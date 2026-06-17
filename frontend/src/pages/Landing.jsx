@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import landingHeroBg from '../assets/images/landing-hero-bg.png';
 
 function Landing() {
   const navigate = useNavigate();
@@ -46,8 +47,9 @@ const features = [
       <section className="relative min-h-screen flex items-center pt-20 overflow-hidden">
         <div className="absolute inset-0 z-0">
           <div 
-            className="w-full h-full bg-[url('/landing-hero-bg.png')] bg-cover bg-center" 
+            className="w-full h-full bg-cover bg-center" 
             style={{ 
+              backgroundImage: `url(${landingHeroBg})`,
               filter: 'contrast(1.05) brightness(0.95) saturate(1.05)',
               imageRendering: 'crisp-edges'
             }}
@@ -287,7 +289,7 @@ const features = [
               <div 
                 className="absolute inset-0 rounded-xl" 
                 style={{ 
-                  backgroundImage: "url('/landing-hero-bg.png')", 
+                  backgroundImage: `url(${landingHeroBg})`, 
                   backgroundSize: 'cover', 
                   backgroundPosition: 'center', 
                   filter: 'contrast(1.2) brightness(0.4) saturate(1.1)',
