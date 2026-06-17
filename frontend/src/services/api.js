@@ -40,11 +40,16 @@ apiClient.interceptors.response.use(
     return response;
   },
   async (error) => {
-    // Handle 401 Unauthorized - session expired
+    // Handle 401 Unauthorized - DO NOT auto-redirect
+    // Let the calling code handle 401 errors appropriately
     if (error.response?.status === 401) {
-      // Session expired, redirect to register page
-      window.location.href = '/register';
-      return Promise.reject(error);
+      // Just reject, don't redirect - the auth slice will handle it
+      return Promise.reject({
+        message: error.response.data?.message || 'Unauthorized',
+        code: error.response.data?.code || 'UNAUTHORIZED',
+        status: 401,
+        data: error.response.data,
+      });
     }
     
     // Handle other errors
