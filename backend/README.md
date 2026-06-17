@@ -1,12 +1,11 @@
 # anotherME Backend
 
-Backend API built with Node.js, Express, and MongoDB.
+Backend API for anotherME.
 
 ## Requirements
 
 * Node.js 18+
-* npm 9+
-* MongoDB Atlas
+* MongoDB
 
 ## Setup
 
@@ -15,20 +14,7 @@ npm install
 cp .env.example .env
 ```
 
-Configure `.env`:
-
-```env
-MONGODB_URI=your_mongodb_uri
-JWT_ACCESS_SECRET=your_access_secret
-JWT_REFRESH_SECRET=your_refresh_secret
-CORS_ORIGIN=http://localhost:5173
-```
-
-Generate JWT secrets:
-
-```bash
-node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"
-```
+Configure the required environment variables in `.env`.
 
 ## Run
 
@@ -44,23 +30,22 @@ Production:
 npm start
 ```
 
-API runs at:
+Default server:
 
-```
+```text
 http://localhost:5000
 ```
 
 ## Scripts
 
 ```bash
-npm run dev      # Development server
-npm start        # Production server
-npm test         # Run tests
-npm run lint     # Lint code
-npm run format   # Format code
+npm run dev
+npm start
+npm test
+npm run lint
 ```
 
-## Project Structure
+## Structure
 
 ```text
 src/
@@ -68,58 +53,20 @@ src/
 ├── controllers/
 ├── services/
 ├── models/
-├── middlewares/
-├── utils/
-├── config/
-└── app.js
-
-server.js
+└── middlewares/
 ```
 
-## Main Features
+## Features
 
-* JWT authentication
-* Anonymous user profiles
-* Posts, comments, and circles
-* Content reactions
+* Authentication
+* Anonymous profiles
+* Posts and comments
+* Communities
 * Input validation
 * Rate limiting
-* Security headers
-* MongoDB persistence
-
-## API
-
-Base URL:
-
-```text
-/api
-```
-
-Core resources:
-
-```text
-/auth
-/users
-/posts
-/comments
-/circles
-/categories
-/health
-```
 
 ## Deployment
 
-1. Set environment variables.
-2. Build and deploy to your hosting platform.
-3. Ensure MongoDB Atlas is accessible.
-4. Set `NODE_ENV=production`.
+Set the required environment variables and start the server in production mode.
 
-Required production variables:
-
-```env
-NODE_ENV=production
-MONGODB_URI=...
-JWT_ACCESS_SECRET=...
-JWT_REFRESH_SECRET=...
-CORS_ORIGIN=https://your-frontend-url.com
-```
+See `.env.example` for configuration.
