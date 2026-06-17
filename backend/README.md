@@ -69,4 +69,4 @@ src/
 
 Set the required environment variables and start the server in production mode.
 
-See `.env.example` for configuration.
+See `.env` for configuration.
