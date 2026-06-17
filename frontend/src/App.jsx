@@ -57,8 +57,10 @@ function App() {
 
   // Restore session on app mount
   useEffect(() => {
+    // Only check session once
+    if (!authLoading) return;
     dispatch(getSession());
-  }, [dispatch]);
+  }, [dispatch]); // Remove authLoading from dependencies to prevent infinite loop
 
   // Show loading spinner while checking authentication on initial load
   if (authLoading) {
