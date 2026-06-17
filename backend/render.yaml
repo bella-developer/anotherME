@@ -47,9 +47,23 @@ services:
         value: 7d
       
       # CORS Configuration
-      # Update with your actual Vercel frontend URL
+      # Update with your actual Vercel frontend URL after deployment
       - key: CORS_ORIGIN
-        value: https://your-app.vercel.app
+        sync: false # Must be set manually in dashboard with your Vercel URL
+      
+      # Session Configuration
+      - key: SESSION_SECRET
+        sync: false # Must be set manually in dashboard
+      
+      # Cloudinary Configuration (for image uploads)
+      - key: CLOUDINARY_CLOUD_NAME
+        sync: false # Must be set manually in dashboard
+      
+      - key: CLOUDINARY_API_KEY
+        sync: false # Must be set manually in dashboard
+      
+      - key: CLOUDINARY_API_SECRET
+        sync: false # Must be set manually in dashboard
       
       # Rate Limiting
       - key: RATE_LIMIT_WINDOW_MS

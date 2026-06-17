@@ -227,32 +227,76 @@ GET    /api/health           # Health check endpoint
 
 ## 🚢 Deployment
 
-### Backend Deployment (Render)
+> **📘 Complete deployment guide available in [DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md)**
 
-1. Create a new Web Service on [Render](https://render.com)
-2. Connect your GitHub repository
-3. Set root directory to `backend`
-4. Render will detect `render.yaml` automatically
-5. Set environment variables in Render Dashboard:
-   - `MONGODB_URI`
-   - `JWT_ACCESS_SECRET`
-   - `JWT_REFRESH_SECRET`
-   - `CORS_ORIGIN` (your Vercel frontend URL)
-6. Deploy!
+### Quick Deployment Overview
 
-**Note**: Free tier spins down after 15 minutes of inactivity (cold starts expected).
+**Frontend**: Deploy to Vercel (Auto-deploys from GitHub)
+**Backend**: Deploy to Render (Auto-deploys from GitHub)
+**Keep-Alive**: GitHub Actions pings server every 10 minutes
 
-### Frontend Deployment (Vercel)
+### Prerequisites for Deployment
 
-1. Install Vercel CLI: `npm i -g vercel`
-2. Navigate to frontend directory: `cd frontend`
-3. Run: `vercel`
-4. Follow prompts to link project
-5. Set environment variable in Vercel Dashboard:
-   - `VITE_API_BASE_URL` (your Render backend URL)
-6. Deploy: `vercel --prod`
+- GitHub repository (✅ you already have this)
+- [Vercel Account](https://vercel.com) (Free)
+- [Render Account](https://render.com) (Free)
+- [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) (Free M0 Cluster)
+- [Cloudinary Account](https://cloudinary.com) (Free tier for images)
 
-Alternatively, connect your GitHub repository to Vercel for automatic deployments.
+### Deployment Steps
+
+1. **Generate Secrets**:
+   ```bash
+   node scripts/generate-secrets.js
+   ```
+   Save the output for environment variables.
+
+2. **Deploy Backend to Render**:
+   - Connect GitHub repo
+   - Set root directory: `backend`
+   - Add environment variables from generated secrets
+   - Deploy automatically via `render.yaml`
+
+3. **Deploy Frontend to Vercel**:
+   - Connect GitHub repo
+   - Set root directory: `frontend`
+   - Add `VITE_API_BASE_URL` environment variable
+   - Deploy automatically via `vercel.json`
+
+4. **Setup GitHub Actions**:
+   - Add `RENDER_BACKEND_URL` to GitHub Secrets
+   - Enable workflows in Actions tab
+   - Keep-alive workflow runs every 10 minutes
+
+**📖 See [DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md) for detailed step-by-step instructions.**
+
+### Deployment Architecture
+
+```
+┌─────────────────────────────────────────────────────────┐
+│                    GitHub Repository                     │
+│                  (bella-developer/anotherME)             │
+└─────┬──────────────────────────────────┬────────────────┘
+      │                                  │
+      │ Auto-deploy on push              │ Auto-deploy on push
+      ▼                                  ▼
+┌─────────────────┐              ┌──────────────────┐
+│  Vercel (Free)  │              │  Render (Free)   │
+│   Frontend      │◄────CORS─────┤    Backend       │
+│   React + Vite  │              │  Node + Express  │
+└─────────────────┘              └────────┬─────────┘
+                                          │
+                                          ▼
+                                 ┌─────────────────┐
+                                 │ MongoDB Atlas   │
+                                 │  (Free M0)      │
+                                 └─────────────────┘
+         ┌────────────────────────────┐
+         │   GitHub Actions           │
+         │   (Keep Server Awake)      │
+         │   Pings every 10 minutes   │
+         └────────────────────────────┘
+```
 
 ## 🧪 Testing
 
