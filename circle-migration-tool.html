@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Circle Room Migration Tool</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: #0d1117;
+      color: #c9d1d9;
+      padding: 40px 20px;
+      line-height: 1.6;
+    }
+    
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    
+    h1 {
+      color: #58a6ff;
+      margin-bottom: 10px;
+    }
+    
+    .subtitle {
+      color: #8b949e;
+      margin-bottom: 30px;
+    }
+    
+    .section {
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 6px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    
+    h2 {
+      color: #f0883e;
+      margin-bottom: 15px;
+      font-size: 18px;
+    }
+    
+    button {
+      background: #238636;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      margin-right: 10px;
+      margin-bottom: 10px;
+    }
+    
+    button:hover {
+      background: #2ea043;
+    }
+    
+    button:disabled {
+      background: #21262d;
+      color: #484f58;
+      cursor: not-allowed;
+    }
+    
+    .output {
+      background: #0d1117;
+      border: 1px solid #30363d;
+      border-radius: 6px;
+      padding: 15px;
+      margin-top: 15px;
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      max-height: 400px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+    
+    .success {
+      color: #3fb950;
+    }
+    
+    .error {
+      color: #f85149;
+    }
+    
+    .warning {
+      color: #d29922;
+    }
+    
+    .info {
+      color: #58a6ff;
+    }
+    
+    input {
+      background: #0d1117;
+      border: 1px solid #30363d;
+      color: #c9d1d9;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 14px;
+      width: 100%;
+      margin-bottom: 10px;
+    }
+    
+    select {
+      background: #0d1117;
+      border: 1px solid #30363d;
+      color: #c9d1d9;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+    
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 600;
+      margin-left: 8px;
+    }
+    
+    .badge-dark {
+      background: #2a1a1a;
+      color: #D97757;
+    }
+    
+    .badge-climb {
+      background: #1a2a1a;
+      color: #7BC96F;
+    }
+    
+    .badge-philo {
+      background: #1a1a2a;
+      color: #8B9DC3;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🔧 Circle Room Migration Tool</h1>
+    <p class="subtitle">Assign room types to your circles so badges appear correctly</p>
+    
+    <!-- Step 1: Check Status -->
+    <div class="section">
+      <h2>Step 1: Check Current Status</h2>
+      <p style="margin-bottom: 15px;">See which circles have room assignments and which don't.</p>
+      <button onclick="checkStatus()">Check Circle Status</button>
+      <div id="checkOutput" class="output" style="display: none;"></div>
+    </div>
+    
+    <!-- Step 2: Run Migration -->
+    <div class="section">
+      <h2>Step 2: Auto-Migrate Circles</h2>
+      <p style="margin-bottom: 15px;">Automatically assign rooms based on circle names and categories.</p>
+      <button onclick="runMigration()">Run Auto-Migration</button>
+      <div id="migrateOutput" class="output" style="display: none;"></div>
+    </div>
+    
+    <!-- Step 3: Manual Assignment -->
+    <div class="section">
+      <h2>Step 3: Manual Assignment (Optional)</h2>
+      <p style="margin-bottom: 15px;">Manually assign a room to a specific circle.</p>
+      
+      <label style="display: block; margin-bottom: 5px; color: #8b949e;">Circle ID:</label>
+      <input type="text" id="circleId" placeholder="Enter circle ID from Step 1">
+      
+      <label style="display: block; margin-bottom: 5px; color: #8b949e;">Room:</label>
+      <select id="roomSelect">
+        <option value="dark">Dark Room</option>
+        <option value="climb">Climb Room</option>
+        <option value="philo">Philo Room</option>
+      </select>
+      
+      <button onclick="manualAssign()">Assign Room</button>
+      <div id="assignOutput" class="output" style="display: none;"></div>
+    </div>
+    
+    <!-- Instructions -->
+    <div class="section">
+      <h2>📋 Instructions</h2>
+      <ol style="margin-left: 20px; color: #8b949e;">
+        <li>Make sure your backend server is running (npm run dev)</li>
+        <li>Make sure you're logged in to the application</li>
+        <li>Click "Check Circle Status" to see current state</li>
+        <li>Click "Run Auto-Migration" to automatically assign rooms</li>
+        <li>Use manual assignment for any circles that weren't auto-assigned</li>
+        <li>Refresh your Circles page to see the badges!</li>
+      </ol>
+    </div>
+  </div>
+  
+  <script>
+    const API_BASE = 'http://localhost:5000/api';
+    
+    function log(elementId, message, type = 'info') {
+      const output = document.getElementById(elementId);
+      output.style.display = 'block';
+      const className = type === 'success' ? 'success' : 
+                       type === 'error' ? 'error' : 
+                       type === 'warning' ? 'warning' : 'info';
+      output.innerHTML += `<span class="${className}">${message}</span>\n`;
+      output.scrollTop = output.scrollHeight;
+    }
+    
+    function clearLog(elementId) {
+      const output = document.getElementById(elementId);
+      output.innerHTML = '';
+    }
+    
+    async function checkStatus() {
+      clearLog('checkOutput');
+      log('checkOutput', '🔍 Checking circle status...', 'info');
+      
+      try {
+        const response = await fetch(`${API_BASE}/admin/check-circle-rooms`, {
+          credentials: 'include'
+        });
+        
+        const data = await response.json();
+        
+        if (data.status === 'success') {
+          log('checkOutput', `\n✅ Total circles: ${data.data.total}`, 'success');
+          log('checkOutput', `\n📊 Summary:`, 'info');
+          log('checkOutput', `  Dark Room: ${data.data.summary.dark} circles`, 'info');
+          log('checkOutput', `  Climb Room: ${data.data.summary.climb} circles`, 'info');
+          log('checkOutput', `  Philo Room: ${data.data.summary.philo} circles`, 'info');
+          log('checkOutput', `  Unassigned: ${data.data.summary.unassigned} circles`, 'warning');
+          
+          if (data.data.byRoom.unassigned.length > 0) {
+            log('checkOutput', `\n⚠️  Unassigned Circles:`, 'warning');
+            data.data.byRoom.unassigned.forEach(circle => {
+              log('checkOutput', `  • ${circle.name} (ID: ${circle.id})`, 'warning');
+            });
+          }
+          
+          if (data.data.byRoom.dark.length > 0) {
+            log('checkOutput', `\n🌑 Dark Room Circles:`, 'info');
+            data.data.byRoom.dark.forEach(circle => {
+              log('checkOutput', `  • ${circle.name}`, 'info');
+            });
+          }
+          
+          if (data.data.byRoom.climb.length > 0) {
+            log('checkOutput', `\n🚀 Climb Room Circles:`, 'info');
+            data.data.byRoom.climb.forEach(circle => {
+              log('checkOutput', `  • ${circle.name}`, 'info');
+            });
+          }
+          
+          if (data.data.byRoom.philo.length > 0) {
+            log('checkOutput', `\n🧘 Philo Room Circles:`, 'info');
+            data.data.byRoom.philo.forEach(circle => {
+              log('checkOutput', `  • ${circle.name}`, 'info');
+            });
+          }
+        } else {
+          log('checkOutput', `❌ Error: ${data.message}`, 'error');
+        }
+      } catch (error) {
+        log('checkOutput', `❌ Error: ${error.message}`, 'error');
+        log('checkOutput', `\nMake sure:`, 'warning');
+        log('checkOutput', `  1. Backend server is running`, 'warning');
+        log('checkOutput', `  2. You are logged in`, 'warning');
+      }
+    }
+    
+    async function runMigration() {
+      clearLog('migrateOutput');
+      log('migrateOutput', '🚀 Starting auto-migration...', 'info');
+      
+      try {
+        const response = await fetch(`${API_BASE}/admin/migrate-circle-rooms`, {
+          method: 'POST',
+          credentials: 'include'
+        });
+        
+        const data = await response.json();
+        
+        if (data.status === 'success') {
+          log('migrateOutput', `\n✅ Migration complete!`, 'success');
+          log('migrateOutput', `\nTotal circles processed: ${data.data.total}`, 'info');
+          log('migrateOutput', `Updated: ${data.data.updated.length}`, 'success');
+          log('migrateOutput', `Skipped: ${data.data.skipped.length}`, 'warning');
+          
+          if (data.data.updated.length > 0) {
+            log('migrateOutput', `\n✅ Updated Circles:`, 'success');
+            data.data.updated.forEach(circle => {
+              const badge = circle.room === 'dark' ? '🌑' : 
+                           circle.room === 'climb' ? '🚀' : '🧘';
+              log('migrateOutput', `  ${badge} ${circle.name} → ${circle.room.toUpperCase()} room`, 'success');
+            });
+          }
+          
+          if (data.data.skipped.length > 0) {
+            log('migrateOutput', `\n⚠️  Skipped Circles (need manual assignment):`, 'warning');
+            data.data.skipped.forEach(circle => {
+              log('migrateOutput', `  • ${circle.name} (ID: ${circle.id})`, 'warning');
+            });
+          }
+          
+          log('migrateOutput', `\n🎉 Refresh your Circles page to see the badges!`, 'success');
+        } else {
+          log('migrateOutput', `❌ Error: ${data.message}`, 'error');
+        }
+      } catch (error) {
+        log('migrateOutput', `❌ Error: ${error.message}`, 'error');
+      }
+    }
+    
+    async function manualAssign() {
+      const circleId = document.getElementById('circleId').value.trim();
+      const room = document.getElementById('roomSelect').value;
+      
+      if (!circleId) {
+        alert('Please enter a circle ID');
+        return;
+      }
+      
+      clearLog('assignOutput');
+      log('assignOutput', `🔧 Assigning ${room} room to circle...`, 'info');
+      
+      try {
+        const response = await fetch(`${API_BASE}/admin/assign-circle-room/${circleId}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify({ room })
+        });
+        
+        const data = await response.json();
+        
+        if (data.status === 'success') {
+          const badge = room === 'dark' ? '🌑' : room === 'climb' ? '🚀' : '🧘';
+          log('assignOutput', `\n✅ ${data.message}`, 'success');
+          log('assignOutput', `${badge} ${data.data.name} → ${data.data.room.toUpperCase()} room`, 'success');
+          
+          // Clear inputs
+          document.getElementById('circleId').value = '';
+        } else {
+          log('assignOutput', `❌ Error: ${data.message}`, 'error');
+        }
+      } catch (error) {
+        log('assignOutput', `❌ Error: ${error.message}`, 'error');
+      }
+    }
+  </script>
+</body>
+</html>

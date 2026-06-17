@@ -1,0 +1,176 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    font-family: 'Geist Mono', 'Courier New', monospace;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background: #000000;
+    color: #ffffff;
+  }
+
+  * {
+    @apply box-border;
+  }
+
+  /* Accessibility: Screen reader only content */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  .sr-only:focus,
+  .sr-only:active {
+    position: static;
+    width: auto;
+    height: auto;
+    padding: inherit;
+    margin: inherit;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+  }
+
+  /* Accessibility: Focus visible for keyboard navigation */
+  *:focus-visible {
+    outline: 2px solid #58a6ff;
+    outline-offset: 2px;
+  }
+
+  /* Accessibility: Respect reduced motion preference */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* Responsive font sizes */
+  html {
+    font-size: 14px;
+  }
+
+  @media (min-width: 768px) {
+    html {
+      font-size: 16px;
+    }
+  }
+
+  /* Hide scrollbar for horizontal scroll areas */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@layer utilities {
+  /* Dark mysterious glassmorphism utilities */
+  .glass {
+    background: rgba(10, 10, 15, 0.3);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  
+  .glass-strong {
+    background: rgba(15, 15, 20, 0.4);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  
+  .glass-dark {
+    background: rgba(5, 5, 10, 0.6);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+  }
+  
+  /* Features section starfield background */
+  .features-starfield {
+    background-color: #000000;
+    position: relative;
+  }
+
+  .features-starfield::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background-image:
+      radial-gradient(1px 1px at 5% 12%, rgba(255,255,255,0.55) 0%, transparent 100%),
+      radial-gradient(1px 1px at 18% 7%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 27% 23%, rgba(255,255,255,0.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 38% 4%, rgba(255,255,255,0.35) 0%, transparent 100%),
+      radial-gradient(1px 1px at 45% 18%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 53% 9%, rgba(255,255,255,0.45) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 61% 31%, rgba(255,255,255,0.65) 0%, transparent 100%),
+      radial-gradient(1px 1px at 72% 5%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 82% 16%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 91% 11%, rgba(255,255,255,0.35) 0%, transparent 100%),
+      radial-gradient(1px 1px at 96% 26%, rgba(255,255,255,0.55) 0%, transparent 100%),
+      radial-gradient(1px 1px at 9% 38%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 21% 45%, rgba(255,255,255,0.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 33% 52%, rgba(255,255,255,0.35) 0%, transparent 100%),
+      radial-gradient(1px 1px at 47% 41%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 58% 57%, rgba(255,255,255,0.45) 0%, transparent 100%),
+      radial-gradient(1px 1px at 67% 48%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 76% 63%, rgba(255,255,255,0.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 85% 39%, rgba(255,255,255,0.35) 0%, transparent 100%),
+      radial-gradient(1px 1px at 93% 54%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 3% 67%, rgba(255,255,255,0.45) 0%, transparent 100%),
+      radial-gradient(1px 1px at 14% 74%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 25% 81%, rgba(255,255,255,0.65) 0%, transparent 100%),
+      radial-gradient(1px 1px at 36% 69%, rgba(255,255,255,0.35) 0%, transparent 100%),
+      radial-gradient(1px 1px at 49% 88%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 55% 76%, rgba(255,255,255,0.45) 0%, transparent 100%),
+      radial-gradient(1px 1px at 64% 92%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 78% 83%, rgba(255,255,255,0.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 88% 71%, rgba(255,255,255,0.35) 0%, transparent 100%),
+      radial-gradient(1px 1px at 97% 86%, rgba(255,255,255,0.55) 0%, transparent 100%),
+      radial-gradient(1px 1px at 11% 95%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 42% 97%, rgba(255,255,255,0.35) 0%, transparent 100%),
+      radial-gradient(1px 1px at 71% 99%, rgba(255,255,255,0.45) 0%, transparent 100%);
+    pointer-events: none;
+  }
+
+  .features-starfield > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  /* Utility for focus-visible support */
+  .focus-visible\:ring-2:focus-visible {
+    --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+    --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+    box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+  }
+}

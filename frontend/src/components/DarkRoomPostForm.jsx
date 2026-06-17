@@ -1,0 +1,424 @@
+import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { createPost, clearError } from '../features/postsSlice';
+import { createCircle } from '../services/circleService';
+import Button from './Button';
+import ImageUpload from './ImageUpload';
+import useReducedMotion from '../hooks/useReducedMotion';
+
+/**
+ * Dark Room Post Form Component
+ * Specialized form for Dark Room posts with specific categories
+ */
+const DarkRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated }) => {
+  const dispatch = useDispatch();
+  const { loading, error } = useSelector((state) => state.posts);
+
+  const [formData, setFormData] = useState({
+    content: '',
+    room: 'dark',
+    circleId: '',
+    category: 'CONFESSION',
+    image: null,
+  });
+
+  const [showCircleCreation, setShowCircleCreation] = useState(false);
+  const [newCircle, setNewCircle] = useState({
+    name: '',
+    description: '',
+  });
+  const [creatingCircle, setCreatingCircle] = useState(false);
+  const [validationErrors, setValidationErrors] = useState({});
+  const [characterCount, setCharacterCount] = useState(0);
+  const prefersReducedMotion = useReducedMotion();
+
+  // Dark Room specific categories
+  const categories = [
+    { value: 'CONFESSION', label: 'Confession', description: 'Release what weighs on you' },
+    { value: 'REGRET', label: 'Regret', description: 'Process past decisions' },
+    { value: 'DARK', label: 'Dark', description: 'Explore the shadows' },
+  ];
+
+  // Reset form when modal opens/closes
+  useEffect(() => {
+    if (!isOpen) {
+      setFormData({
+        content: '',
+        room: 'dark',
+        circleId: '',
+        category: 'CONFESSION',
+        image: null,
+      });
+      setNewCircle({ name: '', description: '' });
+      setShowCircleCreation(false);
+      setValidationErrors({});
+      setCharacterCount(0);
+      dispatch(clearError());
+    }
+  }, [isOpen, dispatch]);
+
+  // Update character count
+  useEffect(() => {
+    setCharacterCount(formData.content.length);
+  }, [formData.content]);
+
+  // Handle input changes
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+
+    if (validationErrors[name]) {
+      setValidationErrors((prev) => ({
+        ...prev,
+        [name]: '',
+      }));
+    }
+  };
+
+  // Handle circle creation
+  const handleCreateCircle = async () => {
+    if (!newCircle.name.trim() || newCircle.name.length < 3) {
+      setValidationErrors(prev => ({
+        ...prev,
+        circleName: 'Circle name must be at least 3 characters'
+      }));
+      return;
+    }
+
+    if (!newCircle.description.trim() || newCircle.description.length < 10) {
+      setValidationErrors(prev => ({
+        ...prev,
+        circleDescription: 'Description must be at least 10 characters'
+      }));
+      return;
+    }
+
+    try {
+      setCreatingCircle(true);
+      const createdCircle = await createCircle({
+        name: newCircle.name.trim(),
+        description: newCircle.description.trim(),
+        visibility: 'public',
+        categories: [formData.category],
+        room: 'dark' // Dark room identifier
+      });
+
+      setFormData(prev => ({ ...prev, circleId: createdCircle.circle.id }));
+      setShowCircleCreation(false);
+      setNewCircle({ name: '', description: '' });
+    } catch (err) {
+      setValidationErrors(prev => ({
+        ...prev,
+        circleCreation: err.message || 'Failed to create circle'
+      }));
+    } finally {
+      setCreatingCircle(false);
+    }
+  };
+
+  // Validate form
+  const validateForm = () => {
+    const errors = {};
+
+    if (!formData.content.trim()) {
+      errors.content = 'Content is required';
+    } else if (formData.content.length < 10) {
+      errors.content = 'Content must be at least 10 characters';
+    } else if (formData.content.length > 5000) {
+      errors.content = 'Content must not exceed 5000 characters';
+    }
+
+    if (!formData.circleId) {
+      errors.circleId = 'Please select or create a circle';
+    }
+
+    setValidationErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
+  // Handle form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    console.log('Form submitted with data:', formData);
+    
+    if (!validateForm()) {
+      console.log('Validation failed:', validationErrors);
+      return;
+    }
+
+    console.log('Validation passed, creating post...');
+
+    try {
+      const result = await dispatch(createPost(formData)).unwrap();
+      console.log('Post created successfully:', result);
+      
+      // Pass the created post back to parent for optimistic update
+      if (onPostCreated) {
+        onPostCreated(result);
+      }
+      
+      onClose();
+    } catch (err) {
+      console.error('Failed to create post:', err);
+    }
+  };
+
+  const handleClose = () => {
+    if (!loading) {
+      onClose();
+    }
+  };
+
+  const handleBackdropClick = (e) => {
+    if (e.target === e.currentTarget) {
+      handleClose();
+    }
+  };
+
+  if (!isOpen) return null;
+
+  const getCharacterCountColor = () => {
+    if (characterCount > 5000) return 'text-[#ef4444]';
+    if (characterCount > 4500) return 'text-[#f59e0b]';
+    return 'text-[#a3a3a3]';
+  };
+
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80 p-4"
+      onClick={handleBackdropClick}
+    >
+      <div
+        className="bg-[#1a1a1a] rounded-xl w-full max-w-2xl max-h-[80vh] overflow-y-auto"
+        style={{
+          animation: prefersReducedMotion ? 'none' : 'fadeIn 300ms ease-out',
+        }}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modal-title"
+      >
+        {/* Modal Header */}
+        <div className="flex items-center justify-between p-6 border-b border-[#2a2a2a]">
+          <div>
+            <h2 id="modal-title" className="text-white text-2xl font-bold">Dark Room Post</h2>
+            <p className="text-[#6B5E59] text-sm mt-1">Release. Witness. Discharge.</p>
+          </div>
+          <button
+            onClick={handleClose}
+            disabled={loading}
+            className="text-[#a3a3a3] hover:text-white transition-colors duration-200 disabled:opacity-50"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+        </div>
+
+        {/* Modal Body */}
+        <form onSubmit={handleSubmit} className="p-6">
+          {/* Category Selector */}
+          <div className="mb-4">
+            <label className="block text-[#a3a3a3] text-sm mb-2">Category</label>
+            <div className="grid grid-cols-3 gap-3">
+              {categories.map((cat) => (
+                <button
+                  key={cat.value}
+                  type="button"
+                  onClick={() => setFormData(prev => ({ ...prev, category: cat.value }))}
+                  disabled={loading}
+                  className={`p-3 rounded-lg border-2 transition-all duration-200 disabled:opacity-50 ${
+                    formData.category === cat.value
+                      ? 'border-[#D97757] bg-[#D97757] bg-opacity-10 text-white'
+                      : 'border-[#2a2a2a] bg-[#1a1a1a] text-[#a3a3a3] hover:border-[#3a3a3a]'
+                  }`}
+                >
+                  <div className="font-medium text-sm">{cat.label}</div>
+                  <div className="text-xs mt-1 opacity-70">{cat.description}</div>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Content Textarea */}
+          <div className="mb-4">
+            <textarea
+              name="content"
+              placeholder="Share what's in the dark..."
+              value={formData.content}
+              onChange={handleChange}
+              disabled={loading}
+              className={`w-full min-h-[200px] bg-[#1a1a1a] text-[#e5e5e5] border ${
+                validationErrors.content ? 'border-[#ef4444]' : 'border-[#2a2a2a]'
+              } rounded-lg px-4 py-3 text-base focus:outline-none focus:border-[#D97757] focus:ring-2 focus:ring-[#D97757] focus:ring-opacity-20 transition-all duration-200 resize-y disabled:opacity-50 disabled:cursor-not-allowed placeholder-[#4a4a4a]`}
+              style={{ lineHeight: '1.6' }}
+            />
+            
+            <div className="flex items-center justify-between mt-2">
+              {validationErrors.content && (
+                <span className="text-[#ef4444] text-xs">{validationErrors.content}</span>
+              )}
+              <span className={`text-xs ml-auto ${getCharacterCountColor()}`}>
+                {characterCount} / 5000
+              </span>
+            </div>
+          </div>
+
+          {/* Image Upload */}
+          <div className="mb-4">
+            <ImageUpload
+              onImageSelect={(file) => setFormData(prev => ({ ...prev, image: file }))}
+              onImageRemove={() => setFormData(prev => ({ ...prev, image: null }))}
+              disabled={loading}
+            />
+          </div>
+
+          {/* Circle Selection/Creation */}
+          <div className="mb-4">
+            <label className="block text-[#a3a3a3] text-sm mb-2">Circle</label>
+            
+            {!showCircleCreation ? (
+              <div className="space-y-2">
+                <select
+                  name="circleId"
+                  value={formData.circleId}
+                  onChange={handleChange}
+                  disabled={loading}
+                  className={`w-full bg-[#1a1a1a] text-[#e5e5e5] border ${
+                    validationErrors.circleId ? 'border-[#ef4444]' : 'border-[#2a2a2a]'
+                  } rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-[#D97757] focus:ring-2 focus:ring-[#D97757] focus:ring-opacity-20 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed`}
+                >
+                  <option value="">Select a circle</option>
+                  {circles
+                    .filter(circle => circle.room === 'dark')
+                    .map((circle) => {
+                      const isBusy = (circle.topicCount || 0) >= 3;
+                      return (
+                        <option 
+                          key={circle.id} 
+                          value={circle.id}
+                          disabled={isBusy}
+                        >
+                          {circle.name}{isBusy ? ' (Circle is busy)' : ''}
+                        </option>
+                      );
+                    })}
+                </select>
+                
+                <button
+                  type="button"
+                  onClick={() => setShowCircleCreation(true)}
+                  disabled={loading}
+                  className="text-[#D97757] text-sm hover:text-[#E68868] transition-colors disabled:opacity-50"
+                >
+                  + Create new circle
+                </button>
+                
+                {validationErrors.circleId && (
+                  <span className="text-[#ef4444] text-xs block">{validationErrors.circleId}</span>
+                )}
+              </div>
+            ) : (
+              <div className="space-y-3 p-4 bg-[#0a0a0a] rounded-lg border border-[#2a2a2a]">
+                <div>
+                  <input
+                    type="text"
+                    placeholder="Circle name"
+                    value={newCircle.name}
+                    onChange={(e) => {
+                      setNewCircle(prev => ({ ...prev, name: e.target.value }));
+                      setValidationErrors(prev => ({ ...prev, circleName: '' }));
+                    }}
+                    disabled={creatingCircle}
+                    className={`w-full bg-[#1a1a1a] text-[#e5e5e5] border ${
+                      validationErrors.circleName ? 'border-[#ef4444]' : 'border-[#2a2a2a]'
+                    } rounded px-3 py-2 text-sm focus:outline-none focus:border-[#D97757] disabled:opacity-50`}
+                  />
+                  {validationErrors.circleName && (
+                    <span className="text-[#ef4444] text-xs mt-1 block">{validationErrors.circleName}</span>
+                  )}
+                </div>
+                
+                <div>
+                  <textarea
+                    placeholder="Circle description"
+                    value={newCircle.description}
+                    onChange={(e) => {
+                      setNewCircle(prev => ({ ...prev, description: e.target.value }));
+                      setValidationErrors(prev => ({ ...prev, circleDescription: '' }));
+                    }}
+                    disabled={creatingCircle}
+                    rows={3}
+                    className={`w-full bg-[#1a1a1a] text-[#e5e5e5] border ${
+                      validationErrors.circleDescription ? 'border-[#ef4444]' : 'border-[#2a2a2a]'
+                    } rounded px-3 py-2 text-sm focus:outline-none focus:border-[#D97757] disabled:opacity-50 resize-none`}
+                  />
+                  {validationErrors.circleDescription && (
+                    <span className="text-[#ef4444] text-xs mt-1 block">{validationErrors.circleDescription}</span>
+                  )}
+                </div>
+                
+                {validationErrors.circleCreation && (
+                  <div className="text-[#ef4444] text-xs">{validationErrors.circleCreation}</div>
+                )}
+                
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    onClick={handleCreateCircle}
+                    disabled={creatingCircle}
+                    className="flex-1 px-4 py-2 bg-[#D97757] text-black rounded text-sm font-medium hover:bg-[#E68868] transition-colors disabled:opacity-50"
+                  >
+                    {creatingCircle ? 'Creating...' : 'Create Circle'}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setShowCircleCreation(false);
+                      setNewCircle({ name: '', description: '' });
+                      setValidationErrors(prev => {
+                        const { circleName, circleDescription, circleCreation, ...rest } = prev;
+                        return rest;
+                      });
+                    }}
+                    disabled={creatingCircle}
+                    className="px-4 py-2 bg-[#2a2a2a] text-[#a3a3a3] rounded text-sm hover:bg-[#3a3a3a] transition-colors disabled:opacity-50"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Error Message */}
+          {error && (
+            <div className="mb-4 p-3 bg-[#ef4444] bg-opacity-10 border border-[#ef4444] rounded-lg">
+              <p className="text-[#ef4444] text-sm">{error}</p>
+            </div>
+          )}
+
+          {/* Submit Button */}
+          <Button
+            type="submit"
+            variant="primary"
+            disabled={loading || creatingCircle}
+            className="w-full h-12"
+          >
+            {loading ? 'Publishing...' : 'Publish to Dark Room'}
+          </Button>
+        </form>
+      </div>
+    </div>
+  );
+};
+
+export default DarkRoomPostForm;

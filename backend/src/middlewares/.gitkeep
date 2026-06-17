@@ -1,0 +1,2 @@
+# Middlewares directory
+# Cross-cutting concerns (auth, validation, rate limiting)

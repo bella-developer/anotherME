@@ -1,0 +1,22 @@
+### Test Circle Topic Post Endpoints
+### These tests verify the circle topic post feature
+
+### 1. Get topic post for a circle (should return 404 if no topic exists)
+GET http://localhost:5000/api/circles/697714f67ca9366f6ef2f784/topic
+Content-Type: application/json
+
+### 2. Set a post as circle topic (requires authentication)
+POST http://localhost:5000/api/circles/697714f67ca9366f6ef2f784/topic/POST_ID_HERE
+Content-Type: application/json
+
+### 3. Get topic post after setting (should return 200 with post data)
+GET http://localhost:5000/api/circles/697714f67ca9366f6ef2f784/topic
+Content-Type: application/json
+
+### 4. Remove topic post (requires authentication - circle creator only)
+DELETE http://localhost:5000/api/circles/697714f67ca9366f6ef2f784/topic
+Content-Type: application/json
+
+### 5. Get topic post after removal (should return 404)
+GET http://localhost:5000/api/circles/697714f67ca9366f6ef2f784/topic
+Content-Type: application/json

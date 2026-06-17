@@ -1,0 +1,788 @@
+
+> anotherme-backend@1.0.0 test
+> node --test
+
+TAP version 13
+# {"timestamp":"2026-01-20T06:07:02.455Z","level":"warn","message":"Error occurred","requestId":"test-id","error":"Test error","code":"TEST_ERROR","statusCode":400,"path":"/test","method":"GET","stack":"Error: Test error\\n    at TestContext.<anonymous> (file:///home/bella/bella-workspace/tasks/dev/another/anotherME/backend/src/middlewares/errorHandler.middleware.test.js:47:21)\\n    at Test.runInAsyncScope (node:async_hooks:206:9)\\n    at Test.run (node:internal/test_runner/test:796:25)\\n    at Test.start (node:internal/test_runner/test:702:17)\\n    at node:internal/test_runner/test:1133:71\\n    at node:internal/per_context/primordials:482:82\\n    at new Promise (<anonymous>)\\n    at new SafePromise (node:internal/per_context/primordials:450:29)\\n    at node:internal/per_context/primordials:482:9\\n    at Array.map (<anonymous>)","errorDetails":{"statusCode":400,"code":"TEST_ERROR","details":null,"isOperational":true}}
+# {"timestamp":"2026-01-20T06:07:02.457Z","level":"error","message":"Error occurred","requestId":"test-id","error":"Unknown error","code":"INTERNAL_ERROR","statusCode":500,"path":"/test","method":"GET","stack":"Error: Unknown error\\n    at TestContext.<anonymous> (file:///home/bella/bella-workspace/tasks/dev/another/anotherME/backend/src/middlewares/errorHandler.middleware.test.js:73:21)\\n    at Test.runInAsyncScope (node:async_hooks:206:9)\\n    at Test.run (node:internal/test_runner/test:796:25)\\n    at Suite.processPendingSubtests (node:internal/test_runner/test:526:18)\\n    at Test.postRun (node:internal/test_runner/test:889:19)\\n    at Test.run (node:internal/test_runner/test:835:12)\\n    at async Promise.all (index 0)\\n    at async Suite.run (node:internal/test_runner/test:1135:7)\\n    at async Suite.processPendingSubtests (node:internal/test_runner/test:526:7)","errorDetails":{}}
+# {"timestamp":"2026-01-20T06:07:02.457Z","level":"warn","message":"Error occurred","requestId":"test-id","error":"Validation failed","code":"VALIDATION_ERROR","statusCode":400,"path":"/test","method":"POST","errorDetails":{"name":"ValidationError","errors":{"field1":{"path":"field1","message":"Field 1 is required"}}}}
+# {"timestamp":"2026-01-20T06:07:02.458Z","level":"warn","message":"Error occurred","requestId":"test-id","error":"Invalid authentication token","code":"INVALID_TOKEN","statusCode":401,"path":"/test","method":"GET","errorDetails":{"name":"JsonWebTokenError","message":"Invalid token"}}
+# Subtest: Error Handler Middleware
+    # Subtest: AppError
+        # Subtest: should create an AppError with correct properties
+        ok 1 - should create an AppError with correct properties
+          ---
+          duration_ms: 1.818828
+          ...
+        1..1
+    ok 1 - AppError
+      ---
+      duration_ms: 2.611724
+      type: 'suite'
+      ...
+    # Subtest: requestIdMiddleware
+        # Subtest: should add request ID to request object
+        ok 1 - should add request ID to request object
+          ---
+          duration_ms: 1.047779
+          ...
+        1..1
+    ok 2 - requestIdMiddleware
+      ---
+      duration_ms: 1.226817
+      type: 'suite'
+      ...
+    # Subtest: errorHandler
+        # Subtest: should handle AppError correctly
+        ok 1 - should handle AppError correctly
+          ---
+          duration_ms: 1.676112
+          ...
+        # Subtest: should default to 500 for unknown errors
+        ok 2 - should default to 500 for unknown errors
+          ---
+          duration_ms: 0.312039
+          ...
+        # Subtest: should handle validation errors
+        ok 3 - should handle validation errors
+          ---
+          duration_ms: 1.08399
+          ...
+        # Subtest: should handle JWT errors
+        ok 4 - should handle JWT errors
+          ---
+          duration_ms: 0.29206
+          ...
+        1..4
+    ok 3 - errorHandler
+      ---
+      duration_ms: 3.718568
+      type: 'suite'
+      ...
+    # Subtest: Error helper functions
+        # Subtest: should create validation error
+        ok 1 - should create validation error
+          ---
+          duration_ms: 0.336866
+          ...
+        # Subtest: should create authentication error
+        ok 2 - should create authentication error
+          ---
+          duration_ms: 0.170066
+          ...
+        # Subtest: should create not found error
+        ok 3 - should create not found error
+          ---
+          duration_ms: 0.231789
+          ...
+        1..3
+    ok 4 - Error helper functions
+      ---
+      duration_ms: 0.966141
+      type: 'suite'
+      ...
+    1..4
+ok 1 - Error Handler Middleware
+  ---
+  duration_ms: 9.899481
+  type: 'suite'
+  ...
+# Subtest: Validation Middleware
+    # Subtest: should pass through when no validation errors
+    ok 1 - should pass through when no validation errors
+      ---
+      duration_ms: 1.490474
+      ...
+    # Subtest: should return 400 error when validation fails
+    ok 2 - should return 400 error when validation fails
+      ---
+      duration_ms: 0.169708
+      ...
+    1..2
+ok 2 - Validation Middleware
+  ---
+  duration_ms: 3.21062
+  type: 'suite'
+  ...
+# Subtest: User Model - Property 34: Demographic Storage Without PII
+    # Subtest: should store demographic data without PII fields
+    ok 1 - should store demographic data without PII fields
+      ---
+      duration_ms: 1934.467994
+      ...
+    # Subtest: should reject attempts to add PII fields to user schema
+    ok 2 - should reject attempts to add PII fields to user schema
+      ---
+      duration_ms: 177.840634
+      ...
+    # Subtest: should allow users with only alias and no demographics
+    ok 3 - should allow users with only alias and no demographics
+      ---
+      duration_ms: 145.489057
+      ...
+    # Subtest: should sanitize user data in toSafeObject method
+    ok 4 - should sanitize user data in toSafeObject method
+      ---
+      duration_ms: 85.35244
+      ...
+    1..4
+ok 3 - User Model - Property 34: Demographic Storage Without PII
+  ---
+  duration_ms: 3844.174459
+  type: 'suite'
+  ...
+# MongoDB connected successfully
+# Subtest: Authentication Service
+    # Subtest: register
+        # Subtest: should register a new user with randomized alias
+        not ok 1 - should register a new user with randomized alias
+          ---
+          duration_ms: 2076.630243
+          location: '/home/bella/bella-workspace/tasks/dev/another/anotherME/backend/src/services/auth.service.test.js:31:5'
+          failureType: 'testCodeFailure'
+          error: 'Alias collision occurred'
+          code: 'ALIAS_COLLISION'
+          stack: |-
+            Module.register (file:///home/bella/bella-workspace/tasks/dev/another/anotherME/backend/src/services/auth.service.js:67:19)
+            process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+            async TestContext.<anonymous> (file:///home/bella/bella-workspace/tasks/dev/another/anotherME/backend/src/services/auth.service.test.js:32:22)
+            async Test.run (node:internal/test_runner/test:797:9)
+            async Promise.all (index 0)
+            async Suite.run (node:internal/test_runner/test:1135:7)
+            async Promise.all (index 0)
+            async Suite.run (node:internal/test_runner/test:1135:7)
+            async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+          ...
+        # Subtest: should register a user with optional demographics
+        not ok 2 - should register a user with optional demographics
+          ---
+          duration_ms: 511.888673
+          location: '/home/bella/bella-workspace/tasks/dev/another/anotherME/backend/src/services/auth.service.test.js:46:5'
+          failureType: 'testCodeFailure'
+          error: 'Alias collision occurred'
+          code: 'ALIAS_COLLISION'
+          stack: |-
+            Module.register (file:///home/bella/bella-workspace/tasks/dev/another/anotherME/backend/src/services/auth.service.js:67:19)
+            process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+            async TestContext.<anonymous> (file:///home/bella/bella-workspace/tasks/dev/another/anotherME/backend/src/services/auth.service.test.js:47:22)
+            async Test.run (node:internal/test_runner/test:797:9)
+            async Suite.processPendingSubtests (node:internal/test_runner/test:526:7)
+          ...
+        # Subtest: should reject registration with PII fields
+        ok 3 - should reject registration with PII fields
+          ---
+          duration_ms: 0.981299
+          ...
+        # Subtest: should reject registration with name fields
+        ok 4 - should reject registration with name fields
+          ---
+          duration_ms: 0.173451
+          ...
+        1..4
+    not ok 1 - register
+      ---
+      duration_ms: 2590.27972
+      type: 'suite'
+      location: '/home/bella/bella-workspace/tasks/dev/another/anotherME/backend/src/services/auth.service.test.js:30:3'
+      failureType: 'subtestsFailed'
+      error: '2 subtests failed'
+      code: 'ERR_TEST_FAILURE'
+      stack: |-
+        async Promise.all (index 0)
+      ...
+    # Subtest: refresh
+        # Subtest: should refresh tokens with valid refresh token
+        not ok 1 - should refresh tokens with valid refresh token
+          ---
+          duration_ms: 511.021953
+          location: '/home/bella/bella-workspace/tasks/dev/another/anotherME/backend/src/services/auth.service.test.js:84:5'
+          failureType: 'testCodeFailure'
+          error: 'Alias collision occurred'
+          code: 'ALIAS_COLLISION'
+          stack: |-
+            Module.register (file:///home/bella/bella-workspace/tasks/dev/another/anotherME/backend/src/services/auth.service.js:67:19)
+            process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+            async TestContext.<anonymous> (file:///home/bella/bella-workspace/tasks/dev/another/anotherME/backend/src/services/auth.service.test.js:86:30)
+            async Test.run (node:internal/test_runner/test:797:9)
+            async Promise.all (index 0)
+            async Suite.run (node:internal/test_runner/test:1135:7)
+            async Suite.processPendingSubtests (node:internal/test_runner/test:526:7)
+          ...
+        # Subtest: should reject refresh with invalid token
+        ok 2 - should reject refresh with invalid token
+          ---
+          duration_ms: 0.733309
+          ...
+        # Subtest: should reject refresh with missing token
+        ok 3 - should reject refresh with missing token
+          ---
+          duration_ms: 0.2343
+          ...
+        # Subtest: should reject reuse of old refresh token (rotation)
+        not ok 4 - should reject reuse of old refresh token (rotation)
+          ---
+          duration_ms: 510.628396
+          location: '/home/bella/bella-workspace/tasks/dev/another/anotherME/backend/src/services/auth.service.test.js:120:5'
+          failureType: 'testCodeFailure'
+          error: 'Alias collision occurred'
+          code: 'ALIAS_COLLISION'
+          stack: |-
+            Module.register (file:///home/bella/bella-workspace/tasks/dev/another/anotherME/backend/src/services/auth.service.js:67:19)
+            process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+            async TestContext.<anonymous> (file:///home/bella/bella-workspace/tasks/dev/another/anotherME/backend/src/services/auth.service.test.js:122:30)
+            async Test.run (node:internal/test_runner/test:797:9)
+            async Suite.processPendingSubtests (node:internal/test_runner/test:526:7)
+          ...
+        1..4
+    not ok 2 - refresh
+      ---
+      duration_ms: 1023.189153
+      type: 'suite'
+      location: '/home/bella/bella-workspace/tasks/dev/another/anotherME/backend/src/services/auth.service.test.js:83:3'
+      failureType: 'subtestsFailed'
+      error: '2 subtests failed'
+      code: 'ERR_TEST_FAILURE'
+      ...
+    # Subtest: logout
+        # Subtest: should logout user and invalidate tokens
+        not ok 1 - should logout user and invalidate tokens
+          ---
+          duration_ms: 512.320216
+          location: '/home/bella/bella-workspace/tasks/dev/another/anotherME/backend/src/services/auth.service.test.js:141:5'
+          failureType: 'testCodeFailure'
+          error: 'Alias collision occurred'
+          code: 'ALIAS_COLLISION'
+          stack: |-
+            Module.register (file:///home/bella/bella-workspace/tasks/dev/another/anotherME/backend/src/services/auth.service.js:67:19)
+            process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+            async TestContext.<anonymous> (file:///home/bella/bella-workspace/tasks/dev/another/anotherME/backend/src/services/auth.service.test.js:143:30)
+            async Test.run (node:internal/test_runner/test:797:9)
+            async Promise.all (index 0)
+            async Suite.run (node:internal/test_runner/test:1135:7)
+            async Suite.processPendingSubtests (node:internal/test_runner/test:526:7)
+          ...
+        # Subtest: should reject logout with missing user ID
+        ok 2 - should reject logout with missing user ID
+          ---
+          duration_ms: 0.461463
+          ...
+        # Subtest: should reject logout with invalid user ID
+        ok 3 - should reject logout with invalid user ID
+          ---
+          duration_ms: 254.922428
+          ...
+        1..3
+    not ok 3 - logout
+      ---
+      duration_ms: 767.991383
+      type: 'suite'
+      location: '/home/bella/bella-workspace/tasks/dev/another/anotherME/backend/src/services/auth.service.test.js:140:3'
+      failureType: 'subtestsFailed'
+      error: '1 subtest failed'
+      code: 'ERR_TEST_FAILURE'
+      ...
+    # Subtest: invalidateTokensOnAccountChange
+        # Subtest: should invalidate all tokens on account change
+        not ok 1 - should invalidate all tokens on account change
+          ---
+          duration_ms: 511.436455
+          location: '/home/bella/bella-workspace/tasks/dev/another/anotherME/backend/src/services/auth.service.test.js:195:5'
+          failureType: 'testCodeFailure'
+          error: 'Alias collision occurred'
+          code: 'ALIAS_COLLISION'
+          stack: |-
+            Module.register (file:///home/bella/bella-workspace/tasks/dev/another/anotherME/backend/src/services/auth.service.js:67:19)
+            process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+            async TestContext.<anonymous> (file:///home/bella/bella-workspace/tasks/dev/another/anotherME/backend/src/services/auth.service.test.js:197:30)
+            async Test.run (node:internal/test_runner/test:797:9)
+            async Promise.all (index 0)
+            async Suite.run (node:internal/test_runner/test:1135:7)
+            async Suite.processPendingSubtests (node:internal/test_runner/test:526:7)
+          ...
+        1..1
+    not ok 4 - invalidateTokensOnAccountChange
+      ---
+      duration_ms: 511.764606
+      type: 'suite'
+      location: '/home/bella/bella-workspace/tasks/dev/another/anotherME/backend/src/services/auth.service.test.js:194:3'
+      failureType: 'subtestsFailed'
+      error: '1 subtest failed'
+      code: 'ERR_TEST_FAILURE'
+      ...
+# MongoDB disconnected. Attempting to reconnect...
+# MongoDB disconnected successfully
+    1..4
+not ok 4 - Authentication Service
+  ---
+  duration_ms: 8338.969136
+  type: 'suite'
+  location: '/home/bella/bella-workspace/tasks/dev/another/anotherME/backend/src/services/auth.service.test.js:17:1'
+  failureType: 'subtestsFailed'
+  error: '4 subtests failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# MongoDB connected successfully
+# Subtest: User Service
+    # Subtest: getCurrentUser
+        # Subtest: should get current user profile
+        ok 1 - should get current user profile
+          ---
+          duration_ms: 256.135233
+          ...
+        # Subtest: should reject with missing user ID
+        ok 2 - should reject with missing user ID
+          ---
+          duration_ms: 0.909064
+          ...
+        # Subtest: should reject with invalid user ID
+        ok 3 - should reject with invalid user ID
+          ---
+          duration_ms: 255.308055
+          ...
+        1..3
+    ok 1 - getCurrentUser
+      ---
+      duration_ms: 512.968922
+      type: 'suite'
+      ...
+    # Subtest: updateUser
+        # Subtest: should update user age
+        ok 1 - should update user age
+          ---
+          duration_ms: 770.050243
+          ...
+        # Subtest: should update user gender
+        ok 2 - should update user gender
+          ---
+          duration_ms: 768.320523
+          ...
+        # Subtest: should update both age and gender
+        ok 3 - should update both age and gender
+          ---
+          duration_ms: 513.428606
+          ...
+        # Subtest: should reject PII fields - email
+        ok 4 - should reject PII fields - email
+          ---
+          duration_ms: 0.247628
+          ...
+        # Subtest: should reject PII fields - phone
+        ok 5 - should reject PII fields - phone
+          ---
+          duration_ms: 0.214239
+          ...
+        # Subtest: should reject PII fields - name
+        ok 6 - should reject PII fields - name
+          ---
+          duration_ms: 0.203271
+          ...
+        # Subtest: should reject alias modification
+        ok 7 - should reject alias modification
+          ---
+          duration_ms: 0.209668
+          ...
+        # Subtest: should return current data when no valid updates provided
+        ok 8 - should return current data when no valid updates provided
+          ---
+          duration_ms: 255.041121
+          ...
+        # Subtest: should reject with missing user ID
+        ok 9 - should reject with missing user ID
+          ---
+          duration_ms: 0.315863
+          ...
+        # Subtest: should reject with invalid user ID
+        ok 10 - should reject with invalid user ID
+          ---
+          duration_ms: 255.031506
+          ...
+        # Subtest: should handle validation errors for invalid age
+        not ok 11 - should handle validation errors for invalid age
+          ---
+          duration_ms: 257.701963
+          location: '/home/bella/bella-workspace/tasks/dev/another/anotherME/backend/src/services/user.service.test.js:205:5'
+          failureType: 'testCodeFailure'
+          error: |-
+            Expected values to be strictly deep-equal:
+            + actual - expected
+            
+              Comparison {
+            +   message: 'User not found'
+            -   message: 'Validation failed'
+              }
+          code: 'ERR_ASSERTION'
+          name: 'AssertionError'
+          expected:
+            message: 'Validation failed'
+          actual:
+          error: 'User not found'
+          stack: |-
+            Module.updateUser (file:///home/bella/bella-workspace/tasks/dev/another/anotherME/backend/src/services/user.service.js:92:19)
+            process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+            async assert.rejects.message (file:///home/bella/bella-workspace/tasks/dev/another/anotherME/backend/src/services/user.service.test.js:208:11)
+            async waitForActual (node:assert:533:5)
+            async Function.rejects (node:assert:654:25)
+            async TestContext.<anonymous> (file:///home/bella/bella-workspace/tasks/dev/another/anotherME/backend/src/services/user.service.test.js:206:7)
+            async Test.run (node:internal/test_runner/test:797:9)
+            async Suite.processPendingSubtests (node:internal/test_runner/test:526:7)
+          operator: 'rejects'
+          stack: |-
+            process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+            async TestContext.<anonymous> (file:///home/bella/bella-workspace/tasks/dev/another/anotherME/backend/src/services/user.service.test.js:206:7)
+            async Test.run (node:internal/test_runner/test:797:9)
+            async Suite.processPendingSubtests (node:internal/test_runner/test:526:7)
+          ...
+        # Subtest: should handle validation errors for invalid gender
+        not ok 12 - should handle validation errors for invalid gender
+          ---
+          duration_ms: 255.983251
+          location: '/home/bella/bella-workspace/tasks/dev/another/anotherME/backend/src/services/user.service.test.js:218:5'
+          failureType: 'testCodeFailure'
+          error: |-
+            Expected values to be strictly deep-equal:
+            + actual - expected
+            
+              Comparison {
+            +   message: 'User not found'
+            -   message: 'Validation failed'
+              }
+          code: 'ERR_ASSERTION'
+          name: 'AssertionError'
+          expected:
+            message: 'Validation failed'
+          actual:
+          error: 'User not found'
+          stack: |-
+            Module.updateUser (file:///home/bella/bella-workspace/tasks/dev/another/anotherME/backend/src/services/user.service.js:92:19)
+            process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+            async assert.rejects.message (file:///home/bella/bella-workspace/tasks/dev/another/anotherME/backend/src/services/user.service.test.js:221:11)
+            async waitForActual (node:assert:533:5)
+            async Function.rejects (node:assert:654:25)
+            async TestContext.<anonymous> (file:///home/bella/bella-workspace/tasks/dev/another/anotherME/backend/src/services/user.service.test.js:219:7)
+            async Test.run (node:internal/test_runner/test:797:9)
+            async Suite.processPendingSubtests (node:internal/test_runner/test:526:7)
+          operator: 'rejects'
+          stack: |-
+            process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+            async TestContext.<anonymous> (file:///home/bella/bella-workspace/tasks/dev/another/anotherME/backend/src/services/user.service.test.js:219:7)
+            async Test.run (node:internal/test_runner/test:797:9)
+            async Suite.processPendingSubtests (node:internal/test_runner/test:526:7)
+          ...
+        1..12
+    not ok 2 - updateUser
+      ---
+      duration_ms: 3077.768152
+      type: 'suite'
+      location: '/home/bella/bella-workspace/tasks/dev/another/anotherME/backend/src/services/user.service.test.js:86:3'
+      failureType: 'subtestsFailed'
+      error: '2 subtests failed'
+      code: 'ERR_TEST_FAILURE'
+      ...
+# MongoDB disconnected. Attempting to reconnect...
+# MongoDB disconnected successfully
+    1..2
+not ok 5 - User Service
+  ---
+  duration_ms: 9155.811649
+  type: 'suite'
+  location: '/home/bella/bella-workspace/tasks/dev/another/anotherME/backend/src/services/user.service.test.js:19:1'
+  failureType: 'subtestsFailed'
+  error: '1 subtest failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: Response Sanitization Utilities
+    # Subtest: sanitizeUser
+        # Subtest: should sanitize user data and never expose sensitive fields
+        ok 1 - should sanitize user data and never expose sensitive fields
+          ---
+          duration_ms: 2.145333
+          ...
+        # Subtest: should handle null user
+        ok 2 - should handle null user
+          ---
+          duration_ms: 0.393138
+          ...
+        # Subtest: should handle user with null optional fields
+        ok 3 - should handle user with null optional fields
+          ---
+          duration_ms: 0.529286
+          ...
+        1..3
+    ok 1 - sanitizeUser
+      ---
+      duration_ms: 4.167511
+      type: 'suite'
+      ...
+    # Subtest: sanitizePost
+        # Subtest: should sanitize post data and never expose sensitive fields
+        ok 1 - should sanitize post data and never expose sensitive fields
+          ---
+          duration_ms: 0.969701
+          ...
+        # Subtest: should handle null post
+        ok 2 - should handle null post
+          ---
+          duration_ms: 0.205917
+          ...
+        # Subtest: should include author alias when populated and requested
+        ok 3 - should include author alias when populated and requested
+          ---
+          duration_ms: 0.320863
+          ...
+        1..3
+    ok 2 - sanitizePost
+      ---
+      duration_ms: 1.941097
+      type: 'suite'
+      ...
+    # Subtest: sanitizeCircle
+        # Subtest: should sanitize circle data and never expose sensitive fields
+        ok 1 - should sanitize circle data and never expose sensitive fields
+          ---
+          duration_ms: 0.503667
+          ...
+        # Subtest: should handle null circle
+        ok 2 - should handle null circle
+          ---
+          duration_ms: 0.194248
+          ...
+        1..2
+    ok 3 - sanitizeCircle
+      ---
+      duration_ms: 1.027015
+      type: 'suite'
+      ...
+    # Subtest: sanitizeComment
+        # Subtest: should sanitize comment data and never expose sensitive fields
+        ok 1 - should sanitize comment data and never expose sensitive fields
+          ---
+          duration_ms: 0.52621
+          ...
+        # Subtest: should include opaque parentId when present
+        ok 2 - should include opaque parentId when present
+          ---
+          duration_ms: 0.465739
+          ...
+        # Subtest: should handle null comment
+        ok 3 - should handle null comment
+          ---
+          duration_ms: 0.304251
+          ...
+        1..3
+    ok 4 - sanitizeComment
+      ---
+      duration_ms: 1.637053
+      type: 'suite'
+      ...
+    # Subtest: sanitizeArray
+        # Subtest: should sanitize an array of items
+        ok 1 - should sanitize an array of items
+          ---
+          duration_ms: 0.587377
+          ...
+        # Subtest: should handle empty array
+        ok 2 - should handle empty array
+          ---
+          duration_ms: 0.183338
+          ...
+        # Subtest: should handle non-array input
+        ok 3 - should handle non-array input
+          ---
+          duration_ms: 0.164743
+          ...
+        1..3
+    ok 5 - sanitizeArray
+      ---
+      duration_ms: 1.285659
+      type: 'suite'
+      ...
+    # Subtest: createPaginatedResponse
+        # Subtest: should create a paginated response with sanitized data
+        ok 1 - should create a paginated response with sanitized data
+          ---
+          duration_ms: 0.357263
+          ...
+        1..1
+    ok 6 - createPaginatedResponse
+      ---
+      duration_ms: 0.503174
+      type: 'suite'
+      ...
+    # Subtest: createSuccessResponse
+        # Subtest: should create a success response
+        ok 1 - should create a success response
+          ---
+          duration_ms: 0.241039
+          ...
+        # Subtest: should create a success response without message
+        ok 2 - should create a success response without message
+          ---
+          duration_ms: 0.159491
+          ...
+        1..2
+    ok 7 - createSuccessResponse
+      ---
+      duration_ms: 0.559046
+      type: 'suite'
+      ...
+    # Subtest: createErrorResponse
+        # Subtest: should create an error response
+        ok 1 - should create an error response
+          ---
+          duration_ms: 0.383312
+          ...
+        # Subtest: should include details when provided
+        ok 2 - should include details when provided
+          ---
+          duration_ms: 0.182429
+          ...
+        1..2
+    ok 8 - createErrorResponse
+      ---
+      duration_ms: 0.721448
+      type: 'suite'
+      ...
+    # Subtest: sanitizeError
+        # Subtest: should sanitize error for API response
+        ok 1 - should sanitize error for API response
+          ---
+          duration_ms: 0.622039
+          ...
+        # Subtest: should include stack trace in development
+        ok 2 - should include stack trace in development
+          ---
+          duration_ms: 0.240165
+          ...
+        # Subtest: should not include stack trace in production
+        ok 3 - should not include stack trace in production
+          ---
+          duration_ms: 0.184803
+          ...
+        # Subtest: should include retry-after for rate limit errors
+        ok 4 - should include retry-after for rate limit errors
+          ---
+          duration_ms: 0.321518
+          ...
+        1..4
+    ok 9 - sanitizeError
+      ---
+      duration_ms: 1.657625
+      type: 'suite'
+      ...
+    1..9
+ok 6 - Response Sanitization Utilities
+  ---
+  duration_ms: 16.325441
+  type: 'suite'
+  ...
+# Subtest: Token Utilities
+    # Subtest: Opaque ID generation
+        # Subtest: should generate and decode opaque IDs
+        ok 1 - should generate and decode opaque IDs
+          ---
+          duration_ms: 1.58148
+          ...
+        # Subtest: should throw error for missing MongoDB ID
+        ok 2 - should throw error for missing MongoDB ID
+          ---
+          duration_ms: 0.572987
+          ...
+        1..2
+    ok 1 - Opaque ID generation
+      ---
+      duration_ms: 2.924577
+      type: 'suite'
+      ...
+    # Subtest: Access Token
+        # Subtest: should generate valid access token
+        ok 1 - should generate valid access token
+          ---
+          duration_ms: 4.104557
+          ...
+        # Subtest: should verify and decode access token
+        ok 2 - should verify and decode access token
+          ---
+          duration_ms: 3.521713
+          ...
+        # Subtest: should reject invalid token signature
+        ok 3 - should reject invalid token signature
+          ---
+          duration_ms: 0.434319
+          ...
+        # Subtest: should reject refresh token as access token
+        ok 4 - should reject refresh token as access token
+          ---
+          duration_ms: 2.470866
+          ...
+        1..4
+    ok 2 - Access Token
+      ---
+      duration_ms: 11.147843
+      type: 'suite'
+      ...
+    # Subtest: Refresh Token
+        # Subtest: should generate valid refresh token
+        ok 1 - should generate valid refresh token
+          ---
+          duration_ms: 1.810292
+          ...
+        # Subtest: should verify and decode refresh token
+        ok 2 - should verify and decode refresh token
+          ---
+          duration_ms: 2.957057
+          ...
+        # Subtest: should reject access token as refresh token
+        ok 3 - should reject access token as refresh token
+          ---
+          duration_ms: 2.690557
+          ...
+        1..3
+    ok 3 - Refresh Token
+      ---
+      duration_ms: 7.958674
+      type: 'suite'
+      ...
+    # Subtest: Token Version Validation
+        # Subtest: should validate matching token versions
+        ok 1 - should validate matching token versions
+          ---
+          duration_ms: 0.396411
+          ...
+        # Subtest: should reject mismatched token versions
+        ok 2 - should reject mismatched token versions
+          ---
+          duration_ms: 0.204283
+          ...
+        1..2
+    ok 4 - Token Version Validation
+      ---
+      duration_ms: 1.637101
+      type: 'suite'
+      ...
+    # Subtest: Token Pair Generation
+        # Subtest: should generate both access and refresh tokens
+        ok 1 - should generate both access and refresh tokens
+          ---
+          duration_ms: 4.26006
+          ...
+        1..1
+    ok 5 - Token Pair Generation
+      ---
+      duration_ms: 4.415229
+      type: 'suite'
+      ...
+    1..5
+ok 7 - Token Utilities
+  ---
+  duration_ms: 29.000914
+  type: 'suite'
+  ...
+1..7
+# tests 77
+# suites 31
+# pass 69
+# fail 8
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 9463.115402

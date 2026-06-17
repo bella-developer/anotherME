@@ -1,0 +1,423 @@
+import { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { selectAuth, setUser, clearUser } from '../features/authSlice';
+import PageTransition from '../components/PageTransition';
+import LoadingSpinner from '../components/LoadingSpinner';
+import Layout from '../components/Layout';
+import LevelBadge from '../components/LevelBadge';
+import { getCurrentUser, updateUserProfile, fetchUserStats } from '../services/userService';
+import { logout } from '../services/authService';
+
+/**
+ * Profile Page - Artistic Redesign
+ * Clean, elegant display of user identity and stats
+ * Username-based identity (no alias/anonymous concept)
+ */
+function Profile() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { user, isAuthenticated } = useSelector(selectAuth);
+  
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const [loggingOut, setLoggingOut] = useState(false);
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [stats, setStats] = useState(null);
+  
+  const [profileData, setProfileData] = useState({
+    username: '',
+    age: '',
+    gender: ''
+  });
+  
+  const [formData, setFormData] = useState({
+    age: '',
+    gender: ''
+  });
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate('/login');
+      return;
+    }
+    loadUserData();
+    loadUserStats();
+  }, [isAuthenticated, navigate]);
+
+  const loadUserData = async () => {
+    try {
+      setLoading(true);
+      const userData = await getCurrentUser();
+      const user = userData.user || userData;
+      
+      const data = {
+        username: user.username || '',
+        age: user.age || '',
+        gender: user.gender || ''
+      };
+      setProfileData(data);
+      setFormData({ age: data.age, gender: data.gender });
+    } catch (err) {
+      setError(err.message || 'Failed to load profile');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const loadUserStats = async () => {
+    try {
+      const statsData = await fetchUserStats();
+      setStats(statsData);
+    } catch (err) {
+      console.error('Failed to load stats:', err);
+    }
+  };
+
+  const getHighestLevelStat = () => {
+    if (!stats) return null;
+    
+    const allStats = [];
+    ['climb', 'dark', 'philo'].forEach(room => {
+      if (stats[room]) {
+        Object.entries(stats[room]).forEach(([stat, data]) => {
+          allStats.push({ room, stat, level: data.level, xp: data.xp });
+        });
+      }
+    });
+    
+    if (allStats.length === 0) return null;
+    allStats.sort((a, b) => b.level !== a.level ? b.level - a.level : b.xp - a.xp);
+    return allStats[0];
+  };
+
+  const highestStat = getHighestLevelStat();
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+    setError(null);
+    setSuccess(false);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (saving) return;
+
+    try {
+      setSaving(true);
+      setError(null);
+      
+      const updateData = {
+        ...(formData.age && { age: parseInt(formData.age, 10) }),
+        ...(formData.gender && { gender: formData.gender })
+      };
+
+      const updatedUser = await updateUserProfile(updateData);
+      const user = updatedUser.user || updatedUser;
+      
+      const data = {
+        username: user.username || '',
+        age: user.age || '',
+        gender: user.gender || ''
+      };
+      setProfileData(data);
+      setFormData({ age: data.age, gender: data.gender });
+      dispatch(setUser({ user }));
+      
+      setSuccess(true);
+      setIsEditing(false);
+      setTimeout(() => setSuccess(false), 3000);
+    } catch (err) {
+      setError(err.message || 'Failed to update profile');
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handleLogout = async () => {
+    if (loggingOut) return;
+    try {
+      setLoggingOut(true);
+      await logout();
+      dispatch(clearUser());
+      navigate('/login');
+    } catch (err) {
+      dispatch(clearUser());
+      navigate('/login');
+    }
+  };
+
+  if (loading) {
+    return (
+      <PageTransition>
+        <Layout leftSidebar={null} rightSidebar={null}>
+          <div className="min-h-screen flex items-center justify-center">
+            <LoadingSpinner />
+          </div>
+        </Layout>
+      </PageTransition>
+    );
+  }
+
+  const roomAccent = {
+    dark: '#c4a882',
+    climb: '#A05A2C',
+    philo: '#8B7AA3'
+  };
+
+  return (
+    <PageTransition>
+      <Layout leftSidebar={null} rightSidebar={null}>
+        <div className="min-h-screen pt-2 pb-12 px-4 relative z-10">
+          <div className="max-w-4xl mx-auto">
+            
+            {/* Header */}
+            <div className="mb-10">
+              <button
+                onClick={() => navigate(-1)}
+                className="text-[10px] tracking-[0.2em] text-white/30 hover:text-white/70 transition-colors mb-8 uppercase flex items-center gap-2"
+              >
+                ← Back
+              </button>
+
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <div className="w-8 h-px mb-5" style={{ background: 'linear-gradient(to right, rgba(255,255,255,0.2), transparent)' }} />
+                  <h1 className="text-3xl font-light tracking-[0.25em] text-white uppercase mb-3">
+                    Profile
+                  </h1>
+                  <p className="text-[11px] tracking-[0.15em] text-white/35 uppercase">
+                    Your Identity · Stats · Progress
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Success Message */}
+            {success && (
+              <div className="mb-6 p-4 transition-all duration-200" style={{
+                background: 'rgba(34, 197, 94, 0.1)',
+                border: '1px solid rgba(34, 197, 94, 0.3)',
+                borderRadius: '3px'
+              }}>
+                <p className="text-green-400 text-xs tracking-wide">✓ Profile updated successfully</p>
+              </div>
+            )}
+
+            {/* Main Profile Card */}
+            <div className="mb-8 p-8" style={{
+              background: 'rgba(255,255,255,0.03)',
+              boxShadow: '0 0 0 1px rgba(255,255,255,0.06)',
+              borderRadius: '4px'
+            }}>
+              {/* Username Display */}
+              <div className="flex items-center gap-6 mb-8 pb-8" style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+                <div className="w-20 h-20 rounded-full flex items-center justify-center flex-shrink-0" style={{
+                  background: 'linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%)',
+                  boxShadow: '0 0 0 1px rgba(255,255,255,0.1), inset 0 0 20px rgba(0,0,0,0.3)'
+                }}>
+                  <span className="text-white/70 text-2xl font-light">
+                    {profileData.username.charAt(0).toUpperCase()}
+                  </span>
+                </div>
+                <div className="flex-1">
+                  <div className="flex items-center gap-3 mb-2">
+                    <h2 className="text-2xl text-white/90 font-light tracking-wide">{profileData.username}</h2>
+                    {highestStat && (
+                      <LevelBadge stat={highestStat.stat} level={highestStat.level} size="md" />
+                    )}
+                  </div>
+                  <p className="text-[10px] tracking-[0.15em] text-white/30 uppercase">Member</p>
+                </div>
+              </div>
+
+              {/* Demographics */}
+              {!isEditing ? (
+                <div className="grid grid-cols-2 gap-6 mb-6">
+                  <div>
+                    <p className="text-[9px] tracking-[0.2em] text-white/25 uppercase mb-2">Age</p>
+                    <p className="text-white/70 text-lg font-light">
+                      {profileData.age || <span className="text-white/20">Not specified</span>}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-[9px] tracking-[0.2em] text-white/25 uppercase mb-2">Gender</p>
+                    <p className="text-white/70 text-lg font-light capitalize">
+                      {profileData.gender ? profileData.gender.replace('-', ' ') : <span className="text-white/20">Not specified</span>}
+                    </p>
+                  </div>
+                </div>
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-6 mb-6">
+                  <div className="grid grid-cols-2 gap-6">
+                    <div>
+                      <label className="block text-[9px] tracking-[0.2em] text-white/25 uppercase mb-2">
+                        Age
+                      </label>
+                      <input
+                        type="number"
+                        name="age"
+                        value={formData.age}
+                        onChange={handleChange}
+                        className="w-full bg-black/20 text-white/90 px-4 py-2 text-sm focus:outline-none transition-all"
+                        style={{
+                          border: '1px solid rgba(255,255,255,0.1)',
+                          borderRadius: '2px'
+                        }}
+                        min={18}
+                        max={100}
+                        placeholder="Optional"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[9px] tracking-[0.2em] text-white/25 uppercase mb-2">
+                        Gender
+                      </label>
+                      <select
+                        name="gender"
+                        value={formData.gender}
+                        onChange={handleChange}
+                        className="w-full bg-black/20 text-white/90 px-4 py-2 text-sm focus:outline-none transition-all"
+                        style={{
+                          border: '1px solid rgba(255,255,255,0.1)',
+                          borderRadius: '2px'
+                        }}
+                      >
+                        <option value="">Not specified</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="other">Other</option>
+                        <option value="prefer-not-to-say">Prefer not to say</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  {error && (
+                    <div className="p-3 text-xs" style={{
+                      background: 'rgba(239, 68, 68, 0.1)',
+                      border: '1px solid rgba(239, 68, 68, 0.3)',
+                      borderRadius: '2px',
+                      color: 'rgba(239, 68, 68, 0.9)'
+                    }}>
+                      {error}
+                    </div>
+                  )}
+
+                  <div className="flex gap-3">
+                    <button
+                      type="submit"
+                      disabled={saving}
+                      className="px-6 py-2 text-[10px] tracking-[0.15em] uppercase font-medium transition-all disabled:opacity-50"
+                      style={{
+                        background: 'rgba(255,255,255,0.1)',
+                        color: 'white',
+                        border: '1px solid rgba(255,255,255,0.2)',
+                        borderRadius: '2px'
+                      }}
+                    >
+                      {saving ? 'Saving...' : 'Save'}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setIsEditing(false);
+                        setFormData({ age: profileData.age, gender: profileData.gender });
+                        setError(null);
+                      }}
+                      className="px-6 py-2 text-[10px] tracking-[0.15em] uppercase transition-all"
+                      style={{
+                        background: 'rgba(255,255,255,0.03)',
+                        color: 'rgba(255,255,255,0.5)',
+                        border: '1px solid rgba(255,255,255,0.08)',
+                        borderRadius: '2px'
+                      }}
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </form>
+              )}
+
+              {/* Action Buttons */}
+              {!isEditing && (
+                <div className="flex gap-3">
+                  <button
+                    onClick={() => setIsEditing(true)}
+                    className="px-6 py-2 text-[10px] tracking-[0.15em] uppercase transition-all"
+                    style={{
+                      background: 'rgba(255,255,255,0.06)',
+                      color: 'rgba(255,255,255,0.7)',
+                      border: '1px solid rgba(255,255,255,0.12)',
+                      borderRadius: '2px'
+                    }}
+                  >
+                    Edit Profile
+                  </button>
+                  <button
+                    onClick={handleLogout}
+                    disabled={loggingOut}
+                    className="px-6 py-2 text-[10px] tracking-[0.15em] uppercase transition-all disabled:opacity-50"
+                    style={{
+                      background: 'rgba(239, 68, 68, 0.1)',
+                      color: 'rgba(239, 68, 68, 0.9)',
+                      border: '1px solid rgba(239, 68, 68, 0.3)',
+                      borderRadius: '2px'
+                    }}
+                  >
+                    {loggingOut ? 'Logging out...' : 'Logout'}
+                  </button>
+                </div>
+              )}
+            </div>
+
+            {/* Stats Section */}
+            {stats && (
+              <div className="space-y-6">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-8 h-px" style={{ background: 'linear-gradient(to right, rgba(255,255,255,0.2), transparent)' }} />
+                  <h3 className="text-[10px] tracking-[0.2em] text-white/30 uppercase">Your Stats</h3>
+                </div>
+
+                {/* Room Stats */}
+                {['dark', 'philo', 'climb'].map(room => {
+                  if (!stats[room]) return null;
+                  const accent = roomAccent[room];
+                  const roomName = room === 'dark' ? 'Dark Room' : room === 'climb' ? 'Climb Room' : 'Philo Room';
+                  
+                  return (
+                    <div key={room} className="p-6" style={{
+                      background: 'rgba(255,255,255,0.02)',
+                      boxShadow: '0 0 0 1px rgba(255,255,255,0.05)',
+                      borderRadius: '3px'
+                    }}>
+                      <div className="flex items-center gap-2 mb-5">
+                        <div className="w-2 h-2 rounded-full" style={{ background: accent }} />
+                        <h4 className="text-[10px] tracking-[0.2em] uppercase" style={{ color: accent }}>{roomName}</h4>
+                      </div>
+                      <div className="grid grid-cols-3 gap-4">
+                        {Object.entries(stats[room]).map(([stat, data]) => (
+                          <div key={stat} className="text-center">
+                            <p className="text-[9px] tracking-[0.15em] text-white/25 uppercase mb-2">{stat}</p>
+                            <div className="flex flex-col items-center gap-1">
+                              <LevelBadge stat={stat} level={data.level} size="sm" />
+                              <p className="text-[10px] text-white/40">{data.xp} XP</p>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        </div>
+      </Layout>
+    </PageTransition>
+  );
+}
+
+export default Profile;

@@ -1,0 +1,56 @@
+### Test Comment Reactions
+
+# First, login to get session cookie
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+  "alias": "TestUser",
+  "age": 25,
+  "gender": "prefer-not-to-say"
+}
+
+###
+
+# Get a circle's comments (replace with actual circle ID)
+GET http://localhost:5000/api/circles/YOUR_CIRCLE_ID/comments
+
+###
+
+# Add upvote (resonate) reaction to a comment
+POST http://localhost:5000/api/comments/YOUR_COMMENT_ID/reactions
+Content-Type: application/json
+
+{
+  "type": "resonate"
+}
+
+###
+
+# Add downvote (echo) reaction to a comment
+POST http://localhost:5000/api/comments/YOUR_COMMENT_ID/reactions
+Content-Type: application/json
+
+{
+  "type": "echo"
+}
+
+###
+
+# Remove reaction from a comment
+DELETE http://localhost:5000/api/comments/YOUR_COMMENT_ID/reactions
+Content-Type: application/json
+
+{
+  "type": "resonate"
+}
+
+###
+
+# Try to react to own comment (should fail)
+POST http://localhost:5000/api/comments/YOUR_OWN_COMMENT_ID/reactions
+Content-Type: application/json
+
+{
+  "type": "resonate"
+}

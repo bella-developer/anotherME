@@ -1,0 +1,489 @@
+import { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { selectAuth, setUser, clearUser } from '../features/authSlice';
+import PageTransition from '../components/PageTransition';
+import LoadingSpinner from '../components/LoadingSpinner';
+import LevelBadge from '../components/LevelBadge';
+import StatDisplay from '../components/StatDisplay';
+import { getCurrentUser, updateUserProfile, fetchUserStats } from '../services/userService';
+import { logout } from '../services/authService';
+
+/**
+ * Profile Page
+ * Allows users to view and edit their profile (alias, age, gender)
+ */
+function Profile() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { user, isAuthenticated } = useSelector(selectAuth);
+  
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const [loggingOut, setLoggingOut] = useState(false);
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [stats, setStats] = useState(null);
+  
+  const [profileData, setProfileData] = useState({
+    alias: '',
+    age: '',
+    gender: ''
+  });
+  
+  const [formData, setFormData] = useState({
+    alias: '',
+    age: '',
+    gender: ''
+  });
+
+  // Load user data
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate('/login');
+      return;
+    }
+
+    loadUserData();
+    loadUserStats();
+  }, [isAuthenticated, navigate]);
+
+  const loadUserData = async () => {
+    try {
+      setLoading(true);
+      const userData = await getCurrentUser();
+      console.log('Loaded user data:', userData); // Debug log
+      
+      // Handle both direct and nested user object
+      const user = userData.user || userData;
+      
+      const data = {
+        alias: user.alias || '',
+        age: user.age || '',
+        gender: user.gender || ''
+      };
+      setProfileData(data);
+      setFormData(data);
+    } catch (err) {
+      setError(err.message || 'Failed to load profile');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const loadUserStats = async () => {
+    try {
+      const statsData = await fetchUserStats();
+      setStats(statsData);
+    } catch (err) {
+      console.error('Failed to load stats:', err);
+      // Don't show error to user, stats are optional
+    }
+  };
+
+  const handleRefreshStats = async () => {
+    setLoading(true);
+    await loadUserStats();
+    setLoading(false);
+  };
+
+  // Get highest level stat for badge display
+  const getHighestLevelStat = () => {
+    if (!stats || !stats.climb) return null;
+
+    const climbStats = [
+      { stat: 'genius', level: stats.climb.genius.level, xp: stats.climb.genius.xp },
+      { stat: 'hustle', level: stats.climb.hustle.level, xp: stats.climb.hustle.xp },
+      { stat: 'legend', level: stats.climb.legend.level, xp: stats.climb.legend.xp }
+    ];
+
+    // Sort by level (desc), then by XP (desc)
+    climbStats.sort((a, b) => {
+      if (b.level !== a.level) return b.level - a.level;
+      return b.xp - a.xp;
+    });
+
+    return climbStats[0];
+  };
+
+  const highestStat = getHighestLevelStat();
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+    setError(null);
+    setSuccess(false);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    if (saving) return;
+
+    // Validate alias
+    if (formData.alias.trim().length < 3) {
+      setError('Alias must be at least 3 characters');
+      return;
+    }
+
+    if (formData.alias.trim().length > 20) {
+      setError('Alias must be at most 20 characters');
+      return;
+    }
+
+    if (!/^[a-zA-Z0-9_-]+$/.test(formData.alias)) {
+      setError('Alias can only contain letters, numbers, underscores, and hyphens');
+      return;
+    }
+
+    try {
+      setSaving(true);
+      setError(null);
+      
+      const updateData = {
+        alias: formData.alias.trim(),
+        ...(formData.age && { age: parseInt(formData.age, 10) }),
+        ...(formData.gender && { gender: formData.gender })
+      };
+
+      const updatedUser = await updateUserProfile(updateData);
+      console.log('Updated user data:', updatedUser); // Debug log
+      
+      // Handle both direct and nested user object
+      const user = updatedUser.user || updatedUser;
+      
+      // Update both profile data and Redux store
+      const data = {
+        alias: user.alias || '',
+        age: user.age || '',
+        gender: user.gender || ''
+      };
+      setProfileData(data);
+      setFormData(data);
+      dispatch(setUser({ user: user }));
+      
+      setSuccess(true);
+      setIsEditing(false);
+      setTimeout(() => setSuccess(false), 3000);
+    } catch (err) {
+      setError(err.message || 'Failed to update profile');
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handleEdit = () => {
+    setIsEditing(true);
+    setError(null);
+    setSuccess(false);
+  };
+
+  const handleCancel = () => {
+    setIsEditing(false);
+    setFormData(profileData);
+    setError(null);
+  };
+
+  const handleLogout = async () => {
+    if (loggingOut) return;
+
+    try {
+      setLoggingOut(true);
+      await logout();
+      dispatch(clearUser());
+      navigate('/login');
+    } catch (err) {
+      console.error('Logout failed:', err);
+      // Even if logout fails, clear local state and redirect
+      dispatch(clearUser());
+      navigate('/login');
+    }
+  };
+
+  if (loading) {
+    return (
+      <PageTransition>
+        <div className="min-h-screen flex items-center justify-center">
+          <LoadingSpinner />
+        </div>
+      </PageTransition>
+    );
+  }
+
+  return (
+    <PageTransition>
+      <div className="min-h-screen">
+        <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          {/* Header */}
+          <div className="mb-8">
+            <button
+              onClick={() => navigate(-1)}
+              className="text-[#918A87] hover:text-white transition-colors text-sm mb-4"
+            >
+              ← Back
+            </button>
+            <h1 className="text-4xl font-bold text-white mb-2">
+              {isEditing ? 'Edit Profile' : 'Your Profile'}
+            </h1>
+            <p className="text-[#918A87]">
+              {isEditing ? 'Customize your anonymous persona' : 'Your anonymous identity'}
+            </p>
+          </div>
+
+          {/* Success Message */}
+          {success && (
+            <div className="bg-green-900/20 border border-green-900/50 rounded-lg p-4 mb-6">
+              <p className="text-green-400 text-sm">✓ Profile updated successfully!</p>
+            </div>
+          )}
+
+          {/* Profile View Mode */}
+          {!isEditing && (
+            <div className="space-y-6">
+              {/* Profile Card */}
+              <div className="bg-white/5 border border-[#333] rounded-lg p-6">
+                <div className="space-y-6">
+                  {/* Alias */}
+                  <div>
+                    <label className="block text-sm font-medium text-[#666] mb-2">
+                      Alias (Your Mask Name)
+                    </label>
+                    <div className="flex items-center gap-3">
+                      <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#4A4458] to-[#2A2438] flex items-center justify-center">
+                        <span className="text-[#8B7AA3] text-lg font-medium">
+                          {profileData.alias.charAt(0).toUpperCase()}
+                        </span>
+                      </div>
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-1">
+                          <p className="text-white text-xl font-medium">{profileData.alias}</p>
+                          {highestStat && (
+                            <LevelBadge stat={highestStat.stat} level={highestStat.level} size="sm" />
+                          )}
+                        </div>
+                        <p className="text-[#666] text-sm">This is how others see you</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Age */}
+                  <div>
+                    <label className="block text-sm font-medium text-[#666] mb-2">
+                      Age
+                    </label>
+                    <p className="text-white text-lg">
+                      {profileData.age || <span className="text-[#666]">Not specified</span>}
+                    </p>
+                  </div>
+
+                  {/* Gender */}
+                  <div>
+                    <label className="block text-sm font-medium text-[#666] mb-2">
+                      Gender
+                    </label>
+                    <p className="text-white text-lg capitalize">
+                      {profileData.gender ? 
+                        profileData.gender.replace('-', ' ') : 
+                        <span className="text-[#666]">Not specified</span>
+                      }
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Action Buttons - 3 Column Grid */}
+              <div className="flex justify-center">
+                <div className="grid grid-cols-3 gap-2 w-full max-w-md">
+                  <button
+                    onClick={handleEdit}
+                    className="px-3 py-1.5 bg-[#D97757]/20 text-[#D97757] text-xs rounded hover:bg-[#D97757]/30 transition-colors border border-[#D97757]/30"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => navigate('/create')}
+                    className="px-3 py-1.5 bg-[#D97757]/20 text-[#D97757] text-xs rounded hover:bg-[#D97757]/30 transition-colors border border-[#D97757]/30"
+                  >
+                    Whisper
+                  </button>
+                  <button
+                    onClick={handleLogout}
+                    disabled={loggingOut}
+                    className="px-3 py-1.5 bg-transparent text-red-400 text-xs rounded hover:bg-red-900/20 transition-colors border border-red-900/50 disabled:opacity-50"
+                  >
+                    {loggingOut ? 'Logging out...' : 'Logout'}
+                  </button>
+                </div>
+              </div>
+
+              {/* Stats Display - All Rooms */}
+              {stats && (
+                <div className="space-y-6">
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-white text-xl font-medium">Your Stats</h3>
+                    <button
+                      onClick={handleRefreshStats}
+                      disabled={loading}
+                      className="px-3 py-1 text-xs bg-white/5 text-[#918A87] rounded hover:bg-[#252525] transition-colors border border-[#333] disabled:opacity-50"
+                    >
+                      {loading ? 'Refreshing...' : '🔄 Refresh'}
+                    </button>
+                  </div>
+
+                  {/* Dark Room Stats */}
+                  {stats.dark && (
+                    <StatDisplay room="dark" stats={stats.dark} />
+                  )}
+
+                  {/* Philo Room Stats */}
+                  {stats.philo && (
+                    <StatDisplay room="philo" stats={stats.philo} />
+                  )}
+
+                  {/* Climb Room Stats */}
+                  {stats.climb && (
+                    <StatDisplay room="climb" stats={stats.climb} />
+                  )}
+
+                  {/* XP Info */}
+                  <div className="bg-white/5 border border-[#333] rounded-lg p-6">
+                    <h4 className="text-white font-medium mb-3">How to Earn XP</h4>
+                    <div className="space-y-3 text-sm text-[#918A87]">
+                      <div>
+                        <span className="text-white">🌑 Dark Room:</span> Receive reactions like "I feel you" (+6 XP), "You're not alone" (+5 XP)
+                      </div>
+                      <div>
+                        <span className="text-white">🦉 Philo Room:</span> Get 💡 Insight (+6 XP), ✨ Curiosity (+4 XP), 👏 Resonance (+8 XP)
+                      </div>
+                      <div>
+                        <span className="text-white">🚀 Climb Room:</span> Earn ⬆️ Push (+3 XP), ⚙️ Gear (+6 XP), 🚀 Rocket (+10 XP)
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Info Box */}
+              <div className="bg-white/5 border border-[#333] rounded-lg p-6">
+                <h3 className="text-white font-medium mb-2">About Your Profile</h3>
+                <ul className="text-[#918A87] text-sm space-y-2">
+                  <li>• Your alias is your identity across the platform</li>
+                  <li>• Choose a name that represents your anonymous persona</li>
+                  <li>• Age and gender are optional and help personalize your experience</li>
+                  <li>• No personal information is ever stored or shared</li>
+                </ul>
+              </div>
+
+              {/* Leaderboard Link */}
+              <div className="flex justify-center">
+                <button
+                  onClick={() => navigate('/leaderboard')}
+                  className="px-6 py-3 bg-gradient-to-r from-purple-600 to-purple-400 text-white font-medium rounded-lg hover:from-purple-700 hover:to-purple-500 transition-all flex items-center gap-2"
+                >
+                  <span className="text-xl">🏆</span>
+                  View Leaderboard
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Profile Edit Mode */}
+          {isEditing && (
+            <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Alias */}
+            <div>
+              <label htmlFor="alias" className="block text-sm font-medium text-[#D1D1D1] mb-2">
+                Alias (Your Mask Name)
+              </label>
+              <input
+                type="text"
+                id="alias"
+                name="alias"
+                value={formData.alias}
+                onChange={handleChange}
+                className="w-full bg-white/5 text-white rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#D97757] border border-[#333]"
+                placeholder="Enter your alias"
+                minLength={3}
+                maxLength={20}
+                required
+              />
+              <p className="text-xs text-[#666] mt-1">
+                3-20 characters. Letters, numbers, underscores, and hyphens only.
+              </p>
+            </div>
+
+            {/* Age */}
+            <div>
+              <label htmlFor="age" className="block text-sm font-medium text-[#D1D1D1] mb-2">
+                Age (Optional)
+              </label>
+              <input
+                type="number"
+                id="age"
+                name="age"
+                value={formData.age}
+                onChange={handleChange}
+                className="w-full bg-white/5 text-white rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#D97757] border border-[#333]"
+                placeholder="Enter your age"
+                min={18}
+                max={100}
+              />
+            </div>
+
+            {/* Gender */}
+            <div>
+              <label htmlFor="gender" className="block text-sm font-medium text-[#D1D1D1] mb-2">
+                Gender (Optional)
+              </label>
+              <select
+                id="gender"
+                name="gender"
+                value={formData.gender}
+                onChange={handleChange}
+                className="w-full bg-white/5 text-white rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#D97757] border border-[#333]"
+              >
+                <option value="">Select gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+                <option value="prefer-not-to-say">Prefer not to say</option>
+              </select>
+            </div>
+
+            {/* Error Message */}
+            {error && (
+              <div className="bg-red-900/20 border border-red-900/50 rounded-lg p-4">
+                <p className="text-red-400 text-sm">{error}</p>
+              </div>
+            )}
+
+            {/* Submit Buttons */}
+            <div className="flex gap-3 justify-center">
+              <button
+                type="submit"
+                disabled={saving}
+                className="px-6 py-2 bg-[#D97757] text-black font-medium text-sm rounded-lg hover:bg-[#E68868] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {saving ? 'Saving...' : 'Save Changes'}
+              </button>
+              <button
+                type="button"
+                onClick={handleCancel}
+                className="px-6 py-2 bg-white/5 text-[#918A87] text-sm rounded-lg hover:bg-[#252525] transition-colors border border-[#333]"
+              >
+                Cancel
+              </button>
+            </div>
+          </form>
+          )}
+        </div>
+      </div>
+    </PageTransition>
+  );
+}
+
+export default Profile;

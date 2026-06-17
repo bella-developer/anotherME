@@ -1,0 +1,186 @@
+import { useNavigate } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import RoomReactions from './RoomReactions';
+
+/**
+ * Dark Room Post Card Component
+ * For emotional release and vulnerability
+ * Feedback: Text-only buttons with glow effect
+ */
+function DarkRoomCard({ post, onReaction }) {
+  const navigate = useNavigate();
+
+  const formatTimeAgo = (date) => {
+    const seconds = Math.floor((new Date() - new Date(date)) / 1000);
+    if (seconds < 60) return `${seconds}s ago`;
+    if (seconds < 3600) return `${Math.floor(seconds / 60)}m ago`;
+    if (seconds < 86400) return `${Math.floor(seconds / 3600)}h ago`;
+    return `${Math.floor(seconds / 86400)}d ago`;
+  };
+
+  return (
+    <div
+      className="relative p-7 mb-4 transition-all duration-300 hover:-translate-y-0.5"
+      style={{
+        background: 'rgba(255,255,255,0.03)',
+        boxShadow: '0 0 0 1px rgba(255,255,255,0.06), 0 4px 24px rgba(0,0,0,0.4)',
+        borderRadius: '4px',
+      }}
+    >
+      {/* Metadata */}
+      <div className="flex items-center justify-between mb-6 text-xs text-[#6B5E59]">
+        <div className="flex items-center gap-3">
+          <span className="tracking-wider">{formatTimeAgo(post.createdAt)}</span>
+          {/* Category Badge */}
+          {post.category && (
+            <span className="px-2 py-1 rounded text-[10px] font-medium uppercase tracking-wider bg-red-900/20 text-red-400 border border-red-900/30">
+              {post.category}
+            </span>
+          )}
+        </div>
+        <div className="flex items-center gap-4">
+          {post.commentCount > 0 && (
+            <div className="flex items-center gap-1.5">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+              </svg>
+              <span className="tracking-wider">{post.commentCount} {post.commentCount === 1 ? 'response' : 'responses'}</span>
+            </div>
+          )}
+          {post.stateLabel && (
+            <span className="uppercase tracking-wider">{post.stateLabel}</span>
+          )}
+        </div>
+      </div>
+
+      {/* Content and Circles Container */}
+      <div className="flex gap-6 mb-8">
+        {/* Content */}
+        <div className="flex-1 min-w-0">
+          {post.title && (
+            <h3 className="text-xl text-[#F5E6D3] mb-4 leading-relaxed">
+              {post.title}
+            </h3>
+          )}
+          <div 
+            className="text-[#F5E6D3] leading-loose space-y-4 prose prose-invert max-w-none"
+            dangerouslySetInnerHTML={{ __html: post.content }}
+          />
+          
+          {/* Image Display */}
+          {post.image?.url && (
+            <div className="mt-6">
+              <div
+                className="relative overflow-hidden"
+                style={{
+                  background: 'linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%)',
+                  borderRadius: '3px',
+                  padding: '12px',
+                  boxShadow: '0 0 0 1px rgba(255,255,255,0.1), inset 0 0 20px rgba(0,0,0,0.3)',
+                }}
+              >
+                <div
+                  className="relative overflow-hidden"
+                  style={{
+                    borderRadius: '2px',
+                    boxShadow: 'inset 0 0 15px rgba(0,0,0,0.5)',
+                  }}
+                >
+                  <img
+                    src={post.image.url}
+                    alt="Post attachment"
+                    className="w-full h-auto"
+                    style={{
+                      display: 'block',
+                      maxHeight: '500px',
+                      objectFit: 'contain',
+                    }}
+                  />
+                </div>
+                <div className="absolute top-2 left-2" style={{ width: '16px', height: '16px', borderTop: '2px solid rgba(255,255,255,0.2)', borderLeft: '2px solid rgba(255,255,255,0.2)' }} />
+                <div className="absolute top-2 right-2" style={{ width: '16px', height: '16px', borderTop: '2px solid rgba(255,255,255,0.2)', borderRight: '2px solid rgba(255,255,255,0.2)' }} />
+                <div className="absolute bottom-2 left-2" style={{ width: '16px', height: '16px', borderBottom: '2px solid rgba(255,255,255,0.2)', borderLeft: '2px solid rgba(255,255,255,0.2)' }} />
+                <div className="absolute bottom-2 right-2" style={{ width: '16px', height: '16px', borderBottom: '2px solid rgba(255,255,255,0.2)', borderRight: '2px solid rgba(255,255,255,0.2)' }} />
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Circles - Right-end mid-card */}
+        {post.circles && post.circles.length > 0 && (
+          <div className="flex flex-col gap-3 justify-center items-end flex-shrink-0">
+            {post.circles.map((circle, index) => (
+              <div
+                key={index}
+                className="group relative"
+              >
+                <div
+                  onClick={async () => {
+                    console.log('Circle clicked:', circle);
+                    console.log('Circle ID:', circle.circleId, 'Circle.id:', circle.id);
+                    const circleIdToUse = circle.circleId || circle.id;
+                    if (circleIdToUse) {
+                      console.log('Navigating to:', `/circles/${circleIdToUse}?from=post&postId=${post.id}`);
+                      navigate(`/circles/${circleIdToUse}?from=post&postId=${post.id}`);
+                    } else {
+                      console.error('No circle ID found in circle object:', circle);
+                    }
+                  }}
+                  className="px-3 py-1 text-[10px] tracking-[0.12em] font-light whitespace-nowrap cursor-pointer transition-all duration-200"
+                  style={{
+                    background: 'rgba(255,255,255,0.06)',
+                    color: 'rgba(255,255,255,0.5)',
+                    borderRadius: '2px',
+                  }}
+                  title={`View in ${circle.fullName || circle.name}`}
+                >
+                  {circle.icon && <span className="mr-1.5">{circle.icon}</span>}
+                  {circle.name}
+                </div>
+                {/* Tooltip on hover */}
+                {circle.fullName && circle.fullName !== circle.name && (
+                  <div className="absolute right-0 top-full mt-1 px-2 py-1 bg-black/80 border border-white/10 rounded text-xs text-[#F5E6D3] whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-10">
+                    {circle.fullName}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* Reactions */}
+      <div className="pt-6 border-t border-[#1a1412]">
+        <RoomReactions
+          room="dark"
+          reactions={post.reactions || {}}
+          userReactions={post.userReactions || []}
+          onReact={(reactionType) => onReaction?.(post.id, reactionType)}
+          disabled={post.isAuthor}
+        />
+      </div>
+    </div>
+  );
+}
+
+DarkRoomCard.propTypes = {
+  post: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    title: PropTypes.string,
+    content: PropTypes.string.isRequired,
+    createdAt: PropTypes.string.isRequired,
+    stateLabel: PropTypes.string,
+    reactions: PropTypes.object,
+    circles: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        fullName: PropTypes.string,
+        color: PropTypes.string,
+        icon: PropTypes.string
+      })
+    )
+  }).isRequired,
+  onReaction: PropTypes.func
+};
+
+export default DarkRoomCard;

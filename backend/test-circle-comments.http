@@ -1,0 +1,40 @@
+### Test Circle Comment Endpoints
+### Replace {{baseUrl}} with your backend URL (e.g., http://localhost:3000)
+### Replace {{accessToken}} with a valid JWT access token
+### Replace {{circleId}} with "The Void" circle ID from seed script
+
+@baseUrl = http://localhost:3000
+@accessToken = YOUR_ACCESS_TOKEN_HERE
+@circleId = 6970ba160248543dcec12bb2
+
+### 1. Get Circle Details
+GET {{baseUrl}}/api/circles/{{circleId}}
+
+### 2. List Circle Comments (no auth required)
+GET {{baseUrl}}/api/circles/{{circleId}}/comments?limit=20
+
+### 3. Create Circle Comment (requires auth)
+POST {{baseUrl}}/api/circles/{{circleId}}/comments
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "content": "This is a test comment from the API. The void is listening..."
+}
+
+### 4. Create Reply to Comment (requires auth)
+### Replace {{commentId}} with an actual comment ID from step 2
+POST {{baseUrl}}/api/comments/{{commentId}}/replies
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "content": "This is a test reply. Echoing into the void..."
+}
+
+### 5. List Replies for a Comment
+GET {{baseUrl}}/api/comments/{{commentId}}/replies?limit=50
+
+### 6. Delete Comment (requires auth and ownership)
+DELETE {{baseUrl}}/api/comments/{{commentId}}
+Authorization: Bearer {{accessToken}}
