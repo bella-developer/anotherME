@@ -40,15 +40,29 @@ apiClient.interceptors.response.use(
     return response;
   },
   async (error) => {
-    // Handle 401 Unauthorized - DO NOT auto-redirect
+    // Handle 401 Unauthorized - DO NOT auto-redirect on public pages
     // Let the calling code handle 401 errors appropriately
     if (error.response?.status === 401) {
-      // Just reject, don't redirect - the auth slice will handle it
+      // Check if we're on a public page (login/register)
+      const isPublicPage = window.location.pathname === '/login' || 
+                          window.location.pathname === '/register' ||
+                          window.location.pathname === '/';
+      
+      // Don't show error messages on public pages during initial session check
+      if (isPublicPage) {
+        return Promise.reject({
+          message: 'Authentication required',
+          code: 'UNAUTHORIZED',
+          status: 401,
+          silent: true, // Flag to suppress error display
+        });
+      }
+      
+      // For protected pages, show authentication error
       return Promise.reject({
-        message: error.response.data?.message || 'Unauthorized',
-        code: error.response.data?.code || 'UNAUTHORIZED',
+        message: 'Authentication required',
+        code: 'UNAUTHORIZED',
         status: 401,
-        data: error.response.data,
       });
     }
     
@@ -65,9 +79,13 @@ apiClient.interceptors.response.use(
         data: error.response.data,
       });
     } else if (error.request) {
-      // Request made but no response received
+      // Request made but no response received - don't show on public pages
+      const isPublicPage = window.location.pathname === '/login' || 
+                          window.location.pathname === '/register' ||
+                          window.location.pathname === '/';
+      
       return Promise.reject({
-        message: 'No response from server. Please check your connection.',
+        message: isPublicPage ? 'Unable to connect' : 'No response from server. Please check your connection.',
         code: 'NETWORK_ERROR',
         status: 0,
       });

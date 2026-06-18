@@ -45,9 +45,9 @@ export function createSessionMiddleware() {
     cookie: {
       httpOnly: true, // Prevent JavaScript access
       secure: isProduction, // HTTPS only in production
-      sameSite: isProduction ? 'none' : 'lax', // CSRF protection
+      sameSite: isProduction ? 'none' : 'lax', // Allow cross-origin in production
       maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days in milliseconds
-      domain: isProduction ? process.env.COOKIE_DOMAIN : undefined
+      path: '/', // Cookie available on all paths
     },
     proxy: isProduction // Trust proxy in production (for Render)
   });

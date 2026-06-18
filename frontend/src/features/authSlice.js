@@ -171,10 +171,13 @@ const authSlice = createSlice({
         state.user = null;
         state.isAuthenticated = false;
         state.sessionChecked = true;
-        state.error = action.payload || {
-          message: 'Session retrieval failed',
-          code: 'SESSION_ERROR',
-        };
+        // Don't set error for silent rejections (initial session check on public pages)
+        if (!action.payload?.silent) {
+          state.error = action.payload || {
+            message: 'Session retrieval failed',
+            code: 'SESSION_ERROR',
+          };
+        }
       });
 
     // Logout
