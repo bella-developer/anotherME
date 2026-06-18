@@ -1,5 +1,5 @@
 import express from 'express';
-import { healthCheck } from '../controllers/health.controller.js';
+import { healthCheck, debugCheck } from '../controllers/health.controller.js';
 
 const router = express.Router();
 
@@ -9,5 +9,12 @@ const router = express.Router();
  * Returns system health status including database connection
  */
 router.get('/', healthCheck);
+
+/**
+ * Debug endpoint
+ * GET /api/health/debug
+ * Returns session and cookie debug information
+ */
+router.get('/debug', debugCheck);
 
 export default router;
