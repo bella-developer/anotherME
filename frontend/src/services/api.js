@@ -10,12 +10,20 @@ const apiClient = axios.create({
     'Content-Type': 'application/json',
   },
   timeout: 10000, // 10 second timeout
-  withCredentials: true, // Send cookies with requests
+  withCredentials: true, // Send cookies with requests (backwards compatibility)
 });
 
-// Request interceptor - Log requests in development
+// Request interceptor - Add JWT token to requests
 apiClient.interceptors.request.use(
   (config) => {
+    // Get access token from localStorage
+    const accessToken = localStorage.getItem('accessToken');
+    
+    // Add Authorization header if token exists
+    if (accessToken) {
+      config.headers.Authorization = `Bearer ${accessToken}`;
+    }
+    
     return config;
   },
   (error) => {

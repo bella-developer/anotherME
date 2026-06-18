@@ -1,10 +1,12 @@
 import User from '../models/User.model.js';
+import { verifyAccessToken } from '../utils/jwt.utils.js';
 import { logAuthEvent, logSecurityEvent } from '../utils/logger.utils.js';
 
 /**
  * Authentication Middleware
- * Validates server-side sessions and attaches user to request
+ * Validates JWT tokens or server-side sessions and attaches user to request
  * Checks user ban status
+ * Supports both JWT and session-based auth for backwards compatibility
  */
 
 /**
@@ -31,19 +33,41 @@ function createAuthError(message, code = 'AUTHENTICATION_FAILED') {
  */
 export async function authenticate(req, res, next) {
   try {
-    // Check if session exists and has userId
-    if (!req.session || !req.session.userId) {
-      throw createAuthError('Authentication required', 'MISSING_SESSION');
+    let userId = null;
+    
+    // Try JWT token first (from Authorization header)
+    const authHeader = req.headers.authorization;
+    if (authHeader && authHeader.startsWith('Bearer ')) {
+      const token = authHeader.substring(7);
+      try {
+        const decoded = verifyAccessToken(token);
+        userId = decoded.userId;
+      } catch (error) {
+        // JWT verification failed, try session
+        if (error.code === 'TOKEN_EXPIRED' || error.code === 'INVALID_TOKEN') {
+          throw createAuthError(error.message, error.code);
+        }
+      }
     }
     
-    const userId = req.session.userId;
+    // Fallback to session if JWT not present or invalid
+    if (!userId && req.session && req.session.userId) {
+      userId = req.session.userId;
+    }
+    
+    // No authentication found
+    if (!userId) {
+      throw createAuthError('Authentication required', 'MISSING_AUTH');
+    }
     
     // Fetch user from database
     const user = await User.findById(userId);
     
     if (!user) {
-      // User not found, destroy invalid session
-      req.session.destroy(() => {});
+      // User not found, destroy invalid session if exists
+      if (req.session) {
+        req.session.destroy(() => {});
+      }
       throw createAuthError('User not found', 'USER_NOT_FOUND');
     }
     

@@ -1,11 +1,12 @@
 import * as authService from '../services/auth.service.js';
 import { createSuccessResponse } from '../utils/response.utils.js';
+import { generateAccessToken, generateRefreshToken } from '../utils/jwt.utils.js';
 import { regenerateSession, destroySession } from '../config/session.js';
 
 /**
  * Authentication Controller
  * Handles HTTP requests for authentication endpoints
- * Manages server-side sessions
+ * Uses JWT tokens for authentication (secure for cross-origin)
  * Implements Requirements: 1.1, 2.3, 2.4
  */
 
@@ -29,13 +30,13 @@ export async function register(req, res, next) {
     // Call service layer
     const result = await authService.register({ username, password, age, gender });
     
-    // Regenerate session to prevent fixation attacks
+    // Generate JWT tokens
+    const accessToken = generateAccessToken({ userId: result.user.id });
+    const refreshToken = generateRefreshToken({ userId: result.user.id });
+    
+    // Also set session for backwards compatibility
     await regenerateSession(req);
-    
-    // Store user ID in session
     req.session.userId = result.user.id;
-    
-    // Explicitly save session before sending response
     await new Promise((resolve, reject) => {
       req.session.save((err) => {
         if (err) reject(err);
@@ -43,11 +44,13 @@ export async function register(req, res, next) {
       });
     });
     
-    // Return success response with user data
+    // Return success response with tokens and user data
     res.status(201).json(
       createSuccessResponse(
         {
-          user: result.user
+          user: result.user,
+          accessToken,
+          refreshToken,
         },
         'Registration successful'
       )
@@ -75,13 +78,13 @@ export async function login(req, res, next) {
     // Call service layer
     const result = await authService.login({ username, password });
     
-    // Regenerate session to prevent fixation attacks
+    // Generate JWT tokens
+    const accessToken = generateAccessToken({ userId: result.user.id });
+    const refreshToken = generateRefreshToken({ userId: result.user.id });
+    
+    // Also set session for backwards compatibility
     await regenerateSession(req);
-    
-    // Store user ID in session
     req.session.userId = result.user.id;
-    
-    // Explicitly save session before sending response
     await new Promise((resolve, reject) => {
       req.session.save((err) => {
         if (err) reject(err);
@@ -89,11 +92,13 @@ export async function login(req, res, next) {
       });
     });
     
-    // Return success response with user data
+    // Return success response with tokens and user data
     res.status(200).json(
       createSuccessResponse(
         {
-          user: result.user
+          user: result.user,
+          accessToken,
+          refreshToken,
         },
         'Login successful'
       )

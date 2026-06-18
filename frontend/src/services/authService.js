@@ -29,15 +29,21 @@ export async function register(registrationData = {}) {
       };
     }
     
-    const { user } = response.data.data;
+    const { user, accessToken, refreshToken } = response.data.data;
     
     // Validate required fields
-    if (!user) {
+    if (!user || !accessToken) {
       throw {
         message: 'Missing required fields in response',
         code: 'INVALID_RESPONSE',
         status: 0,
       };
+    }
+    
+    // Store tokens in localStorage (secure for HTTPS)
+    localStorage.setItem('accessToken', accessToken);
+    if (refreshToken) {
+      localStorage.setItem('refreshToken', refreshToken);
     }
     
     return {
@@ -68,15 +74,21 @@ export async function login(loginData) {
       };
     }
     
-    const { user } = response.data.data;
+    const { user, accessToken, refreshToken } = response.data.data;
     
     // Validate required fields
-    if (!user) {
+    if (!user || !accessToken) {
       throw {
         message: 'Missing required fields in response',
         code: 'INVALID_RESPONSE',
         status: 0,
       };
+    }
+    
+    // Store tokens in localStorage
+    localStorage.setItem('accessToken', accessToken);
+    if (refreshToken) {
+      localStorage.setItem('refreshToken', refreshToken);
     }
     
     return {
@@ -134,6 +146,10 @@ export async function logout() {
   } catch (error) {
     // Log error but don't throw - we still want to clear local state
     console.error('Logout API call failed:', error);
+  } finally {
+    // Always clear tokens from localStorage
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
   }
 }
 
