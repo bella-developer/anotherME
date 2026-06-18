@@ -35,6 +35,14 @@ export async function register(req, res, next) {
     // Store user ID in session
     req.session.userId = result.user.id;
     
+    // Explicitly save session before sending response
+    await new Promise((resolve, reject) => {
+      req.session.save((err) => {
+        if (err) reject(err);
+        else resolve();
+      });
+    });
+    
     // Return success response with user data
     res.status(201).json(
       createSuccessResponse(
@@ -72,6 +80,14 @@ export async function login(req, res, next) {
     
     // Store user ID in session
     req.session.userId = result.user.id;
+    
+    // Explicitly save session before sending response
+    await new Promise((resolve, reject) => {
+      req.session.save((err) => {
+        if (err) reject(err);
+        else resolve();
+      });
+    });
     
     // Return success response with user data
     res.status(200).json(
