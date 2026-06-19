@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { FaPen, FaTrash } from 'react-icons/fa';
 import RoomReactions from './RoomReactions';
 
 /**
@@ -7,7 +8,7 @@ import RoomReactions from './RoomReactions';
  * For philosophical reflection and contemplation
  * Feedback: Icon-based with Lamp/Spark/Clap system
  */
-function PhiloRoomCard({ post, onReaction }) {
+function PhiloRoomCard({ post, onReaction, onEdit, onDelete }) {
   const navigate = useNavigate();
 
   const formatTimeAgo = (date) => {
@@ -39,6 +40,29 @@ function PhiloRoomCard({ post, onReaction }) {
           )}
         </div>
         <div className="flex items-center gap-4">
+          {/* Edit/Delete buttons - only for author */}
+          {post.isAuthor && (
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => onEdit?.(post)}
+                className="p-1.5 rounded hover:bg-white/10 transition-colors"
+                title="Edit post"
+              >
+                <FaPen className="text-white/40 hover:text-white/70" size={10} />
+              </button>
+              <button
+                onClick={() => {
+                  if (window.confirm('Are you sure you want to delete this post?')) {
+                    onDelete?.(post.id);
+                  }
+                }}
+                className="p-1.5 rounded hover:bg-red-900/20 transition-colors"
+                title="Delete post"
+              >
+                <FaTrash className="text-red-400/40 hover:text-red-400/70" size={10} />
+              </button>
+            </div>
+          )}
           {post.commentCount > 0 && (
             <div className="flex items-center gap-1.5">
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

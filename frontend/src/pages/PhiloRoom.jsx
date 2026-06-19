@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { selectAuth } from '../features/authSlice';
+import { deletePost } from '../features/postsSlice';
 import * as postService from '../services/postService';
 import * as circleService from '../services/circleService';
 import Layout from '../components/Layout';
@@ -12,11 +13,13 @@ import LoadingSpinner from '../components/LoadingSpinner';
 
 function PhiloRoom() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { isAuthenticated } = useSelector(selectAuth);
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isPostFormOpen, setIsPostFormOpen] = useState(false);
+  const [editingPost, setEditingPost] = useState(null);
   const [circles, setCircles] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('ALL');
 
@@ -61,6 +64,20 @@ function PhiloRoom() {
   const handleCircleCreated = () => {
     // Refetch circles to update dropdown with cache bust
     fetchData(true); // Pass true to bust cache
+  };
+
+  const handleEdit = (post) => {
+    setEditingPost(post);
+    setIsPostFormOpen(true);
+  };
+
+  const handleDelete = async (postId) => {
+    try {
+      await dispatch(deletePost(postId)).unwrap();
+      setPosts(prev => prev.filter(p => p.id !== postId));
+    } catch (error) {
+      alert('Failed to delete post');
+    }
   };
 
   const handleReaction = async (postId, reactionKey) => {
@@ -177,7 +194,13 @@ function PhiloRoom() {
             ) : (
               <div className="space-y-3">
                 {posts.map((post) => (
-                  <PhiloRoomCard key={post.id} post={post} onReaction={handleReaction} />
+                  <PhiloRoomCard 
+                    key={post.id} 
+                    post={post} 
+                    onReaction={handleReaction}
+                    onEdit={handleEdit}
+                    onDelete={handleDelete}
+                  />
                 ))}
               </div>
             )}
