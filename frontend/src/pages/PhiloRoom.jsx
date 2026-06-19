@@ -107,7 +107,7 @@ function PhiloRoom() {
             {/* Room header */}
             <div className="mb-10">
               <button
-                onClick={() => navigate('/rooms')}
+                onClick={() => navigate('/home')}
                 className="text-[10px] tracking-[0.2em] text-white/30 hover:text-white/70 transition-colors mb-8 uppercase flex items-center gap-2"
               >
                 ← Rooms

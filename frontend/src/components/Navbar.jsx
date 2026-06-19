@@ -59,7 +59,7 @@ function Navbar() {
         <div className="flex items-center justify-between h-full">
           {/* Logo and Tagline */}
           <Link 
-            to="/" 
+            to="/home" 
             className="flex items-center space-x-3 focus:outline-none focus:ring-2 focus:ring-[#ff6b35] focus:ring-offset-2 focus:ring-offset-black rounded"
             aria-label="Dark Room home"
           >
@@ -72,7 +72,7 @@ function Navbar() {
           {/* Desktop Navigation Links */}
           <div className="hidden md:flex items-center space-x-8" role="menubar">
             <Link
-              to="/"
+              to="/home"
               className="text-sm text-gray-400 hover:text-white transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#ff6b35] rounded px-2 py-1"
               role="menuitem"
             >
@@ -184,7 +184,7 @@ function Navbar() {
             >
               <div className="flex flex-col space-y-1 p-4">
                 <Link
-                  to="/"
+                  to="/home"
                   onClick={() => setIsMobileMenuOpen(false)}
                   className="text-text-secondary hover:text-text-primary hover:bg-primary-elevated transition-colors duration-200 py-3 px-4 rounded-lg min-h-touch flex items-center focus:outline-none focus:ring-2 focus:ring-accent-primary"
                   role="menuitem"
