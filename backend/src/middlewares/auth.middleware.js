@@ -38,12 +38,19 @@ export async function authenticate(req, res, next) {
     // Try JWT token first (from Authorization header)
     // Check both lowercase and capitalized (Express lowercases headers)
     const authHeader = req.headers.authorization || req.headers.Authorization;
+    
+    // Debug log
+    console.log('Auth header present:', !!authHeader);
+    
     if (authHeader && authHeader.startsWith('Bearer ')) {
       const token = authHeader.substring(7);
+      console.log('JWT token present:', !!token);
       try {
         const decoded = verifyAccessToken(token);
         userId = decoded.userId;
+        console.log('JWT verified, userId:', userId);
       } catch (error) {
+        console.error('JWT verification failed:', error.message);
         // JWT verification failed, try session
         if (error.code === 'TOKEN_EXPIRED' || error.code === 'INVALID_TOKEN') {
           throw createAuthError(error.message, error.code);
