@@ -5,7 +5,7 @@ import apiClient from './api';
  * @param {Object} params - Query parameters
  * @param {string} params.cursor - Pagination cursor
  * @param {string} params.room - Filter by room (dark, climb, philo)
- * @param {boolean} params.bustCache - Add timestamp to bypass cache
+ * @param {boolean} params.bustCache - Force fresh data bypassing browser cache
  * @returns {Promise<Object>} Circles data with pagination
  */
 export const fetchCircles = async ({ cursor, room, bustCache = false } = {}) => {
@@ -13,9 +13,20 @@ export const fetchCircles = async ({ cursor, room, bustCache = false } = {}) => 
     const params = {};
     if (cursor) params.cursor = cursor;
     if (room) params.room = room;
-    if (bustCache) params._t = Date.now(); // Cache buster
 
-    const response = await apiClient.get('/circles', { params });
+    // Configure request to bypass cache if needed
+    const config = { params };
+    if (bustCache) {
+      // Add timestamp to URL to bypass browser cache
+      params._t = Date.now();
+      // Also set headers to force revalidation
+      config.headers = {
+        'Cache-Control': 'no-cache',
+        'Pragma': 'no-cache'
+      };
+    }
+
+    const response = await apiClient.get('/circles', config);
     
     // Response format: { status: 'success', data: { circles: [...], pagination: {...} } }
     if (!response.data?.data?.circles || !Array.isArray(response.data.data.circles)) {
