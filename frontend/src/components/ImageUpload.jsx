@@ -3,27 +3,27 @@ import { FaImage, FaTimes } from 'react-icons/fa';
 
 /**
  * ImageUpload Component
- * Provides image upload with preview in artistic frame
+ * Compact image upload with drag & drop and preview
  */
 const ImageUpload = ({ onImageSelect, onImageRemove, disabled = false }) => {
   const [preview, setPreview] = useState(null);
   const [fileName, setFileName] = useState('');
+  const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef(null);
 
-  const handleFileChange = (e) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+  const validateAndProcessFile = (file) => {
+    if (!file) return false;
 
     // Validate file type
     if (!file.type.startsWith('image/')) {
       alert('Please select an image file');
-      return;
+      return false;
     }
 
     // Validate file size (5MB max)
     if (file.size > 5 * 1024 * 1024) {
       alert('Image size must be less than 5MB');
-      return;
+      return false;
     }
 
     // Create preview
@@ -34,6 +34,37 @@ const ImageUpload = ({ onImageSelect, onImageRemove, disabled = false }) => {
       onImageSelect(file);
     };
     reader.readAsDataURL(file);
+    return true;
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files?.[0];
+    validateAndProcessFile(file);
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!disabled) {
+      setIsDragging(true);
+    }
+  };
+
+  const handleDragLeave = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+
+    if (disabled) return;
+
+    const file = e.dataTransfer.files?.[0];
+    validateAndProcessFile(file);
   };
 
   const handleRemove = () => {
@@ -66,105 +97,48 @@ const ImageUpload = ({ onImageSelect, onImageRemove, disabled = false }) => {
         <button
           type="button"
           onClick={handleClick}
+          onDragOver={handleDragOver}
+          onDragLeave={handleDragLeave}
+          onDrop={handleDrop}
           disabled={disabled}
-          className="w-full p-4 border border-dashed transition-all duration-200"
+          className="w-full py-2 px-3 border border-dashed transition-all duration-200 flex items-center gap-2 group"
           style={{
-            borderColor: 'rgba(255,255,255,0.15)',
-            background: 'rgba(255,255,255,0.02)',
+            borderColor: isDragging ? 'rgba(255,255,255,0.4)' : 'rgba(255,255,255,0.15)',
+            background: isDragging ? 'rgba(255,255,255,0.06)' : 'rgba(255,255,255,0.02)',
             borderRadius: '3px',
             cursor: disabled ? 'not-allowed' : 'pointer',
             opacity: disabled ? 0.5 : 1,
           }}
-          onMouseEnter={(e) => {
-            if (!disabled) {
-              e.currentTarget.style.borderColor = 'rgba(255,255,255,0.25)';
-              e.currentTarget.style.background = 'rgba(255,255,255,0.04)';
-            }
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.borderColor = 'rgba(255,255,255,0.15)';
-            e.currentTarget.style.background = 'rgba(255,255,255,0.02)';
-          }}
         >
-          <div className="flex flex-col items-center gap-2">
-            <FaImage className="text-white/30" size={24} />
-            <span className="text-white/50 text-xs font-light tracking-wide">
-              Add an image (optional)
+          <FaImage className="text-white/30 group-hover:text-white/50 transition-colors" size={14} />
+          <div className="flex-1 text-left">
+            <span className="text-white/50 text-xs font-light">
+              {isDragging ? 'Drop image here' : 'Add image'}
             </span>
-            <span className="text-white/30 text-[10px]">
-              Max 5MB • JPG, PNG, GIF, WebP
+            <span className="text-white/30 text-[10px] ml-1">
+              (optional)
             </span>
           </div>
         </button>
       ) : (
-        <div className="relative">
-          {/* Artistic Frame */}
-          <div
-            className="relative overflow-hidden"
-            style={{
-              background: 'linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%)',
-              borderRadius: '3px',
-              padding: '12px',
-              boxShadow: '0 0 0 1px rgba(255,255,255,0.1), inset 0 0 20px rgba(0,0,0,0.3)',
-            }}
-          >
-            {/* Inner shadow frame effect */}
-            <div
-              className="relative overflow-hidden"
-              style={{
-                borderRadius: '2px',
-                boxShadow: 'inset 0 0 15px rgba(0,0,0,0.5)',
-              }}
-            >
-              <img
-                src={preview}
-                alt="Preview"
-                className="w-full h-auto"
-                style={{
-                  display: 'block',
-                  maxHeight: '400px',
-                  objectFit: 'contain',
-                }}
-              />
-            </div>
+        <div className="relative flex items-center gap-2 p-2 border border-white/10 rounded bg-white/5">
+          {/* Small preview thumbnail */}
+          <div className="relative w-12 h-12 flex-shrink-0 overflow-hidden rounded border border-white/20">
+            <img
+              src={preview}
+              alt="Preview"
+              className="w-full h-full object-cover"
+            />
+          </div>
 
-            {/* Decorative corner accents */}
-            <div
-              className="absolute top-2 left-2"
-              style={{
-                width: '16px',
-                height: '16px',
-                borderTop: '2px solid rgba(255,255,255,0.2)',
-                borderLeft: '2px solid rgba(255,255,255,0.2)',
-              }}
-            />
-            <div
-              className="absolute top-2 right-2"
-              style={{
-                width: '16px',
-                height: '16px',
-                borderTop: '2px solid rgba(255,255,255,0.2)',
-                borderRight: '2px solid rgba(255,255,255,0.2)',
-              }}
-            />
-            <div
-              className="absolute bottom-2 left-2"
-              style={{
-                width: '16px',
-                height: '16px',
-                borderBottom: '2px solid rgba(255,255,255,0.2)',
-                borderLeft: '2px solid rgba(255,255,255,0.2)',
-              }}
-            />
-            <div
-              className="absolute bottom-2 right-2"
-              style={{
-                width: '16px',
-                height: '16px',
-                borderBottom: '2px solid rgba(255,255,255,0.2)',
-                borderRight: '2px solid rgba(255,255,255,0.2)',
-              }}
-            />
+          {/* File name */}
+          <div className="flex-1 min-w-0">
+            <span className="text-white/60 text-xs block truncate">
+              {fileName}
+            </span>
+            <span className="text-white/30 text-[10px]">
+              Image attached
+            </span>
           </div>
 
           {/* Remove button */}
@@ -172,29 +146,13 @@ const ImageUpload = ({ onImageSelect, onImageRemove, disabled = false }) => {
             type="button"
             onClick={handleRemove}
             disabled={disabled}
-            className="absolute -top-2 -right-2 w-6 h-6 rounded-full flex items-center justify-center transition-all duration-200"
+            className="w-6 h-6 rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110"
             style={{
-              background: 'rgba(220, 38, 38, 0.9)',
-              boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = 'rgba(220, 38, 38, 1)';
-              e.currentTarget.style.transform = 'scale(1.1)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = 'rgba(220, 38, 38, 0.9)';
-              e.currentTarget.style.transform = 'scale(1)';
+              background: 'rgba(220, 38, 38, 0.8)',
             }}
           >
-            <FaTimes className="text-white" size={12} />
+            <FaTimes className="text-white" size={10} />
           </button>
-
-          {/* File name */}
-          <div className="mt-2 text-center">
-            <span className="text-white/40 text-[10px] font-light">
-              {fileName}
-            </span>
-          </div>
         </div>
       )}
     </div>
