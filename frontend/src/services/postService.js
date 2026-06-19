@@ -6,14 +6,16 @@ import apiClient from './api';
  * @param {string} params.cursor - Pagination cursor
  * @param {string} params.circleId - Filter by circle ID
  * @param {string} params.category - Filter by category
+ * @param {string} params.room - Filter by room (dark, climb, philo)
  * @returns {Promise<Object>} Posts data with pagination
  */
-export const fetchPosts = async ({ cursor, circleId, category } = {}) => {
+export const fetchPosts = async ({ cursor, circleId, category, room } = {}) => {
   try {
     const params = {};
     if (cursor) params.cursor = cursor;
     if (circleId) params.circleId = circleId;
     if (category) params.category = category;
+    if (room) params.room = room;
 
     const response = await apiClient.get('/posts', { params });
     

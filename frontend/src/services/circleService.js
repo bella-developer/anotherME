@@ -4,12 +4,14 @@ import apiClient from './api';
  * Fetch circles with optional pagination
  * @param {Object} params - Query parameters
  * @param {string} params.cursor - Pagination cursor
+ * @param {string} params.room - Filter by room (dark, climb, philo)
  * @returns {Promise<Object>} Circles data with pagination
  */
-export const fetchCircles = async ({ cursor } = {}) => {
+export const fetchCircles = async ({ cursor, room } = {}) => {
   try {
     const params = {};
     if (cursor) params.cursor = cursor;
+    if (room) params.room = room;
 
     const response = await apiClient.get('/circles', { params });
     

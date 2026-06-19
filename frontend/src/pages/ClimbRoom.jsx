@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { selectAuth } from '../features/authSlice';
+import * as postService from '../services/postService';
+import * as circleService from '../services/circleService';
 import Layout from '../components/Layout';
 import PageTransition from '../components/PageTransition';
 import ClimbRoomCard from '../components/ClimbRoomCard';
@@ -30,27 +32,25 @@ function ClimbRoom() {
     try {
       setLoading(true);
       setError(null);
-      const apiUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api';
-      const postsUrl = selectedCategory === 'ALL'
-        ? `${apiUrl}/posts?room=climb`
-        : `${apiUrl}/posts?room=climb&category=${selectedCategory}`;
-      const postsResponse = await fetch(postsUrl, { credentials: 'include' });
-      if (!postsResponse.ok) {
-        if (postsResponse.status === 401) { navigate('/login'); return; }
-        throw new Error('Failed to fetch posts');
-      }
-      const postsData = await postsResponse.json();
-      setPosts(postsData.data.data || []);
-      const circlesResponse = await fetch(`${apiUrl}/circles?room=climb`, { credentials: 'include' });
-      if (circlesResponse.ok) {
-        const circlesData = await circlesResponse.json();
-        setCircles(circlesData.data.circles || []);
-      }
+      
+      // Fetch posts using service (includes JWT token via interceptor)
+      const postsData = await postService.fetchPosts({
+        room: 'climb',
+        category: selectedCategory === 'ALL' ? undefined : selectedCategory
+      });
+      setPosts(postsData.posts || []);
+      
+      // Fetch circles using service (includes JWT token via interceptor)
+      const circlesData = await circleService.fetchCircles({ room: 'climb' });
+      setCircles(circlesData.circles || []);
     } catch (err) {
-      setError(err.message);
+      console.error('Failed to load room data:', err);
+      setError(err.message || 'Failed to load data');
+      if (err.code === 'UNAUTHORIZED') navigate('/login');
     } finally {
       setLoading(false);
     }
+  };
   };
 
   useEffect(() => { fetchData(); }, [navigate, selectedCategory]);
@@ -59,11 +59,12 @@ function ClimbRoom() {
 
   const handleReaction = async (postId, reactionKey) => {
     if (!isAuthenticated) { navigate('/login'); return; }
-    const apiUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api';
     const post = posts.find(p => p.id === postId);
     if (post?.isAuthor) return;
     const currentReaction = post?.userReactions?.[0];
     const hasThisReaction = currentReaction === reactionKey;
+    
+    // Optimistic UI update
     setPosts(prev => prev.map(p => {
       if (p.id !== postId) return p;
       const newReactions = { ...p.reactions };
@@ -75,12 +76,20 @@ function ClimbRoom() {
       newReactions[reactionKey] = (newReactions[reactionKey] || 0) + 1;
       return { ...p, reactions: newReactions, userReactions: [reactionKey] };
     }));
-    const method = hasThisReaction ? 'DELETE' : 'POST';
-    const response = await fetch(`${apiUrl}/posts/${postId}/reactions`, {
-      method, headers: { 'Content-Type': 'application/json' },
-      credentials: 'include', body: JSON.stringify({ type: reactionKey })
-    });
-    if (!response.ok && response.status === 401) navigate('/login');
+    
+    try {
+      // Use postService which has JWT interceptor
+      if (hasThisReaction) {
+        await postService.removeReaction(postId, reactionKey);
+      } else {
+        await postService.addReaction(postId, reactionKey);
+      }
+    } catch (error) {
+      console.error('Reaction failed:', error);
+      if (error.code === 'UNAUTHORIZED') navigate('/login');
+      // Revert optimistic update on error
+      setPosts(prev => prev.map(p => p.id === postId ? post : p));
+    }
   };
 
   return (
