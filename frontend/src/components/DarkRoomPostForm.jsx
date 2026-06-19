@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { createPost, clearError } from '../features/postsSlice';
+import { createPost, updatePost, clearError } from '../features/postsSlice';
 import { createCircle } from '../services/circleService';
 import Button from './Button';
 import ImageUpload from './ImageUpload';
@@ -165,16 +165,27 @@ const DarkRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, onCirc
     }
 
     try {
-      const result = await dispatch(createPost(formData)).unwrap();
+      let result;
       
-      // Pass the created post back to parent for optimistic update
+      if (editingPost) {
+        // Update existing post
+        result = await dispatch(updatePost({ 
+          postId: editingPost.id, 
+          postData: formData 
+        })).unwrap();
+      } else {
+        // Create new post
+        result = await dispatch(createPost(formData)).unwrap();
+      }
+      
+      // Pass the result back to parent for optimistic update
       if (onPostCreated) {
         onPostCreated(result);
       }
       
       onClose();
     } catch (err) {
-      console.error('Failed to create post:', err);
+      // Error handling
     }
   };
 
@@ -424,7 +435,7 @@ const DarkRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, onCirc
             disabled={loading || creatingCircle}
             className="w-full h-12"
           >
-            {loading ? 'Publishing...' : 'Publish to Dark Room'}
+            {loading ? (editingPost ? 'Updating...' : 'Publishing...') : (editingPost ? 'Update Post' : 'Publish to Dark Room')}
           </Button>
         </form>
       </div>

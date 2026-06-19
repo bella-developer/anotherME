@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { createPost, clearError } from '../features/postsSlice';
+import { createPost, updatePost, clearError } from '../features/postsSlice';
 import { createCircle } from '../services/circleService';
 import Button from './Button';
 import ImageUpload from './ImageUpload';
@@ -167,9 +167,20 @@ const PhiloRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, onCir
     }
 
     try {
-      const result = await dispatch(createPost(formData)).unwrap();
+      let result;
       
-      // Pass the created post back to parent for optimistic update
+      if (editingPost) {
+        // Update existing post
+        result = await dispatch(updatePost({ 
+          postId: editingPost.id, 
+          postData: formData 
+        })).unwrap();
+      } else {
+        // Create new post
+        result = await dispatch(createPost(formData)).unwrap();
+      }
+      
+      // Pass the result back to parent for optimistic update
       if (onPostCreated) {
         onPostCreated(result);
       }
@@ -439,7 +450,7 @@ const PhiloRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, onCir
             disabled={loading || creatingCircle}
             className="w-full h-12"
           >
-            {loading ? 'Publishing...' : 'Publish to Philo Room'}
+            {loading ? (editingPost ? 'Updating...' : 'Publishing...') : (editingPost ? 'Update Post' : 'Publish to Philo Room')}
           </Button>
         </form>
       </div>
