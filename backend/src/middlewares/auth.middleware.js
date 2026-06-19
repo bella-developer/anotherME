@@ -36,7 +36,8 @@ export async function authenticate(req, res, next) {
     let userId = null;
     
     // Try JWT token first (from Authorization header)
-    const authHeader = req.headers.authorization;
+    // Check both lowercase and capitalized (Express lowercases headers)
+    const authHeader = req.headers.authorization || req.headers.Authorization;
     if (authHeader && authHeader.startsWith('Bearer ')) {
       const token = authHeader.substring(7);
       try {
