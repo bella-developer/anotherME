@@ -10,7 +10,7 @@ import useReducedMotion from '../hooks/useReducedMotion';
  * Dark Room Post Form Component
  * Specialized form for Dark Room posts with specific categories
  */
-const DarkRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated }) => {
+const DarkRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, onCircleCreated }) => {
   const dispatch = useDispatch();
   const { loading, error } = useSelector((state) => state.posts);
 
@@ -109,6 +109,8 @@ const DarkRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated }) => {
       setFormData(prev => ({ ...prev, circleId: createdCircle.circle.id }));
       setShowCircleCreation(false);
       setNewCircle({ name: '', description: '' });
+      // Notify parent to refetch circles
+      if (onCircleCreated) onCircleCreated();
     } catch (err) {
       setValidationErrors(prev => ({
         ...prev,

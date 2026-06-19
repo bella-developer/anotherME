@@ -56,6 +56,11 @@ function ClimbRoom() {
 
   const handlePostCreated = (newPost) => setPosts(prev => [newPost, ...prev]);
 
+  const handleCircleCreated = () => {
+    // Refetch circles to update dropdown
+    fetchData();
+  };
+
   const handleReaction = async (postId, reactionKey) => {
     if (!isAuthenticated) { navigate('/login'); return; }
     const post = posts.find(p => p.id === postId);
@@ -100,7 +105,7 @@ function ClimbRoom() {
             {/* Room header */}
             <div className="mb-10">
               <button
-                onClick={() => navigate('/')}
+                onClick={() => navigate('/rooms')}
                 className="text-[10px] tracking-[0.2em] text-white/30 hover:text-white/70 transition-colors mb-8 uppercase flex items-center gap-2"
               >
                 ← Rooms
@@ -181,6 +186,7 @@ function ClimbRoom() {
           isOpen={isPostFormOpen}
           onClose={() => setIsPostFormOpen(false)}
           onPostCreated={handlePostCreated}
+          onCircleCreated={handleCircleCreated}
           circles={circles}
         />
       </Layout>

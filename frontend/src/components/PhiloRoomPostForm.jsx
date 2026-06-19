@@ -10,7 +10,7 @@ import useReducedMotion from '../hooks/useReducedMotion';
  * Philo Room Post Form Component
  * Specialized form for Philo Room posts with specific categories
  */
-const PhiloRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated }) => {
+const PhiloRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, onCircleCreated }) => {
   const dispatch = useDispatch();
   const { loading, error } = useSelector((state) => state.posts);
 
@@ -111,6 +111,8 @@ const PhiloRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated }) => 
       setFormData(prev => ({ ...prev, circleId: createdCircle.circle.id }));
       setShowCircleCreation(false);
       setNewCircle({ name: '', description: '' });
+      // Notify parent to refetch circles
+      if (onCircleCreated) onCircleCreated();
     } catch (err) {
       setValidationErrors(prev => ({
         ...prev,

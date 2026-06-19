@@ -73,16 +73,7 @@ function RoomReactions({ room, reactions, userReactions = [], onReact, disabled 
     
     try {
       await onReact(reactionType, hasReacted);
-      
-      // Show feedback message only on successful reaction
-      if (!hasReacted) {
-        const message = FEEDBACK_MESSAGES[room]?.[reactionType] || 'Reaction added.';
-        setShowFeedback({ type: reactionType, message });
-        
-        // Hide feedback after delay (room-specific timing)
-        const delay = room === 'climb' ? 2000 : room === 'philo' ? 3000 : 2500;
-        setTimeout(() => setShowFeedback(null), delay);
-      }
+      // Feedback messages removed per user request
     } catch (error) {
       console.error('Failed to react:', error);
       // Don't show feedback on error - the error is already handled by parent
