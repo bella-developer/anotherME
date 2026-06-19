@@ -10,7 +10,7 @@ import useReducedMotion from '../hooks/useReducedMotion';
  * Dark Room Post Form Component
  * Specialized form for Dark Room posts with specific categories
  */
-const DarkRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, onCircleCreated }) => {
+const DarkRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, onCircleCreated, editingPost = null }) => {
   const dispatch = useDispatch();
   const { loading, error } = useSelector((state) => state.posts);
 
@@ -39,7 +39,7 @@ const DarkRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, onCirc
     { value: 'DARK', label: 'Dark', description: 'Explore the shadows' },
   ];
 
-  // Reset form when modal opens/closes
+  // Reset or populate form when modal opens/closes or editingPost changes
   useEffect(() => {
     if (!isOpen) {
       setFormData({
@@ -54,8 +54,23 @@ const DarkRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, onCirc
       setValidationErrors({});
       setCharacterCount(0);
       dispatch(clearError());
+    } else if (isOpen && editingPost) {
+      // Populate form with editing post data
+      // Strip HTML tags from content for editing
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = editingPost.content;
+      const plainTextContent = tempDiv.textContent || tempDiv.innerText || '';
+      
+      setFormData({
+        content: plainTextContent,
+        room: editingPost.room,
+        circleId: editingPost.circleId || '',
+        category: editingPost.category,
+        image: null, // Don't pre-fill image, user can re-upload if needed
+      });
+      setCharacterCount(plainTextContent.length);
     }
-  }, [isOpen, dispatch]);
+  }, [isOpen, editingPost, dispatch]);
 
   // Update character count
   useEffect(() => {

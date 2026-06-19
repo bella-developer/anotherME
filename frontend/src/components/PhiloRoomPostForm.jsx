@@ -10,7 +10,7 @@ import useReducedMotion from '../hooks/useReducedMotion';
  * Philo Room Post Form Component
  * Specialized form for Philo Room posts with specific categories
  */
-const PhiloRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, onCircleCreated }) => {
+const PhiloRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, onCircleCreated, editingPost = null }) => {
   const dispatch = useDispatch();
   const { loading, error } = useSelector((state) => state.posts);
 
@@ -56,8 +56,23 @@ const PhiloRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, onCir
       setValidationErrors({});
       setCharacterCount(0);
       dispatch(clearError());
+    } else if (isOpen && editingPost) {
+      // Populate form with editing post data
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = editingPost.content;
+      const plainTextContent = tempDiv.textContent || tempDiv.innerText || '';
+      
+      setFormData({
+        title: editingPost.title || '',
+        content: plainTextContent,
+        room: editingPost.room,
+        circleId: editingPost.circleId || '',
+        category: editingPost.category,
+        image: null,
+      });
+      setCharacterCount(plainTextContent.length);
     }
-  }, [isOpen, dispatch]);
+  }, [isOpen, editingPost, dispatch]);
 
   // Update character count
   useEffect(() => {

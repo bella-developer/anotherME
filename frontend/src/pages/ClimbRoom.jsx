@@ -209,10 +209,14 @@ function ClimbRoom() {
 
         <ClimbRoomPostForm
           isOpen={isPostFormOpen}
-          onClose={() => setIsPostFormOpen(false)}
+          onClose={() => {
+            setIsPostFormOpen(false);
+            setEditingPost(null);
+          }}
           onPostCreated={handlePostCreated}
           onCircleCreated={handleCircleCreated}
           circles={circles}
+          editingPost={editingPost}
         />
       </Layout>
     </PageTransition>
