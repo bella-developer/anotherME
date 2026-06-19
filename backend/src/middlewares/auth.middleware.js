@@ -132,13 +132,29 @@ export async function authenticate(req, res, next) {
  */
 export async function optionalAuthenticate(req, res, next) {
   try {
-    // Check if session exists and has userId
-    if (!req.session || !req.session.userId) {
-      // No session, continue without authentication
+    let userId = null;
+
+    // First, check for JWT token in Authorization header
+    const authHeader = req.headers.authorization;
+    if (authHeader && authHeader.startsWith('Bearer ')) {
+      const token = authHeader.substring(7);
+      try {
+        const decoded = verifyAccessToken(token);
+        userId = decoded.userId;
+      } catch (jwtError) {
+        // Invalid JWT, try session fallback
+      }
+    }
+
+    // Fallback to session if no valid JWT
+    if (!userId && req.session && req.session.userId) {
+      userId = req.session.userId;
+    }
+
+    // If no authentication found, continue without user
+    if (!userId) {
       return next();
     }
-    
-    const userId = req.session.userId;
     
     // Fetch user from database
     const user = await User.findById(userId);
