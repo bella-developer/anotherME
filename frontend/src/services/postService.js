@@ -217,13 +217,15 @@ export const addReaction = async (postId, reactionType) => {
       type: reactionType,
     });
     
-    // Validate response structure
-    if (!response.data || !response.data.reactions) {
+    // Backend returns: { status: 'success', data: { ...post with reactions }, message: '...' }
+    // Extract the post data which contains reactions
+    if (!response.data || !response.data.data) {
       throw new Error('Invalid response structure from server');
     }
 
     return {
-      reactions: response.data.reactions,
+      reactions: response.data.data.reactions || {},
+      userReactions: response.data.data.userReactions || []
     };
   } catch (error) {
     throw {
@@ -265,13 +267,15 @@ export const removeReaction = async (postId, reactionType) => {
       data: { type: reactionType },
     });
     
-    // Validate response structure
-    if (!response.data || !response.data.reactions) {
+    // Backend returns: { status: 'success', data: { ...post with reactions }, message: '...' }
+    // Extract the post data which contains reactions
+    if (!response.data || !response.data.data) {
       throw new Error('Invalid response structure from server');
     }
 
     return {
-      reactions: response.data.reactions,
+      reactions: response.data.data.reactions || {},
+      userReactions: response.data.data.userReactions || []
     };
   } catch (error) {
     throw {
