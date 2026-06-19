@@ -51,7 +51,6 @@ function ClimbRoom() {
       setLoading(false);
     }
   };
-  };
 
   useEffect(() => { fetchData(); }, [navigate, selectedCategory]);
 
