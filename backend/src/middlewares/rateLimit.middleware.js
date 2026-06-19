@@ -99,12 +99,12 @@ export const sensitiveRateLimiter = rateLimit({
 
 /**
  * Extremely strict rate limiter for login endpoint
- * 5 requests per 15 minutes per IP
+ * 50 requests per 15 minutes per IP (increased for development/testing)
  * Prevents brute force attacks
  */
 export const strictRateLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 5, // 5 requests per window
+  max: 50, // 50 requests per window (increased for testing)
   standardHeaders: true,
   legacyHeaders: false,
   message: {
