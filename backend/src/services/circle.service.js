@@ -48,7 +48,7 @@ export async function createCircle(userId, circleData) {
     throw error;
   }
 
-  const { name, description, visibility = 'public', categories = [] } = circleData;
+  const { name, description, visibility = 'public', categories = [], room } = circleData;
 
   // Validate required fields
   if (!name || !description) {
@@ -66,6 +66,7 @@ export async function createCircle(userId, circleData) {
     creatorId: userId,
     visibility,
     categories,
+    room: room || null, // Optional room field
     memberCount: 0,
     postCount: 0
   });

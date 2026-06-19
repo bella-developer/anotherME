@@ -36,14 +36,15 @@ export async function createCircle(req, res, next) {
     }
 
     // Get circle data from request body
-    const { name, description, visibility, categories } = req.body;
+    const { name, description, visibility, categories, room } = req.body;
 
     // Call service layer
     const circle = await circleService.createCircle(userId, {
       name,
       description,
       visibility,
-      categories
+      categories,
+      room
     });
 
     // Sanitize and return response
