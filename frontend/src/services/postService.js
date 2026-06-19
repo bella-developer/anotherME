@@ -189,7 +189,7 @@ export const deletePost = async (postId) => {
 /**
  * Add reaction to post
  * @param {string} postId - Post ID
- * @param {string} reactionType - Reaction type (iRelate, youreNotAlone, imListening, theAbyss)
+ * @param {string} reactionType - Reaction type
  * @returns {Promise<Object>} Updated reactions
  */
 export const addReaction = async (postId, reactionType) => {
@@ -198,8 +198,17 @@ export const addReaction = async (postId, reactionType) => {
       throw new Error('Post ID and reaction type are required');
     }
 
-    // Validate reaction type
-    const validReactions = ['iRelate', 'youreNotAlone', 'imListening', 'theAbyss'];
+    // Validate reaction type - supports all room-specific reactions
+    const validReactions = [
+      // Dark Room reactions
+      'iFeelYou', 'notGood', 'youreNotAlone', 'sendingStrength',
+      // Climb Room reactions
+      'push', 'pull', 'gear', 'rocket',
+      // Philo Room reactions
+      'lamp', 'spark', 'clap',
+      // Legacy reactions
+      'iRelate', 'imListening', 'theAbyss'
+    ];
     if (!validReactions.includes(reactionType)) {
       throw new Error('Invalid reaction type');
     }
@@ -228,7 +237,7 @@ export const addReaction = async (postId, reactionType) => {
 /**
  * Remove reaction from post
  * @param {string} postId - Post ID
- * @param {string} reactionType - Reaction type (iRelate, youreNotAlone, imListening, theAbyss)
+ * @param {string} reactionType - Reaction type
  * @returns {Promise<Object>} Updated reactions
  */
 export const removeReaction = async (postId, reactionType) => {
@@ -237,8 +246,17 @@ export const removeReaction = async (postId, reactionType) => {
       throw new Error('Post ID and reaction type are required');
     }
 
-    // Validate reaction type
-    const validReactions = ['iRelate', 'youreNotAlone', 'imListening', 'theAbyss'];
+    // Validate reaction type - supports all room-specific reactions
+    const validReactions = [
+      // Dark Room reactions
+      'iFeelYou', 'notGood', 'youreNotAlone', 'sendingStrength',
+      // Climb Room reactions
+      'push', 'pull', 'gear', 'rocket',
+      // Philo Room reactions
+      'lamp', 'spark', 'clap',
+      // Legacy reactions
+      'iRelate', 'imListening', 'theAbyss'
+    ];
     if (!validReactions.includes(reactionType)) {
       throw new Error('Invalid reaction type');
     }
