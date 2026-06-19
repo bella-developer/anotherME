@@ -68,7 +68,7 @@ export const corsConfig = () => {
     },
     credentials: true, // Allow cookies and authorization headers
     methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'Cache-Control', 'Pragma'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'cache-control', 'pragma'],
     exposedHeaders: ['X-Request-ID', 'Retry-After'],
     maxAge: 86400, // 24 hours
   });
