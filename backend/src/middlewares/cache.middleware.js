@@ -112,7 +112,8 @@ export function cacheStaleWhileRevalidate(maxAge = 300, staleAge = 600) {
 
     // Set Cache-Control with stale-while-revalidate
     res.set('Cache-Control', `public, max-age=${maxAge}, stale-while-revalidate=${staleAge}`);
-    res.set('Vary', 'Accept-Encoding');
+    // Vary by Authorization to cache authenticated and unauthenticated responses separately
+    res.set('Vary', 'Accept-Encoding, Authorization');
 
     next();
   };
