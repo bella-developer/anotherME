@@ -35,12 +35,12 @@ export const validateRegister = [
     .optional()
     .isString()
     .withMessage('Username must be a string')
+    .trim()
+    .toLowerCase()
     .isLength({ min: 3, max: 30 })
     .withMessage('Username must be between 3 and 30 characters')
     .matches(/^[a-z0-9_-]+$/)
-    .withMessage('Username can only contain lowercase letters, numbers, underscores, and hyphens')
-    .trim()
-    .toLowerCase(),
+    .withMessage('Username can only contain letters, numbers, underscores, and hyphens'),
   body('password')
     .notEmpty()
     .withMessage('Password is required')
