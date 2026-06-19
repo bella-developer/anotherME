@@ -22,7 +22,8 @@ apiClient.interceptors.request.use(
     // Add Authorization header if token exists
     if (accessToken) {
       config.headers.Authorization = `Bearer ${accessToken}`;
-      console.log('🔑 Token added to request'); // Debug log
+      console.log('🔑 Token added to request');
+      console.log('Headers:', JSON.stringify(config.headers)); // Debug: show all headers
     } else {
       console.warn('⚠️ No access token found in localStorage');
     }
