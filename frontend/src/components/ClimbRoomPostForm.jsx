@@ -101,6 +101,7 @@ const ClimbRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, onCir
 
     try {
       setCreatingCircle(true);
+      console.log('📝 Creating circle with:', { name: newCircle.name.trim(), room: 'climb' });
       const createdCircle = await createCircle({
         name: newCircle.name.trim(),
         description: newCircle.description.trim(),
@@ -108,6 +109,7 @@ const ClimbRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, onCir
         categories: [formData.category],
         room: 'climb' // Climb room identifier
       });
+      console.log('✅ Circle created:', createdCircle);
 
       setFormData(prev => ({ ...prev, circleId: createdCircle.circle.id }));
       setShowCircleCreation(false);
