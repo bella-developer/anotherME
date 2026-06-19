@@ -28,7 +28,7 @@ function ClimbRoom() {
     { value: 'ENTREPRENEUR', label: 'Entrepreneur' },
   ];
 
-  const fetchData = async () => {
+  const fetchData = async (bustCache = false) => {
     try {
       setLoading(true);
       setError(null);
@@ -41,7 +41,10 @@ function ClimbRoom() {
       setPosts(postsData.posts || []);
       
       // Fetch circles using service (includes JWT token via interceptor)
-      const circlesData = await circleService.fetchCircles({ room: 'climb' });
+      const circlesData = await circleService.fetchCircles({ 
+        room: 'climb',
+        bustCache // Pass cache buster when refetching after creation
+      });
       setCircles(circlesData.circles || []);
     } catch (err) {
       console.error('Failed to load room data:', err);
@@ -57,9 +60,9 @@ function ClimbRoom() {
   const handlePostCreated = (newPost) => setPosts(prev => [newPost, ...prev]);
 
   const handleCircleCreated = () => {
-    // Refetch circles to update dropdown
-    console.log('🔄 Circle created, refetching circles...');
-    fetchData();
+    // Refetch circles to update dropdown with cache bust
+    console.log('🔄 Circle created, refetching circles with cache bust...');
+    fetchData(true); // Pass true to bust cache
   };
 
   const handleReaction = async (postId, reactionKey) => {

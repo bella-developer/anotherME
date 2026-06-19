@@ -5,13 +5,15 @@ import apiClient from './api';
  * @param {Object} params - Query parameters
  * @param {string} params.cursor - Pagination cursor
  * @param {string} params.room - Filter by room (dark, climb, philo)
+ * @param {boolean} params.bustCache - Add timestamp to bypass cache
  * @returns {Promise<Object>} Circles data with pagination
  */
-export const fetchCircles = async ({ cursor, room } = {}) => {
+export const fetchCircles = async ({ cursor, room, bustCache = false } = {}) => {
   try {
     const params = {};
     if (cursor) params.cursor = cursor;
     if (room) params.room = room;
+    if (bustCache) params._t = Date.now(); // Cache buster
 
     const response = await apiClient.get('/circles', { params });
     
