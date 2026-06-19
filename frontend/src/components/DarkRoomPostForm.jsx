@@ -110,6 +110,7 @@ const DarkRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, onCirc
       setShowCircleCreation(false);
       setNewCircle({ name: '', description: '' });
       // Notify parent to refetch circles
+      console.log('✅ Circle created successfully, calling onCircleCreated callback');
       if (onCircleCreated) onCircleCreated();
     } catch (err) {
       setValidationErrors(prev => ({

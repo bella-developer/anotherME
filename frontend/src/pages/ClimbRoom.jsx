@@ -58,6 +58,7 @@ function ClimbRoom() {
 
   const handleCircleCreated = () => {
     // Refetch circles to update dropdown
+    console.log('🔄 Circle created, refetching circles...');
     fetchData();
   };
 
