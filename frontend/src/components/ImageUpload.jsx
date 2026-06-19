@@ -42,18 +42,26 @@ const ImageUpload = ({ onImageSelect, onImageRemove, disabled = false }) => {
     validateAndProcessFile(file);
   };
 
+  const handleDragEnter = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!disabled && e.dataTransfer.items && e.dataTransfer.items.length > 0) {
+      setIsDragging(true);
+    }
+  };
+
   const handleDragOver = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    if (!disabled) {
-      setIsDragging(true);
-    }
   };
 
   const handleDragLeave = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    setIsDragging(false);
+    // Only set dragging false if leaving the main container
+    if (e.currentTarget === e.target) {
+      setIsDragging(false);
+    }
   };
 
   const handleDrop = (e) => {
@@ -63,11 +71,14 @@ const ImageUpload = ({ onImageSelect, onImageRemove, disabled = false }) => {
 
     if (disabled) return;
 
-    const file = e.dataTransfer.files?.[0];
-    validateAndProcessFile(file);
+    const files = e.dataTransfer.files;
+    if (files && files.length > 0) {
+      validateAndProcessFile(files[0]);
+    }
   };
 
-  const handleRemove = () => {
+  const handleRemove = (e) => {
+    e.stopPropagation();
     setPreview(null);
     setFileName('');
     if (fileInputRef.current) {
@@ -94,32 +105,42 @@ const ImageUpload = ({ onImageSelect, onImageRemove, disabled = false }) => {
       />
 
       {!preview ? (
-        <button
-          type="button"
+        <div
           onClick={handleClick}
+          onDragEnter={handleDragEnter}
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
           onDrop={handleDrop}
-          disabled={disabled}
-          className="w-full py-2 px-3 border border-dashed transition-all duration-200 flex items-center gap-2 group"
+          className="w-full py-3 px-4 border border-dashed transition-all duration-200 cursor-pointer"
           style={{
-            borderColor: isDragging ? 'rgba(255,255,255,0.4)' : 'rgba(255,255,255,0.15)',
-            background: isDragging ? 'rgba(255,255,255,0.06)' : 'rgba(255,255,255,0.02)',
+            borderColor: isDragging ? 'rgba(161, 98, 7, 0.6)' : 'rgba(255,255,255,0.15)',
+            background: isDragging ? 'rgba(161, 98, 7, 0.1)' : 'rgba(255,255,255,0.02)',
             borderRadius: '3px',
-            cursor: disabled ? 'not-allowed' : 'pointer',
             opacity: disabled ? 0.5 : 1,
+            pointerEvents: disabled ? 'none' : 'auto',
           }}
         >
-          <FaImage className="text-white/30 group-hover:text-white/50 transition-colors" size={14} />
-          <div className="flex-1 text-left">
-            <span className="text-white/50 text-xs font-light">
-              {isDragging ? 'Drop image here' : 'Add image'}
-            </span>
-            <span className="text-white/30 text-[10px] ml-1">
-              (optional)
-            </span>
+          <div className="flex flex-col items-center justify-center gap-2">
+            <FaImage 
+              className="transition-colors" 
+              style={{ color: isDragging ? 'rgba(161, 98, 7, 0.8)' : 'rgba(161, 98, 7, 0.5)' }}
+              size={16} 
+            />
+            <div className="text-center">
+              <span 
+                className="text-xs font-light tracking-wide block"
+                style={{ color: isDragging ? 'rgba(161, 98, 7, 0.9)' : 'rgba(161, 98, 7, 0.7)' }}
+              >
+                {isDragging ? 'Drop your image here' : 'Add image (optional)'}
+              </span>
+              {!isDragging && (
+                <span className="text-white/30 text-[10px] block mt-1">
+                  Click or drag & drop • Max 5MB
+                </span>
+              )}
+            </div>
           </div>
-        </button>
+        </div>
       ) : (
         <div className="relative flex items-center gap-2 p-2 border border-white/10 rounded bg-white/5">
           {/* Small preview thumbnail */}
