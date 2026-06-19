@@ -145,7 +145,7 @@ export async function logout() {
     await apiClient.post('/auth/logout');
   } catch (error) {
     // Log error but don't throw - we still want to clear local state
-    console.error('Logout API call failed:', error);
+    // Silent logout failure for security
   } finally {
     // Always clear tokens from localStorage
     localStorage.removeItem('accessToken');

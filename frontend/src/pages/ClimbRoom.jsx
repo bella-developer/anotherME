@@ -41,15 +41,12 @@ function ClimbRoom() {
       setPosts(postsData.posts || []);
       
       // Fetch circles using service (includes JWT token via interceptor)
-      console.log(`📡 Fetching circles for room=climb, bustCache=${bustCache}`);
       const circlesData = await circleService.fetchCircles({ 
         room: 'climb',
         bustCache // Pass cache buster when refetching after creation
       });
-      console.log(`✅ Received ${circlesData.circles.length} circles:`, circlesData.circles.map(c => c.name));
       setCircles(circlesData.circles || []);
     } catch (err) {
-      console.error('Failed to load room data:', err);
       setError(err.message || 'Failed to load data');
       if (err.code === 'UNAUTHORIZED') navigate('/login');
     } finally {
@@ -63,7 +60,6 @@ function ClimbRoom() {
 
   const handleCircleCreated = () => {
     // Refetch circles to update dropdown with cache bust
-    console.log('🔄 Circle created, refetching circles with cache bust...');
     fetchData(true); // Pass true to bust cache
   };
 

@@ -116,14 +116,9 @@ function DarkRoomCard({ post, onReaction }) {
               >
                 <div
                   onClick={async () => {
-                    console.log('Circle clicked:', circle);
-                    console.log('Circle ID:', circle.circleId, 'Circle.id:', circle.id);
                     const circleIdToUse = circle.circleId || circle.id;
                     if (circleIdToUse) {
-                      console.log('Navigating to:', `/circles/${circleIdToUse}?from=post&postId=${post.id}`);
                       navigate(`/circles/${circleIdToUse}?from=post&postId=${post.id}`);
-                    } else {
-                      console.error('No circle ID found in circle object:', circle);
                     }
                   }}
                   className="px-3 py-1 text-[10px] tracking-[0.12em] font-light whitespace-nowrap cursor-pointer transition-all duration-200"

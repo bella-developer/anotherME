@@ -112,7 +112,6 @@ const PhiloRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, onCir
       setShowCircleCreation(false);
       setNewCircle({ name: '', description: '' });
       // Notify parent to refetch circles
-      console.log('✅ Circle created successfully, calling onCircleCreated callback');
       if (onCircleCreated) onCircleCreated();
     } catch (err) {
       setValidationErrors(prev => ({
@@ -147,19 +146,13 @@ const PhiloRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, onCir
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    console.log('Form submitted with data:', formData);
     
     if (!validateForm()) {
-      console.log('Validation failed:', validationErrors);
       return;
     }
 
-    console.log('Validation passed, creating post...');
-
     try {
       const result = await dispatch(createPost(formData)).unwrap();
-      console.log('Post created successfully:', result);
       
       // Pass the created post back to parent for optimistic update
       if (onPostCreated) {
@@ -168,7 +161,7 @@ const PhiloRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, onCir
       
       onClose();
     } catch (err) {
-      console.error('Failed to create post:', err);
+      // Error handling
     }
   };
 

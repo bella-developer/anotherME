@@ -27,9 +27,8 @@ apiClient.interceptors.request.use(
       }
       // Set Authorization header (use lowercase for consistency)
       config.headers['Authorization'] = `Bearer ${accessToken}`;
-      console.log('🔑 Token added:', config.headers['Authorization'].substring(0, 30) + '...');
     } else {
-      console.warn('⚠️ No access token in localStorage');
+      // No token available - silent for security
     }
     
     return config;
@@ -44,7 +43,7 @@ apiClient.interceptors.response.use(
   (response) => {
     // Validate response structure (defensive programming)
     if (!response || typeof response !== 'object') {
-      console.error('Invalid response structure received');
+      // Invalid response structure
       return Promise.reject({
         message: 'Invalid response from server',
         code: 'INVALID_RESPONSE',

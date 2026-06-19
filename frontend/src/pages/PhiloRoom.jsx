@@ -60,7 +60,6 @@ function PhiloRoom() {
 
   const handleCircleCreated = () => {
     // Refetch circles to update dropdown with cache bust
-    console.log('🔄 Circle created, refetching circles with cache bust...');
     fetchData(true); // Pass true to bust cache
   };
 

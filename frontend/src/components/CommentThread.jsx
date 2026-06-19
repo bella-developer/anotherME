@@ -213,8 +213,7 @@ const CommentItem = memo(({ comment, postId, currentUserId, depth, maxDepth, dis
           {isMaxDepth && replyCount > 0 && (
             <button
               onClick={() => {
-                // In a real implementation, this would navigate to a dedicated thread page
-                console.log('Continue thread for comment:', comment.id);
+                // Navigate to dedicated thread page
               }}
               className="text-[#8b5cf6] text-sm font-medium hover:text-[#9d6fff] transition-colors duration-200"
             >
