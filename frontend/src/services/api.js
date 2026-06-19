@@ -21,11 +21,15 @@ apiClient.interceptors.request.use(
     
     // Add Authorization header if token exists
     if (accessToken) {
-      config.headers.Authorization = `Bearer ${accessToken}`;
-      console.log('🔑 Token added to request');
-      console.log('Headers:', JSON.stringify(config.headers)); // Debug: show all headers
+      // Ensure headers object exists
+      if (!config.headers) {
+        config.headers = {};
+      }
+      // Set Authorization header (use lowercase for consistency)
+      config.headers['Authorization'] = `Bearer ${accessToken}`;
+      console.log('🔑 Token added:', config.headers['Authorization'].substring(0, 30) + '...');
     } else {
-      console.warn('⚠️ No access token found in localStorage');
+      console.warn('⚠️ No access token in localStorage');
     }
     
     return config;
