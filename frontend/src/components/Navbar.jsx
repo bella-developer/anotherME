@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 import NotificationBell from './NotificationBell';
-import logo from '../assets/images/anotherme-logo.png';
+import logo from '../assets/images/logo.png';
 
 /**
  * Navbar Component
