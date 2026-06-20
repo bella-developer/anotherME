@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 import NotificationBell from './NotificationBell';
+import logo from '../assets/images/anotherme-logo.png';
 
 /**
  * Navbar Component
@@ -63,9 +64,7 @@ function Navbar() {
             className="flex items-center space-x-3 focus:outline-none focus:ring-2 focus:ring-[#ff6b35] focus:ring-offset-2 focus:ring-offset-black rounded"
             aria-label="Dark Room home"
           >
-            <div className="w-8 h-8 bg-[#1b0000ff] rounded-full flex items-center justify-center">
-              <span className="text-black font-bold text-sm">⊙</span>
-            </div>
+            <img src={logo} alt="anotherME" className="h-8 w-auto" />
             <h1 className="text-lg md:text-xl font-bold text-white">anotherME</h1>
           </Link>
 
