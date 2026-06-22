@@ -28,6 +28,28 @@ const userSchema = new mongoose.Schema(
       minlength: 60 // bcrypt hash length
     },
 
+    // Optional email for account recovery
+    email: {
+      type: String,
+      sparse: true, // Allows multiple null values
+      unique: true,
+      trim: true,
+      lowercase: true,
+      match: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+      default: null
+    },
+
+    // Password reset tokens
+    resetPasswordToken: {
+      type: String,
+      default: null
+    },
+
+    resetPasswordExpires: {
+      type: Date,
+      default: null
+    },
+
     // Optional demographic information (no PII)
     age: {
       type: Number,
@@ -233,6 +255,7 @@ userSchema.methods.unban = async function() {
 userSchema.methods.toSafeObject = function() {
   return {
     username: this.username,
+    email: this.email,
     age: this.age,
     gender: this.gender,
     createdAt: this.createdAt
@@ -245,6 +268,8 @@ userSchema.set('toJSON', {
     delete ret._id;
     delete ret.__v;
     delete ret.password;
+    delete ret.resetPasswordToken;
+    delete ret.resetPasswordExpires;
     delete ret.isBanned;
     delete ret.banExpiresAt;
     delete ret.lastActive;

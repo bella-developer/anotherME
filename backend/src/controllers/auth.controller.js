@@ -18,6 +18,7 @@ import { regenerateSession, destroySession } from '../config/session.js';
  * @param {Object} req.body - Request body
  * @param {string} req.body.username - Optional username (auto-generated if not provided)
  * @param {string} req.body.password - Required password
+ * @param {string} req.body.email - Optional email for account recovery
  * @param {number} req.body.age - Optional age (18-100)
  * @param {string} req.body.gender - Optional gender
  * @param {Object} res - Express response object
@@ -25,10 +26,10 @@ import { regenerateSession, destroySession } from '../config/session.js';
  */
 export async function register(req, res, next) {
   try {
-    const { username, password, age, gender } = req.body;
+    const { username, password, email, age, gender } = req.body;
     
     // Call service layer
-    const result = await authService.register({ username, password, age, gender });
+    const result = await authService.register({ username, password, email, age, gender });
     
     // Generate JWT tokens
     const accessToken = generateAccessToken({ userId: result.user.id });
@@ -169,6 +170,79 @@ export async function logout(req, res, next) {
       createSuccessResponse(
         null,
         result.message
+      )
+    );
+  } catch (error) {
+    next(error);
+  }
+}
+
+/**
+ * Request password reset
+ * POST /api/auth/forgot-password
+ * 
+ * @param {Object} req - Express request object
+ * @param {Object} req.body - Request body
+ * @param {string} req.body.email - User's email address
+ * @param {Object} res - Express response object
+ * @param {Function} next - Express next middleware function
+ */
+export async function requestPasswordReset(req, res, next) {
+  try {
+    const { email } = req.body;
+    
+    // Call service layer
+    const result = await authService.requestPasswordReset(email);
+    
+    // NOTE: In production, send the resetToken via email
+    // For now, we return it in response (REMOVE IN PRODUCTION)
+    // TODO: Integrate with email service (SendGrid, AWS SES, etc.)
+    
+    // Return success response (intentionally vague for security)
+    res.status(200).json(
+      createSuccessResponse(
+        {
+          message: result.message,
+          // REMOVE IN PRODUCTION - only for testing
+          ...(process.env.NODE_ENV !== 'production' && { 
+            resetToken: result.resetToken,
+            email: result.email,
+            username: result.username
+          })
+        },
+        'Password reset request processed'
+      )
+    );
+  } catch (error) {
+    next(error);
+  }
+}
+
+/**
+ * Reset password using token
+ * POST /api/auth/reset-password
+ * 
+ * @param {Object} req - Express request object
+ * @param {Object} req.body - Request body
+ * @param {string} req.body.token - Reset token from email
+ * @param {string} req.body.newPassword - New password
+ * @param {Object} res - Express response object
+ * @param {Function} next - Express next middleware function
+ */
+export async function resetPassword(req, res, next) {
+  try {
+    const { token, newPassword } = req.body;
+    
+    // Call service layer
+    const result = await authService.resetPassword(token, newPassword);
+    
+    // Return success response
+    res.status(200).json(
+      createSuccessResponse(
+        {
+          message: result.message
+        },
+        'Password reset successful'
       )
     );
   } catch (error) {

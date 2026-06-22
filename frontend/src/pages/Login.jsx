@@ -130,7 +130,7 @@ function Login() {
                   </svg>
                   <div className="flex-1">
                     <p className="text-xs text-red-400 tracking-wide uppercase">
-                      {error.userMessage || error.message || 'Authentication failed'}
+                      Invalid username or password
                     </p>
                     {error.code === 'ACCOUNT_LOCKED' && (
                       <p className="text-xs text-red-400/70 mt-2">
@@ -142,11 +142,19 @@ function Login() {
               </div>
             )}
 
+            {/* Forgot Password Link */}
+            <div className="text-right">
+              <Link to="/forgot-password" className="text-xs text-white/60 hover:text-white transition-colors tracking-wide">
+                Forgot password?
+              </Link>
+            </div>
+
             {/* Submit Button */}
             <button
               type="submit"
               disabled={!isFormValid || loading}
               className="w-full py-3.5 bg-white/90 hover:bg-white disabled:bg-white/20 disabled:cursor-not-allowed text-black font-medium rounded transition-colors text-sm tracking-[0.15em] uppercase shadow-lg"
+              aria-label="Sign in to your account"
             >
               {loading ? (
                 <span className="flex items-center justify-center gap-2">
@@ -173,16 +181,11 @@ function Login() {
           </div>
         </div>
 
-        {/* Security Notice */}
+        {/* Privacy Link */}
         <div className="mt-8 text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 glass border border-white/10 rounded">
-            <svg className="w-4 h-4 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-            </svg>
-            <p className="text-[0.65rem] tracking-[0.2em] text-white/60 uppercase">
-              Encrypted & Secure
-            </p>
-          </div>
+          <p className="text-xs text-white/50">
+            Read our <Link to="/privacy" className="underline hover:text-white">Privacy Policy</Link>
+          </p>
         </div>
       </div>
     </div>

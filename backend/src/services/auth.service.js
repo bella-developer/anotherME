@@ -1,5 +1,6 @@
 import User from '../models/User.model.js';
 import { hashPassword, verifyPassword, validatePasswordStrength, generateUsername } from '../utils/password.utils.js';
+import { sendPasswordResetEmail, sendWelcomeEmail } from './email.service.js';
 
 /**
  * Authentication Service
@@ -8,18 +9,19 @@ import { hashPassword, verifyPassword, validatePasswordStrength, generateUsernam
 
 /**
  * Register a new user
- * Creates user with username, password, and optional demographics
+ * Creates user with username, password, optional email, and optional demographics
  * 
  * @param {Object} registrationData - Registration data
  * @param {string} registrationData.username - Username for login (optional, auto-generated if not provided)
  * @param {string} registrationData.password - Password (required)
+ * @param {string} registrationData.email - Email for recovery (optional)
  * @param {number} registrationData.age - Optional age (18-100)
  * @param {string} registrationData.gender - Optional gender
  * @returns {Promise<Object>} User data
  * @throws {Error} If registration fails
  */
 export async function register(registrationData = {}) {
-  const { username, password, age, gender } = registrationData;
+  const { username, password, email, age, gender } = registrationData;
   
   // Validate password is provided
   if (!password) {
@@ -79,8 +81,8 @@ export async function register(registrationData = {}) {
     }
   }
   
-  // Validate that no PII fields are present
-  const piiFields = ['email', 'phone', 'name', 'realName', 'firstName', 'lastName'];
+  // Validate that no PII fields (except email) are present
+  const piiFields = ['phone', 'name', 'realName', 'firstName', 'lastName'];
   const hasPII = piiFields.some(field => registrationData[field] !== undefined);
   
   if (hasPII) {
@@ -90,6 +92,31 @@ export async function register(registrationData = {}) {
     error.userMessage = 'Personal information is not allowed during registration';
     throw error;
   }
+
+  // Validate email format if provided
+  let finalEmail = null;
+  if (email) {
+    const normalizedEmail = email.toLowerCase().trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizedEmail)) {
+      const error = new Error('Invalid email format');
+      error.statusCode = 400;
+      error.code = 'INVALID_EMAIL';
+      error.userMessage = 'Please provide a valid email address';
+      throw error;
+    }
+
+    // Check if email already exists
+    const existingEmailUser = await User.findOne({ email: normalizedEmail });
+    if (existingEmailUser) {
+      const error = new Error('Email already registered');
+      error.statusCode = 409;
+      error.code = 'EMAIL_TAKEN';
+      error.userMessage = 'This email is already registered';
+      throw error;
+    }
+
+    finalEmail = normalizedEmail;
+  }
   
   // Hash password
   const hashedPassword = await hashPassword(password);
@@ -98,6 +125,7 @@ export async function register(registrationData = {}) {
   const user = new User({
     username: finalUsername,
     password: hashedPassword,
+    email: finalEmail,
     age: age || null,
     gender: gender || null,
     lastActive: new Date(),
@@ -112,11 +140,19 @@ export async function register(registrationData = {}) {
     // Save user to database
     await user.save();
     
+    // Send welcome email if email provided (non-blocking)
+    if (finalEmail) {
+      sendWelcomeEmail(finalEmail, finalUsername).catch(err => {
+        console.error('Failed to send welcome email:', err.message);
+      });
+    }
+    
     // Return user data (without password)
     return {
       user: {
         id: user._id.toString(),
         username: user.username,
+        email: user.email,
         age: user.age,
         gender: user.gender,
         createdAt: user.createdAt
@@ -129,6 +165,14 @@ export async function register(registrationData = {}) {
       err.statusCode = 409;
       err.code = 'USERNAME_TAKEN';
       err.userMessage = 'This username is already taken. Please choose another.';
+      throw err;
+    }
+    // Handle duplicate email
+    if (error.code === 11000 && error.keyPattern?.email) {
+      const err = new Error('Email already registered');
+      err.statusCode = 409;
+      err.code = 'EMAIL_TAKEN';
+      err.userMessage = 'This email is already registered';
       throw err;
     }
     throw error;
@@ -235,6 +279,7 @@ export async function login(loginData) {
     user: {
       id: user._id.toString(),
       username: user.username,
+      email: user.email,
       age: user.age,
       gender: user.gender,
       createdAt: user.createdAt
@@ -321,9 +366,133 @@ export async function getSessionUser(userId) {
     user: {
       id: user._id.toString(),
       username: user.username,
+      email: user.email,
       age: user.age,
       gender: user.gender,
       createdAt: user.createdAt
     }
+  };
+}
+
+/**
+ * Request password reset
+ * Generates a reset token and stores it with expiry
+ * 
+ * @param {string} email - User's email address
+ * @returns {Promise<Object>} Reset token and user info
+ * @throws {Error} If email not found or invalid
+ */
+export async function requestPasswordReset(email) {
+  if (!email) {
+    const error = new Error('Email is required');
+    error.statusCode = 400;
+    error.code = 'EMAIL_REQUIRED';
+    error.userMessage = 'Email address is required';
+    throw error;
+  }
+
+  // Normalize email
+  const normalizedEmail = email.toLowerCase().trim();
+
+  // Find user by email
+  const user = await User.findOne({ email: normalizedEmail });
+
+  // For security, don't reveal if email exists
+  if (!user) {
+    // Still return success to prevent email enumeration
+    return {
+      message: 'If an account exists with that email, a reset link has been sent'
+    };
+  }
+
+  // Generate reset token (random 32-byte hex string)
+  const crypto = await import('crypto');
+  const resetToken = crypto.randomBytes(32).toString('hex');
+  
+  // Hash the token before storing
+  const hashedToken = crypto.createHash('sha256').update(resetToken).digest('hex');
+
+  // Set token and expiry (1 hour)
+  user.resetPasswordToken = hashedToken;
+  user.resetPasswordExpires = new Date(Date.now() + 60 * 60 * 1000); // 1 hour
+  await user.save();
+
+  // Send password reset email
+  try {
+    await sendPasswordResetEmail(user.email, resetToken, user.username);
+  } catch (emailError) {
+    console.error('Failed to send password reset email:', emailError);
+    // Don't throw - we still want to return success to prevent email enumeration
+  }
+
+  // Return the plain token (to be sent via email) and user info
+  return {
+    message: 'If an account exists with that email, a reset link has been sent',
+    resetToken, // This should be sent via email, not in API response
+    email: user.email,
+    username: user.username
+  };
+}
+
+/**
+ * Reset password using token
+ * Validates token and updates password
+ * 
+ * @param {string} token - Reset token from email
+ * @param {string} newPassword - New password
+ * @returns {Promise<Object>} Success message
+ * @throws {Error} If token invalid or expired
+ */
+export async function resetPassword(token, newPassword) {
+  if (!token || !newPassword) {
+    const error = new Error('Token and new password are required');
+    error.statusCode = 400;
+    error.code = 'MISSING_FIELDS';
+    error.userMessage = 'Reset token and new password are required';
+    throw error;
+  }
+
+  // Validate new password strength
+  const passwordValidation = validatePasswordStrength(newPassword);
+  if (!passwordValidation.isValid) {
+    const error = new Error('Password does not meet requirements');
+    error.statusCode = 400;
+    error.code = 'WEAK_PASSWORD';
+    error.userMessage = passwordValidation.errors.join(', ');
+    error.details = passwordValidation.errors;
+    throw error;
+  }
+
+  // Hash the provided token to compare with stored hash
+  const crypto = await import('crypto');
+  const hashedToken = crypto.createHash('sha256').update(token).digest('hex');
+
+  // Find user with valid token
+  const user = await User.findOne({
+    resetPasswordToken: hashedToken,
+    resetPasswordExpires: { $gt: new Date() } // Token not expired
+  });
+
+  if (!user) {
+    const error = new Error('Invalid or expired reset token');
+    error.statusCode = 400;
+    error.code = 'INVALID_TOKEN';
+    error.userMessage = 'Password reset token is invalid or has expired';
+    throw error;
+  }
+
+  // Hash new password
+  const hashedPassword = await hashPassword(newPassword);
+
+  // Update password and clear reset token
+  user.password = hashedPassword;
+  user.resetPasswordToken = null;
+  user.resetPasswordExpires = null;
+  user.failedLoginAttempts = 0; // Reset failed attempts
+  user.accountLockedUntil = null; // Unlock account if locked
+  await user.save();
+
+  return {
+    message: 'Password has been reset successfully'
   };
 }

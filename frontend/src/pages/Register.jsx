@@ -12,6 +12,7 @@ function Register() {
   const [showSuccess, setShowSuccess] = useState(false);
   const [formData, setFormData] = useState({
     username: '',
+    email: '',
     password: '',
     confirmPassword: '',
     age: '',
@@ -34,8 +35,46 @@ function Register() {
     }
   };
 
+  const handleBlur = (e) => {
+    const { name, value } = e.target;
+    const errors = {};
+    
+    if (name === 'password' && value) {
+      if (value.length < 8) {
+        errors.password = 'MINIMUM 8 CHARACTERS';
+      } else if (!/[a-z]/.test(value)) {
+        errors.password = 'INCLUDE LOWERCASE';
+      } else if (!/[A-Z]/.test(value)) {
+        errors.password = 'INCLUDE UPPERCASE';
+      } else if (!/[0-9]/.test(value)) {
+        errors.password = 'INCLUDE NUMBER';
+      } else if (!/[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(value)) {
+        errors.password = 'INCLUDE SPECIAL CHARACTER';
+      }
+    }
+    
+    if (name === 'confirmPassword' && value && value !== formData.password) {
+      errors.confirmPassword = 'PASSWORDS DO NOT MATCH';
+    }
+    
+    if (name === 'email' && value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+      errors.email = 'INVALID EMAIL FORMAT';
+    }
+    
+    if (name === 'username' && value && value.length < 3) {
+      errors.username = 'MINIMUM 3 CHARACTERS';
+    }
+    
+    setValidationErrors((prev) => ({ ...prev, ...errors }));
+  };
+
   const validateForm = () => {
     const errors = {};
+    
+    if (formData.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      errors.email = 'INVALID EMAIL FORMAT';
+    }
+    
     if (!formData.password) {
       errors.password = 'PASSWORD REQUIRED';
     } else if (formData.password.length < 8) {
@@ -49,26 +88,36 @@ function Register() {
     } else if (!/[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(formData.password)) {
       errors.password = 'INCLUDE SPECIAL CHARACTER';
     }
+    
     if (formData.password !== formData.confirmPassword) {
       errors.confirmPassword = 'PASSWORDS DO NOT MATCH';
     }
+    
     if (formData.username && formData.username.length < 3) {
       errors.username = 'MINIMUM 3 CHARACTERS';
     }
+    
     setValidationErrors(errors);
     return Object.keys(errors).length === 0;
   };
 
+  const isFormValid = formData.password && formData.confirmPassword && 
+                     formData.password === formData.confirmPassword && 
+                     Object.keys(validationErrors).length === 0;
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateForm()) return;
+    
     const registrationData = { password: formData.password };
     if (formData.username.trim()) registrationData.username = formData.username.trim();
+    if (formData.email.trim()) registrationData.email = formData.email.trim();
     if (formData.age) {
       const ageMap = { '18-24': 21, '25-34': 29, '35-44': 39, '45+': 50 };
       registrationData.age = ageMap[formData.age];
     }
     if (formData.gender) registrationData.gender = formData.gender;
+    
     const result = await dispatch(register(registrationData));
     if (register.fulfilled.match(result)) {
       setShowSuccess(true);
@@ -152,12 +201,36 @@ function Register() {
                 type="text"
                 value={formData.username}
                 onChange={handleChange}
+                onBlur={handleBlur}
                 className={`w-full px-4 py-3 rounded text-white placeholder-white/25 focus:outline-none transition-colors text-sm tracking-wide ${validationErrors.username ? 'border border-red-500/50 bg-red-500/5' : 'border border-white/15 bg-white/5'}`}
                 placeholder="auto-generated if empty"
                 disabled={loading}
+                aria-describedby={validationErrors.username ? 'username-error' : undefined}
               />
               {validationErrors.username && (
-                <p className="text-[0.65rem] text-[#ff6b6b] mt-1 tracking-wider uppercase">{validationErrors.username}</p>
+                <p id="username-error" className="text-[0.65rem] text-[#ff6b6b] mt-1 tracking-wider uppercase">{validationErrors.username}</p>
+              )}
+            </div>
+
+            <div>
+              <label htmlFor="email" className="block text-[0.7rem] tracking-[0.15em] text-white/55 mb-2 uppercase">
+                Email <span className="text-white/30">(Optional but recommended for recovery)</span>
+              </label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                autoComplete="email"
+                value={formData.email}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                className={`w-full px-4 py-3 rounded text-white placeholder-white/25 focus:outline-none transition-colors text-sm tracking-wide ${validationErrors.email ? 'border border-red-500/50 bg-red-500/5' : 'border border-white/15 bg-white/5'}`}
+                placeholder="your@email.com"
+                disabled={loading}
+                aria-describedby={validationErrors.email ? 'email-error' : undefined}
+              />
+              {validationErrors.email && (
+                <p id="email-error" className="text-[0.65rem] text-[#ff6b6b] mt-1 tracking-wider uppercase">{validationErrors.email}</p>
               )}
             </div>
 
@@ -172,9 +245,11 @@ function Register() {
                   type={showPassword ? 'text' : 'password'}
                   value={formData.password}
                   onChange={handleChange}
+                  onBlur={handleBlur}
                   className={`w-full px-4 py-3 pr-12 rounded text-white placeholder-white/25 focus:outline-none transition-colors text-sm tracking-wide ${validationErrors.password ? 'border border-red-500/50 bg-red-500/5' : 'border border-white/15 bg-white/5'}`}
                   placeholder="secure password required"
                   disabled={loading}
+                  aria-describedby={validationErrors.password ? 'password-error' : undefined}
                 />
                 <button
                   type="button"
@@ -195,7 +270,7 @@ function Register() {
                 </button>
               </div>
               {validationErrors.password ? (
-                <p className="text-[0.65rem] text-red-400 mt-1 tracking-wider uppercase">{validationErrors.password}</p>
+                <p id="password-error" className="text-[0.65rem] text-red-400 mt-1 tracking-wider uppercase">{validationErrors.password}</p>
               ) : (
                 <p className="text-[0.65rem] text-white/30 mt-1 tracking-wide uppercase">
                   8+ chars · uppercase · lowercase · number · special
@@ -213,12 +288,14 @@ function Register() {
                 type={showPassword ? 'text' : 'password'}
                 value={formData.confirmPassword}
                 onChange={handleChange}
+                onBlur={handleBlur}
                 className={`w-full px-4 py-3 rounded text-white placeholder-white/25 focus:outline-none transition-colors text-sm tracking-wide ${validationErrors.confirmPassword ? 'border border-red-500/50 bg-red-500/5' : 'border border-white/15 bg-white/5'}`}
                 placeholder="re-enter password"
                 disabled={loading}
+                aria-describedby={validationErrors.confirmPassword ? 'confirm-password-error' : undefined}
               />
               {validationErrors.confirmPassword && (
-                <p className="text-[0.65rem] text-[#ff6b6b] mt-1 tracking-wider uppercase">{validationErrors.confirmPassword}</p>
+                <p id="confirm-password-error" className="text-[0.65rem] text-[#ff6b6b] mt-1 tracking-wider uppercase">{validationErrors.confirmPassword}</p>
               )}
             </div>
 
@@ -248,8 +325,8 @@ function Register() {
 
             <button
               type="submit"
-              disabled={loading}
-              className="w-full py-3.5 bg-[#D9C5B2] hover:bg-[#E6D1BE] disabled:bg-[#2d2420] disabled:cursor-not-allowed text-[#0d1117] font-medium rounded transition-colors text-sm tracking-[0.15em] uppercase"
+              disabled={!isFormValid || loading}
+              className="w-full py-3.5 bg-white hover:bg-white/90 disabled:bg-white/20 disabled:cursor-not-allowed text-black font-medium rounded transition-colors text-sm tracking-[0.15em] uppercase"
             >
               {loading ? (
                 <span className="flex items-center justify-center gap-2">

@@ -1,0 +1,7 @@
+# robots.txt for Eso
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+
+Sitemap: https://anothermee.vercel.app/sitemap.xml

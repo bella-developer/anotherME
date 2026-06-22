@@ -4,34 +4,35 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Geist Mono', 'Courier New', 'monospace'],
-        mono: ['Geist Mono', 'Courier New', 'monospace'],
+        sans: ['Geist Mono', 'Space Mono', 'Courier New', 'monospace'],
+        mono: ['Geist Mono', 'Space Mono', 'Courier New', 'monospace'],
+        display: ['Space Mono', 'Geist Mono', 'monospace'],
       },
       colors: {
-        // Dark theme colors - "Dark Room" atmosphere
+        // Dark theme colors - Pure black and white monochrome aesthetic for Eso
         primary: {
-          bg: '#120C0C',
-          secondary: '#1A1414',
-          elevated: '#251E1D',
-          contrast: '#433F41',
+          bg: '#000000',
+          secondary: '#0a0a0a',
+          elevated: '#141414',
+          contrast: '#1f1f1f',
         },
         text: {
-          primary: '#E6D1BE',
-          secondary: '#918A87',
-          muted: '#575455',
+          primary: '#ffffff',
+          secondary: '#a0a0a0',
+          muted: '#666666',
         },
         accent: {
-          primary: '#8B4A1D',
-          secondary: '#A05A2C',
+          primary: '#ffffff',
+          secondary: '#e0e0e0',
         },
         tag: {
-          bg: '#372B27',
-          hover: '#4A3A34',
+          bg: '#1a1a1a',
+          hover: '#2a2a2a',
         },
-        border: '#251E1D',
-        success: '#10b981',
-        error: '#ef4444',
-        warning: '#f59e0b',
+        border: '#333333',
+        success: '#ffffff',
+        error: '#ff4444',
+        warning: '#ffaa00',
       },
       backdropBlur: {
         md: '12px',

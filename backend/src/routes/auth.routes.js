@@ -72,4 +72,32 @@ router.post(
   authController.logout
 );
 
+/**
+ * POST /api/auth/forgot-password
+ * Request password reset token
+ * 
+ * Middleware chain:
+ * 1. Strict rate limiting (5 requests per 15 minutes)
+ * 2. Controller handler
+ */
+router.post(
+  '/forgot-password',
+  strictRateLimiter,
+  authController.requestPasswordReset
+);
+
+/**
+ * POST /api/auth/reset-password
+ * Reset password using token
+ * 
+ * Middleware chain:
+ * 1. Sensitive rate limiting (10 requests per 15 minutes)
+ * 2. Controller handler
+ */
+router.post(
+  '/reset-password',
+  sensitiveRateLimiter,
+  authController.resetPassword
+);
+
 export default router;

@@ -1,10 +1,21 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
 import landingHeroBg from '../assets/images/landing-hero-bg.png';
 
 function Landing() {
   const navigate = useNavigate();
+  const [isScrolled, setIsScrolled] = useState(false);
 
-const features = [
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const features = [
     {
       title: 'Philosophy',
       desc: 'Explore ideas that challenge the ordinary.',
@@ -32,258 +43,325 @@ const features = [
   ];
 
   return (
-    <div className="min-h-screen text-white overflow-x-hidden" style={{ fontFamily: "'Geist Mono', 'Courier New', monospace" }}>
+    <div className="min-h-screen text-white overflow-x-hidden bg-black" style={{ fontFamily: "'Geist Mono', monospace" }}>
 
-      {/* HEADER */}
-      <header className="fixed top-0 left-0 right-0 z-50 border-b border-white/10" style={{ background: 'rgba(0,0,0,0.88)', backdropFilter: 'blur(14px)' }}>
-        <div className="max-w-7xl mx-auto px-6 lg:px-12 py-4 flex items-center justify-center">
-          <div className="text-center">
-            <div className="text-sm font-semibold tracking-[0.22em] uppercase leading-tight">Introverts safe place.</div>
+      {/* NAVIGATION */}
+      <motion.header 
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.6 }}
+        className={`fixed top-0 left-0 right-0 z-50 border-b transition-all duration-300 ${
+          isScrolled ? 'border-white/15 bg-black/95 backdrop-blur-xl' : 'border-white/5 bg-black/80 backdrop-blur-md'
+        }`}
+      >
+        <nav className="max-w-7xl mx-auto px-6 lg:px-12 py-4" role="navigation" aria-label="Main navigation">
+          <div className="flex items-center justify-between">
+            <Link to="/" className="text-2xl font-bold tracking-[0.3em] hover:text-white/80 transition-colors" style={{ fontFamily: "'Space Mono', monospace" }}>
+              ESO
+            </Link>
+            
+            <div className="flex items-center gap-8">
+              <Link to="/explore" className="text-sm text-white/60 hover:text-white transition-colors tracking-wider uppercase hidden md:inline-block">
+                Explore
+              </Link>
+              <Link to="/terms" className="text-sm text-white/60 hover:text-white transition-colors tracking-wider uppercase hidden md:inline-block">
+                Terms
+              </Link>
+              <Link to="/privacy" className="text-sm text-white/60 hover:text-white transition-colors tracking-wider uppercase hidden md:inline-block">
+                Privacy
+              </Link>
+              <div className="flex items-center gap-3">
+                <Link 
+                  to="/login"
+                  className="px-5 py-2 text-sm text-white/80 hover:text-white transition-colors tracking-wider uppercase border border-white/20 hover:border-white/40 rounded"
+                >
+                  Sign In
+                </Link>
+                <Link 
+                  to="/register"
+                  className="px-5 py-2 text-sm bg-white text-black font-semibold hover:bg-white/90 transition-all tracking-wider uppercase rounded"
+                >
+                  Join
+                </Link>
+              </div>
+            </div>
           </div>
-        </div>
-      </header>
+        </nav>
+      </motion.header>
 
-      {/* HERO - Netflix-Inspired Split Layout (App Style) */}
+      {/* HERO SECTION */}
       <section className="relative min-h-screen flex items-center pt-20 overflow-hidden">
         <div className="absolute inset-0 z-0">
           <div 
             className="w-full h-full bg-cover bg-center" 
             style={{ 
               backgroundImage: `url(${landingHeroBg})`,
-              filter: 'contrast(1.05) brightness(0.95) saturate(1.05)',
-              imageRendering: 'crisp-edges'
+              filter: 'contrast(1.05) brightness(0.85) saturate(1.05)',
             }}
           />
-          {/* Minimal vignette for text readability */}
-          <div className="absolute inset-0 bg-gradient-to-r from-black/20 via-transparent to-black/20" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60" />
         </div>
         
         <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-12 w-full py-24">
           <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
             
-            {/* LEFT SIDE - Minimalist Typographic with Geometric Elements */}
-            <div className="space-y-8">
-              <h1 className="leading-[1.1]" style={{ fontFamily: "'Geist Mono', 'Courier New', monospace" }}>
-                {/* WELCOME - Outlined with geometric accent */}
-                <div className="relative mb-3">
-                  <div 
-                    className="absolute -left-4 top-1/2 w-2 h-2 border border-white/40"
-                    style={{ transform: 'translateY(-50%) rotate(45deg)' }}
-                  />
-                  <span 
-                    className="block text-4xl sm:text-5xl lg:text-6xl font-light relative"
-                    style={{ 
-                      letterSpacing: '0.15em',
-                      color: 'transparent',
-                      WebkitTextStroke: '1.5px rgba(255,255,255,0.8)',
-                      textShadow: '0 0 40px rgba(255,255,255,0.15)',
-                    }}
-                  >
-                    WELCOME
-                  </span>
-                </div>
+            {/* LEFT SIDE - Hero Content */}
+            <motion.div 
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="space-y-8"
+            >
+              <div>
+                <motion.div 
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.4 }}
+                  className="inline-block px-4 py-2 mb-6 border border-white/20 rounded-full"
+                  style={{ background: 'rgba(255,255,255,0.05)' }}
+                >
+                  <span className="text-xs tracking-[0.25em] uppercase text-white/70">Within · Inner · Essence</span>
+                </motion.div>
                 
-                {/* HOME, - Solid fill with offset shadow */}
-                <div className="relative mb-3">
-                  <span 
-                    className="block text-4xl sm:text-5xl lg:text-6xl font-black relative"
-                    style={{ 
-                      letterSpacing: '0.12em',
-                      color: 'white',
-                      textShadow: '6px 6px 0px rgba(0,0,0,0.5)',
-                    }}
+                <h1 className="leading-[1.1] mb-6">
+                  <motion.div 
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.5 }}
+                    className="relative mb-3"
                   >
-                    HOME,
-                  </span>
-                  <div 
-                    className="absolute -right-6 top-0 w-1 h-full bg-white/20"
-                    style={{ transform: 'skewX(-15deg)' }}
-                  />
-                </div>
+                    <span 
+                      className="block text-5xl sm:text-6xl lg:text-7xl font-black"
+                      style={{ 
+                        fontFamily: "'Space Mono', monospace",
+                        letterSpacing: '0.2em',
+                        color: 'white',
+                        textShadow: '0 0 60px rgba(255,255,255,0.3)',
+                      }}
+                    >
+                      ESO
+                    </span>
+                  </motion.div>
+
+                  
+                  <motion.span 
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.7 }}
+                    className="block text-2xl sm:text-3xl lg:text-4xl font-light text-white/90 tracking-wide"
+                  >
+                    Your Inner World,<br />Finally Understood
+                  </motion.span>
+                </h1>
                 
-                {/* BUDDY. - Inline shadow with line accent */}
-                <div className="relative">
-                  <div 
-                    className="absolute -bottom-2 left-0 right-0 h-px bg-gradient-to-r from-white/60 via-white/20 to-transparent"
-                  />
-                  <span 
-                    className="block text-3xl sm:text-4xl lg:text-5xl font-medium"
-                    style={{ 
-                      letterSpacing: '0.18em',
-                      color: 'white',
-                      textShadow: 'inset 0 0 20px rgba(0,0,0,0.8), 0 4px 30px rgba(0,0,0,0.9)',
-                      opacity: 0.95,
-                    }}
-                  >
-                    BUDDY.
-                  </span>
-                </div>
-              </h1>
-              
-              {/* Decorative geometric element */}
-              <div className="flex items-center gap-3 pt-4">
-                <div className="w-8 h-px bg-white/30" />
-                <div className="w-1.5 h-1.5 bg-white/50 rotate-45" />
-                <div className="w-16 h-px bg-gradient-to-r from-white/30 to-transparent" />
+                <motion.p 
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.9 }}
+                  className="text-base text-white/70 leading-relaxed max-w-lg"
+                >
+                  A dark aesthetic space for introverts, deep thinkers, and solitary souls. 
+                  Where silence speaks volumes and authenticity reigns.
+                </motion.p>
               </div>
-            </div>
+              
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 1.1 }}
+                className="flex gap-4"
+              >
+                <button 
+                  onClick={() => navigate('/register')}
+                  className="px-8 py-4 bg-white text-black font-bold text-sm uppercase tracking-[0.2em] hover:bg-gray-200 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+                  aria-label="Create an account"
+                >
+                  Enter Eso
+                </button>
+                
+                <button 
+                  onClick={() => navigate('/explore')}
+                  className="px-8 py-4 text-white font-semibold text-sm uppercase tracking-[0.2em] hover:bg-white/10 transition-all border border-white/30 hover:border-white/50"
+                  aria-label="Explore content"
+                >
+                  Preview
+                </button>
+              </motion.div>
+              
+              <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 1.3 }}
+                className="flex items-center gap-3 pt-4"
+              >
+                <div className="flex -space-x-2">
+                  <div className="w-10 h-10 rounded-full bg-cover bg-center border-2 border-black" style={{ backgroundImage: "url('https://images.pexels.com/photos/1212984/pexels-photo-1212984.jpeg?w=100&h=100&fit=crop')" }} />
+                  <div className="w-10 h-10 rounded-full bg-cover bg-center border-2 border-black" style={{ backgroundImage: "url('https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?w=100&h=100&fit=crop')" }} />
+                  <div className="w-10 h-10 rounded-full bg-cover bg-center border-2 border-black" style={{ backgroundImage: "url('https://images.pexels.com/photos/1681010/pexels-photo-1681010.jpeg?w=100&h=100&fit=crop')" }} />
+                </div>
+                <p className="text-sm text-white/60">
+                  <span className="text-white font-semibold">2,847+</span> quiet minds already inside
+                </p>
+              </motion.div>
+            </motion.div>
             
-            {/* RIGHT SIDE - Transparent Card with Minimal Border */}
-            <div className="lg:ml-auto max-w-md">
+            {/* RIGHT SIDE - Feature Card */}
+            <motion.div 
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              className="lg:ml-auto max-w-md"
+            >
               <div 
-                className="p-8 rounded-xl space-y-6 transition-all duration-500 hover:-translate-y-1"
+                className="p-8 rounded-xl backdrop-blur-md border border-white/10 hover:border-white/20 transition-all duration-500 group"
                 style={{
-                  background: 'transparent',
-                  boxShadow: '0 0 0 1px rgba(255,255,255,0.15)',
+                  background: 'rgba(0,0,0,0.4)',
+                  boxShadow: '0 20px 60px rgba(0,0,0,0.5)',
                 }}
               >
-                {/* Subtle hover glow */}
-                <div 
-                  className="absolute inset-0 rounded-xl opacity-0 hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                  style={{ boxShadow: 'inset 0 0 30px rgba(255,255,255,0.05)' }} 
-                />
-                
-                {/* Subtitle with minimal border */}
-                <div className="border-l-2 border-white/30 pl-4 relative z-10">
-                  <h2 className="text-2xl font-bold text-white mb-2">
-                    A Safe Haven
-                  </h2>
-                  <p className="text-xs text-gray-400 uppercase tracking-[0.2em]">
-                    For Deep Thinkers
-                  </p>
-                </div>
-                
-                {/* Description */}
-                <p className="text-sm text-gray-300 leading-relaxed relative z-10">
-                  In a world of noise, survival means finding your tribe. Join introverts, philosophers, and quiet souls who seek depth over superficiality.
+                <h2 className="text-2xl font-semibold mb-4 tracking-wider">A Safe Haven</h2>
+                <p className="text-sm text-white/70 leading-relaxed mb-6">
+                  In a world of noise, finding your tribe is survival. Join introverts, philosophers, 
+                  and quiet souls who seek depth over superficiality.
                 </p>
                 
-                {/* CTAs - App Style */}
-                <div className="flex gap-4 relative z-10">
-                  <button 
-                    onClick={() => navigate('/login')}
-                    className="flex-1 py-3 bg-white text-black font-bold text-xs uppercase tracking-[0.2em] hover:bg-gray-200 transition-all"
-                  >
-                    STEP IN
-                  </button>
-                  
-                  <button 
-                    onClick={() => navigate('/login')}
-                    className="px-6 py-3 text-white font-semibold text-xs uppercase tracking-[0.2em] hover:bg-white/10 transition-all"
-                    style={{
-                      background: 'transparent',
-                      boxShadow: '0 0 0 1px rgba(255,255,255,0.3)',
-                    }}
-                  >
-                    EXPLORE
-                  </button>
+                <div className="space-y-3 mb-6">
+                  {['No small talk, only real connections', 'Share your inner world anonymously', 'Dark aesthetic, calm atmosphere', 'For the misunderstood & unique'].map((item, i) => (
+                    <motion.div 
+                      key={i}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 1 + (i * 0.1) }}
+                      className="flex items-start gap-3"
+                    >
+                      <svg className="w-5 h-5 text-white/60 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                      <span className="text-sm text-white/80">{item}</span>
+                    </motion.div>
+                  ))}
                 </div>
+
                 
-                {/* Community Badge */}
-                <div 
-                  className="pt-4 flex items-center gap-3 relative z-10"
-                  style={{ borderTop: '1px solid rgba(255,255,255,0.1)' }}
-                >
-                  <div className="flex -space-x-2">
-                    <div className="w-8 h-8 rounded-full bg-cover bg-center" style={{ backgroundImage: "url('https://images.pexels.com/photos/1212984/pexels-photo-1212984.jpeg?w=100&h=100&fit=crop')", boxShadow: '0 0 0 2px rgba(255,255,255,0.1)' }} />
-                    <div className="w-8 h-8 rounded-full bg-cover bg-center" style={{ backgroundImage: "url('https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?w=100&h=100&fit=crop')", boxShadow: '0 0 0 2px rgba(255,255,255,0.1)' }} />
-                    <div className="w-8 h-8 rounded-full bg-cover bg-center" style={{ backgroundImage: "url('https://images.pexels.com/photos/1681010/pexels-photo-1681010.jpeg?w=100&h=100&fit=crop')", boxShadow: '0 0 0 2px rgba(255,255,255,0.1)' }} />
-                  </div>
-                  <p className="text-xs text-gray-400 font-medium">
-                    <span className="text-white font-bold">2,847+</span> thoughtful minds
+                <div className="pt-4 border-t border-white/10">
+                  <p className="text-xs text-white/50">
+                    <Link to="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
                   </p>
                 </div>
               </div>
-            </div>
+            </motion.div>
             
           </div>
         </div>
       </section>
 
-      {/* STATS BAR */}
-      <div className="relative z-10 py-12" style={{ background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(20px)' }}>
+      {/* STATS SECTION */}
+      <motion.section 
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.7 }}
+        className="relative z-10 py-16 border-y border-white/10"
+        style={{ background: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(20px)' }}
+      >
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 lg:gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 lg:gap-8">
             {[
               { icon: 'M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z', val: '2,847', label: 'Quiet Minds' },
               { icon: 'M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 01-.825-.242m9.345-8.334a2.126 2.126 0 00-.476-.095 48.64 48.64 0 00-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0011.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155', val: '1,203', label: 'Deep Discussions' },
               { icon: 'M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25', val: '436', label: 'Shared Thoughts' },
-              { icon: 'M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253M3 12c0 .778.099 1.533.284 2.253', val: '23 Countries', label: 'Worldwide' },
-              { icon: 'M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z', val: 'No noise.', label: 'Just real connections.' },
-            ].map((s) => (
-              <div
-                key={s.label}
-                className="flex flex-col items-center justify-center text-center py-6 px-4 rounded-lg transition-all duration-300 hover:scale-105"
+              { icon: 'M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253M3 12c0 .778.099 1.533.284 2.253', val: '23', label: 'Countries' },
+              { icon: 'M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z', val: '100%', label: 'Authentic' },
+            ].map((s, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1, duration: 0.5 }}
+                className="flex flex-col items-center justify-center text-center py-6 px-4 rounded-lg transition-all duration-300 hover:scale-105 group"
                 style={{
-                  background: 'rgba(255,255,255,0.03)',
-                  boxShadow: '0 0 0 1px rgba(255,255,255,0.07), 0 4px 24px rgba(0,0,0,0.4)',
+                  background: 'rgba(255,255,255,0.02)',
+                  boxShadow: '0 0 0 1px rgba(255,255,255,0.07)',
                 }}
               >
-                <svg className="w-5 h-5 text-white/30 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+                <svg className="w-6 h-6 text-white/30 group-hover:text-white/50 mb-3 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
                   <path strokeLinecap="round" strokeLinejoin="round" d={s.icon} />
                 </svg>
-                <div className="text-base font-light tracking-wide mb-1 text-white">{s.val}</div>
-                <div className="text-[9px] tracking-[0.18em] text-white/40 uppercase">{s.label}</div>
-              </div>
+                <div className="text-xl font-semibold tracking-wide mb-1 text-white">{s.val}</div>
+                <div className="text-[10px] tracking-[0.18em] text-white/50 uppercase">{s.label}</div>
+              </motion.div>
             ))}
           </div>
         </div>
-      </div>
+      </motion.section>
 
-      {/* FEATURES + QUOTE + COMMUNITY */}
-      <section className="py-20 lg:py-28 relative z-10" style={{ background: 'rgba(0,0,0,0.55)', backdropFilter: 'blur(20px)' }}>
-        <div className="max-w-5xl mx-auto px-6 lg:px-8">
 
-          {/* Feature cards — 4 cols, no grid lines, floating cards */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
-            {features.map((f) => (
-              <div
-                key={f.title}
-                onClick={() => navigate('/login')}
-                className="relative flex flex-col items-center justify-between p-7 text-center cursor-pointer group overflow-hidden rounded-xl transition-all duration-500 hover:-translate-y-1"
+      {/* FEATURES SECTION */}
+      <section className="py-24 lg:py-32 relative z-10" style={{ background: 'rgba(0,0,0,0.6)' }}>
+        <div className="max-w-6xl mx-auto px-6 lg:px-8">
+          
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 tracking-wider">Spaces for Your Mind</h2>
+            <p className="text-white/60 text-sm max-w-2xl mx-auto">
+              Four unique rooms designed for different aspects of your inner world
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
+            {features.map((f, i) => (
+              <motion.article
+                key={i}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.15, duration: 0.6 }}
+                className="relative flex flex-col items-center justify-between p-8 text-center cursor-pointer group overflow-hidden rounded-xl transition-all duration-500 hover:-translate-y-2"
                 style={{
-                  minHeight: '260px',
+                  minHeight: '300px',
                   background: 'rgba(255,255,255,0.02)',
-                  boxShadow: '0 0 0 1px rgba(255,255,255,0.08), 0 8px 40px rgba(0,0,0,0.6)',
+                  boxShadow: '0 0 0 1px rgba(255,255,255,0.08)',
                 }}
               >
-                {/* Background image */}
                 <div
                   className="absolute inset-0 bg-cover bg-center rounded-xl transition-transform duration-700 group-hover:scale-110"
                   style={{ 
                     backgroundImage: `url('${f.img}')`, 
-                    filter: 'contrast(1.3) brightness(0.5) saturate(1.2)',
-                    imageRendering: 'crisp-edges'
+                    filter: 'contrast(1.2) brightness(0.4) saturate(1.1)',
                   }}
                 />
-                {/* Vignette */}
-                <div className="absolute inset-0 rounded-xl bg-gradient-to-t from-black/80 via-black/10 to-black/30 group-hover:from-black/60 transition-all duration-500" />
-                {/* Glow on hover */}
-                <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                  style={{ boxShadow: 'inset 0 0 30px rgba(255,255,255,0.04)' }} />
+                <div className="absolute inset-0 rounded-xl bg-gradient-to-t from-black/90 via-black/30 to-black/50 group-hover:from-black/70 transition-all duration-500" />
 
-                {/* Content */}
                 <div className="relative z-10 flex flex-col items-center">
-                  <svg className="w-6 h-6 text-white/50 mb-5 group-hover:text-white transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}>
+                  <svg className="w-7 h-7 text-white/50 mb-6 group-hover:text-white transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}>
                     <path strokeLinecap="round" strokeLinejoin="round" d={f.icon} />
                   </svg>
-                  <div className="text-[10px] tracking-[0.25em] uppercase font-semibold mb-3 text-white">{f.title}</div>
-                  <p className="text-[11px] text-white/50 leading-relaxed group-hover:text-white/80 transition-colors duration-300">{f.desc}</p>
+                  <h3 className="text-sm tracking-[0.25em] uppercase font-semibold mb-3 text-white">{f.title}</h3>
+                  <p className="text-xs text-white/60 leading-relaxed group-hover:text-white/80 transition-colors duration-300">{f.desc}</p>
                 </div>
-                <span className="relative z-10 mt-6 text-white/25 group-hover:text-white transition-all duration-300 group-hover:translate-x-1 inline-block">→</span>
-              </div>
+                <span className="relative z-10 mt-6 text-white/30 group-hover:text-white transition-all duration-300 group-hover:translate-x-1 text-lg">→</span>
+              </motion.article>
             ))}
           </div>
 
-          {/* Quote + Community — 2 cols, same card style */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-
-            {/* Quote */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.6, duration: 0.7 }}
+            className="grid grid-cols-1 lg:grid-cols-2 gap-5"
+          >
+            {/* Quote Card */}
             <div
-              className="relative flex items-center justify-center text-center overflow-hidden rounded-xl"
+              className="relative flex items-center justify-center text-center overflow-hidden rounded-xl min-h-[280px]"
               style={{
-                minHeight: '280px',
-                boxShadow: '0 0 0 1px rgba(255,255,255,0.07), 0 8px 40px rgba(0,0,0,0.6)',
+                boxShadow: '0 0 0 1px rgba(255,255,255,0.07)',
               }}
             >
               <div 
@@ -292,72 +370,150 @@ const features = [
                   backgroundImage: `url(${landingHeroBg})`, 
                   backgroundSize: 'cover', 
                   backgroundPosition: 'center', 
-                  filter: 'contrast(1.2) brightness(0.4) saturate(1.1)',
-                  imageRendering: 'crisp-edges'
+                  filter: 'contrast(1.2) brightness(0.35) saturate(1.1)',
                 }} 
               />
-              <div className="absolute inset-0 rounded-xl" style={{ background: 'linear-gradient(135deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.2) 100%)' }} />
+              <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-black/60 to-black/30" />
               <div className="relative z-10 px-10 py-12">
-                <svg className="w-6 h-6 text-white/15 mb-5 mx-auto" fill="currentColor" viewBox="0 0 24 24">
+                <svg className="w-8 h-8 text-white/15 mb-6 mx-auto" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
                 </svg>
-                <p className="text-xl lg:text-2xl font-light leading-snug text-white mb-5">
+                <p className="text-xl lg:text-2xl font-light leading-snug text-white mb-6">
                   Most people seek attention.<br />Few seek understanding.
                 </p>
-                <div className="text-[9px] tracking-[0.3em] text-white/30 uppercase">— anotherME</div>
+                <div className="text-[10px] tracking-[0.3em] text-white/40 uppercase">— Eso Philosophy</div>
               </div>
             </div>
 
-            {/* Community */}
+
+            {/* Community Card */}
             <div
-              className="flex flex-col items-center justify-center text-center px-10 py-12 rounded-xl"
+              className="flex flex-col items-center justify-center text-center px-10 py-12 rounded-xl min-h-[280px]"
               style={{
                 background: 'rgba(255,255,255,0.025)',
-                boxShadow: '0 0 0 1px rgba(255,255,255,0.07), 0 8px 40px rgba(0,0,0,0.5)',
+                boxShadow: '0 0 0 1px rgba(255,255,255,0.07)',
               }}
             >
-              <div className="text-[9px] tracking-[0.28em] text-white/30 uppercase mb-5">The Community</div>
+              <div className="text-[10px] tracking-[0.28em] text-white/40 uppercase mb-6">Who You'll Meet</div>
               
-              {/* 4 Lines - Each phrase on separate line */}
-              <div className="text-xs sm:text-sm font-light leading-relaxed text-white mb-1">
-                The thinkers.
-              </div>
-              <div className="text-xs sm:text-sm font-light leading-relaxed text-white mb-1">
-                The dreamers.
-              </div>
-              <div className="text-xs sm:text-sm font-light leading-relaxed text-white mb-1">
-                The outsiders.
-              </div>
-              <div className="text-xs sm:text-sm font-light leading-relaxed text-white mb-4">
-                The observers.
+              <div className="space-y-2 mb-8">
+                {['The thinkers', 'The dreamers', 'The outsiders', 'The observers'].map((line, i) => (
+                  <motion.div 
+                    key={i}
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.8 + (i * 0.1) }}
+                    className="text-sm font-light text-white"
+                  >
+                    {line}
+                  </motion.div>
+                ))}
               </div>
               
-              <p className="text-[11px] text-white/35 mb-7">They're all here.</p>
-              <div className="flex justify-center -space-x-2 mb-7">
-                <div className="w-8 h-8 rounded-full bg-cover bg-center border-2 border-black" style={{ backgroundImage: "url('https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?w=100&h=100&fit=crop')" }} />
-                <div className="w-8 h-8 rounded-full bg-cover bg-center border-2 border-black" style={{ backgroundImage: "url('https://images.pexels.com/photos/1438081/pexels-photo-1438081.jpeg?w=100&h=100&fit=crop')" }} />
-                <div className="w-8 h-8 rounded-full bg-cover bg-center border-2 border-black" style={{ backgroundImage: "url('https://images.pexels.com/photos/1212984/pexels-photo-1212984.jpeg?w=100&h=100&fit=crop')" }} />
-                <div className="w-8 h-8 rounded-full bg-cover bg-center border-2 border-black" style={{ backgroundImage: "url('https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?w=100&h=100&fit=crop')" }} />
-                <div className="w-8 h-8 rounded-full bg-cover bg-center border-2 border-black" style={{ backgroundImage: "url('https://images.pexels.com/photos/1681010/pexels-photo-1681010.jpeg?w=100&h=100&fit=crop')" }} />
-                <div className="w-8 h-8 rounded-full bg-cover bg-center border-2 border-black" style={{ backgroundImage: "url('https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?w=100&h=100&fit=crop')" }} />
+              <p className="text-xs text-white/40 mb-7">They're all here, waiting.</p>
+              
+              <div className="flex justify-center -space-x-2 mb-8">
+                {['1212984', '1438081', '1222271', '1239291', '1681010', '2379004'].map((id, i) => (
+                  <motion.div 
+                    key={i}
+                    initial={{ opacity: 0, scale: 0 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 1.2 + (i * 0.05) }}
+                    className="w-10 h-10 rounded-full bg-cover bg-center border-2 border-black" 
+                    style={{ backgroundImage: `url('https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?w=100&h=100&fit=crop')` }} 
+                  />
+                ))}
               </div>
-              <button onClick={() => navigate('/login')} className="group flex items-center gap-2 text-[10px] tracking-[0.22em] uppercase text-white/40 hover:text-white transition-colors duration-300">
+              
+              <button 
+                onClick={() => navigate('/explore')}
+                className="group flex items-center gap-2 text-[11px] tracking-[0.22em] uppercase text-white/50 hover:text-white transition-colors duration-300"
+              >
                 Meet the Community
                 <svg className="w-3 h-3 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
               </button>
             </div>
-          </div>
+          </motion.div>
 
         </div>
       </section>
 
+      {/* CTA SECTION */}
+      <motion.section 
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8 }}
+        className="py-24 relative z-10"
+        style={{ background: 'rgba(0,0,0,0.8)' }}
+      >
+        <div className="max-w-4xl mx-auto px-6 text-center">
+          <h2 className="text-3xl md:text-4xl font-bold mb-6 tracking-wider">Your Tribe Awaits</h2>
+          <p className="text-white/60 text-base mb-10 max-w-2xl mx-auto leading-relaxed">
+            Stop pretending to be someone you're not. Join Eso and connect with people who understand 
+            the beauty of solitude, the depth of thought, and the power of authenticity.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <button
+              onClick={() => navigate('/register')}
+              className="px-10 py-4 bg-white text-black font-bold text-sm uppercase tracking-[0.2em] hover:bg-gray-200 transition-all shadow-lg"
+            >
+              Create Free Account
+            </button>
+            <button
+              onClick={() => navigate('/explore')}
+              className="px-10 py-4 border border-white/30 text-white font-semibold text-sm uppercase tracking-[0.2em] hover:bg-white/10 transition-all"
+            >
+              Explore First
+            </button>
+          </div>
+        </div>
+      </motion.section>
+
       {/* FOOTER */}
-      <footer className="border-t border-white/10 relative z-10" style={{ background: 'rgba(0,0,0,0.75)', backdropFilter: 'blur(12px)' }}>
-        <div className="max-w-7xl mx-auto px-6 lg:px-12 py-10">
-          <div className="text-center">
-            <p className="text-sm text-white/50">the introverts gathered here.</p>
+      <footer className="border-t border-white/10 relative z-10 bg-black">
+        <div className="max-w-7xl mx-auto px-6 lg:px-12 py-12">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+            <div>
+              <h3 className="text-xl font-bold tracking-[0.3em] mb-4" style={{ fontFamily: "'Space Mono', monospace" }}>ESO</h3>
+              <p className="text-sm text-white/50 leading-relaxed">
+                Your inner world, finally understood. A safe space for introverts and deep thinkers.
+              </p>
+            </div>
+            
+            <div>
+              <h4 className="text-sm font-semibold tracking-wider uppercase mb-3 text-white/70">Platform</h4>
+              <ul className="space-y-2">
+                <li><Link to="/explore" className="text-sm text-white/50 hover:text-white transition-colors">Explore</Link></li>
+                <li><Link to="/about" className="text-sm text-white/50 hover:text-white transition-colors">About</Link></li>
+                <li><Link to="/rules" className="text-sm text-white/50 hover:text-white transition-colors">Community Rules</Link></li>
+              </ul>
+            </div>
+            
+            <div>
+              <h4 className="text-sm font-semibold tracking-wider uppercase mb-3 text-white/70">Legal</h4>
+              <ul className="space-y-2">
+                <li><Link to="/terms" className="text-sm text-white/50 hover:text-white transition-colors">Terms of Service</Link></li>
+                <li><Link to="/privacy" className="text-sm text-white/50 hover:text-white transition-colors">Privacy Policy</Link></li>
+              </ul>
+            </div>
+            
+            <div>
+              <h4 className="text-sm font-semibold tracking-wider uppercase mb-3 text-white/70">Connect</h4>
+              <ul className="space-y-2">
+                <li><a href="mailto:hello@eso.app" className="text-sm text-white/50 hover:text-white transition-colors">hello@eso.app</a></li>
+                <li><a href="mailto:support@eso.app" className="text-sm text-white/50 hover:text-white transition-colors">Support</a></li>
+              </ul>
+            </div>
+          </div>
+          
+          <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
+            <p className="text-xs text-white/40">© 2026 Eso. Where introverts gather and thrive.</p>
+            <p className="text-xs text-white/40">Built for the quiet, the thoughtful, the unique.</p>
           </div>
         </div>
       </footer>

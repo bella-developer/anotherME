@@ -28,6 +28,11 @@ const Rules = lazy(() => import('./pages/Rules'));
 const AboutUs = lazy(() => import('./pages/AboutUs'));
 const Support = lazy(() => import('./pages/Support'));
 const Manifesto = lazy(() => import('./pages/Manifesto'));
+const NotFound = lazy(() => import('./pages/NotFound'));
+const Terms = lazy(() => import('./pages/Terms'));
+const Privacy = lazy(() => import('./pages/Privacy'));
+const Explore = lazy(() => import('./pages/Explore'));
+const ForgotPassword = lazy(() => import('./pages/ForgotPassword'));
 
 // Placeholder Create component
 function Create() {
@@ -83,6 +88,10 @@ function App() {
             <Route path="/" element={<Landing />} />
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/explore" element={<Explore />} />
+            <Route path="/terms" element={<Terms />} />
+            <Route path="/privacy" element={<Privacy />} />
 
             {/* Protected routes - Require authentication */}
             <Route
@@ -210,8 +219,8 @@ function App() {
               }
             />
 
-            {/* Catch all - redirect to landing */}
-            <Route path="*" element={<Navigate to="/" replace />} />
+            {/* Catch all - 404 Page */}
+            <Route path="*" element={<NotFound />} />
           </Routes>
 
           {/* Level-Up Notifications */}
