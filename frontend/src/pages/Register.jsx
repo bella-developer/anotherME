@@ -147,13 +147,19 @@ function Register() {
     if (!validateForm()) return;
     
     const registrationData = { password: formData.password };
-    if (formData.username.trim()) registrationData.username = formData.username.trim();
-    if (formData.email.trim()) registrationData.email = formData.email.trim();
+    if (formData.username && formData.username.trim()) {
+      registrationData.username = formData.username.trim();
+    }
+    if (formData.email && formData.email.trim()) {
+      registrationData.email = formData.email.trim();
+    }
     if (formData.age) {
       const ageMap = { '18-24': 21, '25-34': 29, '35-44': 39, '45+': 50 };
       registrationData.age = ageMap[formData.age];
     }
-    if (formData.gender) registrationData.gender = formData.gender;
+    if (formData.gender) {
+      registrationData.gender = formData.gender;
+    }
     
     const result = await dispatch(register(registrationData));
     if (register.fulfilled.match(result)) {
@@ -220,9 +226,16 @@ function Register() {
 
           {error && (
             <div className="bg-[#220000] border border-[#4d0000] rounded p-4 mb-6">
-              <p className="text-xs text-[#ff6b6b] tracking-wide uppercase">
+              <p className="text-xs text-[#ff6b6b] tracking-wide uppercase font-semibold mb-2">
                 {error.message || 'REGISTRATION FAILED'}
               </p>
+              {error.details && Array.isArray(error.details) && (
+                <ul className="text-xs text-[#ff8888] space-y-1 mt-2">
+                  {error.details.map((detail, i) => (
+                    <li key={i}>• {detail.field}: {detail.message}</li>
+                  ))}
+                </ul>
+              )}
             </div>
           )}
 
