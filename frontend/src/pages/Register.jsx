@@ -101,9 +101,46 @@ function Register() {
     return Object.keys(errors).length === 0;
   };
 
-  const isFormValid = formData.password && formData.confirmPassword && 
-                     formData.password === formData.confirmPassword && 
-                     Object.keys(validationErrors).length === 0;
+  const isFormValid = () => {
+    // Required fields
+    if (!formData.password || !formData.confirmPassword) {
+      return false;
+    }
+    
+    // Passwords must match
+    if (formData.password !== formData.confirmPassword) {
+      return false;
+    }
+    
+    // Password strength
+    if (formData.password.length < 8) {
+      return false;
+    }
+    if (!/[a-z]/.test(formData.password)) {
+      return false;
+    }
+    if (!/[A-Z]/.test(formData.password)) {
+      return false;
+    }
+    if (!/[0-9]/.test(formData.password)) {
+      return false;
+    }
+    if (!/[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(formData.password)) {
+      return false;
+    }
+    
+    // Username validation (if provided)
+    if (formData.username && formData.username.length < 3) {
+      return false;
+    }
+    
+    // Email validation (if provided)
+    if (formData.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      return false;
+    }
+    
+    return true;
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -325,7 +362,7 @@ function Register() {
 
             <button
               type="submit"
-              disabled={!isFormValid || loading}
+              disabled={!isFormValid() || loading}
               className="w-full py-3.5 bg-white hover:bg-white/90 disabled:bg-white/20 disabled:cursor-not-allowed text-black font-medium rounded transition-colors text-sm tracking-[0.15em] uppercase"
             >
               {loading ? (
