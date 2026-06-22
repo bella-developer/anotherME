@@ -41,6 +41,11 @@ export const validateRegister = [
     .withMessage('Username must be between 3 and 30 characters')
     .matches(/^[a-z0-9_-]+$/)
     .withMessage('Username can only contain letters, numbers, underscores, and hyphens'),
+  body('email')
+    .optional()
+    .isEmail()
+    .withMessage('Invalid email format')
+    .normalizeEmail(),
   body('password')
     .notEmpty()
     .withMessage('Password is required')
@@ -57,8 +62,7 @@ export const validateRegister = [
     .optional()
     .isIn(['male', 'female', 'other', 'prefer-not-to-say'])
     .withMessage('Invalid gender value'),
-  // Reject any PII fields
-  body('email').not().exists().withMessage('Email is not allowed'),
+  // Reject other PII fields (but allow email now)
   body('phone').not().exists().withMessage('Phone number is not allowed'),
   body('name').not().exists().withMessage('Name is not allowed'),
   body('realName').not().exists().withMessage('Real name is not allowed'),
@@ -322,6 +326,11 @@ export const validateCreateCircleComment = [
  * Validation schemas for user endpoints
  */
 export const validateUpdateUser = [
+  body('email')
+    .optional()
+    .isEmail()
+    .withMessage('Invalid email format')
+    .normalizeEmail(),
   body('age')
     .optional()
     .isInt({ min: 18, max: 100 })
@@ -331,8 +340,7 @@ export const validateUpdateUser = [
     .optional()
     .isIn(['male', 'female', 'other', 'prefer-not-to-say'])
     .withMessage('Invalid gender value'),
-  // Reject any PII fields
-  body('email').not().exists().withMessage('Email is not allowed'),
+  // Reject other PII fields (but allow email now)
   body('phone').not().exists().withMessage('Phone number is not allowed'),
   body('name').not().exists().withMessage('Name is not allowed'),
   body('realName').not().exists().withMessage('Real name is not allowed'),
