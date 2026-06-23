@@ -1,6 +1,6 @@
 /**
- * ESO Logo Component - Matching the exact reference design
- * Bold, rounded letters with specific styling
+ * ESO Logo Component - Refined with thinner strokes
+ * Clean, modern design with reduced curviness
  */
 
 function EsoLogo({ className = "h-10 w-auto" }) {
@@ -34,86 +34,86 @@ function EsoLogo({ className = "h-10 w-auto" }) {
         </filter>
       </defs>
       
-      {/* Letter E - Bold C-shape with horizontal bar */}
+      {/* Letter E - Thinner C-shape with horizontal bar */}
       <g filter="url(#glow)">
-        {/* Main C body - very thick stroke */}
+        {/* Main C body - thinner stroke */}
         <path
-          d="M 90 30
-             C 60 30, 40 50, 40 80
+          d="M 80 40
+             C 55 40, 40 55, 40 80
              L 40 120
-             C 40 150, 60 170, 90 170
-             L 140 170
-             C 155 170, 165 160, 165 145
-             L 165 140
-             C 165 130, 155 125, 145 125
-             L 95 125
-             L 95 75
-             L 145 75
-             C 155 75, 165 70, 165 60
-             L 165 55
-             C 165 40, 155 30, 140 30
+             C 40 145, 55 160, 80 160
+             L 130 160
+             C 145 160, 155 150, 155 135
+             L 155 132
+             C 155 125, 148 120, 140 120
+             L 85 120
+             L 85 80
+             L 140 80
+             C 148 80, 155 75, 155 68
+             L 155 65
+             C 155 50, 145 40, 130 40
              Z"
           fill="url(#purpleGrad)"
         />
         
-        {/* Floating horizontal bar - completely separate */}
+        {/* Floating horizontal bar - thinner */}
         <rect 
-          x="100" 
-          y="85" 
-          width="90" 
-          height="30" 
-          rx="15" 
+          x="90" 
+          y="90" 
+          width="85" 
+          height="20" 
+          rx="10" 
           fill="url(#purpleGrad)" 
         />
       </g>
       
-      {/* Letter S - Bold angular S shape */}
+      {/* Letter S - Cleaner, less curvy S */}
       <g filter="url(#glow)">
         <path
-          d="M 220 30
-             L 360 30
-             C 378 30, 385 38, 385 55
-             L 385 60
-             C 385 68, 382 74, 375 78
-             L 285 78
-             C 275 78, 270 83, 270 88
-             L 270 92
-             C 270 97, 275 102, 285 102
-             L 375 102
-             C 382 106, 385 112, 385 120
-             L 385 145
-             C 385 162, 378 170, 360 170
-             L 220 170
-             C 202 170, 195 162, 195 145
-             L 195 140
-             C 195 132, 198 126, 205 122
-             L 305 122
-             C 315 122, 320 117, 320 112
-             L 320 108
-             C 320 103, 315 98, 305 98
-             L 205 98
-             C 198 94, 195 88, 195 80
-             L 195 55
-             C 195 38, 202 30, 220 30
+          d="M 210 40
+             L 350 40
+             C 365 40, 375 48, 375 60
+             L 375 65
+             C 375 72, 372 77, 365 80
+             L 280 80
+             C 270 80, 265 85, 265 90
+             L 265 94
+             C 265 99, 270 104, 280 104
+             L 365 104
+             C 372 107, 375 112, 375 119
+             L 375 140
+             C 375 152, 365 160, 350 160
+             L 210 160
+             C 195 160, 185 152, 185 140
+             L 185 135
+             C 185 128, 188 123, 195 120
+             L 300 120
+             C 310 120, 315 115, 315 110
+             L 315 106
+             C 315 101, 310 96, 300 96
+             L 195 96
+             C 188 93, 185 88, 185 81
+             L 185 60
+             C 185 48, 195 40, 210 40
              Z"
           fill="#FFFFFF"
         />
       </g>
       
-      {/* Letter O - Perfect thick donut */}
+      {/* Letter O - Thinner donut ring */}
       <g filter="url(#glow)">
         <path
-          d="M 480 30
-             C 530 30, 570 70, 570 100
-             C 570 130, 530 170, 480 170
-             C 430 170, 390 130, 390 100
-             C 390 70, 430 30, 480 30
+          d="M 480 40
+             C 525 40, 560 75, 560 100
+             C 560 125, 525 160, 480 160
+             C 435 160, 400 125, 400 100
+             C 400 75, 435 40, 480 40
              Z
-             M 480 75
-             C 460 75, 445 85, 445 100
-             C 445 115, 460 125, 480 125
-             C 500 125, 515 115, 515 100
-             C 515 85, 500 75, 480 75
+             M 480 70
+             C 455 70, 435 85, 435 100
+             C 435 115, 455 130, 480 130
+             C 505 130, 525 115, 525 100
+             C 525 85, 505 70, 480 70
              Z"
           fill="url(#blueGrad)"
           fillRule="evenodd"
