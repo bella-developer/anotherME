@@ -58,10 +58,30 @@ import categoryRoutes from './routes/category.routes.js';
 import notificationRoutes from './routes/notification.routes.js';
 import adminRoutes from './routes/admin.routes.js';
 import supportRoutes from './routes/support.routes.js';
+import { sendWelcomeEmail } from './services/email.service.js';
 
 // API routes
 app.get('/api', (req, res) => {
   res.json({ message: 'ESO API' });
+});
+
+// Test email endpoint (temporary - remove in production)
+app.get('/api/test-email', async (req, res) => {
+  try {
+    const result = await sendWelcomeEmail('test@example.com', 'TestUser');
+    res.json({ 
+      success: true, 
+      result,
+      resendConfigured: !!process.env.RESEND_API_KEY,
+      apiKeyLength: process.env.RESEND_API_KEY?.length || 0
+    });
+  } catch (error) {
+    res.status(500).json({ 
+      success: false, 
+      error: error.message,
+      resendConfigured: !!process.env.RESEND_API_KEY 
+    });
+  }
 });
 
 // Health check routes
