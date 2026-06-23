@@ -1,49 +1,37 @@
 /**
  * Email Service
- * Handles sending emails for password reset and notifications using Nodemailer + Gmail SMTP
+ * Handles sending emails using Brevo (formerly Sendinblue) HTTP API
+ * Works with Render's network restrictions (no SMTP ports needed)
  */
 
-import nodemailer from 'nodemailer';
+import brevo from '@getbrevo/brevo';
 
-// Create reusable transporter using Gmail SMTP
-let transporter = null;
+// Initialize Brevo API client
+let apiInstance = null;
 
-function initializeTransporter() {
-  if (!process.env.GMAIL_USER || !process.env.GMAIL_APP_PASSWORD) {
-    console.warn('[EMAIL SERVICE] Gmail credentials not configured - emails will be logged to console only');
-    console.warn('[EMAIL SERVICE] Set GMAIL_USER and GMAIL_APP_PASSWORD environment variables to enable email sending');
+function initializeBrevo() {
+  if (!process.env.BREVO_API_KEY) {
+    console.warn('[EMAIL SERVICE] BREVO_API_KEY not configured - emails will be logged to console only');
+    console.warn('[EMAIL SERVICE] Get your free API key at https://app.brevo.com/settings/keys/api');
     return null;
   }
 
   try {
-    transporter = nodemailer.createTransport({
-      // Use direct IPv4 address to bypass IPv6 issues
-      host: '74.125.200.108', // smtp.gmail.com IPv4 address
-      port: 587,
-      secure: false, // Use STARTTLS
-      auth: {
-        user: process.env.GMAIL_USER,
-        pass: process.env.GMAIL_APP_PASSWORD,
-      },
-      // Ignore TLS certificate hostname verification since we're using IP
-      tls: {
-        rejectUnauthorized: false,
-        servername: 'smtp.gmail.com'
-      },
-      connectionTimeout: 10000,
-      greetingTimeout: 10000,
-      socketTimeout: 10000,
-    });
-    console.log(`[EMAIL SERVICE] Gmail SMTP initialized with IPv4 fallback for user: ${process.env.GMAIL_USER}`);
-    return transporter;
+    const defaultClient = brevo.ApiClient.instance;
+    const apiKey = defaultClient.authentications['api-key'];
+    apiKey.apiKey = process.env.BREVO_API_KEY;
+    
+    apiInstance = new brevo.TransactionalEmailsApi();
+    console.log('[EMAIL SERVICE] Brevo API initialized successfully');
+    return apiInstance;
   } catch (error) {
-    console.error('[EMAIL SERVICE] Failed to initialize Gmail SMTP:', error.message);
+    console.error('[EMAIL SERVICE] Failed to initialize Brevo API:', error.message);
     return null;
   }
 }
 
 // Initialize on module load
-transporter = initializeTransporter();
+apiInstance = initializeBrevo();
 
 /**
  * Send password reset email
@@ -55,15 +43,19 @@ transporter = initializeTransporter();
 export async function sendPasswordResetEmail(email, resetToken, username) {
   const resetUrl = `${process.env.FRONTEND_URL || 'https://anothermee.vercel.app'}/reset-password?token=${resetToken}`;
   
-  // Send actual email if Gmail is configured
-  if (transporter) {
+  // Send actual email if Brevo is configured
+  if (apiInstance) {
     console.log(`[EMAIL] Attempting to send password reset email to: ${email}`);
     try {
-      const info = await transporter.sendMail({
-        from: `"Eso" <${process.env.GMAIL_USER}>`,
-        to: email,
-        subject: 'Reset Your Eso Password',
-        html: `
+      const sendSmtpEmail = new brevo.SendSmtpEmail();
+      
+      sendSmtpEmail.sender = { 
+        name: 'Eso',
+        email: process.env.BREVO_SENDER_EMAIL || 'noreply@example.com'
+      };
+      sendSmtpEmail.to = [{ email }];
+      sendSmtpEmail.subject = 'Reset Your Eso Password';
+      sendSmtpEmail.htmlContent = `
 <!DOCTYPE html>
 <html>
 <head>
@@ -76,47 +68,34 @@ export async function sendPasswordResetEmail(email, resetToken, username) {
     <tr>
       <td align="center" style="padding: 40px 20px;">
         <table role="presentation" style="max-width: 600px; width: 100%; border-collapse: collapse; background-color: #0a0a0a; border: 1px solid #333333;">
-          <!-- Header -->
           <tr>
             <td style="padding: 40px 40px 30px; text-align: center; border-bottom: 1px solid #333333;">
               <h1 style="margin: 0; font-size: 32px; letter-spacing: 0.3em; color: #ffffff; font-weight: 700;">ESO</h1>
               <p style="margin: 10px 0 0; font-size: 11px; letter-spacing: 0.15em; color: #666666; text-transform: uppercase;">Your inner world, understood</p>
             </td>
           </tr>
-          
-          <!-- Content -->
           <tr>
             <td style="padding: 40px;">
               <p style="margin: 0 0 20px; font-size: 14px; line-height: 1.6; color: #ffffff;">Hello <strong>${username}</strong>,</p>
-              
               <p style="margin: 0 0 30px; font-size: 14px; line-height: 1.6; color: #cccccc;">You requested to reset your password. Click the button below to create a new password:</p>
-              
-              <!-- Button -->
               <table role="presentation" style="width: 100%; border-collapse: collapse;">
                 <tr>
                   <td align="center" style="padding: 20px 0;">
-                    <a href="${resetUrl}" style="display: inline-block; padding: 16px 40px; background-color: #ffffff; color: #000000; text-decoration: none; font-weight: 700; font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; border-radius: 0;">RESET PASSWORD</a>
+                    <a href="${resetUrl}" style="display: inline-block; padding: 16px 40px; background-color: #ffffff; color: #000000; text-decoration: none; font-weight: 700; font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase;">RESET PASSWORD</a>
                   </td>
                 </tr>
               </table>
-              
-              <p style="margin: 30px 0 0; font-size: 12px; line-height: 1.6; color: #888888;">Or copy and paste this link into your browser:</p>
+              <p style="margin: 30px 0 0; font-size: 12px; line-height: 1.6; color: #888888;">Or copy and paste this link:</p>
               <p style="margin: 10px 0 0; font-size: 11px; line-height: 1.6; color: #666666; word-break: break-all;">${resetUrl}</p>
-              
               <div style="margin: 40px 0 0; padding-top: 30px; border-top: 1px solid #333333;">
-                <p style="margin: 0 0 10px; font-size: 11px; line-height: 1.6; color: #888888;">This link will expire in <strong>1 hour</strong>.</p>
-                <p style="margin: 0; font-size: 11px; line-height: 1.6; color: #888888;">If you didn't request this, please ignore this email. Your password will remain unchanged.</p>
+                <p style="margin: 0 0 10px; font-size: 11px; line-height: 1.6; color: #888888;">This link expires in <strong>1 hour</strong>.</p>
+                <p style="margin: 0; font-size: 11px; line-height: 1.6; color: #888888;">If you didn't request this, ignore this email.</p>
               </div>
             </td>
           </tr>
-          
-          <!-- Footer -->
           <tr>
             <td style="padding: 30px 40px; text-align: center; border-top: 1px solid #333333;">
-              <p style="margin: 0; font-size: 10px; line-height: 1.6; color: #666666; letter-spacing: 0.05em;">
-                The Eso Team<br>
-                A safe space for introverts and deep thinkers
-              </p>
+              <p style="margin: 0; font-size: 10px; line-height: 1.6; color: #666666; letter-spacing: 0.05em;">The Eso Team</p>
             </td>
           </tr>
         </table>
@@ -125,14 +104,15 @@ export async function sendPasswordResetEmail(email, resetToken, username) {
   </table>
 </body>
 </html>
-        `,
-      });
+      `;
 
-      console.log(`[EMAIL] Password reset email sent successfully. Message ID: ${info.messageId}`);
+      const result = await apiInstance.sendTransacEmail(sendSmtpEmail);
+      console.log(`[EMAIL] Password reset email sent successfully. Message ID: ${result.messageId}`);
+      
       return {
         success: true,
         message: 'Password reset email sent',
-        messageId: info.messageId,
+        messageId: result.messageId,
       };
     } catch (error) {
       console.error('[EMAIL] Error sending password reset email:', error);
@@ -151,7 +131,7 @@ export async function sendPasswordResetEmail(email, resetToken, username) {
     return {
       success: true,
       message: 'Password reset email logged (development mode)',
-      resetUrl, // Only in dev mode
+      resetUrl,
     };
   }
 }
@@ -165,15 +145,19 @@ export async function sendPasswordResetEmail(email, resetToken, username) {
 export async function sendWelcomeEmail(email, username) {
   if (!email) return { success: false, message: 'No email provided' };
 
-  // Send actual email if Gmail is configured
-  if (transporter) {
+  // Send actual email if Brevo is configured
+  if (apiInstance) {
     console.log(`[EMAIL] Attempting to send welcome email to: ${email}`);
     try {
-      const info = await transporter.sendMail({
-        from: `"Eso" <${process.env.GMAIL_USER}>`,
-        to: email,
-        subject: 'Welcome to Eso',
-        html: `
+      const sendSmtpEmail = new brevo.SendSmtpEmail();
+      
+      sendSmtpEmail.sender = { 
+        name: 'Eso',
+        email: process.env.BREVO_SENDER_EMAIL || 'noreply@example.com'
+      };
+      sendSmtpEmail.to = [{ email }];
+      sendSmtpEmail.subject = 'Welcome to Eso';
+      sendSmtpEmail.htmlContent = `
 <!DOCTYPE html>
 <html>
 <head>
@@ -186,66 +170,51 @@ export async function sendWelcomeEmail(email, username) {
     <tr>
       <td align="center" style="padding: 40px 20px;">
         <table role="presentation" style="max-width: 600px; width: 100%; border-collapse: collapse; background-color: #0a0a0a; border: 1px solid #333333;">
-          <!-- Header -->
           <tr>
             <td style="padding: 40px 40px 30px; text-align: center; border-bottom: 1px solid #333333;">
               <h1 style="margin: 0; font-size: 32px; letter-spacing: 0.3em; color: #ffffff; font-weight: 700;">ESO</h1>
               <p style="margin: 10px 0 0; font-size: 11px; letter-spacing: 0.15em; color: #666666; text-transform: uppercase;">Your inner world, understood</p>
             </td>
           </tr>
-          
-          <!-- Content -->
           <tr>
             <td style="padding: 40px;">
               <p style="margin: 0 0 20px; font-size: 16px; line-height: 1.6; color: #ffffff;">Welcome, <strong>${username}</strong>!</p>
-              
               <p style="margin: 0 0 30px; font-size: 14px; line-height: 1.6; color: #cccccc;">Thank you for joining Eso — a safe space where introverts, deep thinkers, and unique minds connect authentically.</p>
-              
-              <!-- Spaces -->
               <h2 style="margin: 30px 0 20px; font-size: 14px; letter-spacing: 0.15em; color: #ffffff; text-transform: uppercase;">Explore Our Spaces:</h2>
-              
               <table role="presentation" style="width: 100%; border-collapse: collapse;">
                 <tr>
                   <td style="padding: 12px 0; border-bottom: 1px solid #222222;">
                     <p style="margin: 0; font-size: 13px; color: #ffffff;"><strong>→ Philosophy</strong></p>
-                    <p style="margin: 5px 0 0; font-size: 12px; color: #888888;">Question reality and explore ideas that challenge the ordinary</p>
+                    <p style="margin: 5px 0 0; font-size: 12px; color: #888888;">Question reality and explore ideas</p>
                   </td>
                 </tr>
                 <tr>
                   <td style="padding: 12px 0; border-bottom: 1px solid #222222;">
                     <p style="margin: 0; font-size: 13px; color: #ffffff;"><strong>→ Solitude</strong></p>
-                    <p style="margin: 5px 0 0; font-size: 12px; color: #888888;">Embrace the beauty of being alone</p>
+                    <p style="margin: 5px 0 0; font-size: 12px; color: #888888;">Embrace being alone</p>
                   </td>
                 </tr>
                 <tr>
                   <td style="padding: 12px 0; border-bottom: 1px solid #222222;">
                     <p style="margin: 0; font-size: 13px; color: #ffffff;"><strong>→ Creativity</strong></p>
-                    <p style="margin: 5px 0 0; font-size: 12px; color: #888888;">Share art, writing, and creative expression</p>
+                    <p style="margin: 5px 0 0; font-size: 12px; color: #888888;">Share your creative expression</p>
                   </td>
                 </tr>
                 <tr>
                   <td style="padding: 12px 0;">
                     <p style="margin: 0; font-size: 13px; color: #ffffff;"><strong>→ Deep Talks</strong></p>
-                    <p style="margin: 5px 0 0; font-size: 12px; color: #888888;">Conversations that go beneath the surface</p>
+                    <p style="margin: 5px 0 0; font-size: 12px; color: #888888;">Conversations beneath the surface</p>
                   </td>
                 </tr>
               </table>
-              
               <div style="margin: 40px 0 0; padding-top: 30px; border-top: 1px solid #333333;">
-                <p style="margin: 0; font-size: 11px; line-height: 1.6; color: #888888; font-style: italic;">
-                  "Most people seek attention. Few seek understanding."
-                </p>
+                <p style="margin: 0; font-size: 11px; line-height: 1.6; color: #888888; font-style: italic;">"Most people seek attention. Few seek understanding."</p>
               </div>
             </td>
           </tr>
-          
-          <!-- Footer -->
           <tr>
             <td style="padding: 30px 40px; text-align: center; border-top: 1px solid #333333;">
-              <p style="margin: 0; font-size: 10px; line-height: 1.6; color: #666666; letter-spacing: 0.05em;">
-                The Eso Team<br>
-                Built for the quiet, the thoughtful, the unique
-              </p>
+              <p style="margin: 0; font-size: 10px; line-height: 1.6; color: #666666; letter-spacing: 0.05em;">The Eso Team</p>
             </td>
           </tr>
         </table>
@@ -254,18 +223,18 @@ export async function sendWelcomeEmail(email, username) {
   </table>
 </body>
 </html>
-        `,
-      });
+      `;
 
-      console.log(`[EMAIL] Welcome email sent successfully. Message ID: ${info.messageId}`);
+      const result = await apiInstance.sendTransacEmail(sendSmtpEmail);
+      console.log(`[EMAIL] Welcome email sent successfully. Message ID: ${result.messageId}`);
+      
       return {
         success: true,
         message: 'Welcome email sent',
-        messageId: info.messageId,
+        messageId: result.messageId,
       };
     } catch (error) {
       console.error('[EMAIL] Error sending welcome email:', error);
-      // Don't throw - welcome email is optional
       return {
         success: false,
         message: 'Failed to send welcome email',

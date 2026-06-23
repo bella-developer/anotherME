@@ -68,22 +68,20 @@ app.get('/api', (req, res) => {
 // Test email endpoint (temporary - remove in production)
 app.get('/api/test-email', async (req, res) => {
   try {
-    // Use query parameter or default email
     const testEmail = req.query.email || 'test@example.com';
     const result = await sendWelcomeEmail(testEmail, 'TestUser');
     res.json({ 
       success: result.success, 
       result,
-      gmailConfigured: !!(process.env.GMAIL_USER && process.env.GMAIL_APP_PASSWORD),
-      gmailUser: process.env.GMAIL_USER || 'not configured',
+      brevoConfigured: !!process.env.BREVO_API_KEY,
       testEmail,
-      instructions: 'Visit /api/test-email?email=your@email.com to test'
+      instructions: 'Get free API key at https://app.brevo.com/settings/keys/api'
     });
   } catch (error) {
     res.status(500).json({ 
       success: false, 
       error: error.message,
-      gmailConfigured: !!(process.env.GMAIL_USER && process.env.GMAIL_APP_PASSWORD)
+      brevoConfigured: !!process.env.BREVO_API_KEY
     });
   }
 });

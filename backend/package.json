@@ -25,6 +25,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "@getbrevo/brevo": "^5.0.4",
     "bcrypt": "^5.1.1",
     "cloudinary": "^2.10.0",
     "connect-mongo": "^6.0.0",
@@ -40,7 +41,6 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.0.0",
     "multer": "^2.2.0",
-    "nodemailer": "^9.0.1",
     "winston": "^3.19.0"
   },
   "devDependencies": {
