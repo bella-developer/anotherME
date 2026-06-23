@@ -1,18 +1,38 @@
 /**
  * Email Service
- * Handles sending emails for password reset and notifications using Resend
+ * Handles sending emails for password reset and notifications using Nodemailer + Gmail SMTP
  */
 
-import { Resend } from 'resend';
+import nodemailer from 'nodemailer';
 
-// Initialize Resend client
-let resend = null;
-if (process.env.RESEND_API_KEY) {
-  resend = new Resend(process.env.RESEND_API_KEY);
-  console.log('[EMAIL SERVICE] Resend initialized successfully');
-} else {
-  console.warn('[EMAIL SERVICE] RESEND_API_KEY not found - emails will be logged to console only');
+// Create reusable transporter using Gmail SMTP
+let transporter = null;
+
+function initializeTransporter() {
+  if (!process.env.GMAIL_USER || !process.env.GMAIL_APP_PASSWORD) {
+    console.warn('[EMAIL SERVICE] Gmail credentials not configured - emails will be logged to console only');
+    console.warn('[EMAIL SERVICE] Set GMAIL_USER and GMAIL_APP_PASSWORD environment variables to enable email sending');
+    return null;
+  }
+
+  try {
+    transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.GMAIL_USER,
+        pass: process.env.GMAIL_APP_PASSWORD,
+      },
+    });
+    console.log(`[EMAIL SERVICE] Gmail SMTP initialized successfully with user: ${process.env.GMAIL_USER}`);
+    return transporter;
+  } catch (error) {
+    console.error('[EMAIL SERVICE] Failed to initialize Gmail SMTP:', error.message);
+    return null;
+  }
 }
+
+// Initialize on module load
+transporter = initializeTransporter();
 
 /**
  * Send password reset email
@@ -22,15 +42,15 @@ if (process.env.RESEND_API_KEY) {
  * @returns {Promise<Object>} Email send result
  */
 export async function sendPasswordResetEmail(email, resetToken, username) {
-  const resetUrl = `${process.env.FRONTEND_URL || 'http://localhost:5173'}/reset-password?token=${resetToken}`;
+  const resetUrl = `${process.env.FRONTEND_URL || 'https://anothermee.vercel.app'}/reset-password?token=${resetToken}`;
   
-  // Send actual email using Resend if API key is configured
-  if (resend) {
+  // Send actual email if Gmail is configured
+  if (transporter) {
     console.log(`[EMAIL] Attempting to send password reset email to: ${email}`);
     try {
-      const { data, error } = await resend.emails.send({
-        from: process.env.EMAIL_FROM || 'Eso <onboarding@resend.dev>',
-        to: [email],
+      const info = await transporter.sendMail({
+        from: `"Eso" <${process.env.GMAIL_USER}>`,
+        to: email,
         subject: 'Reset Your Eso Password',
         html: `
 <!DOCTYPE html>
@@ -97,20 +117,15 @@ export async function sendPasswordResetEmail(email, resetToken, username) {
         `,
       });
 
-      if (error) {
-        console.error('[EMAIL] Resend email error:', error);
-        throw new Error('Failed to send password reset email');
-      }
-      
-      console.log(`[EMAIL] Password reset email sent successfully. Email ID: ${data?.id}`);
+      console.log(`[EMAIL] Password reset email sent successfully. Message ID: ${info.messageId}`);
       return {
         success: true,
         message: 'Password reset email sent',
-        emailId: data?.id,
+        messageId: info.messageId,
       };
     } catch (error) {
-      console.error('Error sending password reset email:', error);
-      throw error;
+      console.error('[EMAIL] Error sending password reset email:', error);
+      throw new Error('Failed to send password reset email');
     }
   } else {
     // Development: Log to console
@@ -131,7 +146,7 @@ export async function sendPasswordResetEmail(email, resetToken, username) {
 }
 
 /**
- * Send welcome email (optional)
+ * Send welcome email
  * @param {string} email - Recipient email
  * @param {string} username - User's username
  * @returns {Promise<Object>} Email send result
@@ -139,12 +154,13 @@ export async function sendPasswordResetEmail(email, resetToken, username) {
 export async function sendWelcomeEmail(email, username) {
   if (!email) return { success: false, message: 'No email provided' };
 
-  // Send actual email using Resend if API key is configured
-  if (resend) {
+  // Send actual email if Gmail is configured
+  if (transporter) {
+    console.log(`[EMAIL] Attempting to send welcome email to: ${email}`);
     try {
-      const { data, error } = await resend.emails.send({
-        from: process.env.EMAIL_FROM || 'Eso <onboarding@resend.dev>',
-        to: [email],
+      const info = await transporter.sendMail({
+        from: `"Eso" <${process.env.GMAIL_USER}>`,
+        to: email,
         subject: 'Welcome to Eso',
         html: `
 <!DOCTYPE html>
@@ -230,23 +246,14 @@ export async function sendWelcomeEmail(email, username) {
         `,
       });
 
-      if (error) {
-        console.error('[EMAIL] Resend welcome email error:', error);
-        // Don't throw - welcome email is optional
-        return {
-          success: false,
-          message: 'Failed to send welcome email',
-        };
-      }
-      
-      console.log(`[EMAIL] Welcome email sent successfully. Email ID: ${data?.id}`);
+      console.log(`[EMAIL] Welcome email sent successfully. Message ID: ${info.messageId}`);
       return {
         success: true,
         message: 'Welcome email sent',
-        emailId: data?.id,
+        messageId: info.messageId,
       };
     } catch (error) {
-      console.error('Error sending welcome email:', error);
+      console.error('[EMAIL] Error sending welcome email:', error);
       // Don't throw - welcome email is optional
       return {
         success: false,

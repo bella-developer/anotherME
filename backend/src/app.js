@@ -68,18 +68,22 @@ app.get('/api', (req, res) => {
 // Test email endpoint (temporary - remove in production)
 app.get('/api/test-email', async (req, res) => {
   try {
-    const result = await sendWelcomeEmail('test@example.com', 'TestUser');
+    // Use query parameter or default email
+    const testEmail = req.query.email || 'test@example.com';
+    const result = await sendWelcomeEmail(testEmail, 'TestUser');
     res.json({ 
-      success: true, 
+      success: result.success, 
       result,
-      resendConfigured: !!process.env.RESEND_API_KEY,
-      apiKeyLength: process.env.RESEND_API_KEY?.length || 0
+      gmailConfigured: !!(process.env.GMAIL_USER && process.env.GMAIL_APP_PASSWORD),
+      gmailUser: process.env.GMAIL_USER || 'not configured',
+      testEmail,
+      instructions: 'Visit /api/test-email?email=your@email.com to test'
     });
   } catch (error) {
     res.status(500).json({ 
       success: false, 
       error: error.message,
-      resendConfigured: !!process.env.RESEND_API_KEY 
+      gmailConfigured: !!(process.env.GMAIL_USER && process.env.GMAIL_APP_PASSWORD)
     });
   }
 });
