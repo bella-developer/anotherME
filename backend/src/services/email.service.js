@@ -9,6 +9,9 @@ import { Resend } from 'resend';
 let resend = null;
 if (process.env.RESEND_API_KEY) {
   resend = new Resend(process.env.RESEND_API_KEY);
+  console.log('[EMAIL SERVICE] Resend initialized successfully');
+} else {
+  console.warn('[EMAIL SERVICE] RESEND_API_KEY not found - emails will be logged to console only');
 }
 
 /**
@@ -21,8 +24,9 @@ if (process.env.RESEND_API_KEY) {
 export async function sendPasswordResetEmail(email, resetToken, username) {
   const resetUrl = `${process.env.FRONTEND_URL || 'http://localhost:5173'}/reset-password?token=${resetToken}`;
   
-  // Production: Send actual email using Resend
-  if (process.env.NODE_ENV === 'production' && resend) {
+  // Send actual email using Resend if API key is configured
+  if (resend) {
+    console.log(`[EMAIL] Attempting to send password reset email to: ${email}`);
     try {
       const { data, error } = await resend.emails.send({
         from: process.env.EMAIL_FROM || 'Eso <onboarding@resend.dev>',
@@ -94,10 +98,11 @@ export async function sendPasswordResetEmail(email, resetToken, username) {
       });
 
       if (error) {
-        console.error('Resend email error:', error);
+        console.error('[EMAIL] Resend email error:', error);
         throw new Error('Failed to send password reset email');
       }
       
+      console.log(`[EMAIL] Password reset email sent successfully. Email ID: ${data?.id}`);
       return {
         success: true,
         message: 'Password reset email sent',
@@ -134,8 +139,8 @@ export async function sendPasswordResetEmail(email, resetToken, username) {
 export async function sendWelcomeEmail(email, username) {
   if (!email) return { success: false, message: 'No email provided' };
 
-  // Production: Send actual email using Resend
-  if (process.env.NODE_ENV === 'production' && resend) {
+  // Send actual email using Resend if API key is configured
+  if (resend) {
     try {
       const { data, error } = await resend.emails.send({
         from: process.env.EMAIL_FROM || 'Eso <onboarding@resend.dev>',
@@ -226,7 +231,7 @@ export async function sendWelcomeEmail(email, username) {
       });
 
       if (error) {
-        console.error('Resend email error:', error);
+        console.error('[EMAIL] Resend welcome email error:', error);
         // Don't throw - welcome email is optional
         return {
           success: false,
@@ -234,6 +239,7 @@ export async function sendWelcomeEmail(email, username) {
         };
       }
       
+      console.log(`[EMAIL] Welcome email sent successfully. Email ID: ${data?.id}`);
       return {
         success: true,
         message: 'Welcome email sent',
