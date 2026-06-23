@@ -1,12 +1,12 @@
 /**
  * ESO Logo Component - Brand identity
- * Exact custom letter shapes from the reference design
+ * Dark aesthetic with curvy, artistic letter shapes
  */
 
 function EsoLogo({ className = "h-10 w-auto" }) {
   return (
     <svg 
-      viewBox="0 0 500 200" 
+      viewBox="0 0 420 200" 
       fill="none" 
       xmlns="http://www.w3.org/2000/svg" 
       className={className}
@@ -14,19 +14,19 @@ function EsoLogo({ className = "h-10 w-auto" }) {
       <defs>
         {/* Purple gradient for E */}
         <linearGradient id="purpleGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stopColor="#A78BFA" />
-          <stop offset="100%" stopColor="#7C3AED" />
+          <stop offset="0%" stopColor="#9D7FFF" />
+          <stop offset="100%" stopColor="#6B4FDD" />
         </linearGradient>
         
         {/* Blue gradient for O */}
         <linearGradient id="blueGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stopColor="#60A5FA" />
-          <stop offset="100%" stopColor="#3B82F6" />
+          <stop offset="0%" stopColor="#6BA5FA" />
+          <stop offset="100%" stopColor="#4A7FE8" />
         </linearGradient>
         
-        {/* Glow effect */}
+        {/* Strong glow effect for dark aesthetic */}
         <filter id="glow">
-          <feGaussianBlur stdDeviation="6" result="coloredBlur"/>
+          <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
           <feMerge>
             <feMergeNode in="coloredBlur"/>
             <feMergeNode in="SourceGraphic"/>
@@ -34,79 +34,92 @@ function EsoLogo({ className = "h-10 w-auto" }) {
         </filter>
       </defs>
       
-      {/* Letter E - C shape with SEPARATE floating horizontal bar */}
+      {/* Letter E - Smooth curvy C-shape with separate floating bar */}
       <g filter="url(#glow)">
-        {/* Main C-shaped body of E */}
+        {/* Main curvy C-shaped body */}
         <path
-          d="M 40 30 
-             C 40 30, 20 30, 20 50
-             L 20 150
-             C 20 170, 40 170, 40 170
-             L 120 170
-             C 130 170, 130 160, 130 150
-             L 130 145
-             C 130 135, 120 135, 120 135
-             L 60 135
-             L 60 65
-             L 120 65
-             C 130 65, 130 55, 130 50
-             L 130 45
-             C 130 35, 120 30, 120 30
+          d="M 45 25
+             C 25 25, 15 35, 15 55
+             L 15 145
+             C 15 165, 25 175, 45 175
+             L 110 175
+             C 125 175, 135 165, 135 150
+             L 135 143
+             C 135 133, 125 128, 115 128
+             L 60 128
+             L 60 72
+             L 115 72
+             C 125 72, 135 67, 135 57
+             L 135 50
+             C 135 35, 125 25, 110 25
              Z"
           fill="url(#purpleGrad)"
         />
         
-        {/* SEPARATE floating horizontal bar (not connected to E body) */}
-        <rect x="65" y="85" width="75" height="30" rx="15" fill="url(#purpleGrad)" />
+        {/* Separate floating rounded bar */}
+        <rect x="70" y="82" width="80" height="36" rx="18" fill="url(#purpleGrad)" />
       </g>
       
-      {/* Letter S - Angular geometric S */}
+      {/* Letter S - Smooth curvy S overlapping towards O */}
       <g filter="url(#glow)">
         <path
-          d="M 160 30
-             L 280 30
-             C 295 30, 300 35, 300 50
-             L 300 60
-             C 300 67, 295 72, 285 75
-             L 200 75
-             C 190 75, 185 80, 185 85
-             L 185 90
-             C 185 95, 190 100, 200 100
-             L 285 100
-             C 295 103, 300 108, 300 115
-             L 300 150
-             C 300 165, 295 170, 280 170
-             L 160 170
-             C 145 170, 140 165, 140 150
-             L 140 140
-             C 140 133, 145 128, 155 125
-             L 255 125
-             C 265 125, 270 120, 270 115
-             L 270 110
-             C 270 105, 265 100, 255 100
-             L 155 100
-             C 145 97, 140 92, 140 85
-             L 140 50
-             C 140 35, 145 30, 160 30
+          d="M 165 25
+             C 155 25, 145 32, 145 45
+             L 145 57
+             C 145 67, 152 74, 162 77
+             C 152 80, 145 87, 145 97
+             L 145 155
+             C 145 168, 155 175, 165 175
+             L 265 175
+             C 275 175, 285 168, 285 155
+             L 285 143
+             C 285 133, 278 126, 268 123
+             C 278 120, 285 113, 285 103
+             L 285 45
+             C 285 32, 275 25, 265 25
+             Z
+             M 175 50
+             L 255 50
+             C 260 50, 263 53, 263 58
+             L 263 88
+             C 263 93, 260 96, 255 96
+             L 175 96
+             C 170 96, 167 93, 167 88
+             L 167 58
+             C 167 53, 170 50, 175 50
+             Z
+             M 175 104
+             L 255 104
+             C 260 104, 263 107, 263 112
+             L 263 142
+             C 263 147, 260 150, 255 150
+             L 175 150
+             C 170 150, 167 147, 167 142
+             L 167 112
+             C 167 107, 170 104, 175 104
              Z"
           fill="#FFFFFF"
         />
       </g>
       
-      {/* Letter O - Donut ring shape with TRANSPARENT hole */}
+      {/* Letter O - Smooth rounded donut, close to S */}
       <g filter="url(#glow)">
         <path
-          d="M 400 20
-             C 444 20, 480 56, 480 100
-             C 480 144, 444 180, 400 180
-             C 356 180, 320 144, 320 100
-             C 320 56, 356 20, 400 20
+          d="M 350 20
+             C 390 20, 420 50, 420 90
+             L 420 110
+             C 420 150, 390 180, 350 180
+             C 310 180, 280 150, 280 110
+             L 280 90
+             C 280 50, 310 20, 350 20
              Z
-             M 400 65
-             C 380 65, 365 80, 365 100
-             C 365 120, 380 135, 400 135
-             C 420 135, 435 120, 435 100
-             C 435 80, 420 65, 400 65
+             M 350 60
+             C 332 60, 320 72, 320 90
+             L 320 110
+             C 320 128, 332 140, 350 140
+             C 368 140, 380 128, 380 110
+             L 380 90
+             C 380 72, 368 60, 350 60
              Z"
           fill="url(#blueGrad)"
           fillRule="evenodd"
