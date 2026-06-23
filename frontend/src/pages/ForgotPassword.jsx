@@ -5,11 +5,36 @@ import { motion } from 'framer-motion';
 function ForgotPassword() {
   const [email, setEmail] = useState('');
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // TODO: Implement password reset API call
-    setSubmitted(true);
+    setLoading(true);
+    setError('');
+
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || 'https://anotherme-backend.onrender.com'}/api/auth/forgot-password`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setSubmitted(true);
+      } else {
+        setError(data.message || 'Failed to send reset email');
+      }
+    } catch (err) {
+      setError('Network error. Please try again.');
+      console.error('Password reset error:', err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -44,6 +69,12 @@ function ForgotPassword() {
           </div>
         ) : (
           <div className="border border-white/15 rounded-lg p-8" style={{ background: 'rgba(255,255,255,0.04)', backdropFilter: 'blur(16px)' }}>
+            {error && (
+              <div className="bg-red-500/10 border border-red-500/30 rounded p-4 mb-6">
+                <p className="text-xs text-red-400 tracking-wide uppercase">{error}</p>
+              </div>
+            )}
+            
             <p className="text-white/60 text-sm mb-6 text-center">
               Note: Password recovery requires an email on file. If you didn't provide an email during registration, please contact support.
             </p>
@@ -67,9 +98,10 @@ function ForgotPassword() {
 
               <button
                 type="submit"
-                className="w-full py-3.5 bg-white hover:bg-white/90 text-black font-medium rounded transition-colors text-sm tracking-[0.15em] uppercase"
+                disabled={loading}
+                className="w-full py-3.5 bg-white hover:bg-white/90 disabled:bg-white/20 disabled:cursor-not-allowed text-black font-medium rounded transition-colors text-sm tracking-[0.15em] uppercase"
               >
-                Send Reset Link
+                {loading ? 'Sending...' : 'Send Reset Link'}
               </button>
             </form>
 
