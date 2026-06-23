@@ -17,24 +17,24 @@ function initializeTransporter() {
 
   try {
     transporter = nodemailer.createTransport({
-      host: 'smtp.gmail.com',
-      port: 587, // Use port 587 (STARTTLS) instead of 465
+      // Use direct IPv4 address to bypass IPv6 issues
+      host: '74.125.200.108', // smtp.gmail.com IPv4 address
+      port: 587,
       secure: false, // Use STARTTLS
       auth: {
         user: process.env.GMAIL_USER,
         pass: process.env.GMAIL_APP_PASSWORD,
       },
-      // Force IPv4 to avoid IPv6 connection issues on some hosts
-      family: 4,
-      // Connection timeout and retry settings
+      // Ignore TLS certificate hostname verification since we're using IP
+      tls: {
+        rejectUnauthorized: false,
+        servername: 'smtp.gmail.com'
+      },
       connectionTimeout: 10000,
       greetingTimeout: 10000,
       socketTimeout: 10000,
-      // Enable debug logging if needed
-      debug: false,
-      logger: false,
     });
-    console.log(`[EMAIL SERVICE] Gmail SMTP initialized successfully with user: ${process.env.GMAIL_USER}`);
+    console.log(`[EMAIL SERVICE] Gmail SMTP initialized with IPv4 fallback for user: ${process.env.GMAIL_USER}`);
     return transporter;
   } catch (error) {
     console.error('[EMAIL SERVICE] Failed to initialize Gmail SMTP:', error.message);
