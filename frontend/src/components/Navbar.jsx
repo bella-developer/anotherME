@@ -2,7 +2,32 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 import NotificationBell from './NotificationBell';
-import logo from '../assets/images/logo.png';
+
+/**
+ * ESO Logo Component with gradient design
+ */
+const EsoLogo = () => (
+  <svg width="80" height="32" viewBox="0 0 80 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-8 w-auto">
+    <defs>
+      <linearGradient id="esoGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" style={{ stopColor: '#8B5CF6', stopOpacity: 1 }} />
+        <stop offset="50%" style={{ stopColor: '#FFFFFF', stopOpacity: 1 }} />
+        <stop offset="100%" style={{ stopColor: '#3B82F6', stopOpacity: 1 }} />
+      </linearGradient>
+    </defs>
+    <text 
+      x="0" 
+      y="26" 
+      fontFamily="'Courier New', monospace" 
+      fontSize="32" 
+      fontWeight="700" 
+      letterSpacing="0.1em"
+      fill="url(#esoGradient)"
+    >
+      ESO
+    </text>
+  </svg>
+);
 
 /**
  * Navbar Component
@@ -58,14 +83,13 @@ function Navbar() {
     >
       <div className="container mx-auto px-4 h-full">
         <div className="flex items-center justify-between h-full">
-          {/* Logo and Tagline */}
+          {/* Logo */}
           <Link 
             to="/home" 
-            className="flex items-center space-x-3 focus:outline-none focus:ring-2 focus:ring-[#ff6b35] focus:ring-offset-2 focus:ring-offset-black rounded"
-            aria-label="Dark Room home"
+            className="flex items-center focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-black rounded"
+            aria-label="ESO home"
           >
-            <img src={logo} alt="anotherME" className="h-8 w-auto" />
-            <h1 className="text-lg md:text-xl font-bold text-white">anotherME</h1>
+            <EsoLogo />
           </Link>
 
           {/* Desktop Navigation Links */}

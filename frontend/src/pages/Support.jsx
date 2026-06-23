@@ -160,7 +160,7 @@ const Support = () => {
         title: "Licensed Professional Therapist",
         professionalType: "Licensed Therapist (LMFT)",
         description: "Specializing in introversion, social anxiety, existential concerns, and identity exploration. Provides a safe, non-judgmental space for deep thinkers and quiet souls.",
-        link: "mailto:elijah@anotherme.app",
+        link: "mailto:support@eso.app",
         imageUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop",
         specialties: ["Social Anxiety", "Depression", "Identity Issues", "Existential Concerns", "Introversion"],
         availability: "Monday-Friday, 9AM-6PM",
@@ -173,7 +173,7 @@ const Support = () => {
         name: "Ruhama",
         role: "Verified Peer Support",
         description: "A fellow introvert who has walked through darkness and found her way to self-acceptance. Available for peer support conversations about loneliness, self-love, and finding your place.",
-        link: "mailto:ruhama@anotherme.app",
+        link: "mailto:support@eso.app",
         imageUrl: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop",
         specialties: ["Loneliness", "Self-Love Journey", "Introvert Struggles", "Finding Community"],
         availability: "Flexible, volunteer basis",
@@ -550,7 +550,7 @@ const Support = () => {
         <div className="relative z-20" style={{ borderTop: '1px solid rgba(255,255,255,0.1)' }}>
           <div className="max-w-3xl mx-auto px-6 py-6 text-center">
             <p className="text-[10px] tracking-[0.2em] text-white/30 uppercase">
-              © 2026 anotherME
+              © 2026 ESO
             </p>
           </div>
         </div>

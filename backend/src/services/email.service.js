@@ -25,7 +25,7 @@ export async function sendPasswordResetEmail(email, resetToken, username) {
   if (process.env.NODE_ENV === 'production' && resend) {
     try {
       const { data, error } = await resend.emails.send({
-        from: process.env.EMAIL_FROM || 'Eso <noreply@eso.app>',
+        from: process.env.EMAIL_FROM || 'Eso <onboarding@resend.dev>',
         to: [email],
         subject: 'Reset Your Eso Password',
         html: `
@@ -138,7 +138,7 @@ export async function sendWelcomeEmail(email, username) {
   if (process.env.NODE_ENV === 'production' && resend) {
     try {
       const { data, error } = await resend.emails.send({
-        from: process.env.EMAIL_FROM || 'Eso <noreply@eso.app>',
+        from: process.env.EMAIL_FROM || 'Eso <onboarding@resend.dev>',
         to: [email],
         subject: 'Welcome to Eso',
         html: `

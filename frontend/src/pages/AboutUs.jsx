@@ -176,7 +176,7 @@ function AboutUs() {
         <div className="relative z-20" style={{ borderTop: '1px solid rgba(255,255,255,0.1)' }}>
           <div className="max-w-3xl mx-auto px-6 py-6 text-center">
             <p className="text-[10px] tracking-[0.2em] text-white/30 uppercase">
-              © 2026 anotherME
+              © 2026 ESO
             </p>
           </div>
         </div>
