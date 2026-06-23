@@ -17,11 +17,22 @@ function initializeTransporter() {
 
   try {
     transporter = nodemailer.createTransport({
-      service: 'gmail',
+      host: 'smtp.gmail.com',
+      port: 587, // Use port 587 (STARTTLS) instead of 465
+      secure: false, // Use STARTTLS
       auth: {
         user: process.env.GMAIL_USER,
         pass: process.env.GMAIL_APP_PASSWORD,
       },
+      // Force IPv4 to avoid IPv6 connection issues on some hosts
+      family: 4,
+      // Connection timeout and retry settings
+      connectionTimeout: 10000,
+      greetingTimeout: 10000,
+      socketTimeout: 10000,
+      // Enable debug logging if needed
+      debug: false,
+      logger: false,
     });
     console.log(`[EMAIL SERVICE] Gmail SMTP initialized successfully with user: ${process.env.GMAIL_USER}`);
     return transporter;
