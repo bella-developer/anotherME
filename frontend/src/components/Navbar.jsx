@@ -77,7 +77,12 @@ function Navbar() {
 
   return (
     <nav 
-      className="fixed top-0 left-0 right-0 z-50 border-b border-gray-800 h-16"
+      className="fixed top-0 left-0 right-0 z-50 border-b border-white/10 h-16"
+      style={{ 
+        background: 'rgba(0, 0, 0, 0.85)', 
+        backdropFilter: 'blur(20px)',
+        WebkitBackdropFilter: 'blur(20px)'
+      }}
       role="navigation"
       aria-label="Main navigation"
     >
@@ -96,21 +101,21 @@ function Navbar() {
           <div className="hidden md:flex items-center space-x-8" role="menubar">
             <Link
               to="/home"
-              className="text-sm text-gray-400 hover:text-white transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#ff6b35] rounded px-2 py-1"
+              className="text-sm text-white/70 hover:text-white transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white/50 rounded px-2 py-1 tracking-wider uppercase"
               role="menuitem"
             >
               Home
             </Link>
             <Link
               to="/circles"
-              className="text-sm text-gray-400 hover:text-white transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#ff6b35] rounded px-2 py-1"
+              className="text-sm text-white/70 hover:text-white transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white/50 rounded px-2 py-1 tracking-wider uppercase"
               role="menuitem"
             >
               Circles
             </Link>
             <Link
               to="/support"
-              className="text-sm text-gray-400 hover:text-white transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#ff6b35] rounded px-2 py-1"
+              className="text-sm text-white/70 hover:text-white transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white/50 rounded px-2 py-1 tracking-wider uppercase"
               role="menuitem"
             >
               Support
@@ -121,7 +126,7 @@ function Navbar() {
           <div className="hidden md:flex items-center space-x-4">
             <Link
               to="/about"
-              className="text-sm text-gray-400 hover:text-white transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#ff6b35] rounded px-2 py-1"
+              className="text-sm text-white/70 hover:text-white transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white/50 rounded px-2 py-1 tracking-wider uppercase"
               role="menuitem"
             >
               About Us
