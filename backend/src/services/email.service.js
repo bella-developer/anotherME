@@ -17,6 +17,10 @@ function initializeBrevo() {
   }
 
   try {
+    console.log('[EMAIL SERVICE] Initializing Brevo API...');
+    console.log('[EMAIL SERVICE] API key present:', !!process.env.BREVO_API_KEY);
+    console.log('[EMAIL SERVICE] API key length:', process.env.BREVO_API_KEY?.length);
+    
     const defaultClient = brevo.ApiClient.instance;
     const apiKey = defaultClient.authentications['api-key'];
     apiKey.apiKey = process.env.BREVO_API_KEY;
@@ -26,6 +30,7 @@ function initializeBrevo() {
     return apiInstance;
   } catch (error) {
     console.error('[EMAIL SERVICE] Failed to initialize Brevo API:', error.message);
+    console.error('[EMAIL SERVICE] Error details:', error);
     return null;
   }
 }
