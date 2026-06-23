@@ -103,6 +103,12 @@ function Register() {
 
   const isFormValid = () => {
     // Required fields
+    if (!formData.username || !formData.username.trim()) {
+      return false;
+    }
+    if (!formData.email || !formData.email.trim()) {
+      return false;
+    }
     if (!formData.password || !formData.confirmPassword) {
       return false;
     }
@@ -129,13 +135,13 @@ function Register() {
       return false;
     }
     
-    // Username validation (if provided)
-    if (formData.username && formData.username.length < 3) {
+    // Username validation - required, min 3 chars
+    if (formData.username.length < 3) {
       return false;
     }
     
-    // Email validation (if provided)
-    if (formData.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+    // Email validation - required, valid format
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
       return false;
     }
     
@@ -146,13 +152,12 @@ function Register() {
     e.preventDefault();
     if (!validateForm()) return;
     
-    const registrationData = { password: formData.password };
-    if (formData.username && formData.username.trim()) {
-      registrationData.username = formData.username.trim();
-    }
-    if (formData.email && formData.email.trim()) {
-      registrationData.email = formData.email.trim();
-    }
+    const registrationData = {
+      username: formData.username.trim(),
+      email: formData.email.trim(),
+      password: formData.password
+    };
+    
     if (formData.age) {
       const ageMap = { '18-24': 21, '25-34': 29, '35-44': 39, '45+': 50 };
       registrationData.age = ageMap[formData.age];
@@ -243,17 +248,18 @@ function Register() {
 
             <div>
               <label htmlFor="username" className="block text-[0.7rem] tracking-[0.15em] text-white/55 mb-2 uppercase">
-                Username <span className="text-white/30">(Optional)</span>
+                Username <span className="text-white/70">*</span>
               </label>
               <input
                 id="username"
                 name="username"
                 type="text"
+                required
                 value={formData.username}
                 onChange={handleChange}
                 onBlur={handleBlur}
                 className={`w-full px-4 py-3 rounded text-white placeholder-white/25 focus:outline-none transition-colors text-sm tracking-wide ${validationErrors.username ? 'border border-red-500/50 bg-red-500/5' : 'border border-white/15 bg-white/5'}`}
-                placeholder="auto-generated if empty"
+                placeholder="choose your username"
                 disabled={loading}
                 aria-describedby={validationErrors.username ? 'username-error' : undefined}
               />
@@ -264,12 +270,13 @@ function Register() {
 
             <div>
               <label htmlFor="email" className="block text-[0.7rem] tracking-[0.15em] text-white/55 mb-2 uppercase">
-                Email <span className="text-white/30">(Optional but recommended for recovery)</span>
+                Email <span className="text-white/70">*</span>
               </label>
               <input
                 id="email"
                 name="email"
                 type="email"
+                required
                 autoComplete="email"
                 value={formData.email}
                 onChange={handleChange}
