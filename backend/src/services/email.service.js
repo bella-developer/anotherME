@@ -4,7 +4,8 @@
  * Works with Render's network restrictions (no SMTP ports needed)
  */
 
-import * as brevo from '@getbrevo/brevo';
+import brevoLib from '@getbrevo/brevo';
+const { ApiClient, TransactionalEmailsApi, SendSmtpEmail } = brevoLib;
 
 // Initialize Brevo API client
 let apiInstance = null;
@@ -18,19 +19,17 @@ function initializeBrevo() {
 
   try {
     console.log('[EMAIL SERVICE] Initializing Brevo API...');
-    console.log('[EMAIL SERVICE] API key present:', !!process.env.BREVO_API_KEY);
-    console.log('[EMAIL SERVICE] API key length:', process.env.BREVO_API_KEY?.length);
     
-    const defaultClient = brevo.ApiClient.instance;
+    const defaultClient = ApiClient.instance;
     const apiKey = defaultClient.authentications['api-key'];
     apiKey.apiKey = process.env.BREVO_API_KEY;
     
-    apiInstance = new brevo.TransactionalEmailsApi();
+    apiInstance = new TransactionalEmailsApi();
     console.log('[EMAIL SERVICE] Brevo API initialized successfully');
     return apiInstance;
   } catch (error) {
     console.error('[EMAIL SERVICE] Failed to initialize Brevo API:', error.message);
-    console.error('[EMAIL SERVICE] Error details:', error);
+    console.error('[EMAIL SERVICE] Error stack:', error.stack);
     return null;
   }
 }
@@ -52,7 +51,7 @@ export async function sendPasswordResetEmail(email, resetToken, username) {
   if (apiInstance) {
     console.log(`[EMAIL] Attempting to send password reset email to: ${email}`);
     try {
-      const sendSmtpEmail = new brevo.SendSmtpEmail();
+      const sendSmtpEmail = new SendSmtpEmail();
       
       sendSmtpEmail.sender = { 
         name: 'Eso',
@@ -154,7 +153,7 @@ export async function sendWelcomeEmail(email, username) {
   if (apiInstance) {
     console.log(`[EMAIL] Attempting to send welcome email to: ${email}`);
     try {
-      const sendSmtpEmail = new brevo.SendSmtpEmail();
+      const sendSmtpEmail = new SendSmtpEmail();
       
       sendSmtpEmail.sender = { 
         name: 'Eso',
