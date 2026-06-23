@@ -34,9 +34,9 @@ function EsoLogo({ className = "h-10 w-auto" }) {
         </filter>
       </defs>
       
-      {/* Letter E - Custom shape with horizontal bar through middle */}
+      {/* Letter E - C shape with SEPARATE floating horizontal bar */}
       <g filter="url(#glow)">
-        {/* Outer C shape of E */}
+        {/* Main C-shaped body of E */}
         <path
           d="M 40 30 
              C 40 30, 20 30, 20 50
@@ -46,14 +46,8 @@ function EsoLogo({ className = "h-10 w-auto" }) {
              C 130 170, 130 160, 130 150
              L 130 145
              C 130 135, 120 135, 120 135
-             L 55 135
-             L 55 110
-             L 110 110
-             C 120 110, 120 100, 120 95
-             L 120 90
-             C 120 80, 110 80, 110 80
-             L 55 80
-             L 55 65
+             L 60 135
+             L 60 65
              L 120 65
              C 130 65, 130 55, 130 50
              L 130 45
@@ -62,8 +56,8 @@ function EsoLogo({ className = "h-10 w-auto" }) {
           fill="url(#purpleGrad)"
         />
         
-        {/* Horizontal bar through E */}
-        <rect x="55" y="85" width="80" height="20" rx="10" fill="url(#purpleGrad)" />
+        {/* SEPARATE floating horizontal bar (not connected to E body) */}
+        <rect x="65" y="85" width="75" height="30" rx="15" fill="url(#purpleGrad)" />
       </g>
       
       {/* Letter S - Angular geometric S */}
@@ -71,40 +65,52 @@ function EsoLogo({ className = "h-10 w-auto" }) {
         <path
           d="M 160 30
              L 280 30
-             C 290 30, 295 35, 295 45
-             L 295 55
-             C 295 60, 292 65, 285 68
-             L 200 68
-             C 195 68, 190 73, 190 78
-             L 190 82
-             C 190 87, 195 92, 200 92
-             L 285 92
-             C 292 95, 295 100, 295 105
-             L 295 155
-             C 295 165, 290 170, 280 170
+             C 295 30, 300 35, 300 50
+             L 300 60
+             C 300 67, 295 72, 285 75
+             L 200 75
+             C 190 75, 185 80, 185 85
+             L 185 90
+             C 185 95, 190 100, 200 100
+             L 285 100
+             C 295 103, 300 108, 300 115
+             L 300 150
+             C 300 165, 295 170, 280 170
              L 160 170
-             C 150 170, 145 165, 145 155
-             L 145 145
-             C 145 140, 148 135, 155 132
-             L 255 132
-             C 260 132, 265 127, 265 122
-             L 265 118
-             C 265 113, 260 108, 255 108
-             L 155 108
-             C 148 105, 145 100, 145 95
-             L 145 45
-             C 145 35, 150 30, 160 30
+             C 145 170, 140 165, 140 150
+             L 140 140
+             C 140 133, 145 128, 155 125
+             L 255 125
+             C 265 125, 270 120, 270 115
+             L 270 110
+             C 270 105, 265 100, 255 100
+             L 155 100
+             C 145 97, 140 92, 140 85
+             L 140 50
+             C 140 35, 145 30, 160 30
              Z"
           fill="#FFFFFF"
         />
       </g>
       
-      {/* Letter O - Perfect circle with thick stroke */}
+      {/* Letter O - Donut ring shape with TRANSPARENT hole */}
       <g filter="url(#glow)">
-        {/* Outer circle */}
-        <circle cx="400" cy="100" r="80" fill="url(#blueGrad)" />
-        {/* Inner circle (creates the hollow) */}
-        <circle cx="400" cy="100" r="45" fill="#0A0A1A" />
+        <path
+          d="M 400 20
+             C 444 20, 480 56, 480 100
+             C 480 144, 444 180, 400 180
+             C 356 180, 320 144, 320 100
+             C 320 56, 356 20, 400 20
+             Z
+             M 400 65
+             C 380 65, 365 80, 365 100
+             C 365 120, 380 135, 400 135
+             C 420 135, 435 120, 435 100
+             C 435 80, 420 65, 400 65
+             Z"
+          fill="url(#blueGrad)"
+          fillRule="evenodd"
+        />
       </g>
     </svg>
   );
