@@ -33,6 +33,7 @@ const Terms = lazy(() => import('./pages/Terms'));
 const Privacy = lazy(() => import('./pages/Privacy'));
 const Explore = lazy(() => import('./pages/Explore'));
 const ForgotPassword = lazy(() => import('./pages/ForgotPassword'));
+const ResetPassword = lazy(() => import('./pages/ResetPassword'));
 
 // Placeholder Create component
 function Create() {
@@ -89,6 +90,7 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/explore" element={<Explore />} />
             <Route path="/terms" element={<Terms />} />
             <Route path="/privacy" element={<Privacy />} />
