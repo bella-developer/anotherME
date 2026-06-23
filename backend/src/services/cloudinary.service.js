@@ -12,7 +12,7 @@ import { Readable } from 'stream';
  * @param {string} folder - Cloudinary folder name
  * @returns {Promise<Object>} Upload result with URL
  */
-export async function uploadImage(fileBuffer, folder = 'anotherme/posts') {
+export async function uploadImage(fileBuffer, folder = 'eso/posts') {
   return new Promise((resolve, reject) => {
     const uploadStream = cloudinary.uploader.upload_stream(
       {

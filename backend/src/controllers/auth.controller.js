@@ -163,7 +163,7 @@ export async function logout(req, res, next) {
     await destroySession(req);
     
     // Clear session cookie
-    res.clearCookie('anotherme.sid');
+    res.clearCookie('eso.sid');
     
     // Return success response
     res.status(200).json(

@@ -28,7 +28,7 @@ export function createSessionMiddleware() {
   const isProduction = process.env.NODE_ENV === 'production';
 
   return session({
-    name: 'anotherme.sid', // Custom session cookie name
+    name: 'eso.sid', // Custom session cookie name
     secret: sessionSecret,
     resave: false, // Don't save session if unmodified
     saveUninitialized: false, // Don't create session until something stored

@@ -32,6 +32,24 @@ export async function register(registrationData = {}) {
     throw error;
   }
   
+  // Validate username is provided
+  if (!username) {
+    const error = new Error('Username is required');
+    error.statusCode = 400;
+    error.code = 'USERNAME_REQUIRED';
+    error.userMessage = 'Username is required for registration';
+    throw error;
+  }
+  
+  // Validate email is provided
+  if (!email) {
+    const error = new Error('Email is required');
+    error.statusCode = 400;
+    error.code = 'EMAIL_REQUIRED';
+    error.userMessage = 'Email is required for registration';
+    throw error;
+  }
+  
   // Validate password strength
   const passwordValidation = validatePasswordStrength(password);
   if (!passwordValidation.isValid) {
@@ -43,42 +61,36 @@ export async function register(registrationData = {}) {
     throw error;
   }
   
-  // Generate or validate username
+  // Validate and normalize username
   let finalUsername = username;
-  if (!finalUsername) {
-    // Auto-generate username
-    finalUsername = generateUsername();
-  } else {
-    // Validate provided username
-    if (typeof finalUsername !== 'string' || finalUsername.length < 3 || finalUsername.length > 30) {
-      const error = new Error('Username must be between 3 and 30 characters');
-      error.statusCode = 400;
-      error.code = 'INVALID_USERNAME';
-      error.userMessage = 'Username must be between 3 and 30 characters';
-      throw error;
-    }
-    
-    // Normalize username
-    finalUsername = finalUsername.toLowerCase().trim();
-    
-    // Validate username format
-    if (!/^[a-z0-9_-]+$/.test(finalUsername)) {
-      const error = new Error('Username can only contain lowercase letters, numbers, underscores, and hyphens');
-      error.statusCode = 400;
-      error.code = 'INVALID_USERNAME_FORMAT';
-      error.userMessage = 'Username can only contain lowercase letters, numbers, underscores, and hyphens';
-      throw error;
-    }
-    
-    // Check if username already exists
-    const existingUser = await User.findOne({ username: finalUsername });
-    if (existingUser) {
-      const error = new Error('Username already taken');
-      error.statusCode = 409;
-      error.code = 'USERNAME_TAKEN';
-      error.userMessage = 'This username is already taken. Please choose another.';
-      throw error;
-    }
+  if (typeof finalUsername !== 'string' || finalUsername.length < 3 || finalUsername.length > 30) {
+    const error = new Error('Username must be between 3 and 30 characters');
+    error.statusCode = 400;
+    error.code = 'INVALID_USERNAME';
+    error.userMessage = 'Username must be between 3 and 30 characters';
+    throw error;
+  }
+  
+  // Normalize username
+  finalUsername = finalUsername.toLowerCase().trim();
+  
+  // Validate username format
+  if (!/^[a-z0-9_-]+$/.test(finalUsername)) {
+    const error = new Error('Username can only contain lowercase letters, numbers, underscores, and hyphens');
+    error.statusCode = 400;
+    error.code = 'INVALID_USERNAME_FORMAT';
+    error.userMessage = 'Username can only contain lowercase letters, numbers, underscores, and hyphens';
+    throw error;
+  }
+  
+  // Check if username already exists
+  const existingUser = await User.findOne({ username: finalUsername });
+  if (existingUser) {
+    const error = new Error('Username already taken');
+    error.statusCode = 409;
+    error.code = 'USERNAME_TAKEN';
+    error.userMessage = 'This username is already taken. Please choose another.';
+    throw error;
   }
   
   // Validate that no PII fields (except email) are present
@@ -93,30 +105,27 @@ export async function register(registrationData = {}) {
     throw error;
   }
 
-  // Validate email format if provided
-  let finalEmail = null;
-  if (email) {
-    const normalizedEmail = email.toLowerCase().trim();
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizedEmail)) {
-      const error = new Error('Invalid email format');
-      error.statusCode = 400;
-      error.code = 'INVALID_EMAIL';
-      error.userMessage = 'Please provide a valid email address';
-      throw error;
-    }
-
-    // Check if email already exists
-    const existingEmailUser = await User.findOne({ email: normalizedEmail });
-    if (existingEmailUser) {
-      const error = new Error('Email already registered');
-      error.statusCode = 409;
-      error.code = 'EMAIL_TAKEN';
-      error.userMessage = 'This email is already registered';
-      throw error;
-    }
-
-    finalEmail = normalizedEmail;
+  // Validate and normalize email
+  const normalizedEmail = email.toLowerCase().trim();
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizedEmail)) {
+    const error = new Error('Invalid email format');
+    error.statusCode = 400;
+    error.code = 'INVALID_EMAIL';
+    error.userMessage = 'Please provide a valid email address';
+    throw error;
   }
+
+  // Check if email already exists
+  const existingEmailUser = await User.findOne({ email: normalizedEmail });
+  if (existingEmailUser) {
+    const error = new Error('Email already registered');
+    error.statusCode = 409;
+    error.code = 'EMAIL_TAKEN';
+    error.userMessage = 'This email is already registered';
+    throw error;
+  }
+
+  const finalEmail = normalizedEmail;
   
   // Hash password
   const hashedPassword = await hashPassword(password);
@@ -140,12 +149,15 @@ export async function register(registrationData = {}) {
     // Save user to database
     await user.save();
     
-    // Send welcome email if email provided (non-blocking)
-    if (finalEmail) {
-      sendWelcomeEmail(finalEmail, finalUsername).catch(err => {
-        console.error('Failed to send welcome email:', err.message);
+    // Send welcome email (non-blocking)
+    console.log(`[AUTH] Sending welcome email to: ${finalEmail}`);
+    sendWelcomeEmail(finalEmail, finalUsername)
+      .then(result => {
+        console.log('[AUTH] Welcome email sent successfully:', result);
+      })
+      .catch(err => {
+        console.error('[AUTH] Failed to send welcome email:', err.message);
       });
-    }
     
     // Return user data (without password)
     return {

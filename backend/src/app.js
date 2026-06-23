@@ -61,7 +61,7 @@ import supportRoutes from './routes/support.routes.js';
 
 // API routes
 app.get('/api', (req, res) => {
-  res.json({ message: 'anotherME API' });
+  res.json({ message: 'ESO API' });
 });
 
 // Health check routes

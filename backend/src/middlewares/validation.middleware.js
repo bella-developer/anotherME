@@ -32,7 +32,8 @@ export const handleValidationErrors = (req, res, next) => {
  */
 export const validateRegister = [
   body('username')
-    .optional()
+    .notEmpty()
+    .withMessage('Username is required')
     .isString()
     .withMessage('Username must be a string')
     .trim()
@@ -42,7 +43,8 @@ export const validateRegister = [
     .matches(/^[a-z0-9_-]+$/)
     .withMessage('Username can only contain letters, numbers, underscores, and hyphens'),
   body('email')
-    .optional()
+    .notEmpty()
+    .withMessage('Email is required')
     .isEmail()
     .withMessage('Invalid email format')
     .normalizeEmail(),

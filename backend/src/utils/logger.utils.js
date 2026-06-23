@@ -73,7 +73,7 @@ const logger = winston.createLogger({
     winston.format.errors({ stack: true })
   ),
   defaultMeta: {
-    service: 'anotherme-api',
+    service: 'eso-api',
   },
   transports: [
     new winston.transports.Console({

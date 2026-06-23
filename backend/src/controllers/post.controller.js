@@ -24,7 +24,7 @@ export async function createPost(req, res, next) {
     let imageData = null;
     if (req.file) {
       try {
-        imageData = await uploadImage(req.file.buffer, 'anotherme/posts');
+        imageData = await uploadImage(req.file.buffer, 'eso/posts');
       } catch (uploadError) {
         console.error('[Upload Error]', uploadError);
         const err = new Error('Failed to upload image');

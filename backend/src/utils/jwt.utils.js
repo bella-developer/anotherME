@@ -21,8 +21,8 @@ export function generateAccessToken(payload) {
   
   return jwt.sign(payload, secret, {
     expiresIn: expiry,
-    issuer: 'anotherme-api',
-    audience: 'anotherme-app',
+    issuer: 'eso-api',
+    audience: 'eso-app',
   });
 }
 
@@ -42,8 +42,8 @@ export function generateRefreshToken(payload) {
   
   return jwt.sign(payload, secret, {
     expiresIn: expiry,
-    issuer: 'anotherme-api',
-    audience: 'anotherme-app',
+    issuer: 'eso-api',
+    audience: 'eso-app',
   });
 }
 
@@ -62,8 +62,8 @@ export function verifyAccessToken(token) {
   
   try {
     return jwt.verify(token, secret, {
-      issuer: 'anotherme-api',
-      audience: 'anotherme-app',
+      issuer: 'eso-api',
+      audience: 'eso-app',
     });
   } catch (error) {
     if (error.name === 'TokenExpiredError') {
@@ -99,8 +99,8 @@ export function verifyRefreshToken(token) {
   
   try {
     return jwt.verify(token, secret, {
-      issuer: 'anotherme-api',
-      audience: 'anotherme-app',
+      issuer: 'eso-api',
+      audience: 'eso-app',
     });
   } catch (error) {
     if (error.name === 'TokenExpiredError') {
