@@ -66,10 +66,10 @@ function Navbar() {
           {/* Logo */}
           <Link 
             to="/home" 
-            className="flex items-center focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-black rounded"
+            className="flex items-center focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-black rounded p-1"
             aria-label="ESO home"
           >
-            <EsoLogo />
+            <EsoLogo className="h-8 w-auto" />
           </Link>
 
           {/* Desktop Navigation Links */}

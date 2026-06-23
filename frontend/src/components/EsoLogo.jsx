@@ -1,5 +1,5 @@
 /**
- * ESO Logo Component - Using brand image asset
+ * ESO Logo Component - Professional rendering
  */
 
 import logoImage from '../assets/images/logo.png';
@@ -10,6 +10,11 @@ function EsoLogo({ className = "h-10 w-auto" }) {
       src={logoImage} 
       alt="ESO Logo" 
       className={className}
+      style={{
+        objectFit: 'contain',
+        mixBlendMode: 'screen',
+        filter: 'brightness(1.1) contrast(1.05)',
+      }}
     />
   );
 }
