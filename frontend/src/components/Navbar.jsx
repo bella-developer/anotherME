@@ -2,32 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 import NotificationBell from './NotificationBell';
-
-/**
- * ESO Logo Component with gradient design
- */
-const EsoLogo = () => (
-  <svg width="80" height="32" viewBox="0 0 80 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-8 w-auto">
-    <defs>
-      <linearGradient id="esoGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-        <stop offset="0%" style={{ stopColor: '#8B5CF6', stopOpacity: 1 }} />
-        <stop offset="50%" style={{ stopColor: '#FFFFFF', stopOpacity: 1 }} />
-        <stop offset="100%" style={{ stopColor: '#3B82F6', stopOpacity: 1 }} />
-      </linearGradient>
-    </defs>
-    <text 
-      x="0" 
-      y="26" 
-      fontFamily="'Courier New', monospace" 
-      fontSize="32" 
-      fontWeight="700" 
-      letterSpacing="0.1em"
-      fill="url(#esoGradient)"
-    >
-      ESO
-    </text>
-  </svg>
-);
+import EsoLogo from './EsoLogo';
 
 /**
  * Navbar Component

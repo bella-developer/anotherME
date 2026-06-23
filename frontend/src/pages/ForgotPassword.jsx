@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import EsoLogo from '../components/EsoLogo';
 
 function ForgotPassword() {
   const [email, setEmail] = useState('');
@@ -46,6 +47,9 @@ function ForgotPassword() {
         className="w-full max-w-md"
       >
         <div className="text-center mb-10">
+          <Link to="/" className="inline-block mb-6 focus:outline-none focus:ring-2 focus:ring-white/50 rounded">
+            <EsoLogo className="h-12 w-auto mx-auto" />
+          </Link>
           <h1 className="text-3xl font-light tracking-[0.25em] text-white mb-3 uppercase">
             Reset Password
           </h1>

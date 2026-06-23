@@ -2,6 +2,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import landingHeroBg from '../assets/images/landing-hero-bg.png';
+import EsoLogo from '../components/EsoLogo';
 
 function Landing() {
   const navigate = useNavigate();
@@ -56,8 +57,8 @@ function Landing() {
       >
         <nav className="max-w-7xl mx-auto px-6 lg:px-12 py-4" role="navigation" aria-label="Main navigation">
           <div className="flex items-center justify-between">
-            <Link to="/" className="text-2xl font-bold tracking-[0.3em] hover:text-white/80 transition-colors" style={{ fontFamily: "'Space Mono', monospace" }}>
-              ESO
+            <Link to="/" className="focus:outline-none focus:ring-2 focus:ring-white/50 rounded">
+              <EsoLogo className="h-8 w-auto" />
             </Link>
             
             <div className="flex items-center gap-8">
@@ -128,19 +129,9 @@ function Landing() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.5 }}
-                    className="relative mb-3"
+                    className="relative mb-6"
                   >
-                    <span 
-                      className="block text-5xl sm:text-6xl lg:text-7xl font-black"
-                      style={{ 
-                        fontFamily: "'Space Mono', monospace",
-                        letterSpacing: '0.2em',
-                        color: 'white',
-                        textShadow: '0 0 60px rgba(255,255,255,0.3)',
-                      }}
-                    >
-                      ESO
-                    </span>
+                    <EsoLogo className="h-20 sm:h-24 lg:h-28 w-auto" />
                   </motion.div>
 
                   
@@ -479,7 +470,9 @@ function Landing() {
         <div className="max-w-7xl mx-auto px-6 lg:px-12 py-12">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
             <div>
-              <h3 className="text-xl font-bold tracking-[0.3em] mb-4" style={{ fontFamily: "'Space Mono', monospace" }}>ESO</h3>
+              <div className="mb-4">
+                <EsoLogo className="h-8 w-auto" />
+              </div>
               <p className="text-sm text-white/50 leading-relaxed">
                 Your inner world, finally understood. A safe space for introverts and deep thinkers.
               </p>
