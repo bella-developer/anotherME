@@ -1,43 +1,112 @@
 /**
  * ESO Logo Component - Brand identity
- * Matches the exact design from the reference image
+ * Exact custom letter shapes from the reference design
  */
 
 function EsoLogo({ className = "h-10 w-auto" }) {
   return (
-    <div className={className} style={{ display: 'inline-flex', alignItems: 'center', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-      <style>{`
-        @keyframes subtle-glow {
-          0%, 100% { filter: drop-shadow(0 0 8px currentColor); }
-          50% { filter: drop-shadow(0 0 12px currentColor); }
-        }
-        .eso-letter {
-          font-weight: 900;
-          font-size: 3rem;
-          line-height: 1;
-          letter-spacing: -0.05em;
-          animation: subtle-glow 3s ease-in-out infinite;
-        }
-        .eso-e {
-          background: linear-gradient(180deg, #9B8BFF 0%, #7B6BFF 100%);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
-        }
-        .eso-s {
-          color: #FFFFFF;
-        }
-        .eso-o {
-          background: linear-gradient(180deg, #7BA5FF 0%, #5B85FF 100%);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
-        }
-      `}</style>
-      <span className="eso-letter eso-e" style={{ color: '#9B8BFF' }}>E</span>
-      <span className="eso-letter eso-s">S</span>
-      <span className="eso-letter eso-o" style={{ color: '#7BA5FF' }}>O</span>
-    </div>
+    <svg 
+      viewBox="0 0 500 200" 
+      fill="none" 
+      xmlns="http://www.w3.org/2000/svg" 
+      className={className}
+    >
+      <defs>
+        {/* Purple gradient for E */}
+        <linearGradient id="purpleGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stopColor="#A78BFA" />
+          <stop offset="100%" stopColor="#7C3AED" />
+        </linearGradient>
+        
+        {/* Blue gradient for O */}
+        <linearGradient id="blueGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stopColor="#60A5FA" />
+          <stop offset="100%" stopColor="#3B82F6" />
+        </linearGradient>
+        
+        {/* Glow effect */}
+        <filter id="glow">
+          <feGaussianBlur stdDeviation="6" result="coloredBlur"/>
+          <feMerge>
+            <feMergeNode in="coloredBlur"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+      </defs>
+      
+      {/* Letter E - Custom shape with horizontal bar through middle */}
+      <g filter="url(#glow)">
+        {/* Outer C shape of E */}
+        <path
+          d="M 40 30 
+             C 40 30, 20 30, 20 50
+             L 20 150
+             C 20 170, 40 170, 40 170
+             L 120 170
+             C 130 170, 130 160, 130 150
+             L 130 145
+             C 130 135, 120 135, 120 135
+             L 55 135
+             L 55 110
+             L 110 110
+             C 120 110, 120 100, 120 95
+             L 120 90
+             C 120 80, 110 80, 110 80
+             L 55 80
+             L 55 65
+             L 120 65
+             C 130 65, 130 55, 130 50
+             L 130 45
+             C 130 35, 120 30, 120 30
+             Z"
+          fill="url(#purpleGrad)"
+        />
+        
+        {/* Horizontal bar through E */}
+        <rect x="55" y="85" width="80" height="20" rx="10" fill="url(#purpleGrad)" />
+      </g>
+      
+      {/* Letter S - Angular geometric S */}
+      <g filter="url(#glow)">
+        <path
+          d="M 160 30
+             L 280 30
+             C 290 30, 295 35, 295 45
+             L 295 55
+             C 295 60, 292 65, 285 68
+             L 200 68
+             C 195 68, 190 73, 190 78
+             L 190 82
+             C 190 87, 195 92, 200 92
+             L 285 92
+             C 292 95, 295 100, 295 105
+             L 295 155
+             C 295 165, 290 170, 280 170
+             L 160 170
+             C 150 170, 145 165, 145 155
+             L 145 145
+             C 145 140, 148 135, 155 132
+             L 255 132
+             C 260 132, 265 127, 265 122
+             L 265 118
+             C 265 113, 260 108, 255 108
+             L 155 108
+             C 148 105, 145 100, 145 95
+             L 145 45
+             C 145 35, 150 30, 160 30
+             Z"
+          fill="#FFFFFF"
+        />
+      </g>
+      
+      {/* Letter O - Perfect circle with thick stroke */}
+      <g filter="url(#glow)">
+        {/* Outer circle */}
+        <circle cx="400" cy="100" r="80" fill="url(#blueGrad)" />
+        {/* Inner circle (creates the hollow) */}
+        <circle cx="400" cy="100" r="45" fill="#0A0A1A" />
+      </g>
+    </svg>
   );
 }
 
