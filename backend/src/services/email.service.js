@@ -18,6 +18,8 @@ if (isConfigured) {
  * Send email via Brevo REST API
  */
 async function sendBrevoEmail(to, subject, htmlContent) {
+  console.log('[EMAIL] Calling Brevo API...');
+  
   const response = await fetch('https://api.brevo.com/v3/smtp/email', {
     method: 'POST',
     headers: {
@@ -36,9 +38,12 @@ async function sendBrevoEmail(to, subject, htmlContent) {
     })
   });
 
+  console.log('[EMAIL] Brevo API response status:', response.status);
+
   if (!response.ok) {
     const error = await response.json();
-    throw new Error(`Brevo API error: ${error.message || response.statusText}`);
+    console.error('[EMAIL] Brevo API error response:', error);
+    throw new Error(`Brevo API error: ${JSON.stringify(error)}`);
   }
 
   return await response.json();
@@ -199,7 +204,8 @@ export async function sendWelcomeEmail(email, username) {
       return { success: true, message: 'Welcome email sent', messageId: result.messageId };
     } catch (error) {
       console.error('[EMAIL] Error sending welcome email:', error.message);
-      return { success: false, message: 'Failed to send welcome email' };
+      console.error('[EMAIL] Full error:', error);
+      return { success: false, message: 'Failed to send welcome email', error: error.message };
     }
   } else {
     console.log('\n========================================');
