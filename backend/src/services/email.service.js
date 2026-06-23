@@ -20,6 +20,9 @@ function initializeBrevo() {
 
   try {
     console.log('[EMAIL SERVICE] Initializing Brevo API...');
+    console.log('[EMAIL SERVICE] Brevo object keys:', Object.keys(brevo));
+    console.log('[EMAIL SERVICE] Has ApiClient?:', !!brevo.ApiClient);
+    console.log('[EMAIL SERVICE] Brevo structure:', JSON.stringify(Object.keys(brevo), null, 2));
     
     const defaultClient = brevo.ApiClient.instance;
     const apiKey = defaultClient.authentications['api-key'];
