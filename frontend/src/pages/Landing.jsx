@@ -304,14 +304,10 @@ function Landing() {
                   className="flex items-center gap-16"
                 >
                   <span 
-                    className="word-glow text-5xl md:text-6xl lg:text-7xl font-light tracking-[0.08em] uppercase whitespace-nowrap transition-all duration-300 hover:scale-105"
+                    className="text-3xl md:text-4xl font-medium tracking-[0.08em] uppercase whitespace-nowrap transition-all duration-300 hover:scale-105"
                     style={{
-                      background: 'linear-gradient(135deg, #A78BFA 0%, #E0E7FF 50%, #60A5FA 100%)',
-                      WebkitBackgroundClip: 'text',
-                      WebkitTextFillColor: 'transparent',
-                      backgroundClip: 'text',
-                      fontFamily: "'Space Grotesk', 'Inter', sans-serif",
-                      letterSpacing: '0.05em',
+                      color: '#FFFFFF',
+                      textShadow: '0 0 30px rgba(255, 255, 255, 0.3)',
                     }}
                   >
                     {word}
