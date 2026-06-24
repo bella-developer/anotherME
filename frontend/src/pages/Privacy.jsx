@@ -15,12 +15,7 @@ function Privacy() {
         </div>
       </nav>
 
-      <motion.main 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.6 }}
-        className="max-w-4xl mx-auto px-6 py-24"
-      >
+      <main className="max-w-4xl mx-auto px-6 py-24">
         <h1 className="text-4xl font-bold mb-8 tracking-[0.2em] mt-12">PRIVACY POLICY</h1>
         <p className="text-white/60 mb-12 text-sm">Last updated: {new Date().toLocaleDateString()}</p>
 
@@ -71,7 +66,7 @@ function Privacy() {
             Privacy concerns? Reach out at <a href="mailto:privacy@eso.app" className="text-white underline">privacy@eso.app</a>
           </p>
         </div>
-      </motion.main>
+      </main>
     </div>
   );
 }

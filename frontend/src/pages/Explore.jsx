@@ -59,19 +59,14 @@ function Explore() {
       </nav>
 
       <main className="max-w-6xl mx-auto px-6 py-24">
-        <motion.div 
-          className="text-center mb-16 mt-12"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
-        >
+        <div className="text-center mb-16 mt-12">
           <h1 className="text-4xl md:text-5xl font-bold mb-4 tracking-[0.2em]">
             EXPLORE
           </h1>
           <p className="text-white/60 text-sm tracking-wide">
             Preview what awaits inside. Join to participate in these communities.
           </p>
-        </motion.div>
+        </div>
 
         <div className="grid md:grid-cols-2 gap-6 mb-16">
           {categories.map((cat, i) => (

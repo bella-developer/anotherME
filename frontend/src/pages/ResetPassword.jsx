@@ -71,12 +71,7 @@ function ResetPassword() {
 
   return (
     <div className="min-h-screen flex items-center justify-center px-4 bg-black text-white">
-      <motion.div 
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="w-full max-w-md"
-      >
+      <div className="w-full max-w-md">
         <div className="text-center mb-10">
           <Link to="/" className="inline-block mb-6 focus:outline-none focus:ring-2 focus:ring-white/50 rounded">
             <EsoLogo className="h-16 w-auto mx-auto" />
@@ -164,7 +159,7 @@ function ResetPassword() {
             </div>
           </div>
         )}
-      </motion.div>
+      </div>
     </div>
   );
 }
