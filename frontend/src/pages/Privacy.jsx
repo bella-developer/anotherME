@@ -27,11 +27,11 @@ function Privacy() {
         </div>
       </nav>
 
-      {/* Main Content Container - Auth Page Style */}
-      <main className="pt-16 px-4 pb-8 min-h-screen flex items-center justify-center">
-        <div className="w-full max-w-md">
+      {/* Main Content Container - Border-less, No Cards */}
+      <main className="pt-20 px-6 pb-12">
+        <div className="max-w-3xl mx-auto">
           
-          {/* Header Section - Same as Auth Pages */}
+          {/* ESO Logo at Top - Same as Auth Pages */}
           <div className="text-center mb-8">
             <Link to="/" className="inline-block mb-4 focus:outline-none focus:ring-2 focus:ring-white/50 rounded">
               <EsoLogo className="h-16 w-auto mx-auto" />
@@ -44,76 +44,72 @@ function Privacy() {
             </p>
           </div>
 
-          {/* Content Container */}
-          <div className="border border-white/15 rounded-lg p-8" style={{ background: 'rgba(255,255,255,0.04)', backdropFilter: 'blur(16px)' }}>
+          {/* Updated Date */}
+          <div className="text-center mb-12">
+            <div className="text-xs text-white/40">
+              Updated: June 24, 2026
+            </div>
+          </div>
+
+          {/* Content Sections - No Cards, No Borders */}
+          <div className="space-y-10 max-w-2xl mx-auto">
             
-            {/* Last Updated */}
-            <div className="text-center mb-6">
-              <div className="text-xs text-white/60 tracking-wider">
-                Updated: June 24, 2026
-              </div>
+            <div className="text-center">
+              <h2 className="text-lg font-semibold text-white mb-3 tracking-wide uppercase">Data We Collect</h2>
+              <p className="text-base text-white/80 leading-relaxed">
+                Username, password (encrypted), optional age & gender. No email required for basic accounts.
+              </p>
             </div>
 
-            {/* Content Sections */}
-            <div className="space-y-6">
-              
-              <div className="text-center">
-                <h2 className="text-sm font-medium tracking-wider uppercase text-white/90 mb-2">Data We Collect</h2>
-                <p className="text-xs text-white/70 leading-relaxed">
-                  Username, password (encrypted), optional age & gender. No email required for basic accounts.
-                </p>
-              </div>
-
-              <div className="text-center">
-                <h2 className="text-sm font-medium tracking-wider uppercase text-white/90 mb-2">How It's Used</h2>
-                <p className="text-xs text-white/70 leading-relaxed">
-                  Authentication, profile display, and community interactions only.
-                </p>
-              </div>
-
-              <div className="text-center">
-                <h2 className="text-sm font-medium tracking-wider uppercase text-white/90 mb-2">Security</h2>
-                <p className="text-xs text-white/70 leading-relaxed">
-                  Industry-standard encryption. Your data stays within ESO's infrastructure.
-                </p>
-              </div>
-
-              <div className="text-center">
-                <h2 className="text-sm font-medium tracking-wider uppercase text-white/90 mb-2">Your Rights</h2>
-                <p className="text-xs text-white/70 leading-relaxed">
-                  Access, modify, or delete your data anytime. GDPR & CCPA compliant.
-                </p>
-              </div>
-
-              <div className="text-center">
-                <h2 className="text-sm font-medium tracking-wider uppercase text-white/90 mb-2">No Tracking</h2>
-                <p className="text-xs text-white/70 leading-relaxed">
-                  Essential cookies only. No third-party tracking or advertising cookies.
-                </p>
-              </div>
-
+            <div className="text-center">
+              <h2 className="text-lg font-semibold text-white mb-3 tracking-wide uppercase">How It's Used</h2>
+              <p className="text-base text-white/80 leading-relaxed">
+                Authentication, profile display, and community interactions only.
+              </p>
             </div>
 
-            {/* Contact */}
-            <div className="mt-8 pt-6 border-t border-white/10 text-center">
-              <p className="text-xs text-white/50 mb-2">Questions?</p>
-              <a 
-                href="mailto:privacy@eso.app" 
-                className="text-xs text-white/70 hover:text-white transition-colors tracking-wide"
-              >
-                privacy@eso.app
-              </a>
+            <div className="text-center">
+              <h2 className="text-lg font-semibold text-white mb-3 tracking-wide uppercase">Security</h2>
+              <p className="text-base text-white/80 leading-relaxed">
+                Industry-standard encryption. Your data stays within ESO's infrastructure.
+              </p>
             </div>
 
-            {/* Back Link */}
-            <div className="mt-6 text-center">
-              <Link 
-                to="/" 
-                className="text-xs text-white/50 hover:text-white/70 transition-colors tracking-wider uppercase"
-              >
-                ← Back to Home
-              </Link>
+            <div className="text-center">
+              <h2 className="text-lg font-semibold text-white mb-3 tracking-wide uppercase">Your Rights</h2>
+              <p className="text-base text-white/80 leading-relaxed">
+                Access, modify, or delete your data anytime. GDPR & CCPA compliant.
+              </p>
             </div>
+
+            <div className="text-center">
+              <h2 className="text-lg font-semibold text-white mb-3 tracking-wide uppercase">No Tracking</h2>
+              <p className="text-base text-white/80 leading-relaxed">
+                Essential cookies only. No third-party tracking or advertising cookies.
+              </p>
+            </div>
+
+          </div>
+
+          {/* Contact Section */}
+          <div className="text-center mt-16">
+            <h2 className="text-lg font-semibold text-white mb-3 tracking-wide uppercase">Questions?</h2>
+            <a 
+              href="mailto:privacy@eso.app" 
+              className="text-base text-white/70 hover:text-white transition-colors"
+            >
+              privacy@eso.app
+            </a>
+          </div>
+
+          {/* Back Link */}
+          <div className="text-center mt-12">
+            <Link 
+              to="/" 
+              className="text-sm text-white/50 hover:text-white/70 transition-colors tracking-wider uppercase"
+            >
+              ← Back to Home
+            </Link>
           </div>
 
         </div>
