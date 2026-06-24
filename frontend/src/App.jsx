@@ -1,4 +1,4 @@
-import { lazy, Suspense } from 'react';
+import { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { ToastProvider } from './components/ToastContainer';
 import { StatsProvider } from './contexts/StatsContext';
@@ -8,12 +8,19 @@ import ProtectedRoute from './components/ProtectedRoute';
 import LevelUpNotification from './components/LevelUpNotification';
 import { useLevelUpNotifications } from './hooks/useLevelUpNotifications';
 import IntrovertsBg from './components/IntrovertsBg';
-import Home from './pages/Home';
+import ErrorBoundary from './components/ErrorBoundary';
 
-// Lazy load other route components for code splitting
-const Landing = lazy(() => import('./pages/Landing'));
-const Register = lazy(() => import('./pages/Register'));
-const Login = lazy(() => import('./pages/Login'));
+// Direct imports for public pages to avoid loading issues
+import Home from './pages/Home';
+import Landing from './pages/Landing';
+import Register from './pages/Register';
+import Login from './pages/Login';
+import Privacy from './pages/Privacy';
+import Explore from './pages/Explore';
+import ForgotPassword from './pages/ForgotPassword';
+import ResetPassword from './pages/ResetPassword';
+
+// Lazy load protected route components for code splitting
 const Circles = lazy(() => import('./pages/Circles'));
 const CircleDetail = lazy(() => import('./pages/CircleDetail'));
 const PostDetail = lazy(() => import('./pages/PostDetail'));
@@ -28,10 +35,6 @@ const Support = lazy(() => import('./pages/Support'));
 const Manifesto = lazy(() => import('./pages/Manifesto'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 const Terms = lazy(() => import('./pages/Terms'));
-const Privacy = lazy(() => import('./pages/Privacy'));
-const Explore = lazy(() => import('./pages/Explore'));
-const ForgotPassword = lazy(() => import('./pages/ForgotPassword'));
-const ResetPassword = lazy(() => import('./pages/ResetPassword'));
 
 // Placeholder Create component
 function Create() {
@@ -65,24 +68,25 @@ function App() {
       <IntrovertsBg />
       <ToastProvider>
         <StatsProvider>
-          <Suspense fallback={<PageLoader />}>
+          <ErrorBoundary>
             <Routes>
-            {/* Public routes - Landing and Auth */}
+            {/* Public routes - Direct imports, no Suspense needed */}
             <Route path="/" element={<Landing />} />
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/explore" element={<Explore />} />
-            <Route path="/terms" element={<Terms />} />
             <Route path="/privacy" element={<Privacy />} />
 
-            {/* Protected routes - Require authentication */}
+            {/* Protected routes - Lazy loaded, wrapped in Suspense */}
             <Route
               path="/home"
               element={
                 <ProtectedRoute>
-                  <Home />
+                  <Suspense fallback={<PageLoader />}>
+                    <Home />
+                  </Suspense>
                 </ProtectedRoute>
               }
             />
@@ -90,7 +94,9 @@ function App() {
               path="/circles"
               element={
                 <ProtectedRoute>
-                  <Circles />
+                  <Suspense fallback={<PageLoader />}>
+                    <Circles />
+                  </Suspense>
                 </ProtectedRoute>
               }
             />
@@ -98,7 +104,9 @@ function App() {
               path="/circles/:id"
               element={
                 <ProtectedRoute>
-                  <CircleDetail />
+                  <Suspense fallback={<PageLoader />}>
+                    <CircleDetail />
+                  </Suspense>
                 </ProtectedRoute>
               }
             />
@@ -106,7 +114,9 @@ function App() {
               path="/posts/:postId"
               element={
                 <ProtectedRoute>
-                  <PostDetail />
+                  <Suspense fallback={<PageLoader />}>
+                    <PostDetail />
+                  </Suspense>
                 </ProtectedRoute>
               }
             />
@@ -114,7 +124,9 @@ function App() {
               path="/support"
               element={
                 <ProtectedRoute>
-                  <Support />
+                  <Suspense fallback={<PageLoader />}>
+                    <Support />
+                  </Suspense>
                 </ProtectedRoute>
               }
             />
@@ -122,8 +134,18 @@ function App() {
               path="/manifesto"
               element={
                 <ProtectedRoute>
-                  <Manifesto />
+                  <Suspense fallback={<PageLoader />}>
+                    <Manifesto />
+                  </Suspense>
                 </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/terms"
+              element={
+                <Suspense fallback={<PageLoader />}>
+                  <Terms />
+                </Suspense>
               }
             />
             <Route
@@ -150,7 +172,9 @@ function App() {
               path="/profile"
               element={
                 <ProtectedRoute>
-                  <Profile />
+                  <Suspense fallback={<PageLoader />}>
+                    <Profile />
+                  </Suspense>
                 </ProtectedRoute>
               }
             />
@@ -158,7 +182,9 @@ function App() {
               path="/rooms/dark"
               element={
                 <ProtectedRoute>
-                  <DarkRoom />
+                  <Suspense fallback={<PageLoader />}>
+                    <DarkRoom />
+                  </Suspense>
                 </ProtectedRoute>
               }
             />
@@ -166,7 +192,9 @@ function App() {
               path="/rooms/climb"
               element={
                 <ProtectedRoute>
-                  <ClimbRoom />
+                  <Suspense fallback={<PageLoader />}>
+                    <ClimbRoom />
+                  </Suspense>
                 </ProtectedRoute>
               }
             />
@@ -174,7 +202,9 @@ function App() {
               path="/rooms/philo"
               element={
                 <ProtectedRoute>
-                  <PhiloRoom />
+                  <Suspense fallback={<PageLoader />}>
+                    <PhiloRoom />
+                  </Suspense>
                 </ProtectedRoute>
               }
             />
@@ -182,7 +212,9 @@ function App() {
               path="/leaderboard"
               element={
                 <ProtectedRoute>
-                  <Leaderboard />
+                  <Suspense fallback={<PageLoader />}>
+                    <Leaderboard />
+                  </Suspense>
                 </ProtectedRoute>
               }
             />
@@ -190,7 +222,9 @@ function App() {
               path="/rules"
               element={
                 <ProtectedRoute>
-                  <Rules />
+                  <Suspense fallback={<PageLoader />}>
+                    <Rules />
+                  </Suspense>
                 </ProtectedRoute>
               }
             />
@@ -198,14 +232,24 @@ function App() {
               path="/about"
               element={
                 <ProtectedRoute>
-                  <AboutUs />
+                  <Suspense fallback={<PageLoader />}>
+                    <AboutUs />
+                  </Suspense>
                 </ProtectedRoute>
               }
             />
 
             {/* Catch all - 404 Page */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+            <Route 
+              path="*" 
+              element={
+                <Suspense fallback={<PageLoader />}>
+                  <NotFound />
+                </Suspense>
+              } 
+            />
+            </Routes>
+          </ErrorBoundary>
 
           {/* Level-Up Notifications */}
           {currentNotification && (
@@ -215,10 +259,9 @@ function App() {
               onClose={closeNotification}
             />
           )}
-        </Suspense>
-      </StatsProvider>
-    </ToastProvider>
-  </Router>
+        </StatsProvider>
+      </ToastProvider>
+    </Router>
   );
 }
 
