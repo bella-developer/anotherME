@@ -83,15 +83,15 @@ function ForgotPassword() {
           <Link to="/" className="inline-block mb-6">
             <EsoLogo className="h-16 w-auto mx-auto" />
           </Link>
-          <h1 className="text-2xl font-bold tracking-[0.2em] uppercase mb-3">
+          <h1 className="text-3xl font-light tracking-[0.25em] text-white mb-3 uppercase">
             Reset Password
           </h1>
-          <p className="text-xs text-white/50 tracking-wider uppercase">
+          <p className="text-xs tracking-[0.2em] text-white/50 uppercase">
             Recover Your Account
           </p>
         </div>
 
-        <div className="border border-white/15 rounded-lg p-8 bg-white/5 backdrop-blur-sm">
+        <div className="border border-white/15 rounded-lg p-8" style={{ background: 'rgba(255,255,255,0.04)', backdropFilter: 'blur(16px)' }}>
           {error && (
             <div className="border border-red-500/30 rounded-lg p-4 mb-6 bg-red-500/10">
               <div className="flex items-center gap-3">
@@ -132,7 +132,7 @@ function ForgotPassword() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3 bg-white hover:bg-white/90 disabled:bg-white/20 disabled:cursor-not-allowed text-black font-semibold rounded transition-colors text-xs tracking-[0.15em] uppercase"
+              className="w-full py-3.5 bg-white hover:bg-white/90 disabled:bg-white/20 disabled:cursor-not-allowed text-black font-medium rounded transition-colors text-sm tracking-[0.15em] uppercase"
             >
               {loading ? 'Sending...' : 'Send Reset Link'}
             </button>

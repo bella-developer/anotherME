@@ -23,24 +23,34 @@ function Privacy() {
       <main className="pt-24 pb-16">
         <div className="max-w-4xl mx-auto px-6">
           {/* Header */}
-          <div className="text-center mb-16">
-            <h1 className="text-4xl md:text-5xl font-bold tracking-[0.2em] uppercase mb-4">
+          <div className="text-center mb-20">
+            <div className="inline-block px-6 py-3 border border-white/20 rounded-full bg-white/10 backdrop-blur-sm mb-8">
+              <span className="text-xs text-white/80 tracking-[0.2em] uppercase font-medium">
+                Legal Documentation
+              </span>
+            </div>
+            <h1 className="text-5xl md:text-6xl font-bold tracking-[0.1em] uppercase mb-6 bg-gradient-to-b from-white to-white/60 bg-clip-text">
               Privacy Policy
             </h1>
-            <div className="inline-flex items-center gap-2 px-4 py-2 border border-white/10 rounded-full bg-white/5">
-              <div className="w-1.5 h-1.5 bg-white/60 rounded-full"></div>
-              <span className="text-xs text-white/60 tracking-wider uppercase">
-                Last Updated: {new Date().toLocaleDateString('en-US', { 
-                  year: 'numeric', 
-                  month: 'long', 
-                  day: 'numeric' 
-                })}
-              </span>
+            <div className="max-w-2xl mx-auto">
+              <p className="text-white/70 text-lg leading-relaxed mb-6">
+                Your privacy matters. Here's how we protect and handle your data with complete transparency.
+              </p>
+              <div className="inline-flex items-center gap-3 px-4 py-2 border border-white/10 rounded-full bg-white/5">
+                <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                <span className="text-xs text-white/60 tracking-wider uppercase">
+                  Last Updated: {new Date().toLocaleDateString('en-US', { 
+                    year: 'numeric', 
+                    month: 'long', 
+                    day: 'numeric' 
+                  })}
+                </span>
+              </div>
             </div>
           </div>
 
           {/* Content Cards */}
-          <div className="space-y-8 mb-16">
+          <div className="max-w-3xl mx-auto space-y-6 mb-20">
             {[
               {
                 title: "Information We Collect",
@@ -77,12 +87,12 @@ function Privacy() {
             ].map((section, index) => (
               <div 
                 key={index}
-                className="border border-white/10 rounded-lg p-8 bg-white/5 backdrop-blur-sm hover:border-white/20 transition-all duration-300"
+                className="border border-white/10 rounded-xl p-6 bg-white/5 backdrop-blur-sm hover:border-white/20 hover:bg-white/10 transition-all duration-300"
               >
-                <h2 className="text-xl font-semibold tracking-wider uppercase mb-4 text-white">
+                <h2 className="text-lg font-semibold tracking-wide uppercase mb-3 text-white/90">
                   {String(index + 1).padStart(2, '0')}. {section.title}
                 </h2>
-                <p className="text-white/80 leading-relaxed text-sm">
+                <p className="text-white/70 leading-relaxed text-sm">
                   {section.content}
                 </p>
               </div>
