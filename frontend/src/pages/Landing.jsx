@@ -65,12 +65,14 @@ function Landing() {
               <Link to="/explore" className="text-sm text-white/60 hover:text-white transition-colors tracking-wider uppercase hidden md:inline-block">
                 Explore
               </Link>
-              <Link to="/terms" className="text-sm text-white/60 hover:text-white transition-colors tracking-wider uppercase hidden md:inline-block">
-                Terms
-              </Link>
-              <Link to="/privacy" className="text-sm text-white/60 hover:text-white transition-colors tracking-wider uppercase hidden md:inline-block">
-                Privacy
-              </Link>
+              <a 
+                href="https://t.me/hesed_perspectives" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-sm text-white/60 hover:text-white transition-colors tracking-wider uppercase hidden md:inline-block"
+              >
+                Socials
+              </a>
               <div className="flex items-center gap-3">
                 <Link 
                   to="/login"
@@ -141,7 +143,7 @@ function Landing() {
                     transition={{ delay: 0.7 }}
                     className="block text-2xl sm:text-3xl lg:text-4xl font-light text-white/90 tracking-wide"
                   >
-                    Your Inner World,<br />Finally Understood
+                    A Space for Deep Thinkers
                   </motion.span>
                 </h1>
                 
@@ -151,8 +153,8 @@ function Landing() {
                   transition={{ delay: 0.9 }}
                   className="text-base text-white/70 leading-relaxed max-w-lg"
                 >
-                  A dark aesthetic space for introverts, deep thinkers, and solitary souls. 
-                  Where silence speaks volumes and authenticity reigns.
+                  Share your thoughts anonymously. Connect through philosophy, creativity, and meaningful conversations. 
+                  No superficial content—just depth.
                 </motion.p>
               </div>
               
@@ -191,7 +193,7 @@ function Landing() {
                   <div className="w-10 h-10 rounded-full bg-cover bg-center border-2 border-black" style={{ backgroundImage: "url('https://images.pexels.com/photos/1681010/pexels-photo-1681010.jpeg?w=100&h=100&fit=crop')" }} />
                 </div>
                 <p className="text-sm text-white/60">
-                  <span className="text-white font-semibold">2,847+</span> quiet minds already inside
+                  <span className="text-white font-semibold">Join us</span> and discover your tribe
                 </p>
               </motion.div>
             </motion.div>
@@ -210,14 +212,14 @@ function Landing() {
                   boxShadow: '0 20px 60px rgba(0,0,0,0.5)',
                 }}
               >
-                <h2 className="text-2xl font-semibold mb-4 tracking-wider">A Safe Haven</h2>
+                <h2 className="text-2xl font-semibold mb-4 tracking-wider">Why ESO?</h2>
                 <p className="text-sm text-white/70 leading-relaxed mb-6">
-                  In a world of noise, finding your tribe is survival. Join introverts, philosophers, 
-                  and quiet souls who seek depth over superficiality.
+                  Tired of shallow interactions? ESO is built for those who think differently. 
+                  Express yourself through posts, engage in real discussions, and find people who actually get you.
                 </p>
                 
                 <div className="space-y-3 mb-6">
-                  {['No small talk, only real connections', 'Share your inner world anonymously', 'Dark aesthetic, calm atmosphere', 'For the misunderstood & unique'].map((item, i) => (
+                  {['Post your thoughts anonymously', 'Engage in four core circles', 'No algorithms, just authentic content', 'Dark, minimal, distraction-free'].map((item, i) => (
                     <motion.div 
                       key={i}
                       initial={{ opacity: 0, x: -20 }}
@@ -492,10 +494,10 @@ function Landing() {
         style={{ background: 'rgba(0,0,0,0.8)' }}
       >
         <div className="max-w-4xl mx-auto px-6 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6 tracking-wider">Your Tribe Awaits</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-6 tracking-wider">Ready to Join?</h2>
           <p className="text-white/60 text-base mb-10 max-w-2xl mx-auto leading-relaxed">
-            Stop pretending to be someone you're not. Join Eso and connect with people who understand 
-            the beauty of solitude, the depth of thought, and the power of authenticity.
+            Create your account and start sharing your thoughts. Connect with people who value depth, 
+            philosophy, creativity, and meaningful conversations.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button
@@ -537,10 +539,10 @@ function Landing() {
             </div>
             
             <div>
-              <h4 className="text-sm font-semibold tracking-wider uppercase mb-3 text-white/70">Legal</h4>
+              <h4 className="text-sm font-semibold tracking-wider uppercase mb-3 text-white/70">Socials</h4>
               <ul className="space-y-2">
-                <li><Link to="/terms" className="text-sm text-white/50 hover:text-white transition-colors">Terms of Service</Link></li>
-                <li><Link to="/privacy" className="text-sm text-white/50 hover:text-white transition-colors">Privacy Policy</Link></li>
+                <li><a href="https://t.me/hesed_perspectives" target="_blank" rel="noopener noreferrer" className="text-sm text-white/50 hover:text-white transition-colors">Telegram</a></li>
+                <li><a href="#" target="_blank" rel="noopener noreferrer" className="text-sm text-white/50 hover:text-white transition-colors">YouTube</a></li>
               </ul>
             </div>
             
@@ -554,8 +556,8 @@ function Landing() {
           </div>
           
           <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-xs text-white/40">© 2026 Eso. Where introverts gather and thrive.</p>
-            <p className="text-xs text-white/40">Built for the quiet, the thoughtful, the unique.</p>
+            <p className="text-xs text-white/40">© 2026 ESO. For deep thinkers and authentic minds.</p>
+            <p className="text-xs text-white/40">No algorithms. Just real conversations.</p>
           </div>
         </div>
       </footer>
