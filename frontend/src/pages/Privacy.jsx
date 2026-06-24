@@ -32,7 +32,7 @@ function Privacy() {
           </div>
 
           {/* Minimal Content */}
-          <div className="space-y-6 text-center">
+          <div className="space-y-8 text-center">
             {[
               {
                 title: "Data We Collect",
@@ -55,11 +55,11 @@ function Privacy() {
                 content: "Essential cookies only. No third-party tracking or advertising cookies."
               }
             ].map((section, index) => (
-              <div key={index} className="py-4 border-b border-white/10 last:border-b-0">
-                <h3 className="text-sm font-medium tracking-wider uppercase text-white/90 mb-2">
+              <div key={index} className="py-6">
+                <h3 className="text-sm font-medium tracking-wider uppercase text-white/90 mb-3">
                   {section.title}
                 </h3>
-                <p className="text-xs text-white/70 leading-relaxed max-w-md mx-auto">
+                <p className="text-xs text-white/60 leading-relaxed max-w-lg mx-auto">
                   {section.content}
                 </p>
               </div>
@@ -67,21 +67,21 @@ function Privacy() {
           </div>
 
           {/* Contact */}
-          <div className="mt-8 pt-6 border-t border-white/10 text-center">
-            <p className="text-xs text-white/60 mb-2">Questions?</p>
+          <div className="mt-12 pt-8 text-center">
+            <p className="text-xs text-white/50 mb-3">Questions?</p>
             <a 
               href="mailto:privacy@eso.app" 
-              className="text-xs text-white/80 hover:text-white transition-colors tracking-wide"
+              className="text-xs text-white/70 hover:text-white transition-colors tracking-wide"
             >
               privacy@eso.app
             </a>
           </div>
 
           {/* Back Link */}
-          <div className="mt-6 text-center">
+          <div className="mt-8 text-center">
             <Link 
               to="/" 
-              className="text-xs text-white/60 hover:text-white transition-colors tracking-wider uppercase"
+              className="text-xs text-white/50 hover:text-white/70 transition-colors tracking-wider uppercase"
             >
               ← Back to Home
             </Link>
