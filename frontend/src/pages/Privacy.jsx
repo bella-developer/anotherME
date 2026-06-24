@@ -28,81 +28,81 @@ function Privacy() {
       </nav>
 
       {/* Main Content Container */}
-      <main className="pt-24 px-6 pb-12">
+      <main className="pt-20 px-6 pb-12">
         <div className="max-w-4xl mx-auto">
           
-          {/* Page Header */}
-          <header className="text-center py-16">
-            <Link to="/" className="inline-block mb-8">
-              <EsoLogo className="h-20 w-auto mx-auto" />
+          {/* Page Header - Compact and Elegant */}
+          <header className="text-center py-12">
+            <Link to="/" className="inline-block mb-6">
+              <EsoLogo className="h-16 w-auto mx-auto" />
             </Link>
-            <h1 className="text-6xl font-bold text-white mb-6 tracking-wider uppercase">
+            <h1 className="text-5xl font-bold text-white mb-3 tracking-wider uppercase">
               Privacy Policy
             </h1>
-            <p className="text-xl text-white opacity-80 tracking-wider uppercase">
+            <p className="text-lg text-white opacity-70 tracking-wide uppercase mb-2">
               How We Protect Your Data
             </p>
-            <div className="mt-4 text-white opacity-60">
+            <div className="text-sm text-white opacity-50">
               Updated: June 24, 2026
             </div>
           </header>
 
-          {/* Content */}
-          <section className="space-y-16 max-w-3xl mx-auto py-8">
+          {/* Content - Tighter Spacing */}
+          <section className="space-y-12 max-w-3xl mx-auto">
             
             <div className="text-center">
-              <h2 className="text-3xl font-bold text-white mb-6 tracking-wider uppercase">Data We Collect</h2>
-              <p className="text-xl text-white opacity-90 leading-relaxed">
+              <h2 className="text-2xl font-bold text-white mb-4 tracking-wide uppercase">Data We Collect</h2>
+              <p className="text-lg text-white opacity-90 leading-relaxed">
                 Username, password (encrypted), optional age & gender. No email required for basic accounts.
               </p>
             </div>
 
             <div className="text-center">
-              <h2 className="text-3xl font-bold text-white mb-6 tracking-wider uppercase">How It's Used</h2>
-              <p className="text-xl text-white opacity-90 leading-relaxed">
+              <h2 className="text-2xl font-bold text-white mb-4 tracking-wide uppercase">How It's Used</h2>
+              <p className="text-lg text-white opacity-90 leading-relaxed">
                 Authentication, profile display, and community interactions only.
               </p>
             </div>
 
             <div className="text-center">
-              <h2 className="text-3xl font-bold text-white mb-6 tracking-wider uppercase">Security</h2>
-              <p className="text-xl text-white opacity-90 leading-relaxed">
+              <h2 className="text-2xl font-bold text-white mb-4 tracking-wide uppercase">Security</h2>
+              <p className="text-lg text-white opacity-90 leading-relaxed">
                 Industry-standard encryption. Your data stays within ESO's infrastructure.
               </p>
             </div>
 
             <div className="text-center">
-              <h2 className="text-3xl font-bold text-white mb-6 tracking-wider uppercase">Your Rights</h2>
-              <p className="text-xl text-white opacity-90 leading-relaxed">
+              <h2 className="text-2xl font-bold text-white mb-4 tracking-wide uppercase">Your Rights</h2>
+              <p className="text-lg text-white opacity-90 leading-relaxed">
                 Access, modify, or delete your data anytime. GDPR & CCPA compliant.
               </p>
             </div>
 
             <div className="text-center">
-              <h2 className="text-3xl font-bold text-white mb-6 tracking-wider uppercase">No Tracking</h2>
-              <p className="text-xl text-white opacity-90 leading-relaxed">
+              <h2 className="text-2xl font-bold text-white mb-4 tracking-wide uppercase">No Tracking</h2>
+              <p className="text-lg text-white opacity-90 leading-relaxed">
                 Essential cookies only. No third-party tracking or advertising cookies.
               </p>
             </div>
 
           </section>
 
-          {/* Contact */}
-          <section className="text-center py-16">
-            <h2 className="text-3xl font-bold text-white mb-8 tracking-wider uppercase">Questions?</h2>
+          {/* Contact - Closer to Content */}
+          <section className="text-center py-12 mt-8">
+            <h2 className="text-2xl font-bold text-white mb-4 tracking-wide uppercase">Questions?</h2>
             <a 
               href="mailto:privacy@eso.app" 
-              className="text-2xl text-white hover:opacity-80 transition-opacity tracking-wide"
+              className="text-lg text-white hover:opacity-80 transition-opacity"
             >
               privacy@eso.app
             </a>
           </section>
 
           {/* Back Link */}
-          <footer className="text-center py-8">
+          <footer className="text-center py-4">
             <Link 
               to="/" 
-              className="text-lg text-white opacity-70 hover:opacity-100 transition-opacity tracking-wider uppercase"
+              className="text-base text-white opacity-60 hover:opacity-100 transition-opacity tracking-wide uppercase"
             >
               ← Back to Home
             </Link>

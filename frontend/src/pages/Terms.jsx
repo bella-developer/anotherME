@@ -28,66 +28,66 @@ function Terms() {
       </nav>
 
       {/* Main Content Container */}
-      <main className="pt-24 px-6 pb-12">
+      <main className="pt-20 px-6 pb-12">
         <div className="max-w-4xl mx-auto">
           
           {/* Page Header */}
-          <header className="text-center py-16">
-            <Link to="/" className="inline-block mb-8">
-              <EsoLogo className="h-20 w-auto mx-auto" />
+          <header className="text-center py-12">
+            <Link to="/" className="inline-block mb-6">
+              <EsoLogo className="h-16 w-auto mx-auto" />
             </Link>
-            <h1 className="text-6xl font-bold text-white mb-6 tracking-wider uppercase">
+            <h1 className="text-5xl font-bold text-white mb-3 tracking-wider uppercase">
               Terms of Service
             </h1>
-            <p className="text-xl text-white opacity-80 tracking-wider uppercase">
+            <p className="text-lg text-white opacity-70 tracking-wide uppercase mb-2">
               Platform Guidelines
             </p>
-            <div className="mt-4 text-white opacity-60">
+            <div className="text-sm text-white opacity-50">
               Effective: June 24, 2026
             </div>
           </header>
 
           {/* Content */}
-          <section className="space-y-16 max-w-3xl mx-auto py-8">
+          <section className="space-y-12 max-w-3xl mx-auto">
             
             <div className="text-center">
-              <h2 className="text-3xl font-bold text-white mb-6 tracking-wider uppercase">Acceptance of Terms</h2>
-              <p className="text-xl text-white opacity-90 leading-relaxed">
+              <h2 className="text-2xl font-bold text-white mb-4 tracking-wide uppercase">Acceptance of Terms</h2>
+              <p className="text-lg text-white opacity-90 leading-relaxed">
                 By using ESO, you agree to these terms. If you don't agree, please don't use the platform.
               </p>
             </div>
 
             <div className="text-center">
-              <h2 className="text-3xl font-bold text-white mb-6 tracking-wider uppercase">Community Guidelines</h2>
-              <p className="text-xl text-white opacity-90 leading-relaxed">
+              <h2 className="text-2xl font-bold text-white mb-4 tracking-wide uppercase">Community Guidelines</h2>
+              <p className="text-lg text-white opacity-90 leading-relaxed">
                 ESO is for deep thinkers. Harassment, spam, or disruptive content is prohibited.
               </p>
             </div>
 
             <div className="text-center">
-              <h2 className="text-3xl font-bold text-white mb-6 tracking-wider uppercase">Content Ownership</h2>
-              <p className="text-xl text-white opacity-90 leading-relaxed">
+              <h2 className="text-2xl font-bold text-white mb-4 tracking-wide uppercase">Content Ownership</h2>
+              <p className="text-lg text-white opacity-90 leading-relaxed">
                 You own your posts. By posting, you grant ESO license to display your content within the platform.
               </p>
             </div>
 
             <div className="text-center">
-              <h2 className="text-3xl font-bold text-white mb-6 tracking-wider uppercase">Account Termination</h2>
+              <h2 className="text-2xl font-bold text-white mb-4 tracking-wide uppercase">Account Termination</h2>
               <p className="text-xl text-white opacity-90 leading-relaxed">
                 We reserve the right to terminate accounts that violate these terms or disrupt the community.
               </p>
             </div>
 
             <div className="text-center">
-              <h2 className="text-3xl font-bold text-white mb-6 tracking-wider uppercase">Platform Availability</h2>
-              <p className="text-xl text-white opacity-90 leading-relaxed">
+              <h2 className="text-2xl font-bold text-white mb-4 tracking-wide uppercase">Platform Availability</h2>
+              <p className="text-lg text-white opacity-90 leading-relaxed">
                 ESO is provided 'as is' without warranty. We don't guarantee error-free or continuous availability.
               </p>
             </div>
 
             <div className="text-center">
-              <h2 className="text-3xl font-bold text-white mb-6 tracking-wider uppercase">Changes to Terms</h2>
-              <p className="text-xl text-white opacity-90 leading-relaxed">
+              <h2 className="text-2xl font-bold text-white mb-4 tracking-wide uppercase">Changes to Terms</h2>
+              <p className="text-lg text-white opacity-90 leading-relaxed">
                 We may update these terms. Continued use after changes constitutes acceptance.
               </p>
             </div>
@@ -95,21 +95,21 @@ function Terms() {
           </section>
 
           {/* Contact */}
-          <section className="text-center py-16">
-            <h2 className="text-3xl font-bold text-white mb-8 tracking-wider uppercase">Legal Questions?</h2>
+          <section className="text-center py-12 mt-8">
+            <h2 className="text-2xl font-bold text-white mb-4 tracking-wide uppercase">Legal Questions?</h2>
             <a 
               href="mailto:legal@eso.app" 
-              className="text-2xl text-white hover:opacity-80 transition-opacity tracking-wide"
+              className="text-lg text-white hover:opacity-80 transition-opacity"
             >
               legal@eso.app
             </a>
           </section>
 
           {/* Back Link */}
-          <footer className="text-center py-8">
+          <footer className="text-center py-4">
             <Link 
               to="/" 
-              className="text-lg text-white opacity-70 hover:opacity-100 transition-opacity tracking-wider uppercase"
+              className="text-base text-white opacity-60 hover:opacity-100 transition-opacity tracking-wide uppercase"
             >
               ← Back to Home
             </Link>
