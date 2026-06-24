@@ -14,7 +14,7 @@ function Privacy() {
             Privacy Policy
           </h1>
           <p className="text-xs tracking-[0.2em] text-white/50 uppercase">
-            How We Protect Your Data
+            How We Protect Your Data • v2024
           </p>
         </div>
 
