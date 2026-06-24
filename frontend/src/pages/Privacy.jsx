@@ -3,36 +3,51 @@ import EsoLogo from '../components/EsoLogo';
 
 function Privacy() {
   return (
-    <div className="min-h-screen bg-black text-white flex items-center justify-center px-4 py-12" style={{ fontFamily: "'Geist Mono', monospace" }}>
-      <div className="w-full max-w-2xl">
-        {/* Header - Same as auth pages */}
-        <div className="text-center mb-12">
-          <Link to="/" className="inline-block mb-4 focus:outline-none focus:ring-2 focus:ring-white/50 rounded">
-            <EsoLogo className="h-16 w-auto mx-auto" />
+    <div className="min-h-screen bg-black text-white" style={{ fontFamily: "'Geist Mono', monospace" }}>
+      {/* Navigation */}
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-black/90 backdrop-blur-xl">
+        <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+          <Link to="/" className="focus:outline-none focus:ring-2 focus:ring-white/50 rounded-md">
+            <EsoLogo className="h-9 w-auto" />
           </Link>
-          <h1 className="text-3xl md:text-4xl font-light tracking-[0.25em] text-white mb-3 uppercase">
-            Privacy Policy
-          </h1>
-          <p className="text-xs tracking-[0.2em] text-white/50 uppercase">
-            How We Protect Your Data • v2024
-          </p>
+          <div className="flex items-center gap-6">
+            <Link 
+              to="/login" 
+              className="text-xs text-white/60 hover:text-white transition-colors tracking-[0.15em] uppercase font-medium"
+            >
+              Sign In
+            </Link>
+            <Link
+              to="/register"
+              className="px-4 py-2 text-xs text-white hover:bg-white/5 transition-all tracking-[0.15em] uppercase font-medium"
+            >
+              Register
+            </Link>
+          </div>
         </div>
+      </nav>
 
-        {/* Main Content Card - Transparent */}
-        <div className="border border-white/15 rounded-lg p-8" style={{ background: 'rgba(255,255,255,0.04)', backdropFilter: 'blur(16px)' }}>
-          
-          {/* Last Updated */}
-          <div className="text-center mb-8">
-            <div className="inline-flex items-center gap-2 px-3 py-1 border border-white/10 rounded-full bg-white/5">
-              <div className="w-1.5 h-1.5 bg-white/40 rounded-full"></div>
-              <span className="text-xs text-white/60 tracking-wider">
-                Updated: {new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
-              </span>
+      {/* Main Content */}
+      <div className="pt-24 pb-16 px-4">
+        <div className="max-w-4xl mx-auto">
+          {/* Header */}
+          <div className="text-center mb-20">
+            <Link to="/" className="inline-block mb-6 focus:outline-none focus:ring-2 focus:ring-white/50 rounded">
+              <EsoLogo className="h-20 w-auto mx-auto" />
+            </Link>
+            <h1 className="text-5xl md:text-6xl font-light tracking-[0.2em] text-white mb-4 uppercase">
+              Privacy Policy
+            </h1>
+            <p className="text-sm tracking-[0.15em] text-white/50 uppercase mb-4">
+              How We Protect Your Data
+            </p>
+            <div className="text-xs text-white/40 tracking-wider">
+              Updated: {new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
             </div>
           </div>
 
-          {/* Minimal Content */}
-          <div className="space-y-8 text-center">
+          {/* Content Sections */}
+          <div className="space-y-16 max-w-3xl mx-auto">
             {[
               {
                 title: "Data We Collect",
@@ -55,33 +70,33 @@ function Privacy() {
                 content: "Essential cookies only. No third-party tracking or advertising cookies."
               }
             ].map((section, index) => (
-              <div key={index} className="py-6">
-                <h3 className="text-sm font-medium tracking-wider uppercase text-white/90 mb-3">
+              <div key={index} className="text-center">
+                <h2 className="text-xl font-light tracking-[0.2em] uppercase text-white mb-6">
                   {section.title}
-                </h3>
-                <p className="text-xs text-white/60 leading-relaxed max-w-lg mx-auto">
+                </h2>
+                <p className="text-white/70 text-base leading-relaxed max-w-2xl mx-auto">
                   {section.content}
                 </p>
               </div>
             ))}
           </div>
 
-          {/* Contact */}
-          <div className="mt-12 pt-8 text-center">
-            <p className="text-xs text-white/50 mb-3">Questions?</p>
+          {/* Contact Section */}
+          <div className="text-center mt-20">
+            <h2 className="text-xl font-light tracking-[0.2em] uppercase text-white mb-6">Questions?</h2>
             <a 
               href="mailto:privacy@eso.app" 
-              className="text-xs text-white/70 hover:text-white transition-colors tracking-wide"
+              className="text-white/70 hover:text-white transition-colors tracking-wide text-lg"
             >
               privacy@eso.app
             </a>
           </div>
 
           {/* Back Link */}
-          <div className="mt-8 text-center">
+          <div className="text-center mt-16">
             <Link 
               to="/" 
-              className="text-xs text-white/50 hover:text-white/70 transition-colors tracking-wider uppercase"
+              className="text-white/50 hover:text-white/70 transition-colors tracking-wider uppercase text-sm"
             >
               ← Back to Home
             </Link>
