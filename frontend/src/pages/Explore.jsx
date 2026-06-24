@@ -80,7 +80,7 @@ function Explore() {
               Surf Around
             </h1>
             <p className="text-sm tracking-[0.15em] text-white/50 uppercase mb-8">
-              Preview Communities
+              Preview Communities • Enhanced
             </p>
             <div className="max-w-2xl mx-auto mb-8">
               <p className="text-white/70 text-base leading-relaxed mb-6">
