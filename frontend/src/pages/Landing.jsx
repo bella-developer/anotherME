@@ -246,10 +246,13 @@ function Landing() {
         </div>
       </section>
 
-      {/* SLIDING TEXT SECTION - Modern infinite scroll */}
+      {/* SLIDING TEXT SECTION - Artistic & Beautiful */}
       <section 
-        className="relative z-10 py-20 border-y border-white/10 overflow-hidden"
-        style={{ background: 'rgba(0,0,0,0.8)', backdropFilter: 'blur(20px)' }}
+        className="relative z-10 py-24 border-y border-white/5 overflow-hidden"
+        style={{ 
+          background: 'linear-gradient(180deg, rgba(0,0,0,0.95) 0%, rgba(10,5,20,0.98) 50%, rgba(0,0,0,0.95) 100%)',
+          backdropFilter: 'blur(40px)',
+        }}
       >
         <style>{`
           @keyframes slideLeft {
@@ -257,19 +260,31 @@ function Landing() {
             to { transform: translateX(-50%); }
           }
           .slide-track {
-            animation: slideLeft 40s linear infinite;
+            animation: slideLeft 50s linear infinite;
             display: flex;
             width: max-content;
           }
           .slide-track:hover {
             animation-play-state: paused;
           }
+          .word-glow {
+            filter: drop-shadow(0 0 20px rgba(167, 139, 250, 0.4)) 
+                    drop-shadow(0 0 40px rgba(139, 92, 246, 0.2));
+          }
         `}</style>
         
-        <div className="slide-track">
+        {/* Ambient light effect */}
+        <div 
+          className="absolute inset-0 opacity-30"
+          style={{
+            background: 'radial-gradient(ellipse at 50% 50%, rgba(139, 92, 246, 0.15) 0%, transparent 60%)',
+          }}
+        />
+        
+        <div className="slide-track relative z-10">
           {/* Duplicate the words twice for seamless loop */}
           {[...Array(2)].map((_, setIndex) => (
-            <div key={setIndex} className="flex items-center gap-12 px-6">
+            <div key={setIndex} className="flex items-center gap-16 px-8">
               {[
                 'Creators',
                 'Introverts', 
@@ -286,26 +301,43 @@ function Landing() {
               ].map((word, i) => (
                 <div 
                   key={`${setIndex}-${i}`}
-                  className="flex items-center gap-12"
+                  className="flex items-center gap-16"
                 >
                   <span 
-                    className="text-4xl md:text-5xl lg:text-6xl font-light tracking-[0.1em] uppercase whitespace-nowrap"
+                    className="word-glow text-5xl md:text-6xl lg:text-7xl font-light tracking-[0.08em] uppercase whitespace-nowrap transition-all duration-300 hover:scale-105"
                     style={{
-                      background: 'linear-gradient(90deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.35) 50%, rgba(255,255,255,0.15) 100%)',
+                      background: 'linear-gradient(135deg, #A78BFA 0%, #E0E7FF 50%, #60A5FA 100%)',
                       WebkitBackgroundClip: 'text',
                       WebkitTextFillColor: 'transparent',
                       backgroundClip: 'text',
-                      textShadow: '0 0 40px rgba(255,255,255,0.1)',
+                      fontFamily: "'Space Grotesk', 'Inter', sans-serif",
+                      letterSpacing: '0.05em',
                     }}
                   >
                     {word}
                   </span>
-                  <span className="text-white/20 text-2xl">•</span>
+                  <span 
+                    className="text-3xl"
+                    style={{
+                      color: 'rgba(167, 139, 250, 0.3)',
+                      textShadow: '0 0 20px rgba(167, 139, 250, 0.5)',
+                    }}
+                  >
+                    ✦
+                  </span>
                 </div>
               ))}
             </div>
           ))}
         </div>
+        
+        {/* Bottom fade effect */}
+        <div 
+          className="absolute bottom-0 left-0 right-0 h-12 pointer-events-none"
+          style={{
+            background: 'linear-gradient(to top, rgba(0,0,0,0.95), transparent)',
+          }}
+        />
       </section>
 
 
