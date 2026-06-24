@@ -24,7 +24,7 @@ function Privacy() {
           {/* Last Updated */}
           <div className="text-center mb-8">
             <div className="inline-flex items-center gap-2 px-3 py-1 border border-white/10 rounded-full bg-white/5">
-              <div className="w-1.5 h-1.5 bg-green-400 rounded-full"></div>
+              <div className="w-1.5 h-1.5 bg-white/40 rounded-full"></div>
               <span className="text-xs text-white/60 tracking-wider">
                 Updated: {new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
               </span>

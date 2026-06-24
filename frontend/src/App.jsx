@@ -16,6 +16,7 @@ import Landing from './pages/Landing';
 import Register from './pages/Register';
 import Login from './pages/Login';
 import Privacy from './pages/Privacy';
+import Terms from './pages/Terms';
 import Explore from './pages/Explore';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
@@ -34,7 +35,6 @@ const AboutUs = lazy(() => import('./pages/AboutUs'));
 const Support = lazy(() => import('./pages/Support'));
 const Manifesto = lazy(() => import('./pages/Manifesto'));
 const NotFound = lazy(() => import('./pages/NotFound'));
-const Terms = lazy(() => import('./pages/Terms'));
 
 // Placeholder Create component
 function Create() {
@@ -141,14 +141,7 @@ function App() {
                 </ProtectedRoute>
               }
             />
-            <Route
-              path="/terms"
-              element={
-                <Suspense fallback={<PageLoader />}>
-                  <Terms />
-                </Suspense>
-              }
-            />
+            <Route path="/terms" element={<Terms />} />
             <Route
               path="/archive"
               element={
