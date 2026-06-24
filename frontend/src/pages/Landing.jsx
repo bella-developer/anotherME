@@ -123,7 +123,7 @@ function Landing() {
                   className="inline-block px-4 py-2 mb-6 border border-white/20 rounded-full"
                   style={{ background: 'rgba(255,255,255,0.05)' }}
                 >
-                  <span className="text-xs tracking-[0.25em] uppercase text-white/70">Within · Inner · Essence</span>
+                  <span className="text-xs tracking-[0.25em] uppercase text-white/70">Comfy · Aesthetic · Environment</span>
                 </motion.div>
                 
                 <h1 className="leading-[1.1] mb-6">
@@ -153,8 +153,7 @@ function Landing() {
                   transition={{ delay: 0.9 }}
                   className="text-base text-white/70 leading-relaxed max-w-lg"
                 >
-                  Share your thoughts anonymously. Connect through philosophy, creativity, and meaningful conversations. 
-                  No superficial content—just depth.
+                  A quiet corner of the internet for introverts, philosophers, creators, and people who think deeply and feel differently.
                 </motion.p>
               </div>
               
@@ -162,22 +161,22 @@ function Landing() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1.1 }}
-                className="flex gap-4"
+                className="flex gap-3"
               >
                 <button 
                   onClick={() => navigate('/register')}
-                  className="px-8 py-4 bg-white text-black font-bold text-sm uppercase tracking-[0.2em] hover:bg-gray-200 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+                  className="px-6 py-3 bg-white text-black font-semibold text-xs uppercase tracking-[0.2em] hover:bg-gray-200 transition-all shadow-lg rounded"
                   aria-label="Create an account"
                 >
-                  Enter Eso
+                  Step In →
                 </button>
                 
                 <button 
                   onClick={() => navigate('/explore')}
-                  className="px-8 py-4 text-white font-semibold text-sm uppercase tracking-[0.2em] hover:bg-white/10 transition-all border border-white/30 hover:border-white/50"
+                  className="px-6 py-3 text-white font-medium text-xs uppercase tracking-[0.2em] hover:bg-white/10 transition-all border border-white/30 hover:border-white/50 rounded"
                   aria-label="Explore content"
                 >
-                  Preview
+                  Surf Around
                 </button>
               </motion.div>
               
@@ -499,16 +498,16 @@ function Landing() {
             Create your account and start sharing your thoughts. Connect with people who value depth, 
             philosophy, creativity, and meaningful conversations.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <button
               onClick={() => navigate('/register')}
-              className="px-10 py-4 bg-white text-black font-bold text-sm uppercase tracking-[0.2em] hover:bg-gray-200 transition-all shadow-lg"
+              className="px-8 py-3 bg-white text-black font-semibold text-xs uppercase tracking-[0.2em] hover:bg-gray-200 transition-all shadow-lg rounded"
             >
-              Create Free Account
+              Create Account
             </button>
             <button
               onClick={() => navigate('/explore')}
-              className="px-10 py-4 border border-white/30 text-white font-semibold text-sm uppercase tracking-[0.2em] hover:bg-white/10 transition-all"
+              className="px-8 py-3 border border-white/30 text-white font-medium text-xs uppercase tracking-[0.2em] hover:bg-white/10 transition-all rounded"
             >
               Explore First
             </button>
