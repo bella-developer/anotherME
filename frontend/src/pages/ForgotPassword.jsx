@@ -80,10 +80,10 @@ function ForgotPassword() {
     <div className="min-h-screen flex items-center justify-center px-4 bg-black text-white" style={{ fontFamily: "'Geist Mono', monospace" }}>
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <Link to="/" className="inline-block mb-6">
+          <Link to="/" className="inline-block mb-4 focus:outline-none focus:ring-2 focus:ring-white/50 rounded">
             <EsoLogo className="h-16 w-auto mx-auto" />
           </Link>
-          <h1 className="text-3xl font-light tracking-[0.25em] text-white mb-3 uppercase">
+          <h1 className="text-3xl md:text-4xl font-light tracking-[0.25em] text-white mb-3 uppercase">
             Reset Password
           </h1>
           <p className="text-xs tracking-[0.2em] text-white/50 uppercase">
@@ -116,7 +116,7 @@ function ForgotPassword() {
           
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <label className="block text-xs text-white/55 mb-3 tracking-[0.15em] uppercase">
+              <label className="block text-[0.7rem] tracking-[0.15em] text-white/80 mb-2 uppercase">
                 Email Address
               </label>
               <input
@@ -124,7 +124,7 @@ function ForgotPassword() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-3 border border-white/15 bg-white/5 rounded text-white placeholder-white/25 focus:outline-none focus:border-white/30 transition-colors text-sm"
+                className="w-full px-4 py-3 glass border border-white/20 rounded text-white placeholder-white/40 focus:outline-none focus:border-white/50 transition-colors text-sm tracking-wide"
                 placeholder="your@email.com"
               />
             </div>

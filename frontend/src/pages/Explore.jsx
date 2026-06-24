@@ -73,16 +73,17 @@ function Explore() {
         <div className="max-w-6xl mx-auto px-6">
           {/* Header */}
           <div className="text-center mb-20">
-            <div className="inline-block px-6 py-3 border border-white/20 rounded-full bg-white/10 backdrop-blur-sm mb-8">
-              <span className="text-xs text-white/80 tracking-[0.2em] uppercase font-medium">
-                Preview Communities • Updated
-              </span>
+            <div className="inline-block mb-6 focus:outline-none focus:ring-2 focus:ring-white/50 rounded">
+              <EsoLogo className="h-20 w-auto mx-auto" />
             </div>
-            <h1 className="text-5xl md:text-7xl font-bold tracking-[0.15em] uppercase mb-6 bg-gradient-to-b from-white to-white/60 bg-clip-text">
+            <h1 className="text-5xl md:text-6xl font-light tracking-[0.2em] uppercase mb-4 text-white">
               Surf Around
             </h1>
-            <div className="max-w-3xl mx-auto mb-8">
-              <p className="text-white/70 text-lg leading-relaxed mb-4">
+            <p className="text-sm tracking-[0.15em] text-white/50 uppercase mb-8">
+              Preview Communities
+            </p>
+            <div className="max-w-2xl mx-auto mb-8">
+              <p className="text-white/70 text-base leading-relaxed mb-6">
                 Discover spaces where deep thinkers gather. Each community offers a unique lens through which to explore life, creativity, and consciousness.
               </p>
               <div className="flex items-center justify-center gap-8 text-sm text-white/50">
