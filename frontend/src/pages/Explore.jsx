@@ -75,7 +75,7 @@ function Explore() {
           <div className="text-center mb-20">
             <div className="inline-block px-6 py-3 border border-white/20 rounded-full bg-white/10 backdrop-blur-sm mb-8">
               <span className="text-xs text-white/80 tracking-[0.2em] uppercase font-medium">
-                Preview Communities
+                Preview Communities • Updated
               </span>
             </div>
             <h1 className="text-5xl md:text-7xl font-bold tracking-[0.15em] uppercase mb-6 bg-gradient-to-b from-white to-white/60 bg-clip-text">
