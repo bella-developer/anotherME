@@ -221,7 +221,7 @@ function Register() {
 
         <div className="text-center mb-10">
           <Link to="/" className="inline-block mb-6 focus:outline-none focus:ring-2 focus:ring-white/50 rounded">
-            <EsoLogo className="h-12 w-auto mx-auto" />
+            <EsoLogo className="h-16 w-auto mx-auto" />
           </Link>
           <h1 className="text-3xl md:text-4xl font-light tracking-[0.25em] text-white mb-3 uppercase">
             Register

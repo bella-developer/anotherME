@@ -1,5 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import EsoLogo from '../components/EsoLogo';
 
 function Explore() {
   const navigate = useNavigate();
@@ -43,8 +44,8 @@ function Explore() {
     <div className="min-h-screen bg-black text-white">
       <nav className="fixed top-0 left-0 right-0 z-50 border-b border-white/10 bg-black/90 backdrop-blur-md">
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-          <Link to="/" className="text-xl font-bold tracking-[0.3em]" style={{ fontFamily: "'Space Mono', monospace" }}>
-            ESO
+          <Link to="/" className="focus:outline-none focus:ring-2 focus:ring-white/50 rounded">
+            <EsoLogo className="h-9 w-auto" />
           </Link>
           <div className="flex gap-6">
             <Link to="/login" className="text-sm text-white/60 hover:text-white transition-colors tracking-wider">

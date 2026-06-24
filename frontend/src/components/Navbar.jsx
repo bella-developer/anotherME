@@ -69,7 +69,7 @@ function Navbar() {
             className="flex items-center focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-black rounded p-1"
             aria-label="ESO home"
           >
-            <EsoLogo className="h-8 w-auto" />
+            <EsoLogo className="h-11 w-auto" />
           </Link>
 
           {/* Desktop Navigation Links */}
