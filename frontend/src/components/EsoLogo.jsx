@@ -1,5 +1,5 @@
 /**
- * ESO Logo Component - Professional rendering
+ * ESO Logo Component - Clear and visible
  */
 
 import logoImage from '../assets/images/logo.png';
@@ -12,8 +12,7 @@ function EsoLogo({ className = "h-10 w-auto" }) {
       className={className}
       style={{
         objectFit: 'contain',
-        mixBlendMode: 'screen',
-        filter: 'brightness(1.1) contrast(1.05)',
+        filter: 'brightness(1.2) contrast(1.1)',
       }}
     />
   );
