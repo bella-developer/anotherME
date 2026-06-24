@@ -4,8 +4,8 @@ import EsoLogo from '../components/EsoLogo';
 function Terms() {
   return (
     <div className="min-h-screen bg-black text-white" style={{ fontFamily: "'Geist Mono', monospace" }}>
-      {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-black/95 backdrop-blur-xl border-b border-white/10">
+      {/* Fixed Navigation */}
+      <nav className="fixed top-0 left-0 right-0 z-50 border-b border-white/10 bg-black/95 backdrop-blur-xl">
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
           <Link to="/" className="focus:outline-none focus:ring-2 focus:ring-white/50 rounded-md">
             <EsoLogo className="h-9 w-auto" />
@@ -27,71 +27,78 @@ function Terms() {
         </div>
       </nav>
 
-      {/* Main Content Container - Border-less, No Cards */}
-      <main className="pt-20 px-6 pb-12">
-        <div className="max-w-3xl mx-auto">
-          
-          {/* ESO Logo at Top - Same as Auth Pages */}
-          <div className="text-center mb-8">
-            <Link to="/" className="inline-block mb-4 focus:outline-none focus:ring-2 focus:ring-white/50 rounded">
-              <EsoLogo className="h-16 w-auto mx-auto" />
-            </Link>
-            <h1 className="text-3xl md:text-4xl font-light tracking-[0.25em] text-white mb-3 uppercase">
+      {/* Main Content */}
+      <main className="pt-24 pb-16">
+        <div className="max-w-6xl mx-auto px-6">
+          {/* Header */}
+          <div className="text-center mb-20">
+            <div className="inline-block mb-6">
+              <EsoLogo className="h-20 w-auto mx-auto" />
+            </div>
+            <h1 className="text-5xl md:text-6xl font-light tracking-[0.2em] uppercase mb-4 text-white">
               Terms of Service
             </h1>
-            <p className="text-xs tracking-[0.2em] text-white/50 uppercase">
+            <p className="text-sm tracking-[0.15em] text-white/50 uppercase mb-8">
               Platform Guidelines
             </p>
-          </div>
-
-          {/* Updated Date */}
-          <div className="text-center mb-12">
-            <div className="text-xs text-white/40">
+            <div className="text-sm text-white/40 tracking-wider">
               Effective: June 24, 2026
             </div>
           </div>
 
-          {/* Content Sections - No Cards, No Borders */}
-          <div className="space-y-10 max-w-2xl mx-auto">
+          {/* Content Sections */}
+          <div className="max-w-4xl mx-auto space-y-12">
             
             <div className="text-center">
-              <h2 className="text-lg font-semibold text-white mb-3 tracking-wide uppercase">Acceptance of Terms</h2>
-              <p className="text-base text-white/80 leading-relaxed">
+              <h2 className="text-2xl font-semibold tracking-wider uppercase text-white mb-4">
+                Acceptance of Terms
+              </h2>
+              <p className="text-white/80 text-lg leading-relaxed max-w-2xl mx-auto">
                 By using ESO, you agree to these terms. If you don't agree, please don't use the platform.
               </p>
             </div>
 
             <div className="text-center">
-              <h2 className="text-lg font-semibold text-white mb-3 tracking-wide uppercase">Community Guidelines</h2>
-              <p className="text-base text-white/80 leading-relaxed">
+              <h2 className="text-2xl font-semibold tracking-wider uppercase text-white mb-4">
+                Community Guidelines
+              </h2>
+              <p className="text-white/80 text-lg leading-relaxed max-w-2xl mx-auto">
                 ESO is for deep thinkers. Harassment, spam, or disruptive content is prohibited.
               </p>
             </div>
 
             <div className="text-center">
-              <h2 className="text-lg font-semibold text-white mb-3 tracking-wide uppercase">Content Ownership</h2>
-              <p className="text-base text-white/80 leading-relaxed">
+              <h2 className="text-2xl font-semibold tracking-wider uppercase text-white mb-4">
+                Content Ownership
+              </h2>
+              <p className="text-white/80 text-lg leading-relaxed max-w-2xl mx-auto">
                 You own your posts. By posting, you grant ESO license to display your content within the platform.
               </p>
             </div>
 
             <div className="text-center">
-              <h2 className="text-lg font-semibold text-white mb-3 tracking-wide uppercase">Account Termination</h2>
-              <p className="text-base text-white/80 leading-relaxed">
+              <h2 className="text-2xl font-semibold tracking-wider uppercase text-white mb-4">
+                Account Termination
+              </h2>
+              <p className="text-white/80 text-lg leading-relaxed max-w-2xl mx-auto">
                 We reserve the right to terminate accounts that violate these terms or disrupt the community.
               </p>
             </div>
 
             <div className="text-center">
-              <h2 className="text-lg font-semibold text-white mb-3 tracking-wide uppercase">Platform Availability</h2>
-              <p className="text-base text-white/80 leading-relaxed">
+              <h2 className="text-2xl font-semibold tracking-wider uppercase text-white mb-4">
+                Platform Availability
+              </h2>
+              <p className="text-white/80 text-lg leading-relaxed max-w-2xl mx-auto">
                 ESO is provided 'as is' without warranty. We don't guarantee error-free or continuous availability.
               </p>
             </div>
 
             <div className="text-center">
-              <h2 className="text-lg font-semibold text-white mb-3 tracking-wide uppercase">Changes to Terms</h2>
-              <p className="text-base text-white/80 leading-relaxed">
+              <h2 className="text-2xl font-semibold tracking-wider uppercase text-white mb-4">
+                Changes to Terms
+              </h2>
+              <p className="text-white/80 text-lg leading-relaxed max-w-2xl mx-auto">
                 We may update these terms. Continued use after changes constitutes acceptance.
               </p>
             </div>
@@ -99,18 +106,20 @@ function Terms() {
           </div>
 
           {/* Contact Section */}
-          <div className="text-center mt-16">
-            <h2 className="text-lg font-semibold text-white mb-3 tracking-wide uppercase">Legal Questions?</h2>
+          <div className="text-center mt-20">
+            <h2 className="text-2xl font-semibold tracking-wider uppercase text-white mb-4">
+              Legal Questions?
+            </h2>
             <a 
               href="mailto:legal@eso.app" 
-              className="text-base text-white/70 hover:text-white transition-colors"
+              className="text-lg text-white/80 hover:text-white transition-colors"
             >
               legal@eso.app
             </a>
           </div>
 
           {/* Back Link */}
-          <div className="text-center mt-12">
+          <div className="text-center mt-16">
             <Link 
               to="/" 
               className="text-sm text-white/50 hover:text-white/70 transition-colors tracking-wider uppercase"
@@ -118,7 +127,6 @@ function Terms() {
               ← Back to Home
             </Link>
           </div>
-
         </div>
       </main>
     </div>
