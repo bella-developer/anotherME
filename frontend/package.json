@@ -1,6 +1,6 @@
 {
   "name": "anotherme-frontend",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "anotherME anonymous social platform frontend",
   "type": "module",
   "scripts": {
