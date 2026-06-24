@@ -27,46 +27,50 @@ function Terms() {
         </div>
       </nav>
 
-      {/* Main Content Container */}
-      <main className="pt-20 px-6 pb-12">
-        <div className="max-w-4xl mx-auto">
+      {/* Main Content Container - More Compact and Centered */}
+      <main className="pt-16 px-4 pb-8 min-h-screen flex items-center justify-center">
+        <div className="max-w-3xl mx-auto w-full">
           
-          {/* Page Header */}
-          <header className="text-center py-12">
-            <Link to="/" className="inline-block mb-6">
-              <EsoLogo className="h-16 w-auto mx-auto" />
+          {/* ESO Logo at Top */}
+          <div className="text-center mb-8">
+            <Link to="/" className="inline-block">
+              <EsoLogo className="h-20 w-auto mx-auto" />
             </Link>
-            <h1 className="text-5xl font-bold text-white mb-3 tracking-wider uppercase">
+          </div>
+
+          {/* Page Header - Compact */}
+          <header className="text-center mb-12">
+            <h1 className="text-4xl font-bold text-white mb-2 tracking-wider uppercase">
               Terms of Service
             </h1>
-            <p className="text-lg text-white opacity-70 tracking-wide uppercase mb-2">
+            <p className="text-sm text-white opacity-60 tracking-wide uppercase mb-1">
               Platform Guidelines
             </p>
-            <div className="text-sm text-white opacity-50">
+            <div className="text-xs text-white opacity-40">
               Effective: June 24, 2026
             </div>
           </header>
 
           {/* Content */}
-          <section className="space-y-12 max-w-3xl mx-auto">
+          <section className="space-y-8 max-w-2xl mx-auto mb-10">
             
             <div className="text-center">
-              <h2 className="text-2xl font-bold text-white mb-4 tracking-wide uppercase">Acceptance of Terms</h2>
-              <p className="text-lg text-white opacity-90 leading-relaxed">
+              <h2 className="text-xl font-semibold text-white mb-3 tracking-wide uppercase">Acceptance of Terms</h2>
+              <p className="text-base text-white opacity-85 leading-relaxed">
                 By using ESO, you agree to these terms. If you don't agree, please don't use the platform.
               </p>
             </div>
 
             <div className="text-center">
-              <h2 className="text-2xl font-bold text-white mb-4 tracking-wide uppercase">Community Guidelines</h2>
-              <p className="text-lg text-white opacity-90 leading-relaxed">
+              <h2 className="text-xl font-semibold text-white mb-3 tracking-wide uppercase">Community Guidelines</h2>
+              <p className="text-base text-white opacity-85 leading-relaxed">
                 ESO is for deep thinkers. Harassment, spam, or disruptive content is prohibited.
               </p>
             </div>
 
             <div className="text-center">
-              <h2 className="text-2xl font-bold text-white mb-4 tracking-wide uppercase">Content Ownership</h2>
-              <p className="text-lg text-white opacity-90 leading-relaxed">
+              <h2 className="text-xl font-semibold text-white mb-3 tracking-wide uppercase">Content Ownership</h2>
+              <p className="text-base text-white opacity-85 leading-relaxed">
                 You own your posts. By posting, you grant ESO license to display your content within the platform.
               </p>
             </div>
