@@ -1,6 +1,5 @@
-import { lazy, Suspense, useEffect } from 'react';
+import { lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
 import { ToastProvider } from './components/ToastContainer';
 import { StatsProvider } from './contexts/StatsContext';
 import Layout from './components/Layout';
@@ -10,7 +9,6 @@ import LevelUpNotification from './components/LevelUpNotification';
 import { useLevelUpNotifications } from './hooks/useLevelUpNotifications';
 import IntrovertsBg from './components/IntrovertsBg';
 import Home from './pages/Home';
-import { getSession, selectAuthLoading } from './features/authSlice';
 
 // Lazy load other route components for code splitting
 const Landing = lazy(() => import('./pages/Landing'));
@@ -57,28 +55,10 @@ function PageLoader() {
 }
 
 function App() {
-  const dispatch = useDispatch();
-  const authLoading = useSelector(selectAuthLoading);
-  const sessionChecked = useSelector((state) => state.auth.sessionChecked);
   const { currentNotification, closeNotification } = useLevelUpNotifications();
 
-  // Restore session on app mount
-  useEffect(() => {
-    dispatch(getSession());
-  }, []); // Empty dependency array - only run once on mount
-
-  // Show loading spinner while checking authentication on initial load
-  // Only show loading if we haven't checked session yet AND still loading
-  if (!sessionChecked && authLoading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen bg-black">
-        <IntrovertsBg />
-        <div className="relative z-10">
-          <LoadingSpinner size="large" />
-        </div>
-      </div>
-    );
-  }
+  // Don't check session on app mount - let protected routes handle it
+  // This prevents unnecessary 401 errors on public pages
 
   return (
     <Router>
