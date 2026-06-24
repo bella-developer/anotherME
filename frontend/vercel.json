@@ -31,7 +31,7 @@
           "value": "nosniff"
         },
         {
-          "key": "X-Frame-Options",
+          "key": "X-Frame-Options", 
           "value": "DENY"
         },
         {
@@ -53,7 +53,7 @@
       "headers": [
         {
           "key": "Cache-Control",
-          "value": "public, max-age=0, must-revalidate"
+          "value": "no-cache, no-store, must-revalidate"
         }
       ]
     },
@@ -68,8 +68,8 @@
     }
   ],
   "env": {
-    "VITE_APP_NAME": "anotherME",
-    "VITE_APP_TAGLINE": "a safe place for unique life"
+    "VITE_APP_NAME": "ESO",
+    "VITE_APP_TAGLINE": "A Space for Deep Thinkers"
   },
   "regions": ["iad1"],
   "framework": "vite"
