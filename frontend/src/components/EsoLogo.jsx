@@ -1,5 +1,5 @@
 /**
- * ESO Logo Component - Pure white monochrome
+ * ESO Logo Component - Natural transparent PNG
  */
 
 import logoImage from '../assets/images/logo.png';
@@ -12,7 +12,6 @@ function EsoLogo({ className = "h-10 w-auto" }) {
       className={className}
       style={{
         objectFit: 'contain',
-        filter: 'grayscale(100%) brightness(2) contrast(1.5) invert(1)',
       }}
     />
   );

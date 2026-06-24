@@ -58,7 +58,7 @@ function Landing() {
         <nav className="max-w-7xl mx-auto px-6 lg:px-12 py-4" role="navigation" aria-label="Main navigation">
           <div className="flex items-center justify-between">
             <Link to="/" className="focus:outline-none focus:ring-2 focus:ring-white/50 rounded">
-              <EsoLogo className="h-8 w-auto" />
+              <EsoLogo className="h-7 w-auto" />
             </Link>
             
             <div className="flex items-center gap-8">
@@ -131,7 +131,7 @@ function Landing() {
                     transition={{ delay: 0.5 }}
                     className="relative mb-6"
                   >
-                    <EsoLogo className="h-20 sm:h-24 lg:h-28 w-auto" />
+                    <EsoLogo className="h-16 sm:h-20 lg:h-24 w-auto" />
                   </motion.div>
 
                   
@@ -520,7 +520,7 @@ function Landing() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
             <div>
               <div className="mb-4">
-                <EsoLogo className="h-8 w-auto" />
+                <EsoLogo className="h-6 w-auto" />
               </div>
               <p className="text-sm text-white/50 leading-relaxed">
                 Your inner world, finally understood. A safe space for introverts and deep thinkers.
