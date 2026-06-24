@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { useSearchParams, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import EsoLogo from '../components/EsoLogo';
 
 function ResetPassword() {
   const [searchParams] = useSearchParams();
@@ -60,61 +61,116 @@ function ResetPassword() {
 
   if (success) {
     return (
-      <div className="min-h-screen flex items-center justify-center px-4 bg-black text-white">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold mb-4">Password Reset Complete</h1>
-          <p className="text-white/60 mb-6">Redirecting to login...</p>
+      <div className="min-h-screen flex items-center justify-center px-4 bg-black text-white" style={{ fontFamily: "'Geist Mono', monospace" }}>
+        <div className="w-full max-w-md">
+          <div className="text-center mb-8">
+            <Link to="/" className="inline-block mb-6">
+              <EsoLogo className="h-16 w-auto mx-auto" />
+            </Link>
+          </div>
+
+          <div className="border border-white/15 rounded-lg p-8 bg-white/5 backdrop-blur-sm text-center">
+            <div className="w-16 h-16 border border-white/20 rounded-full flex items-center justify-center mx-auto mb-6">
+              <svg className="w-6 h-6 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            
+            <h1 className="text-xl font-semibold tracking-wider uppercase mb-4">
+              Password Reset Complete
+            </h1>
+            <p className="text-white/60 text-sm mb-8 leading-relaxed">
+              Your password has been successfully reset. Redirecting to login in a few seconds...
+            </p>
+            
+            <Link 
+              to="/login" 
+              className="inline-block px-6 py-3 bg-white text-black font-semibold tracking-wider uppercase text-xs hover:bg-white/90 transition-all rounded"
+            >
+              Go to Login
+            </Link>
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 bg-black text-white">
+    <div className="min-h-screen flex items-center justify-center px-4 bg-black text-white" style={{ fontFamily: "'Geist Mono', monospace" }}>
       <div className="w-full max-w-md">
-        <h1 className="text-2xl font-bold mb-8 text-center">Set New Password</h1>
-        
-        {error && (
-          <div className="bg-red-500/10 border border-red-500/30 rounded p-4 mb-6">
-            <p className="text-red-400">{error}</p>
-          </div>
-        )}
-        
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
-            <label className="block text-sm mb-2">New Password</label>
-            <input
-              type="password"
-              required
-              value={newPassword}
-              onChange={(e) => setNewPassword(e.target.value)}
-              className="w-full px-4 py-3 border border-white/15 bg-white/5 rounded text-white placeholder-white/25 focus:outline-none focus:border-white/30"
-              placeholder="Enter new password"
-              minLength={6}
-            />
-          </div>
+        <div className="text-center mb-8">
+          <Link to="/" className="inline-block mb-6">
+            <EsoLogo className="h-16 w-auto mx-auto" />
+          </Link>
+          <h1 className="text-2xl font-bold tracking-[0.2em] uppercase mb-3">
+            Set New Password
+          </h1>
+          <p className="text-xs text-white/50 tracking-wider uppercase">
+            Choose a Strong Password
+          </p>
+        </div>
 
-          <div>
-            <label className="block text-sm mb-2">Confirm Password</label>
-            <input
-              type="password"
-              required
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              className="w-full px-4 py-3 border border-white/15 bg-white/5 rounded text-white placeholder-white/25 focus:outline-none focus:border-white/30"
-              placeholder="Confirm new password"
-              minLength={6}
-            />
-          </div>
+        <div className="border border-white/15 rounded-lg p-8 bg-white/5 backdrop-blur-sm">
+          {error && (
+            <div className="border border-red-500/30 rounded-lg p-4 mb-6 bg-red-500/10">
+              <div className="flex items-center gap-3">
+                <svg className="w-4 h-4 text-red-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <p className="text-xs text-red-400 tracking-wide uppercase">{error}</p>
+              </div>
+            </div>
+          )}
+          
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div>
+              <label className="block text-xs text-white/55 mb-3 tracking-[0.15em] uppercase">
+                New Password
+              </label>
+              <input
+                type="password"
+                required
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+                className="w-full px-4 py-3 border border-white/15 bg-white/5 rounded text-white placeholder-white/25 focus:outline-none focus:border-white/30 transition-colors text-sm"
+                placeholder="Enter new password"
+                minLength={6}
+              />
+            </div>
 
-          <button
-            type="submit"
-            disabled={loading || !token}
-            className="w-full py-3 bg-white hover:bg-white/90 disabled:bg-white/20 disabled:cursor-not-allowed text-black font-medium rounded transition-colors"
-          >
-            {loading ? 'Resetting...' : 'Reset Password'}
-          </button>
-        </form>
+            <div>
+              <label className="block text-xs text-white/55 mb-3 tracking-[0.15em] uppercase">
+                Confirm Password
+              </label>
+              <input
+                type="password"
+                required
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                className="w-full px-4 py-3 border border-white/15 bg-white/5 rounded text-white placeholder-white/25 focus:outline-none focus:border-white/30 transition-colors text-sm"
+                placeholder="Confirm new password"
+                minLength={6}
+              />
+            </div>
+
+            <button
+              type="submit"
+              disabled={loading || !token}
+              className="w-full py-3 bg-white hover:bg-white/90 disabled:bg-white/20 disabled:cursor-not-allowed text-black font-semibold rounded transition-colors text-xs tracking-[0.15em] uppercase"
+            >
+              {loading ? 'Resetting...' : 'Reset Password'}
+            </button>
+          </form>
+
+          <div className="mt-8 pt-6 border-t border-white/10 text-center">
+            <p className="text-xs text-white/60 tracking-wide">
+              Remember your password?{' '}
+              <Link to="/login" className="text-white hover:text-white/80 transition-colors uppercase tracking-wider">
+                Sign In
+              </Link>
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   );
