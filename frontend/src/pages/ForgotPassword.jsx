@@ -16,9 +16,7 @@ function ForgotPassword() {
     try {
       const response = await fetch(`${import.meta.env.VITE_API_URL || 'https://anotherme-backend.onrender.com'}/api/auth/forgot-password`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email }),
       });
 
@@ -31,7 +29,6 @@ function ForgotPassword() {
       }
     } catch (err) {
       setError('Network error. Please try again.');
-      console.error('Password reset error:', err);
     } finally {
       setLoading(false);
     }
@@ -40,14 +37,14 @@ function ForgotPassword() {
   return (
     <div className="min-h-screen flex items-center justify-center px-4 bg-black text-white">
       <div className="w-full max-w-md">
-        <div className="text-center mb-10">
-          <Link to="/" className="inline-block mb-6 focus:outline-none focus:ring-2 focus:ring-white/50 rounded">
+        <div className="text-center mb-8">
+          <Link to="/" className="inline-block mb-4">
             <EsoLogo className="h-16 w-auto mx-auto" />
           </Link>
           <h1 className="text-3xl font-light tracking-[0.25em] text-white mb-3 uppercase">
             Reset Password
           </h1>
-          <p className="text-xs tracking-[0.2em] text-white/70 uppercase">
+          <p className="text-xs tracking-[0.2em] text-white/50 uppercase">
             Recover Your Account
           </p>
         </div>
@@ -61,7 +58,7 @@ function ForgotPassword() {
             <p className="text-white/60 text-sm mb-6">
               If an account exists with {email}, you'll receive password reset instructions shortly.
             </p>
-            <Link to="/login" className="inline-block px-6 py-3 bg-white text-black font-semibold tracking-wider uppercase text-sm hover:bg-white/90 transition-all">
+            <Link to="/login" className="inline-block px-6 py-3 bg-white text-black font-semibold tracking-wider uppercase text-sm hover:bg-white/90 transition-all rounded">
               Back to Login
             </Link>
           </div>
@@ -84,12 +81,11 @@ function ForgotPassword() {
                 </label>
                 <input
                   id="email"
-                  name="email"
                   type="email"
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-4 py-3 border border-white/15 bg-white/5 rounded text-white placeholder-white/25 focus:outline-none focus:border-white/30 transition-colors text-sm tracking-wide"
+                  className="w-full px-4 py-3 border border-white/15 bg-white/5 rounded text-white placeholder-white/25 focus:outline-none focus:border-white/30 transition-colors text-sm"
                   placeholder="your@email.com"
                 />
               </div>

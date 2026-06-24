@@ -1,5 +1,4 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
 import EsoLogo from '../components/EsoLogo';
 
 function Explore() {
@@ -42,39 +41,36 @@ function Explore() {
 
   return (
     <div className="min-h-screen bg-black text-white">
+      {/* Navbar */}
       <nav className="fixed top-0 left-0 right-0 z-50 border-b border-white/10 bg-black/90 backdrop-blur-md">
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
           <Link to="/" className="focus:outline-none focus:ring-2 focus:ring-white/50 rounded">
             <EsoLogo className="h-9 w-auto" />
           </Link>
           <div className="flex gap-6">
-            <Link to="/login" className="text-sm text-white/60 hover:text-white transition-colors tracking-wider">
-              SIGN IN
+            <Link to="/login" className="text-sm text-white/60 hover:text-white transition-colors tracking-wider uppercase">
+              Sign In
             </Link>
-            <Link to="/register" className="text-sm text-white hover:text-white/80 transition-colors tracking-wider">
-              REGISTER
+            <Link to="/register" className="text-sm text-white hover:text-white/80 transition-colors tracking-wider uppercase">
+              Register
             </Link>
           </div>
         </div>
       </nav>
 
-      <main className="max-w-6xl mx-auto px-6 py-24">
-        <div className="text-center mb-16 mt-12">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4 tracking-[0.2em]">
-            EXPLORE
-          </h1>
+      {/* Content */}
+      <main className="max-w-6xl mx-auto px-6 py-24 mt-12">
+        <div className="text-center mb-16">
+          <h1 className="text-4xl md:text-5xl font-bold mb-4 tracking-[0.2em]">EXPLORE</h1>
           <p className="text-white/60 text-sm tracking-wide">
             Preview what awaits inside. Join to participate in these communities.
           </p>
         </div>
 
         <div className="grid md:grid-cols-2 gap-6 mb-16">
-          {categories.map((cat, i) => (
-            <motion.article
+          {categories.map((cat) => (
+            <article
               key={cat.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.1, duration: 0.5 }}
               className="relative overflow-hidden rounded-lg border border-white/10 hover:border-white/20 transition-all group"
               style={{ background: 'rgba(255,255,255,0.02)' }}
             >
@@ -99,7 +95,7 @@ function Explore() {
                   </button>
                 </div>
               </div>
-            </motion.article>
+            </article>
           ))}
         </div>
 
@@ -107,18 +103,18 @@ function Explore() {
           <div className="inline-block border border-white/15 rounded-lg p-8" style={{ background: 'rgba(255,255,255,0.02)' }}>
             <h3 className="text-xl font-semibold mb-3 tracking-wider">Ready to Dive Deeper?</h3>
             <p className="text-white/60 text-sm mb-6 max-w-md">
-              Create an account to access all categories, post your thoughts, and connect with fellow introverts.
+              Create an account to access all categories, post your thoughts, and connect with fellow deep thinkers.
             </p>
             <div className="flex gap-4 justify-center">
               <button
                 onClick={() => navigate('/register')}
-                className="px-6 py-3 bg-white text-black font-semibold tracking-wider uppercase text-sm hover:bg-white/90 transition-all"
+                className="px-6 py-3 bg-white text-black font-semibold tracking-wider uppercase text-sm hover:bg-white/90 transition-all rounded"
               >
                 Create Account
               </button>
               <button
                 onClick={() => navigate('/login')}
-                className="px-6 py-3 border border-white/30 text-white font-semibold tracking-wider uppercase text-sm hover:bg-white/10 transition-all"
+                className="px-6 py-3 border border-white/30 text-white font-semibold tracking-wider uppercase text-sm hover:bg-white/10 transition-all rounded"
               >
                 Sign In
               </button>

@@ -1,21 +1,24 @@
 import { Link } from 'react-router-dom';
+import EsoLogo from '../components/EsoLogo';
 
 function Privacy() {
   return (
     <div className="min-h-screen bg-black text-white">
+      {/* Navbar */}
       <nav className="fixed top-0 left-0 right-0 z-50 border-b border-white/10 bg-black/90 backdrop-blur-md">
         <div className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
-          <Link to="/" className="text-xl font-bold tracking-[0.3em]" style={{ fontFamily: "'Space Mono', monospace" }}>
-            ESO
+          <Link to="/" className="focus:outline-none focus:ring-2 focus:ring-white/50 rounded">
+            <EsoLogo className="h-8 w-auto" />
           </Link>
-          <Link to="/" className="text-sm text-white/60 hover:text-white transition-colors tracking-wider">
-            BACK TO HOME
+          <Link to="/" className="text-sm text-white/60 hover:text-white transition-colors tracking-wider uppercase">
+            Back to Home
           </Link>
         </div>
       </nav>
 
-      <main className="max-w-4xl mx-auto px-6 py-24">
-        <h1 className="text-4xl font-bold mb-8 tracking-[0.2em] mt-12">PRIVACY POLICY</h1>
+      {/* Content */}
+      <main className="max-w-4xl mx-auto px-6 py-24 mt-12">
+        <h1 className="text-4xl font-bold mb-8 tracking-[0.2em]">PRIVACY POLICY</h1>
         <p className="text-white/60 mb-12 text-sm">Last updated: {new Date().toLocaleDateString()}</p>
 
         <section className="space-y-8 text-white/80 leading-relaxed">
@@ -41,11 +44,11 @@ function Privacy() {
 
           <div>
             <h2 className="text-2xl font-semibold mb-4 tracking-wider">5. Data Sharing</h2>
-            <p>We do not sell, rent, or share your personal data with third parties. Your data stays within Eso's secure infrastructure.</p>
+            <p>We do not sell, rent, or share your personal data with third parties. Your data stays within ESO's secure infrastructure.</p>
           </div>
 
           <div>
-            <h2 className="text-2xl font-semibold mb-4 tracking-wider">6. Your Rights (GDPR/CCPA)</h2>
+            <h2 className="text-2xl font-semibold mb-4 tracking-wider">6. Your Rights</h2>
             <p>You have the right to access, modify, or delete your data. Contact us to exercise these rights. We comply with GDPR and CCPA regulations.</p>
           </div>
 

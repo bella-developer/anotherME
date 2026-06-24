@@ -13,7 +13,6 @@ function ResetPassword() {
   const [success, setSuccess] = useState(false);
 
   useEffect(() => {
-    // Extract token from URL
     const tokenFromUrl = searchParams.get('token');
     if (!tokenFromUrl) {
       setError('Invalid or missing reset token');
@@ -26,13 +25,11 @@ function ResetPassword() {
     e.preventDefault();
     setError('');
 
-    // Validate passwords match
     if (newPassword !== confirmPassword) {
       setError('Passwords do not match');
       return;
     }
 
-    // Validate password length
     if (newPassword.length < 6) {
       setError('Password must be at least 6 characters');
       return;
@@ -43,9 +40,7 @@ function ResetPassword() {
     try {
       const response = await fetch(`${import.meta.env.VITE_API_URL || 'https://anotherme-backend.onrender.com'}/api/auth/reset-password`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ token, newPassword }),
       });
 
@@ -53,16 +48,12 @@ function ResetPassword() {
 
       if (response.ok) {
         setSuccess(true);
-        // Redirect to login after 3 seconds
-        setTimeout(() => {
-          navigate('/login');
-        }, 3000);
+        setTimeout(() => navigate('/login'), 3000);
       } else {
         setError(data.message || 'Failed to reset password');
       }
     } catch (err) {
       setError('Network error. Please try again.');
-      console.error('Password reset error:', err);
     } finally {
       setLoading(false);
     }
@@ -71,14 +62,14 @@ function ResetPassword() {
   return (
     <div className="min-h-screen flex items-center justify-center px-4 bg-black text-white">
       <div className="w-full max-w-md">
-        <div className="text-center mb-10">
-          <Link to="/" className="inline-block mb-6 focus:outline-none focus:ring-2 focus:ring-white/50 rounded">
+        <div className="text-center mb-8">
+          <Link to="/" className="inline-block mb-4">
             <EsoLogo className="h-16 w-auto mx-auto" />
           </Link>
           <h1 className="text-3xl font-light tracking-[0.25em] text-white mb-3 uppercase">
             Set New Password
           </h1>
-          <p className="text-xs tracking-[0.2em] text-white/70 uppercase">
+          <p className="text-xs tracking-[0.2em] text-white/50 uppercase">
             Choose a Strong Password
           </p>
         </div>
@@ -92,7 +83,7 @@ function ResetPassword() {
             <p className="text-white/60 text-sm mb-6">
               Your password has been successfully reset. Redirecting to login...
             </p>
-            <Link to="/login" className="inline-block px-6 py-3 bg-white text-black font-semibold tracking-wider uppercase text-sm hover:bg-white/90 transition-all">
+            <Link to="/login" className="inline-block px-6 py-3 bg-white text-black font-semibold tracking-wider uppercase text-sm hover:bg-white/90 transition-all rounded">
               Go to Login
             </Link>
           </div>
@@ -111,12 +102,11 @@ function ResetPassword() {
                 </label>
                 <input
                   id="newPassword"
-                  name="newPassword"
                   type="password"
                   required
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
-                  className="w-full px-4 py-3 border border-white/15 bg-white/5 rounded text-white placeholder-white/25 focus:outline-none focus:border-white/30 transition-colors text-sm tracking-wide"
+                  className="w-full px-4 py-3 border border-white/15 bg-white/5 rounded text-white placeholder-white/25 focus:outline-none focus:border-white/30 transition-colors text-sm"
                   placeholder="Enter new password"
                   minLength={6}
                 />
@@ -128,12 +118,11 @@ function ResetPassword() {
                 </label>
                 <input
                   id="confirmPassword"
-                  name="confirmPassword"
                   type="password"
                   required
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
-                  className="w-full px-4 py-3 border border-white/15 bg-white/5 rounded text-white placeholder-white/25 focus:outline-none focus:border-white/30 transition-colors text-sm tracking-wide"
+                  className="w-full px-4 py-3 border border-white/15 bg-white/5 rounded text-white placeholder-white/25 focus:outline-none focus:border-white/30 transition-colors text-sm"
                   placeholder="Confirm new password"
                   minLength={6}
                 />
