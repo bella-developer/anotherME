@@ -59,6 +59,7 @@ function PageLoader() {
 function App() {
   const dispatch = useDispatch();
   const authLoading = useSelector(selectAuthLoading);
+  const sessionChecked = useSelector((state) => state.auth.sessionChecked);
   const { currentNotification, closeNotification } = useLevelUpNotifications();
 
   // Restore session on app mount
@@ -67,7 +68,8 @@ function App() {
   }, []); // Empty dependency array - only run once on mount
 
   // Show loading spinner while checking authentication on initial load
-  if (authLoading) {
+  // Only show loading if we haven't checked session yet AND still loading
+  if (!sessionChecked && authLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-black">
         <IntrovertsBg />
