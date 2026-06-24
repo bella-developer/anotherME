@@ -58,30 +58,20 @@ function Explore() {
         </div>
       </nav>
 
-      <motion.main 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.6 }}
-        className="max-w-6xl mx-auto px-6 py-24"
-      >
-        <div className="text-center mb-16 mt-12">
-          <motion.h1 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7 }}
-            className="text-4xl md:text-5xl font-bold mb-4 tracking-[0.2em]"
-          >
+      <main className="max-w-6xl mx-auto px-6 py-24">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7 }}
+          className="text-center mb-16 mt-12"
+        >
+          <h1 className="text-4xl md:text-5xl font-bold mb-4 tracking-[0.2em]">
             EXPLORE
-          </motion.h1>
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.2 }}
-            className="text-white/60 text-sm tracking-wide"
-          >
+          </h1>
+          <p className="text-white/60 text-sm tracking-wide">
             Preview what awaits inside. Join to participate in these communities.
-          </motion.p>
-        </div>
+          </p>
+        </motion.div>
 
         <div className="grid md:grid-cols-2 gap-6 mb-16">
           {categories.map((cat, i) => (
@@ -140,7 +130,7 @@ function Explore() {
             </div>
           </div>
         </div>
-      </motion.main>
+      </main>
     </div>
   );
 }

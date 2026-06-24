@@ -216,11 +216,11 @@ function Register() {
 
   // Registration form
   return (
-    <div className="relative min-h-screen flex items-center justify-center px-4 py-12">
+    <div className="relative min-h-screen flex items-center justify-center px-4 py-12 bg-black">
       <div className="relative z-10 w-full max-w-lg">
 
-        <div className="text-center mb-10">
-          <Link to="/" className="inline-block mb-6 focus:outline-none focus:ring-2 focus:ring-white/50 rounded">
+        <div className="text-center mb-8">
+          <Link to="/" className="inline-block mb-8 focus:outline-none focus:ring-2 focus:ring-white/50 rounded">
             <EsoLogo className="h-16 w-auto mx-auto" />
           </Link>
           <h1 className="text-3xl md:text-4xl font-light tracking-[0.25em] text-white mb-3 uppercase">

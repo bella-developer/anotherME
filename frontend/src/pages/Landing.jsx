@@ -63,7 +63,7 @@ function Landing() {
             
             <div className="flex items-center gap-8">
               <Link to="/explore" className="text-sm text-white/60 hover:text-white transition-colors tracking-wider uppercase hidden md:inline-block">
-                Explore
+                Surf Around
               </Link>
               <a 
                 href="https://t.me/hesed_perspectives" 
@@ -141,7 +141,7 @@ function Landing() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.7 }}
-                    className="block text-2xl sm:text-3xl lg:text-4xl font-light text-white/90 tracking-wide"
+                    className="block text-2xl sm:text-3xl lg:text-4xl font-bold text-white tracking-wide whitespace-nowrap"
                   >
                     A Space for Deep Thinkers
                   </motion.span>
