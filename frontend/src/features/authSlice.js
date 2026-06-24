@@ -12,7 +12,7 @@ import * as authService from '../services/authService';
 const initialState = {
   user: null,
   isAuthenticated: false,
-  loading: true, // Start as true to prevent flash before session check
+  loading: false, // Start as false - only set to true when actually loading
   error: null,
   sessionChecked: false, // Track if initial session check is done
 };
