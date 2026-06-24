@@ -27,97 +27,101 @@ function Terms() {
         </div>
       </nav>
 
-      {/* Main Content Container - More Compact and Centered */}
+      {/* Main Content Container - Auth Page Style */}
       <main className="pt-16 px-4 pb-8 min-h-screen flex items-center justify-center">
-        <div className="max-w-3xl mx-auto w-full">
+        <div className="w-full max-w-md">
           
-          {/* ESO Logo at Top */}
+          {/* Header Section - Same as Auth Pages */}
           <div className="text-center mb-8">
-            <Link to="/" className="inline-block">
-              <EsoLogo className="h-20 w-auto mx-auto" />
+            <Link to="/" className="inline-block mb-4 focus:outline-none focus:ring-2 focus:ring-white/50 rounded">
+              <EsoLogo className="h-16 w-auto mx-auto" />
             </Link>
-          </div>
-
-          {/* Page Header - Compact */}
-          <header className="text-center mb-12">
-            <h1 className="text-4xl font-bold text-white mb-2 tracking-wider uppercase">
+            <h1 className="text-3xl md:text-4xl font-light tracking-[0.25em] text-white mb-3 uppercase">
               Terms of Service
             </h1>
-            <p className="text-sm text-white opacity-60 tracking-wide uppercase mb-1">
+            <p className="text-xs tracking-[0.2em] text-white/50 uppercase">
               Platform Guidelines
             </p>
-            <div className="text-xs text-white opacity-40">
-              Effective: June 24, 2026
-            </div>
-          </header>
+          </div>
 
-          {/* Content */}
-          <section className="space-y-8 max-w-2xl mx-auto mb-10">
+          {/* Content Container */}
+          <div className="border border-white/15 rounded-lg p-8" style={{ background: 'rgba(255,255,255,0.04)', backdropFilter: 'blur(16px)' }}>
             
-            <div className="text-center">
-              <h2 className="text-xl font-semibold text-white mb-3 tracking-wide uppercase">Acceptance of Terms</h2>
-              <p className="text-base text-white opacity-85 leading-relaxed">
-                By using ESO, you agree to these terms. If you don't agree, please don't use the platform.
-              </p>
+            {/* Last Updated */}
+            <div className="text-center mb-6">
+              <div className="text-xs text-white/60 tracking-wider">
+                Effective: June 24, 2026
+              </div>
             </div>
 
-            <div className="text-center">
-              <h2 className="text-xl font-semibold text-white mb-3 tracking-wide uppercase">Community Guidelines</h2>
-              <p className="text-base text-white opacity-85 leading-relaxed">
-                ESO is for deep thinkers. Harassment, spam, or disruptive content is prohibited.
-              </p>
+            {/* Content Sections */}
+            <div className="space-y-6">
+              
+              <div className="text-center">
+                <h2 className="text-sm font-medium tracking-wider uppercase text-white/90 mb-2">Acceptance of Terms</h2>
+                <p className="text-xs text-white/70 leading-relaxed">
+                  By using ESO, you agree to these terms. If you don't agree, please don't use the platform.
+                </p>
+              </div>
+
+              <div className="text-center">
+                <h2 className="text-sm font-medium tracking-wider uppercase text-white/90 mb-2">Community Guidelines</h2>
+                <p className="text-xs text-white/70 leading-relaxed">
+                  ESO is for deep thinkers. Harassment, spam, or disruptive content is prohibited.
+                </p>
+              </div>
+
+              <div className="text-center">
+                <h2 className="text-sm font-medium tracking-wider uppercase text-white/90 mb-2">Content Ownership</h2>
+                <p className="text-xs text-white/70 leading-relaxed">
+                  You own your posts. By posting, you grant ESO license to display your content within the platform.
+                </p>
+              </div>
+
+              <div className="text-center">
+                <h2 className="text-sm font-medium tracking-wider uppercase text-white/90 mb-2">Account Termination</h2>
+                <p className="text-xs text-white/70 leading-relaxed">
+                  We reserve the right to terminate accounts that violate these terms or disrupt the community.
+                </p>
+              </div>
+
+              <div className="text-center">
+                <h2 className="text-sm font-medium tracking-wider uppercase text-white/90 mb-2">Platform Availability</h2>
+                <p className="text-xs text-white/70 leading-relaxed">
+                  ESO is provided 'as is' without warranty. We don't guarantee error-free or continuous availability.
+                </p>
+              </div>
+
+              <div className="text-center">
+                <h2 className="text-sm font-medium tracking-wider uppercase text-white/90 mb-2">Changes to Terms</h2>
+                <p className="text-xs text-white/70 leading-relaxed">
+                  We may update these terms. Continued use after changes constitutes acceptance.
+                </p>
+              </div>
+
             </div>
 
-            <div className="text-center">
-              <h2 className="text-xl font-semibold text-white mb-3 tracking-wide uppercase">Content Ownership</h2>
-              <p className="text-base text-white opacity-85 leading-relaxed">
-                You own your posts. By posting, you grant ESO license to display your content within the platform.
-              </p>
+            {/* Contact */}
+            <div className="mt-8 pt-6 border-t border-white/10 text-center">
+              <p className="text-xs text-white/50 mb-2">Legal Questions?</p>
+              <a 
+                href="mailto:legal@eso.app" 
+                className="text-xs text-white/70 hover:text-white transition-colors tracking-wide"
+              >
+                legal@eso.app
+              </a>
             </div>
 
-            <div className="text-center">
-              <h2 className="text-2xl font-bold text-white mb-4 tracking-wide uppercase">Account Termination</h2>
-              <p className="text-xl text-white opacity-90 leading-relaxed">
-                We reserve the right to terminate accounts that violate these terms or disrupt the community.
-              </p>
+            {/* Back Link */}
+            <div className="mt-6 text-center">
+              <Link 
+                to="/" 
+                className="text-xs text-white/50 hover:text-white/70 transition-colors tracking-wider uppercase"
+              >
+                ← Back to Home
+              </Link>
             </div>
-
-            <div className="text-center">
-              <h2 className="text-2xl font-bold text-white mb-4 tracking-wide uppercase">Platform Availability</h2>
-              <p className="text-lg text-white opacity-90 leading-relaxed">
-                ESO is provided 'as is' without warranty. We don't guarantee error-free or continuous availability.
-              </p>
-            </div>
-
-            <div className="text-center">
-              <h2 className="text-2xl font-bold text-white mb-4 tracking-wide uppercase">Changes to Terms</h2>
-              <p className="text-lg text-white opacity-90 leading-relaxed">
-                We may update these terms. Continued use after changes constitutes acceptance.
-              </p>
-            </div>
-
-          </section>
-
-          {/* Contact */}
-          <section className="text-center py-12 mt-8">
-            <h2 className="text-2xl font-bold text-white mb-4 tracking-wide uppercase">Legal Questions?</h2>
-            <a 
-              href="mailto:legal@eso.app" 
-              className="text-lg text-white hover:opacity-80 transition-opacity"
-            >
-              legal@eso.app
-            </a>
-          </section>
-
-          {/* Back Link */}
-          <footer className="text-center py-4">
-            <Link 
-              to="/" 
-              className="text-base text-white opacity-60 hover:opacity-100 transition-opacity tracking-wide uppercase"
-            >
-              ← Back to Home
-            </Link>
-          </footer>
+          </div>
 
         </div>
       </main>
