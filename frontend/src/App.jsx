@@ -62,6 +62,7 @@ function App() {
 
   // Don't check session on app mount - let protected routes handle it
   // This prevents unnecessary 401 errors on public pages
+  // UI fixes deployed successfully
 
   return (
     <Router>
