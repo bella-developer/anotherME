@@ -28,26 +28,26 @@ function Privacy() {
       </nav>
 
       {/* Main Content */}
-      <div className="pt-24 pb-16 px-4">
+      <div className="pt-32 pb-20 px-6">
         <div className="max-w-4xl mx-auto">
           {/* Header */}
-          <div className="text-center mb-20">
-            <Link to="/" className="inline-block mb-6 focus:outline-none focus:ring-2 focus:ring-white/50 rounded">
-              <EsoLogo className="h-20 w-auto mx-auto" />
+          <div className="text-center mb-24">
+            <Link to="/" className="inline-block mb-8 focus:outline-none focus:ring-2 focus:ring-white/50 rounded">
+              <EsoLogo className="h-24 w-auto mx-auto" />
             </Link>
-            <h1 className="text-5xl md:text-6xl font-light tracking-[0.2em] text-white mb-4 uppercase">
+            <h1 className="text-4xl md:text-5xl font-bold tracking-[0.3em] text-white mb-6 uppercase">
               Privacy Policy
             </h1>
-            <p className="text-sm tracking-[0.15em] text-white/50 uppercase mb-4">
+            <p className="text-lg tracking-[0.2em] text-white/70 uppercase mb-6">
               How We Protect Your Data
             </p>
-            <div className="text-xs text-white/40 tracking-wider">
+            <div className="text-sm text-white/50 tracking-wider">
               Updated: {new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
             </div>
           </div>
 
           {/* Content Sections */}
-          <div className="space-y-16 max-w-3xl mx-auto">
+          <div className="space-y-20 max-w-3xl mx-auto">
             {[
               {
                 title: "Data We Collect",
@@ -71,10 +71,10 @@ function Privacy() {
               }
             ].map((section, index) => (
               <div key={index} className="text-center">
-                <h2 className="text-xl font-light tracking-[0.2em] uppercase text-white mb-6">
+                <h2 className="text-2xl font-semibold tracking-[0.3em] uppercase text-white mb-8">
                   {section.title}
                 </h2>
-                <p className="text-white/70 text-base leading-relaxed max-w-2xl mx-auto">
+                <p className="text-white/80 text-lg leading-relaxed max-w-2xl mx-auto">
                   {section.content}
                 </p>
               </div>
@@ -82,21 +82,21 @@ function Privacy() {
           </div>
 
           {/* Contact Section */}
-          <div className="text-center mt-20">
-            <h2 className="text-xl font-light tracking-[0.2em] uppercase text-white mb-6">Questions?</h2>
+          <div className="text-center mt-24">
+            <h2 className="text-2xl font-semibold tracking-[0.3em] uppercase text-white mb-8">Questions?</h2>
             <a 
               href="mailto:privacy@eso.app" 
-              className="text-white/70 hover:text-white transition-colors tracking-wide text-lg"
+              className="text-white/80 hover:text-white transition-colors tracking-wide text-xl"
             >
               privacy@eso.app
             </a>
           </div>
 
           {/* Back Link */}
-          <div className="text-center mt-16">
+          <div className="text-center mt-20">
             <Link 
               to="/" 
-              className="text-white/50 hover:text-white/70 transition-colors tracking-wider uppercase text-sm"
+              className="text-white/60 hover:text-white/80 transition-colors tracking-wider uppercase text-base"
             >
               ← Back to Home
             </Link>
