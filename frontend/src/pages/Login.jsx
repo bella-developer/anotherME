@@ -50,22 +50,22 @@ function Login() {
 
   return (
     <div className="relative min-h-screen flex items-center justify-center px-4 py-12 bg-black">
-      <div className="relative z-10 w-full max-w-md">
+      <div className="relative z-10 w-full max-w-md animate-fadeIn">
         {/* Header */}
         <div className="text-center mb-8">
-          <Link to="/" className="inline-block mb-4 focus:outline-none focus:ring-2 focus:ring-white/50 rounded">
+          <Link to="/" className="inline-block mb-4 focus:outline-none focus:ring-2 focus:ring-white/50 rounded transform hover:scale-105 transition-transform duration-300">
             <EsoLogo className="h-16 w-auto mx-auto" />
           </Link>
-          <h1 className="text-3xl md:text-4xl font-light tracking-[0.25em] text-white mb-3 uppercase">
+          <h1 className="text-3xl md:text-4xl font-light tracking-[0.25em] text-white mb-3 uppercase animate-slideUp">
             Sign In
           </h1>
-          <p className="text-xs tracking-[0.2em] text-white/50 uppercase">
+          <p className="text-xs tracking-[0.2em] text-white/50 uppercase animate-slideUp" style={{ animationDelay: '0.1s' }}>
             Continue Your Journey
           </p>
         </div>
 
         {/* Login Card - Dark Glassmorphic */}
-        <div className="border border-white/15 rounded-lg p-8" style={{ background: 'rgba(255,255,255,0.04)', backdropFilter: 'blur(16px)' }}>
+        <div className="border border-white/15 rounded-lg p-8 animate-slideUp" style={{ background: 'rgba(255,255,255,0.04)', backdropFilter: 'blur(16px)', animationDelay: '0.2s' }}>
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Username Field */}
             <div>
