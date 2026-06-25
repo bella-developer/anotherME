@@ -40,10 +40,11 @@ passport.use(
         if (email) {
           user = await User.findOne({ email });
           if (user) {
-            // Link Google account to existing user
-            user.googleId = profile.id;
-            await user.save();
-            return done(null, user);
+            // User exists with this email but no Google account linked
+            // Return error instead of auto-linking
+            return done(null, false, { 
+              message: 'An account with this email already exists. Please sign in with your username and password instead.' 
+            });
           }
         }
 

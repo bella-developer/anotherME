@@ -117,13 +117,23 @@ router.get(
  */
 router.get(
   '/google/callback',
-  passport.authenticate('google', { failureRedirect: '/login' }),
+  passport.authenticate('google', { 
+    failureRedirect: '/login',
+    failureMessage: true 
+  }),
   (req, res) => {
     // Successful authentication
     // Passport has populated req.user with the authenticated user
     
+    // Check if authentication failed (user = false)
+    if (!req.user) {
+      const frontendURL = process.env.FRONTEND_URL || 'http://localhost:5173';
+      const message = encodeURIComponent('An account with this email already exists. Please sign in with your username and password.');
+      return res.redirect(`${frontendURL}/login?error=${message}`);
+    }
+    
     // Store user ID in session for compatibility with existing auth system
-    if (req.user && req.user._id) {
+    if (req.user._id) {
       req.session.userId = req.user._id.toString();
       req.session.save((err) => {
         if (err) {

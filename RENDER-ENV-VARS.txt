@@ -1,0 +1,29 @@
+===========================================
+RENDER ENVIRONMENT VARIABLES
+Copy these to: https://dashboard.render.com/
+Service: anotherme-backend → Environment
+===========================================
+
+Add these 4 variables:
+
+1. GOOGLE_CLIENT_ID
+   Value: [Your Client ID from Google Console]
+
+2. GOOGLE_CLIENT_SECRET
+   Value: [Your Client Secret from Google Console]
+
+3. GOOGLE_CALLBACK_URL
+   Value: https://anotherme-backend.onrender.com/api/auth/google/callback
+
+4. FRONTEND_URL
+   Value: https://anothermee.vercel.app
+
+===========================================
+After adding, click "Save Changes"
+Render will automatically redeploy (~2 mins)
+===========================================
+
+GOOGLE CONSOLE REDIRECT URI:
+Make sure this is in your Google OAuth Client:
+https://anotherme-backend.onrender.com/api/auth/google/callback
+===========================================
