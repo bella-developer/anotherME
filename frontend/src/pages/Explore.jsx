@@ -46,8 +46,8 @@ function Explore() {
   return (
     <div className="min-h-screen bg-black text-white relative z-10" style={{ fontFamily: "'Geist Mono', monospace" }}>
       {/* Fixed Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 border-b border-white/10 bg-black/95 backdrop-blur-xl">
-        <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-black/95 backdrop-blur-xl">
+        <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between border-b border-white/10">
           <Link to="/" className="focus:outline-none focus:ring-2 focus:ring-white/50 rounded-md">
             <EsoLogo className="h-9 w-auto" />
           </Link>
@@ -60,7 +60,7 @@ function Explore() {
             </Link>
             <button
               onClick={() => navigate('/register')}
-              className="px-4 py-2 border border-white/20 hover:border-white/40 text-xs text-white hover:bg-white/5 transition-all tracking-[0.15em] uppercase font-medium rounded"
+              className="px-4 py-2 text-xs text-white hover:bg-white/5 transition-all tracking-[0.15em] uppercase font-medium"
             >
               Register
             </button>
@@ -108,63 +108,63 @@ function Explore() {
             {categories.map((category) => (
               <div
                 key={category.id}
-                className="group relative overflow-hidden rounded-xl bg-black/40 backdrop-blur-sm border border-white/10 hover:border-white/30 transition-all duration-500 cursor-pointer hover:scale-[1.02]"
+                className="group relative overflow-hidden cursor-pointer hover:scale-[1.02] transition-transform duration-500"
               >
                 {/* Background Image */}
                 <div className="absolute inset-0 z-0">
                   <img 
                     src={category.image} 
                     alt={category.title}
-                    className="w-full h-full object-cover opacity-20 group-hover:opacity-30 transition-opacity duration-700 group-hover:scale-110 transform"
+                    className="w-full h-full object-cover opacity-10 group-hover:opacity-15 transition-opacity duration-700 group-hover:scale-110 transform"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/60 to-black/40"></div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-black/60"></div>
                 </div>
 
                 {/* Content */}
                 <div className="relative z-10 p-8 min-h-[340px] flex flex-col">
                   {/* Header */}
                   <div className="flex items-center justify-between mb-6">
-                    <div className="w-12 h-12 border border-white/30 rounded-full flex items-center justify-center bg-white/10 backdrop-blur-sm group-hover:border-white/50 group-hover:bg-white/20 transition-all">
-                      <svg className="w-5 h-5 text-white/80 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}>
+                    <div className="w-12 h-12 flex items-center justify-center group-hover:scale-110 transition-transform">
+                      <svg className="w-6 h-6 text-white/50 group-hover:text-white/80 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}>
                         <path strokeLinecap="round" strokeLinejoin="round" d={category.icon} />
                       </svg>
                     </div>
                     <div className="text-right">
-                      <div className="text-xs text-white/50 tracking-wider uppercase mb-1">Posts</div>
-                      <div className="text-lg font-mono text-white/70 group-hover:text-white transition-colors">{category.posts}</div>
+                      <div className="text-xs text-white/40 tracking-wider uppercase mb-1">Posts</div>
+                      <div className="text-lg font-mono text-white/60 group-hover:text-white/80 transition-colors">{category.posts}</div>
                     </div>
                   </div>
 
                   {/* Main Content */}
                   <div className="flex-grow space-y-4">
-                    <h2 className="text-2xl font-bold tracking-wider uppercase text-white group-hover:text-white transition-colors mb-3">
+                    <h2 className="text-2xl font-bold tracking-wider uppercase text-white/90 group-hover:text-white transition-colors mb-3">
                       {category.title}
                     </h2>
-                    <p className="text-white/80 text-sm leading-relaxed mb-6">
+                    <p className="text-white/60 text-sm leading-relaxed mb-6">
                       {category.desc}
                     </p>
                     
                     {/* Recent Preview */}
-                    <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg p-4 group-hover:bg-white/15 transition-all">
-                      <div className="text-xs text-white/60 uppercase tracking-wider mb-2 flex items-center gap-2">
-                        <div className="w-1.5 h-1.5 bg-white/60 rounded-full"></div>
+                    <div className="bg-white/5 backdrop-blur-sm p-4 group-hover:bg-white/10 transition-all">
+                      <div className="text-xs text-white/50 uppercase tracking-wider mb-2 flex items-center gap-2">
+                        <div className="w-1.5 h-1.5 bg-white/50 rounded-full"></div>
                         Recent Discussion
                       </div>
-                      <div className="text-sm text-white/90 italic font-light">
+                      <div className="text-sm text-white/80 italic font-light">
                         {category.preview}
                       </div>
                     </div>
                   </div>
 
                   {/* Footer Action */}
-                  <div className="flex items-center justify-between mt-6 pt-4 border-t border-white/20">
+                  <div className="flex items-center justify-between mt-6 pt-4 border-t border-white/10">
                     <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 bg-red-400 rounded-full animate-pulse"></div>
-                      <span className="text-xs text-white/60 tracking-wider uppercase">Locked</span>
+                      <div className="w-2 h-2 bg-red-400/70 rounded-full animate-pulse"></div>
+                      <span className="text-xs text-white/50 tracking-wider uppercase">Locked</span>
                     </div>
                     <button 
                       onClick={() => navigate('/register')}
-                      className="flex items-center gap-2 text-sm text-white/80 hover:text-white uppercase tracking-wide transition-all group-hover:translate-x-1 duration-300"
+                      className="flex items-center gap-2 text-sm text-white/70 hover:text-white uppercase tracking-wide transition-all group-hover:translate-x-1 duration-300"
                     >
                       Join to Enter
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -180,30 +180,30 @@ function Explore() {
           {/* CTA Section */}
           <div className="text-center">
             <div className="inline-block max-w-lg">
-              <div className="border border-white/15 rounded-lg p-10 bg-white/5 backdrop-blur-sm">
-                <div className="w-16 h-16 border border-white/20 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <svg className="w-6 h-6 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="p-10 bg-white/5 backdrop-blur-sm">
+                <div className="w-16 h-16 flex items-center justify-center mx-auto mb-6">
+                  <svg className="w-7 h-7 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
                   </svg>
                 </div>
                 
-                <h3 className="text-xl font-semibold tracking-wider uppercase mb-4 text-white">
+                <h3 className="text-xl font-semibold tracking-wider uppercase mb-4 text-white/90">
                   Ready to Dive Deeper?
                 </h3>
-                <p className="text-white/60 text-sm leading-relaxed mb-8">
+                <p className="text-white/50 text-sm leading-relaxed mb-8">
                   Create an account to access all categories, post your thoughts, and connect with fellow deep thinkers.
                 </p>
                 
                 <div className="flex flex-col sm:flex-row gap-3 justify-center">
                   <button
                     onClick={() => navigate('/register')}
-                    className="px-6 py-3 bg-white text-black font-semibold tracking-wider uppercase text-xs hover:bg-white/90 transition-all rounded"
+                    className="px-6 py-3 bg-white text-black font-semibold tracking-wider uppercase text-xs hover:bg-white/90 transition-all"
                   >
                     Create Account
                   </button>
                   <button
                     onClick={() => navigate('/login')}
-                    className="px-6 py-3 border border-white/30 text-white font-semibold tracking-wider uppercase text-xs hover:bg-white/10 transition-all rounded"
+                    className="px-6 py-3 text-white font-semibold tracking-wider uppercase text-xs hover:bg-white/5 transition-all"
                   >
                     Sign In
                   </button>
