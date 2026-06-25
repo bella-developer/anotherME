@@ -47,6 +47,11 @@ app.use((req, res, next) => {
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
+// Initialize Passport
+const passport = require('./config/passport.config');
+app.use(passport.initialize());
+app.use(passport.session());
+
 // Import routes
 import healthRoutes from './routes/health.routes.js';
 import authRoutes from './routes/auth.routes.js';

@@ -39,6 +39,24 @@ const userSchema = new mongoose.Schema(
       default: null
     },
 
+    // Google OAuth
+    googleId: {
+      type: String,
+      unique: true,
+      sparse: true,
+      default: null
+    },
+
+    profilePicture: {
+      type: String,
+      default: null
+    },
+
+    isEmailVerified: {
+      type: Boolean,
+      default: false
+    },
+
     // Password reset tokens
     resetPasswordToken: {
       type: String,

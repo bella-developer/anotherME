@@ -4,6 +4,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { register, selectAuth } from '../features/authSlice';
 import IntrovertsBg from '../components/IntrovertsBg';
 import EsoLogo from '../components/EsoLogo';
+import GoogleSignInButton from '../components/GoogleSignInButton';
 
 function Register() {
   const dispatch = useDispatch();
@@ -402,6 +403,16 @@ function Register() {
               )}
             </button>
           </form>
+
+          {/* Divider */}
+          <div className="flex items-center my-6">
+            <div className="flex-1 border-t border-white/10"></div>
+            <span className="px-4 text-xs text-white/40 tracking-wider uppercase">Or</span>
+            <div className="flex-1 border-t border-white/10"></div>
+          </div>
+
+          {/* Google Sign In */}
+          <GoogleSignInButton text="Sign up with Google" />
 
           <div className="mt-6 pt-6 border-t border-white/10 text-center">
             <p className="text-xs text-white/45 tracking-wide">
