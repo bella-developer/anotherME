@@ -81,7 +81,7 @@ router.get(
 router.post(
   '/forgot-password',
   sensitiveRateLimiter,
-  authController.forgotPassword
+  authController.requestPasswordReset
 );
 
 /**
