@@ -109,68 +109,74 @@ function Explore() {
               <div
                 key={category.id}
                 className="group relative overflow-hidden cursor-pointer hover:scale-[1.02] transition-transform duration-500"
+                style={{
+                  padding: '2px',
+                  background: 'linear-gradient(135deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.05) 50%, rgba(255,255,255,0.15) 100%)',
+                }}
               >
-                {/* Background Image */}
-                <div className="absolute inset-0 z-0">
-                  <img 
-                    src={category.image} 
-                    alt={category.title}
-                    className="w-full h-full object-cover opacity-10 group-hover:opacity-15 transition-opacity duration-700 group-hover:scale-110 transform"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-black/60"></div>
-                </div>
-
-                {/* Content */}
-                <div className="relative z-10 p-8 min-h-[340px] flex flex-col">
-                  {/* Header */}
-                  <div className="flex items-center justify-between mb-6">
-                    <div className="w-12 h-12 flex items-center justify-center group-hover:scale-110 transition-transform">
-                      <svg className="w-6 h-6 text-white/50 group-hover:text-white/80 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d={category.icon} />
-                      </svg>
-                    </div>
-                    <div className="text-right">
-                      <div className="text-xs text-white/40 tracking-wider uppercase mb-1">Posts</div>
-                      <div className="text-lg font-mono text-white/60 group-hover:text-white/80 transition-colors">{category.posts}</div>
-                    </div>
+                {/* Inner frame */}
+                <div className="relative overflow-hidden" style={{
+                  background: '#000000',
+                  border: '1px solid rgba(255,255,255,0.1)',
+                }}>
+                  {/* Background Image */}
+                  <div className="absolute inset-0 z-0">
+                    <img 
+                      src={category.image} 
+                      alt={category.title}
+                      className="w-full h-full object-cover opacity-20 group-hover:opacity-30 transition-opacity duration-700 group-hover:scale-105 transform"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/90 to-black/70"></div>
                   </div>
 
-                  {/* Main Content */}
-                  <div className="flex-grow space-y-4">
-                    <h2 className="text-2xl font-bold tracking-wider uppercase text-white/90 group-hover:text-white transition-colors mb-3">
-                      {category.title}
-                    </h2>
-                    <p className="text-white/60 text-sm leading-relaxed mb-6">
-                      {category.desc}
-                    </p>
-                    
-                    {/* Recent Preview */}
-                    <div className="bg-white/5 backdrop-blur-sm p-4 group-hover:bg-white/10 transition-all">
-                      <div className="text-xs text-white/50 uppercase tracking-wider mb-2 flex items-center gap-2">
-                        <div className="w-1.5 h-1.5 bg-white/50 rounded-full"></div>
-                        Recent Discussion
+                  {/* Content */}
+                  <div className="relative z-10 p-8 min-h-[340px] flex flex-col">
+                    {/* Header */}
+                    <div className="flex items-center justify-between mb-6">
+                      <div className="w-12 h-12 flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <svg className="w-6 h-6 text-white/50 group-hover:text-white/80 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d={category.icon} />
+                        </svg>
                       </div>
-                      <div className="text-sm text-white/80 italic font-light">
-                        {category.preview}
+                      <div className="text-right">
+                        <div className="text-xs text-white/40 tracking-wider uppercase mb-1">Posts</div>
+                        <div className="text-lg font-mono text-white/60 group-hover:text-white/80 transition-colors">{category.posts}</div>
                       </div>
                     </div>
-                  </div>
 
-                  {/* Footer Action */}
-                  <div className="flex items-center justify-between mt-6 pt-4 border-t border-white/10">
-                    <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 bg-red-400/70 rounded-full animate-pulse"></div>
-                      <span className="text-xs text-white/50 tracking-wider uppercase">Locked</span>
+                    {/* Main Content */}
+                    <div className="flex-grow space-y-4">
+                      <h2 className="text-2xl font-bold tracking-wider uppercase text-white/90 group-hover:text-white transition-colors mb-3">
+                        {category.title}
+                      </h2>
+                      <p className="text-white/60 text-sm leading-relaxed mb-6">
+                        {category.desc}
+                      </p>
+                      
+                      {/* Recent Preview */}
+                      <div className="bg-white/5 backdrop-blur-sm p-4 group-hover:bg-white/10 transition-all">
+                        <div className="text-xs text-white/50 uppercase tracking-wider mb-2 flex items-center gap-2">
+                          <div className="w-1.5 h-1.5 bg-white/50 rounded-full"></div>
+                          Recent Discussion
+                        </div>
+                        <div className="text-sm text-white/80 italic font-light">
+                          {category.preview}
+                        </div>
+                      </div>
                     </div>
-                    <button 
-                      onClick={() => navigate('/register')}
-                      className="flex items-center gap-2 text-sm text-white/70 hover:text-white uppercase tracking-wide transition-all group-hover:translate-x-1 duration-300"
-                    >
-                      Join to Enter
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                      </svg>
-                    </button>
+
+                    {/* Footer Action */}
+                    <div className="flex items-center justify-end mt-6 pt-4 border-t border-white/10">
+                      <button 
+                        onClick={() => navigate('/register')}
+                        className="flex items-center gap-2 text-sm text-white/70 hover:text-white uppercase tracking-wide transition-all group-hover:translate-x-1 duration-300"
+                      >
+                        Join to Enter
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                        </svg>
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
