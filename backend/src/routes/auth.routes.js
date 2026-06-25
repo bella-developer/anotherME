@@ -102,9 +102,15 @@ router.post(
  * GET /api/auth/google
  * Initiates Google OAuth flow
  * Redirects user to Google for authentication
+ * Query param: action=login|register (optional, defaults to login)
  */
 router.get(
   '/google',
+  (req, res, next) => {
+    // Store the action (login or register) in session
+    req.session.oauthAction = req.query.action || 'login';
+    next();
+  },
   passport.authenticate('google', {
     scope: ['profile', 'email']
   })
@@ -122,19 +128,32 @@ router.get(
     failureMessage: true 
   }),
   (req, res) => {
-    // Successful authentication
-    // Passport has populated req.user with the authenticated user
+    // Check if authentication failed with redirect_to_signin action
+    if (!req.user && req.session.messages && req.session.messages.length > 0) {
+      const message = req.session.messages[0];
+      const frontendURL = process.env.FRONTEND_URL || 'http://localhost:5173';
+      const encodedMessage = encodeURIComponent(message);
+      
+      // Clear messages
+      req.session.messages = [];
+      
+      return res.redirect(`${frontendURL}/login?error=${encodedMessage}`);
+    }
     
     // Check if authentication failed (user = false)
     if (!req.user) {
       const frontendURL = process.env.FRONTEND_URL || 'http://localhost:5173';
-      const message = encodeURIComponent('An account with this email already exists. Please sign in with your username and password.');
+      const message = encodeURIComponent('Authentication failed. Please try again.');
       return res.redirect(`${frontendURL}/login?error=${message}`);
     }
     
     // Store user ID in session for compatibility with existing auth system
     if (req.user._id) {
       req.session.userId = req.user._id.toString();
+      
+      // Clear OAuth action from session
+      delete req.session.oauthAction;
+      
       req.session.save((err) => {
         if (err) {
           console.error('Session save error:', err);

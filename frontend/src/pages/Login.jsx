@@ -211,7 +211,7 @@ function Login() {
           </div>
 
           {/* Google Sign In */}
-          <GoogleSignInButton text="Sign in with Google" />
+          <GoogleSignInButton text="Sign in with Google" action="login" />
 
           {/* Register Link */}
           <div className="mt-6 pt-6 border-t border-white/10 text-center">

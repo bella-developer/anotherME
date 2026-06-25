@@ -412,7 +412,7 @@ function Register() {
           </div>
 
           {/* Google Sign In */}
-          <GoogleSignInButton text="Sign up with Google" />
+          <GoogleSignInButton text="Sign up with Google" action="register" />
 
           <div className="mt-6 pt-6 border-t border-white/10 text-center">
             <p className="text-xs text-white/45 tracking-wide">

@@ -1,7 +1,7 @@
-function GoogleSignInButton({ text = "Continue with Google" }) {
+function GoogleSignInButton({ text = "Continue with Google", action = "login" }) {
   const handleGoogleSignIn = () => {
     const apiUrl = import.meta.env.VITE_API_URL || 'https://anotherme-backend.onrender.com';
-    window.location.href = `${apiUrl}/api/auth/google`;
+    window.location.href = `${apiUrl}/api/auth/google?action=${action}`;
   };
 
   return (

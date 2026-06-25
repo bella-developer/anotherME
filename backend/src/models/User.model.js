@@ -52,6 +52,11 @@ const userSchema = new mongoose.Schema(
       default: null
     },
 
+    fullName: {
+      type: String,
+      default: null
+    },
+
     isEmailVerified: {
       type: Boolean,
       default: false
