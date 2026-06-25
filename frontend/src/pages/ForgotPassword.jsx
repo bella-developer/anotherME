@@ -124,7 +124,7 @@ function ForgotPassword() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-3 glass border border-white/20 rounded text-white placeholder-white/40 focus:outline-none focus:border-white/50 transition-colors text-sm tracking-wide"
+                className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded text-white placeholder-white/40 focus:outline-none focus:border-white/50 transition-colors text-sm tracking-wide"
                 placeholder="your@email.com"
               />
             </div>
@@ -132,7 +132,7 @@ function ForgotPassword() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3.5 bg-white hover:bg-white/90 disabled:bg-white/20 disabled:cursor-not-allowed text-black font-medium rounded transition-colors text-sm tracking-[0.15em] uppercase"
+              className="w-full py-3.5 bg-white/10 hover:bg-white/15 disabled:bg-white/5 disabled:cursor-not-allowed text-white font-medium rounded transition-colors text-sm tracking-[0.15em] uppercase border border-white/20"
             >
               {loading ? 'Sending...' : 'Send Reset Link'}
             </button>

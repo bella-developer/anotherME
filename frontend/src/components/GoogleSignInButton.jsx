@@ -7,7 +7,7 @@ function GoogleSignInButton({ text = "Continue with Google", action = "login" })
   return (
     <button
       onClick={handleGoogleSignIn}
-      className="w-full py-3.5 bg-white hover:bg-gray-50 text-gray-800 font-medium rounded transition-colors text-sm tracking-wide flex items-center justify-center gap-3 border border-gray-200"
+      className="w-full py-3.5 bg-white/10 hover:bg-white/15 text-white font-medium transition-colors text-sm tracking-wide flex items-center justify-center gap-3 border border-white/20 rounded"
       type="button"
     >
       <svg className="w-5 h-5" viewBox="0 0 24 24">

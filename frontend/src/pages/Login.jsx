@@ -93,7 +93,7 @@ function Login() {
                 required
                 value={formData.username}
                 onChange={handleChange}
-                className="w-full px-4 py-3 glass border border-white/20 rounded text-white placeholder-white/40 focus:outline-none focus:border-white/50 transition-colors text-sm tracking-wide"
+                className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded text-white placeholder-white/40 focus:outline-none focus:border-white/50 transition-colors text-sm tracking-wide"
                 placeholder="enter username"
                 disabled={loading}
               />
@@ -113,7 +113,7 @@ function Login() {
                   required
                   value={formData.password}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 pr-12 glass border border-white/20 rounded text-white placeholder-white/40 focus:outline-none focus:border-white/50 transition-colors text-sm tracking-wide"
+                  className="w-full px-4 py-3 pr-12 bg-white/10 border border-white/20 rounded text-white placeholder-white/40 focus:outline-none focus:border-white/50 transition-colors text-sm tracking-wide"
                   placeholder="enter password"
                   disabled={loading}
                 />
@@ -186,7 +186,7 @@ function Login() {
             <button
               type="submit"
               disabled={!isFormValid || loading}
-              className="w-full py-3.5 bg-white/90 hover:bg-white disabled:bg-white/20 disabled:cursor-not-allowed text-black font-medium rounded transition-colors text-sm tracking-[0.15em] uppercase shadow-lg"
+              className="w-full py-3.5 bg-white/10 hover:bg-white/15 disabled:bg-white/5 disabled:cursor-not-allowed text-white font-medium rounded transition-colors text-sm tracking-[0.15em] uppercase border border-white/20"
               aria-label="Sign in to your account"
             >
               {loading ? (

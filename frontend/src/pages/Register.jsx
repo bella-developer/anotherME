@@ -388,7 +388,7 @@ function Register() {
             <button
               type="submit"
               disabled={!isFormValid() || loading}
-              className="w-full py-3.5 bg-white hover:bg-white/90 disabled:bg-white/20 disabled:cursor-not-allowed text-black font-medium rounded transition-colors text-sm tracking-[0.15em] uppercase"
+              className="w-full py-3.5 bg-white/10 hover:bg-white/15 disabled:bg-white/5 disabled:cursor-not-allowed text-white font-medium rounded transition-colors text-sm tracking-[0.15em] uppercase border border-white/20"
             >
               {loading ? (
                 <span className="flex items-center justify-center gap-2">
