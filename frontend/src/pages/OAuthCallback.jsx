@@ -26,13 +26,24 @@ function OAuthCallback() {
           return;
         }
 
-        // Store tokens
+        // Store tokens synchronously
         localStorage.setItem('accessToken', accessToken);
         if (refreshToken) {
           localStorage.setItem('refreshToken', refreshToken);
         }
 
-        // Get user session
+        // Small delay to ensure localStorage is persisted
+        await new Promise(resolve => setTimeout(resolve, 100));
+
+        // Verify tokens are stored
+        const storedToken = localStorage.getItem('accessToken');
+        if (!storedToken) {
+          console.error('Failed to store access token');
+          navigate('/login', { replace: true });
+          return;
+        }
+
+        // Get user session (will now include token in header)
         const response = await authService.getSession();
         
         // Update Redux state
@@ -42,7 +53,10 @@ function OAuthCallback() {
         navigate('/home', { replace: true });
       } catch (error) {
         console.error('OAuth callback error:', error);
-        navigate('/login', { replace: true });
+        // Clear tokens on error
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('refreshToken');
+        navigate('/login?error=' + encodeURIComponent('Authentication failed. Please try again.'), { replace: true });
       }
     };
 
