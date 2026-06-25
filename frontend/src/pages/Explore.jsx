@@ -110,72 +110,74 @@ function Explore() {
                 key={category.id}
                 className="group relative overflow-hidden cursor-pointer hover:scale-[1.02] transition-transform duration-500"
                 style={{
-                  padding: '3px',
-                  background: 'linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.05) 25%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.05) 75%, rgba(255,255,255,0.2) 100%)',
-                  borderRadius: '24px',
+                  padding: '4px',
+                  background: 'linear-gradient(160deg, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0.08) 20%, rgba(255,255,255,0.15) 40%, rgba(255,255,255,0.05) 60%, rgba(255,255,255,0.18) 80%, rgba(255,255,255,0.25) 100%)',
+                  borderRadius: '32px',
+                  boxShadow: '0 8px 32px rgba(0,0,0,0.4)',
                 }}
               >
                 {/* Inner frame with artistic curve */}
                 <div className="relative overflow-hidden" style={{
-                  background: '#000000',
-                  borderRadius: '21px',
-                  border: '1px solid rgba(255,255,255,0.15)',
+                  background: 'linear-gradient(180deg, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.85) 100%)',
+                  borderRadius: '28px',
+                  border: '1px solid rgba(255,255,255,0.2)',
                 }}>
                   {/* Background Image */}
                   <div className="absolute inset-0 z-0">
                     <img 
                       src={category.image} 
                       alt={category.title}
-                      className="w-full h-full object-cover opacity-35 group-hover:opacity-45 transition-opacity duration-700 group-hover:scale-105 transform"
+                      className="w-full h-full object-cover opacity-50 group-hover:opacity-65 transition-opacity duration-700 group-hover:scale-105 transform"
+                      style={{ filter: 'brightness(0.9) contrast(1.1)' }}
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/60 to-black/40"></div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/45 to-black/25"></div>
                   </div>
 
                   {/* Content */}
                   <div className="relative z-10 p-8 min-h-[340px] flex flex-col">
                     {/* Header */}
                     <div className="flex items-center justify-between mb-6">
-                      <div className="w-12 h-12 flex items-center justify-center group-hover:scale-110 transition-transform">
-                        <svg className="w-6 h-6 text-white/60 group-hover:text-white/90 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.2}>
+                      <div className="w-14 h-14 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center group-hover:scale-110 group-hover:bg-white/15 transition-all">
+                        <svg className="w-7 h-7 text-white/70 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
                           <path strokeLinecap="round" strokeLinejoin="round" d={category.icon} />
                         </svg>
                       </div>
                       <div className="text-right">
-                        <div className="text-xs text-white/50 tracking-wider uppercase mb-1">Posts</div>
-                        <div className="text-lg font-mono text-white/70 group-hover:text-white/90 transition-colors">{category.posts}</div>
+                        <div className="text-xs text-white/60 tracking-wider uppercase mb-1">Posts</div>
+                        <div className="text-xl font-mono text-white/80 group-hover:text-white transition-colors">{category.posts}</div>
                       </div>
                     </div>
 
                     {/* Main Content */}
                     <div className="flex-grow space-y-4">
-                      <h2 className="text-2xl font-bold tracking-wider uppercase text-white group-hover:text-white transition-colors mb-3">
+                      <h2 className="text-2xl font-bold tracking-wider uppercase text-white group-hover:text-white transition-colors mb-3 drop-shadow-lg">
                         {category.title}
                       </h2>
-                      <p className="text-white/70 text-sm leading-relaxed mb-6">
+                      <p className="text-white/80 text-sm leading-relaxed mb-6 drop-shadow">
                         {category.desc}
                       </p>
                       
                       {/* Recent Preview */}
-                      <div className="bg-white/10 backdrop-blur-sm p-4 rounded-xl group-hover:bg-white/15 transition-all">
-                        <div className="text-xs text-white/60 uppercase tracking-wider mb-2 flex items-center gap-2">
-                          <div className="w-1.5 h-1.5 bg-white/60 rounded-full"></div>
+                      <div className="bg-black/40 backdrop-blur-md p-4 rounded-2xl border border-white/10 group-hover:bg-black/30 group-hover:border-white/20 transition-all">
+                        <div className="text-xs text-white/70 uppercase tracking-wider mb-2 flex items-center gap-2">
+                          <div className="w-2 h-2 bg-white/70 rounded-full"></div>
                           Recent Discussion
                         </div>
-                        <div className="text-sm text-white/90 italic font-light">
+                        <div className="text-sm text-white italic font-light">
                           {category.preview}
                         </div>
                       </div>
                     </div>
 
                     {/* Footer Action */}
-                    <div className="flex items-center justify-end mt-6 pt-4 border-t border-white/15">
+                    <div className="flex items-center justify-end mt-6 pt-4 border-t border-white/20">
                       <button 
                         onClick={() => navigate('/register')}
-                        className="flex items-center gap-2 text-sm text-white/80 hover:text-white uppercase tracking-wide transition-all group-hover:translate-x-1 duration-300"
+                        className="flex items-center gap-2 text-sm text-white/90 hover:text-white uppercase tracking-wide transition-all group-hover:translate-x-1 duration-300 font-medium"
                       >
                         Join to Enter
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                         </svg>
                       </button>
                     </div>
