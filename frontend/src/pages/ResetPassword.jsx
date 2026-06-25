@@ -61,10 +61,10 @@ function ResetPassword() {
 
   if (success) {
     return (
-      <div className="min-h-screen flex items-center justify-center px-4 bg-black text-white" style={{ fontFamily: "'Geist Mono', monospace" }}>
-        <div className="w-full max-w-md">
+      <div className="min-h-screen flex items-center justify-center px-4 bg-black text-white relative z-10" style={{ fontFamily: "'Geist Mono', monospace" }}>
+        <div className="w-full max-w-md animate-fadeIn">
           <div className="text-center mb-8">
-            <Link to="/" className="inline-block mb-6">
+            <Link to="/" className="inline-block mb-6 transform hover:scale-105 transition-transform duration-300">
               <EsoLogo className="h-16 w-auto mx-auto" />
             </Link>
           </div>
@@ -96,16 +96,16 @@ function ResetPassword() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 bg-black text-white" style={{ fontFamily: "'Geist Mono', monospace" }}>
-      <div className="w-full max-w-md">
+    <div className="min-h-screen flex items-center justify-center px-4 bg-black text-white relative z-10" style={{ fontFamily: "'Geist Mono', monospace" }}>
+      <div className="w-full max-w-md animate-fadeIn">
         <div className="text-center mb-8">
-          <Link to="/" className="inline-block mb-4 focus:outline-none focus:ring-2 focus:ring-white/50 rounded">
+          <Link to="/" className="inline-block mb-4 focus:outline-none focus:ring-2 focus:ring-white/50 rounded transform hover:scale-105 transition-transform duration-300">
             <EsoLogo className="h-16 w-auto mx-auto" />
           </Link>
-          <h1 className="text-3xl md:text-4xl font-light tracking-[0.25em] text-white mb-3 uppercase">
+          <h1 className="text-3xl md:text-4xl font-light tracking-[0.25em] text-white mb-3 uppercase animate-slideUp">
             Set New Password
           </h1>
-          <p className="text-xs tracking-[0.2em] text-white/50 uppercase">
+          <p className="text-xs tracking-[0.2em] text-white/50 uppercase animate-slideUp" style={{ animationDelay: '0.1s' }}>
             Choose a Strong Password
           </p>
         </div>

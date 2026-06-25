@@ -44,7 +44,7 @@ function Explore() {
   ];
 
   return (
-    <div className="min-h-screen bg-black text-white" style={{ fontFamily: "'Geist Mono', monospace" }}>
+    <div className="min-h-screen bg-black text-white relative z-10" style={{ fontFamily: "'Geist Mono', monospace" }}>
       {/* Fixed Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 border-b border-white/10 bg-black/95 backdrop-blur-xl">
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
@@ -72,17 +72,17 @@ function Explore() {
       <main className="pt-24 pb-16">
         <div className="max-w-6xl mx-auto px-6">
           {/* Header */}
-          <div className="text-center mb-20">
-            <div className="inline-block mb-6 focus:outline-none focus:ring-2 focus:ring-white/50 rounded">
+          <div className="text-center mb-20 animate-fadeIn">
+            <div className="inline-block mb-6 focus:outline-none focus:ring-2 focus:ring-white/50 rounded transform hover:scale-105 transition-transform duration-300">
               <EsoLogo className="h-20 w-auto mx-auto" />
             </div>
-            <h1 className="text-5xl md:text-6xl font-light tracking-[0.2em] uppercase mb-4 text-white">
+            <h1 className="text-5xl md:text-6xl font-light tracking-[0.2em] uppercase mb-4 text-white animate-slideUp">
               Surf Around
             </h1>
-            <p className="text-sm tracking-[0.15em] text-white/50 uppercase mb-8">
+            <p className="text-sm tracking-[0.15em] text-white/50 uppercase mb-8 animate-slideUp" style={{ animationDelay: '0.1s' }}>
               Preview Communities • Enhanced
             </p>
-            <div className="max-w-2xl mx-auto mb-8">
+            <div className="max-w-2xl mx-auto mb-8 animate-slideUp" style={{ animationDelay: '0.2s' }}>
               <p className="text-white/70 text-base leading-relaxed mb-6">
                 Discover spaces where deep thinkers gather. Each community offers a unique lens through which to explore life, creativity, and consciousness.
               </p>
@@ -104,11 +104,11 @@ function Explore() {
           </div>
 
           {/* Categories Grid */}
-          <div className="grid md:grid-cols-2 gap-8 mb-20">
+          <div className="grid md:grid-cols-2 gap-8 mb-20 animate-fadeIn" style={{ animationDelay: '0.3s' }}>
             {categories.map((category) => (
               <div
                 key={category.id}
-                className="group relative overflow-hidden rounded-xl bg-black/40 backdrop-blur-sm border border-white/10 hover:border-white/30 transition-all duration-500 cursor-pointer"
+                className="group relative overflow-hidden rounded-xl bg-black/40 backdrop-blur-sm border border-white/10 hover:border-white/30 transition-all duration-500 cursor-pointer hover:scale-[1.02]"
               >
                 {/* Background Image */}
                 <div className="absolute inset-0 z-0">
@@ -117,11 +117,11 @@ function Explore() {
                     alt={category.title}
                     className="w-full h-full object-cover opacity-20 group-hover:opacity-30 transition-opacity duration-700 group-hover:scale-110 transform"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/30"></div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/60 to-black/40"></div>
                 </div>
 
                 {/* Content */}
-                <div className="relative z-10 p-8 min-h-[320px] flex flex-col">
+                <div className="relative z-10 p-8 min-h-[340px] flex flex-col">
                   {/* Header */}
                   <div className="flex items-center justify-between mb-6">
                     <div className="w-12 h-12 border border-white/30 rounded-full flex items-center justify-center bg-white/10 backdrop-blur-sm group-hover:border-white/50 group-hover:bg-white/20 transition-all">
@@ -145,8 +145,11 @@ function Explore() {
                     </p>
                     
                     {/* Recent Preview */}
-                    <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg p-4 group-hover:bg-white/20 transition-all">
-                      <div className="text-xs text-white/60 uppercase tracking-wider mb-2">Recent Discussion</div>
+                    <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg p-4 group-hover:bg-white/15 transition-all">
+                      <div className="text-xs text-white/60 uppercase tracking-wider mb-2 flex items-center gap-2">
+                        <div className="w-1.5 h-1.5 bg-white/60 rounded-full"></div>
+                        Recent Discussion
+                      </div>
                       <div className="text-sm text-white/90 italic font-light">
                         {category.preview}
                       </div>
@@ -156,7 +159,7 @@ function Explore() {
                   {/* Footer Action */}
                   <div className="flex items-center justify-between mt-6 pt-4 border-t border-white/20">
                     <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 bg-red-400 rounded-full"></div>
+                      <div className="w-2 h-2 bg-red-400 rounded-full animate-pulse"></div>
                       <span className="text-xs text-white/60 tracking-wider uppercase">Locked</span>
                     </div>
                     <button 
