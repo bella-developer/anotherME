@@ -124,56 +124,61 @@ router.get(
  */
 router.get(
   '/google/callback',
-  passport.authenticate('google', { 
-    failureRedirect: '/login',
-    failureMessage: true 
-  }),
-  (req, res) => {
-    // Check if authentication failed with redirect_to_signin action
-    if (!req.user && req.session.messages && req.session.messages.length > 0) {
-      const message = req.session.messages[0];
-      const frontendURL = process.env.FRONTEND_URL || 'http://localhost:5173';
-      const encodedMessage = encodeURIComponent(message);
-      
-      // Clear messages
-      req.session.messages = [];
-      
-      return res.redirect(`${frontendURL}/login?error=${encodedMessage}`);
-    }
-    
-    // Check if authentication failed (user = false)
-    if (!req.user) {
-      const frontendURL = process.env.FRONTEND_URL || 'http://localhost:5173';
-      const message = encodeURIComponent('Authentication failed. Please try again.');
-      return res.redirect(`${frontendURL}/login?error=${message}`);
-    }
-    
-    // Store user ID in session for compatibility with existing auth system
-    if (req.user._id) {
-      req.session.userId = req.user._id.toString();
-      
-      // Generate JWT tokens for the user
-      const accessToken = generateAccessToken({ userId: req.user._id.toString() });
-      const refreshToken = generateRefreshToken({ userId: req.user._id.toString() });
-      
-      // Clear OAuth action from session
-      delete req.session.oauthAction;
-      
-      req.session.save((err) => {
-        if (err) {
-          console.error('Session save error:', err);
-        }
-        
-        // Redirect to frontend home page with tokens in URL
+  (req, res, next) => {
+    passport.authenticate('google', (err, user, info) => {
+      if (err) {
+        console.error('OAuth authentication error:', err);
         const frontendURL = process.env.FRONTEND_URL || 'http://localhost:5173';
-        const redirectURL = `${frontendURL}/auth/callback?accessToken=${encodeURIComponent(accessToken)}&refreshToken=${encodeURIComponent(refreshToken)}`;
-        res.redirect(redirectURL);
+        const message = encodeURIComponent('Authentication error. Please try again.');
+        return res.redirect(`${frontendURL}/login?error=${message}`);
+      }
+
+      // Check if authentication failed with redirect_to_signin action
+      if (!user) {
+        const frontendURL = process.env.FRONTEND_URL || 'http://localhost:5173';
+        const message = info?.message || 'Authentication failed. Please try again.';
+        const encodedMessage = encodeURIComponent(message);
+        return res.redirect(`${frontendURL}/login?error=${encodedMessage}`);
+      }
+
+      // Log the user in (establish session)
+      req.logIn(user, (loginErr) => {
+        if (loginErr) {
+          console.error('Login error:', loginErr);
+          const frontendURL = process.env.FRONTEND_URL || 'http://localhost:5173';
+          const message = encodeURIComponent('Failed to establish session. Please try again.');
+          return res.redirect(`${frontendURL}/login?error=${message}`);
+        }
+
+        // Store user ID in session for compatibility with existing auth system
+        if (user._id) {
+          req.session.userId = user._id.toString();
+
+          // Generate JWT tokens for the user
+          const accessToken = generateAccessToken({ userId: user._id.toString() });
+          const refreshToken = generateRefreshToken({ userId: user._id.toString() });
+
+          // Clear OAuth action from session
+          delete req.session.oauthAction;
+
+          req.session.save((saveErr) => {
+            if (saveErr) {
+              console.error('Session save error:', saveErr);
+            }
+
+            // Redirect to frontend home page with tokens in URL
+            const frontendURL = process.env.FRONTEND_URL || 'http://localhost:5173';
+            const redirectURL = `${frontendURL}/auth/callback?accessToken=${encodeURIComponent(accessToken)}&refreshToken=${encodeURIComponent(refreshToken)}`;
+            res.redirect(redirectURL);
+          });
+        } else {
+          // No user ID found
+          const frontendURL = process.env.FRONTEND_URL || 'http://localhost:5173';
+          const message = encodeURIComponent('Invalid user data. Please try again.');
+          res.redirect(`${frontendURL}/login?error=${message}`);
+        }
       });
-    } else {
-      // No user found, redirect to login
-      const frontendURL = process.env.FRONTEND_URL || 'http://localhost:5173';
-      res.redirect(`${frontendURL}/login`);
-    }
+    })(req, res, next);
   }
 );
 
