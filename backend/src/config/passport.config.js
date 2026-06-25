@@ -1,6 +1,6 @@
-const passport = require('passport');
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const User = require('../models/User.model');
+import passport from 'passport';
+import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
+import User from '../models/User.model.js';
 
 // Serialize user for session
 passport.serializeUser((user, done) => {
@@ -68,4 +68,4 @@ passport.use(
   )
 );
 
-module.exports = passport;
+export default passport;

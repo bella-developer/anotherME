@@ -48,7 +48,7 @@ app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 // Initialize Passport
-const passport = require('./config/passport.config');
+import passport from './config/passport.config.js';
 app.use(passport.initialize());
 app.use(passport.session());
 
