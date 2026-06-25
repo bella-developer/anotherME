@@ -119,9 +119,26 @@ router.get(
   '/google/callback',
   passport.authenticate('google', { failureRedirect: '/login' }),
   (req, res) => {
-    // Successful authentication, redirect to frontend
-    const frontendURL = process.env.FRONTEND_URL || 'http://localhost:5173';
-    res.redirect(`${frontendURL}/home`);
+    // Successful authentication
+    // Passport has populated req.user with the authenticated user
+    
+    // Store user ID in session for compatibility with existing auth system
+    if (req.user && req.user._id) {
+      req.session.userId = req.user._id.toString();
+      req.session.save((err) => {
+        if (err) {
+          console.error('Session save error:', err);
+        }
+        
+        // Redirect to frontend home page
+        const frontendURL = process.env.FRONTEND_URL || 'http://localhost:5173';
+        res.redirect(`${frontendURL}/home`);
+      });
+    } else {
+      // No user found, redirect to login
+      const frontendURL = process.env.FRONTEND_URL || 'http://localhost:5173';
+      res.redirect(`${frontendURL}/login`);
+    }
   }
 );
 
