@@ -4,6 +4,7 @@ import { validateRegister, validateLogin } from '../middlewares/validation.middl
 import { sensitiveRateLimiter, strictRateLimiter } from '../middlewares/rateLimit.middleware.js';
 import { authenticate } from '../middlewares/auth.middleware.js';
 import passport from '../config/passport.config.js';
+import { generateAccessToken, generateRefreshToken } from '../utils/jwt.utils.js';
 
 /**
  * Authentication Routes
@@ -151,6 +152,10 @@ router.get(
     if (req.user._id) {
       req.session.userId = req.user._id.toString();
       
+      // Generate JWT tokens for the user
+      const accessToken = generateAccessToken({ userId: req.user._id.toString() });
+      const refreshToken = generateRefreshToken({ userId: req.user._id.toString() });
+      
       // Clear OAuth action from session
       delete req.session.oauthAction;
       
@@ -159,9 +164,10 @@ router.get(
           console.error('Session save error:', err);
         }
         
-        // Redirect to frontend home page
+        // Redirect to frontend home page with tokens in URL
         const frontendURL = process.env.FRONTEND_URL || 'http://localhost:5173';
-        res.redirect(`${frontendURL}/home`);
+        const redirectURL = `${frontendURL}/auth/callback?accessToken=${encodeURIComponent(accessToken)}&refreshToken=${encodeURIComponent(refreshToken)}`;
+        res.redirect(redirectURL);
       });
     } else {
       // No user found, redirect to login

@@ -15,6 +15,7 @@ import Home from './pages/Home';
 import Landing from './pages/Landing';
 import Register from './pages/Register';
 import Login from './pages/Login';
+import OAuthCallback from './pages/OAuthCallback';
 import Privacy from './pages/Privacy';
 import Terms from './pages/Terms';
 import Explore from './pages/Explore';
@@ -75,6 +76,7 @@ function App() {
             <Route path="/" element={<Landing />} />
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/auth/callback" element={<OAuthCallback />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/explore" element={<Explore />} />
