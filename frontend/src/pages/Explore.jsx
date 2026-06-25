@@ -72,39 +72,17 @@ function Explore() {
       <main className="pt-24 pb-16">
         <div className="max-w-6xl mx-auto px-6">
           {/* Header */}
-          <div className="text-center mb-20 animate-fadeIn">
+          <div className="text-center mb-16 animate-fadeIn">
             <div className="inline-block mb-6 focus:outline-none focus:ring-2 focus:ring-white/50 rounded transform hover:scale-105 transition-transform duration-300">
               <EsoLogo className="h-20 w-auto mx-auto" />
             </div>
             <h1 className="text-5xl md:text-6xl font-light tracking-[0.2em] uppercase mb-4 text-white animate-slideUp">
               Surf Around
             </h1>
-            <p className="text-sm tracking-[0.15em] text-white/50 uppercase mb-8 animate-slideUp" style={{ animationDelay: '0.1s' }}>
-              Preview Communities • Enhanced
-            </p>
-            <div className="max-w-2xl mx-auto mb-8 animate-slideUp" style={{ animationDelay: '0.2s' }}>
-              <p className="text-white/70 text-base leading-relaxed mb-6">
-                Discover spaces where deep thinkers gather. Each community offers a unique lens through which to explore life, creativity, and consciousness.
-              </p>
-              <div className="flex items-center justify-center gap-8 text-sm text-white/50">
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 bg-white/40 rounded-full"></div>
-                  <span>4 Communities</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 bg-white/40 rounded-full"></div>
-                  <span>619+ Posts</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 bg-white/40 rounded-full"></div>
-                  <span>Join to Participate</span>
-                </div>
-              </div>
-            </div>
           </div>
 
           {/* Categories Grid */}
-          <div className="grid md:grid-cols-2 gap-8 mb-20 animate-fadeIn" style={{ animationDelay: '0.3s' }}>
+          <div className="grid md:grid-cols-2 gap-8 mb-16 animate-fadeIn" style={{ animationDelay: '0.2s' }}>
             {categories.map((category) => (
               <div
                 key={category.id}
@@ -127,10 +105,10 @@ function Explore() {
                     <img 
                       src={category.image} 
                       alt={category.title}
-                      className="w-full h-full object-cover opacity-50 group-hover:opacity-65 transition-opacity duration-700 group-hover:scale-105 transform"
-                      style={{ filter: 'brightness(0.9) contrast(1.1)' }}
+                      className="w-full h-full object-cover opacity-40 group-hover:opacity-50 transition-opacity duration-700 group-hover:scale-105 transform"
+                      style={{ filter: 'brightness(0.7) contrast(1.2)' }}
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/45 to-black/25"></div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/60 to-black/40"></div>
                   </div>
 
                   {/* Content */}
@@ -187,37 +165,57 @@ function Explore() {
             ))}
           </div>
 
+          {/* About Section */}
+          <div className="max-w-3xl mx-auto text-center mb-16 space-y-12">
+            <div>
+              <h2 className="text-2xl font-light tracking-[0.25em] uppercase text-white/90 mb-6">
+                What is ESO?
+              </h2>
+              <p className="text-white/60 text-sm leading-relaxed">
+                ESO is a space for introverts, philosophers, and deep thinkers. 
+                No small talk. No noise. Just meaningful conversations and authentic connections.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-8 text-center">
+              <div>
+                <div className="text-white/40 text-xs tracking-[0.2em] uppercase mb-3">Anonymous</div>
+                <p className="text-white/70 text-sm">Share thoughts without identity pressure</p>
+              </div>
+              <div>
+                <div className="text-white/40 text-xs tracking-[0.2em] uppercase mb-3">Thoughtful</div>
+                <p className="text-white/70 text-sm">Quality over quantity conversations</p>
+              </div>
+              <div>
+                <div className="text-white/40 text-xs tracking-[0.2em] uppercase mb-3">Safe</div>
+                <p className="text-white/70 text-sm">Judgment-free zone for authenticity</p>
+              </div>
+            </div>
+          </div>
+
           {/* CTA Section */}
           <div className="text-center">
-            <div className="inline-block max-w-lg">
-              <div className="p-10">
-                <div className="w-16 h-16 flex items-center justify-center mx-auto mb-6">
-                  <svg className="w-7 h-7 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
-                  </svg>
-                </div>
-                
-                <h3 className="text-xl font-semibold tracking-wider uppercase mb-4 text-white/90">
-                  Ready to Dive Deeper?
-                </h3>
-                <p className="text-white/50 text-sm leading-relaxed mb-8">
-                  Create an account to access all categories, post your thoughts, and connect with fellow deep thinkers.
-                </p>
-                
-                <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                  <button
-                    onClick={() => navigate('/register')}
-                    className="px-6 py-3 bg-white text-black font-semibold tracking-wider uppercase text-xs hover:bg-white/90 transition-all"
-                  >
-                    Create Account
-                  </button>
-                  <button
-                    onClick={() => navigate('/login')}
-                    className="px-6 py-3 text-white font-semibold tracking-wider uppercase text-xs hover:bg-white/5 transition-all"
-                  >
-                    Sign In
-                  </button>
-                </div>
+            <div className="max-w-lg mx-auto py-12">
+              <h3 className="text-xl font-light tracking-[0.2em] uppercase mb-6 text-white/90">
+                Ready to Join?
+              </h3>
+              <p className="text-white/50 text-sm leading-relaxed mb-8">
+                Create an account to access all communities and start contributing to conversations that matter.
+              </p>
+              
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <button
+                  onClick={() => navigate('/register')}
+                  className="px-8 py-3 bg-white text-black font-medium tracking-[0.15em] uppercase text-xs hover:bg-white/90 transition-all"
+                >
+                  Create Account
+                </button>
+                <button
+                  onClick={() => navigate('/login')}
+                  className="px-8 py-3 text-white/80 hover:text-white font-medium tracking-[0.15em] uppercase text-xs hover:bg-white/5 transition-all"
+                >
+                  Sign In
+                </button>
               </div>
             </div>
           </div>
