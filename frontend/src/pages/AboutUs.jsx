@@ -1,186 +1,153 @@
-import { useNavigate } from 'react-router-dom';
-import { Heart, Moon, Shield, Eye, ArrowLeft, CloudMoon, Rocket, Brain } from 'lucide-react';
+import Layout from '../components/Layout';
 import PageTransition from '../components/PageTransition';
+import EsoLogo from '../components/EsoLogo';
 
 /**
- * About Us Page
- * Minimal, essential information only
+ * About Us Page - Minimal, Artistic, Centered
+ * ESO branding with philosophical aesthetic
  */
 function AboutUs() {
-  const navigate = useNavigate();
-
-  const coreIdeas = [
+  const principles = [
     {
-      icon: Moon,
       title: "Silence is Sacred",
-      message: "No pressure to interact"
+      desc: "No pressure to interact"
     },
     {
-      icon: CloudMoon,
       title: "Darkness is Welcome",
-      message: "Heavy feelings belong here"
+      desc: "Heavy feelings belong here"
     },
     {
-      icon: Shield,
       title: "Privacy First",
-      message: "What's shared stays here"
+      desc: "What's shared stays here"
     },
     {
-      icon: Eye,
       title: "Depth Over Performance",
-      message: "Real beats perfect"
+      desc: "Real beats perfect"
     }
+  ];
+
+  const spaces = [
+    { name: "Dark", desc: "Heavy emotions" },
+    { name: "Climb", desc: "Ideas & growth" },
+    { name: "Philo", desc: "Deep thoughts" }
   ];
 
   return (
     <PageTransition>
-      <div className="min-h-screen bg-transparent text-white relative z-10">
-        {/* Back Button */}
-        <div className="max-w-3xl mx-auto px-6 pt-6 relative z-20">
-          <button
-            onClick={() => navigate(-1)}
-            className="text-gray-400 hover:text-white transition-colors text-sm flex items-center gap-2 group font-medium"
-          >
-            <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
-            Back
-          </button>
-        </div>
-
-        {/* Hero Section - Compact */}
-        <div className="max-w-2xl mx-auto px-6 py-16 text-center relative z-20">
-          <div className="mb-6 inline-block">
-            <div className="w-16 h-16 rounded-full flex items-center justify-center" style={{
-              background: 'transparent',
-              boxShadow: '0 0 0 1px rgba(255,255,255,0.15)'
-            }}>
-              <Heart size={28} className="text-white/70" strokeWidth={2} />
-            </div>
-          </div>
-          
-          <h1 className="text-5xl font-bold text-white mb-4 leading-tight">
-            another<span className="text-[#D97757]">ME</span>
-          </h1>
-          
-          <p className="text-gray-400 font-normal mb-8 text-lg">
-            A quiet space for introverts, deep thinkers, and those who don't fit the mold
-          </p>
-
-          {/* Core Ideas - 4 Tiny Cards */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
-            {coreIdeas.map((idea, index) => {
-              const Icon = idea.icon;
-              return (
-                <div
-                  key={index}
-                  className="relative flex flex-col items-center justify-center p-6 text-center cursor-pointer group overflow-hidden rounded-xl transition-all duration-500 hover:-translate-y-1"
-                  style={{
-                    minHeight: '180px',
-                    background: 'transparent',
-                    boxShadow: '0 0 0 1px rgba(255,255,255,0.15)',
-                  }}
-                >
-                  <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                    style={{ boxShadow: 'inset 0 0 30px rgba(255,255,255,0.06)' }} />
-                  
-                  <div className="relative z-10 flex flex-col items-center">
-                    <Icon size={32} className="text-white/70 mb-4 group-hover:text-white transition-colors duration-300" strokeWidth={2} />
-                    
-                    <h3 className="text-xs font-bold text-white mb-2 tracking-wide">
-                      {idea.title}
-                    </h3>
-                    
-                    <p className="text-[11px] text-white/80 leading-relaxed group-hover:text-white transition-colors duration-300">
-                      {idea.message}
-                    </p>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-
-          {/* Three Rooms */}
-          <div className="mb-12">
-            <h2 className="text-xl font-semibold text-white/90 mb-6 tracking-wide">Three Spaces</h2>
+      <Layout leftSidebar={null} rightSidebar={null}>
+        <div className="min-h-screen flex items-center justify-center px-6 py-16 relative z-10">
+          <div className="max-w-2xl w-full text-center space-y-16">
             
-            <div className="grid grid-cols-3 gap-4 max-w-lg mx-auto">
-              <div
-                className="relative flex flex-col items-center justify-center p-5 text-center cursor-pointer group overflow-hidden rounded-xl transition-all duration-500 hover:-translate-y-1"
-                style={{
-                  minHeight: '140px',
-                  background: 'transparent',
-                  boxShadow: '0 0 0 1px rgba(255,255,255,0.15)',
-                }}
-              >
-                <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                  style={{ boxShadow: 'inset 0 0 30px rgba(255,255,255,0.06)' }} />
-                
-                <div className="relative z-10">
-                  <CloudMoon size={28} className="text-white/70 mb-3 mx-auto group-hover:text-white transition-colors duration-300" strokeWidth={2} />
-                  <h3 className="text-xs font-bold text-white mb-1">Dark</h3>
-                  <p className="text-[10px] text-white/80">Heavy emotions</p>
-                </div>
+            {/* Logo + Title Section */}
+            <div className="space-y-8 animate-fadeIn">
+              <div className="inline-block">
+                <EsoLogo className="h-24 w-auto mx-auto" />
               </div>
-
-              <div
-                className="relative flex flex-col items-center justify-center p-5 text-center cursor-pointer group overflow-hidden rounded-xl transition-all duration-500 hover:-translate-y-1"
-                style={{
-                  minHeight: '140px',
-                  background: 'transparent',
-                  boxShadow: '0 0 0 1px rgba(255,255,255,0.15)',
-                }}
-              >
-                <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                  style={{ boxShadow: 'inset 0 0 30px rgba(255,255,255,0.06)' }} />
-                
-                <div className="relative z-10">
-                  <Rocket size={28} className="text-white/70 mb-3 mx-auto group-hover:text-white transition-colors duration-300" strokeWidth={2} />
-                  <h3 className="text-xs font-bold text-white mb-1">Climb</h3>
-                  <p className="text-[10px] text-white/80">Ideas & growth</p>
-                </div>
-              </div>
-
-              <div
-                className="relative flex flex-col items-center justify-center p-5 text-center cursor-pointer group overflow-hidden rounded-xl transition-all duration-500 hover:-translate-y-1"
-                style={{
-                  minHeight: '140px',
-                  background: 'transparent',
-                  boxShadow: '0 0 0 1px rgba(255,255,255,0.15)',
-                }}
-              >
-                <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                  style={{ boxShadow: 'inset 0 0 30px rgba(255,255,255,0.06)' }} />
-                
-                <div className="relative z-10">
-                  <Brain size={28} className="text-white/70 mb-3 mx-auto group-hover:text-white transition-colors duration-300" strokeWidth={2} />
-                  <h3 className="text-xs font-bold text-white mb-1">Philo</h3>
-                  <p className="text-[10px] text-white/80">Deep thoughts</p>
-                </div>
+              
+              <div className="space-y-4">
+                <h1 className="text-lg tracking-[0.3em] uppercase text-white/90 font-light">
+                  Inner World, Finally Understood
+                </h1>
+                <p className="text-sm text-white/50 leading-relaxed max-w-lg mx-auto">
+                  A quiet space for introverts, deep thinkers, and those who don't fit the mold
+                </p>
               </div>
             </div>
-          </div>
 
-          {/* Simple Welcome */}
-          <div
-            className="inline-flex items-center gap-2 text-white px-6 py-3 rounded-full"
-            style={{
-              background: 'transparent',
-              boxShadow: '0 0 0 1px rgba(255,255,255,0.15)',
-            }}
-          >
-            <Heart size={16} strokeWidth={2} />
-            <span className="font-semibold text-xs tracking-wide">Welcome home</span>
+            {/* Divider */}
+            <div className="flex items-center gap-3 justify-center">
+              <div className="w-8 h-px bg-white/10"></div>
+              <div className="w-1 h-1 rounded-full bg-white/30"></div>
+              <div className="w-8 h-px bg-white/10"></div>
+            </div>
+
+            {/* Core Principles */}
+            <div className="space-y-8 animate-slideUp" style={{ animationDelay: '0.2s' }}>
+              <h2 className="text-xs tracking-[0.25em] uppercase text-white/40 font-medium">
+                Our Philosophy
+              </h2>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-xl mx-auto">
+                {principles.map((item, i) => (
+                  <div
+                    key={i}
+                    className="group p-6 rounded-xl transition-all duration-500 hover:-translate-y-1"
+                    style={{
+                      background: 'rgba(255,255,255,0.02)',
+                      boxShadow: '0 0 0 1px rgba(255,255,255,0.08)',
+                    }}
+                  >
+                    <div className="space-y-2">
+                      <h3 className="text-sm font-semibold tracking-wide text-white group-hover:text-white/90 transition-colors">
+                        {item.title}
+                      </h3>
+                      <p className="text-xs text-white/50 leading-relaxed">
+                        {item.desc}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Divider */}
+            <div className="flex items-center gap-3 justify-center">
+              <div className="w-8 h-px bg-white/10"></div>
+              <div className="w-1 h-1 rounded-full bg-white/30"></div>
+              <div className="w-8 h-px bg-white/10"></div>
+            </div>
+
+            {/* Three Spaces */}
+            <div className="space-y-8 animate-slideUp" style={{ animationDelay: '0.4s' }}>
+              <h2 className="text-xs tracking-[0.25em] uppercase text-white/40 font-medium">
+                Three Spaces
+              </h2>
+              
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4 max-w-md mx-auto">
+                {spaces.map((space, i) => (
+                  <div
+                    key={i}
+                    className="group w-full sm:w-auto flex-1 p-6 rounded-xl transition-all duration-500 hover:-translate-y-1 text-center"
+                    style={{
+                      background: 'rgba(255,255,255,0.02)',
+                      boxShadow: '0 0 0 1px rgba(255,255,255,0.08)',
+                    }}
+                  >
+                    <div className="space-y-2">
+                      <h3 className="text-sm font-bold tracking-wider uppercase text-white group-hover:text-white/90 transition-colors">
+                        {space.name}
+                      </h3>
+                      <p className="text-[10px] text-white/50 tracking-wide">
+                        {space.desc}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Divider */}
+            <div className="flex items-center gap-3 justify-center">
+              <div className="w-8 h-px bg-white/10"></div>
+              <div className="w-1 h-1 rounded-full bg-white/30"></div>
+              <div className="w-8 h-px bg-white/10"></div>
+            </div>
+
+            {/* Welcome Message */}
+            <div className="space-y-6 animate-fadeIn" style={{ animationDelay: '0.6s' }}>
+              <div className="space-y-4">
+                <p className="text-2xl font-light text-white/80 leading-relaxed">
+                  Welcome home
+                </p>
+                <p className="text-xs tracking-[0.2em] uppercase text-white/30">
+                  For deep thinkers and authentic minds
+                </p>
+              </div>
+            </div>
+
           </div>
         </div>
-
-        {/* Footer */}
-        <div className="relative z-20" style={{ borderTop: '1px solid rgba(255,255,255,0.1)' }}>
-          <div className="max-w-3xl mx-auto px-6 py-6 text-center">
-            <p className="text-[10px] tracking-[0.2em] text-white/30 uppercase">
-              © 2026 ESO
-            </p>
-          </div>
-        </div>
-      </div>
+      </Layout>
     </PageTransition>
   );
 }
