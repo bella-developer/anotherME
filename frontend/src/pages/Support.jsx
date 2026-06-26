@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Book, Video, FileText, Heart, Users, ArrowLeft, Mail, CheckCircle, Play } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { Book, Video, FileText, Heart, Users, Mail, CheckCircle, Play } from 'lucide-react';
+import Layout from '../components/Layout';
 import PageTransition from '../components/PageTransition';
 import VideoModal from '../components/VideoModal';
 import ArticleModal from '../components/ArticleModal';
@@ -17,7 +17,6 @@ const Support = () => {
     peerSupport: []
   });
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
 
   useEffect(() => {
     fetchResources();
@@ -202,27 +201,17 @@ const Support = () => {
 
   return (
     <PageTransition>
-      <div className="min-h-screen bg-transparent text-white relative z-10">
-        {/* Back Button */}
-        <div className="max-w-5xl mx-auto px-6 pt-6 relative z-20">
-          <button
-            onClick={() => navigate(-1)}
-            className="text-gray-400 hover:text-white transition-colors text-sm flex items-center gap-2 group font-medium"
-          >
-            <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
-            Back
-          </button>
-        </div>
-
-        {/* Header */}
-        <div className="max-w-3xl mx-auto px-6 py-12 text-center relative z-20">
-          <h1 className="text-4xl font-bold text-white mb-4">
-            Support & Resources
-          </h1>
-          <p className="text-gray-400 text-base max-w-2xl mx-auto">
-            Curated resources for introverts, deep thinkers, and quiet souls
-          </p>
-        </div>
+      <Layout leftSidebar={null} rightSidebar={null}>
+        <div className="min-h-screen bg-transparent text-white relative z-10">
+          {/* Header */}
+          <div className="max-w-3xl mx-auto px-6 py-12 text-center relative z-20">
+            <h1 className="text-4xl font-bold text-white mb-4">
+              Support & Resources
+            </h1>
+            <p className="text-gray-400 text-base max-w-2xl mx-auto">
+              Curated resources for introverts, deep thinkers, and quiet souls
+            </p>
+          </div>
 
         {/* Navigation Tabs */}
         <div className="max-w-3xl mx-auto px-6 mb-8 relative z-20">
@@ -561,6 +550,7 @@ const Support = () => {
           <ArticleModal article={selectedArticle} onClose={() => setSelectedArticle(null)} />
         )}
       </div>
+      </Layout>
     </PageTransition>
   );
 };
