@@ -1,46 +1,35 @@
 import { Link, useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import EsoLogo from '../components/EsoLogo';
 
 function Explore() {
   const navigate = useNavigate();
 
-  const categories = [
+  const features = [
     {
-      id: 'philosophy',
       title: 'Philosophy',
-      desc: 'Question reality, explore ideas, challenge conventional thinking.',
-      preview: '"What is the nature of consciousness?"',
-      posts: 142,
-      image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=400&fit=crop&crop=face',
-      icon: 'M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25'
+      desc: 'Explore ideas that challenge the ordinary.',
+      icon: 'M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25',
+      img: 'https://images.pexels.com/photos/1660995/pexels-photo-1660995.jpeg?auto=compress&cs=tinysrgb&w=600',
     },
     {
-      id: 'solitude',
       title: 'Solitude',
-      desc: 'Embrace being alone. Share moments of peaceful isolation.',
-      preview: '"The art of enjoying your own company"',
-      posts: 98,
-      image: 'https://images.unsplash.com/photo-1494548162494-384bba4ab999?w=600&h=400&fit=crop',
-      icon: 'M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z'
+      desc: 'Embracing the beauty of being alone.',
+      icon: 'M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z',
+      img: 'https://images.pexels.com/photos/1547813/pexels-photo-1547813.jpeg?auto=compress&cs=tinysrgb&w=600',
     },
     {
-      id: 'creativity',
       title: 'Creativity',
-      desc: 'Art, writing, music, code. Share your creative expression.',
-      preview: '"Midnight poetry about existence"',
-      posts: 203,
-      image: 'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=600&h=400&fit=crop',
-      icon: 'M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.62m-5.043-.025a15.994 15.994 0 011.622-3.395m3.42 3.42a15.995 15.995 0 004.764-4.648l3.876-5.814a1.151 1.151 0 00-1.597-1.597L14.146 6.32a15.996 15.996 0 00-4.649 4.763m3.42 3.42a6.776 6.776 0 00-3.42-3.42'
+      desc: 'Thoughts, stories, and art from quiet minds.',
+      icon: 'M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.62m-5.043-.025a15.994 15.994 0 011.622-3.395m3.42 3.42a15.995 15.995 0 004.764-4.648l3.876-5.814a1.151 1.151 0 00-1.597-1.597L14.146 6.32a15.996 15.996 0 00-4.649 4.763m3.42 3.42a6.776 6.776 0 00-3.42-3.42',
+      img: 'https://images.pexels.com/photos/3094208/pexels-photo-3094208.jpeg?auto=compress&cs=tinysrgb&w=600',
     },
     {
-      id: 'deeptalks',
       title: 'Deep Talks',
-      desc: 'Conversations that matter. No small talk allowed.',
-      preview: '"Why do we fear being misunderstood?"',
-      posts: 176,
-      image: 'https://images.unsplash.com/photo-1573495627361-d9b87960b12d?w=600&h=400&fit=crop',
-      icon: 'M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 01-.825-.242m9.345-8.334a2.126 2.126 0 00-.476-.095 48.64 48.64 0 00-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0011.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155'
-    }
+      desc: 'Conversations that go beneath the surface.',
+      icon: 'M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 01-.825-.242m9.345-8.334a2.126 2.126 0 00-.476-.095 48.64 48.64 0 00-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0011.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155',
+      img: 'https://images.pexels.com/photos/1083822/pexels-photo-1083822.jpeg?auto=compress&cs=tinysrgb&w=600',
+    },
   ];
 
   return (
@@ -68,159 +57,229 @@ function Explore() {
         </div>
       </nav>
 
-      {/* Main Content */}
-      <main className="pt-24 pb-16">
-        <div className="max-w-6xl mx-auto px-6">
-          {/* Header */}
-          <div className="text-center mb-16 animate-fadeIn">
-            <div className="inline-block mb-6 focus:outline-none focus:ring-2 focus:ring-white/50 rounded transform hover:scale-105 transition-transform duration-300">
-              <EsoLogo className="h-20 w-auto mx-auto" />
-            </div>
-            <h1 className="text-5xl md:text-6xl font-light tracking-[0.2em] uppercase mb-4 text-white animate-slideUp">
-              Surf Around
-            </h1>
-          </div>
+      {/* FEATURES SECTION */}
+      <section className="pt-32 py-24 lg:py-32 relative z-10" style={{ background: 'rgba(0,0,0,0.6)' }}>
+        <div className="max-w-6xl mx-auto px-6 lg:px-8">
+          
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 tracking-wider">Safe Space for Inner Reflection</h2>
+            <p className="text-white/60 text-sm max-w-2xl mx-auto">
+              Four unique rooms designed for different aspects of your inner world
+            </p>
+          </motion.div>
 
-          {/* Categories Grid */}
-          <div className="grid md:grid-cols-2 gap-8 mb-16 animate-fadeIn" style={{ animationDelay: '0.2s' }}>
-            {categories.map((category) => (
-              <div
-                key={category.id}
-                className="group relative overflow-hidden cursor-pointer hover:scale-[1.02] transition-transform duration-500"
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
+            {features.map((f, i) => (
+              <motion.article
+                key={i}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.15, duration: 0.6 }}
+                className="relative flex flex-col items-center justify-between p-8 text-center cursor-pointer group overflow-hidden rounded-xl transition-all duration-500 hover:-translate-y-2"
                 style={{
-                  padding: '4px',
-                  background: 'linear-gradient(160deg, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0.08) 20%, rgba(255,255,255,0.15) 40%, rgba(255,255,255,0.05) 60%, rgba(255,255,255,0.18) 80%, rgba(255,255,255,0.25) 100%)',
-                  borderRadius: '32px',
-                  boxShadow: '0 8px 32px rgba(0,0,0,0.4)',
+                  minHeight: '300px',
+                  background: 'rgba(255,255,255,0.02)',
+                  boxShadow: '0 0 0 1px rgba(255,255,255,0.08)',
                 }}
               >
-                {/* Inner frame with artistic curve */}
-                <div className="relative overflow-hidden" style={{
-                  background: 'linear-gradient(180deg, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.85) 100%)',
-                  borderRadius: '28px',
-                  border: '1px solid rgba(255,255,255,0.2)',
-                }}>
-                  {/* Background Image */}
-                  <div className="absolute inset-0 z-0">
-                    <img 
-                      src={category.image} 
-                      alt={category.title}
-                      className="w-full h-full object-cover opacity-40 group-hover:opacity-50 transition-opacity duration-700 group-hover:scale-105 transform"
-                      style={{ filter: 'brightness(0.7) contrast(1.2)' }}
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/60 to-black/40"></div>
-                  </div>
+                <div
+                  className="absolute inset-0 bg-cover bg-center rounded-xl transition-transform duration-700 group-hover:scale-110"
+                  style={{ 
+                    backgroundImage: `url('${f.img}')`, 
+                    filter: 'contrast(1.2) brightness(0.4) saturate(1.1)',
+                  }}
+                />
+                <div className="absolute inset-0 rounded-xl bg-gradient-to-t from-black/90 via-black/30 to-black/50 group-hover:from-black/70 transition-all duration-500" />
 
-                  {/* Content */}
-                  <div className="relative z-10 p-8 min-h-[340px] flex flex-col">
-                    {/* Header */}
-                    <div className="flex items-center justify-between mb-6">
-                      <div className="w-14 h-14 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center group-hover:scale-110 group-hover:bg-white/15 transition-all">
-                        <svg className="w-7 h-7 text-white/70 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
-                          <path strokeLinecap="round" strokeLinejoin="round" d={category.icon} />
-                        </svg>
-                      </div>
-                      <div className="text-right">
-                        <div className="text-xs text-white/60 tracking-wider uppercase mb-1">Posts</div>
-                        <div className="text-xl font-mono text-white/80 group-hover:text-white transition-colors">{category.posts}</div>
-                      </div>
-                    </div>
-
-                    {/* Main Content */}
-                    <div className="flex-grow space-y-4">
-                      <h2 className="text-2xl font-bold tracking-wider uppercase text-white group-hover:text-white transition-colors mb-3 drop-shadow-lg">
-                        {category.title}
-                      </h2>
-                      <p className="text-white/80 text-sm leading-relaxed mb-6 drop-shadow">
-                        {category.desc}
-                      </p>
-                      
-                      {/* Recent Preview */}
-                      <div className="bg-black/40 backdrop-blur-md p-4 rounded-2xl border border-white/10 group-hover:bg-black/30 group-hover:border-white/20 transition-all">
-                        <div className="text-xs text-white/70 uppercase tracking-wider mb-2 flex items-center gap-2">
-                          <div className="w-2 h-2 bg-white/70 rounded-full"></div>
-                          Recent Discussion
-                        </div>
-                        <div className="text-sm text-white italic font-light">
-                          {category.preview}
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Footer Action */}
-                    <div className="flex items-center justify-end mt-6 pt-4 border-t border-white/20">
-                      <button 
-                        onClick={() => navigate('/register')}
-                        className="flex items-center gap-2 text-sm text-white/90 hover:text-white uppercase tracking-wide transition-all group-hover:translate-x-1 duration-300 font-medium"
-                      >
-                        Join to Enter
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                        </svg>
-                      </button>
-                    </div>
-                  </div>
+                <div className="relative z-10 flex flex-col items-center">
+                  <svg className="w-7 h-7 text-white/50 mb-6 group-hover:text-white transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d={f.icon} />
+                  </svg>
+                  <h3 className="text-sm tracking-[0.25em] uppercase font-semibold mb-3 text-white">{f.title}</h3>
+                  <p className="text-xs text-white/60 leading-relaxed group-hover:text-white/80 transition-colors duration-300">{f.desc}</p>
                 </div>
-              </div>
+                <span className="relative z-10 mt-6 text-white/30 group-hover:text-white transition-all duration-300 group-hover:translate-x-1 text-lg">→</span>
+              </motion.article>
             ))}
           </div>
 
-          {/* About Section */}
-          <div className="max-w-3xl mx-auto text-center mb-16 space-y-12">
-            <div>
-              <h2 className="text-2xl font-light tracking-[0.25em] uppercase text-white/90 mb-6">
-                What is ESO?
-              </h2>
-              <p className="text-white/60 text-sm leading-relaxed">
-                ESO is a space for introverts, philosophers, and deep thinkers. 
-                No small talk. No noise. Just meaningful conversations and authentic connections.
-              </p>
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.6, duration: 0.7 }}
+            className="grid grid-cols-1 lg:grid-cols-2 gap-5"
+          >
+            {/* Quote Card */}
+            <div
+              className="relative flex items-center justify-center text-center overflow-hidden rounded-xl min-h-[280px]"
+              style={{
+                boxShadow: '0 0 0 1px rgba(255,255,255,0.07)',
+              }}
+            >
+              <div 
+                className="absolute inset-0 rounded-xl" 
+                style={{ 
+                  backgroundImage: `url(https://images.pexels.com/photos/1660995/pexels-photo-1660995.jpeg?auto=compress&cs=tinysrgb&w=600)`, 
+                  backgroundSize: 'cover', 
+                  backgroundPosition: 'center', 
+                  filter: 'contrast(1.2) brightness(0.35) saturate(1.1)',
+                }} 
+              />
+              <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-black/60 to-black/30" />
+              <div className="relative z-10 px-10 py-12">
+                <svg className="w-8 h-8 text-white/15 mb-6 mx-auto" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+                </svg>
+                <p className="text-xl lg:text-2xl font-light leading-snug text-white mb-6">
+                  Most people seek attention.<br />Few seek understanding.
+                </p>
+                <div className="text-[10px] tracking-[0.3em] text-white/40 uppercase">— Eso Philosophy</div>
+              </div>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-8 text-center">
-              <div>
-                <div className="text-white/40 text-xs tracking-[0.2em] uppercase mb-3">Anonymous</div>
-                <p className="text-white/70 text-sm">Share thoughts without identity pressure</p>
-              </div>
-              <div>
-                <div className="text-white/40 text-xs tracking-[0.2em] uppercase mb-3">Thoughtful</div>
-                <p className="text-white/70 text-sm">Quality over quantity conversations</p>
-              </div>
-              <div>
-                <div className="text-white/40 text-xs tracking-[0.2em] uppercase mb-3">Safe</div>
-                <p className="text-white/70 text-sm">Judgment-free zone for authenticity</p>
-              </div>
-            </div>
-          </div>
 
-          {/* CTA Section */}
-          <div className="text-center">
-            <div className="max-w-lg mx-auto py-12">
-              <h3 className="text-xl font-light tracking-[0.2em] uppercase mb-6 text-white/90">
-                Ready to Join?
-              </h3>
-              <p className="text-white/50 text-sm leading-relaxed mb-8">
-                Create an account to access all communities and start contributing to conversations that matter.
-              </p>
+            {/* Community Card */}
+            <div
+              className="flex flex-col items-center justify-center text-center px-10 py-12 rounded-xl min-h-[280px]"
+              style={{
+                background: 'rgba(255,255,255,0.025)',
+                boxShadow: '0 0 0 1px rgba(255,255,255,0.07)',
+              }}
+            >
+              <div className="text-[10px] tracking-[0.28em] text-white/40 uppercase mb-6">Who You'll Meet</div>
               
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <button
-                  onClick={() => navigate('/register')}
-                  className="px-8 py-3 bg-white text-black font-medium tracking-[0.15em] uppercase text-xs hover:bg-white/90 transition-all"
-                >
-                  Create Account
-                </button>
-                <button
-                  onClick={() => navigate('/login')}
-                  className="px-8 py-3 text-white/80 hover:text-white font-medium tracking-[0.15em] uppercase text-xs hover:bg-white/5 transition-all"
-                >
-                  Sign In
-                </button>
+              <div className="space-y-2 mb-8">
+                {['The thinkers', 'The dreamers', 'The outsiders', 'The observers'].map((line, i) => (
+                  <motion.div 
+                    key={i}
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.8 + (i * 0.1) }}
+                    className="text-sm font-light text-white"
+                  >
+                    {line}
+                  </motion.div>
+                ))}
               </div>
+              
+              <p className="text-xs text-white/40 mb-7">They're all here, waiting.</p>
+              
+              <div className="flex justify-center -space-x-2 mb-8">
+                {['1212984', '1438081', '1222271', '1239291', '1681010', '2379004'].map((id, i) => (
+                  <motion.div 
+                    key={i}
+                    initial={{ opacity: 0, scale: 0 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 1.2 + (i * 0.05) }}
+                    className="w-10 h-10 rounded-full bg-cover bg-center border-2 border-black" 
+                    style={{ backgroundImage: `url('https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?w=100&h=100&fit=crop')` }} 
+                  />
+                ))}
+              </div>
+              
+              <button 
+                onClick={() => navigate('/register')}
+                className="group flex items-center gap-2 text-[11px] tracking-[0.22em] uppercase text-white/50 hover:text-white transition-colors duration-300"
+              >
+                Join the Community
+                <svg className="w-3 h-3 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </button>
             </div>
+          </motion.div>
+
+        </div>
+      </section>
+
+      {/* CTA SECTION */}
+      <motion.section 
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8 }}
+        className="py-24 relative z-10"
+        style={{ background: 'rgba(0,0,0,0.8)' }}
+      >
+        <div className="max-w-4xl mx-auto px-6 text-center">
+          <h2 className="text-3xl md:text-4xl font-bold mb-6 tracking-wider">Ready to Join?</h2>
+          <p className="text-white/60 text-base mb-10 max-w-2xl mx-auto leading-relaxed">
+            Create your account and start sharing your thoughts. Connect with people who value depth, 
+            philosophy, creativity, and meaningful conversations.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <button
+              onClick={() => navigate('/register')}
+              className="px-8 py-3 bg-white text-black font-semibold text-xs uppercase tracking-[0.2em] hover:bg-gray-200 transition-all shadow-lg rounded"
+            >
+              Create Account
+            </button>
+            <button
+              onClick={() => navigate('/login')}
+              className="px-8 py-3 border border-white/30 text-white font-medium text-xs uppercase tracking-[0.2em] hover:bg-white/10 transition-all rounded"
+            >
+              Sign In
+            </button>
           </div>
         </div>
-      </main>
+      </motion.section>
+
+      {/* FOOTER */}
+      <footer className="border-t border-white/10 relative z-10 bg-black">
+        <div className="max-w-7xl mx-auto px-6 lg:px-12 py-12">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+            <div>
+              <div className="mb-4">
+                <EsoLogo className="h-8 w-auto" />
+              </div>
+              <p className="text-sm text-white/50 leading-relaxed">
+                Your inner world, finally understood. A safe space for introverts and deep thinkers.
+              </p>
+            </div>
+            
+            <div>
+              <h4 className="text-sm font-semibold tracking-wider uppercase mb-3 text-white/70">Platform</h4>
+              <ul className="space-y-2">
+                <li><Link to="/" className="text-sm text-white/50 hover:text-white transition-colors">Home</Link></li>
+                <li><Link to="/about" className="text-sm text-white/50 hover:text-white transition-colors">About</Link></li>
+                <li><Link to="/rules" className="text-sm text-white/50 hover:text-white transition-colors">Community Rules</Link></li>
+              </ul>
+            </div>
+            
+            <div>
+              <h4 className="text-sm font-semibold tracking-wider uppercase mb-3 text-white/70">Socials</h4>
+              <ul className="space-y-2">
+                <li><a href="https://t.me/hesed_perspectives" target="_blank" rel="noopener noreferrer" className="text-sm text-white/50 hover:text-white transition-colors">Telegram</a></li>
+                <li><a href="#" target="_blank" rel="noopener noreferrer" className="text-sm text-white/50 hover:text-white transition-colors">YouTube</a></li>
+              </ul>
+            </div>
+            
+            <div>
+              <h4 className="text-sm font-semibold tracking-wider uppercase mb-3 text-white/70">Connect</h4>
+              <ul className="space-y-2">
+                <li><a href="mailto:hello@eso.app" className="text-sm text-white/50 hover:text-white transition-colors">hello@eso.app</a></li>
+                <li><a href="mailto:support@eso.app" className="text-sm text-white/50 hover:text-white transition-colors">Support</a></li>
+              </ul>
+            </div>
+          </div>
+          
+          <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
+            <p className="text-xs text-white/40">© 2026 ESO. For deep thinkers and authentic minds.</p>
+            <p className="text-xs text-white/40">No algorithms. Just real conversations.</p>
+          </div>
+        </div>
+      </footer>
+
     </div>
   );
 }
