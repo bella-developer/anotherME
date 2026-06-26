@@ -21,6 +21,7 @@ import Terms from './pages/Terms';
 import Explore from './pages/Explore';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
+import OAuthRedirect from './pages/OAuthRedirect';
 
 // Lazy load protected route components for code splitting
 const Circles = lazy(() => import('./pages/Circles'));
@@ -77,6 +78,7 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
             <Route path="/auth/callback" element={<OAuthCallback />} />
+            <Route path="/oauth/redirect" element={<OAuthRedirect />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/explore" element={<Explore />} />

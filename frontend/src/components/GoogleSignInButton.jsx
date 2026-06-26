@@ -1,7 +1,11 @@
+import { useNavigate } from 'react-router-dom';
+
 function GoogleSignInButton({ text = "Continue with Google", action = "login" }) {
+  const navigate = useNavigate();
+
   const handleGoogleSignIn = () => {
-    const apiUrl = import.meta.env.VITE_API_URL || 'https://anotherme-backend.onrender.com';
-    window.location.href = `${apiUrl}/api/auth/google?action=${action}`;
+    // Navigate to intermediate loading page instead of directly to backend
+    navigate(`/oauth/redirect?action=${action}`);
   };
 
   return (
