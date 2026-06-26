@@ -212,12 +212,11 @@ function Landing() {
               >
                 <h2 className="text-2xl font-semibold mb-4 tracking-wider">Why ESO?</h2>
                 <p className="text-sm text-white/70 leading-relaxed mb-6">
-                  Tired of shallow interactions? ESO is built for those who think differently. 
-                  Express yourself through posts, engage in real discussions, and find people who actually get you.
+                  Built for those who think differently. Real discussions with people who actually get you.
                 </p>
                 
                 <div className="space-y-3 mb-6">
-                  {['Post your thoughts anonymously', 'Engage in four core circles', 'No algorithms, just authentic content', 'Dark, minimal, distraction-free'].map((item, i) => (
+                  {['Anonymous expression', 'Four core spaces', 'No algorithms', 'Dark, distraction-free'].map((item, i) => (
                     <motion.div 
                       key={i}
                       initial={{ opacity: 0, x: -20 }}
