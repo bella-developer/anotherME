@@ -1,10 +1,14 @@
 import { useState, useEffect } from 'react';
-import { Book, Video, FileText, Heart, Users, ExternalLink, ArrowLeft, Mail, CheckCircle } from 'lucide-react';
+import { Book, Video, FileText, Heart, Users, ArrowLeft, Mail, CheckCircle, Play } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import PageTransition from '../components/PageTransition';
+import VideoModal from '../components/VideoModal';
+import ArticleModal from '../components/ArticleModal';
 
 const Support = () => {
   const [activeTab, setActiveTab] = useState('library');
+  const [selectedVideo, setSelectedVideo] = useState(null);
+  const [selectedArticle, setSelectedArticle] = useState(null);
   const [resources, setResources] = useState({
     books: [],
     videos: [],
@@ -279,7 +283,7 @@ const Support = () => {
                           <span className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider">
                             {book.category}
                           </span>
-                          <ExternalLink size={14} className="text-gray-600 group-hover:text-white/70 transition-colors" strokeWidth={2} />
+                          <Book size={14} className="text-gray-600 group-hover:text-white/70 transition-colors" strokeWidth={2} />
                         </div>
                         
                         <h3 className="text-base font-semibold text-white mb-1 group-hover:text-white/90 transition-colors">
@@ -304,12 +308,10 @@ const Support = () => {
                       : null;
                     
                     return (
-                      <a
+                      <button
                         key={index}
-                        href={video.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="group relative block rounded-xl overflow-hidden transition-all duration-500 hover:-translate-y-1"
+                        onClick={() => setSelectedVideo(video)}
+                        className="group relative block rounded-xl overflow-hidden transition-all duration-500 hover:-translate-y-1 w-full text-left"
                         style={{
                           background: 'transparent',
                           boxShadow: '0 0 0 1px rgba(255,255,255,0.1)',
@@ -321,17 +323,15 @@ const Support = () => {
                         <div className="relative z-10 flex gap-4 p-5">
                           {/* Video Thumbnail */}
                           {thumbnailUrl && (
-                            <div className="flex-shrink-0">
+                            <div className="flex-shrink-0 relative">
                               <div 
                                 className="w-40 h-24 rounded-lg bg-gray-800 bg-cover bg-center relative overflow-hidden"
                                 style={{ backgroundImage: `url(${thumbnailUrl})` }}
                               >
-                                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors" />
+                                <div className="absolute inset-0 bg-black/30 group-hover:bg-black/20 transition-colors" />
                                 <div className="absolute inset-0 flex items-center justify-center">
-                                  <div className="w-12 h-12 rounded-full bg-red-600/80 flex items-center justify-center group-hover:bg-red-600 transition-colors">
-                                    <svg className="w-5 h-5 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
-                                      <path d="M8 5v14l11-7z"/>
-                                    </svg>
+                                  <div className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center group-hover:bg-white/20 group-hover:scale-110 transition-all duration-300">
+                                    <Play size={20} className="text-white ml-1" fill="white" />
                                   </div>
                                 </div>
                               </div>
@@ -346,7 +346,7 @@ const Support = () => {
                                 </span>
                                 <span className="text-[10px] text-gray-600">• {video.duration}</span>
                               </div>
-                              <ExternalLink size={14} className="text-gray-600 group-hover:text-white/70 transition-colors" strokeWidth={2} />
+                              <Video size={14} className="text-gray-600 group-hover:text-white/70 transition-colors" strokeWidth={2} />
                             </div>
                             
                             <h3 className="text-base font-semibold text-white mb-1 group-hover:text-white/90 transition-colors">
@@ -358,7 +358,7 @@ const Support = () => {
                             </p>
                           </div>
                         </div>
-                      </a>
+                      </button>
                     );
                   })}
                 </div>
@@ -368,12 +368,10 @@ const Support = () => {
               {activeTab === 'articles' && (
                 <div className="space-y-4">
                   {resources.articles.map((article, index) => (
-                    <a
+                    <button
                       key={index}
-                      href={article.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="group relative block rounded-xl p-5 transition-all duration-500 hover:-translate-y-1"
+                      onClick={() => setSelectedArticle(article)}
+                      className="group relative block rounded-xl p-5 transition-all duration-500 hover:-translate-y-1 w-full text-left"
                       style={{
                         background: 'transparent',
                         boxShadow: '0 0 0 1px rgba(255,255,255,0.1)',
@@ -387,7 +385,7 @@ const Support = () => {
                           <span className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider">
                             {article.category}
                           </span>
-                          <ExternalLink size={14} className="text-gray-600 group-hover:text-white/70 transition-colors" strokeWidth={2} />
+                          <FileText size={14} className="text-gray-600 group-hover:text-white/70 transition-colors" strokeWidth={2} />
                         </div>
                         
                         <h3 className="text-base font-semibold text-white mb-1 group-hover:text-white/90 transition-colors">
@@ -398,7 +396,7 @@ const Support = () => {
                           {article.description}
                         </p>
                       </div>
-                    </a>
+                    </button>
                   ))}
                 </div>
               )}
@@ -554,6 +552,14 @@ const Support = () => {
             </p>
           </div>
         </div>
+
+        {/* Modals */}
+        {selectedVideo && (
+          <VideoModal video={selectedVideo} onClose={() => setSelectedVideo(null)} />
+        )}
+        {selectedArticle && (
+          <ArticleModal article={selectedArticle} onClose={() => setSelectedArticle(null)} />
+        )}
       </div>
     </PageTransition>
   );
