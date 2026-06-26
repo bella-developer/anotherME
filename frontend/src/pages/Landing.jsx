@@ -120,10 +120,9 @@ function Landing() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.4 }}
-                  className="inline-block px-4 py-2 mb-6 border border-white/20 rounded-full"
-                  style={{ background: 'rgba(255,255,255,0.05)' }}
+                  className="inline-block px-4 py-2 mb-6"
                 >
-                  <span className="text-xs tracking-[0.25em] uppercase text-white/70">Comfy · Aesthetic · Environment</span>
+                  <span className="text-xs tracking-[0.25em] uppercase text-white font-bold">Safe · Cozy · Comfy Environment</span>
                 </motion.div>
                 
                 <h1 className="leading-[1.1] mb-6">
