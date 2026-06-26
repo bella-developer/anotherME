@@ -105,15 +105,15 @@ function Landing() {
           <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60" />
         </div>
         
-        <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-12 w-full py-24">
-          <div className="grid lg:grid-cols-2 gap-16 lg:gap-32 items-start">
+        <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-12 w-full py-16 md:py-24">
+          <div className="grid lg:grid-cols-2 gap-12 md:gap-16 lg:gap-32 items-center lg:items-start">
             
             {/* LEFT SIDE - Hero Content */}
             <motion.div 
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="space-y-8 pt-12"
+              className="space-y-6 md:space-y-8 pt-0 md:pt-8 lg:pt-12"
             >
               <div>
                 <motion.div 
@@ -183,14 +183,14 @@ function Landing() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 1.3 }}
-                className="flex items-center gap-3 pt-4"
+                className="flex flex-col sm:flex-row items-center sm:items-center gap-3 pt-4"
               >
                 <div className="flex -space-x-2">
-                  <div className="w-10 h-10 rounded-full bg-cover bg-center border-2 border-black" style={{ backgroundImage: "url('https://images.pexels.com/photos/1212984/pexels-photo-1212984.jpeg?w=100&h=100&fit=crop')" }} />
-                  <div className="w-10 h-10 rounded-full bg-cover bg-center border-2 border-black" style={{ backgroundImage: "url('https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?w=100&h=100&fit=crop')" }} />
-                  <div className="w-10 h-10 rounded-full bg-cover bg-center border-2 border-black" style={{ backgroundImage: "url('https://images.pexels.com/photos/1681010/pexels-photo-1681010.jpeg?w=100&h=100&fit=crop')" }} />
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-cover bg-center border-2 border-black" style={{ backgroundImage: "url('https://images.pexels.com/photos/1212984/pexels-photo-1212984.jpeg?w=100&h=100&fit=crop')" }} />
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-cover bg-center border-2 border-black" style={{ backgroundImage: "url('https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?w=100&h=100&fit=crop')" }} />
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-cover bg-center border-2 border-black" style={{ backgroundImage: "url('https://images.pexels.com/photos/1681010/pexels-photo-1681010.jpeg?w=100&h=100&fit=crop')" }} />
                 </div>
-                <p className="text-sm text-white/60">
+                <p className="text-xs sm:text-sm text-white/60 text-center sm:text-left">
                   <span className="text-white font-semibold">Join us</span> and discover your tribe
                 </p>
               </motion.div>
@@ -201,40 +201,40 @@ function Landing() {
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
-              className="lg:ml-auto max-w-md pt-32"
+              className="lg:ml-auto w-full max-w-md mx-auto lg:mx-0 pt-0 md:pt-8 lg:pt-32"
             >
               <div 
-                className="p-8 rounded-xl backdrop-blur-md border border-white/5 hover:border-white/10 transition-all duration-500 group"
+                className="p-6 md:p-8 rounded-xl backdrop-blur-md border border-white/5 hover:border-white/10 transition-all duration-500 group"
                 style={{
                   background: 'rgba(0,0,0,0.3)',
                   boxShadow: '0 20px 60px rgba(0,0,0,0.5)',
                 }}
               >
-                <h2 className="text-2xl font-semibold mb-4 tracking-wider">Why ESO?</h2>
-                <p className="text-sm text-white/70 leading-relaxed mb-6">
+                <h2 className="text-xl md:text-2xl font-semibold mb-3 md:mb-4 tracking-wider">Why ESO?</h2>
+                <p className="text-xs md:text-sm text-white/70 leading-relaxed mb-4 md:mb-6">
                   Built for those who think differently. Real discussions with people who actually get you.
                 </p>
                 
-                <div className="space-y-3 mb-6">
+                <div className="space-y-2 md:space-y-3 mb-4 md:mb-6">
                   {['Anonymous expression', 'Four core spaces', 'No algorithms', 'Dark, distraction-free'].map((item, i) => (
                     <motion.div 
                       key={i}
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 1 + (i * 0.1) }}
-                      className="flex items-start gap-3"
+                      className="flex items-start gap-2 md:gap-3"
                     >
-                      <svg className="w-5 h-5 text-white/60 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-4 h-4 md:w-5 md:h-5 text-white/60 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                       </svg>
-                      <span className="text-sm text-white/80">{item}</span>
+                      <span className="text-xs md:text-sm text-white/80">{item}</span>
                     </motion.div>
                   ))}
                 </div>
 
                 
-                <div className="pt-4 border-t border-white/10">
-                  <p className="text-xs text-white/50">
+                <div className="pt-3 md:pt-4 border-t border-white/10">
+                  <p className="text-[10px] md:text-xs text-white/50">
                     <Link to="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
                   </p>
                 </div>
