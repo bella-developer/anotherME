@@ -106,14 +106,14 @@ function Landing() {
         </div>
         
         <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-12 w-full py-24">
-          <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+          <div className="grid lg:grid-cols-2 gap-16 lg:gap-32 items-start">
             
             {/* LEFT SIDE - Hero Content */}
             <motion.div 
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="space-y-8"
+              className="space-y-8 pt-12"
             >
               <div>
                 <motion.div 
@@ -201,12 +201,12 @@ function Landing() {
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
-              className="lg:ml-auto max-w-md"
+              className="lg:ml-auto max-w-md pt-32"
             >
               <div 
-                className="p-8 rounded-xl backdrop-blur-md border border-white/10 hover:border-white/20 transition-all duration-500 group"
+                className="p-8 rounded-xl backdrop-blur-md border border-white/5 hover:border-white/10 transition-all duration-500 group"
                 style={{
-                  background: 'rgba(0,0,0,0.4)',
+                  background: 'rgba(0,0,0,0.3)',
                   boxShadow: '0 20px 60px rgba(0,0,0,0.5)',
                 }}
               >
