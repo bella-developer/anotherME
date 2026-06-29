@@ -212,11 +212,11 @@ function Landing() {
               >
                 <h2 className="text-xl md:text-2xl font-semibold mb-3 md:mb-4 tracking-wider">Why ESO?</h2>
                 <p className="text-xs md:text-sm text-white/70 leading-relaxed mb-4 md:mb-6">
-                  Built for those who think differently. Real discussions with people who actually get you.
+                  For those who think differently.
                 </p>
                 
-                <div className="space-y-2 md:space-y-3 mb-4 md:mb-6">
-                  {['Anonymous expression', 'Four core spaces', 'No algorithms', 'Dark, distraction-free'].map((item, i) => (
+                <div className="space-y-2 md:space-y-3">
+                  {['Speak freely, stay anonymous', 'Three rooms for your inner world', 'Raw conversations, zero algorithms'].map((item, i) => (
                     <motion.div 
                       key={i}
                       initial={{ opacity: 0, x: -20 }}
@@ -230,13 +230,6 @@ function Landing() {
                       <span className="text-xs md:text-sm text-white/80">{item}</span>
                     </motion.div>
                   ))}
-                </div>
-
-                
-                <div className="pt-3 md:pt-4 border-t border-white/10">
-                  <p className="text-[10px] md:text-xs text-white/50">
-                    <Link to="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
-                  </p>
                 </div>
               </div>
             </motion.div>
