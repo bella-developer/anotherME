@@ -15,31 +15,37 @@ function OAuthRedirect() {
     const action = searchParams.get('action') || 'login';
     const apiUrl = import.meta.env.VITE_API_URL || 'https://anotherme-backend.onrender.com';
     
-    // Update status messages
-    const statusTimer1 = setTimeout(() => setStatus('Connecting...'), 1000);
-    const statusTimer2 = setTimeout(() => setStatus('Almost ready...'), 3000);
+    // Update status messages (faster)
+    const statusTimer = setTimeout(() => setStatus('Connecting...'), 800);
     
-    // Ping backend first to wake it up if needed
+    // Ping backend and redirect immediately when ready
     const wakeUpBackend = async () => {
       try {
-        // Try to ping the health endpoint first
-        await fetch(`${apiUrl}/api/health`, { method: 'HEAD' });
-      } catch (error) {
-        // Backend might be cold starting, that's okay
-        console.log('Backend warming up...');
-      }
-      
-      // Wait a bit then redirect
-      setTimeout(() => {
+        // Ping health endpoint with shorter timeout
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 3000);
+        
+        await fetch(`${apiUrl}/api/health`, { 
+          method: 'HEAD',
+          signal: controller.signal
+        });
+        
+        clearTimeout(timeoutId);
+        // Backend is awake, redirect immediately
         window.location.href = `${apiUrl}/api/auth/google?action=${action}`;
-      }, 1500);
+      } catch (error) {
+        // Backend might be cold, redirect anyway (let OAuth handle the wait)
+        console.log('Redirecting to OAuth...');
+        setTimeout(() => {
+          window.location.href = `${apiUrl}/api/auth/google?action=${action}`;
+        }, 500);
+      }
     };
     
     wakeUpBackend();
 
     return () => {
-      clearTimeout(statusTimer1);
-      clearTimeout(statusTimer2);
+      clearTimeout(statusTimer);
     };
   }, [searchParams]);
 
@@ -58,7 +64,7 @@ function OAuthRedirect() {
           {status}
         </p>
         <p className="text-white/30 text-xs tracking-wide">
-          Setting up secure connection
+          Connecting to Google
         </p>
       </div>
     </div>
