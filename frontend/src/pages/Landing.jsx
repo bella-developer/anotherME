@@ -356,7 +356,7 @@ function Landing() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.15, duration: 0.6 }}
-                className="relative flex flex-col items-center justify-between p-8 text-center cursor-pointer group overflow-hidden rounded-xl transition-all duration-500 hover:-translate-y-2"
+                className="relative flex flex-col items-center justify-end p-8 text-center cursor-pointer group overflow-hidden rounded-xl transition-all duration-500 hover:-translate-y-2"
                 style={{
                   minHeight: '300px',
                   background: 'rgba(255,255,255,0.02)',
@@ -367,19 +367,19 @@ function Landing() {
                   className="absolute inset-0 bg-cover bg-center rounded-xl transition-transform duration-700 group-hover:scale-110"
                   style={{ 
                     backgroundImage: `url('${f.img}')`, 
-                    filter: 'contrast(1.2) brightness(0.4) saturate(1.1)',
+                    filter: 'contrast(1.1) brightness(0.6) saturate(1.1)',
                   }}
                 />
-                <div className="absolute inset-0 rounded-xl bg-gradient-to-t from-black/90 via-black/30 to-black/50 group-hover:from-black/70 transition-all duration-500" />
+                <div className="absolute inset-0 rounded-xl bg-gradient-to-t from-black/95 via-black/20 to-transparent group-hover:from-black/90 transition-all duration-500" />
 
-                <div className="relative z-10 flex flex-col items-center">
-                  <svg className="w-7 h-7 text-white/50 mb-6 group-hover:text-white transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}>
+                <div className="relative z-10 flex flex-col items-center pb-4">
+                  <svg className="w-7 h-7 text-white/50 mb-4 group-hover:text-white transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}>
                     <path strokeLinecap="round" strokeLinejoin="round" d={f.icon} />
                   </svg>
                   <h3 className="text-sm tracking-[0.25em] uppercase font-semibold mb-3 text-white">{f.title}</h3>
                   <p className="text-xs text-white/60 leading-relaxed group-hover:text-white/80 transition-colors duration-300">{f.desc}</p>
+                  <span className="mt-4 text-white/30 group-hover:text-white transition-all duration-300 group-hover:translate-x-1 text-lg">→</span>
                 </div>
-                <span className="relative z-10 mt-6 text-white/30 group-hover:text-white transition-all duration-300 group-hover:translate-x-1 text-lg">→</span>
               </motion.article>
             ))}
           </div>
@@ -401,13 +401,13 @@ function Landing() {
               <div 
                 className="absolute inset-0 rounded-xl" 
                 style={{ 
-                  backgroundImage: `url(${landingHeroBg})`, 
+                  backgroundImage: `url(https://res.cloudinary.com/dbtm7etag/image/upload/v1782735075/attention_ngxcb7.png)`, 
                   backgroundSize: 'cover', 
                   backgroundPosition: 'center', 
-                  filter: 'contrast(1.2) brightness(0.35) saturate(1.1)',
+                  filter: 'contrast(1.1) brightness(0.5) saturate(1.1)',
                 }} 
               />
-              <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-black/60 to-black/30" />
+              <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-black/70 to-black/40" />
               <div className="relative z-10 px-10 py-12">
                 <svg className="w-8 h-8 text-white/15 mb-6 mx-auto" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
