@@ -132,18 +132,23 @@ function Explore() {
                   backgroundImage: `url(https://res.cloudinary.com/dbtm7etag/image/upload/v1782735075/attention_ngxcb7.png)`, 
                   backgroundSize: 'cover', 
                   backgroundPosition: 'center', 
-                  filter: 'contrast(1.1) brightness(0.5) saturate(1.1)',
+                  filter: 'contrast(1.05) brightness(0.8) saturate(1.1)',
                 }} 
               />
-              <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-black/70 to-black/40" />
-              <div className="relative z-10 px-10 py-12">
-                <svg className="w-8 h-8 text-white/15 mb-6 mx-auto" fill="currentColor" viewBox="0 0 24 24">
+              <div className="absolute inset-0 rounded-xl bg-gradient-to-t from-black/95 via-black/60 to-transparent" />
+              <div className="relative z-10 h-full flex flex-col justify-between p-10">
+                {/* Quote icon at top */}
+                <svg className="w-7 h-7 text-white/12" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
                 </svg>
-                <p className="text-xl lg:text-2xl font-light leading-snug text-white mb-6">
-                  Most people seek attention.<br />Few seek understanding.
-                </p>
-                <div className="text-[10px] tracking-[0.3em] text-white/40 uppercase">— Eso Philosophy</div>
+                
+                {/* Text at bottom */}
+                <div>
+                  <p className="text-xl lg:text-2xl font-light leading-snug text-white mb-4">
+                    Most people seek attention.<br />Few seek understanding.
+                  </p>
+                  <div className="text-[10px] tracking-[0.3em] text-white/40 uppercase">— Eso Philosophy</div>
+                </div>
               </div>
             </div>
 
