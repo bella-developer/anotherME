@@ -6,6 +6,7 @@ import { usePageTitle } from '../hooks/usePageTitle';
 
 const landingHeroBg = 'https://res.cloudinary.com/dbtm7etag/image/upload/v1782740734/landing-hero-bg_u4uoy8.png';
 
+// ESO Landing Page - Updated June 29, 2026
 function Landing() {
   usePageTitle('');
   const navigate = useNavigate();
