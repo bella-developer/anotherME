@@ -66,6 +66,19 @@ import supportRoutes from './routes/support.routes.js';
 import { sendWelcomeEmail } from './services/email.service.js';
 
 // API routes
+app.get('/', (req, res) => {
+  res.json({ 
+    message: 'ESO API Server',
+    version: '1.0.0',
+    status: 'running',
+    endpoints: {
+      health: '/api/health',
+      auth: '/api/auth',
+      docs: 'https://github.com/your-repo'
+    }
+  });
+});
+
 app.get('/api', (req, res) => {
   res.json({ message: 'ESO API' });
 });
