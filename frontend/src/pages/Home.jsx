@@ -61,7 +61,7 @@ function Home() {
 
           {/* Header */}
           <div className="text-center mb-14">
-            <p className="text-[9px] tracking-[0.35em] text-white/25 uppercase mb-4">Choose Your Posture</p>
+            <p className="text-[9px] tracking-[0.35em] text-white/25 uppercase mb-4">Choose Your Room</p>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-light tracking-[0.28em] text-white uppercase">
               Your Safe Space.
             </h1>
