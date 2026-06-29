@@ -19,7 +19,7 @@ function Home() {
       description: 'Where raw emotion finds its voice. No performance. No filter. Just truth.',
       path: '/rooms/dark',
       // deep dark fog, grief, stillness
-      img: 'https://images.pexels.com/photos/1647220/pexels-photo-1647220.jpeg?auto=compress&cs=tinysrgb&w=800',
+      img: 'https://res.cloudinary.com/dbtm7etag/image/upload/v1782735009/darkroom_mf0vxg.png',
       accent: 'rgba(180,140,120,0.15)',
       accentText: '#c4a882',
       glowColor: 'rgba(160,100,80,0.12)',
@@ -33,7 +33,7 @@ function Home() {
       description: 'Ideas sharpened against each other. Growth that demands something of you.',
       path: '/rooms/climb',
       // upward light beam / mountain summit
-      img: 'https://images.pexels.com/photos/618833/pexels-photo-618833.jpeg?auto=compress&cs=tinysrgb&w=800',
+      img: 'https://res.cloudinary.com/dbtm7etag/image/upload/v1782735019/climbroom_camkye.png',
       accent: 'rgba(160,90,44,0.18)',
       accentText: '#c47a3a',
       glowColor: 'rgba(160,90,44,0.14)',
@@ -47,7 +47,7 @@ function Home() {
       description: 'Thought as practice. Meaning as destination. Silence between the words.',
       path: '/rooms/philo',
       // ancient stone, cosmos, contemplation
-      img: 'https://images.pexels.com/photos/3075993/pexels-photo-3075993.jpeg?auto=compress&cs=tinysrgb&w=800',
+      img: 'https://res.cloudinary.com/dbtm7etag/image/upload/v1782735026/philoroom_lazjzx.png',
       accent: 'rgba(200,180,240,0.12)',
       accentText: '#b8a8d4',
       glowColor: 'rgba(140,120,200,0.12)',
