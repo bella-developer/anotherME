@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import EsoLogo from '../components/EsoLogo';
+import { usePageTitle } from '../hooks/usePageTitle';
 
 function ResetPassword() {
+  usePageTitle('Reset Password');
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const [token, setToken] = useState('');

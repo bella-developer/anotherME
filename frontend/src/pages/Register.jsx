@@ -5,8 +5,10 @@ import { register, selectAuth } from '../features/authSlice';
 import IntrovertsBg from '../components/IntrovertsBg';
 import EsoLogo from '../components/EsoLogo';
 import GoogleSignInButton from '../components/GoogleSignInButton';
+import { usePageTitle } from '../hooks/usePageTitle';
 
 function Register() {
+  usePageTitle('Register');
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { user, isAuthenticated, loading, error } = useSelector(selectAuth);

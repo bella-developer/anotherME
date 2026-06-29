@@ -8,6 +8,7 @@ import Layout from '../components/Layout';
 import LevelBadge from '../components/LevelBadge';
 import { getCurrentUser, updateUserProfile, fetchUserStats } from '../services/userService';
 import { logout } from '../services/authService';
+import { usePageTitle } from '../hooks/usePageTitle';
 
 /**
  * Profile Page - Artistic Redesign
@@ -15,6 +16,7 @@ import { logout } from '../services/authService';
  * Username-based identity (no alias/anonymous concept)
  */
 function Profile() {
+  usePageTitle('Profile');
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user, isAuthenticated } = useSelector(selectAuth);

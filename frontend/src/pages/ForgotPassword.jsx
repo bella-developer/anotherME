@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import EsoLogo from '../components/EsoLogo';
+import { usePageTitle } from '../hooks/usePageTitle';
 
 function ForgotPassword() {
+  usePageTitle('Forgot Password');
   const [email, setEmail] = useState('');
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);

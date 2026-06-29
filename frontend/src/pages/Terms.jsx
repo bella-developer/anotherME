@@ -1,7 +1,9 @@
 import { Link } from 'react-router-dom';
 import EsoLogo from '../components/EsoLogo';
+import { usePageTitle } from '../hooks/usePageTitle';
 
 function Terms() {
+  usePageTitle('Terms');
   return (
     <div className="min-h-screen bg-black text-white relative z-10" style={{ fontFamily: "'Geist Mono', monospace" }}>
       {/* Navigation */}

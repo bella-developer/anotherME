@@ -2,8 +2,10 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
 import PageTransition from '../components/PageTransition';
+import { usePageTitle } from '../hooks/usePageTitle';
 
 function Home() {
+  usePageTitle('Home');
   const navigate = useNavigate();
   const [hovered, setHovered] = useState(null);
 

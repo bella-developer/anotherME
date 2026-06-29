@@ -3,8 +3,10 @@ import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import landingHeroBg from '../assets/images/landing-hero-bg.png';
 import EsoLogo from '../components/EsoLogo';
+import { usePageTitle } from '../hooks/usePageTitle';
 
 function Landing() {
+  usePageTitle('');
   const navigate = useNavigate();
   const [isScrolled, setIsScrolled] = useState(false);
 

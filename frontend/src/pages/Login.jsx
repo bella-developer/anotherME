@@ -4,12 +4,14 @@ import { useNavigate, Link, useSearchParams } from 'react-router-dom';
 import { login, clearError, selectAuth } from '../features/authSlice';
 import EsoLogo from '../components/EsoLogo';
 import GoogleSignInButton from '../components/GoogleSignInButton';
+import { usePageTitle } from '../hooks/usePageTitle';
 
 /**
  * Login Page - Dark Glassmorphic Design with Cosmic Nebula Background
  * Secure authentication with comprehensive security measures
  */
 function Login() {
+  usePageTitle('Sign In');
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { isAuthenticated, loading, error } = useSelector(selectAuth);

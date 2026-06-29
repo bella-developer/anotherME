@@ -1,12 +1,14 @@
 import Layout from '../components/Layout';
 import PageTransition from '../components/PageTransition';
 import EsoLogo from '../components/EsoLogo';
+import { usePageTitle } from '../hooks/usePageTitle';
 
 /**
  * About Us Page - Minimal, Artistic, Centered
  * ESO branding with philosophical aesthetic
  */
 function AboutUs() {
+  usePageTitle('About');
   const principles = [
     {
       title: "Silence is Sacred",

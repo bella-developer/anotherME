@@ -1,8 +1,10 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import EsoLogo from '../components/EsoLogo';
+import { usePageTitle } from '../hooks/usePageTitle';
 
 function Explore() {
+  usePageTitle('Explore');
   const navigate = useNavigate();
 
   const features = [

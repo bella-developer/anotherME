@@ -1,7 +1,9 @@
 import { Link } from 'react-router-dom';
 import EsoLogo from '../components/EsoLogo';
+import { usePageTitle } from '../hooks/usePageTitle';
 
 function Privacy() {
+  usePageTitle('Privacy');
   const sections = [
     {
       id: 'data',

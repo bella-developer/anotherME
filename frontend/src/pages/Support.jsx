@@ -4,8 +4,10 @@ import Layout from '../components/Layout';
 import PageTransition from '../components/PageTransition';
 import VideoModal from '../components/VideoModal';
 import ArticleModal from '../components/ArticleModal';
+import { usePageTitle } from '../hooks/usePageTitle';
 
 const Support = () => {
+  usePageTitle('Support');
   const [activeTab, setActiveTab] = useState('library');
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [selectedArticle, setSelectedArticle] = useState(null);
