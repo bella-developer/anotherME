@@ -409,17 +409,24 @@ function Landing() {
                 }} 
               />
               <div className="absolute inset-0 rounded-xl bg-gradient-to-t from-black/95 via-black/60 to-transparent" />
-              <div className="relative z-10 h-full flex flex-col justify-between p-10">
-                {/* Quote icon at top */}
-                <svg className="w-7 h-7 text-white/12" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-                </svg>
-                
-                {/* Text at bottom */}
+              <div className="relative z-10 h-full flex flex-col justify-end p-10">
+                {/* Text at bottom with quote icons */}
                 <div>
-                  <p className="text-xl lg:text-2xl font-light leading-snug text-white mb-4">
-                    Most people seek attention.<br />Few seek understanding.
-                  </p>
+                  <div className="flex items-start gap-3 mb-4">
+                    {/* Opening quote */}
+                    <svg className="w-6 h-6 text-white/20 flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+                    </svg>
+                    
+                    <p className="text-xl lg:text-2xl font-light leading-snug text-white flex-1">
+                      Most people seek attention.<br />Few seek understanding.
+                    </p>
+                    
+                    {/* Closing quote (rotated) */}
+                    <svg className="w-6 h-6 text-white/20 flex-shrink-0 mt-1 rotate-180" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+                    </svg>
+                  </div>
                   <div className="text-[10px] tracking-[0.3em] text-white/40 uppercase">— Eso Philosophy</div>
                 </div>
               </div>
