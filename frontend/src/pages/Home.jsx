@@ -93,17 +93,17 @@ function Home() {
                     backgroundImage: `url('${room.img}')`,
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
-                    filter: hovered === room.id ? 'brightness(0.28) saturate(0.6)' : 'brightness(0.18) saturate(0.4)',
+                    filter: hovered === room.id ? 'brightness(0.85) saturate(0.6)' : 'brightness(0.75) saturate(0.4)',
                     transform: hovered === room.id ? 'scale(1.06)' : 'scale(1)',
                     transition: 'filter 0.8s ease, transform 0.8s ease',
                   }}
                 />
 
-                {/* Atmospheric gradient — heavier at bottom */}
+                {/* Atmospheric gradient — show top 70% of image, text at bottom */}
                 <div
                   className="absolute inset-0"
                   style={{
-                    background: `linear-gradient(to top, rgba(0,0,0,0.96) 0%, rgba(0,0,0,0.5) 40%, rgba(0,0,0,0.1) 100%)`,
+                    background: `linear-gradient(to top, rgba(0,0,0,0.98) 0%, rgba(0,0,0,0.7) 35%, transparent 70%)`,
                   }}
                 />
 
