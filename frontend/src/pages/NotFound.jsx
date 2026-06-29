@@ -1,7 +1,9 @@
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { usePageTitle } from '../hooks/usePageTitle';
 
 function NotFound() {
+  usePageTitle('404 Not Found');
   const navigate = useNavigate();
 
   return (

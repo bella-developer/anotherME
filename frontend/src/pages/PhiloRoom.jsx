@@ -10,8 +10,10 @@ import PageTransition from '../components/PageTransition';
 import PhiloRoomCard from '../components/PhiloRoomCard';
 import PhiloRoomPostForm from '../components/PhiloRoomPostForm';
 import LoadingSpinner from '../components/LoadingSpinner';
+import { usePageTitle } from '../hooks/usePageTitle';
 
 function PhiloRoom() {
+  usePageTitle('Philo Room');
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { isAuthenticated } = useSelector(selectAuth);

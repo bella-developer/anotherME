@@ -4,6 +4,7 @@ import Layout from '../components/Layout';
 import PageTransition from '../components/PageTransition';
 import LoadingSpinner from '../components/LoadingSpinner';
 import { fetchCircles } from '../services/circleService';
+import { usePageTitle } from '../hooks/usePageTitle';
 
 // Room accent config
 const roomAccent = {
@@ -98,6 +99,7 @@ function CircleCard({ circle, onClick }) {
 }
 
 function Circles() {
+  usePageTitle('Circles');
   const navigate = useNavigate();
   const [circles, setCircles] = useState([]);
   const [loading, setLoading] = useState(true);

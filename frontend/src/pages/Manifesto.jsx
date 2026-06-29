@@ -1,6 +1,8 @@
 import { Heart, Moon, Users, Leaf, Eye, Shield, BookOpen, Compass } from 'lucide-react';
+import { usePageTitle } from '../hooks/usePageTitle';
 
 const Manifesto = () => {
+  usePageTitle('Manifesto');
   const values = [
     {
       icon: Moon,

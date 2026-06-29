@@ -34,6 +34,9 @@ function CircleDetail() {
   const [submitting, setSubmitting] = useState(false);
   const [cursor, setCursor] = useState(null);
 
+  // Dynamic title based on circle name
+  usePageTitle(circle ? circle.name : 'Circle');
+
   const loadCircle = useCallback(async () => {
     try {
       const data = await fetchCircleById(id);

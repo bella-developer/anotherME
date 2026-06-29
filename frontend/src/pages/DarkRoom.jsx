@@ -10,8 +10,10 @@ import PageTransition from '../components/PageTransition';
 import DarkRoomCard from '../components/DarkRoomCard';
 import DarkRoomPostForm from '../components/DarkRoomPostForm';
 import LoadingSpinner from '../components/LoadingSpinner';
+import { usePageTitle } from '../hooks/usePageTitle';
 
 function DarkRoom() {
+  usePageTitle('Dark Room');
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { isAuthenticated } = useSelector(selectAuth);

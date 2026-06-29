@@ -5,6 +5,7 @@ import { selectAuth } from '../features/authSlice';
 import * as postService from '../services/postService';
 import * as commentService from '../services/commentService';
 import LoadingSpinner from '../components/LoadingSpinner';
+import { usePageTitle } from '../hooks/usePageTitle';
 
 /**
  * Post Detail Page
@@ -12,6 +13,7 @@ import LoadingSpinner from '../components/LoadingSpinner';
  * Matches exact design: dark theme, monospace elements, specific layout
  */
 function PostDetail() {
+  usePageTitle('Post');
   const { postId } = useParams();
   const navigate = useNavigate();
   const { isAuthenticated } = useSelector(selectAuth);

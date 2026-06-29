@@ -3,12 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import PageTransition from '../components/PageTransition';
 import LoadingSpinner from '../components/LoadingSpinner';
 import apiClient from '../services/api';
+import { usePageTitle } from '../hooks/usePageTitle';
 
 /**
  * Leaderboard Page
  * Displays top users by room and stat
  */
 function Leaderboard() {
+  usePageTitle('Leaderboard');
   const navigate = useNavigate();
   
   const [room, setRoom] = useState('climb');

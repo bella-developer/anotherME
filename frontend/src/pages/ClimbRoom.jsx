@@ -10,8 +10,10 @@ import PageTransition from '../components/PageTransition';
 import ClimbRoomCard from '../components/ClimbRoomCard';
 import ClimbRoomPostForm from '../components/ClimbRoomPostForm';
 import LoadingSpinner from '../components/LoadingSpinner';
+import { usePageTitle } from '../hooks/usePageTitle';
 
 function ClimbRoom() {
+  usePageTitle('Climb Room');
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { isAuthenticated } = useSelector(selectAuth);
