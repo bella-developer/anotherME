@@ -1,9 +1,10 @@
 import { useNavigate, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
-import landingHeroBg from '../assets/images/landing-hero-bg.png';
 import EsoLogo from '../components/EsoLogo';
 import { usePageTitle } from '../hooks/usePageTitle';
+
+const landingHeroBg = 'https://res.cloudinary.com/dbtm7etag/image/upload/v1782740734/landing-hero-bg_u4uoy8.png';
 
 function Landing() {
   usePageTitle('');
