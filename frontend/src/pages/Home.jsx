@@ -73,15 +73,6 @@ function Home() {
   return (
     <PageTransition>
       <Layout leftSidebar={null} rightSidebar={null}>
-        {/* Subtle film grain overlay */}
-        <div 
-          className="fixed inset-0 pointer-events-none opacity-[0.03] mix-blend-overlay"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
-            animation: 'grain 0.6s steps(4) infinite',
-          }}
-        />
-
         <div className="min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 md:px-8 py-16 md:py-20 lg:py-24 relative z-10">
 
           {/* Opening quote - fades in slowly */}
@@ -133,20 +124,19 @@ function Home() {
                 onClick={() => navigate(room.path)}
                 onMouseEnter={() => setHovered(room.id)}
                 onMouseLeave={() => setHovered(null)}
-                className="group relative text-left overflow-hidden focus:outline-none bg-transparent border-none"
+                className="group relative text-left focus:outline-none bg-transparent border-none"
                 style={{
                   height: 'clamp(480px, 60vh, 560px)',
                   cursor: 'pointer',
-                  borderRadius: '12px', // Subtle artistic curves
+                  borderRadius: '8px',
+                  overflow: 'hidden', // Critical for clipping curves properly
                 }}
               >
                 {/* Soft vignette frame */}
                 <div 
-                  className="absolute inset-0"
+                  className="absolute inset-0 pointer-events-none"
                   style={{
-                    boxShadow: 'inset 0 0 80px 20px rgba(0,0,0,0.4)',
-                    borderRadius: '12px',
-                    pointerEvents: 'none',
+                    boxShadow: 'inset 0 0 60px 15px rgba(0,0,0,0.35)',
                     zIndex: 10,
                   }}
                 />
@@ -170,7 +160,6 @@ function Home() {
                       ? 'brightness(0.88) contrast(1.08) saturate(0.95)' 
                       : 'brightness(0.68) contrast(0.92) saturate(0.85)',
                     transition: 'filter 1.4s cubic-bezier(0.22, 1, 0.36, 1)',
-                    borderRadius: '12px',
                   }}
                 />
 
@@ -187,7 +176,6 @@ function Home() {
                   className="absolute inset-0"
                   style={{
                     background: `radial-gradient(ellipse at 50% 90%, ${room.accent.replace('0.15', '0.25').replace('0.18', '0.3').replace('0.12', '0.2')} 0%, transparent 65%)`,
-                    borderRadius: '12px',
                   }}
                 />
 
@@ -196,7 +184,6 @@ function Home() {
                   className="absolute inset-0"
                   style={{
                     background: `linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.6) 42%, transparent 78%)`,
-                    borderRadius: '12px',
                   }}
                 />
 
@@ -358,15 +345,6 @@ function Home() {
           </motion.p>
 
         </div>
-
-        <style>{`
-          @keyframes grain {
-            0%, 100% { transform: translate(0, 0); }
-            25% { transform: translate(-2%, -2%); }
-            50% { transform: translate(2%, -1%); }
-            75% { transform: translate(-1%, 2%); }
-          }
-        `}</style>
       </Layout>
     </PageTransition>
   );
