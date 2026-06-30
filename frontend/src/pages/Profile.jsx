@@ -217,13 +217,25 @@ function Profile() {
             }}>
               {/* Username Display */}
               <div className="flex items-center gap-6 mb-8 pb-8" style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
-                <div className="w-20 h-20 rounded-full flex items-center justify-center flex-shrink-0" style={{
-                  background: 'linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%)',
-                  boxShadow: '0 0 0 1px rgba(255,255,255,0.1), inset 0 0 20px rgba(0,0,0,0.3)'
-                }}>
-                  <span className="text-white/70 text-2xl font-light">
-                    {profileData.username.charAt(0).toUpperCase()}
-                  </span>
+                <div className="relative flex-shrink-0">
+                  {/* Concentric circles */}
+                  <div className="absolute inset-0 rounded-full" style={{
+                    border: '1px solid rgba(75, 75, 75, 0.3)',
+                    transform: 'scale(1.3)'
+                  }} />
+                  <div className="absolute inset-0 rounded-full" style={{
+                    border: '1px solid rgba(75, 75, 75, 0.25)',
+                    transform: 'scale(1.15)'
+                  }} />
+                  {/* Avatar */}
+                  <div className="w-20 h-20 rounded-full flex items-center justify-center" style={{
+                    background: 'black',
+                    boxShadow: '0 0 0 1px rgba(255,255,255,0.1), inset 0 0 20px rgba(0,0,0,0.3)'
+                  }}>
+                    <span className="text-2xl font-light" style={{ color: '#D97757' }}>
+                      {profileData.username.charAt(0).toUpperCase()}
+                    </span>
+                  </div>
                 </div>
                 <div className="flex-1">
                   <div className="flex items-center gap-3 mb-2">

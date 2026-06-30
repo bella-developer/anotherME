@@ -23,7 +23,7 @@ function PhiloRoomCard({ post, onReaction, onEdit, onDelete }) {
     <div
       className="relative p-7 mb-4 transition-all duration-300 hover:-translate-y-0.5"
       style={{
-        background: 'rgba(0, 0, 0, 0.1)', // 90% transparent
+        background: 'rgba(0, 0, 0, 0.2)', // 80% transparent
         backdropFilter: 'blur(10px)',
         boxShadow: '0 0 0 1px rgba(255,255,255,0.06), 0 4px 24px rgba(0,0,0,0.4)',
         borderRadius: '4px',
