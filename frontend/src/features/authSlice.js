@@ -15,6 +15,7 @@ const initialState = {
   loading: false, // Start as false - only set to true when actually loading
   error: null,
   sessionChecked: false, // Track if initial session check is done
+  hasActiveSession: sessionStorage.getItem('hasActiveSession') === 'true', // Persist session flag across refreshes
 };
 
 // Async thunks
@@ -119,7 +120,10 @@ const authSlice = createSlice({
         state.user = action.payload.user;
         state.isAuthenticated = true;
         state.sessionChecked = true;
+        state.hasActiveSession = true;
         state.error = null;
+        // Persist session flag
+        sessionStorage.setItem('hasActiveSession', 'true');
       })
       .addCase(register.rejected, (state, action) => {
         state.loading = false;
@@ -140,7 +144,10 @@ const authSlice = createSlice({
         state.user = action.payload.user;
         state.isAuthenticated = true;
         state.sessionChecked = true;
+        state.hasActiveSession = true;
         state.error = null;
+        // Persist session flag
+        sessionStorage.setItem('hasActiveSession', 'true');
       })
       .addCase(login.rejected, (state, action) => {
         state.loading = false;
@@ -164,13 +171,19 @@ const authSlice = createSlice({
         state.user = action.payload.user;
         state.isAuthenticated = true;
         state.sessionChecked = true;
+        state.hasActiveSession = true;
         state.error = null;
+        // Persist session flag
+        sessionStorage.setItem('hasActiveSession', 'true');
       })
       .addCase(getSession.rejected, (state, action) => {
         state.loading = false;
         state.user = null;
         state.isAuthenticated = false;
         state.sessionChecked = true;
+        state.hasActiveSession = false;
+        // Clear session flag
+        sessionStorage.removeItem('hasActiveSession');
         // Don't set error for silent rejections (initial session check on public pages)
         if (!action.payload?.silent) {
           state.error = action.payload || {
@@ -190,17 +203,23 @@ const authSlice = createSlice({
         state.loading = false;
         state.user = null;
         state.isAuthenticated = false;
+        state.hasActiveSession = false;
         state.error = null;
+        // Clear session flag
+        sessionStorage.removeItem('hasActiveSession');
       })
       .addCase(logout.rejected, (state, action) => {
         state.loading = false;
         // Even if logout fails on server, clear local state
         state.user = null;
         state.isAuthenticated = false;
+        state.hasActiveSession = false;
         state.error = action.payload || {
           message: 'Logout failed',
           code: 'LOGOUT_ERROR',
         };
+        // Clear session flag
+        sessionStorage.removeItem('hasActiveSession');
       });
   },
 });

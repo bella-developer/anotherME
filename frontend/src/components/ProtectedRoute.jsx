@@ -10,7 +10,7 @@ import LoadingSpinner from './LoadingSpinner';
  */
 function ProtectedRoute({ children }) {
   const dispatch = useDispatch();
-  const { isAuthenticated, loading, sessionChecked } = useSelector(selectAuth);
+  const { isAuthenticated, loading, sessionChecked, hasActiveSession } = useSelector(selectAuth);
 
   // Check session on mount of protected route
   useEffect(() => {
@@ -19,8 +19,8 @@ function ProtectedRoute({ children }) {
     }
   }, [dispatch, sessionChecked]);
 
-  // Show loading while checking session
-  if (!sessionChecked && loading) {
+  // Show loading while checking session (only if we think there's a session)
+  if (!sessionChecked && (loading || hasActiveSession)) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-black">
         <LoadingSpinner size="large" />
@@ -28,8 +28,8 @@ function ProtectedRoute({ children }) {
     );
   }
 
-  // Redirect to landing page if not authenticated
-  if (!isAuthenticated) {
+  // Redirect to landing page if not authenticated and session check is complete
+  if (!isAuthenticated && sessionChecked) {
     return <Navigate to="/" replace />;
   }
 
