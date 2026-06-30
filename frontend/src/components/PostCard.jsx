@@ -72,8 +72,14 @@ const PostCard = memo(({ post, onPostClick }) => {
   return (
     <article 
       onClick={() => onPostClick && onPostClick(post.id)}
-      className="bg-[#1A1414] rounded-lg p-6 mb-4 transition-all duration-200 hover:bg-[#251E1D] cursor-pointer"
+      className="rounded-lg p-6 mb-4 transition-all duration-200 cursor-pointer"
+      style={{
+        backgroundColor: 'rgba(0, 0, 0, 0.1)', // 90% transparent
+        backdropFilter: 'blur(10px)',
+      }}
       role="article"
+      onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'rgba(0, 0, 0, 0.15)'}
+      onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'rgba(0, 0, 0, 0.1)'}
     >
       {/* Header: Category Badge and Timestamp */}
       <div className="flex items-center justify-between mb-4">

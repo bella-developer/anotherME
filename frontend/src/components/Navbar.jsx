@@ -110,10 +110,10 @@ function Navbar() {
             {isAuthenticated ? (
               <Link
                 to="/profile"
-                className="w-9 h-9 rounded-full bg-[#ff6b35] flex items-center justify-center hover:opacity-80 transition-opacity"
+                className="w-9 h-9 rounded-full bg-black flex items-center justify-center hover:opacity-80 transition-opacity"
                 aria-label={`Profile: ${user?.username || 'User'}`}
               >
-                <span className="text-white text-sm font-bold">
+                <span className="text-[#D97757] text-sm font-bold">
                   {(user?.username || 'U').charAt(0).toUpperCase()}
                 </span>
               </Link>
