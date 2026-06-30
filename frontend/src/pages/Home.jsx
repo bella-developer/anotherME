@@ -82,14 +82,14 @@ function Home() {
           }}
         />
 
-        <div className="min-h-screen flex flex-col items-center justify-center px-6 py-24 relative z-10">
+        <div className="min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 md:px-8 py-16 md:py-20 lg:py-24 relative z-10">
 
           {/* Opening quote - fades in slowly */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 2, delay: 0.5 }}
-            className="text-center mb-8"
+            className="text-center mb-6 md:mb-8"
           >
             <p className="text-[9px] tracking-[0.28em] text-white/15 uppercase font-light italic">
               "{getGreeting()}"
@@ -101,9 +101,9 @@ function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.8, delay: 0.8 }}
-            className="text-center mb-24"
+            className="text-center mb-16 md:mb-20 lg:mb-24"
           >
-            <p className="text-[9px] tracking-[0.22em] text-white/18 uppercase mb-6 font-light">
+            <p className="text-[9px] tracking-[0.22em] text-white/18 uppercase mb-4 md:mb-6 font-light">
               Choose Your Room
             </p>
             <motion.h1
@@ -115,7 +115,7 @@ function Home() {
                 repeat: Infinity, 
                 ease: 'easeInOut' 
               }}
-              className="text-5xl md:text-6xl lg:text-7xl font-extralight tracking-[0.12em] text-white/92"
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extralight tracking-[0.12em] text-white/92 px-4"
               style={{ fontWeight: 200 }}
             >
               Your Safe Space
@@ -123,7 +123,7 @@ function Home() {
           </motion.div>
 
           {/* Room Cards - intimate windows */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-6xl">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-7 lg:gap-8 w-full max-w-7xl px-4 md:px-0">
             {rooms.map((room, idx) => (
               <motion.button
                 key={room.id}
@@ -135,9 +135,9 @@ function Home() {
                 onMouseLeave={() => setHovered(null)}
                 className="group relative text-left overflow-hidden focus:outline-none bg-transparent border-none"
                 style={{
-                  height: '540px',
+                  height: 'clamp(480px, 60vh, 560px)',
                   cursor: 'pointer',
-                  borderRadius: '3px',
+                  borderRadius: '12px', // Subtle artistic curves
                 }}
               >
                 {/* Soft vignette frame */}
@@ -145,7 +145,7 @@ function Home() {
                   className="absolute inset-0"
                   style={{
                     boxShadow: 'inset 0 0 80px 20px rgba(0,0,0,0.4)',
-                    borderRadius: '3px',
+                    borderRadius: '12px',
                     pointerEvents: 'none',
                     zIndex: 10,
                   }}
@@ -170,6 +170,7 @@ function Home() {
                       ? 'brightness(0.88) contrast(1.08) saturate(0.95)' 
                       : 'brightness(0.68) contrast(0.92) saturate(0.85)',
                     transition: 'filter 1.4s cubic-bezier(0.22, 1, 0.36, 1)',
+                    borderRadius: '12px',
                   }}
                 />
 
@@ -186,6 +187,7 @@ function Home() {
                   className="absolute inset-0"
                   style={{
                     background: `radial-gradient(ellipse at 50% 90%, ${room.accent.replace('0.15', '0.25').replace('0.18', '0.3').replace('0.12', '0.2')} 0%, transparent 65%)`,
+                    borderRadius: '12px',
                   }}
                 />
 
@@ -194,6 +196,7 @@ function Home() {
                   className="absolute inset-0"
                   style={{
                     background: `linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.6) 42%, transparent 78%)`,
+                    borderRadius: '12px',
                   }}
                 />
 
@@ -203,9 +206,9 @@ function Home() {
                     opacity: hovered === room.id ? 0.18 : 0.06,
                   }}
                   transition={{ duration: 0.8 }}
-                  className="absolute top-7 right-8 font-light"
+                  className="absolute top-5 md:top-7 right-6 md:right-8 font-light"
                   style={{
-                    fontSize: '9px',
+                    fontSize: 'clamp(8px, 1.5vw, 9px)',
                     letterSpacing: '0.4em',
                     fontWeight: 200,
                     color: '#ffffff',
@@ -215,7 +218,7 @@ function Home() {
                 </motion.div>
 
                 {/* Content - intimate positioning */}
-                <div className="absolute inset-x-0 bottom-0 px-10 pb-12">
+                <div className="absolute inset-x-0 bottom-0 px-6 md:px-8 lg:px-10 pb-8 md:pb-10 lg:pb-12">
 
                   {/* Poetic tagline */}
                   <motion.div
@@ -224,13 +227,13 @@ function Home() {
                       y: hovered === room.id ? 0 : 10,
                     }}
                     transition={{ duration: 0.8 }}
-                    className="mb-4 overflow-hidden"
+                    className="mb-3 md:mb-4 overflow-hidden"
                     style={{
                       maxHeight: hovered === room.id ? '40px' : '0',
                     }}
                   >
                     <p className="italic" style={{ 
-                      fontSize: '9px', 
+                      fontSize: 'clamp(8px, 1.5vw, 9px)', 
                       letterSpacing: '0.18em', 
                       color: room.accentText, 
                       fontWeight: 300,
@@ -241,9 +244,9 @@ function Home() {
 
                   {/* Room name - literary feel */}
                   <h2
-                    className="uppercase mb-6 transition-all duration-700"
+                    className="uppercase mb-4 md:mb-5 lg:mb-6 transition-all duration-700"
                     style={{
-                      fontSize: '28px',
+                      fontSize: 'clamp(22px, 4vw, 28px)',
                       letterSpacing: '0.15em',
                       color: hovered === room.id ? '#ffffff' : 'rgba(255,255,255,0.85)',
                       fontWeight: 200,
@@ -254,7 +257,7 @@ function Home() {
                   </h2>
 
                   {/* Subtitle verbs - staggered reveal */}
-                  <div className="flex gap-6 mb-7">
+                  <div className="flex flex-wrap gap-3 md:gap-4 lg:gap-6 mb-5 md:mb-6 lg:mb-7">
                     {room.subtitle.map((line, i) => (
                       <motion.span
                         key={i}
@@ -266,7 +269,7 @@ function Home() {
                           delay: hovered === room.id ? i * 0.08 : 0,
                         }}
                         style={{
-                          fontSize: '9px',
+                          fontSize: 'clamp(8px, 1.5vw, 9px)',
                           letterSpacing: '0.14em',
                           color: '#ffffff',
                           fontWeight: 300,
@@ -285,17 +288,17 @@ function Home() {
                     }}
                     transition={{ duration: 0.9, delay: 0.2 }}
                     style={{
-                      maxHeight: hovered === room.id ? '80px' : '0',
+                      maxHeight: hovered === room.id ? '100px' : '0',
                       overflow: 'hidden',
                     }}
                   >
                     <p style={{ 
-                      fontSize: '12px', 
+                      fontSize: 'clamp(11px, 2vw, 12px)', 
                       lineHeight: '1.8', 
                       color: 'rgba(255,255,255,0.48)', 
                       letterSpacing: '0.01em',
                       fontWeight: 300,
-                      marginBottom: '24px',
+                      marginBottom: '20px',
                     }}>
                       {room.description}
                     </p>
@@ -307,15 +310,15 @@ function Home() {
                       opacity: hovered === room.id ? 1 : 0.4,
                     }}
                     transition={{ duration: 0.7 }}
-                    className="flex items-center gap-3"
+                    className="flex items-center gap-2 md:gap-3"
                     style={{
-                      paddingTop: '20px',
+                      paddingTop: '16px md:20px',
                       borderTop: `1px solid rgba(255,255,255,${hovered === room.id ? '0.12' : '0.06'})`,
                     }}
                   >
                     <span
                       style={{
-                        fontSize: '8px',
+                        fontSize: 'clamp(7px, 1.5vw, 8px)',
                         letterSpacing: '0.32em',
                         textTransform: 'uppercase',
                         color: hovered === room.id ? room.accentText : 'rgba(255,255,255,0.32)',
@@ -333,7 +336,7 @@ function Home() {
                       transition={{ duration: 0.5 }}
                       style={{
                         color: hovered === room.id ? room.accentText : 'rgba(255,255,255,0.3)',
-                        fontSize: '10px',
+                        fontSize: 'clamp(9px, 1.8vw, 10px)',
                       }}
                     >
                       →
@@ -349,7 +352,7 @@ function Home() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 2, delay: 2.5 }}
-            className="mt-24 text-[8px] tracking-[0.26em] text-white/10 uppercase font-light italic"
+            className="mt-16 md:mt-20 lg:mt-24 text-[8px] tracking-[0.26em] text-white/10 uppercase font-light italic px-4 text-center"
           >
             A space to breathe, to think, to be.
           </motion.p>
