@@ -34,8 +34,7 @@ function Home() {
       subtitle: ['Release.', 'Witness.', 'Discharge.'],
       description: 'Where raw emotion finds its voice. No performance. No filter. Just truth.',
       path: '/rooms/dark',
-      // deep dark fog, grief, stillness
-      img: 'https://res.cloudinary.com/dbtm7etag/image/upload/v1782735009/darkroom_mf0vxg.png',
+      img: 'https://res.cloudinary.com/dbtm7etag/image/upload/v1782822205/darker_u59a3p.png',
       accent: 'rgba(180,140,120,0.15)',
       accentText: '#c4a882',
       glowColor: 'rgba(160,100,80,0.12)',
