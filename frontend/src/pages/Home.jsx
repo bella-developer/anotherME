@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import Layout from '../components/Layout';
 import PageTransition from '../components/PageTransition';
 import { usePageTitle } from '../hooks/usePageTitle';
@@ -8,6 +9,21 @@ function Home() {
   usePageTitle('Home');
   const navigate = useNavigate();
   const [hovered, setHovered] = useState(null);
+  const [time, setTime] = useState(new Date());
+
+  // Update time for time-based greeting
+  useEffect(() => {
+    const timer = setInterval(() => setTime(new Date()), 60000);
+    return () => clearInterval(timer);
+  }, []);
+
+  // Get greeting based on time
+  const getGreeting = () => {
+    const hour = time.getHours();
+    if (hour < 12) return 'Good morning';
+    if (hour < 18) return 'Good afternoon';
+    return 'Good evening';
+  };
 
   const rooms = [
     {
@@ -57,192 +73,297 @@ function Home() {
   return (
     <PageTransition>
       <Layout leftSidebar={null} rightSidebar={null}>
-        <div className="min-h-screen flex flex-col items-center justify-center px-6 py-20 relative z-10">
+        {/* Subtle film grain overlay */}
+        <div 
+          className="fixed inset-0 pointer-events-none opacity-[0.03] mix-blend-overlay"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
+            animation: 'grain 0.6s steps(4) infinite',
+          }}
+        />
 
-          {/* Header - more cinematic typography */}
-          <div className="text-center mb-20">
-            <p className="text-[10px] tracking-[0.25em] text-white/20 uppercase mb-6 font-light">Choose Your Room</p>
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-extralight tracking-[0.15em] text-white/95 uppercase">
+        <div className="min-h-screen flex flex-col items-center justify-center px-6 py-24 relative z-10">
+
+          {/* Opening quote - fades in slowly */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 2, delay: 0.5 }}
+            className="text-center mb-8"
+          >
+            <p className="text-[9px] tracking-[0.28em] text-white/15 uppercase font-light italic">
+              "{getGreeting()}"
+            </p>
+          </motion.div>
+
+          {/* Header - refined, breathing */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.8, delay: 0.8 }}
+            className="text-center mb-24"
+          >
+            <p className="text-[9px] tracking-[0.22em] text-white/18 uppercase mb-6 font-light">
+              Choose Your Room
+            </p>
+            <motion.h1
+              animate={{ 
+                scale: [1, 1.008, 1],
+              }}
+              transition={{ 
+                duration: 8, 
+                repeat: Infinity, 
+                ease: 'easeInOut' 
+              }}
+              className="text-5xl md:text-6xl lg:text-7xl font-extralight tracking-[0.12em] text-white/92"
+              style={{ fontWeight: 200 }}
+            >
               Your Safe Space
-            </h1>
-          </div>
+            </motion.h1>
+          </motion.div>
 
-          {/* Room Cards - borderless, atmospheric */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-6xl">
-            {rooms.map((room) => (
-              <button
+          {/* Room Cards - intimate windows */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-6xl">
+            {rooms.map((room, idx) => (
+              <motion.button
                 key={room.id}
+                initial={{ opacity: 0, y: 40 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1.2, delay: 1.2 + idx * 0.2 }}
                 onClick={() => navigate(room.path)}
                 onMouseEnter={() => setHovered(room.id)}
                 onMouseLeave={() => setHovered(null)}
                 className="group relative text-left overflow-hidden focus:outline-none bg-transparent border-none"
                 style={{
-                  height: '520px',
+                  height: '540px',
                   cursor: 'pointer',
-                  transition: 'transform 0.6s cubic-bezier(0.22, 1, 0.36, 1)',
-                  transform: hovered === room.id ? 'translateY(-8px)' : 'translateY(0)',
+                  borderRadius: '3px',
                 }}
               >
-                {/* Background photo */}
-                <div
+                {/* Soft vignette frame */}
+                <div 
+                  className="absolute inset-0"
+                  style={{
+                    boxShadow: 'inset 0 0 80px 20px rgba(0,0,0,0.4)',
+                    borderRadius: '3px',
+                    pointerEvents: 'none',
+                    zIndex: 10,
+                  }}
+                />
+
+                {/* Background photo - breathing */}
+                <motion.div
+                  animate={{
+                    scale: hovered === room.id ? 1.05 : [1.02, 1.025, 1.02],
+                  }}
+                  transition={{
+                    scale: hovered === room.id 
+                      ? { duration: 1.5, ease: [0.22, 1, 0.36, 1] }
+                      : { duration: 10, repeat: Infinity, ease: 'easeInOut' }
+                  }}
                   className="absolute inset-0"
                   style={{
                     backgroundImage: `url('${room.img}')`,
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
-                    filter: hovered === room.id ? 'brightness(0.9) contrast(1.05)' : 'brightness(0.7) contrast(0.95)',
-                    transform: hovered === room.id ? 'scale(1.05)' : 'scale(1.02)',
-                    transition: 'filter 1s ease, transform 1.2s cubic-bezier(0.22, 1, 0.36, 1)',
+                    filter: hovered === room.id 
+                      ? 'brightness(0.88) contrast(1.08) saturate(0.95)' 
+                      : 'brightness(0.68) contrast(0.92) saturate(0.85)',
+                    transition: 'filter 1.4s cubic-bezier(0.22, 1, 0.36, 1)',
                   }}
                 />
 
-                {/* Atmospheric gradient — softer, more natural */}
+                {/* Warm candlelight glow on hover */}
+                <motion.div
+                  animate={{ 
+                    opacity: hovered === room.id ? [0.6, 0.7, 0.6] : 0,
+                  }}
+                  transition={{
+                    opacity: hovered === room.id
+                      ? { duration: 3, repeat: Infinity, ease: 'easeInOut' }
+                      : { duration: 1 }
+                  }}
+                  className="absolute inset-0"
+                  style={{
+                    background: `radial-gradient(ellipse at 50% 90%, ${room.accent.replace('0.15', '0.25').replace('0.18', '0.3').replace('0.12', '0.2')} 0%, transparent 65%)`,
+                  }}
+                />
+
+                {/* Soft atmospheric gradient */}
                 <div
                   className="absolute inset-0"
                   style={{
-                    background: `linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.65) 40%, transparent 75%)`,
+                    background: `linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.6) 42%, transparent 78%)`,
                   }}
                 />
 
-                {/* Subtle accent wash on hover */}
-                <div
-                  className="absolute inset-0 transition-opacity duration-1000"
-                  style={{
-                    background: `radial-gradient(ellipse at 50% 85%, ${room.accent} 0%, transparent 70%)`,
-                    opacity: hovered === room.id ? 0.8 : 0,
+                {/* Roman numeral - hidden beauty */}
+                <motion.div
+                  animate={{
+                    opacity: hovered === room.id ? 0.18 : 0.06,
                   }}
-                />
-
-                {/* Roman numeral — subtle watermark */}
-                <div
-                  className="absolute top-6 right-7 font-light transition-all duration-700"
+                  transition={{ duration: 0.8 }}
+                  className="absolute top-7 right-8 font-light"
                   style={{
-                    fontSize: '10px',
-                    letterSpacing: '0.35em',
-                    color: hovered === room.id ? 'rgba(255,255,255,0.2)' : 'rgba(255,255,255,0.08)',
-                    fontWeight: 300,
+                    fontSize: '9px',
+                    letterSpacing: '0.4em',
+                    fontWeight: 200,
+                    color: '#ffffff',
                   }}
                 >
                   {room.label}
-                </div>
+                </motion.div>
 
-                {/* Content — cinematic positioning */}
-                <div className="absolute inset-x-0 bottom-0 px-9 pb-10">
+                {/* Content - intimate positioning */}
+                <div className="absolute inset-x-0 bottom-0 px-10 pb-12">
 
-                  {/* Tagline — appears smoothly */}
-                  <div
-                    className="transition-all duration-600 overflow-hidden"
-                    style={{
-                      maxHeight: hovered === room.id ? '32px' : '0',
+                  {/* Poetic tagline */}
+                  <motion.div
+                    animate={{
                       opacity: hovered === room.id ? 1 : 0,
-                      marginBottom: hovered === room.id ? '14px' : '0',
+                      y: hovered === room.id ? 0 : 10,
+                    }}
+                    transition={{ duration: 0.8 }}
+                    className="mb-4 overflow-hidden"
+                    style={{
+                      maxHeight: hovered === room.id ? '40px' : '0',
                     }}
                   >
-                    <p style={{ 
+                    <p className="italic" style={{ 
                       fontSize: '9px', 
-                      letterSpacing: '0.22em', 
+                      letterSpacing: '0.18em', 
                       color: room.accentText, 
-                      textTransform: 'uppercase',
-                      fontWeight: 400,
+                      fontWeight: 300,
                     }}>
                       {room.tagline}
                     </p>
-                  </div>
+                  </motion.div>
 
-                  {/* Room name — better hierarchy */}
+                  {/* Room name - literary feel */}
                   <h2
-                    className="font-light uppercase mb-5 transition-all duration-500"
+                    className="uppercase mb-6 transition-all duration-700"
                     style={{
-                      fontSize: '26px',
-                      letterSpacing: '0.18em',
-                      color: hovered === room.id ? '#ffffff' : 'rgba(255,255,255,0.88)',
-                      fontWeight: 300,
+                      fontSize: '28px',
+                      letterSpacing: '0.15em',
+                      color: hovered === room.id ? '#ffffff' : 'rgba(255,255,255,0.85)',
+                      fontWeight: 200,
+                      lineHeight: 1.2,
                     }}
                   >
                     {room.name}
                   </h2>
 
-                  {/* Subtitle verbs */}
-                  <div className="flex gap-5 mb-6">
+                  {/* Subtitle verbs - staggered reveal */}
+                  <div className="flex gap-6 mb-7">
                     {room.subtitle.map((line, i) => (
-                      <span
+                      <motion.span
                         key={i}
-                        className="transition-all duration-400"
+                        animate={{
+                          opacity: hovered === room.id ? 0.65 : 0.28,
+                        }}
+                        transition={{
+                          duration: 0.6,
+                          delay: hovered === room.id ? i * 0.08 : 0,
+                        }}
                         style={{
                           fontSize: '9px',
-                          letterSpacing: '0.15em',
-                          color: hovered === room.id ? 'rgba(255,255,255,0.6)' : 'rgba(255,255,255,0.3)',
-                          transitionDelay: `${i * 50}ms`,
+                          letterSpacing: '0.14em',
+                          color: '#ffffff',
                           fontWeight: 300,
                         }}
                       >
                         {line}
-                      </span>
+                      </motion.span>
                     ))}
                   </div>
 
-                  {/* Description — refined */}
-                  <div
-                    className="transition-all duration-600 overflow-hidden"
-                    style={{
-                      maxHeight: hovered === room.id ? '65px' : '0',
+                  {/* Description - intimate prose */}
+                  <motion.div
+                    animate={{
                       opacity: hovered === room.id ? 1 : 0,
-                      marginBottom: hovered === room.id ? '22px' : '0',
+                      y: hovered === room.id ? 0 : 15,
+                    }}
+                    transition={{ duration: 0.9, delay: 0.2 }}
+                    style={{
+                      maxHeight: hovered === room.id ? '80px' : '0',
+                      overflow: 'hidden',
                     }}
                   >
                     <p style={{ 
                       fontSize: '12px', 
-                      lineHeight: '1.75', 
-                      color: 'rgba(255,255,255,0.45)', 
-                      letterSpacing: '0.02em',
+                      lineHeight: '1.8', 
+                      color: 'rgba(255,255,255,0.48)', 
+                      letterSpacing: '0.01em',
                       fontWeight: 300,
+                      marginBottom: '24px',
                     }}>
                       {room.description}
                     </p>
-                  </div>
+                  </motion.div>
 
-                  {/* CTA — minimal, elegant */}
-                  <div
-                    className="flex items-center gap-3 transition-all duration-500"
+                  {/* Enter - whisper */}
+                  <motion.div
+                    animate={{
+                      opacity: hovered === room.id ? 1 : 0.4,
+                    }}
+                    transition={{ duration: 0.7 }}
+                    className="flex items-center gap-3"
                     style={{
-                      paddingTop: '18px',
-                      borderTop: `1px solid ${hovered === room.id ? 'rgba(255,255,255,0.15)' : 'rgba(255,255,255,0.08)'}`,
+                      paddingTop: '20px',
+                      borderTop: `1px solid rgba(255,255,255,${hovered === room.id ? '0.12' : '0.06'})`,
                     }}
                   >
                     <span
                       style={{
                         fontSize: '8px',
-                        letterSpacing: '0.3em',
+                        letterSpacing: '0.32em',
                         textTransform: 'uppercase',
-                        color: hovered === room.id ? room.accentText : 'rgba(255,255,255,0.35)',
-                        transition: 'color 0.5s ease',
-                        fontWeight: 400,
+                        color: hovered === room.id ? room.accentText : 'rgba(255,255,255,0.32)',
+                        transition: 'color 0.7s ease',
+                        fontWeight: 300,
                       }}
                     >
                       Enter
                     </span>
-                    <span
-                      className="transition-all duration-500"
+                    <motion.span
+                      animate={{
+                        x: hovered === room.id ? 6 : 0,
+                        opacity: hovered === room.id ? 1 : 0.4,
+                      }}
+                      transition={{ duration: 0.5 }}
                       style={{
-                        color: hovered === room.id ? room.accentText : 'rgba(255,255,255,0.25)',
-                        transform: hovered === room.id ? 'translateX(5px)' : 'translateX(0)',
-                        fontSize: '11px',
+                        color: hovered === room.id ? room.accentText : 'rgba(255,255,255,0.3)',
+                        fontSize: '10px',
                       }}
                     >
                       →
-                    </span>
-                  </div>
+                    </motion.span>
+                  </motion.div>
                 </div>
-              </button>
+              </motion.button>
             ))}
           </div>
 
-          {/* Ambient footnote — more refined */}
-          <p className="mt-20 text-[8px] tracking-[0.28em] text-white/12 uppercase font-light">
-            No judgment &nbsp;·&nbsp; No performance &nbsp;·&nbsp; Just you
-          </p>
+          {/* Closing thought - contemplative */}
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 2, delay: 2.5 }}
+            className="mt-24 text-[8px] tracking-[0.26em] text-white/10 uppercase font-light italic"
+          >
+            A space to breathe, to think, to be.
+          </motion.p>
 
         </div>
+
+        <style>{`
+          @keyframes grain {
+            0%, 100% { transform: translate(0, 0); }
+            25% { transform: translate(-2%, -2%); }
+            50% { transform: translate(2%, -1%); }
+            75% { transform: translate(-1%, 2%); }
+          }
+        `}</style>
       </Layout>
     </PageTransition>
   );
