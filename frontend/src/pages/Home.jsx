@@ -128,15 +128,15 @@ function Home() {
                 style={{
                   height: 'clamp(480px, 60vh, 560px)',
                   cursor: 'pointer',
-                  borderRadius: '8px',
-                  overflow: 'hidden', // Critical for clipping curves properly
+                  borderRadius: '16px', // More pronounced artistic curves
+                  overflow: 'hidden',
                 }}
               >
-                {/* Soft vignette frame */}
+                {/* Strong edge darkening vignette - masks bright corners */}
                 <div 
                   className="absolute inset-0 pointer-events-none"
                   style={{
-                    boxShadow: 'inset 0 0 60px 15px rgba(0,0,0,0.35)',
+                    boxShadow: 'inset 0 0 100px 30px rgba(0,0,0,0.6)',
                     zIndex: 10,
                   }}
                 />
