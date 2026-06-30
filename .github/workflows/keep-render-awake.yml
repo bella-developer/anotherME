@@ -2,8 +2,8 @@ name: Keep Render Server Awake
 
 on:
   schedule:
-    # Run every 10 minutes to prevent Render free tier from sleeping
-    - cron: '*/10 * * * *'
+    # Run every 8 minutes to prevent Render free tier from sleeping
+    - cron: '*/8 * * * *'
   workflow_dispatch: # Allow manual trigger
 
 jobs:
@@ -52,4 +52,4 @@ jobs:
         if: always()
         run: |
           echo "Ping completed at $(date)"
-          echo "This workflow runs every 10 minutes to keep Render free tier active"
+          echo "This workflow runs every 8 minutes to keep Render free tier active"
