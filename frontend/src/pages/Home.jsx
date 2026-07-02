@@ -127,15 +127,15 @@ function Home() {
                 style={{
                   height: 'clamp(480px, 60vh, 560px)',
                   cursor: 'pointer',
-                  borderRadius: '16px', // More pronounced artistic curves
+                  borderRadius: '24px', // More curvy, cinematic shape
                   overflow: 'hidden',
                 }}
               >
-                {/* Strong edge darkening vignette - masks bright corners */}
+                {/* Edge vignette - lighter for more visible backgrounds */}
                 <div 
                   className="absolute inset-0 pointer-events-none"
                   style={{
-                    boxShadow: 'inset 0 0 100px 30px rgba(0,0,0,0.6)',
+                    boxShadow: 'inset 0 0 80px 20px rgba(0,0,0,0.4)',
                     zIndex: 10,
                   }}
                 />
@@ -156,8 +156,8 @@ function Home() {
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
                     filter: hovered === room.id 
-                      ? 'brightness(0.88) contrast(1.08) saturate(0.95)' 
-                      : 'brightness(0.68) contrast(0.92) saturate(0.85)',
+                      ? 'brightness(0.95) contrast(1.12) saturate(1.05)' 
+                      : 'brightness(0.82) contrast(1.05) saturate(0.95)',
                     transition: 'filter 1.4s cubic-bezier(0.22, 1, 0.36, 1)',
                   }}
                 />
@@ -178,11 +178,11 @@ function Home() {
                   }}
                 />
 
-                {/* Soft atmospheric gradient */}
+                {/* Lighter atmospheric gradient for more visible backgrounds */}
                 <div
                   className="absolute inset-0"
                   style={{
-                    background: `linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.6) 42%, transparent 78%)`,
+                    background: `linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.45) 42%, transparent 78%)`,
                   }}
                 />
 
@@ -228,15 +228,16 @@ function Home() {
                     </p>
                   </motion.div>
 
-                  {/* Room name - literary feel */}
+                  {/* Room name - bold and strong, cinematic */}
                   <h2
                     className="uppercase mb-4 md:mb-5 lg:mb-6 transition-all duration-700"
                     style={{
-                      fontSize: 'clamp(22px, 4vw, 28px)',
-                      letterSpacing: '0.15em',
-                      color: hovered === room.id ? '#ffffff' : 'rgba(255,255,255,0.85)',
-                      fontWeight: 200,
-                      lineHeight: 1.2,
+                      fontSize: 'clamp(26px, 4.5vw, 34px)',
+                      letterSpacing: '0.18em',
+                      color: hovered === room.id ? '#ffffff' : 'rgba(255,255,255,0.92)',
+                      fontWeight: 700, // Bold and strong
+                      lineHeight: 1.1,
+                      textShadow: '0 2px 12px rgba(0,0,0,0.6)', // Strong presence
                     }}
                   >
                     {room.name}
