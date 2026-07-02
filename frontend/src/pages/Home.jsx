@@ -127,8 +127,12 @@ function Home() {
                 style={{
                   height: 'clamp(480px, 60vh, 560px)',
                   cursor: 'pointer',
-                  borderRadius: '24px', // More curvy, cinematic shape
+                  borderRadius: '24px',
                   overflow: 'hidden',
+                  boxShadow: hovered === room.id 
+                    ? '0 20px 60px rgba(0,0,0,0.6), 0 8px 24px rgba(0,0,0,0.4), inset 0 0 0 1px rgba(255,255,255,0.1)' 
+                    : '0 8px 32px rgba(0,0,0,0.5), inset 0 0 0 1px rgba(255,255,255,0.05)',
+                  transition: 'box-shadow 1s cubic-bezier(0.22, 1, 0.36, 1)',
                 }}
               >
                 {/* Edge vignette - lighter for more visible backgrounds */}
@@ -137,6 +141,16 @@ function Home() {
                   style={{
                     boxShadow: 'inset 0 0 80px 20px rgba(0,0,0,0.4)',
                     zIndex: 10,
+                  }}
+                />
+
+                {/* Oil paint texture overlay */}
+                <div 
+                  className="absolute inset-0 pointer-events-none opacity-30 mix-blend-overlay"
+                  style={{
+                    zIndex: 9,
+                    backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.5' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+                    backgroundSize: '180px 180px',
                   }}
                 />
 
@@ -156,8 +170,8 @@ function Home() {
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
                     filter: hovered === room.id 
-                      ? 'brightness(0.95) contrast(1.12) saturate(1.05)' 
-                      : 'brightness(0.82) contrast(1.05) saturate(0.95)',
+                      ? 'brightness(0.95) contrast(1.15) saturate(1.15) blur(0.3px)' 
+                      : 'brightness(0.82) contrast(1.08) saturate(1.05) blur(0.4px)',
                     transition: 'filter 1.4s cubic-bezier(0.22, 1, 0.36, 1)',
                   }}
                 />
@@ -178,11 +192,15 @@ function Home() {
                   }}
                 />
 
-                {/* Lighter atmospheric gradient for more visible backgrounds */}
+                {/* Painterly atmospheric gradient with color tinting */}
                 <div
                   className="absolute inset-0"
                   style={{
-                    background: `linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.45) 42%, transparent 78%)`,
+                    background: `linear-gradient(to top, 
+                      ${room.id === 'dark' ? 'rgba(40,20,15,0.9)' : room.id === 'climb' ? 'rgba(25,30,20,0.88)' : 'rgba(20,20,35,0.88)'} 0%, 
+                      ${room.id === 'dark' ? 'rgba(30,15,10,0.6)' : room.id === 'climb' ? 'rgba(20,25,15,0.55)' : 'rgba(15,15,30,0.55)'} 35%, 
+                      transparent 75%)`,
+                    mixBlendMode: 'multiply',
                   }}
                 />
 
@@ -228,16 +246,21 @@ function Home() {
                     </p>
                   </motion.div>
 
-                  {/* Room name - bold and strong, cinematic */}
+                  {/* Room name - bold and strong, oil-painted aesthetic */}
                   <h2
                     className="uppercase mb-4 md:mb-5 lg:mb-6 transition-all duration-700"
                     style={{
                       fontSize: 'clamp(26px, 4.5vw, 34px)',
                       letterSpacing: '0.18em',
                       color: hovered === room.id ? '#ffffff' : 'rgba(255,255,255,0.92)',
-                      fontWeight: 700, // Bold and strong
+                      fontWeight: 700,
                       lineHeight: 1.1,
-                      textShadow: '0 2px 12px rgba(0,0,0,0.6)', // Strong presence
+                      textShadow: `
+                        0 2px 4px rgba(0,0,0,0.8),
+                        0 4px 12px rgba(0,0,0,0.5),
+                        0 0 20px ${room.glowColor}
+                      `,
+                      filter: 'drop-shadow(0 1px 2px rgba(0,0,0,0.5))',
                     }}
                   >
                     {room.name}
