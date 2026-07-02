@@ -110,10 +110,14 @@ function Navbar() {
             {isAuthenticated ? (
               <Link
                 to="/profile"
-                className="w-9 h-9 rounded-full bg-black flex items-center justify-center hover:opacity-80 transition-opacity"
+                className="relative w-9 h-9 rounded-full bg-black flex items-center justify-center hover:opacity-80 transition-opacity"
                 aria-label={`Profile: ${user?.username || 'User'}`}
               >
-                <span className="text-[#D97757] text-sm font-bold">
+                {/* Concentric circles */}
+                <div className="absolute inset-0 rounded-full border border-gray-700/40"></div>
+                <div className="absolute inset-[-4px] rounded-full border border-gray-700/25"></div>
+                
+                <span className="text-[#D97757] text-sm font-bold relative z-10">
                   {(user?.username || 'U').charAt(0).toUpperCase()}
                 </span>
               </Link>
