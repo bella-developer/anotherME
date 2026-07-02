@@ -72,7 +72,7 @@ function Home() {
   return (
     <PageTransition>
       <Layout leftSidebar={null} rightSidebar={null}>
-        <div className="min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 md:px-8 py-16 md:py-20 lg:py-24 relative z-10">
+        <div className="min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 md:px-8 py-8 md:py-12 lg:py-16 relative z-10">
 
           {/* Opening quote - fades in slowly */}
           <motion.div
