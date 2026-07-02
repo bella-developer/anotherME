@@ -34,7 +34,7 @@ function Home() {
       subtitle: ['Release.', 'Witness.', 'Discharge.'],
       description: 'Where raw emotion finds its voice. No performance. No filter. Just truth.',
       path: '/rooms/dark',
-      img: 'https://res.cloudinary.com/dbtm7etag/image/upload/v1782822205/darker_u59a3p.png',
+      img: 'https://res.cloudinary.com/dbtm7etag/image/upload/v1783001062/dark_ngfvhq.png',
       accent: 'rgba(180,140,120,0.15)',
       accentText: '#c4a882',
       glowColor: 'rgba(160,100,80,0.12)',
@@ -47,8 +47,7 @@ function Home() {
       subtitle: ['Build.', 'Sharpen.', 'Progress.'],
       description: 'Ideas sharpened against each other. Growth that demands something of you.',
       path: '/rooms/climb',
-      // upward light beam / mountain summit
-      img: 'https://res.cloudinary.com/dbtm7etag/image/upload/v1782735019/climbroom_camkye.png',
+      img: 'https://res.cloudinary.com/dbtm7etag/image/upload/v1783001062/climb_djsfui.png',
       accent: 'rgba(160,90,44,0.18)',
       accentText: '#c47a3a',
       glowColor: 'rgba(160,90,44,0.14)',
@@ -61,8 +60,7 @@ function Home() {
       subtitle: ['Understand.', 'Reflect.', 'Inquire.'],
       description: 'Thought as practice. Meaning as destination. Silence between the words.',
       path: '/rooms/philo',
-      // ancient stone, cosmos, contemplation
-      img: 'https://res.cloudinary.com/dbtm7etag/image/upload/v1782735026/philoroom_lazjzx.png',
+      img: 'https://res.cloudinary.com/dbtm7etag/image/upload/v1783001061/philo_dabtjv.png',
       accent: 'rgba(200,180,240,0.12)',
       accentText: '#b8a8d4',
       glowColor: 'rgba(140,120,200,0.12)',
