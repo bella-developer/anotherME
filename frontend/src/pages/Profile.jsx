@@ -238,7 +238,7 @@ function Profile() {
                     boxShadow: '0 0 0 1px rgba(255,255,255,0.1), inset 0 0 20px rgba(0,0,0,0.3)'
                   }}>
                     <span className="text-2xl font-light" style={{ color: '#D97757' }}>
-                      {profileData.username.charAt(0).toUpperCase()}
+                      {(profileData.fullName || profileData.username).charAt(0).toUpperCase()}
                     </span>
                   </div>
                 </div>
