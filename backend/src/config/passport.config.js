@@ -77,7 +77,7 @@ passport.use(
           googleId: profile.id,
           username,
           email: email || `${profile.id}@google-oauth.local`,
-          password: Math.random().toString(36).slice(-16), // Random password (not used)
+          // No password needed for OAuth users
           profilePicture: profile.photos?.[0]?.value || '',
           fullName: profile.displayName || '',
           isEmailVerified: true, // Google emails are verified

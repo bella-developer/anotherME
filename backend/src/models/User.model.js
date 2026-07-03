@@ -21,10 +21,13 @@ const userSchema = new mongoose.Schema(
       match: /^[a-z0-9_-]+$/ // Only lowercase alphanumeric, underscore, hyphen
     },
 
-    // Hashed password
+    // Hashed password (not required for OAuth users)
     password: {
       type: String,
-      required: true,
+      required: function() {
+        // Password not required if user has OAuth (googleId)
+        return !this.googleId;
+      },
       minlength: 60 // bcrypt hash length
     },
 
