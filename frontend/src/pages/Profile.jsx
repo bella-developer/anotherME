@@ -116,10 +116,15 @@ function Profile() {
       setError(null);
       
       const updateData = {
-        ...(formData.fullName && { fullName: formData.fullName }),
-        ...(formData.age && { age: parseInt(formData.age, 10) }),
-        ...(formData.gender && { gender: formData.gender })
+        ...(formData.fullName !== undefined && formData.fullName !== '' && { fullName: formData.fullName }),
+        ...(formData.age !== undefined && formData.age !== '' && { age: parseInt(formData.age, 10) }),
+        ...(formData.gender !== undefined && formData.gender !== '' && { gender: formData.gender })
       };
+
+      // Handle empty fullName separately (set to null to clear it)
+      if (formData.fullName === '') {
+        updateData.fullName = null;
+      }
 
       const updatedUser = await updateUserProfile(updateData);
       const user = updatedUser.user || updatedUser;
@@ -136,6 +141,10 @@ function Profile() {
       
       setSuccess(true);
       setIsEditing(false);
+      
+      // Reload user data to ensure display is in sync
+      await loadUserData();
+      
       setTimeout(() => setSuccess(false), 3000);
     } catch (err) {
       setError(err.message || 'Failed to update profile');
