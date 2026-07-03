@@ -37,6 +37,7 @@ export async function getCurrentUser(userId) {
   // Return sanitized user data
   return {
     username: user.username,
+    fullName: user.fullName,
     age: user.age,
     gender: user.gender,
     createdAt: user.createdAt
@@ -46,10 +47,11 @@ export async function getCurrentUser(userId) {
 /**
  * Update user profile (optional demographics only)
  * Validates that no PII fields are provided
- * Only allows updating age and gender
+ * Only allows updating fullName, age and gender
  * 
  * @param {string} userId - User's MongoDB ObjectId
  * @param {Object} updateData - Update data
+ * @param {string} updateData.fullName - Optional display name
  * @param {number} updateData.age - Optional age (18-100)
  * @param {string} updateData.gender - Optional gender
  * @returns {Promise<Object>} Updated user profile data
@@ -65,7 +67,7 @@ export async function updateUser(userId, updateData = {}) {
   }
   
   // Validate that no PII fields are present
-  const piiFields = ['email', 'phone', 'name', 'realName', 'firstName', 'lastName'];
+  const piiFields = ['email', 'phone', 'realName', 'firstName', 'lastName'];
   const hasPII = piiFields.some(field => updateData[field] !== undefined);
   
   if (hasPII) {
@@ -87,8 +89,8 @@ export async function updateUser(userId, updateData = {}) {
     throw error;
   }
   
-  // Only update allowed fields (age and gender)
-  const allowedFields = ['age', 'gender'];
+  // Only update allowed fields (fullName, age, and gender)
+  const allowedFields = ['fullName', 'age', 'gender'];
   const updates = {};
   
   allowedFields.forEach(field => {
@@ -101,6 +103,7 @@ export async function updateUser(userId, updateData = {}) {
   if (Object.keys(updates).length === 0) {
     return {
       username: user.username,
+      fullName: user.fullName,
       age: user.age,
       gender: user.gender,
       createdAt: user.createdAt
@@ -132,6 +135,7 @@ export async function updateUser(userId, updateData = {}) {
   // Return updated user data
   return {
     username: user.username,
+    fullName: user.fullName,
     age: user.age,
     gender: user.gender,
     createdAt: user.createdAt
