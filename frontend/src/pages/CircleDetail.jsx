@@ -8,6 +8,7 @@ import LoadingSpinner from '../components/LoadingSpinner';
 import TopicPost from '../components/TopicPost';
 import LevelBadge from '../components/LevelBadge';
 import Layout from '../components/Layout';
+import { usePageTitle } from '../hooks/usePageTitle';
 import { fetchCircleById, fetchCircleComments, createCircleComment, fetchCircleTopicPosts } from '../services/circleService';
 
 const roomAccent = {
