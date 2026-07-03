@@ -71,7 +71,20 @@ passport.use(
 
         // No existing user - create new account
         // Extract profile information
-        const username = `google_${profile.displayName?.replace(/\s+/g, '').toLowerCase() || profile.id}${Math.floor(Math.random() * 1000)}`;
+        const displayName = profile.displayName || profile.emails?.[0]?.value?.split('@')[0] || 'user';
+        const cleanName = displayName.replace(/\s+/g, '').toLowerCase().replace(/[^a-z0-9_-]/g, '');
+        const baseUsername = cleanName.slice(0, 20); // Max 20 chars for base name
+        
+        // Try to create with clean name, add number if taken
+        let username = baseUsername;
+        let attempts = 0;
+        let userExists = await User.findOne({ username });
+        
+        while (userExists && attempts < 10) {
+          username = `${baseUsername}${Math.floor(Math.random() * 9000) + 1000}`;
+          userExists = await User.findOne({ username });
+          attempts++;
+        }
         
         user = await User.create({
           googleId: profile.id,
@@ -81,6 +94,7 @@ passport.use(
           profilePicture: profile.photos?.[0]?.value || '',
           fullName: profile.displayName || '',
           isEmailVerified: true, // Google emails are verified
+          // age and gender remain null - user can fill these in profile later
         });
 
         done(null, user);
