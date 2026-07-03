@@ -31,11 +31,13 @@ function Profile() {
   
   const [profileData, setProfileData] = useState({
     username: '',
+    fullName: '',
     age: '',
     gender: ''
   });
   
   const [formData, setFormData] = useState({
+    fullName: '',
     age: '',
     gender: ''
   });
@@ -57,11 +59,12 @@ function Profile() {
       
       const data = {
         username: user.username || '',
+        fullName: user.fullName || '',
         age: user.age || '',
         gender: user.gender || ''
       };
       setProfileData(data);
-      setFormData({ age: data.age, gender: data.gender });
+      setFormData({ fullName: data.fullName, age: data.age, gender: data.gender });
     } catch (err) {
       setError(err.message || 'Failed to load profile');
     } finally {
@@ -113,6 +116,7 @@ function Profile() {
       setError(null);
       
       const updateData = {
+        ...(formData.fullName && { fullName: formData.fullName }),
         ...(formData.age && { age: parseInt(formData.age, 10) }),
         ...(formData.gender && { gender: formData.gender })
       };
@@ -122,11 +126,12 @@ function Profile() {
       
       const data = {
         username: user.username || '',
+        fullName: user.fullName || '',
         age: user.age || '',
         gender: user.gender || ''
       };
       setProfileData(data);
-      setFormData({ age: data.age, gender: data.gender });
+      setFormData({ fullName: data.fullName, age: data.age, gender: data.gender });
       dispatch(setUser({ user }));
       
       setSuccess(true);
@@ -250,7 +255,13 @@ function Profile() {
 
               {/* Demographics */}
               {!isEditing ? (
-                <div className="grid grid-cols-2 gap-6 mb-6">
+                <div className="grid grid-cols-3 gap-6 mb-6">
+                  <div>
+                    <p className="text-[9px] tracking-[0.2em] text-white/25 uppercase mb-2">Name</p>
+                    <p className="text-white/70 text-lg font-light">
+                      {profileData.fullName || <span className="text-white/20">Not specified</span>}
+                    </p>
+                  </div>
                   <div>
                     <p className="text-[9px] tracking-[0.2em] text-white/25 uppercase mb-2">Age</p>
                     <p className="text-white/70 text-lg font-light">
@@ -266,7 +277,24 @@ function Profile() {
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-6 mb-6">
-                  <div className="grid grid-cols-2 gap-6">
+                  <div className="grid grid-cols-3 gap-6">
+                    <div>
+                      <label className="block text-[9px] tracking-[0.2em] text-white/25 uppercase mb-2">
+                        Name
+                      </label>
+                      <input
+                        type="text"
+                        name="fullName"
+                        value={formData.fullName}
+                        onChange={handleChange}
+                        className="w-full bg-black/20 text-white/90 px-4 py-2 text-sm focus:outline-none transition-all"
+                        style={{
+                          border: '1px solid rgba(255,255,255,0.1)',
+                          borderRadius: '2px'
+                        }}
+                        placeholder="Optional"
+                      />
+                    </div>
                     <div>
                       <label className="block text-[9px] tracking-[0.2em] text-white/25 uppercase mb-2">
                         Age
@@ -303,8 +331,6 @@ function Profile() {
                         <option value="">Not specified</option>
                         <option value="male">Male</option>
                         <option value="female">Female</option>
-                        <option value="other">Other</option>
-                        <option value="prefer-not-to-say">Prefer not to say</option>
                       </select>
                     </div>
                   </div>
@@ -338,7 +364,7 @@ function Profile() {
                       type="button"
                       onClick={() => {
                         setIsEditing(false);
-                        setFormData({ age: profileData.age, gender: profileData.gender });
+                        setFormData({ fullName: profileData.fullName, age: profileData.age, gender: profileData.gender });
                         setError(null);
                       }}
                       className="px-6 py-2 text-[10px] tracking-[0.15em] uppercase transition-all"
