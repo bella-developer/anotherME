@@ -253,11 +253,17 @@ function Profile() {
                 </div>
                 <div className="flex-1">
                   <div className="flex items-center gap-3 mb-2">
-                    <h2 className="text-2xl text-white/90 font-light tracking-wide">{profileData.username}</h2>
+                    <h2 className="text-2xl text-white/90 font-light tracking-wide">
+                      {profileData.fullName || profileData.username}
+                    </h2>
                     {highestStat && (
                       <LevelBadge stat={highestStat.stat} level={highestStat.level} size="md" />
                     )}
                   </div>
+                  <p className="text-[10px] tracking-[0.15em] text-white/30 uppercase">
+                    @{profileData.username}
+                  </p>
+                </div>
                   <p className="text-[10px] tracking-[0.15em] text-white/30 uppercase">Member</p>
                 </div>
               </div>
