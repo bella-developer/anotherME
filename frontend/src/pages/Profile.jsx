@@ -56,7 +56,6 @@ function Profile() {
       setLoading(true);
       const userData = await getCurrentUser();
       const user = userData.user || userData;
-      console.log('loadUserData - fetched user:', user);
       
       const data = {
         username: user.username || '',
@@ -64,7 +63,6 @@ function Profile() {
         age: user.age || '',
         gender: user.gender || ''
       };
-      console.log('loadUserData - setting profileData to:', data);
       setProfileData(data);
       setFormData({ fullName: data.fullName, age: data.age, gender: data.gender });
     } catch (err) {
@@ -128,10 +126,8 @@ function Profile() {
         updateData.fullName = null;
       }
 
-      console.log('Updating profile with:', updateData);
       const updatedUser = await updateUserProfile(updateData);
       const user = updatedUser.user || updatedUser;
-      console.log('Backend returned user:', user);
       
       const data = {
         username: user.username || '',
@@ -139,7 +135,6 @@ function Profile() {
         age: user.age || '',
         gender: user.gender || ''
       };
-      console.log('Setting profileData to:', data);
       setProfileData(data);
       setFormData({ fullName: data.fullName, age: data.age, gender: data.gender });
       dispatch(setUser({ user }));
@@ -148,9 +143,7 @@ function Profile() {
       setIsEditing(false);
       
       // Reload user data to ensure display is in sync
-      console.log('Reloading user data...');
       await loadUserData();
-      console.log('After reload, profileData is:', profileData);
       
       setTimeout(() => setSuccess(false), 3000);
     } catch (err) {

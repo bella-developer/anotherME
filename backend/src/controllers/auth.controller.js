@@ -249,3 +249,35 @@ export async function resetPassword(req, res, next) {
     next(error);
   }
 }
+
+/**
+ * Refresh access token
+ * POST /api/auth/refresh
+ * 
+ * @param {Object} req - Express request object
+ * @param {Object} req.body - Request body
+ * @param {string} req.body.refreshToken - Valid refresh token
+ * @param {Object} res - Express response object
+ * @param {Function} next - Express next middleware function
+ */
+export async function refreshToken(req, res, next) {
+  try {
+    const { refreshToken } = req.body;
+    
+    // Call service layer
+    const result = await authService.refresh(refreshToken);
+    
+    // Return success response with new tokens
+    res.status(200).json(
+      createSuccessResponse(
+        {
+          accessToken: result.accessToken,
+          refreshToken: result.refreshToken,
+        },
+        'Token refreshed successfully'
+      )
+    );
+  } catch (error) {
+    next(error);
+  }
+}

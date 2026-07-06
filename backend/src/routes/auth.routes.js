@@ -96,6 +96,16 @@ router.post(
 );
 
 /**
+ * POST /api/auth/refresh
+ * Refresh access token using refresh token
+ */
+router.post(
+  '/refresh',
+  sensitiveRateLimiter,
+  authController.refreshToken
+);
+
+/**
  * Google OAuth Routes
  */
 

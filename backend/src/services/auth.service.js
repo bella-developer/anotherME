@@ -1,6 +1,7 @@
 import User from '../models/User.model.js';
 import { hashPassword, verifyPassword, validatePasswordStrength, generateUsername } from '../utils/password.utils.js';
 import { sendPasswordResetEmail, sendWelcomeEmail } from './email.service.js';
+import { verifyRefreshToken, generateAccessToken, generateRefreshToken } from '../utils/jwt.utils.js';
 
 /**
  * Authentication Service
@@ -507,4 +508,72 @@ export async function resetPassword(token, newPassword) {
   return {
     message: 'Password has been reset successfully'
   };
+}
+
+/**
+ * Refresh access token using refresh token
+ * Implements token rotation for security
+ * 
+ * @param {string} refreshToken - Valid refresh token
+ * @returns {Promise<Object>} New access and refresh tokens
+ * @throws {Error} If refresh token invalid or expired
+ */
+export async function refresh(refreshToken) {
+  if (!refreshToken) {
+    const error = new Error('Refresh token is required');
+    error.statusCode = 400;
+    error.code = 'REFRESH_TOKEN_REQUIRED';
+    error.userMessage = 'Refresh token is required';
+    throw error;
+  }
+
+  try {
+    // Verify refresh token
+    const decoded = verifyRefreshToken(refreshToken);
+    const userId = decoded.userId;
+
+    // Fetch user from database
+    const user = await User.findById(userId);
+
+    if (!user) {
+      const error = new Error('User not found');
+      error.statusCode = 404;
+      error.code = 'USER_NOT_FOUND';
+      error.userMessage = 'User account not found';
+      throw error;
+    }
+
+    // Check if user is banned
+    if (user.isCurrentlyBanned()) {
+      const error = new Error('Account is banned');
+      error.statusCode = 403;
+      error.code = 'ACCOUNT_BANNED';
+      error.userMessage = 'Your account has been banned';
+      throw error;
+    }
+
+    // Generate new tokens (token rotation)
+    const newAccessToken = generateAccessToken({ userId: user._id.toString() });
+    const newRefreshToken = generateRefreshToken({ userId: user._id.toString() });
+
+    return {
+      accessToken: newAccessToken,
+      refreshToken: newRefreshToken,
+    };
+  } catch (error) {
+    // Re-throw JWT errors
+    if (error.code === 'REFRESH_TOKEN_EXPIRED' || error.code === 'INVALID_REFRESH_TOKEN') {
+      throw error;
+    }
+    // Re-throw known errors
+    if (error.statusCode) {
+      throw error;
+    }
+    // Wrap unknown errors
+    const err = new Error('Token refresh failed');
+    err.statusCode = 401;
+    err.code = 'REFRESH_FAILED';
+    err.userMessage = 'Unable to refresh token';
+    throw err;
+  }
 }

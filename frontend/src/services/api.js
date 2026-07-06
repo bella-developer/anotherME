@@ -38,7 +38,23 @@ apiClient.interceptors.request.use(
   }
 );
 
-// Response interceptor - Handle errors
+// Track if we're currently refreshing the token
+let isRefreshing = false;
+let failedQueue = [];
+
+const processQueue = (error, token = null) => {
+  failedQueue.forEach(prom => {
+    if (error) {
+      prom.reject(error);
+    } else {
+      prom.resolve(token);
+    }
+  });
+  
+  failedQueue = [];
+};
+
+// Response interceptor - Handle errors with automatic token refresh
 apiClient.interceptors.response.use(
   (response) => {
     // Validate response structure (defensive programming)
@@ -55,15 +71,16 @@ apiClient.interceptors.response.use(
     return response;
   },
   async (error) => {
-    // Handle 401 Unauthorized - DO NOT auto-redirect on public pages
-    // Let the calling code handle 401 errors appropriately
-    if (error.response?.status === 401) {
+    const originalRequest = error.config;
+    
+    // Handle 401 Unauthorized - Try to refresh token
+    if (error.response?.status === 401 && !originalRequest._retry) {
       // Check if we're on a public page (login/register)
       const isPublicPage = window.location.pathname === '/login' || 
                           window.location.pathname === '/register' ||
                           window.location.pathname === '/';
       
-      // Don't show error messages on public pages during initial session check
+      // Don't try to refresh on public pages
       if (isPublicPage) {
         return Promise.reject({
           message: 'Authentication required',
@@ -73,12 +90,77 @@ apiClient.interceptors.response.use(
         });
       }
       
-      // For protected pages, show authentication error
-      return Promise.reject({
-        message: 'Authentication required',
-        code: 'UNAUTHORIZED',
-        status: 401,
-      });
+      // Try to refresh the token
+      const refreshToken = localStorage.getItem('refreshToken');
+      
+      if (!refreshToken) {
+        // No refresh token available - redirect to login
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('refreshToken');
+        window.location.href = '/login';
+        return Promise.reject({
+          message: 'Session expired. Please log in again.',
+          code: 'SESSION_EXPIRED',
+          status: 401,
+        });
+      }
+      
+      if (isRefreshing) {
+        // Already refreshing, queue this request
+        return new Promise((resolve, reject) => {
+          failedQueue.push({ resolve, reject });
+        }).then(token => {
+          originalRequest.headers['Authorization'] = 'Bearer ' + token;
+          return apiClient(originalRequest);
+        }).catch(err => {
+          return Promise.reject(err);
+        });
+      }
+
+      originalRequest._retry = true;
+      isRefreshing = true;
+
+      try {
+        // Call refresh endpoint
+        const response = await axios.post(
+          `${API_BASE_URL}/auth/refresh`,
+          { refreshToken },
+          { withCredentials: true }
+        );
+        
+        const { accessToken: newAccessToken, refreshToken: newRefreshToken } = response.data.data;
+        
+        // Store new tokens
+        localStorage.setItem('accessToken', newAccessToken);
+        if (newRefreshToken) {
+          localStorage.setItem('refreshToken', newRefreshToken);
+        }
+        
+        // Update header for original request
+        originalRequest.headers['Authorization'] = 'Bearer ' + newAccessToken;
+        
+        // Process queued requests
+        processQueue(null, newAccessToken);
+        
+        isRefreshing = false;
+        
+        // Retry original request
+        return apiClient(originalRequest);
+      } catch (refreshError) {
+        // Refresh failed - clear tokens and redirect to login
+        processQueue(refreshError, null);
+        isRefreshing = false;
+        
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('refreshToken');
+        window.location.href = '/login';
+        
+        return Promise.reject({
+          message: 'Session expired. Please log in again.',
+          code: 'REFRESH_FAILED',
+          status: 401,
+        });
+      }
     }
     
     // Handle other errors
