@@ -271,8 +271,6 @@ function Profile() {
                     @{profileData.username}
                   </p>
                 </div>
-                  <p className="text-[10px] tracking-[0.15em] text-white/30 uppercase">Member</p>
-                </div>
               </div>
 
               {/* Demographics */}
