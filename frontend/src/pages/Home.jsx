@@ -102,7 +102,7 @@ function Home() {
           </motion.div>
 
           {/* Room Cards - Circular portals with stable border and rotating energy arcs */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10 md:gap-12 lg:gap-16 w-full max-w-7xl px-4 sm:px-6 md:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 sm:gap-10 md:gap-12 lg:gap-16 w-full max-w-7xl px-4 sm:px-6 md:px-8">
             {rooms.map((room, idx) => (
               <motion.div
                 key={room.id}
