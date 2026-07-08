@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { 
   Heart, Flame, Wind, Droplet, // Dark Room - elemental emotions
   Sparkles, Eye, Feather, // Philo Room - contemplation
-  Zap, Moon, Stars, Butterfly // Fantasy Room - creative imagination
+  Zap, Moon, Stars, Cloud // Fantasy Room - creative imagination
 } from 'lucide-react';
 
 /**
@@ -29,7 +29,7 @@ const ROOM_REACTIONS = {
     { type: 'vibe', label: 'Vibe', icon: Zap, color: '#FF9D1C', colorRGB: '255, 157, 28' },
     { type: 'dream', label: 'Dream', icon: Moon, color: '#FF9D1C', colorRGB: '255, 157, 28' },
     { type: 'inspire', label: 'Inspire', icon: Stars, color: '#FF9D1C', colorRGB: '255, 157, 28' },
-    { type: 'wild', label: 'Wild', icon: Butterfly, color: '#FF9D1C', colorRGB: '255, 157, 28' }
+    { type: 'wild', label: 'Wild', icon: Cloud, color: '#FF9D1C', colorRGB: '255, 157, 28' }
   ]
 };
 
