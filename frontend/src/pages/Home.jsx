@@ -112,264 +112,267 @@ function Home() {
                 className="flex flex-col items-center w-full"
               >
                 {/* Circular portal with stable border and rotating energy arcs */}
-                <button
-                  onClick={() => navigate(room.path)}
-                  onMouseEnter={() => setHovered(room.id)}
-                  onMouseLeave={() => setHovered(null)}
-                  className="relative group focus:outline-none w-full"
-                  style={{
-                    maxWidth: 'min(100%, 380px)',
-                    aspectRatio: '1',
-                    cursor: 'pointer',
-                  }}
-                >
-                  {/* Stable circular border */}
-                  <div
-                    className="absolute inset-0 rounded-full"
-                    style={{
-                      margin: '10px',
-                      border: `2px solid rgba(${room.glowColorRGB}, 0.3)`,
-                      boxShadow: `
-                        inset 0 0 30px rgba(${room.glowColorRGB}, 0.1),
-                        0 0 20px rgba(${room.glowColorRGB}, 0.2)
-                      `,
-                    }}
-                  />
-
-                  {/* Rotating energy arcs */}
-                  <div
-                    className="absolute inset-0"
-                    style={{
-                      margin: '10px',
-                      animation: 'rotate360 20s linear infinite',
-                    }}
-                  >
-                    {/* Primary energy arc */}
-                    <svg
-                      className="absolute inset-0 w-full h-full"
-                      viewBox="0 0 400 400"
+                <div className="relative w-full" style={{ maxWidth: '380px' }}>
+                  {/* Aspect ratio container using padding-bottom trick */}
+                  <div style={{ paddingBottom: '100%', position: 'relative', width: '100%' }}>
+                    <button
+                      onClick={() => navigate(room.path)}
+                      onMouseEnter={() => setHovered(room.id)}
+                      onMouseLeave={() => setHovered(null)}
+                      className="absolute inset-0 group focus:outline-none"
                       style={{
-                        filter: `drop-shadow(0 0 15px ${room.glowColor})`,
+                        cursor: 'pointer',
                       }}
                     >
-                      <defs>
-                        <linearGradient id={`arc-gradient-${room.id}`} x1="0%" y1="0%" x2="100%" y2="0%">
-                          <stop offset="0%" stopColor={room.glowColor} stopOpacity="0" />
-                          <stop offset="50%" stopColor={room.glowColor} stopOpacity="1" />
-                          <stop offset="100%" stopColor={room.glowColor} stopOpacity="0" />
-                        </linearGradient>
-                        
-                        {/* Glow filter */}
-                        <filter id={`arc-glow-${room.id}`}>
-                          <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
-                          <feMerge>
-                            <feMergeNode in="coloredBlur"/>
-                            <feMergeNode in="coloredBlur"/>
-                            <feMergeNode in="SourceGraphic"/>
-                          </feMerge>
-                        </filter>
-                      </defs>
-                      
-                      {/* Main rotating arc (90 degrees) */}
-                      <path
-                        d="M 200,20 A 180,180 0 0,1 380,200"
-                        fill="none"
-                        stroke={`url(#arc-gradient-${room.id})`}
-                        strokeWidth="4"
-                        strokeLinecap="round"
-                        filter={`url(#arc-glow-${room.id})`}
-                        style={{ mixBlendMode: 'screen' }}
-                      />
-                      
-                      {/* Bright spot at arc peak */}
-                      <circle
-                        cx="290"
-                        cy="110"
-                        r="6"
-                        fill={room.glowColor}
-                        filter={`url(#arc-glow-${room.id})`}
-                        style={{ mixBlendMode: 'screen' }}
-                      >
-                        <animate
-                          attributeName="r"
-                          values="6; 8; 6"
-                          dur="2s"
-                          repeatCount="indefinite"
-                        />
-                      </circle>
-                    </svg>
-                  </div>
-
-                  {/* Counter-rotating secondary arc */}
-                  <div
-                    className="absolute inset-0"
-                    style={{
-                      margin: '10px',
-                      animation: 'rotate360reverse 15s linear infinite',
-                    }}
-                  >
-                    <svg
-                      className="absolute inset-0 w-full h-full"
-                      viewBox="0 0 400 400"
-                      style={{
-                        filter: `drop-shadow(0 0 10px ${room.glowColor})`,
-                        opacity: 0.6,
-                      }}
-                    >
-                      {/* Secondary arc (smaller, 60 degrees) */}
-                      <path
-                        d="M 380,200 A 180,180 0 0,1 290,290"
-                        fill="none"
-                        stroke={room.glowColor}
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        style={{ mixBlendMode: 'screen' }}
-                      />
-                    </svg>
-                  </div>
-
-                  {/* Orbital particles */}
-                  <div
-                    className="absolute inset-0"
-                    style={{
-                      margin: '10px',
-                      animation: 'rotate360 25s linear infinite',
-                    }}
-                  >
-                    {[...Array(4)].map((_, i) => (
+                      {/* Stable circular border */}
                       <div
-                        key={i}
-                        className="absolute"
+                        className="absolute inset-0 rounded-full"
                         style={{
-                          width: '4px',
-                          height: '4px',
-                          borderRadius: '50%',
-                          background: room.glowColor,
-                          boxShadow: `0 0 10px ${room.glowColor}`,
-                          top: '50%',
-                          left: '50%',
-                          transform: `rotate(${i * 90}deg) translateX(180px) translateY(-50%)`,
-                          opacity: 0.8,
-                          mixBlendMode: 'screen',
+                          margin: '10px',
+                          border: `2px solid rgba(${room.glowColorRGB}, 0.3)`,
+                          boxShadow: `
+                            inset 0 0 30px rgba(${room.glowColorRGB}, 0.1),
+                            0 0 20px rgba(${room.glowColorRGB}, 0.2)
+                          `,
                         }}
                       />
-                    ))}
+
+                      {/* Rotating energy arcs */}
+                      <div
+                        className="absolute inset-0"
+                        style={{
+                          margin: '10px',
+                          animation: 'rotate360 20s linear infinite',
+                        }}
+                      >
+                        {/* Primary energy arc */}
+                        <svg
+                          className="absolute inset-0 w-full h-full"
+                          viewBox="0 0 400 400"
+                          style={{
+                            filter: `drop-shadow(0 0 15px ${room.glowColor})`,
+                          }}
+                        >
+                          <defs>
+                            <linearGradient id={`arc-gradient-${room.id}`} x1="0%" y1="0%" x2="100%" y2="0%">
+                              <stop offset="0%" stopColor={room.glowColor} stopOpacity="0" />
+                              <stop offset="50%" stopColor={room.glowColor} stopOpacity="1" />
+                              <stop offset="100%" stopColor={room.glowColor} stopOpacity="0" />
+                            </linearGradient>
+                            
+                            {/* Glow filter */}
+                            <filter id={`arc-glow-${room.id}`}>
+                              <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                              <feMerge>
+                                <feMergeNode in="coloredBlur"/>
+                                <feMergeNode in="coloredBlur"/>
+                                <feMergeNode in="SourceGraphic"/>
+                              </feMerge>
+                            </filter>
+                          </defs>
+                          
+                          {/* Main rotating arc (90 degrees) */}
+                          <path
+                            d="M 200,20 A 180,180 0 0,1 380,200"
+                            fill="none"
+                            stroke={`url(#arc-gradient-${room.id})`}
+                            strokeWidth="4"
+                            strokeLinecap="round"
+                            filter={`url(#arc-glow-${room.id})`}
+                            style={{ mixBlendMode: 'screen' }}
+                          />
+                          
+                          {/* Bright spot at arc peak */}
+                          <circle
+                            cx="290"
+                            cy="110"
+                            r="6"
+                            fill={room.glowColor}
+                            filter={`url(#arc-glow-${room.id})`}
+                            style={{ mixBlendMode: 'screen' }}
+                          >
+                            <animate
+                              attributeName="r"
+                              values="6; 8; 6"
+                              dur="2s"
+                              repeatCount="indefinite"
+                            />
+                          </circle>
+                        </svg>
+                      </div>
+
+                      {/* Counter-rotating secondary arc */}
+                      <div
+                        className="absolute inset-0"
+                        style={{
+                          margin: '10px',
+                          animation: 'rotate360reverse 15s linear infinite',
+                        }}
+                      >
+                        <svg
+                          className="absolute inset-0 w-full h-full"
+                          viewBox="0 0 400 400"
+                          style={{
+                            filter: `drop-shadow(0 0 10px ${room.glowColor})`,
+                            opacity: 0.6,
+                          }}
+                        >
+                          {/* Secondary arc (smaller, 60 degrees) */}
+                          <path
+                            d="M 380,200 A 180,180 0 0,1 290,290"
+                            fill="none"
+                            stroke={room.glowColor}
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            style={{ mixBlendMode: 'screen' }}
+                          />
+                        </svg>
+                      </div>
+
+                      {/* Orbital particles */}
+                      <div
+                        className="absolute inset-0"
+                        style={{
+                          margin: '10px',
+                          animation: 'rotate360 25s linear infinite',
+                        }}
+                      >
+                        {[...Array(4)].map((_, i) => (
+                          <div
+                            key={i}
+                            className="absolute"
+                            style={{
+                              width: '4px',
+                              height: '4px',
+                              borderRadius: '50%',
+                              background: room.glowColor,
+                              boxShadow: `0 0 10px ${room.glowColor}`,
+                              top: '50%',
+                              left: '50%',
+                              transform: `rotate(${i * 90}deg) translateX(180px) translateY(-50%)`,
+                              opacity: 0.8,
+                              mixBlendMode: 'screen',
+                            }}
+                          />
+                        ))}
+                      </div>
+
+                      {/* CSS Animations */}
+                      <style jsx>{`
+                        @keyframes rotate360 {
+                          from { transform: rotate(0deg); }
+                          to { transform: rotate(360deg); }
+                        }
+                        @keyframes rotate360reverse {
+                          from { transform: rotate(360deg); }
+                          to { transform: rotate(0deg); }
+                        }
+                      `}</style>
+
+                      {/* Atmospheric glow beneath */}
+                      <div
+                        className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 rounded-full"
+                        style={{
+                          width: '70%',
+                          height: '30px',
+                          background: `radial-gradient(ellipse, rgba(${room.glowColorRGB}, ${hovered === room.id ? 0.4 : 0.25}) 0%, transparent 70%)`,
+                          filter: 'blur(20px)',
+                          transition: 'all 0.8s ease',
+                        }}
+                      />
+
+                      {/* Inner circle container with static image */}
+                      <div
+                        className="absolute inset-0 rounded-full overflow-hidden"
+                        style={{
+                          margin: '30px',
+                          border: `1px solid rgba(${room.glowColorRGB}, ${hovered === room.id ? 0.4 : 0.2})`,
+                          boxShadow: `
+                            inset 0 0 40px rgba(${room.glowColorRGB}, 0.15),
+                            0 0 30px rgba(${room.glowColorRGB}, ${hovered === room.id ? 0.3 : 0.15})
+                          `,
+                          transform: hovered === room.id ? 'scale(1.03)' : 'scale(1)',
+                          transition: 'all 0.8s cubic-bezier(0.22, 1, 0.36, 1)',
+                        }}
+                      >
+                        {/* Static room image */}
+                        <div
+                          className="absolute inset-0"
+                          style={{
+                            backgroundImage: `url('${room.img}')`,
+                            backgroundSize: 'cover',
+                            backgroundPosition: 'center',
+                            filter: hovered === room.id 
+                              ? 'brightness(1.1) contrast(1.1)' 
+                              : 'brightness(0.95) contrast(1.05)',
+                            transition: 'filter 0.8s ease',
+                          }}
+                        />
+
+                        {/* Subtle dark overlay */}
+                        <div
+                          className="absolute inset-0"
+                          style={{
+                            background: `radial-gradient(circle, transparent 30%, rgba(0,0,0,${hovered === room.id ? 0.2 : 0.4}) 100%)`,
+                            transition: 'background 0.8s ease',
+                          }}
+                        />
+                      </div>
+                    </button>
                   </div>
 
-                  {/* CSS Animations */}
-                  <style jsx>{`
-                    @keyframes rotate360 {
-                      from { transform: rotate(0deg); }
-                      to { transform: rotate(360deg); }
-                    }
-                    @keyframes rotate360reverse {
-                      from { transform: rotate(360deg); }
-                      to { transform: rotate(0deg); }
-                    }
-                  `}</style>
-
-                  {/* Atmospheric glow beneath */}
-                  <div
-                    className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 rounded-full"
-                    style={{
-                      width: '70%',
-                      height: '30px',
-                      background: `radial-gradient(ellipse, rgba(${room.glowColorRGB}, ${hovered === room.id ? 0.4 : 0.25}) 0%, transparent 70%)`,
-                      filter: 'blur(20px)',
-                      transition: 'all 0.8s ease',
-                    }}
-                  />
-
-                  {/* Inner circle container with static image */}
-                  <div
-                    className="absolute inset-0 rounded-full overflow-hidden"
-                    style={{
-                      margin: '30px',
-                      border: `1px solid rgba(${room.glowColorRGB}, ${hovered === room.id ? 0.4 : 0.2})`,
-                      boxShadow: `
-                        inset 0 0 40px rgba(${room.glowColorRGB}, 0.15),
-                        0 0 30px rgba(${room.glowColorRGB}, ${hovered === room.id ? 0.3 : 0.15})
-                      `,
-                      transform: hovered === room.id ? 'scale(1.03)' : 'scale(1)',
-                      transition: 'all 0.8s cubic-bezier(0.22, 1, 0.36, 1)',
-                    }}
-                  >
-                    {/* Static room image */}
-                    <div
-                      className="absolute inset-0"
+                  {/* Room info below circle */}
+                  <div className="mt-12 md:mt-14 text-center">
+                    <h2
+                      className="text-xl md:text-2xl font-light tracking-[0.25em] mb-3 uppercase"
                       style={{
-                        backgroundImage: `url('${room.img}')`,
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center',
-                        filter: hovered === room.id 
-                          ? 'brightness(1.1) contrast(1.1)' 
-                          : 'brightness(0.95) contrast(1.05)',
-                        transition: 'filter 0.8s ease',
-                      }}
-                    />
-
-                    {/* Subtle dark overlay */}
-                    <div
-                      className="absolute inset-0"
-                      style={{
-                        background: `radial-gradient(circle, transparent 30%, rgba(0,0,0,${hovered === room.id ? 0.2 : 0.4}) 100%)`,
-                        transition: 'background 0.8s ease',
-                      }}
-                    />
-                  </div>
-                </button>
-
-                {/* Room info below circle */}
-                <div className="mt-12 md:mt-14 text-center">
-                  <h2
-                    className="text-xl md:text-2xl font-light tracking-[0.25em] mb-3 uppercase"
-                    style={{
-                      color: hovered === room.id ? room.glowColor : 'rgba(255,255,255,0.9)',
-                      textShadow: hovered === room.id 
-                        ? `0 0 20px rgba(${room.glowColorRGB}, 0.6)` 
-                        : 'none',
-                      transition: 'all 0.6s ease',
-                    }}
-                  >
-                    {room.name}
-                  </h2>
-                  
-                  <p
-                    className="text-[10px] md:text-[11px] tracking-[0.15em] mb-2"
-                    style={{
-                      color: 'rgba(255,255,255,0.5)',
-                    }}
-                  >
-                    {room.tagline}
-                  </p>
-
-                  {/* Enter button */}
-                  <motion.div
-                    animate={{
-                      opacity: hovered === room.id ? 1 : 0.5,
-                    }}
-                    className="mt-4 flex items-center justify-center gap-2"
-                  >
-                    <span
-                      className="text-[9px] tracking-[0.3em] uppercase"
-                      style={{
-                        color: hovered === room.id ? room.glowColor : 'rgba(255,255,255,0.4)',
-                        transition: 'color 0.6s ease',
+                        color: hovered === room.id ? room.glowColor : 'rgba(255,255,255,0.9)',
+                        textShadow: hovered === room.id 
+                          ? `0 0 20px rgba(${room.glowColorRGB}, 0.6)` 
+                          : 'none',
+                        transition: 'all 0.6s ease',
                       }}
                     >
-                      ENTER
-                    </span>
-                    <motion.span
+                      {room.name}
+                    </h2>
+                    
+                    <p
+                      className="text-[10px] md:text-[11px] tracking-[0.15em] mb-2"
+                      style={{
+                        color: 'rgba(255,255,255,0.5)',
+                      }}
+                    >
+                      {room.tagline}
+                    </p>
+
+                    {/* Enter button */}
+                    <motion.div
                       animate={{
-                        x: hovered === room.id ? 4 : 0,
+                        opacity: hovered === room.id ? 1 : 0.5,
                       }}
-                      style={{
-                        color: hovered === room.id ? room.glowColor : 'rgba(255,255,255,0.4)',
-                      }}
+                      className="mt-4 flex items-center justify-center gap-2"
                     >
-                      →
-                    </motion.span>
-                  </motion.div>
+                      <span
+                        className="text-[9px] tracking-[0.3em] uppercase"
+                        style={{
+                          color: hovered === room.id ? room.glowColor : 'rgba(255,255,255,0.4)',
+                          transition: 'color 0.6s ease',
+                        }}
+                      >
+                        ENTER
+                      </span>
+                      <motion.span
+                        animate={{
+                          x: hovered === room.id ? 4 : 0,
+                        }}
+                        style={{
+                          color: hovered === room.id ? room.glowColor : 'rgba(255,255,255,0.4)',
+                        }}
+                      >
+                        →
+                      </motion.span>
+                    </motion.div>
+                  </div>
                 </div>
               </motion.div>
             ))}
