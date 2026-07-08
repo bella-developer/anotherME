@@ -1,64 +1,39 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-// Dark Room Icons - Emotional support and empathy
-import { FaHandHoldingHeart, FaHandsHelping, FaFistRaised } from 'react-icons/fa';
-import { MdOutlineDangerous } from 'react-icons/md';
-// Philo Room Icons - Wisdom and contemplation
-import { HiLightBulb } from 'react-icons/hi';
-import { IoSparkles } from 'react-icons/io5';
-import { GiMeditation } from 'react-icons/gi';
-// Climb Room Icons - Progress and innovation
-import { BiSolidUpArrow, BiSolidDownArrow } from 'react-icons/bi';
-import { IoSettings } from 'react-icons/io5';
-import { RiRocketFill } from 'react-icons/ri';
+// Lucide icons for dark artistic aesthetic
+import { 
+  Heart, Flame, Wind, Droplet, // Dark Room - elemental emotions
+  Sparkles, Eye, Feather, // Philo Room - contemplation
+  TrendingUp, Zap, Target, Compass // Climb Room - progress
+} from 'lucide-react';
 
 /**
  * RoomReactions Component
- * Displays room-specific reaction buttons with appropriate styling and feedback
+ * Displays room-specific reaction buttons with artistic dark aesthetic
+ * Uses Lucide icons with room-themed colors and subtle glow effects
  */
 
 const ROOM_REACTIONS = {
   dark: [
-    { type: 'iFeelYou', label: 'I feel you', icon: FaHandHoldingHeart, color: 'text-purple-400' },
-    { type: 'notGood', label: 'Not good', icon: MdOutlineDangerous, color: 'text-gray-500' },
-    { type: 'youreNotAlone', label: "You're not alone", icon: FaHandsHelping, color: 'text-blue-400' },
-    { type: 'sendingStrength', label: 'Sending strength', icon: FaFistRaised, color: 'text-orange-400' }
+    { type: 'iFeelYou', label: 'I feel you', icon: Heart, color: '#2EE6FF', colorRGB: '46, 230, 255' },
+    { type: 'notGood', label: 'Heavy', icon: Droplet, color: '#2EE6FF', colorRGB: '46, 230, 255' },
+    { type: 'youreNotAlone', label: "You're not alone", icon: Wind, color: '#2EE6FF', colorRGB: '46, 230, 255' },
+    { type: 'sendingStrength', label: 'Sending strength', icon: Flame, color: '#2EE6FF', colorRGB: '46, 230, 255' }
   ],
   philo: [
-    { type: 'lamp', label: 'Insight', icon: HiLightBulb, color: 'text-yellow-400' },
-    { type: 'spark', label: 'Curiosity', icon: IoSparkles, color: 'text-cyan-400' },
-    { type: 'clap', label: 'Resonance', icon: GiMeditation, color: 'text-green-400' }
+    { type: 'lamp', label: 'Insight', icon: Sparkles, color: '#B56DFF', colorRGB: '181, 109, 255' },
+    { type: 'spark', label: 'Curiosity', icon: Eye, color: '#B56DFF', colorRGB: '181, 109, 255' },
+    { type: 'clap', label: 'Resonance', icon: Feather, color: '#B56DFF', colorRGB: '181, 109, 255' }
   ],
   climb: [
-    { type: 'push', label: 'Push', icon: BiSolidUpArrow, color: 'text-green-500' },
-    { type: 'pull', label: 'Pull', icon: BiSolidDownArrow, color: 'text-red-500' },
-    { type: 'gear', label: 'Gear', icon: IoSettings, color: 'text-blue-500' },
-    { type: 'rocket', label: 'Rocket', icon: RiRocketFill, color: 'text-purple-500' }
+    { type: 'push', label: 'Push', icon: TrendingUp, color: '#FF9D1C', colorRGB: '255, 157, 28' },
+    { type: 'pull', label: 'Refine', icon: Target, color: '#FF9D1C', colorRGB: '255, 157, 28' },
+    { type: 'gear', label: 'Practical', icon: Compass, color: '#FF9D1C', colorRGB: '255, 157, 28' },
+    { type: 'rocket', label: 'Breakthrough', icon: Zap, color: '#FF9D1C', colorRGB: '255, 157, 28' }
   ]
 };
 
-const FEEDBACK_MESSAGES = {
-  dark: {
-    iFeelYou: 'Someone felt this.',
-    notGood: 'This was heavy.',
-    youreNotAlone: 'You were witnessed.',
-    sendingStrength: 'You endured.'
-  },
-  philo: {
-    lamp: 'That clarified something.',
-    spark: 'This opened a question.',
-    clap: 'This felt true.'
-  },
-  climb: {
-    push: 'Keep climbing!',
-    pull: 'Refine and iterate.',
-    gear: "That's practical genius.",
-    rocket: "You're onto something big!"
-  }
-};
-
 function RoomReactions({ room, reactions, userReactions = [], onReact, disabled = false }) {
-  const [showFeedback, setShowFeedback] = useState(null);
   const [animatingReaction, setAnimatingReaction] = useState(null);
 
   const roomReactions = ROOM_REACTIONS[room] || [];
@@ -73,60 +48,47 @@ function RoomReactions({ room, reactions, userReactions = [], onReact, disabled 
     
     try {
       await onReact(reactionType, hasReacted);
-      // Feedback messages removed per user request
     } catch (error) {
       console.error('Failed to react:', error);
-      // Don't show feedback on error - the error is already handled by parent
     } finally {
       setTimeout(() => setAnimatingReaction(null), 300);
     }
   };
 
-  // Room-specific styling
-  const getRoomStyle = () => {
-    switch (room) {
-      case 'dark':
-        return 'bg-black/50 backdrop-blur-sm';
-      case 'philo':
-        return 'bg-gray-900/50 backdrop-blur-sm';
-      case 'climb':
-        return 'bg-black/10 backdrop-blur-sm';
-      default:
-        return 'bg-gray-800/50';
-    }
-  };
-
-  const getButtonStyle = (reactionType, hasReacted) => {
-    const base = 'px-3 py-2 rounded-lg transition-all duration-200 flex items-center gap-2 text-sm';
+  const getButtonStyle = (reactionType, hasReacted, color, colorRGB) => {
     const isAnimating = animatingReaction === reactionType;
     
     if (hasReacted) {
-      return `${base} bg-white/10 border border-white/20 scale-105`;
+      return {
+        background: `rgba(${colorRGB}, 0.15)`,
+        border: `1px solid rgba(${colorRGB}, 0.4)`,
+        boxShadow: `0 0 15px rgba(${colorRGB}, 0.3), inset 0 0 20px rgba(${colorRGB}, 0.1)`,
+        transform: 'scale(1.05)',
+        transition: 'all 0.3s cubic-bezier(0.22, 1, 0.36, 1)',
+      };
     }
     
     if (isAnimating) {
-      return `${base} bg-white/5 border border-white/10 scale-95`;
+      return {
+        background: 'rgba(255, 255, 255, 0.03)',
+        border: '1px solid rgba(255, 255, 255, 0.08)',
+        transform: 'scale(0.95)',
+        transition: 'all 0.15s ease',
+      };
     }
     
-    return `${base} bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 hover:scale-105`;
+    return {
+      background: 'rgba(255, 255, 255, 0.02)',
+      border: '1px solid rgba(255, 255, 255, 0.06)',
+      transition: 'all 0.3s cubic-bezier(0.22, 1, 0.36, 1)',
+    };
   };
 
   return (
-    <div className={`relative p-4 rounded-lg ${getRoomStyle()}`}>
-      {/* Feedback Toast */}
-      {showFeedback && (
-        <div className={`absolute -top-12 left-1/2 transform -translate-x-1/2 px-4 py-2 rounded-lg text-sm text-white/90 whitespace-nowrap animate-fade-in-out ${
-          room === 'dark' ? 'bg-black/80' : 
-          room === 'philo' ? 'bg-gray-800/80' : 
-          'bg-purple-900/80'
-        }`}>
-          {showFeedback.message}
-        </div>
-      )}
-
-      {/* Reaction Buttons */}
-      <div className="flex flex-wrap gap-2 justify-center">
-        {roomReactions.map(({ type, label, icon: Icon, color }) => {
+    <div className="relative">
+      {/* Reaction Buttons - Artistic dark design */}
+      <div className="flex flex-wrap gap-3 justify-center">
+        {roomReactions.map(({ type, label, icon: Icon, color, colorRGB }) => {
           const count = reactions[type] || 0;
           const hasReacted = userReactions.includes(type);
           
@@ -135,15 +97,61 @@ function RoomReactions({ room, reactions, userReactions = [], onReact, disabled 
               key={type}
               onClick={() => handleReactionClick(type)}
               disabled={disabled}
-              className={getButtonStyle(type, hasReacted)}
+              className="group relative px-4 py-2.5 rounded-md flex items-center gap-2.5 cursor-pointer outline-none"
+              style={getButtonStyle(type, hasReacted, color, colorRGB)}
               title={label}
+              onMouseEnter={(e) => {
+                if (!hasReacted) {
+                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)';
+                  e.currentTarget.style.border = '1px solid rgba(255, 255, 255, 0.12)';
+                  e.currentTarget.style.transform = 'scale(1.05)';
+                  e.currentTarget.style.boxShadow = `0 0 20px rgba(${colorRGB}, 0.2)`;
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (!hasReacted) {
+                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.02)';
+                  e.currentTarget.style.border = '1px solid rgba(255, 255, 255, 0.06)';
+                  e.currentTarget.style.transform = 'scale(1)';
+                  e.currentTarget.style.boxShadow = 'none';
+                }
+              }}
             >
-              <Icon className={`text-lg ${hasReacted ? color : 'text-gray-400'} transition-colors duration-200`} />
+              {/* Icon with glow effect */}
+              <Icon 
+                size={16}
+                strokeWidth={1.5}
+                style={{
+                  color: hasReacted ? color : 'rgba(255, 255, 255, 0.4)',
+                  filter: hasReacted ? `drop-shadow(0 0 6px rgba(${colorRGB}, 0.6))` : 'none',
+                  transition: 'all 0.3s ease',
+                }}
+              />
+              
+              {/* Count */}
               {count > 0 && (
-                <span className={`font-medium ${hasReacted ? 'text-white' : 'text-gray-400'}`}>
+                <span
+                  className="text-[11px] font-light tracking-wide"
+                  style={{
+                    color: hasReacted ? color : 'rgba(255, 255, 255, 0.4)',
+                    textShadow: hasReacted ? `0 0 10px rgba(${colorRGB}, 0.5)` : 'none',
+                    transition: 'all 0.3s ease',
+                  }}
+                >
                   {count}
                 </span>
               )}
+              
+              {/* Subtle label on hover */}
+              <span
+                className="text-[9px] tracking-wide uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap"
+                style={{
+                  color: 'rgba(255, 255, 255, 0.5)',
+                  letterSpacing: '0.1em',
+                }}
+              >
+                {label}
+              </span>
             </button>
           );
         })}
