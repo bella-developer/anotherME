@@ -101,25 +101,25 @@ function Home() {
             </motion.h1>
           </motion.div>
 
-          {/* Room Cards - Circular portals with organic plasma energy rings */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16 lg:gap-20 w-full max-w-7xl px-4 md:px-8">
+          {/* Room Cards - Circular portals with stable border and rotating energy arcs */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10 md:gap-12 lg:gap-16 w-full max-w-7xl px-4 sm:px-6 md:px-8">
             {rooms.map((room, idx) => (
               <motion.div
                 key={room.id}
                 initial={{ opacity: 0, y: 40 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1.2, delay: 1.2 + idx * 0.2 }}
-                className="flex flex-col items-center"
+                className="flex flex-col items-center w-full"
               >
-                {/* Circular portal with organic plasma energy ring */}
+                {/* Circular portal with stable border and rotating energy arcs */}
                 <button
                   onClick={() => navigate(room.path)}
                   onMouseEnter={() => setHovered(room.id)}
                   onMouseLeave={() => setHovered(null)}
-                  className="relative group focus:outline-none"
+                  className="relative group focus:outline-none w-full"
                   style={{
-                    width: 'min(85vw, 380px)',
-                    height: 'min(85vw, 380px)',
+                    maxWidth: 'min(100%, 380px)',
+                    aspectRatio: '1',
                     cursor: 'pointer',
                   }}
                 >
