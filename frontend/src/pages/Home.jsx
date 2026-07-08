@@ -295,13 +295,12 @@ function Home() {
                           transition: 'all 0.8s cubic-bezier(0.22, 1, 0.36, 1)',
                         }}
                       >
-                        {/* Static room image */}
-                        <div
-                          className="absolute inset-0"
+                        {/* Static room image using img tag for better loading */}
+                        <img
+                          src={room.img}
+                          alt={room.name}
+                          className="absolute inset-0 w-full h-full object-cover"
                           style={{
-                            backgroundImage: `url('${room.img}')`,
-                            backgroundSize: 'cover',
-                            backgroundPosition: 'center',
                             filter: hovered === room.id 
                               ? 'brightness(1.1) contrast(1.1)' 
                               : 'brightness(0.95) contrast(1.05)',
