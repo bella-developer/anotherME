@@ -203,7 +203,7 @@ export const addReaction = async (postId, reactionType) => {
       // Dark Room reactions
       'iFeelYou', 'notGood', 'youreNotAlone', 'sendingStrength',
       // Fantasy Room reactions
-      'push', 'pull', 'gear', 'rocket',
+      'vibe', 'dream', 'inspire', 'wild',
       // Philo Room reactions
       'lamp', 'spark', 'clap',
       // Legacy reactions
@@ -253,7 +253,7 @@ export const removeReaction = async (postId, reactionType) => {
       // Dark Room reactions
       'iFeelYou', 'notGood', 'youreNotAlone', 'sendingStrength',
       // Fantasy Room reactions
-      'push', 'pull', 'gear', 'rocket',
+      'vibe', 'dream', 'inspire', 'wild',
       // Philo Room reactions
       'lamp', 'spark', 'clap',
       // Legacy reactions

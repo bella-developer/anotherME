@@ -17,23 +17,23 @@ import { createLevelUpNotification } from './notification.service.js';
  * Each reaction maps to creative signals
  */
 const FANTASY_ROOM_REACTIONS = {
-  push: {
-    meaning: 'Basic support, upvote, "keep going"',
+  vibe: {
+    meaning: 'Resonates, feels right, "I vibe with this"',
     xp: 3,
     statBias: 'hustle'
   },
-  pull: {
-    meaning: 'Constructive criticism, needs work',
-    xp: -1,
-    statBias: 'hustle'
-  },
-  gear: {
-    meaning: 'Practical, actionable, useful',
-    xp: 6,
+  dream: {
+    meaning: 'Beautiful daydream, imaginative',
+    xp: 5,
     statBias: 'genius'
   },
-  rocket: {
-    meaning: 'Game-changing, breakthrough, visionary',
+  inspire: {
+    meaning: 'Sparks creativity, inspiring',
+    xp: 7,
+    statBias: 'legend'
+  },
+  wild: {
+    meaning: 'Boldly creative, beautifully wild',
     xp: 10,
     statBias: 'legend'
   }
@@ -225,7 +225,13 @@ export async function awardFantasyRoomXP(userId, reactions, options = {}) {
  */
 export function getFantasyRoomFeedback(reactionType) {
   const feedbackMessages = {
-    push: 'Keep creating!',
+    vibe: 'They feel your vibe!',
+    dream: 'Your imagination inspires!',
+    inspire: 'You sparked creativity!',
+    wild: 'Beautifully wild creation!'
+  };
+  
+  return feedbackMessages[reactionType] || 'Keep creating!';
     pull: 'Refine and iterate.',
     gear: 'That\'s practical genius.',
     rocket: 'You\'re onto something big!'

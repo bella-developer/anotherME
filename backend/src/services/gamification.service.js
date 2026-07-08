@@ -13,10 +13,10 @@ import { createLevelUpNotification } from './notification.service.js';
 // Reaction weights for XP calculation
 export const REACTION_WEIGHTS = {
   fantasy: {
-    push: 2,      // ⬆️ Basic upvote
-    pull: -1,     // ⬇️ Downvote
-    gear: 5,      // ⚙️ Comments/engagement
-    rocket: 10    // 🚀 Super-upvote/hype
+    vibe: 3,      // ✨ Resonates
+    dream: 5,     // 🌙 Beautiful daydream
+    inspire: 7,   // 💫 Inspiring
+    wild: 10      // 🦋 Boldly creative
   },
   dark: {
     // Dark Room uses special XP logic from darkroom.xp.service.js
@@ -85,10 +85,10 @@ export function calculateTotalXP(room, reactions) {
   // Map reaction types to weights
   const reactionMap = {
     fantasy: {
-      push: reactions.push || 0,
-      pull: reactions.pull || 0,
-      gear: reactions.gear || 0,
-      rocket: reactions.rocket || 0
+      vibe: reactions.vibe || 0,
+      dream: reactions.dream || 0,
+      inspire: reactions.inspire || 0,
+      wild: reactions.wild || 0
     },
     dark: {
       resonate: reactions.resonate || 0,

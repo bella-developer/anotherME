@@ -2,9 +2,9 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 // Lucide icons for dark artistic aesthetic
 import { 
-  // Climb Room - progress
+  Heart, Flame, Wind, Droplet, // Dark Room - elemental emotions
   Sparkles, Eye, Feather, // Philo Room - contemplation
-  TrendingUp, Zap, Target, Compass // Fantasy Room - creative progress
+  Sparkles as FantasySparkles, Moon, Stars, Butterfly // Fantasy Room - creative imagination
 } from 'lucide-react';
 
 /**
@@ -26,10 +26,10 @@ const ROOM_REACTIONS = {
     { type: 'clap', label: 'Resonance', icon: Feather, color: '#B56DFF', colorRGB: '181, 109, 255' }
   ],
   fantasy: [
-    { type: 'push', label: 'Push', icon: TrendingUp, color: '#FF9D1C', colorRGB: '255, 157, 28' },
-    { type: 'pull', label: 'Refine', icon: Target, color: '#FF9D1C', colorRGB: '255, 157, 28' },
-    { type: 'gear', label: 'Practical', icon: Compass, color: '#FF9D1C', colorRGB: '255, 157, 28' },
-    { type: 'rocket', label: 'Breakthrough', icon: Zap, color: '#FF9D1C', colorRGB: '255, 157, 28' }
+    { type: 'vibe', label: 'Vibe', icon: FantasySparkles, color: '#FF9D1C', colorRGB: '255, 157, 28' },
+    { type: 'dream', label: 'Dream', icon: Moon, color: '#FF9D1C', colorRGB: '255, 157, 28' },
+    { type: 'inspire', label: 'Inspire', icon: Stars, color: '#FF9D1C', colorRGB: '255, 157, 28' },
+    { type: 'wild', label: 'Wild', icon: Butterfly, color: '#FF9D1C', colorRGB: '255, 157, 28' }
   ]
 };
 
