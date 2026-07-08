@@ -375,14 +375,28 @@ const ClimbRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, onCir
                       setNewCircle(prev => ({ ...prev, name: e.target.value }));
                       setValidationErrors(prev => ({ ...prev, circleName: '' }));
                     }}
+                    maxLength={50}
                     disabled={creatingCircle}
                     className={`w-full bg-[#1a1a1a] text-[#e5e5e5] border ${
                       validationErrors.circleName ? 'border-[#ef4444]' : 'border-[#2a2a2a]'
                     } rounded px-3 py-2 text-sm focus:outline-none focus:border-[#D97757] disabled:opacity-50`}
                   />
-                  {validationErrors.circleName && (
-                    <span className="text-[#ef4444] text-xs mt-1 block">{validationErrors.circleName}</span>
-                  )}
+                  <div className="flex items-center justify-between mt-1">
+                    {validationErrors.circleName ? (
+                      <span className="text-[#ef4444] text-xs">{validationErrors.circleName}</span>
+                    ) : newCircle.name ? (
+                      <span className="text-xs" style={{ color: newCircle.name.length >= 3 ? '#2EE6FF' : '#a3a3a3' }}>
+                        {newCircle.name.length >= 3 ? '✓ Valid name' : 'Min 3 characters'}
+                      </span>
+                    ) : (
+                      <span className="text-[#a3a3a3] text-xs">Min 3 characters required</span>
+                    )}
+                    {newCircle.name && (
+                      <span className="text-xs tabular-nums" style={{ color: newCircle.name.length > 45 ? '#f59e0b' : '#6b7280' }}>
+                        {newCircle.name.length}/50
+                      </span>
+                    )}
+                  </div>
                 </div>
                 
                 <div>
@@ -393,15 +407,40 @@ const ClimbRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, onCir
                       setNewCircle(prev => ({ ...prev, description: e.target.value }));
                       setValidationErrors(prev => ({ ...prev, circleDescription: '' }));
                     }}
+                    maxLength={500}
                     disabled={creatingCircle}
                     rows={3}
                     className={`w-full bg-[#1a1a1a] text-[#e5e5e5] border ${
                       validationErrors.circleDescription ? 'border-[#ef4444]' : 'border-[#2a2a2a]'
                     } rounded px-3 py-2 text-sm focus:outline-none focus:border-[#D97757] disabled:opacity-50 resize-none`}
                   />
-                  {validationErrors.circleDescription && (
-                    <span className="text-[#ef4444] text-xs mt-1 block">{validationErrors.circleDescription}</span>
-                  )}
+                  <div className="flex items-center justify-between mt-1">
+                    {validationErrors.circleDescription ? (
+                      <span className="text-[#ef4444] text-xs">{validationErrors.circleDescription}</span>
+                    ) : newCircle.description ? (
+                      <div className="flex items-center gap-2 flex-1">
+                        <div className="flex-1 h-1 bg-[#2a2a2a] rounded-full overflow-hidden">
+                          <div
+                            className="h-full transition-all duration-200"
+                            style={{
+                              width: `${(newCircle.description.length / 500) * 100}%`,
+                              background: newCircle.description.length >= 10 ? (newCircle.description.length > 450 ? '#f59e0b' : '#2EE6FF') : '#6b7280'
+                            }}
+                          />
+                        </div>
+                        <span className="text-xs" style={{ color: newCircle.description.length >= 10 ? '#2EE6FF' : '#a3a3a3' }}>
+                          {newCircle.description.length >= 10 ? '✓' : `${10 - newCircle.description.length} more`}
+                        </span>
+                      </div>
+                    ) : (
+                      <span className="text-[#a3a3a3] text-xs">Min 10 characters required</span>
+                    )}
+                    {newCircle.description && (
+                      <span className="text-xs tabular-nums ml-2" style={{ color: newCircle.description.length > 450 ? '#f59e0b' : '#6b7280' }}>
+                        {newCircle.description.length}/500
+                      </span>
+                    )}
+                  </div>
                 </div>
                 
                 {validationErrors.circleCreation && (
