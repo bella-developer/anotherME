@@ -385,7 +385,7 @@ const ClimbRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, onCir
                     {validationErrors.circleName ? (
                       <span className="text-[#ef4444] text-xs">{validationErrors.circleName}</span>
                     ) : newCircle.name ? (
-                      <span className="text-xs" style={{ color: newCircle.name.length >= 3 ? '#2EE6FF' : '#a3a3a3' }}>
+                      <span className="text-xs" style={{ color: newCircle.name.length >= 3 ? '#22c55e' : '#a3a3a3' }}>
                         {newCircle.name.length >= 3 ? '✓ Valid name' : 'Min 3 characters'}
                       </span>
                     ) : (
@@ -424,11 +424,11 @@ const ClimbRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, onCir
                             className="h-full transition-all duration-200"
                             style={{
                               width: `${(newCircle.description.length / 500) * 100}%`,
-                              background: newCircle.description.length >= 10 ? (newCircle.description.length > 450 ? '#f59e0b' : '#2EE6FF') : '#6b7280'
+                              background: newCircle.description.length >= 10 ? (newCircle.description.length > 450 ? '#f59e0b' : '#22c55e') : '#6b7280'
                             }}
                           />
                         </div>
-                        <span className="text-xs" style={{ color: newCircle.description.length >= 10 ? '#2EE6FF' : '#a3a3a3' }}>
+                        <span className="text-xs" style={{ color: newCircle.description.length >= 10 ? '#22c55e' : '#a3a3a3' }}>
                           {newCircle.description.length >= 10 ? '✓' : `${10 - newCircle.description.length} more`}
                         </span>
                       </div>
