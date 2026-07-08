@@ -7,27 +7,27 @@ import LoadingSpinner from '../components/LoadingSpinner';
 import { fetchCircles } from '../services/circleService';
 import { usePageTitle } from '../hooks/usePageTitle';
 
-// Room accent config with electric glow colors
+// Room accent config with energy ring colors matching Home page
 const roomAccent = {
   dark:  { 
-    color: '#4A90E2', 
-    colorRGB: '74, 144, 226',
-    bg: 'rgba(74,144,226,0.05)', 
-    glow: 'rgba(74,144,226,0.3)', 
+    color: '#2EE6FF', // Electric Cyan
+    colorRGB: '46, 230, 255',
+    bg: 'rgba(46, 230, 255, 0.05)', 
+    glow: 'rgba(46, 230, 255, 0.3)', 
     label: 'Dark' 
   },
   climb: { 
-    color: '#F4A742', 
-    colorRGB: '244, 167, 66',
-    bg: 'rgba(244,167,66,0.05)',  
-    glow: 'rgba(244,167,66,0.3)',  
+    color: '#FF9D1C', // Amber/Gold
+    colorRGB: '255, 157, 28',
+    bg: 'rgba(255, 157, 28, 0.05)',  
+    glow: 'rgba(255, 157, 28, 0.3)',  
     label: 'Climb' 
   },
   philo: { 
-    color: '#50E3C2', 
-    colorRGB: '80, 227, 194',
-    bg: 'rgba(80,227,194,0.05)', 
-    glow: 'rgba(80,227,194,0.3)', 
+    color: '#B56DFF', // Violet
+    colorRGB: '181, 109, 255',
+    bg: 'rgba(181, 109, 255, 0.05)', 
+    glow: 'rgba(181, 109, 255, 0.3)', 
     label: 'Philo' 
   },
 };
@@ -56,59 +56,142 @@ function CircleCard({ circle, onClick }) {
         transition: 'all 0.35s ease',
       }}
     >
-      {/* Circular avatar with animated electric glow */}
+      {/* Circular avatar with stable border and rotating energy arcs */}
       <div className="relative mb-4" style={{ width: '120px', height: '120px' }}>
-        {/* Animated circulating glow effect */}
+        
+        {/* Stable circular border */}
         <div
           className="absolute inset-0 rounded-full"
           style={{
-            background: `conic-gradient(
-              from 0deg,
-              transparent 0%,
-              transparent 40%,
-              rgba(${accent.colorRGB}, 0.6) 50%,
-              rgba(${accent.colorRGB}, 0.8) 55%,
-              rgba(${accent.colorRGB}, 0.6) 60%,
-              transparent 90%,
-              transparent 100%
-            )`,
-            filter: 'blur(8px)',
-            animation: 'spin 15s linear infinite',
-            transform: hovered ? 'scale(1.15)' : 'scale(1.08)',
-            transition: 'transform 0.5s ease',
+            border: `2px solid rgba(${accent.colorRGB}, 0.3)`,
+            boxShadow: `
+              inset 0 0 20px rgba(${accent.colorRGB}, 0.1),
+              0 0 15px rgba(${accent.colorRGB}, 0.2)
+            `,
           }}
         />
 
-        {/* Secondary glow layer */}
+        {/* Rotating energy arc */}
         <div
-          className="absolute inset-0 rounded-full"
+          className="absolute inset-0"
           style={{
-            background: `conic-gradient(
-              from 180deg,
-              transparent 0%,
-              transparent 45%,
-              rgba(${accent.colorRGB}, 0.5) 55%,
-              rgba(${accent.colorRGB}, 0.7) 60%,
-              rgba(${accent.colorRGB}, 0.5) 65%,
-              transparent 95%,
-              transparent 100%
-            )`,
-            filter: 'blur(10px)',
-            animation: 'spin-reverse 12s linear infinite',
-            transform: hovered ? 'scale(1.12)' : 'scale(1.05)',
-            transition: 'transform 0.5s ease',
+            animation: 'spinCircle 20s linear infinite',
           }}
-        />
+        >
+          <svg
+            className="absolute inset-0 w-full h-full"
+            viewBox="0 0 120 120"
+            style={{
+              filter: `drop-shadow(0 0 8px ${accent.color})`,
+            }}
+          >
+            <defs>
+              <linearGradient id={`arc-grad-${circle.id}`} x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor={accent.color} stopOpacity="0" />
+                <stop offset="50%" stopColor={accent.color} stopOpacity="1" />
+                <stop offset="100%" stopColor={accent.color} stopOpacity="0" />
+              </linearGradient>
+              
+              <filter id={`arc-glow-${circle.id}`}>
+                <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+                <feMerge>
+                  <feMergeNode in="coloredBlur"/>
+                  <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+              </filter>
+            </defs>
+            
+            {/* Main arc (90 degrees) */}
+            <path
+              d="M 60,5 A 55,55 0 0,1 115,60"
+              fill="none"
+              stroke={`url(#arc-grad-${circle.id})`}
+              strokeWidth="3"
+              strokeLinecap="round"
+              filter={`url(#arc-glow-${circle.id})`}
+              style={{ mixBlendMode: 'screen' }}
+            />
+            
+            {/* Bright spot */}
+            <circle
+              cx="87"
+              cy="33"
+              r="3"
+              fill={accent.color}
+              filter={`url(#arc-glow-${circle.id})`}
+              style={{ mixBlendMode: 'screen' }}
+            >
+              <animate
+                attributeName="r"
+                values="3; 4; 3"
+                dur="2s"
+                repeatCount="indefinite"
+              />
+            </circle>
+          </svg>
+        </div>
+
+        {/* Counter-rotating secondary arc */}
+        <div
+          className="absolute inset-0"
+          style={{
+            animation: 'spinCircleReverse 15s linear infinite',
+          }}
+        >
+          <svg
+            className="absolute inset-0 w-full h-full"
+            viewBox="0 0 120 120"
+            style={{
+              filter: `drop-shadow(0 0 6px ${accent.color})`,
+              opacity: 0.6,
+            }}
+          >
+            <path
+              d="M 115,60 A 55,55 0 0,1 87,87"
+              fill="none"
+              stroke={accent.color}
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              style={{ mixBlendMode: 'screen' }}
+            />
+          </svg>
+        </div>
+
+        {/* Orbital particles */}
+        <div
+          className="absolute inset-0"
+          style={{
+            animation: 'spinCircle 25s linear infinite',
+          }}
+        >
+          {[0, 90, 180, 270].map((angle, i) => (
+            <div
+              key={i}
+              className="absolute"
+              style={{
+                width: '3px',
+                height: '3px',
+                borderRadius: '50%',
+                background: accent.color,
+                boxShadow: `0 0 6px ${accent.color}`,
+                top: '50%',
+                left: '50%',
+                transform: `rotate(${angle}deg) translateX(55px) translateY(-50%)`,
+                opacity: 0.7,
+                mixBlendMode: 'screen',
+              }}
+            />
+          ))}
+        </div>
 
         {/* Inner circle with first letter */}
         <div
           className="absolute inset-0 rounded-full flex items-center justify-center"
           style={{
-            border: `1px solid rgba(${accent.colorRGB}, ${hovered ? 0.5 : 0.3})`,
-            background: 'rgba(0, 0, 0, 0.8)',
+            margin: '8px',
+            background: 'rgba(0, 0, 0, 0.85)',
             boxShadow: `
-              inset 0 0 20px rgba(${accent.colorRGB}, 0.1),
-              0 0 20px rgba(${accent.colorRGB}, ${hovered ? 0.3 : 0.15})
+              inset 0 0 15px rgba(${accent.colorRGB}, 0.1)
             `,
             transform: hovered ? 'scale(1.05)' : 'scale(1)',
             transition: 'all 0.5s ease',
@@ -119,14 +202,14 @@ function CircleCard({ circle, onClick }) {
             style={{
               fontSize: '32px',
               color: accent.color,
-              textShadow: `0 0 15px rgba(${accent.colorRGB}, 0.5)`,
+              textShadow: `0 0 12px rgba(${accent.colorRGB}, 0.6)`,
             }}
           >
             {circle.name.charAt(0).toUpperCase()}
           </span>
         </div>
 
-        {/* Room badge - top right of circle */}
+        {/* Room badge */}
         {circle.room && (
           <div
             className="absolute -top-1 -right-1 px-2 py-0.5 text-[8px] tracking-[0.2em] uppercase rounded-full"
@@ -134,7 +217,7 @@ function CircleCard({ circle, onClick }) {
               background: hovered ? accent.bg : 'rgba(0,0,0,0.8)',
               border: `1px solid rgba(${accent.colorRGB}, ${hovered ? 0.5 : 0.3})`,
               color: accent.color,
-              boxShadow: `0 0 10px rgba(${accent.colorRGB}, ${hovered ? 0.4 : 0.2})`,
+              boxShadow: `0 0 8px rgba(${accent.colorRGB}, ${hovered ? 0.4 : 0.2})`,
               transition: 'all 0.3s ease',
             }}
           >
@@ -185,13 +268,13 @@ function CircleCard({ circle, onClick }) {
         </span>
       </div>
 
-      {/* Add keyframe animations */}
+      {/* CSS Animations */}
       <style jsx>{`
-        @keyframes spin {
+        @keyframes spinCircle {
           from { transform: rotate(0deg); }
           to { transform: rotate(360deg); }
         }
-        @keyframes spin-reverse {
+        @keyframes spinCircleReverse {
           from { transform: rotate(360deg); }
           to { transform: rotate(0deg); }
         }
