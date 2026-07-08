@@ -33,8 +33,8 @@ function Home() {
       description: 'Where raw emotion finds its voice.',
       path: '/rooms/dark',
       img: 'https://res.cloudinary.com/dbtm7etag/image/upload/v1782735009/darkroom_mf0vxg.png',
-      glowColor: '#4A90E2', // Blue glow
-      glowColorRGB: '74, 144, 226',
+      glowColor: '#2EE6FF', // Electric Cyan
+      glowColorRGB: '46, 230, 255',
     },
     {
       id: 'climb',
@@ -43,8 +43,8 @@ function Home() {
       description: 'The hunger to rise.',
       path: '/rooms/climb',
       img: 'https://res.cloudinary.com/dbtm7etag/image/upload/v1782735019/climbroom_camkye.png',
-      glowColor: '#F4A742', // Orange glow
-      glowColorRGB: '244, 167, 66',
+      glowColor: '#FF9D1C', // Amber/Gold
+      glowColorRGB: '255, 157, 28',
     },
     {
       id: 'philo',
@@ -53,8 +53,8 @@ function Home() {
       description: 'The question that stays.',
       path: '/rooms/philo',
       img: 'https://res.cloudinary.com/dbtm7etag/image/upload/v1782735026/philoroom_lazjzx.png',
-      glowColor: '#50E3C2', // Teal/cyan glow
-      glowColorRGB: '80, 227, 194',
+      glowColor: '#B56DFF', // Violet
+      glowColorRGB: '181, 109, 255',
     },
   ];
 
@@ -101,7 +101,7 @@ function Home() {
             </motion.h1>
           </motion.div>
 
-          {/* Room Cards - Circular portals with animated glow */}
+          {/* Room Cards - Circular portals with organic plasma energy rings */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16 lg:gap-20 w-full max-w-7xl px-4 md:px-8">
             {rooms.map((room, idx) => (
               <motion.div
@@ -111,7 +111,7 @@ function Home() {
                 transition={{ duration: 1.2, delay: 1.2 + idx * 0.2 }}
                 className="flex flex-col items-center"
               >
-                {/* Circular portal with animated glow border */}
+                {/* Circular portal with organic plasma energy ring */}
                 <button
                   onClick={() => navigate(room.path)}
                   onMouseEnter={() => setHovered(room.id)}
@@ -123,94 +123,208 @@ function Home() {
                     cursor: 'pointer',
                   }}
                 >
-                  {/* Animated circulating glow effect */}
-                  <motion.div
-                    className="absolute inset-0 rounded-full"
-                    animate={{
-                      rotate: 360,
-                    }}
-                    transition={{
-                      duration: 20,
-                      repeat: Infinity,
-                      ease: 'linear',
-                    }}
+                  {/* SVG Energy Ring with organic waveform */}
+                  <svg
+                    className="absolute inset-0 w-full h-full"
+                    viewBox="0 0 400 400"
                     style={{
-                      background: `conic-gradient(
-                        from 0deg,
-                        transparent 0%,
-                        transparent 30%,
-                        rgba(${room.glowColorRGB}, 0.8) 50%,
-                        rgba(${room.glowColorRGB}, 1) 60%,
-                        rgba(${room.glowColorRGB}, 0.8) 70%,
-                        transparent 90%,
-                        transparent 100%
-                      )`,
-                      filter: 'blur(15px)',
-                      transform: hovered === room.id ? 'scale(1.15)' : 'scale(1.08)',
-                      transition: 'transform 0.8s ease',
-                    }}
-                  />
-                  
-                  {/* Secondary glow layer for depth */}
-                  <motion.div
-                    className="absolute inset-0 rounded-full"
-                    animate={{
-                      rotate: -360,
-                    }}
-                    transition={{
-                      duration: 15,
-                      repeat: Infinity,
-                      ease: 'linear',
-                    }}
-                    style={{
-                      background: `conic-gradient(
-                        from 120deg,
-                        transparent 0%,
-                        transparent 40%,
-                        rgba(${room.glowColorRGB}, 0.6) 55%,
-                        rgba(${room.glowColorRGB}, 0.8) 65%,
-                        rgba(${room.glowColorRGB}, 0.6) 75%,
-                        transparent 95%,
-                        transparent 100%
-                      )`,
-                      filter: 'blur(20px)',
-                      transform: hovered === room.id ? 'scale(1.12)' : 'scale(1.05)',
-                      transition: 'transform 0.8s ease',
-                    }}
-                  />
-
-                  {/* Reflection glow at bottom */}
-                  <div
-                    className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 rounded-full"
-                    style={{
-                      width: '60%',
-                      height: '20px',
-                      background: `radial-gradient(ellipse, rgba(${room.glowColorRGB}, 0.4) 0%, transparent 70%)`,
-                      filter: 'blur(15px)',
-                      opacity: hovered === room.id ? 0.7 : 0.4,
+                      filter: 'drop-shadow(0 0 20px ' + room.glowColor + ')',
+                      opacity: hovered === room.id ? 1 : 0.85,
                       transition: 'opacity 0.8s ease',
                     }}
+                  >
+                    <defs>
+                      {/* Turbulence for organic wave distortion */}
+                      <filter id={`plasma-${room.id}`}>
+                        <feTurbulence
+                          type="fractalNoise"
+                          baseFrequency="0.02 0.08"
+                          numOctaves="3"
+                          seed={idx}
+                        >
+                          <animate
+                            attributeName="baseFrequency"
+                            values="0.02 0.08; 0.025 0.09; 0.02 0.08"
+                            dur="8s"
+                            repeatCount="indefinite"
+                          />
+                        </feTurbulence>
+                        <feDisplacementMap in="SourceGraphic" scale="8">
+                          <animate
+                            attributeName="scale"
+                            values="8; 12; 8"
+                            dur="6s"
+                            repeatCount="indefinite"
+                          />
+                        </feDisplacementMap>
+                        <feGaussianBlur stdDeviation="1.5" />
+                      </filter>
+
+                      {/* Bloom/glow effect */}
+                      <filter id={`glow-${room.id}`} x="-50%" y="-50%" width="200%" height="200%">
+                        <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+                        <feMerge>
+                          <feMergeNode in="coloredBlur"/>
+                          <feMergeNode in="coloredBlur"/>
+                          <feMergeNode in="SourceGraphic"/>
+                        </feMerge>
+                      </filter>
+
+                      {/* Gradient for the energy ring */}
+                      <linearGradient id={`gradient-${room.id}`} x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stopColor={room.glowColor} stopOpacity="0.4">
+                          <animate
+                            attributeName="stopOpacity"
+                            values="0.4; 0.7; 0.4"
+                            dur="3s"
+                            repeatCount="indefinite"
+                          />
+                        </stop>
+                        <stop offset="50%" stopColor={room.glowColor} stopOpacity="1">
+                          <animate
+                            attributeName="stopOpacity"
+                            values="1; 0.8; 1"
+                            dur="3s"
+                            repeatCount="indefinite"
+                          />
+                        </stop>
+                        <stop offset="100%" stopColor={room.glowColor} stopOpacity="0.5">
+                          <animate
+                            attributeName="stopOpacity"
+                            values="0.5; 0.9; 0.5"
+                            dur="3s"
+                            repeatCount="indefinite"
+                          />
+                        </stop>
+                      </linearGradient>
+                    </defs>
+
+                    {/* Main energy ring with rotation */}
+                    <g filter={`url(#glow-${room.id})`}>
+                      <circle
+                        cx="200"
+                        cy="200"
+                        r="185"
+                        fill="none"
+                        stroke={`url(#gradient-${room.id})`}
+                        strokeWidth="3"
+                        filter={`url(#plasma-${room.id})`}
+                        style={{
+                          transformOrigin: 'center',
+                          mixBlendMode: 'screen',
+                        }}
+                      >
+                        <animateTransform
+                          attributeName="transform"
+                          type="rotate"
+                          from="0 200 200"
+                          to="360 200 200"
+                          dur="25s"
+                          repeatCount="indefinite"
+                        />
+                        {/* Pulsation */}
+                        <animate
+                          attributeName="r"
+                          values="185; 188; 185"
+                          dur="4s"
+                          repeatCount="indefinite"
+                        />
+                        <animate
+                          attributeName="stroke-width"
+                          values="3; 4; 3"
+                          dur="4s"
+                          repeatCount="indefinite"
+                        />
+                      </circle>
+
+                      {/* Secondary inner ring for depth */}
+                      <circle
+                        cx="200"
+                        cy="200"
+                        r="180"
+                        fill="none"
+                        stroke={room.glowColor}
+                        strokeWidth="1"
+                        opacity="0.3"
+                        filter={`url(#plasma-${room.id})`}
+                        style={{
+                          transformOrigin: 'center',
+                          mixBlendMode: 'screen',
+                        }}
+                      >
+                        <animateTransform
+                          attributeName="transform"
+                          type="rotate"
+                          from="360 200 200"
+                          to="0 200 200"
+                          dur="30s"
+                          repeatCount="indefinite"
+                        />
+                      </circle>
+
+                      {/* Particle sparks */}
+                      {[...Array(8)].map((_, i) => {
+                        const angle = (i * 360) / 8;
+                        const x = 200 + 185 * Math.cos((angle * Math.PI) / 180);
+                        const y = 200 + 185 * Math.sin((angle * Math.PI) / 180);
+                        return (
+                          <circle
+                            key={i}
+                            cx={x}
+                            cy={y}
+                            r="1.5"
+                            fill={room.glowColor}
+                            opacity="0"
+                            style={{ mixBlendMode: 'screen' }}
+                          >
+                            <animate
+                              attributeName="opacity"
+                              values="0; 0.8; 0"
+                              dur="2s"
+                              begin={`${i * 0.25}s`}
+                              repeatCount="indefinite"
+                            />
+                            <animate
+                              attributeName="r"
+                              values="1.5; 2.5; 1.5"
+                              dur="2s"
+                              begin={`${i * 0.25}s`}
+                              repeatCount="indefinite"
+                            />
+                          </circle>
+                        );
+                      })}
+                    </g>
+                  </svg>
+
+                  {/* Atmospheric glow beneath */}
+                  <div
+                    className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 rounded-full"
+                    style={{
+                      width: '70%',
+                      height: '30px',
+                      background: `radial-gradient(ellipse, rgba(${room.glowColorRGB}, ${hovered === room.id ? 0.4 : 0.25}) 0%, transparent 70%)`,
+                      filter: 'blur(20px)',
+                      transition: 'all 0.8s ease',
+                    }}
                   />
 
-                  {/* Inner circle container */}
+                  {/* Inner circle container with static image */}
                   <div
                     className="absolute inset-0 rounded-full overflow-hidden"
                     style={{
-                      border: `2px solid rgba(${room.glowColorRGB}, ${hovered === room.id ? 0.6 : 0.3})`,
+                      margin: '30px',
+                      border: `1px solid rgba(${room.glowColorRGB}, ${hovered === room.id ? 0.4 : 0.2})`,
                       boxShadow: `
-                        inset 0 0 40px rgba(${room.glowColorRGB}, 0.2),
-                        0 0 40px rgba(${room.glowColorRGB}, ${hovered === room.id ? 0.4 : 0.2})
+                        inset 0 0 40px rgba(${room.glowColorRGB}, 0.15),
+                        0 0 30px rgba(${room.glowColorRGB}, ${hovered === room.id ? 0.3 : 0.15})
                       `,
-                      transform: hovered === room.id ? 'scale(1.05)' : 'scale(1)',
+                      transform: hovered === room.id ? 'scale(1.03)' : 'scale(1)',
                       transition: 'all 0.8s cubic-bezier(0.22, 1, 0.36, 1)',
                     }}
                   >
-                    {/* Room image */}
-                    <motion.div
-                      animate={{
-                        scale: hovered === room.id ? 1.1 : 1,
-                      }}
-                      transition={{ duration: 0.8 }}
+                    {/* Static room image */}
+                    <div
                       className="absolute inset-0"
                       style={{
                         backgroundImage: `url('${room.img}')`,
@@ -218,16 +332,16 @@ function Home() {
                         backgroundPosition: 'center',
                         filter: hovered === room.id 
                           ? 'brightness(1.1) contrast(1.1)' 
-                          : 'brightness(0.9) contrast(1.05)',
+                          : 'brightness(0.95) contrast(1.05)',
                         transition: 'filter 0.8s ease',
                       }}
                     />
 
-                    {/* Dark overlay for text readability */}
+                    {/* Subtle dark overlay */}
                     <div
                       className="absolute inset-0"
                       style={{
-                        background: `radial-gradient(circle, transparent 40%, rgba(0,0,0,${hovered === room.id ? 0.3 : 0.5}) 100%)`,
+                        background: `radial-gradient(circle, transparent 30%, rgba(0,0,0,${hovered === room.id ? 0.2 : 0.4}) 100%)`,
                         transition: 'background 0.8s ease',
                       }}
                     />
@@ -235,7 +349,7 @@ function Home() {
                 </button>
 
                 {/* Room info below circle */}
-                <div className="mt-8 md:mt-10 text-center">
+                <div className="mt-12 md:mt-14 text-center">
                   <h2
                     className="text-xl md:text-2xl font-light tracking-[0.25em] mb-3 uppercase"
                     style={{
