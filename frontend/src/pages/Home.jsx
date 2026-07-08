@@ -123,179 +123,150 @@ function Home() {
                     cursor: 'pointer',
                   }}
                 >
-                  {/* SVG Energy Ring with organic waveform */}
-                  <svg
-                    className="absolute inset-0 w-full h-full"
-                    viewBox="0 0 400 400"
+                  {/* Stable circular border */}
+                  <div
+                    className="absolute inset-0 rounded-full"
                     style={{
-                      filter: 'drop-shadow(0 0 20px ' + room.glowColor + ')',
-                      opacity: hovered === room.id ? 1 : 0.85,
-                      transition: 'opacity 0.8s ease',
+                      margin: '10px',
+                      border: `2px solid rgba(${room.glowColorRGB}, 0.3)`,
+                      boxShadow: `
+                        inset 0 0 30px rgba(${room.glowColorRGB}, 0.1),
+                        0 0 20px rgba(${room.glowColorRGB}, 0.2)
+                      `,
+                    }}
+                  />
+
+                  {/* Rotating energy arcs */}
+                  <div
+                    className="absolute inset-0"
+                    style={{
+                      margin: '10px',
+                      animation: 'rotate360 20s linear infinite',
                     }}
                   >
-                    <defs>
-                      {/* Turbulence for organic wave distortion */}
-                      <filter id={`plasma-${room.id}`}>
-                        <feTurbulence
-                          type="fractalNoise"
-                          baseFrequency="0.02 0.08"
-                          numOctaves="3"
-                          seed={idx}
-                        >
-                          <animate
-                            attributeName="baseFrequency"
-                            values="0.02 0.08; 0.025 0.09; 0.02 0.08"
-                            dur="8s"
-                            repeatCount="indefinite"
-                          />
-                        </feTurbulence>
-                        <feDisplacementMap in="SourceGraphic" scale="8">
-                          <animate
-                            attributeName="scale"
-                            values="8; 12; 8"
-                            dur="6s"
-                            repeatCount="indefinite"
-                          />
-                        </feDisplacementMap>
-                        <feGaussianBlur stdDeviation="1.5" />
-                      </filter>
-
-                      {/* Bloom/glow effect */}
-                      <filter id={`glow-${room.id}`} x="-50%" y="-50%" width="200%" height="200%">
-                        <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
-                        <feMerge>
-                          <feMergeNode in="coloredBlur"/>
-                          <feMergeNode in="coloredBlur"/>
-                          <feMergeNode in="SourceGraphic"/>
-                        </feMerge>
-                      </filter>
-
-                      {/* Gradient for the energy ring */}
-                      <linearGradient id={`gradient-${room.id}`} x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stopColor={room.glowColor} stopOpacity="0.4">
-                          <animate
-                            attributeName="stopOpacity"
-                            values="0.4; 0.7; 0.4"
-                            dur="3s"
-                            repeatCount="indefinite"
-                          />
-                        </stop>
-                        <stop offset="50%" stopColor={room.glowColor} stopOpacity="1">
-                          <animate
-                            attributeName="stopOpacity"
-                            values="1; 0.8; 1"
-                            dur="3s"
-                            repeatCount="indefinite"
-                          />
-                        </stop>
-                        <stop offset="100%" stopColor={room.glowColor} stopOpacity="0.5">
-                          <animate
-                            attributeName="stopOpacity"
-                            values="0.5; 0.9; 0.5"
-                            dur="3s"
-                            repeatCount="indefinite"
-                          />
-                        </stop>
-                      </linearGradient>
-                    </defs>
-
-                    {/* Main energy ring with rotation */}
-                    <g filter={`url(#glow-${room.id})`}>
-                      <circle
-                        cx="200"
-                        cy="200"
-                        r="185"
+                    {/* Primary energy arc */}
+                    <svg
+                      className="absolute inset-0 w-full h-full"
+                      viewBox="0 0 400 400"
+                      style={{
+                        filter: `drop-shadow(0 0 15px ${room.glowColor})`,
+                      }}
+                    >
+                      <defs>
+                        <linearGradient id={`arc-gradient-${room.id}`} x1="0%" y1="0%" x2="100%" y2="0%">
+                          <stop offset="0%" stopColor={room.glowColor} stopOpacity="0" />
+                          <stop offset="50%" stopColor={room.glowColor} stopOpacity="1" />
+                          <stop offset="100%" stopColor={room.glowColor} stopOpacity="0" />
+                        </linearGradient>
+                        
+                        {/* Glow filter */}
+                        <filter id={`arc-glow-${room.id}`}>
+                          <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                          <feMerge>
+                            <feMergeNode in="coloredBlur"/>
+                            <feMergeNode in="coloredBlur"/>
+                            <feMergeNode in="SourceGraphic"/>
+                          </feMerge>
+                        </filter>
+                      </defs>
+                      
+                      {/* Main rotating arc (90 degrees) */}
+                      <path
+                        d="M 200,20 A 180,180 0 0,1 380,200"
                         fill="none"
-                        stroke={`url(#gradient-${room.id})`}
-                        strokeWidth="3"
-                        filter={`url(#plasma-${room.id})`}
-                        style={{
-                          transformOrigin: 'center',
-                          mixBlendMode: 'screen',
-                        }}
+                        stroke={`url(#arc-gradient-${room.id})`}
+                        strokeWidth="4"
+                        strokeLinecap="round"
+                        filter={`url(#arc-glow-${room.id})`}
+                        style={{ mixBlendMode: 'screen' }}
+                      />
+                      
+                      {/* Bright spot at arc peak */}
+                      <circle
+                        cx="290"
+                        cy="110"
+                        r="6"
+                        fill={room.glowColor}
+                        filter={`url(#arc-glow-${room.id})`}
+                        style={{ mixBlendMode: 'screen' }}
                       >
-                        <animateTransform
-                          attributeName="transform"
-                          type="rotate"
-                          from="0 200 200"
-                          to="360 200 200"
-                          dur="25s"
-                          repeatCount="indefinite"
-                        />
-                        {/* Pulsation */}
                         <animate
                           attributeName="r"
-                          values="185; 188; 185"
-                          dur="4s"
-                          repeatCount="indefinite"
-                        />
-                        <animate
-                          attributeName="stroke-width"
-                          values="3; 4; 3"
-                          dur="4s"
+                          values="6; 8; 6"
+                          dur="2s"
                           repeatCount="indefinite"
                         />
                       </circle>
+                    </svg>
+                  </div>
 
-                      {/* Secondary inner ring for depth */}
-                      <circle
-                        cx="200"
-                        cy="200"
-                        r="180"
+                  {/* Counter-rotating secondary arc */}
+                  <div
+                    className="absolute inset-0"
+                    style={{
+                      margin: '10px',
+                      animation: 'rotate360reverse 15s linear infinite',
+                    }}
+                  >
+                    <svg
+                      className="absolute inset-0 w-full h-full"
+                      viewBox="0 0 400 400"
+                      style={{
+                        filter: `drop-shadow(0 0 10px ${room.glowColor})`,
+                        opacity: 0.6,
+                      }}
+                    >
+                      {/* Secondary arc (smaller, 60 degrees) */}
+                      <path
+                        d="M 380,200 A 180,180 0 0,1 290,290"
                         fill="none"
                         stroke={room.glowColor}
-                        strokeWidth="1"
-                        opacity="0.3"
-                        filter={`url(#plasma-${room.id})`}
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        style={{ mixBlendMode: 'screen' }}
+                      />
+                    </svg>
+                  </div>
+
+                  {/* Orbital particles */}
+                  <div
+                    className="absolute inset-0"
+                    style={{
+                      margin: '10px',
+                      animation: 'rotate360 25s linear infinite',
+                    }}
+                  >
+                    {[...Array(4)].map((_, i) => (
+                      <div
+                        key={i}
+                        className="absolute"
                         style={{
-                          transformOrigin: 'center',
+                          width: '4px',
+                          height: '4px',
+                          borderRadius: '50%',
+                          background: room.glowColor,
+                          boxShadow: `0 0 10px ${room.glowColor}`,
+                          top: '50%',
+                          left: '50%',
+                          transform: `rotate(${i * 90}deg) translateX(180px) translateY(-50%)`,
+                          opacity: 0.8,
                           mixBlendMode: 'screen',
                         }}
-                      >
-                        <animateTransform
-                          attributeName="transform"
-                          type="rotate"
-                          from="360 200 200"
-                          to="0 200 200"
-                          dur="30s"
-                          repeatCount="indefinite"
-                        />
-                      </circle>
+                      />
+                    ))}
+                  </div>
 
-                      {/* Particle sparks */}
-                      {[...Array(8)].map((_, i) => {
-                        const angle = (i * 360) / 8;
-                        const x = 200 + 185 * Math.cos((angle * Math.PI) / 180);
-                        const y = 200 + 185 * Math.sin((angle * Math.PI) / 180);
-                        return (
-                          <circle
-                            key={i}
-                            cx={x}
-                            cy={y}
-                            r="1.5"
-                            fill={room.glowColor}
-                            opacity="0"
-                            style={{ mixBlendMode: 'screen' }}
-                          >
-                            <animate
-                              attributeName="opacity"
-                              values="0; 0.8; 0"
-                              dur="2s"
-                              begin={`${i * 0.25}s`}
-                              repeatCount="indefinite"
-                            />
-                            <animate
-                              attributeName="r"
-                              values="1.5; 2.5; 1.5"
-                              dur="2s"
-                              begin={`${i * 0.25}s`}
-                              repeatCount="indefinite"
-                            />
-                          </circle>
-                        );
-                      })}
-                    </g>
-                  </svg>
+                  {/* CSS Animations */}
+                  <style jsx>{`
+                    @keyframes rotate360 {
+                      from { transform: rotate(0deg); }
+                      to { transform: rotate(360deg); }
+                    }
+                    @keyframes rotate360reverse {
+                      from { transform: rotate(360deg); }
+                      to { transform: rotate(0deg); }
+                    }
+                  `}</style>
 
                   {/* Atmospheric glow beneath */}
                   <div
