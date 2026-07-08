@@ -112,21 +112,32 @@ function Home() {
                 className="flex flex-col items-center w-full"
               >
                 {/* Circular portal with stable border and rotating energy arcs */}
-                <div className="relative w-full mx-auto" style={{ maxWidth: '380px', aspectRatio: '1 / 1' }}>
-                  <button
-                    onClick={() => navigate(room.path)}
-                    onMouseEnter={() => setHovered(room.id)}
-                    onMouseLeave={() => setHovered(null)}
-                    className="absolute inset-0 group focus:outline-none"
-                    style={{
-                      cursor: 'pointer',
-                    }}
-                  >
+                <div className="relative w-full mx-auto" style={{ maxWidth: '380px' }}>
+                  {/* Aspect ratio box using padding-bottom technique for better browser support */}
+                  <div style={{ position: 'relative', width: '100%', paddingBottom: '100%' }}>
+                    <button
+                      onClick={() => navigate(room.path)}
+                      onMouseEnter={() => setHovered(room.id)}
+                      onMouseLeave={() => setHovered(null)}
+                      className="group focus:outline-none"
+                      style={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        cursor: 'pointer',
+                      }}
+                    >
                       {/* Stable circular border */}
                       <div
-                        className="absolute rounded-full"
+                        className="rounded-full"
                         style={{
-                          inset: '10px',
+                          position: 'absolute',
+                          top: '10px',
+                          left: '10px',
+                          right: '10px',
+                          bottom: '10px',
                           border: `2px solid rgba(${room.glowColorRGB}, 0.3)`,
                           boxShadow: `
                             inset 0 0 30px rgba(${room.glowColorRGB}, 0.1),
@@ -137,9 +148,13 @@ function Home() {
 
                       {/* Rotating energy arcs */}
                       <div
-                        className="absolute rounded-full"
+                        className="rounded-full"
                         style={{
-                          inset: '10px',
+                          position: 'absolute',
+                          top: '10px',
+                          left: '10px',
+                          right: '10px',
+                          bottom: '10px',
                           animation: 'rotate360 20s linear infinite',
                         }}
                       >
@@ -201,9 +216,13 @@ function Home() {
 
                       {/* Counter-rotating secondary arc */}
                       <div
-                        className="absolute rounded-full"
+                        className="rounded-full"
                         style={{
-                          inset: '10px',
+                          position: 'absolute',
+                          top: '10px',
+                          left: '10px',
+                          right: '10px',
+                          bottom: '10px',
                           animation: 'rotate360reverse 15s linear infinite',
                         }}
                       >
@@ -229,9 +248,13 @@ function Home() {
 
                       {/* Orbital particles */}
                       <div
-                        className="absolute rounded-full"
+                        className="rounded-full"
                         style={{
-                          inset: '10px',
+                          position: 'absolute',
+                          top: '10px',
+                          left: '10px',
+                          right: '10px',
+                          bottom: '10px',
                           animation: 'rotate360 25s linear infinite',
                         }}
                       >
@@ -281,9 +304,13 @@ function Home() {
 
                       {/* Inner circle container with static image */}
                       <div
-                        className="absolute rounded-full overflow-hidden"
+                        className="rounded-full overflow-hidden"
                         style={{
-                          inset: '30px',
+                          position: 'absolute',
+                          top: '30px',
+                          left: '30px',
+                          right: '30px',
+                          bottom: '30px',
                           border: `1px solid rgba(${room.glowColorRGB}, ${hovered === room.id ? 0.4 : 0.2})`,
                           boxShadow: `
                             inset 0 0 40px rgba(${room.glowColorRGB}, 0.15),
@@ -297,8 +324,13 @@ function Home() {
                         <img
                           src={room.img}
                           alt={room.name}
-                          className="w-full h-full object-cover"
                           style={{
+                            position: 'absolute',
+                            top: 0,
+                            left: 0,
+                            width: '100%',
+                            height: '100%',
+                            objectFit: 'cover',
                             display: 'block',
                             filter: hovered === room.id 
                               ? 'brightness(1.1) contrast(1.1)' 
@@ -309,8 +341,12 @@ function Home() {
 
                         {/* Subtle dark overlay */}
                         <div
-                          className="absolute inset-0"
                           style={{
+                            position: 'absolute',
+                            top: 0,
+                            left: 0,
+                            right: 0,
+                            bottom: 0,
                             background: `radial-gradient(circle, transparent 30%, rgba(0,0,0,${hovered === room.id ? 0.2 : 0.4}) 100%)`,
                             transition: 'background 0.8s ease',
                           }}
@@ -318,6 +354,7 @@ function Home() {
                       </div>
                     </button>
                   </div>
+                </div>
 
                   {/* Room info below circle */}
                   <div className="mt-12 md:mt-14 text-center">
