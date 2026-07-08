@@ -268,27 +268,48 @@ function CircleDetail() {
           style={{ background: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(16px)', borderTop: '1px solid rgba(255,255,255,0.07)' }}
         >
           <div className="max-w-2xl mx-auto">
-            <form onSubmit={handleSubmit} className="flex items-center gap-3">
-              <textarea
-                value={commentContent}
-                onChange={(e) => setCommentContent(e.target.value)}
-                onKeyDown={handleKeyDown}
-                placeholder="Whisper into the void..."
-                className="flex-1 text-white/70 text-sm resize-none focus:outline-none placeholder-white/20 bg-transparent"
-                rows={1}
-                maxLength={2000}
-                style={{ minHeight: '36px', maxHeight: '36px' }}
-              />
-              <span className="text-[10px] text-white/15 whitespace-nowrap tabular-nums">{commentContent.length}/2000</span>
-              <span className="hidden sm:block text-[9px] tracking-[0.18em] text-white/15 uppercase whitespace-nowrap">Anon</span>
-              <button
-                type="submit"
-                disabled={!commentContent.trim() || submitting}
-                className="flex-shrink-0 px-4 py-2 text-[10px] tracking-[0.18em] uppercase transition-all disabled:opacity-30"
-                style={{ background: accent + '22', color: accent, borderRadius: '2px', border: `1px solid ${accent}44` }}
-              >
-                {submitting ? '...' : 'Share'}
-              </button>
+            <form onSubmit={handleSubmit} className="space-y-2">
+              <div className="flex items-start gap-3">
+                <textarea
+                  value={commentContent}
+                  onChange={(e) => setCommentContent(e.target.value)}
+                  onKeyDown={handleKeyDown}
+                  placeholder="Whisper into the void..."
+                  className="flex-1 text-white/70 text-sm resize-none focus:outline-none placeholder-white/20 bg-transparent"
+                  rows={1}
+                  maxLength={2000}
+                  style={{ minHeight: '36px', maxHeight: '36px' }}
+                />
+                <span className="hidden sm:block text-[9px] tracking-[0.18em] text-white/15 uppercase whitespace-nowrap">Anon</span>
+                <button
+                  type="submit"
+                  disabled={!commentContent.trim() || submitting}
+                  className="flex-shrink-0 px-4 py-2 text-[10px] tracking-[0.18em] uppercase transition-all disabled:opacity-30"
+                  style={{ background: accent + '22', color: accent, borderRadius: '2px', border: `1px solid ${accent}44` }}
+                >
+                  {submitting ? '...' : 'Share'}
+                </button>
+              </div>
+              {/* Character counter with progress indicator */}
+              <div className="flex items-center gap-2 px-1">
+                <div className="flex-1 h-0.5 bg-white/5 rounded-full overflow-hidden">
+                  <div
+                    className="h-full transition-all duration-200"
+                    style={{
+                      width: `${(commentContent.length / 2000) * 100}%`,
+                      background: commentContent.length > 1800 ? accent : commentContent.length > 1500 ? `${accent}88` : `${accent}44`,
+                    }}
+                  />
+                </div>
+                <span 
+                  className="text-[10px] tabular-nums whitespace-nowrap transition-colors"
+                  style={{ 
+                    color: commentContent.length > 1800 ? accent : 'rgba(255,255,255,0.15)'
+                  }}
+                >
+                  {commentContent.length}/2000
+                </span>
+              </div>
             </form>
           </div>
         </div>
@@ -459,26 +480,47 @@ function CommentItem({ comment, depth, circleId, accent }) {
 
         {/* Reply form */}
         {showReplyForm && (
-          <form onSubmit={handleReplySubmit} className="mt-3 pl-8 flex items-center gap-2">
-            <textarea
-              value={replyContent}
-              onChange={(e) => setReplyContent(e.target.value)}
-              onKeyDown={handleReplyKey}
-              placeholder="The same here..."
-              className="flex-1 text-white/65 text-[12px] resize-none focus:outline-none placeholder-white/20 bg-transparent border-b border-white/10 py-1"
-              rows={1}
-              maxLength={2000}
-              style={{ minHeight: '28px', maxHeight: '28px' }}
-            />
-            <button
-              type="submit"
-              disabled={!replyContent.trim() || submitting}
-              className="text-[10px] tracking-[0.15em] uppercase transition-all disabled:opacity-30 px-3 py-1"
-              style={{ color: accent || '#c4a882', background: (accent || '#c4a882') + '18', borderRadius: '2px' }}
-            >
-              {submitting ? '...' : 'Post'}
-            </button>
-          </form>
+          <div className="mt-3 pl-8 space-y-1">
+            <div className="flex items-center gap-2">
+              <textarea
+                value={replyContent}
+                onChange={(e) => setReplyContent(e.target.value)}
+                onKeyDown={handleReplyKey}
+                placeholder="The same here..."
+                className="flex-1 text-white/65 text-[12px] resize-none focus:outline-none placeholder-white/20 bg-transparent border-b border-white/10 py-1"
+                rows={1}
+                maxLength={2000}
+                style={{ minHeight: '28px', maxHeight: '28px' }}
+              />
+              <button
+                type="submit"
+                onClick={handleReplySubmit}
+                disabled={!replyContent.trim() || submitting}
+                className="text-[10px] tracking-[0.15em] uppercase transition-all disabled:opacity-30 px-3 py-1"
+                style={{ color: accent || '#c4a882', background: (accent || '#c4a882') + '18', borderRadius: '2px' }}
+              >
+                {submitting ? '...' : 'Post'}
+              </button>
+            </div>
+            {/* Character counter with progress */}
+            <div className="flex items-center gap-2">
+              <div className="flex-1 h-0.5 bg-white/5 rounded-full overflow-hidden">
+                <div
+                  className="h-full transition-all duration-200"
+                  style={{
+                    width: `${(replyContent.length / 2000) * 100}%`,
+                    background: replyContent.length > 1800 ? (accent || '#c4a882') : `${accent || '#c4a882'}44`,
+                  }}
+                />
+              </div>
+              <span 
+                className="text-[9px] tabular-nums"
+                style={{ color: replyContent.length > 1800 ? (accent || '#c4a882') : 'rgba(255,255,255,0.15)' }}
+              >
+                {replyContent.length}/2000
+              </span>
+            </div>
+          </div>
         )}
       </div>
 

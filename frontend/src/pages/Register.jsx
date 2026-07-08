@@ -265,14 +265,28 @@ function Register() {
                 value={formData.username}
                 onChange={handleChange}
                 onBlur={handleBlur}
+                maxLength={30}
                 className={`w-full px-4 py-3 rounded text-white placeholder-white/25 focus:outline-none transition-colors text-sm tracking-wide ${validationErrors.username ? 'border border-red-500/50 bg-red-500/5' : 'border border-white/15 bg-white/5'}`}
                 placeholder="choose your username"
                 disabled={loading}
                 aria-describedby={validationErrors.username ? 'username-error' : undefined}
               />
-              {validationErrors.username && (
-                <p id="username-error" className="text-[0.65rem] text-[#ff6b6b] mt-1 tracking-wider uppercase">{validationErrors.username}</p>
-              )}
+              <div className="flex items-center justify-between mt-1">
+                {validationErrors.username ? (
+                  <p id="username-error" className="text-[0.65rem] text-[#ff6b6b] tracking-wider uppercase">{validationErrors.username}</p>
+                ) : formData.username ? (
+                  <p className="text-[0.65rem] text-white/30 tracking-wide uppercase">
+                    {formData.username.length >= 3 ? '✓ Valid' : 'Min 3 characters'}
+                  </p>
+                ) : (
+                  <p className="text-[0.65rem] text-white/30 tracking-wide uppercase">Min 3 characters required</p>
+                )}
+                {formData.username && (
+                  <span className="text-[0.65rem] tabular-nums" style={{ color: formData.username.length > 25 ? '#ff9d1c' : 'rgba(255,255,255,0.2)' }}>
+                    {formData.username.length}/30
+                  </span>
+                )}
+              </div>
             </div>
 
             <div>
@@ -334,9 +348,56 @@ function Register() {
                 </button>
               </div>
               {validationErrors.password ? (
-                <p id="password-error" className="text-[0.65rem] text-red-400 mt-1 tracking-wider uppercase">{validationErrors.password}</p>
+                <p id="password-error" className="text-[0.65rem] text-red-400 mt-2 tracking-wider uppercase">{validationErrors.password}</p>
+              ) : formData.password ? (
+                <div className="mt-2 space-y-1">
+                  <div className="flex items-center gap-2">
+                    <div className="flex-1 h-1 bg-white/5 rounded-full overflow-hidden">
+                      <div
+                        className="h-full transition-all duration-300"
+                        style={{
+                          width: `${(() => {
+                            let score = 0;
+                            if (formData.password.length >= 8) score += 20;
+                            if (/[a-z]/.test(formData.password)) score += 20;
+                            if (/[A-Z]/.test(formData.password)) score += 20;
+                            if (/[0-9]/.test(formData.password)) score += 20;
+                            if (/[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(formData.password)) score += 20;
+                            return score;
+                          })()}%`,
+                          background: (() => {
+                            let score = 0;
+                            if (formData.password.length >= 8) score++;
+                            if (/[a-z]/.test(formData.password)) score++;
+                            if (/[A-Z]/.test(formData.password)) score++;
+                            if (/[0-9]/.test(formData.password)) score++;
+                            if (/[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(formData.password)) score++;
+                            return score >= 5 ? '#2EE6FF' : score >= 3 ? '#FF9D1C' : '#ff6b6b';
+                          })()
+                        }}
+                      />
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-5 gap-2 text-[0.6rem]">
+                    <span className={formData.password.length >= 8 ? 'text-[#2EE6FF]' : 'text-white/20'}>
+                      {formData.password.length >= 8 ? '✓' : '○'} 8+ chars
+                    </span>
+                    <span className={/[a-z]/.test(formData.password) ? 'text-[#2EE6FF]' : 'text-white/20'}>
+                      {/[a-z]/.test(formData.password) ? '✓' : '○'} lowercase
+                    </span>
+                    <span className={/[A-Z]/.test(formData.password) ? 'text-[#2EE6FF]' : 'text-white/20'}>
+                      {/[A-Z]/.test(formData.password) ? '✓' : '○'} uppercase
+                    </span>
+                    <span className={/[0-9]/.test(formData.password) ? 'text-[#2EE6FF]' : 'text-white/20'}>
+                      {/[0-9]/.test(formData.password) ? '✓' : '○'} number
+                    </span>
+                    <span className={/[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(formData.password) ? 'text-[#2EE6FF]' : 'text-white/20'}>
+                      {/[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(formData.password) ? '✓' : '○'} special
+                    </span>
+                  </div>
+                </div>
               ) : (
-                <p className="text-[0.65rem] text-white/30 mt-1 tracking-wide uppercase">
+                <p className="text-[0.65rem] text-white/30 mt-2 tracking-wide uppercase">
                   8+ chars · uppercase · lowercase · number · special
                 </p>
               )}

@@ -300,6 +300,7 @@ function Profile() {
                         name="fullName"
                         value={formData.fullName}
                         onChange={handleChange}
+                        maxLength={50}
                         className="w-full bg-black/20 text-white/90 px-4 py-2 text-sm focus:outline-none transition-all"
                         style={{
                           border: '1px solid rgba(255,255,255,0.1)',
@@ -307,6 +308,11 @@ function Profile() {
                         }}
                         placeholder="Optional"
                       />
+                      {formData.fullName && (
+                        <p className="text-[9px] mt-1 tabular-nums" style={{ color: formData.fullName.length > 40 ? '#D97757' : 'rgba(255,255,255,0.2)' }}>
+                          {formData.fullName.length}/50
+                        </p>
+                      )}
                     </div>
                     <div>
                       <label className="block text-[9px] tracking-[0.2em] text-white/25 uppercase mb-2">
@@ -326,6 +332,9 @@ function Profile() {
                         max={100}
                         placeholder="Optional"
                       />
+                      {formData.age && (formData.age < 18 || formData.age > 100) && (
+                        <p className="text-[9px] mt-1 text-red-400/80">Must be 18-100</p>
+                      )}
                     </div>
                     <div>
                       <label className="block text-[9px] tracking-[0.2em] text-white/25 uppercase mb-2">
