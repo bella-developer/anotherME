@@ -184,7 +184,7 @@ function CircleCard({ circle, onClick }) {
           ))}
         </div>
 
-        {/* Inner circle with first letter */}
+        {/* Inner circle with full circle name */}
         <div
           className="absolute inset-0 rounded-full flex items-center justify-center"
           style={{
@@ -195,17 +195,26 @@ function CircleCard({ circle, onClick }) {
             `,
             transform: hovered ? 'scale(1.05)' : 'scale(1)',
             transition: 'all 0.5s ease',
+            padding: '12px',
+            overflow: 'hidden',
           }}
         >
           <span
-            className="font-light"
+            className="font-light text-center leading-tight"
             style={{
-              fontSize: '32px',
+              fontSize: circle.name.length > 15 ? '9px' : circle.name.length > 10 ? '11px' : '13px',
               color: accent.color,
               textShadow: `0 0 12px rgba(${accent.colorRGB}, 0.6)`,
+              letterSpacing: '0.05em',
+              wordBreak: 'break-word',
+              maxWidth: '100%',
+              display: '-webkit-box',
+              WebkitLineClamp: 3,
+              WebkitBoxOrient: 'vertical',
+              overflow: 'hidden',
             }}
           >
-            {circle.name.charAt(0).toUpperCase()}
+            {circle.name}
           </span>
         </div>
 
@@ -225,18 +234,6 @@ function CircleCard({ circle, onClick }) {
           </div>
         )}
       </div>
-
-      {/* Circle name */}
-      <h3
-        className="font-light tracking-wide mb-2 text-center transition-colors duration-300"
-        style={{
-          fontSize: '14px',
-          letterSpacing: '0.08em',
-          color: hovered ? '#ffffff' : 'rgba(255,255,255,0.75)',
-        }}
-      >
-        {circle.name}
-      </h3>
 
       {/* Description */}
       <p
