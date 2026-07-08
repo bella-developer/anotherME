@@ -232,12 +232,6 @@ export function getFantasyRoomFeedback(reactionType) {
   };
   
   return feedbackMessages[reactionType] || 'Keep creating!';
-    pull: 'Refine and iterate.',
-    gear: 'That\'s practical genius.',
-    rocket: 'You\'re onto something big!'
-  };
-  
-  return feedbackMessages[reactionType] || 'Progress made.';
 }
 
 /**
