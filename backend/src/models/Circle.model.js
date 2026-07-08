@@ -62,8 +62,8 @@ const circleSchema = new mongoose.Schema(
       enum: [
         // Dark Room categories
         'CONFESSION', 'REGRET', 'DARK',
-        // Climb Room categories
-        'IDEA', 'FUTURISTIC', 'BUSINESS', 'ENTREPRENEUR',
+        // Fantasy Room categories
+        'CREATIVE', 'DAYDREAM', 'FUNNY', 'FUTURISTIC',
         // Philo Room categories
         'SPIRITUAL', 'SHADOW', 'DEEP',
         // Legacy categories
@@ -74,7 +74,7 @@ const circleSchema = new mongoose.Schema(
     // Room identifier (optional - for filtering circles by room)
     room: {
       type: String,
-      enum: ['dark', 'climb', 'philo', null],
+      enum: ['dark', 'fantasy', 'philo', null],
       default: null,
       index: true
     }
