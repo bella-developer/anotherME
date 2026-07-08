@@ -60,9 +60,9 @@ function RoomReactions({ room, reactions, userReactions = [], onReact, disabled 
     
     if (hasReacted) {
       return {
-        background: `rgba(${colorRGB}, 0.15)`,
-        border: `1px solid rgba(${colorRGB}, 0.4)`,
-        boxShadow: `0 0 15px rgba(${colorRGB}, 0.3), inset 0 0 20px rgba(${colorRGB}, 0.1)`,
+        background: `rgba(${colorRGB}, 0.08)`,
+        border: `1px solid rgba(${colorRGB}, 0.25)`,
+        boxShadow: `0 0 8px rgba(${colorRGB}, 0.15), inset 0 0 12px rgba(${colorRGB}, 0.05)`,
         transform: 'scale(1.05)',
         transition: 'all 0.3s cubic-bezier(0.22, 1, 0.36, 1)',
       };
@@ -102,10 +102,10 @@ function RoomReactions({ room, reactions, userReactions = [], onReact, disabled 
               title={label}
               onMouseEnter={(e) => {
                 if (!hasReacted) {
-                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)';
-                  e.currentTarget.style.border = '1px solid rgba(255, 255, 255, 0.12)';
+                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.04)';
+                  e.currentTarget.style.border = '1px solid rgba(255, 255, 255, 0.1)';
                   e.currentTarget.style.transform = 'scale(1.05)';
-                  e.currentTarget.style.boxShadow = `0 0 15px rgba(${colorRGB}, 0.2)`;
+                  e.currentTarget.style.boxShadow = `0 0 8px rgba(${colorRGB}, 0.1)`;
                 }
               }}
               onMouseLeave={(e) => {
@@ -117,14 +117,14 @@ function RoomReactions({ room, reactions, userReactions = [], onReact, disabled 
                 }
               }}
             >
-              {/* Icon with glow effect - responsive sizing */}
+              {/* Icon with subtle glow effect - responsive sizing */}
               <Icon 
                 size={14}
                 strokeWidth={1.5}
                 className="flex-shrink-0"
                 style={{
                   color: hasReacted ? color : 'rgba(255, 255, 255, 0.4)',
-                  filter: hasReacted ? `drop-shadow(0 0 4px rgba(${colorRGB}, 0.6))` : 'none',
+                  filter: hasReacted ? `drop-shadow(0 0 2px rgba(${colorRGB}, 0.4))` : 'none',
                   transition: 'all 0.3s ease',
                 }}
               />
@@ -135,7 +135,7 @@ function RoomReactions({ room, reactions, userReactions = [], onReact, disabled 
                   className="text-[10px] sm:text-[11px] font-light tracking-wide"
                   style={{
                     color: hasReacted ? color : 'rgba(255, 255, 255, 0.4)',
-                    textShadow: hasReacted ? `0 0 8px rgba(${colorRGB}, 0.5)` : 'none',
+                    textShadow: hasReacted ? `0 0 4px rgba(${colorRGB}, 0.3)` : 'none',
                     transition: 'all 0.3s ease',
                   }}
                 >
