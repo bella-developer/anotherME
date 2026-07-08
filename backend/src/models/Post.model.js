@@ -20,7 +20,7 @@ const postSchema = new mongoose.Schema(
     room: {
       type: String,
       required: true,
-      enum: ['dark', 'climb', 'philo'],
+      enum: ['dark', 'fantasy', 'philo'],
       index: true
     },
 
@@ -50,8 +50,8 @@ const postSchema = new mongoose.Schema(
       enum: [
         // Dark Room categories
         'CONFESSION', 'REGRET', 'DARK',
-        // Climb Room categories
-        'IDEA', 'FUTURISTIC', 'BUSINESS', 'ENTREPRENEUR',
+        // Fantasy Room categories
+        'CREATIVE', 'DAYDREAM', 'FUNNY', 'FUTURISTIC',
         // Philo Room categories
         'SPIRITUAL', 'SHADOW', 'DEEP',
         // Legacy categories (for backward compatibility)
@@ -119,11 +119,11 @@ const postSchema = new mongoose.Schema(
       youreNotAlone: { type: Number, default: 0, min: 0 },
       sendingStrength: { type: Number, default: 0, min: 0 },
       
-      // Climb Room reactions
-      push: { type: Number, default: 0, min: 0 },
-      pull: { type: Number, default: 0, min: 0 },
-      gear: { type: Number, default: 0, min: 0 },
-      rocket: { type: Number, default: 0, min: 0 },
+      // Fantasy Room reactions
+      vibe: { type: Number, default: 0, min: 0 },
+      dream: { type: Number, default: 0, min: 0 },
+      inspire: { type: Number, default: 0, min: 0 },
+      wild: { type: Number, default: 0, min: 0 },
       
       // Philo Room reactions
       lamp: { type: Number, default: 0, min: 0 },
