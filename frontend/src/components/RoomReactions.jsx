@@ -86,8 +86,8 @@ function RoomReactions({ room, reactions, userReactions = [], onReact, disabled 
 
   return (
     <div className="relative">
-      {/* Reaction Buttons - Artistic dark design */}
-      <div className="flex flex-wrap gap-3 justify-center">
+      {/* Reaction Buttons - Small, responsive, artistic dark design */}
+      <div className="flex flex-wrap gap-1.5 sm:gap-2 justify-center items-center">
         {roomReactions.map(({ type, label, icon: Icon, color, colorRGB }) => {
           const count = reactions[type] || 0;
           const hasReacted = userReactions.includes(type);
@@ -97,7 +97,7 @@ function RoomReactions({ room, reactions, userReactions = [], onReact, disabled 
               key={type}
               onClick={() => handleReactionClick(type)}
               disabled={disabled}
-              className="group relative px-4 py-2.5 rounded-md flex items-center gap-2.5 cursor-pointer outline-none"
+              className="group relative px-2 sm:px-2.5 py-1.5 sm:py-2 rounded flex items-center gap-1.5 cursor-pointer outline-none"
               style={getButtonStyle(type, hasReacted, color, colorRGB)}
               title={label}
               onMouseEnter={(e) => {
@@ -105,7 +105,7 @@ function RoomReactions({ room, reactions, userReactions = [], onReact, disabled 
                   e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)';
                   e.currentTarget.style.border = '1px solid rgba(255, 255, 255, 0.12)';
                   e.currentTarget.style.transform = 'scale(1.05)';
-                  e.currentTarget.style.boxShadow = `0 0 20px rgba(${colorRGB}, 0.2)`;
+                  e.currentTarget.style.boxShadow = `0 0 15px rgba(${colorRGB}, 0.2)`;
                 }
               }}
               onMouseLeave={(e) => {
@@ -117,24 +117,25 @@ function RoomReactions({ room, reactions, userReactions = [], onReact, disabled 
                 }
               }}
             >
-              {/* Icon with glow effect */}
+              {/* Icon with glow effect - responsive sizing */}
               <Icon 
-                size={16}
+                size={14}
                 strokeWidth={1.5}
+                className="flex-shrink-0"
                 style={{
                   color: hasReacted ? color : 'rgba(255, 255, 255, 0.4)',
-                  filter: hasReacted ? `drop-shadow(0 0 6px rgba(${colorRGB}, 0.6))` : 'none',
+                  filter: hasReacted ? `drop-shadow(0 0 4px rgba(${colorRGB}, 0.6))` : 'none',
                   transition: 'all 0.3s ease',
                 }}
               />
               
-              {/* Count */}
+              {/* Count - only show if > 0 */}
               {count > 0 && (
                 <span
-                  className="text-[11px] font-light tracking-wide"
+                  className="text-[10px] sm:text-[11px] font-light tracking-wide"
                   style={{
                     color: hasReacted ? color : 'rgba(255, 255, 255, 0.4)',
-                    textShadow: hasReacted ? `0 0 10px rgba(${colorRGB}, 0.5)` : 'none',
+                    textShadow: hasReacted ? `0 0 8px rgba(${colorRGB}, 0.5)` : 'none',
                     transition: 'all 0.3s ease',
                   }}
                 >
@@ -142,9 +143,9 @@ function RoomReactions({ room, reactions, userReactions = [], onReact, disabled 
                 </span>
               )}
               
-              {/* Subtle label on hover */}
+              {/* Label on hover - hidden on small screens */}
               <span
-                className="text-[9px] tracking-wide uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap"
+                className="hidden sm:block text-[8px] tracking-wide uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap"
                 style={{
                   color: 'rgba(255, 255, 255, 0.5)',
                   letterSpacing: '0.1em',
