@@ -112,23 +112,21 @@ function Home() {
                 className="flex flex-col items-center w-full"
               >
                 {/* Circular portal with stable border and rotating energy arcs */}
-                <div className="relative w-full" style={{ maxWidth: '380px' }}>
-                  {/* Aspect ratio container using padding-bottom trick */}
-                  <div style={{ paddingBottom: '100%', position: 'relative', width: '100%' }}>
-                    <button
-                      onClick={() => navigate(room.path)}
-                      onMouseEnter={() => setHovered(room.id)}
-                      onMouseLeave={() => setHovered(null)}
-                      className="absolute inset-0 group focus:outline-none"
-                      style={{
-                        cursor: 'pointer',
-                      }}
-                    >
+                <div className="relative w-full mx-auto" style={{ maxWidth: '380px', aspectRatio: '1 / 1' }}>
+                  <button
+                    onClick={() => navigate(room.path)}
+                    onMouseEnter={() => setHovered(room.id)}
+                    onMouseLeave={() => setHovered(null)}
+                    className="absolute inset-0 group focus:outline-none"
+                    style={{
+                      cursor: 'pointer',
+                    }}
+                  >
                       {/* Stable circular border */}
                       <div
-                        className="absolute inset-0 rounded-full"
+                        className="absolute rounded-full"
                         style={{
-                          margin: '10px',
+                          inset: '10px',
                           border: `2px solid rgba(${room.glowColorRGB}, 0.3)`,
                           boxShadow: `
                             inset 0 0 30px rgba(${room.glowColorRGB}, 0.1),
@@ -139,9 +137,9 @@ function Home() {
 
                       {/* Rotating energy arcs */}
                       <div
-                        className="absolute inset-0"
+                        className="absolute rounded-full"
                         style={{
-                          margin: '10px',
+                          inset: '10px',
                           animation: 'rotate360 20s linear infinite',
                         }}
                       >
@@ -203,9 +201,9 @@ function Home() {
 
                       {/* Counter-rotating secondary arc */}
                       <div
-                        className="absolute inset-0"
+                        className="absolute rounded-full"
                         style={{
-                          margin: '10px',
+                          inset: '10px',
                           animation: 'rotate360reverse 15s linear infinite',
                         }}
                       >
@@ -231,9 +229,9 @@ function Home() {
 
                       {/* Orbital particles */}
                       <div
-                        className="absolute inset-0"
+                        className="absolute rounded-full"
                         style={{
-                          margin: '10px',
+                          inset: '10px',
                           animation: 'rotate360 25s linear infinite',
                         }}
                       >
@@ -283,9 +281,9 @@ function Home() {
 
                       {/* Inner circle container with static image */}
                       <div
-                        className="absolute inset-0 rounded-full overflow-hidden"
+                        className="absolute rounded-full overflow-hidden"
                         style={{
-                          margin: '30px',
+                          inset: '30px',
                           border: `1px solid rgba(${room.glowColorRGB}, ${hovered === room.id ? 0.4 : 0.2})`,
                           boxShadow: `
                             inset 0 0 40px rgba(${room.glowColorRGB}, 0.15),
@@ -299,8 +297,9 @@ function Home() {
                         <img
                           src={room.img}
                           alt={room.name}
-                          className="absolute inset-0 w-full h-full object-cover"
+                          className="w-full h-full object-cover"
                           style={{
+                            display: 'block',
                             filter: hovered === room.id 
                               ? 'brightness(1.1) contrast(1.1)' 
                               : 'brightness(0.95) contrast(1.05)',
@@ -372,7 +371,6 @@ function Home() {
                       </motion.span>
                     </motion.div>
                   </div>
-                </div>
               </motion.div>
             ))}
           </div>
