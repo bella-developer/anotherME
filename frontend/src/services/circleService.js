@@ -4,7 +4,7 @@ import apiClient from './api';
  * Fetch circles with optional pagination
  * @param {Object} params - Query parameters
  * @param {string} params.cursor - Pagination cursor
- * @param {string} params.room - Filter by room (dark, climb, philo)
+ * @param {string} params.room - Filter by room (dark, fantasy, philo)
  * @param {boolean} params.bustCache - Force fresh data bypassing browser cache
  * @returns {Promise<Object>} Circles data with pagination
  */

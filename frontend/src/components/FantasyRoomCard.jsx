@@ -4,11 +4,10 @@ import { FaPen, FaTrash } from 'react-icons/fa';
 import RoomReactions from './RoomReactions';
 
 /**
- * Climb Room Idea Card Component
- * For building ideas and collaborative progress
- * Feedback: Icon-based with PUSH/PULL/GEAR/ROCKET system
+ * Fantasy Room Card Component
+ * For creative expression, imagination, and artistic content
  */
-function ClimbRoomCard({ post, onReaction, onEdit, onDelete }) {
+function FantasyRoomCard({ post, onReaction, onEdit, onDelete }) {
   const navigate = useNavigate();
 
   const stateLabels = {
@@ -39,12 +38,12 @@ function ClimbRoomCard({ post, onReaction, onEdit, onDelete }) {
       {/* Metadata */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
-          <span className="text-xs text-[#6B5E59] tracking-wider">
+          <span className="text-xs text-[#9B7E5F] tracking-wider">
             {formatTimeAgo(post.createdAt)}
           </span>
           {/* Category Badge */}
           {post.category && (
-            <span className="px-2 py-1 rounded text-[10px] font-medium uppercase tracking-wider bg-green-900/20 text-green-400 border border-green-900/30">
+            <span className="px-2 py-1 rounded text-[10px] font-medium uppercase tracking-wider bg-amber-900/20 text-amber-400 border border-amber-900/30">
               {post.category}
             </span>
           )}
@@ -74,14 +73,14 @@ function ClimbRoomCard({ post, onReaction, onEdit, onDelete }) {
             </div>
           )}
           {post.commentCount > 0 && (
-            <div className="flex items-center gap-1.5 text-xs text-[#6B5E59]">
+            <div className="flex items-center gap-1.5 text-xs text-[#9B7E5F]">
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
               </svg>
               <span className="tracking-wider">{post.commentCount} {post.commentCount === 1 ? 'response' : 'responses'}</span>
             </div>
           )}
-          <span className="text-xs text-[#A05A2C] uppercase tracking-wider font-medium">
+          <span className="text-xs text-[#FF9D1C] uppercase tracking-wider font-medium">
             {stateLabels[post.climbState] || 'FORMING'}
           </span>
         </div>
@@ -178,15 +177,15 @@ function ClimbRoomCard({ post, onReaction, onEdit, onDelete }) {
 
       {/* System State Label */}
       {post.systemState && (
-        <div className="mb-4 text-xs text-[#6B5E59] uppercase tracking-wider text-center">
+        <div className="mb-4 text-xs text-[#9B7E5F] uppercase tracking-wider text-center">
           {post.systemState}
         </div>
       )}
 
       {/* Reactions */}
-      <div className="pt-6 border-t border-[#2d2420]">
+      <div className="pt-6 border-t" style={{ borderColor: 'rgba(255, 157, 28, 0.15)' }}>
         <RoomReactions
-          room="climb"
+          room="fantasy"
           reactions={post.reactions || {}}
           userReactions={post.userReactions || []}
           onReact={(reactionType) => onReaction?.(post.id, reactionType)}
@@ -197,7 +196,7 @@ function ClimbRoomCard({ post, onReaction, onEdit, onDelete }) {
   );
 }
 
-ClimbRoomCard.propTypes = {
+FantasyRoomCard.propTypes = {
   post: PropTypes.shape({
     id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
@@ -218,4 +217,4 @@ ClimbRoomCard.propTypes = {
   onReaction: PropTypes.func
 };
 
-export default ClimbRoomCard;
+export default FantasyRoomCard;

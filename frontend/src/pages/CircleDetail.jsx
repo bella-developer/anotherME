@@ -13,7 +13,7 @@ import { fetchCircleById, fetchCircleComments, createCircleComment, fetchCircleT
 
 const roomAccent = {
   dark:  '#c4a882',
-  climb: '#c47a3a',
+  fantasy: '#FF9D1C',
   philo: '#b8a8d4',
 };
 

@@ -6,7 +6,7 @@ import apiClient from './api';
  * @param {string} params.cursor - Pagination cursor
  * @param {string} params.circleId - Filter by circle ID
  * @param {string} params.category - Filter by category
- * @param {string} params.room - Filter by room (dark, climb, philo)
+ * @param {string} params.room - Filter by room (dark, fantasy, philo)
  * @returns {Promise<Object>} Posts data with pagination
  */
 export const fetchPosts = async ({ cursor, circleId, category, room } = {}) => {
@@ -70,8 +70,8 @@ export const fetchPostById = async (postId) => {
  * Create new post
  * @param {Object} postData - Post data
  * @param {string} postData.content - Post content (10-5000 chars)
- * @param {string} postData.room - Room type (dark, climb, philo)
- * @param {string} postData.title - Optional title (for climb/philo)
+ * @param {string} postData.room - Room type (dark, fantasy, philo)
+ * @param {string} postData.title - Optional title (for fantasy/philo)
  * @param {string} postData.circleId - Circle ID
  * @param {string} postData.category - Category tag
  * @param {File} postData.image - Optional image file
@@ -90,7 +90,7 @@ export const createPost = async (postData) => {
     }
 
     // Validate room
-    if (!['dark', 'climb', 'philo'].includes(postData.room)) {
+    if (!['dark', 'fantasy', 'philo'].includes(postData.room)) {
       throw new Error('Invalid room type');
     }
 
@@ -202,7 +202,7 @@ export const addReaction = async (postId, reactionType) => {
     const validReactions = [
       // Dark Room reactions
       'iFeelYou', 'notGood', 'youreNotAlone', 'sendingStrength',
-      // Climb Room reactions
+      // Fantasy Room reactions
       'push', 'pull', 'gear', 'rocket',
       // Philo Room reactions
       'lamp', 'spark', 'clap',
@@ -252,7 +252,7 @@ export const removeReaction = async (postId, reactionType) => {
     const validReactions = [
       // Dark Room reactions
       'iFeelYou', 'notGood', 'youreNotAlone', 'sendingStrength',
-      // Climb Room reactions
+      // Fantasy Room reactions
       'push', 'pull', 'gear', 'rocket',
       // Philo Room reactions
       'lamp', 'spark', 'clap',

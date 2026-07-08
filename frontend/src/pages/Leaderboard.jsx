@@ -13,15 +13,15 @@ function Leaderboard() {
   usePageTitle('Leaderboard');
   const navigate = useNavigate();
   
-  const [room, setRoom] = useState('climb');
+  const [room, setRoom] = useState('fantasy');
   const [stat, setStat] = useState('genius');
   const [leaderboard, setLeaderboard] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const roomStats = {
-    climb: {
-      name: 'Climb Room',
+    fantasy: {
+      name: 'Fantasy Room',
       icon: '🚀',
       stats: [
         { key: 'genius', label: 'Genius', color: 'from-purple-600 to-purple-400' },

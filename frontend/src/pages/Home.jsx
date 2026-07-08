@@ -37,11 +37,11 @@ function Home() {
       glowColorRGB: '46, 230, 255',
     },
     {
-      id: 'climb',
-      name: 'CLIMB ROOM',
-      tagline: 'Build. Sharpen. Progress.',
-      description: 'The hunger to rise.',
-      path: '/rooms/climb',
+      id: 'fantasy',
+      name: 'FANTASY ROOM',
+      tagline: 'Dream. Create. Imagine.',
+      description: 'Where imagination roams free.',
+      path: '/rooms/fantasy',
       img: 'https://res.cloudinary.com/dbtm7etag/image/upload/v1782735019/climbroom_camkye.png',
       glowColor: '#FF9D1C', // Amber/Gold
       glowColorRGB: '255, 157, 28',

@@ -99,7 +99,7 @@ export async function createCircle(userId, circleData) {
  * @param {string} options.cursor - Opaque cursor for pagination
  * @param {number} options.limit - Number of results per page (default: 20, max: 50)
  * @param {string} options.visibility - Filter by visibility (optional)
- * @param {string} options.room - Filter by room type (optional: 'dark', 'climb', 'philo')
+ * @param {string} options.room - Filter by room type (optional: 'dark', 'fantasy', 'philo')
  * @returns {Promise<Object>} Paginated circles
  */
 export async function listCircles(options = {}) {
@@ -125,11 +125,11 @@ export async function listCircles(options = {}) {
 
   // Filter by room if specified
   if (room) {
-    if (!['dark', 'climb', 'philo'].includes(room)) {
+    if (!['dark', 'fantasy', 'philo'].includes(room)) {
       const error = new Error('Invalid room value');
       error.statusCode = 400;
       error.code = 'INVALID_ROOM';
-      error.userMessage = 'Room must be either dark, climb, or philo';
+      error.userMessage = 'Room must be either dark, fantasy, or philo';
       throw error;
     }
     query.room = room;

@@ -29,7 +29,7 @@ const CircleDetail = lazy(() => import('./pages/CircleDetail'));
 const PostDetail = lazy(() => import('./pages/PostDetail'));
 const Profile = lazy(() => import('./pages/Profile'));
 const DarkRoom = lazy(() => import('./pages/DarkRoom'));
-const ClimbRoom = lazy(() => import('./pages/ClimbRoom'));
+const FantasyRoom = lazy(() => import('./pages/FantasyRoom'));
 const PhiloRoom = lazy(() => import('./pages/PhiloRoom'));
 const Leaderboard = lazy(() => import('./pages/Leaderboard'));
 const Rules = lazy(() => import('./pages/Rules'));
@@ -187,11 +187,11 @@ function App() {
               }
             />
             <Route
-              path="/rooms/climb"
+              path="/rooms/fantasy"
               element={
                 <ProtectedRoute>
                   <Suspense fallback={<PageLoader />}>
-                    <ClimbRoom />
+                    <FantasyRoom />
                   </Suspense>
                 </ProtectedRoute>
               }

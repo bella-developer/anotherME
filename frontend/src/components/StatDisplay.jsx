@@ -17,7 +17,7 @@ const STAT_CONFIG = {
     soulLevel: { label: 'Soul-Level', color: 'from-blue-600 to-blue-800', icon: '💙' },
     godmode: { label: 'Godmode', color: 'from-purple-600 to-purple-800', icon: '✨' }
   },
-  climb: {
+  fantasy: {
     genius: { label: 'Genius', color: 'from-cyan-600 to-cyan-800', icon: '🧠' },
     hustle: { label: 'Hustle', color: 'from-orange-600 to-orange-800', icon: '🔥' },
     legend: { label: 'Legend', color: 'from-purple-600 to-purple-800', icon: '👑' }
@@ -50,7 +50,7 @@ function StatDisplay({ room, stats, compact = false }) {
         return 'bg-black/80 border-gray-800';
       case 'philo':
         return 'bg-gray-900/80 border-gray-700';
-      case 'climb':
+      case 'fantasy':
         return 'bg-gradient-to-br from-purple-900/50 to-blue-900/50 border-purple-700';
       default:
         return 'bg-gray-800/80 border-gray-700';
@@ -145,7 +145,7 @@ function StatDisplay({ room, stats, compact = false }) {
 }
 
 StatDisplay.propTypes = {
-  room: PropTypes.oneOf(['dark', 'philo', 'climb']).isRequired,
+  room: PropTypes.oneOf(['dark', 'philo', 'fantasy']).isRequired,
   stats: PropTypes.object.isRequired,
   compact: PropTypes.bool
 };

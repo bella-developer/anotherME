@@ -30,7 +30,7 @@ function AboutUs() {
 
   const spaces = [
     { name: "Dark", desc: "Heavy emotions" },
-    { name: "Climb", desc: "Ideas & growth" },
+    { name: "Fantasy", desc: "Creative expression" },
     { name: "Philo", desc: "Deep thoughts" }
   ];
 

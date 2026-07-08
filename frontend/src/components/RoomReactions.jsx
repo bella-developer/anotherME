@@ -2,9 +2,9 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 // Lucide icons for dark artistic aesthetic
 import { 
-  Heart, Flame, Wind, Droplet, // Dark Room - elemental emotions
+  // Climb Room - progress
   Sparkles, Eye, Feather, // Philo Room - contemplation
-  TrendingUp, Zap, Target, Compass // Climb Room - progress
+  TrendingUp, Zap, Target, Compass // Fantasy Room - creative progress
 } from 'lucide-react';
 
 /**
@@ -25,7 +25,7 @@ const ROOM_REACTIONS = {
     { type: 'spark', label: 'Curiosity', icon: Eye, color: '#B56DFF', colorRGB: '181, 109, 255' },
     { type: 'clap', label: 'Resonance', icon: Feather, color: '#B56DFF', colorRGB: '181, 109, 255' }
   ],
-  climb: [
+  fantasy: [
     { type: 'push', label: 'Push', icon: TrendingUp, color: '#FF9D1C', colorRGB: '255, 157, 28' },
     { type: 'pull', label: 'Refine', icon: Target, color: '#FF9D1C', colorRGB: '255, 157, 28' },
     { type: 'gear', label: 'Practical', icon: Compass, color: '#FF9D1C', colorRGB: '255, 157, 28' },
@@ -162,7 +162,7 @@ function RoomReactions({ room, reactions, userReactions = [], onReact, disabled 
 }
 
 RoomReactions.propTypes = {
-  room: PropTypes.oneOf(['dark', 'philo', 'climb']).isRequired,
+  room: PropTypes.oneOf(['dark', 'philo', 'fantasy']).isRequired,
   reactions: PropTypes.object.isRequired,
   userReactions: PropTypes.arrayOf(PropTypes.string),
   onReact: PropTypes.func.isRequired,

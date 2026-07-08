@@ -37,7 +37,7 @@ const PostForm = ({ isOpen, onClose, circles = [] }) => {
   // Room options
   const rooms = [
     { value: 'dark', label: 'Dark Room', description: 'Emotional release & vulnerability' },
-    { value: 'climb', label: 'Climb Room', description: 'Ideas & execution' },
+    { value: 'fantasy', label: 'Fantasy Room', description: 'Creative & imaginative expression' },
     { value: 'philo', label: 'Philo Room', description: 'Deep thoughts & reflection' },
   ];
 
@@ -273,8 +273,8 @@ const PostForm = ({ isOpen, onClose, circles = [] }) => {
             </div>
           </div>
 
-          {/* Title Input (Optional for Climb/Philo) */}
-          {(formData.room === 'climb' || formData.room === 'philo') && (
+          {/* Title Input (Optional for Fantasy/Philo) */}
+          {(formData.room === 'fantasy' || formData.room === 'philo') && (
             <div className="mb-4">
               <input
                 type="text"

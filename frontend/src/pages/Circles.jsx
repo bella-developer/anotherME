@@ -16,12 +16,12 @@ const roomAccent = {
     glow: 'rgba(46, 230, 255, 0.3)', 
     label: 'Dark' 
   },
-  climb: { 
+  fantasy: { 
     color: '#FF9D1C', // Amber/Gold
     colorRGB: '255, 157, 28',
     bg: 'rgba(255, 157, 28, 0.05)',  
     glow: 'rgba(255, 157, 28, 0.3)',  
-    label: 'Climb' 
+    label: 'Fantasy' 
   },
   philo: { 
     color: '#B56DFF', // Violet
@@ -307,7 +307,7 @@ function Circles() {
   const filters = [
     { value: 'all', label: 'All' },
     { value: 'philo', label: 'Philo' },
-    { value: 'climb', label: 'Climb' },
+    { value: 'fantasy', label: 'Fantasy' },
     { value: 'dark', label: 'Dark' },
   ];
 

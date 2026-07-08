@@ -167,7 +167,7 @@ const PostCard = memo(({ post, onPostClick }) => {
             {post.circle.room && (
               <span className={`ml-1 px-1.5 py-0.5 text-[10px] font-medium rounded ${
                 post.circle.room === 'dark' ? 'bg-[#2a1a1a] text-[#D97757]' :
-                post.circle.room === 'climb' ? 'bg-[#1a2a1a] text-[#7BC96F]' :
+                post.circle.room === 'fantasy' ? 'bg-[#2a1a0a] text-[#FF9D1C]' :
                 post.circle.room === 'philo' ? 'bg-[#1a1a2a] text-[#8B9DC3]' :
                 'bg-[#2a2a2a] text-[#918A87]'
               }`}>

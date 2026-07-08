@@ -85,7 +85,7 @@ function Profile() {
     if (!stats) return null;
     
     const allStats = [];
-    ['climb', 'dark', 'philo'].forEach(room => {
+    ['fantasy', 'dark', 'philo'].forEach(room => {
       if (stats[room]) {
         Object.entries(stats[room]).forEach(([stat, data]) => {
           allStats.push({ room, stat, level: data.level, xp: data.xp });
@@ -180,7 +180,7 @@ function Profile() {
 
   const roomAccent = {
     dark: '#c4a882',
-    climb: '#A05A2C',
+    fantasy: '#FF9D1C',
     philo: '#8B7AA3'
   };
 
@@ -444,7 +444,7 @@ function Profile() {
                 </div>
 
                 {/* Room Stats */}
-                {['dark', 'philo', 'climb'].map(room => {
+                {['dark', 'philo', 'fantasy'].map(room => {
                   if (!stats[room]) return null;
                   const accent = roomAccent[room];
                   const roomName = room === 'dark' ? 'Dark Room' : room === 'climb' ? 'Climb Room' : 'Philo Room';

@@ -7,19 +7,19 @@ import ImageUpload from './ImageUpload';
 import useReducedMotion from '../hooks/useReducedMotion';
 
 /**
- * Climb Room Post Form Component
- * Specialized form for Climb Room posts with specific categories
+ * Fantasy Room Post Form Component
+ * Specialized form for Fantasy Room posts with specific categories
  */
-const ClimbRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, onCircleCreated, editingPost = null }) => {
+const FantasyRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, onCircleCreated, editingPost = null }) => {
   const dispatch = useDispatch();
   const { loading, error } = useSelector((state) => state.posts);
 
   const [formData, setFormData] = useState({
     title: '',
     content: '',
-    room: 'climb',
+    room: 'fantasy',
     circleId: '',
-    category: 'IDEA',
+    category: 'CREATIVE',
     image: null,
   });
 
@@ -33,12 +33,12 @@ const ClimbRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, onCir
   const [characterCount, setCharacterCount] = useState(0);
   const prefersReducedMotion = useReducedMotion();
 
-  // Climb Room specific categories
+  // Fantasy Room specific categories
   const categories = [
-    { value: 'IDEA', label: 'Idea', description: 'Share your vision' },
-    { value: 'FUTURISTIC', label: 'Futuristic', description: 'Tomorrow\'s possibilities' },
-    { value: 'BUSINESS', label: 'Business', description: 'Commercial ventures' },
-    { value: 'ENTREPRENEUR', label: 'Entrepreneur', description: 'Building & scaling' },
+    { value: 'CREATIVE', label: 'Creative', description: 'Art & creative works' },
+    { value: 'DAYDREAM', label: 'Daydream', description: 'Fantasy & imagination' },
+    { value: 'FUNNY', label: 'Funny', description: 'Humor & jokes' },
+    { value: 'FUTURISTIC', label: 'Futuristic', description: 'Future visions' },
   ];
 
   // Reset form when modal opens/closes
@@ -47,9 +47,9 @@ const ClimbRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, onCir
       setFormData({
         title: '',
         content: '',
-        room: 'climb',
+        room: 'fantasy',
         circleId: '',
-        category: 'IDEA',
+        category: 'CREATIVE',
         image: null,
       });
       setNewCircle({ name: '', description: '' });
@@ -121,7 +121,7 @@ const ClimbRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, onCir
         description: newCircle.description.trim(),
         visibility: 'public',
         categories: [formData.category],
-        room: 'climb' // Climb room identifier
+        room: 'fantasy' // Fantasy room identifier
       });
 
       setFormData(prev => ({ ...prev, circleId: createdCircle.circle.id }));
@@ -229,8 +229,8 @@ const ClimbRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, onCir
         {/* Modal Header */}
         <div className="flex items-center justify-between p-6 border-b border-[#2a2a2a]">
           <div>
-            <h2 id="modal-title" className="text-white text-2xl font-bold">Climb Room Post</h2>
-            <p className="text-[#6B5E59] text-sm mt-1">Build. Sharpen. Progress.</p>
+            <h2 id="modal-title" className="text-white text-2xl font-bold">Fantasy Room Post</h2>
+            <p className="text-[#6B5E59] text-sm mt-1">Dream. Create. Imagine.</p>
           </div>
           <button
             onClick={handleClose}
@@ -290,7 +290,7 @@ const ClimbRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, onCir
           <div className="mb-4">
             <textarea
               name="content"
-              placeholder="Describe your idea..."
+              placeholder="Share your imagination..."
               value={formData.content}
               onChange={handleChange}
               disabled={loading}
@@ -336,7 +336,7 @@ const ClimbRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, onCir
                 >
                   <option value="">Select a circle</option>
                   {circles
-                    .filter(circle => circle.room === 'climb')
+                    .filter(circle => circle.room === 'fantasy')
                     .map((circle) => {
                       const isBusy = (circle.topicCount || 0) >= 3;
                       return (
@@ -490,7 +490,7 @@ const ClimbRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, onCir
             disabled={loading || creatingCircle}
             className="w-full h-12"
           >
-            {loading ? (editingPost ? 'Updating...' : 'Publishing...') : (editingPost ? 'Update Post' : 'Publish to Climb Room')}
+            {loading ? (editingPost ? 'Updating...' : 'Publishing...') : (editingPost ? 'Update Post' : 'Publish to Fantasy Room')}
           </Button>
         </form>
       </div>
@@ -498,4 +498,4 @@ const ClimbRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, onCir
   );
 };
 
-export default ClimbRoomPostForm;
+export default FantasyRoomPostForm;

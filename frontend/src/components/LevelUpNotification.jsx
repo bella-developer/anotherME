@@ -17,7 +17,7 @@ const STAT_LABELS = {
   soulLevel: { label: 'Soul-Level', icon: '💙', description: 'Truth felt' },
   godmode: { label: 'Godmode', icon: '✨', description: 'Synthesis reached' },
   
-  // Climb Room
+  // Fantasy Room
   genius: { label: 'Genius', icon: '🧠', description: 'Innovation sparked' },
   hustle: { label: 'Hustle', icon: '🔥', description: 'Momentum built' },
   legend: { label: 'Legend', icon: '👑', description: 'Impact made' }
@@ -60,7 +60,7 @@ function LevelUpNotification({ room, levelUp, onClose }) {
           glow: 'shadow-lg shadow-gray-800/50',
           animation: 'animate-fade-in'
         };
-      case 'climb':
+      case 'fantasy':
         return {
           bg: 'bg-gradient-to-r from-purple-900 to-blue-900',
           border: 'border-purple-600',
@@ -138,7 +138,7 @@ function LevelUpNotification({ room, levelUp, onClose }) {
 }
 
 LevelUpNotification.propTypes = {
-  room: PropTypes.oneOf(['dark', 'philo', 'climb']).isRequired,
+  room: PropTypes.oneOf(['dark', 'philo', 'fantasy']).isRequired,
   levelUp: PropTypes.shape({
     stat: PropTypes.string.isRequired,
     oldLevel: PropTypes.number.isRequired,

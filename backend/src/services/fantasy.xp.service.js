@@ -2,21 +2,21 @@ import User from '../models/User.model.js';
 import { createLevelUpNotification } from './notification.service.js';
 
 /**
- * Climb Room XP Service
+ * Fantasy Room XP Service
  * Handles reaction-based XP calculation and stat distribution
  * 
- * Climb Room Philosophy:
- * - Rewards execution, innovation, and momentum
- * - Fast dopamine curve with visible progress
- * - Identity: "I execute and innovate"
- * - Growth through action and impact
+ * Fantasy Room Philosophy:
+ * - Rewards creativity, imagination, and artistic expression
+ * - Encourages daydreaming and creative thinking
+ * - Identity: "I create and imagine"
+ * - Growth through creativity and innovation
  */
 
 /**
- * Climb Room Reaction Weights
- * Each reaction maps to execution signals
+ * Fantasy Room Reaction Weights
+ * Each reaction maps to creative signals
  */
-const CLIMB_ROOM_REACTIONS = {
+const FANTASY_ROOM_REACTIONS = {
   push: {
     meaning: 'Basic support, upvote, "keep going"',
     xp: 3,
@@ -40,11 +40,11 @@ const CLIMB_ROOM_REACTIONS = {
 };
 
 /**
- * Climb Room Stat Distribution
- * XP flows toward execution first, vision last
+ * Fantasy Room Stat Distribution
+ * XP flows toward creativity first, vision last
  */
 const STAT_DISTRIBUTION = {
-  genius: 0.40,  // Innovation, originality, problem-solving
+  genius: 0.40,  // Innovation, originality, creativity
   hustle: 0.35,  // Execution, effort, consistency
   legend: 0.25   // Impact, vision, breakthrough moments
 };
@@ -73,7 +73,7 @@ const LEVEL_THRESHOLDS = [
 function calculateEngagementXP(reactions) {
   let totalXP = 0;
   
-  Object.entries(CLIMB_ROOM_REACTIONS).forEach(([reactionType, config]) => {
+  Object.entries(FANTASY_ROOM_REACTIONS).forEach(([reactionType, config]) => {
     const count = reactions[reactionType] || 0;
     totalXP += count * config.xp;
   });
@@ -82,7 +82,7 @@ function calculateEngagementXP(reactions) {
 }
 
 /**
- * Distribute XP across Climb Room stats
+ * Distribute XP across Fantasy Room stats
  * @param {number} totalXP - Total engagement XP
  * @returns {Object} XP distribution by stat
  */
@@ -119,13 +119,13 @@ function getXPForNextLevel(currentLevel) {
 }
 
 /**
- * Award Climb Room XP to post author based on reactions
+ * Award Fantasy Room XP to post author based on reactions
  * @param {string} userId - User's MongoDB ObjectId
  * @param {Object} reactions - Reaction counts
  * @param {Object} options - Additional options
  * @returns {Promise<Object>} Updated stats and level changes
  */
-export async function awardClimbRoomXP(userId, reactions, options = {}) {
+export async function awardFantasyRoomXP(userId, reactions, options = {}) {
   // Calculate total engagement XP
   const totalXP = calculateEngagementXP(reactions);
   
@@ -149,9 +149,9 @@ export async function awardClimbRoomXP(userId, reactions, options = {}) {
   // Initialize stats if not present
   if (!user.stats) {
     user.stats = {
-      genius: { xp: 0, level: 1, room: 'climb' },
-      hustle: { xp: 0, level: 1, room: 'climb' },
-      legend: { xp: 0, level: 1, room: 'climb' }
+      genius: { xp: 0, level: 1, room: 'fantasy' },
+      hustle: { xp: 0, level: 1, room: 'fantasy' },
+      legend: { xp: 0, level: 1, room: 'fantasy' }
     };
   }
   
@@ -161,7 +161,7 @@ export async function awardClimbRoomXP(userId, reactions, options = {}) {
   // Award XP to each stat
   ['genius', 'hustle', 'legend'].forEach(stat => {
     if (!user.stats[stat]) {
-      user.stats[stat] = { xp: 0, level: 1, room: 'climb' };
+      user.stats[stat] = { xp: 0, level: 1, room: 'fantasy' };
     }
     
     const oldLevel = user.stats[stat].level;
@@ -173,7 +173,7 @@ export async function awardClimbRoomXP(userId, reactions, options = {}) {
     // Calculate new level
     const newLevel = calculateLevel(user.stats[stat].xp);
     user.stats[stat].level = newLevel;
-    user.stats[stat].room = 'climb';
+    user.stats[stat].room = 'fantasy';
     
     // Track level up (energizing feedback)
     if (newLevel > oldLevel) {
@@ -185,7 +185,7 @@ export async function awardClimbRoomXP(userId, reactions, options = {}) {
       });
       
       // Create notification (async, don't block)
-      createLevelUpNotification(userId, 'climb', stat, oldLevel, newLevel, xpDistribution[stat])
+      createLevelUpNotification(userId, 'fantasy', stat, oldLevel, newLevel, xpDistribution[stat])
         .catch(err => console.error('Failed to create level-up notification:', err));
     }
   });
@@ -218,14 +218,14 @@ export async function awardClimbRoomXP(userId, reactions, options = {}) {
 }
 
 /**
- * Get Climb Room feedback message based on reaction type
- * Energizing, momentum-building feedback
+ * Get Fantasy Room feedback message based on reaction type
+ * Energizing, creative feedback
  * @param {string} reactionType - Type of reaction
  * @returns {string} Feedback message
  */
-export function getClimbRoomFeedback(reactionType) {
+export function getFantasyRoomFeedback(reactionType) {
   const feedbackMessages = {
-    push: 'Keep climbing!',
+    push: 'Keep creating!',
     pull: 'Refine and iterate.',
     gear: 'That\'s practical genius.',
     rocket: 'You\'re onto something big!'
@@ -236,7 +236,7 @@ export function getClimbRoomFeedback(reactionType) {
 
 /**
  * Calculate momentum bonus for consistent posting
- * Climb Room rewards consistency and execution
+ * Fantasy Room rewards consistency and creativity
  * @param {string} userId - User's MongoDB ObjectId
  * @returns {Promise<number>} Momentum multiplier (1.0 to 1.5)
  */
@@ -258,17 +258,17 @@ export async function calculateMomentumBonus(userId) {
 export async function calculateExecutionQuality(userId, postData) {
   const { checkForAbuse } = await import('./antiabuse.service.js');
   
-  const result = await checkForAbuse('climb', userId, postData);
+  const result = await checkForAbuse('fantasy', userId, postData);
   
   return result.xpMultiplier;
 }
 
 export default {
-  awardClimbRoomXP,
-  getClimbRoomFeedback,
+  awardFantasyRoomXP,
+  getFantasyRoomFeedback,
   calculateMomentumBonus,
   calculateExecutionQuality,
-  CLIMB_ROOM_REACTIONS,
+  FANTASY_ROOM_REACTIONS,
   STAT_DISTRIBUTION,
   LEVEL_THRESHOLDS
 };

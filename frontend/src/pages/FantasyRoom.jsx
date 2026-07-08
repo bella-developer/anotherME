@@ -7,13 +7,13 @@ import * as postService from '../services/postService';
 import * as circleService from '../services/circleService';
 import Layout from '../components/Layout';
 import PageTransition from '../components/PageTransition';
-import ClimbRoomCard from '../components/ClimbRoomCard';
-import ClimbRoomPostForm from '../components/ClimbRoomPostForm';
+import FantasyRoomCard from '../components/FantasyRoomCard';
+import FantasyRoomPostForm from '../components/FantasyRoomPostForm';
 import LoadingSpinner from '../components/LoadingSpinner';
 import { usePageTitle } from '../hooks/usePageTitle';
 
-function ClimbRoom() {
-  usePageTitle('Climb Room');
+function FantasyRoom() {
+  usePageTitle('Fantasy Room');
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { isAuthenticated } = useSelector(selectAuth);
@@ -27,10 +27,10 @@ function ClimbRoom() {
 
   const categories = [
     { value: 'ALL', label: 'All' },
-    { value: 'IDEA', label: 'Idea' },
+    { value: 'CREATIVE', label: 'Creative' },
+    { value: 'DAYDREAM', label: 'Daydream' },
+    { value: 'FUNNY', label: 'Funny' },
     { value: 'FUTURISTIC', label: 'Futuristic' },
-    { value: 'BUSINESS', label: 'Business' },
-    { value: 'ENTREPRENEUR', label: 'Entrepreneur' },
   ];
 
   const fetchData = async (bustCache = false) => {
@@ -40,14 +40,14 @@ function ClimbRoom() {
       
       // Fetch posts using service (includes JWT token via interceptor)
       const postsData = await postService.fetchPosts({
-        room: 'climb',
+        room: 'fantasy',
         category: selectedCategory === 'ALL' ? undefined : selectedCategory
       });
       setPosts(postsData.posts || []);
       
       // Fetch circles using service (includes JWT token via interceptor)
       const circlesData = await circleService.fetchCircles({ 
-        room: 'climb',
+        room: 'fantasy',
         bustCache // Pass cache buster when refetching after creation
       });
       setCircles(circlesData.circles || []);
@@ -134,15 +134,15 @@ function ClimbRoom() {
 
               <div className="flex items-start justify-between gap-4">
                 <div>
-                  <div className="w-8 h-px mb-5" style={{ background: 'linear-gradient(to right, #c47a3a, transparent)' }} />
+                  <div className="w-8 h-px mb-5" style={{ background: 'linear-gradient(to right, #FF9D1C, transparent)' }} />
                   <h1 className="text-3xl font-light tracking-[0.25em] text-white uppercase mb-3">
-                    Climb Room
+                    Fantasy Room
                   </h1>
                   <p className="text-[11px] tracking-[0.15em] text-white/35 uppercase mb-1">
-                    Build · Sharpen · Progress
+                    Dream · Create · Imagine
                   </p>
                   <p className="text-[11px] text-white/25 leading-relaxed mt-2 max-w-sm">
-                    A space for ideas and collaborative growth. Push ideas forward.
+                    Where imagination roams free and creativity blooms.
                   </p>
                 </div>
                 {isAuthenticated && (
@@ -150,9 +150,9 @@ function ClimbRoom() {
                     onClick={() => setIsPostFormOpen(true)}
                     className="flex-shrink-0 px-5 py-2.5 text-[10px] tracking-[0.2em] uppercase transition-all hover:opacity-90"
                     style={{
-                      background: 'rgba(196,122,58,0.12)',
-                      border: '1px solid rgba(196,122,58,0.25)',
-                      color: '#c47a3a',
+                      background: 'rgba(255,157,28,0.12)',
+                      border: '1px solid rgba(255,157,28,0.25)',
+                      color: '#FF9D1C',
                       borderRadius: '2px',
                     }}
                   >
@@ -170,9 +170,9 @@ function ClimbRoom() {
                     className="px-4 py-1.5 text-[10px] tracking-[0.15em] uppercase transition-all"
                     style={{
                       borderRadius: '2px',
-                      background: selectedCategory === cat.value ? 'rgba(196,122,58,0.15)' : 'rgba(255,255,255,0.03)',
-                      border: selectedCategory === cat.value ? '1px solid rgba(196,122,58,0.4)' : '1px solid rgba(255,255,255,0.08)',
-                      color: selectedCategory === cat.value ? '#c47a3a' : 'rgba(255,255,255,0.35)',
+                      background: selectedCategory === cat.value ? 'rgba(255,157,28,0.15)' : 'rgba(255,255,255,0.03)',
+                      border: selectedCategory === cat.value ? '1px solid rgba(255,157,28,0.4)' : '1px solid rgba(255,255,255,0.08)',
+                      color: selectedCategory === cat.value ? '#FF9D1C' : 'rgba(255,255,255,0.35)',
                     }}
                   >
                     {cat.label}
@@ -191,12 +191,12 @@ function ClimbRoom() {
               </div>
             ) : posts.length === 0 ? (
               <div className="text-center py-16">
-                <p className="text-white/25 text-sm">No ideas yet. Be the first to share.</p>
+                <p className="text-white/25 text-sm">No dreams yet. Be the first to imagine.</p>
               </div>
             ) : (
               <div className="space-y-3">
                 {posts.map((post) => (
-                  <ClimbRoomCard 
+                  <FantasyRoomCard 
                     key={post.id} 
                     post={post} 
                     onReaction={handleReaction}
@@ -209,7 +209,7 @@ function ClimbRoom() {
           </div>
         </div>
 
-        <ClimbRoomPostForm
+        <FantasyRoomPostForm
           isOpen={isPostFormOpen}
           onClose={() => {
             setIsPostFormOpen(false);
@@ -225,4 +225,4 @@ function ClimbRoom() {
   );
 }
 
-export default ClimbRoom;
+export default FantasyRoom;

@@ -1,7 +1,7 @@
 import User from '../models/User.model.js';
 import { awardDarkRoomXP } from './darkroom.xp.service.js';
 import { awardPhiloRoomXP } from './philo.xp.service.js';
-import { awardClimbRoomXP } from './climb.xp.service.js';
+import { awardFantasyRoomXP } from './fantasy.xp.service.js';
 import { createLevelUpNotification } from './notification.service.js';
 
 /**
@@ -12,7 +12,7 @@ import { createLevelUpNotification } from './notification.service.js';
 
 // Reaction weights for XP calculation
 export const REACTION_WEIGHTS = {
-  climb: {
+  fantasy: {
     push: 2,      // ⬆️ Basic upvote
     pull: -1,     // ⬇️ Downvote
     gear: 5,      // ⚙️ Comments/engagement
@@ -35,7 +35,7 @@ export const REACTION_WEIGHTS = {
 
 // Stat distribution percentages by room
 export const STAT_DISTRIBUTION = {
-  climb: {
+  fantasy: {
     genius: 0.50,  // 50% - Originality, innovation
     hustle: 0.30,  // 30% - Execution, effort
     legend: 0.20   // 20% - Impact, vision
@@ -70,7 +70,7 @@ export const LEVEL_THRESHOLDS = [
 
 /**
  * Calculate total XP from post reactions
- * @param {string} room - Room type (climb, dark, philo)
+ * @param {string} room - Room type (fantasy, dark, philo)
  * @param {Object} reactions - Reaction counts
  * @returns {number} Total XP earned
  */
@@ -84,7 +84,7 @@ export function calculateTotalXP(room, reactions) {
 
   // Map reaction types to weights
   const reactionMap = {
-    climb: {
+    fantasy: {
       push: reactions.push || 0,
       pull: reactions.pull || 0,
       gear: reactions.gear || 0,
@@ -118,7 +118,7 @@ export function calculateTotalXP(room, reactions) {
 
 /**
  * Distribute XP across room stats
- * @param {string} room - Room type (climb, dark, philo)
+ * @param {string} room - Room type (fantasy, dark, philo)
  * @param {number} totalXP - Total XP to distribute
  * @returns {Object} XP distribution per stat
  */
@@ -192,7 +192,7 @@ export function getLevelProgress(xp) {
  * Award XP to user for post reactions
  * Recalculates total XP from current reaction counts and updates user stats
  * @param {string} userId - User's MongoDB ObjectId
- * @param {string} room - Room type (climb, dark, philo)
+ * @param {string} room - Room type (fantasy, dark, philo)
  * @param {Object} reactions - Current reaction counts
  * @returns {Promise<Object>} Updated stats and level info
  */
@@ -207,9 +207,9 @@ export async function awardXP(userId, room, reactions) {
     return await awardPhiloRoomXP(userId, reactions);
   }
   
-  // Climb Room uses special XP logic
-  if (room === 'climb') {
-    return await awardClimbRoomXP(userId, reactions);
+  // Fantasy Room uses special XP logic
+  if (room === 'fantasy') {
+    return await awardFantasyRoomXP(userId, reactions);
   }
   
   // Fallback to standard logic (should not reach here)
@@ -230,7 +230,7 @@ export async function getUserStats(userId) {
   // Initialize stats if not present
   if (!user.stats) {
     return {
-      climb: {
+      fantasy: {
         genius: { xp: 0, level: 1, progress: getLevelProgress(0) },
         hustle: { xp: 0, level: 1, progress: getLevelProgress(0) },
         legend: { xp: 0, level: 1, progress: getLevelProgress(0) }
@@ -266,7 +266,7 @@ export async function getUserStats(userId) {
 
 /**
  * Get leaderboard for a specific room and stat
- * @param {string} room - Room type (climb, dark, philo)
+ * @param {string} room - Room type (fantasy, dark, philo)
  * @param {string} stat - Stat name
  * @param {number} limit - Number of users to return
  * @returns {Promise<Array>} Top users

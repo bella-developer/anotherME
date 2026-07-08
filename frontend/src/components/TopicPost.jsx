@@ -18,7 +18,7 @@ function TopicPost({ post }) {
   const getRoomLabel = () => {
     switch (post.room) {
       case 'dark': return 'Dark Room';
-      case 'climb': return 'Climb Room';
+      case 'fantasy': return 'Fantasy Room';
       case 'philo': return 'Philo Room';
       default: return '';
     }
