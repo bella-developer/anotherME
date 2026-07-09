@@ -246,9 +246,9 @@ function Home() {
                         </svg>
                       </div>
 
-                      {/* Orbital particles */}
+                      {/* Orbital particles - positioned to orbit between the border layers */}
                       <div
-                        className="rounded-full"
+                        className="rounded-full pointer-events-none"
                         style={{
                           position: 'absolute',
                           top: '9px',
@@ -258,25 +258,29 @@ function Home() {
                           animation: 'rotate360 25s linear infinite',
                         }}
                       >
-                        {[...Array(4)].map((_, i) => (
-                          <div
-                            key={i}
-                            className="absolute"
-                            style={{
-                              width: '4px',
-                              height: '4px',
-                              borderRadius: '50%',
-                              background: room.glowColor,
-                              boxShadow: `0 0 10px ${room.glowColor}`,
-                              top: '50%',
-                              left: '50%',
-                              transform: `rotate(${i * 90}deg) translateX(50%) translateY(-50%)`,
-                              transformOrigin: 'left center',
-                              opacity: 0.8,
-                              mixBlendMode: 'screen',
-                            }}
-                          />
-                        ))}
+                        {[0, 90, 180, 270].map((angle, i) => {
+                          const rad = (angle * Math.PI) / 180;
+                          const x = 50 + 50 * Math.cos(rad);
+                          const y = 50 + 50 * Math.sin(rad);
+                          return (
+                            <div
+                              key={i}
+                              className="absolute"
+                              style={{
+                                width: '4px',
+                                height: '4px',
+                                borderRadius: '50%',
+                                background: room.glowColor,
+                                boxShadow: `0 0 10px ${room.glowColor}`,
+                                top: `${y}%`,
+                                left: `${x}%`,
+                                transform: 'translate(-50%, -50%)',
+                                opacity: 0.8,
+                                mixBlendMode: 'screen',
+                              }}
+                            />
+                          );
+                        })}
                       </div>
 
                       {/* CSS Animations */}
