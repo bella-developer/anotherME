@@ -13,13 +13,6 @@ function FantasyRoomCard({ post, onReaction, onEdit, onDelete }) {
   const navigate = useNavigate();
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
-  const stateLabels = {
-    forming: 'FORMING',
-    sharpening: 'SHARPENING',
-    expanding: 'EXPANDING',
-    execution: 'EXECUTION'
-  };
-
   const formatTimeAgo = (date) => {
     const seconds = Math.floor((new Date() - new Date(date)) / 1000);
     if (seconds < 60) return `${seconds}s ago`;
@@ -79,9 +72,6 @@ function FantasyRoomCard({ post, onReaction, onEdit, onDelete }) {
               <span className="tracking-wider">{post.commentCount} {post.commentCount === 1 ? 'response' : 'responses'}</span>
             </div>
           )}
-          <span className="text-xs text-[#FF9D1C] uppercase tracking-wider font-medium">
-            {stateLabels[post.climbState] || 'FORMING'}
-          </span>
         </div>
       </div>
 
@@ -212,9 +202,11 @@ FantasyRoomCard.propTypes = {
     title: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired,
     createdAt: PropTypes.string.isRequired,
-    climbState: PropTypes.oneOf(['forming', 'sharpening', 'expanding', 'execution']),
+    category: PropTypes.string,
     systemState: PropTypes.string,
     reactions: PropTypes.object,
+    isAuthor: PropTypes.bool,
+    commentCount: PropTypes.number,
     circles: PropTypes.arrayOf(
       PropTypes.shape({
         name: PropTypes.string.isRequired,
@@ -222,9 +214,14 @@ FantasyRoomCard.propTypes = {
         color: PropTypes.string,
         icon: PropTypes.string
       })
-    )
+    ),
+    image: PropTypes.shape({
+      url: PropTypes.string
+    })
   }).isRequired,
-  onReaction: PropTypes.func
+  onReaction: PropTypes.func,
+  onEdit: PropTypes.func,
+  onDelete: PropTypes.func
 };
 
 export default FantasyRoomCard;

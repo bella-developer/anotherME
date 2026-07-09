@@ -172,10 +172,12 @@ const DarkRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, editin
             rows={5}
             style={{
               background: 'rgba(255, 255, 255, 0.02)',
-              border: 'none',
+              border: '1px solid rgba(255, 255, 255, 0.06)',
               color: '#e5e5e5',
               lineHeight: '1.5',
             }}
+            onFocus={(e) => e.target.style.borderColor = 'rgba(46, 230, 255, 0.25)'}
+            onBlur={(e) => e.target.style.borderColor = 'rgba(255, 255, 255, 0.06)'}
           />
           <div className="flex items-center justify-between -mt-2 px-1">
             <span className="text-[10px]" style={{
@@ -204,9 +206,11 @@ const DarkRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, editin
             className="w-full px-3 py-2 rounded text-sm transition-all disabled:opacity-50"
             style={{
               background: 'rgba(255, 255, 255, 0.02)',
-              border: 'none',
+              border: '1px solid rgba(255, 255, 255, 0.06)',
               color: formData.circleId ? '#e5e5e5' : '#6b7280',
             }}
+            onFocus={(e) => e.target.style.borderColor = 'rgba(46, 230, 255, 0.25)'}
+            onBlur={(e) => e.target.style.borderColor = 'rgba(255, 255, 255, 0.06)'}
           >
             <option value="">Select circle</option>
             {circles.filter(circle => circle.room === 'dark').map((circle) => (
