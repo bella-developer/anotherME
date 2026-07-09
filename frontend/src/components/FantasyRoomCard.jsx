@@ -79,7 +79,13 @@ function FantasyRoomCard({ post, onReaction, onEdit, onDelete }) {
       <div className="flex gap-6 mb-8">
         {/* Content */}
         <div className="flex-1 min-w-0">
-          <h3 className="text-2xl text-[#F5E6D3] mb-5 font-light">
+          <h3 
+            className="text-[22px] text-[#F5E6D3] mb-4 font-bold tracking-tight leading-snug"
+            style={{
+              fontFamily: 'system-ui, -apple-system, "Segoe UI", sans-serif',
+              letterSpacing: '-0.02em'
+            }}
+          >
             {post.title}
           </h3>
           <div 

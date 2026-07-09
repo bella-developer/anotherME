@@ -82,7 +82,13 @@ function DarkRoomCard({ post, onReaction, onEdit, onDelete }) {
         {/* Content */}
         <div className="flex-1 min-w-0">
           {post.title && (
-            <h3 className="text-xl text-[#F5E6D3] mb-4 leading-relaxed">
+            <h3 
+              className="text-[22px] text-[#F5E6D3] mb-4 font-bold tracking-tight leading-snug"
+              style={{
+                fontFamily: 'system-ui, -apple-system, "Segoe UI", sans-serif',
+                letterSpacing: '-0.02em'
+              }}
+            >
               {post.title}
             </h3>
           )}
