@@ -200,18 +200,7 @@ function Navbar() {
                 <Link
                   to="/home"
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="py-3 px-4 rounded-lg min-h-touch flex items-center focus:outline-none focus:ring-2 focus:ring-white/50 transition-colors duration-200"
-                  style={{
-                    color: 'rgba(255, 255, 255, 0.7)',
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.color = 'rgba(255, 255, 255, 1)';
-                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.color = 'rgba(255, 255, 255, 0.7)';
-                    e.currentTarget.style.background = 'transparent';
-                  }}
+                  className="py-3 px-4 rounded-lg text-white/70 hover:text-white hover:bg-white/5 transition-colors duration-200"
                   role="menuitem"
                 >
                   Home
@@ -219,18 +208,7 @@ function Navbar() {
                 <Link
                   to="/circles"
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="py-3 px-4 rounded-lg min-h-touch flex items-center focus:outline-none focus:ring-2 focus:ring-white/50 transition-colors duration-200"
-                  style={{
-                    color: 'rgba(255, 255, 255, 0.7)',
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.color = 'rgba(255, 255, 255, 1)';
-                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.color = 'rgba(255, 255, 255, 0.7)';
-                    e.currentTarget.style.background = 'transparent';
-                  }}
+                  className="py-3 px-4 rounded-lg text-white/70 hover:text-white hover:bg-white/5 transition-colors duration-200"
                   role="menuitem"
                 >
                   Circles
@@ -238,18 +216,7 @@ function Navbar() {
                 <Link
                   to="/support"
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="py-3 px-4 rounded-lg min-h-touch flex items-center focus:outline-none focus:ring-2 focus:ring-white/50 transition-colors duration-200"
-                  style={{
-                    color: 'rgba(255, 255, 255, 0.7)',
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.color = 'rgba(255, 255, 255, 1)';
-                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.color = 'rgba(255, 255, 255, 0.7)';
-                    e.currentTarget.style.background = 'transparent';
-                  }}
+                  className="py-3 px-4 rounded-lg text-white/70 hover:text-white hover:bg-white/5 transition-colors duration-200"
                   role="menuitem"
                 >
                   Support
@@ -257,18 +224,7 @@ function Navbar() {
                 <Link
                   to="/create"
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="py-3 px-4 rounded-lg min-h-touch flex items-center focus:outline-none focus:ring-2 focus:ring-white/50 transition-colors duration-200"
-                  style={{
-                    color: 'rgba(255, 255, 255, 0.7)',
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.color = 'rgba(255, 255, 255, 1)';
-                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.color = 'rgba(255, 255, 255, 0.7)';
-                    e.currentTarget.style.background = 'transparent';
-                  }}
+                  className="py-3 px-4 rounded-lg text-white/70 hover:text-white hover:bg-white/5 transition-colors duration-200"
                   role="menuitem"
                 >
                   Create
@@ -276,18 +232,7 @@ function Navbar() {
                 <Link
                   to="/about"
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="py-3 px-4 rounded-lg min-h-touch flex items-center focus:outline-none focus:ring-2 focus:ring-white/50 transition-colors duration-200"
-                  style={{
-                    color: 'rgba(255, 255, 255, 0.7)',
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.color = 'rgba(255, 255, 255, 1)';
-                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.color = 'rgba(255, 255, 255, 0.7)';
-                    e.currentTarget.style.background = 'transparent';
-                  }}
+                  className="py-3 px-4 rounded-lg text-white/70 hover:text-white hover:bg-white/5 transition-colors duration-200"
                   role="menuitem"
                 >
                   About Us
@@ -296,30 +241,17 @@ function Navbar() {
                   <Link
                     to="/profile"
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="flex items-center space-x-3 py-3 px-4 rounded-lg min-h-touch mt-2 focus:outline-none focus:ring-2 focus:ring-white/50 transition-colors duration-200"
-                    style={{
-                      borderTop: '1px solid rgba(255, 255, 255, 0.1)',
-                      color: 'rgba(255, 255, 255, 0.9)',
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.background = 'transparent';
-                    }}
+                    className="flex items-center space-x-3 py-3 px-4 rounded-lg mt-2 border-t border-white/10 text-white hover:bg-white/5 transition-colors duration-200"
                     role="menuitem"
                     aria-label={`Profile: ${user?.username || 'User'}`}
                   >
                     <div 
-                      className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" 
-                      style={{
-                        background: 'rgba(46, 230, 255, 0.2)',
-                      }}
+                      className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0"
+                      style={{ background: 'rgba(46, 230, 255, 0.2)' }}
                       aria-hidden="true"
                     >
                       <svg
-                        className="w-5 h-5"
-                        style={{ color: '#2EE6FF' }}
+                        className="w-5 h-5 text-[#2EE6FF]"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -340,19 +272,7 @@ function Navbar() {
                   <Link
                     to="/register"
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="py-3 px-4 rounded-lg min-h-touch mt-2 flex items-center focus:outline-none focus:ring-2 focus:ring-white/50 transition-colors duration-200"
-                    style={{
-                      borderTop: '1px solid rgba(255, 255, 255, 0.1)',
-                      color: '#2EE6FF',
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.color = 'rgba(46, 230, 255, 0.8)';
-                      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.color = '#2EE6FF';
-                      e.currentTarget.style.background = 'transparent';
-                    }}
+                    className="py-3 px-4 rounded-lg mt-2 border-t border-white/10 text-[#2EE6FF] hover:text-[#2EE6FF]/80 hover:bg-white/5 transition-colors duration-200"
                     role="menuitem"
                   >
                     Join
