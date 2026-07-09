@@ -73,7 +73,8 @@
   ],
   "env": {
     "VITE_APP_NAME": "ESO",
-    "VITE_APP_TAGLINE": "A Space for Deep Thinkers"
+    "VITE_APP_TAGLINE": "A Space for Deep Thinkers",
+    "NODE_ENV": "production"
   },
   "regions": ["iad1"],
   "framework": "vite"
