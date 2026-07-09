@@ -105,93 +105,87 @@ const DarkRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, editin
       className="fixed inset-0 z-50 flex items-center justify-center p-4"
       onClick={(e) => e.target === e.currentTarget && !loading && onClose()}
       style={{
-        background: 'rgba(0, 0, 0, 0.92)',
-        backdropFilter: 'blur(8px)',
-        animation: prefersReducedMotion ? 'none' : 'fadeIn 250ms ease-out',
+        background: 'rgba(0, 0, 0, 0.94)',
+        backdropFilter: 'blur(12px)',
+        animation: prefersReducedMotion ? 'none' : 'fadeIn 200ms ease-out',
       }}
     >
       <div
-        className="w-full max-w-lg max-h-[90vh] overflow-y-auto"
+        className="w-full max-w-md max-h-[85vh] overflow-y-auto"
         style={{
-          background: 'linear-gradient(135deg, rgba(18, 18, 18, 0.98) 0%, rgba(10, 10, 10, 0.98) 100%)',
-          borderRadius: '12px',
-          boxShadow: '0 0 60px rgba(0, 0, 0, 0.8), 0 0 1px rgba(255, 255, 255, 0.04)',
-          border: '1px solid rgba(255, 255, 255, 0.04)',
-          animation: prefersReducedMotion ? 'none' : 'slideUp 300ms cubic-bezier(0.16, 1, 0.3, 1)',
+          background: '#0a0a0a',
+          borderRadius: '8px',
+          boxShadow: '0 0 40px rgba(0, 0, 0, 0.9)',
+          border: '1px solid rgba(255, 255, 255, 0.03)',
+          animation: prefersReducedMotion ? 'none' : 'slideUp 250ms cubic-bezier(0.16, 1, 0.3, 1)',
+          scrollbarWidth: 'none',
+          msOverflowStyle: 'none',
         }}
       >
+        <style>{`
+          .w-full.max-w-md::-webkit-scrollbar {
+            display: none;
+          }
+        `}</style>
+
         {/* Header */}
-        <div className="flex items-center justify-between px-6 pt-6 pb-4">
-          <div>
-            <h2 className="text-white text-lg font-medium tracking-tight">New Post</h2>
-            <p className="text-[#6b7280] text-xs mt-0.5">Dark Room</p>
-          </div>
+        <div className="flex items-center justify-between px-5 pt-5 pb-3">
+          <h2 className="text-white text-base font-medium">Dark Room</h2>
           <button
             onClick={onClose}
             disabled={loading}
             className="text-[#6b7280] hover:text-[#9ca3af] transition-colors disabled:opacity-50"
           >
-            <X className="w-5 h-5" />
+            <X className="w-4 h-4" />
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="px-6 pb-6 space-y-4">
-          {/* Category - Compact pills */}
-          <div>
-            <label className="text-[#9ca3af] text-xs mb-2 block">Category</label>
-            <div className="flex gap-2">
-              {categories.map((cat) => (
-                <button
-                  key={cat.value}
-                  type="button"
-                  onClick={() => setFormData(prev => ({ ...prev, category: cat.value }))}
-                  disabled={loading}
-                  className="px-3 py-1.5 rounded-md text-xs font-medium transition-all disabled:opacity-50"
-                  style={{
-                    background: formData.category === cat.value 
-                      ? 'rgba(46, 230, 255, 0.12)' 
-                      : 'rgba(255, 255, 255, 0.03)',
-                    border: formData.category === cat.value
-                      ? '1px solid rgba(46, 230, 255, 0.3)'
-                      : '1px solid transparent',
-                    color: formData.category === cat.value ? '#2EE6FF' : '#6b7280',
-                  }}
-                >
-                  {cat.label}
-                </button>
-              ))}
-            </div>
+        <form onSubmit={handleSubmit} className="px-5 pb-5 space-y-3">
+          {/* Category */}
+          <div className="flex gap-1.5">
+            {categories.map((cat) => (
+              <button
+                key={cat.value}
+                type="button"
+                onClick={() => setFormData(prev => ({ ...prev, category: cat.value }))}
+                disabled={loading}
+                className="flex-1 py-1.5 rounded text-xs font-medium transition-all disabled:opacity-50"
+                style={{
+                  background: formData.category === cat.value ? 'rgba(46, 230, 255, 0.15)' : 'rgba(255, 255, 255, 0.02)',
+                  color: formData.category === cat.value ? '#2EE6FF' : '#6b7280',
+                  border: 'none',
+                }}
+              >
+                {cat.label}
+              </button>
+            ))}
           </div>
 
-          {/* Content with inline validation */}
-          <div>
-            <textarea
-              name="content"
-              placeholder="Share what's in the dark..."
-              value={formData.content}
-              onChange={handleChange}
-              disabled={loading}
-              className="w-full px-4 py-3 rounded-lg text-sm resize-none transition-all disabled:opacity-50"
-              rows={6}
-              style={{
-                background: 'rgba(255, 255, 255, 0.02)',
-                border: contentValidation.status === 'valid' 
-                  ? '1px solid rgba(34, 197, 94, 0.3)' 
-                  : '1px solid rgba(255, 255, 255, 0.06)',
-                color: '#e5e5e5',
-                lineHeight: '1.6',
-              }}
-            />
-            <div className="flex items-center justify-between mt-1.5 px-1">
-              <span className="text-xs" style={{
-                color: contentValidation.status === 'valid' ? '#22c55e' : 
-                       contentValidation.status === 'tooShort' ? '#f59e0b' : 
-                       contentValidation.status === 'tooLong' ? '#ef4444' : '#6b7280'
-              }}>
-                {contentValidation.message}
-              </span>
-              <span className="text-xs text-[#6b7280]">{formData.content.length} / 5000</span>
-            </div>
+          {/* Content */}
+          <textarea
+            name="content"
+            placeholder="Share what's in the dark..."
+            value={formData.content}
+            onChange={handleChange}
+            disabled={loading}
+            className="w-full px-3 py-2.5 rounded text-sm resize-none transition-all disabled:opacity-50"
+            rows={5}
+            style={{
+              background: 'rgba(255, 255, 255, 0.02)',
+              border: 'none',
+              color: '#e5e5e5',
+              lineHeight: '1.5',
+            }}
+          />
+          <div className="flex items-center justify-between -mt-2 px-1">
+            <span className="text-[10px]" style={{
+              color: contentValidation.status === 'valid' ? '#22c55e' : 
+                     contentValidation.status === 'tooShort' ? '#f59e0b' : 
+                     contentValidation.status === 'tooLong' ? '#ef4444' : '#6b7280'
+            }}>
+              {contentValidation.message}
+            </span>
+            <span className="text-[10px] text-[#6b7280]">{formData.content.length}</span>
           </div>
 
           {/* Image Upload */}
@@ -201,55 +195,49 @@ const DarkRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, editin
             disabled={loading}
           />
 
-          {/* Circle Selection */}
-          <div>
-            <label className="text-[#9ca3af] text-xs mb-2 block">Circle</label>
-            <select
-              name="circleId"
-              value={formData.circleId}
-              onChange={handleChange}
-              disabled={loading}
-              className="w-full px-4 py-2.5 rounded-lg text-sm transition-all disabled:opacity-50"
-              style={{
-                background: 'rgba(255, 255, 255, 0.02)',
-                border: formData.circleId 
-                  ? '1px solid rgba(34, 197, 94, 0.3)' 
-                  : '1px solid rgba(255, 255, 255, 0.06)',
-                color: formData.circleId ? '#e5e5e5' : '#6b7280',
-              }}
-            >
-              <option value="">Select a circle</option>
-              {circles.filter(circle => circle.room === 'dark').map((circle) => (
-                <option key={circle.id} value={circle.id} disabled={(circle.topicCount || 0) >= 3}>
-                  {circle.name}{(circle.topicCount || 0) >= 3 ? ' (busy)' : ''}
-                </option>
-              ))}
-            </select>
-          </div>
+          {/* Circle */}
+          <select
+            name="circleId"
+            value={formData.circleId}
+            onChange={handleChange}
+            disabled={loading}
+            className="w-full px-3 py-2 rounded text-sm transition-all disabled:opacity-50"
+            style={{
+              background: 'rgba(255, 255, 255, 0.02)',
+              border: 'none',
+              color: formData.circleId ? '#e5e5e5' : '#6b7280',
+            }}
+          >
+            <option value="">Select circle</option>
+            {circles.filter(circle => circle.room === 'dark').map((circle) => (
+              <option key={circle.id} value={circle.id} disabled={(circle.topicCount || 0) >= 3}>
+                {circle.name}{(circle.topicCount || 0) >= 3 ? ' (busy)' : ''}
+              </option>
+            ))}
+          </select>
 
-          {/* Error Message */}
+          {/* Error */}
           {error && (
-            <div className="px-3 py-2 rounded-lg text-xs" style={{
-              background: 'rgba(239, 68, 68, 0.08)',
-              border: '1px solid rgba(239, 68, 68, 0.2)',
+            <div className="px-3 py-1.5 rounded text-[11px]" style={{
+              background: 'rgba(239, 68, 68, 0.1)',
               color: '#ef4444',
             }}>
               {error}
             </div>
           )}
 
-          {/* Submit Button */}
+          {/* Submit */}
           <button
             type="submit"
             disabled={loading || !isFormReady()}
-            className="w-full py-3 rounded-lg font-medium text-sm transition-all disabled:opacity-40"
+            className="w-full py-2.5 rounded font-medium text-sm transition-all disabled:opacity-40"
             style={{
-              background: !isFormReady() ? 'rgba(255, 255, 255, 0.04)' : '#2EE6FF',
+              background: !isFormReady() ? 'rgba(255, 255, 255, 0.03)' : '#2EE6FF',
               color: !isFormReady() ? '#6b7280' : '#000',
               cursor: !isFormReady() ? 'not-allowed' : 'pointer',
             }}
           >
-            {loading ? 'Publishing...' : isFormReady() ? 'Publish' : 'Complete form to publish'}
+            {loading ? 'Publishing...' : isFormReady() ? 'Publish' : 'Complete to publish'}
           </button>
         </form>
       </div>
