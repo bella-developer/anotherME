@@ -251,10 +251,10 @@ function Home() {
                         className="rounded-full"
                         style={{
                           position: 'absolute',
-                          top: '4px',
-                          left: '4px',
-                          right: '4px',
-                          bottom: '4px',
+                          top: '9px',
+                          left: '9px',
+                          right: '9px',
+                          bottom: '9px',
                           animation: 'rotate360 25s linear infinite',
                         }}
                       >
@@ -270,7 +270,8 @@ function Home() {
                               boxShadow: `0 0 10px ${room.glowColor}`,
                               top: '50%',
                               left: '50%',
-                              transform: `rotate(${i * 90}deg) translateX(180px) translateY(-50%)`,
+                              transform: `rotate(${i * 90}deg) translateX(50%) translateY(-50%)`,
+                              transformOrigin: 'left center',
                               opacity: 0.8,
                               mixBlendMode: 'screen',
                             }}
