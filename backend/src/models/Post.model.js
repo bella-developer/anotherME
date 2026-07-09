@@ -60,17 +60,10 @@ const postSchema = new mongoose.Schema(
       index: true
     },
 
-    // Optional title (for Climb and Philo rooms)
+    // Optional title (for Fantasy and Philo rooms)
     title: {
       type: String,
       maxlength: 200
-    },
-
-    // State for Climb room ideas
-    climbState: {
-      type: String,
-      enum: ['forming', 'sharpening', 'expanding', 'execution'],
-      default: 'forming'
     },
 
     // Original content (before sanitization)
@@ -204,7 +197,6 @@ postSchema.index({ 'circles.circleId': 1, createdAt: -1 }); // Multi-circle feed
 postSchema.index({ category: 1, createdAt: -1 }); // Category feed
 postSchema.index({ authorId: 1, createdAt: -1 }); // User posts
 postSchema.index({ createdAt: -1 }); // Global feed
-postSchema.index({ room: 1, climbState: 1, createdAt: -1 }); // Climb room state
 
 // Index for filtering hidden content
 postSchema.index({ isHidden: 1 });

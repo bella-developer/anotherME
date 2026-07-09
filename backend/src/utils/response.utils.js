@@ -109,7 +109,6 @@ export function sanitizePost(post, options = {}) {
     title: postData.title || null,
     content: postData.contentSanitized, // Only sanitized content
     category: postData.category,
-    climbState: postData.climbState || null,
     image: postData.image || null, // Include image data if present
     reactions: postData.reactions || {},
     commentCount: postData.commentCount || 0,
