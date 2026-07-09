@@ -109,15 +109,15 @@ function NotificationPanel({ onClose, onCountChange }) {
   return (
     <div
       ref={panelRef}
-      className="absolute right-0 top-full mt-2 w-96 max-w-[calc(100vw-2rem)] bg-[#1a1a1a] border border-gray-800 rounded-lg shadow-2xl z-50 max-h-[80vh] flex flex-col"
+      className="absolute right-0 top-full mt-2 w-80 max-w-[calc(100vw-2rem)] bg-[#0a0a0a] border border-[rgba(255,255,255,0.06)] rounded-md shadow-2xl z-50 max-h-[70vh] flex flex-col"
     >
       {/* Header */}
-      <div className="p-4 border-b border-gray-800 flex items-center justify-between">
-        <h3 className="text-white font-semibold">Notifications</h3>
+      <div className="px-3 py-2 border-b border-[rgba(255,255,255,0.06)] flex items-center justify-between">
+        <h3 className="text-white text-xs font-medium tracking-wider uppercase">Notifications</h3>
         {unreadCount > 0 && (
           <button
             onClick={handleMarkAllAsRead}
-            className="text-xs text-[#ff6b35] hover:text-[#ff8555] transition-colors"
+            className="text-[9px] text-[#6b7280] hover:text-[#9ca3af] transition-colors uppercase tracking-wider"
           >
             Mark all read
           </button>
@@ -128,19 +128,19 @@ function NotificationPanel({ onClose, onCountChange }) {
       <div className="flex-1 overflow-y-auto">
         {loading ? (
           <div className="p-8 text-center">
-            <div className="inline-block w-8 h-8 border-4 border-gray-700 border-t-[#ff6b35] rounded-full animate-spin"></div>
+            <div className="inline-block w-6 h-6 border-2 border-[#2a2a2a] border-t-[#6b7280] rounded-full animate-spin"></div>
           </div>
         ) : error ? (
-          <div className="p-8 text-center text-red-400 text-sm">{error}</div>
+          <div className="p-6 text-center text-red-400 text-[10px]">{error}</div>
         ) : notifications.length === 0 ? (
-          <div className="p-8 text-center text-gray-500 text-sm">
-            <svg className="w-12 h-12 mx-auto mb-3 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+          <div className="p-8 text-center text-[#4a4a4a] text-[10px]">
+            <svg className="w-8 h-8 mx-auto mb-2 text-[#2a2a2a]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
             </svg>
-            <p>No notifications yet</p>
+            <p>No notifications</p>
           </div>
         ) : (
-          <div className="divide-y divide-gray-800">
+          <div className="divide-y divide-[rgba(255,255,255,0.03)]">
             {notifications.map(notification => (
               <NotificationItem
                 key={notification._id}
