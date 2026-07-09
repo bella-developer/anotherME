@@ -134,11 +134,11 @@ function Home() {
                         className="rounded-full"
                         style={{
                           position: 'absolute',
-                          top: '10px',
-                          left: '10px',
-                          right: '10px',
-                          bottom: '10px',
-                          border: `2px solid rgba(${room.glowColorRGB}, 0.3)`,
+                          top: '4px',
+                          left: '4px',
+                          right: '4px',
+                          bottom: '4px',
+                          border: `1px solid rgba(${room.glowColorRGB}, 0.3)`,
                           boxShadow: `
                             inset 0 0 30px rgba(${room.glowColorRGB}, 0.1),
                             0 0 20px rgba(${room.glowColorRGB}, 0.2)
@@ -151,10 +151,10 @@ function Home() {
                         className="rounded-full"
                         style={{
                           position: 'absolute',
-                          top: '10px',
-                          left: '10px',
-                          right: '10px',
-                          bottom: '10px',
+                          top: '4px',
+                          left: '4px',
+                          right: '4px',
+                          bottom: '4px',
                           animation: 'rotate360 20s linear infinite',
                         }}
                       >
@@ -219,10 +219,10 @@ function Home() {
                         className="rounded-full"
                         style={{
                           position: 'absolute',
-                          top: '10px',
-                          left: '10px',
-                          right: '10px',
-                          bottom: '10px',
+                          top: '4px',
+                          left: '4px',
+                          right: '4px',
+                          bottom: '4px',
                           animation: 'rotate360reverse 15s linear infinite',
                         }}
                       >
@@ -251,10 +251,10 @@ function Home() {
                         className="rounded-full"
                         style={{
                           position: 'absolute',
-                          top: '10px',
-                          left: '10px',
-                          right: '10px',
-                          bottom: '10px',
+                          top: '4px',
+                          left: '4px',
+                          right: '4px',
+                          bottom: '4px',
                           animation: 'rotate360 25s linear infinite',
                         }}
                       >
@@ -307,10 +307,10 @@ function Home() {
                         className="rounded-full overflow-hidden"
                         style={{
                           position: 'absolute',
-                          top: '30px',
-                          left: '30px',
-                          right: '30px',
-                          bottom: '30px',
+                          top: '14px',
+                          left: '14px',
+                          right: '14px',
+                          bottom: '14px',
                           border: `1px solid rgba(${room.glowColorRGB}, ${hovered === room.id ? 0.4 : 0.2})`,
                           boxShadow: `
                             inset 0 0 40px rgba(${room.glowColorRGB}, 0.15),
