@@ -106,7 +106,7 @@ export const validateCreatePost = [
     .withMessage('Room is required')
     .isString()
     .withMessage('Room must be a string')
-    .isIn(['dark', 'climb', 'philo'])
+    .isIn(['dark', 'fantasy', 'philo'])
     .withMessage('Invalid room type'),
   body('title')
     .optional()
@@ -128,8 +128,8 @@ export const validateCreatePost = [
     .isIn([
       // Dark Room categories
       'CONFESSION', 'REGRET', 'DARK',
-      // Climb Room categories
-      'IDEA', 'FUTURISTIC', 'BUSINESS', 'ENTREPRENEUR',
+      // Fantasy Room categories
+      'CREATIVE', 'DAYDREAM', 'FUNNY', 'FUTURISTIC',
       // Philo Room categories
       'SPIRITUAL', 'SHADOW', 'DEEP',
       // Legacy categories
@@ -174,8 +174,8 @@ export const validateReaction = [
     .isIn([
       // Dark Room reactions
       'iFeelYou', 'notGood', 'youreNotAlone', 'sendingStrength',
-      // Climb Room reactions
-      'push', 'pull', 'gear', 'rocket',
+      // Fantasy Room reactions
+      'vibe', 'dream', 'inspire', 'wild',
       // Philo Room reactions
       'lamp', 'spark', 'clap',
       // Legacy reactions
