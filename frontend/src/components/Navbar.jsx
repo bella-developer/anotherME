@@ -178,7 +178,10 @@ function Navbar() {
           <>
             {/* Backdrop */}
             <div 
-              className="md:hidden fixed inset-0 top-16 bg-black bg-opacity-80 z-40"
+              className="md:hidden fixed inset-0 top-16 z-[60]"
+              style={{
+                background: 'rgba(0, 0, 0, 0.8)',
+              }}
               onClick={() => setIsMobileMenuOpen(false)}
               aria-hidden="true"
             />
@@ -186,11 +189,9 @@ function Navbar() {
             {/* Menu content */}
             <div 
               id="mobile-menu"
-              className="md:hidden fixed top-16 left-0 right-0 bottom-0 z-50 overflow-y-auto"
+              className="md:hidden fixed top-16 left-0 right-0 bottom-0 z-[70] overflow-y-auto"
               style={{
-                background: 'rgba(10, 10, 10, 0.98)',
-                backdropFilter: 'blur(20px)',
-                WebkitBackdropFilter: 'blur(20px)',
+                background: '#0a0a0a',
                 borderTop: '1px solid rgba(255, 255, 255, 0.1)'
               }}
               role="menu"
