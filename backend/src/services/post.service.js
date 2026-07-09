@@ -102,7 +102,7 @@ async function setPostAsCircleTopic(postId, circleId, userId) {
  */
 export async function createPost({ content, room, title, circleId, category, imageData }, authorId) {
   // Validate room
-  if (!room || !['dark', 'climb', 'philo'].includes(room)) {
+  if (!room || !['dark', 'fantasy', 'philo'].includes(room)) {
     const err = new Error('Invalid room type');
     err.statusCode = 400;
     err.code = 'INVALID_ROOM';
@@ -156,18 +156,18 @@ export async function createPost({ content, room, title, circleId, category, ima
     content,
     contentSanitized,
     image: imageData || {}, // Add image data if provided
-    climbState: room === 'climb' ? 'forming' : undefined,
+    climbState: undefined, // No state tracking for any room
     reactions: {
       // Dark Room reactions
       iFeelYou: 0,
       notGood: 0,
       youreNotAlone: 0,
       sendingStrength: 0,
-      // Climb Room reactions
-      push: 0,
-      pull: 0,
-      gear: 0,
-      rocket: 0,
+      // Fantasy Room reactions
+      vibe: 0,
+      dream: 0,
+      inspire: 0,
+      wild: 0,
       // Philo Room reactions
       lamp: 0,
       spark: 0,
