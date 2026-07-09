@@ -291,10 +291,6 @@ const CommentThreadWrapper = (props) => {
         isOpen={!!deleteCommentId}
         onClose={() => setDeleteCommentId(null)}
         onConfirm={() => handleDelete(deleteCommentId)}
-        title="Delete Comment"
-        message="Are you sure you want to delete this comment? This action cannot be undone."
-        confirmText="Delete"
-        cancelText="Cancel"
         type="danger"
       />
     </>

@@ -200,10 +200,6 @@ function FantasyRoomCard({ post, onReaction, onEdit, onDelete }) {
           onDelete?.(post.id);
           setShowDeleteConfirm(false);
         }}
-        title="Delete Post"
-        message="Are you sure you want to delete this post? This action cannot be undone."
-        confirmText="Delete"
-        cancelText="Cancel"
         type="danger"
       />
     </div>

@@ -1,19 +1,14 @@
-import { AlertTriangle } from 'lucide-react';
 import useReducedMotion from '../hooks/useReducedMotion';
 
 /**
- * Beautiful Confirmation Dialog Component
- * Elegant, cozy design matching ESO aesthetic
+ * Tiny Confirmation Dialog Component
+ * Minimal, cozy design - just asks "Delete?" with Yes/No
  */
 const ConfirmDialog = ({ 
   isOpen, 
   onClose, 
   onConfirm, 
-  title = 'Confirm Action',
-  message,
-  confirmText = 'Confirm',
-  cancelText = 'Cancel',
-  type = 'warning' // warning, danger, info
+  type = 'danger' // danger, warning, info
 }) => {
   const prefersReducedMotion = useReducedMotion();
 
@@ -25,71 +20,40 @@ const ConfirmDialog = ({
     }
   };
 
-  const getColors = () => {
-    switch (type) {
-      case 'danger':
-        return {
-          icon: 'text-[#ef4444]',
-          confirmBg: 'bg-[#ef4444]',
-          confirmHover: 'hover:bg-[#dc2626]'
-        };
-      case 'info':
-        return {
-          icon: 'text-[#2EE6FF]',
-          confirmBg: 'bg-[#2EE6FF]',
-          confirmHover: 'hover:bg-[#1dd5ef]'
-        };
-      default:
-        return {
-          icon: 'text-[#f59e0b]',
-          confirmBg: 'bg-[#f59e0b]',
-          confirmHover: 'hover:bg-[#ea580c]'
-        };
-    }
-  };
-
-  const colors = getColors();
-
   return (
     <div
       className="fixed inset-0 z-[9999] flex items-center justify-center bg-black bg-opacity-60 backdrop-blur-sm p-4"
       onClick={handleBackdropClick}
       style={{
-        animation: prefersReducedMotion ? 'none' : 'fadeIn 200ms ease-out',
+        animation: prefersReducedMotion ? 'none' : 'fadeIn 150ms ease-out',
       }}
     >
       <div
-        className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl shadow-2xl w-full max-w-md"
+        className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-lg shadow-2xl"
         style={{
-          animation: prefersReducedMotion ? 'none' : 'slideUp 300ms ease-out',
+          animation: prefersReducedMotion ? 'none' : 'slideUp 200ms ease-out',
+          minWidth: '240px',
+          maxWidth: '280px',
         }}
       >
-        {/* Icon & Title */}
-        <div className="flex items-start gap-4 p-6 border-b border-[#2a2a2a]">
-          <div className={`${colors.icon} flex-shrink-0 mt-1`}>
-            <AlertTriangle className="w-6 h-6" />
-          </div>
-          <div>
-            <h3 className="text-white text-lg font-semibold">{title}</h3>
-            <p className="text-[#a3a3a3] text-sm mt-2 leading-relaxed">
-              {message}
-            </p>
-          </div>
+        {/* Message */}
+        <div className="p-4 text-center">
+          <p className="text-[#e5e5e5] text-sm">Delete?</p>
         </div>
 
         {/* Actions */}
-        <div className="flex items-center justify-end gap-3 p-6">
+        <div className="flex items-center border-t border-[#2a2a2a]">
           <button
             onClick={onClose}
-            className="px-5 py-2.5 rounded-lg bg-[#2a2a2a] text-[#e5e5e5] hover:bg-[#3a3a3a] transition-colors text-sm font-medium"
+            className="flex-1 py-2.5 text-[#a3a3a3] hover:text-[#e5e5e5] hover:bg-[#2a2a2a] transition-all text-sm font-medium border-r border-[#2a2a2a]"
           >
-            {cancelText}
+            No
           </button>
           <button
             onClick={onConfirm}
-            className={`px-5 py-2.5 rounded-lg ${colors.confirmBg} ${colors.confirmHover} text-[#050505] transition-colors text-sm font-medium`}
+            className="flex-1 py-2.5 text-[#ef4444] hover:text-[#ff5555] hover:bg-[#2a2a2a] transition-all text-sm font-medium"
           >
-            {confirmText}
+            Yes
           </button>
         </div>
       </div>
