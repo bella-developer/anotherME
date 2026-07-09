@@ -597,14 +597,17 @@ const PhiloRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, onCir
           </div>
 
           {/* Submit Button */}
-          <Button
+          <button
             type="submit"
-            variant="primary"
             disabled={loading || creatingCircle || !isFormReady()}
-            className="w-full h-12"
+            className="w-full h-12 rounded-lg font-medium transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+            style={{
+              backgroundColor: (loading || creatingCircle || !isFormReady()) ? '#2a2a2a' : '#B56DFF',
+              color: (loading || creatingCircle || !isFormReady()) ? '#6b7280' : '#050505',
+            }}
           >
             {loading ? (editingPost ? 'Updating...' : 'Publishing...') : (editingPost ? 'Update Post' : 'Publish to Philo Room')}
-          </Button>
+          </button>
         </form>
       </div>
     </div>
