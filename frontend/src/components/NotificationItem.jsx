@@ -1,11 +1,14 @@
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Circle, CircleDot, X } from 'lucide-react';
 
 /**
  * NotificationItem Component
- * Ultra-minimalistic notification display
+ * Ultra-minimalistic notification display with expandable details
  */
 function NotificationItem({ notification, onMarkAsRead, onDelete, formatTimeAgo }) {
+  const [isExpanded, setIsExpanded] = useState(false);
+
   const getReactionIcon = () => {
     if (notification.type === 'reaction' && notification.data?.reaction) {
       return notification.data.reaction;
@@ -36,13 +39,24 @@ function NotificationItem({ notification, onMarkAsRead, onDelete, formatTimeAgo 
     return notification.message;
   };
 
+  const handleClick = () => {
+    if (!isExpanded && !notification.read) {
+      // Mark as read when expanding for the first time
+      onMarkAsRead(notification._id);
+    }
+    setIsExpanded(!isExpanded);
+  };
+
   return (
     <div
-      className={`px-3 py-2 hover:bg-[#0f0f0f] transition-colors ${
+      className={`transition-colors ${
         !notification.read ? 'bg-[#0a0a0a]' : ''
       }`}
     >
-      <div className="flex items-center gap-2">
+      <div 
+        className="px-3 py-2 hover:bg-[#0f0f0f] cursor-pointer flex items-center gap-2"
+        onClick={handleClick}
+      >
         {/* Read/Unread indicator */}
         <div className="flex-shrink-0">
           {!notification.read ? (
@@ -63,13 +77,36 @@ function NotificationItem({ notification, onMarkAsRead, onDelete, formatTimeAgo 
         
         {/* Hide button */}
         <button
-          onClick={() => onDelete(notification._id)}
+          onClick={(e) => {
+            e.stopPropagation();
+            onDelete(notification._id);
+          }}
           className="text-[#4a4a4a] hover:text-[#6b7280] transition-colors flex-shrink-0"
           title="Hide"
         >
           <X className="w-3 h-3" strokeWidth={2} />
         </button>
       </div>
+
+      {/* Expanded details */}
+      {isExpanded && (
+        <div 
+          className="px-3 pb-2 pl-8"
+          style={{
+            background: 'rgba(255, 255, 255, 0.02)',
+            borderTop: '1px solid rgba(255, 255, 255, 0.03)'
+          }}
+        >
+          <p className="text-[#9ca3af] text-[9px] leading-relaxed">
+            {notification.message}
+          </p>
+          {notification.data?.postTitle && (
+            <p className="text-[#6b7280] text-[9px] mt-1 italic">
+              "{notification.data.postTitle}"
+            </p>
+          )}
+        </div>
+      )}
     </div>
   );
 }
