@@ -32,6 +32,13 @@ const DarkRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, onCirc
   const [characterCount, setCharacterCount] = useState(0);
   const prefersReducedMotion = useReducedMotion();
 
+  // Real-time validation state
+  const [contentValidation, setContentValidation] = useState({
+    isValid: false,
+    status: 'empty', // empty, tooShort, valid, tooLong
+    message: ''
+  });
+
   // Dark Room specific categories
   const categories = [
     { value: 'CONFESSION', label: 'Confession', description: 'Release what weighs on you' },
@@ -72,10 +79,47 @@ const DarkRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, onCirc
     }
   }, [isOpen, editingPost, dispatch]);
 
-  // Update character count
+  // Update character count and validate content in real-time
   useEffect(() => {
-    setCharacterCount(formData.content.length);
+    const length = formData.content.length;
+    setCharacterCount(length);
+    
+    // Real-time content validation
+    if (length === 0) {
+      setContentValidation({
+        isValid: false,
+        status: 'empty',
+        message: 'Content is required'
+      });
+    } else if (length < 10) {
+      setContentValidation({
+        isValid: false,
+        status: 'tooShort',
+        message: `${10 - length} more characters needed`
+      });
+    } else if (length > 5000) {
+      setContentValidation({
+        isValid: false,
+        status: 'tooLong',
+        message: `${length - 5000} characters over limit`
+      });
+    } else {
+      setContentValidation({
+        isValid: true,
+        status: 'valid',
+        message: '✓ Content is ready'
+      });
+    }
   }, [formData.content]);
+
+  // Check if form is ready to submit
+  const isFormReady = () => {
+    return (
+      contentValidation.isValid &&
+      formData.circleId &&
+      formData.category
+    );
+  };
 
   // Handle input changes
   const handleChange = (e) => {
@@ -140,12 +184,8 @@ const DarkRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, onCirc
   const validateForm = () => {
     const errors = {};
 
-    if (!formData.content.trim()) {
-      errors.content = 'Content is required';
-    } else if (formData.content.length < 10) {
-      errors.content = 'Content must be at least 10 characters';
-    } else if (formData.content.length > 5000) {
-      errors.content = 'Content must not exceed 5000 characters';
+    if (!contentValidation.isValid) {
+      errors.content = contentValidation.message;
     }
 
     if (!formData.circleId) {
@@ -279,19 +319,51 @@ const DarkRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, onCirc
               onChange={handleChange}
               disabled={loading}
               className={`w-full min-h-[200px] bg-[#1a1a1a] text-[#e5e5e5] border ${
-                validationErrors.content ? 'border-[#ef4444]' : 'border-[#2a2a2a]'
+                contentValidation.status === 'tooLong' ? 'border-[#ef4444]' : 
+                contentValidation.status === 'valid' ? 'border-[#22c55e]' : 
+                'border-[#2a2a2a]'
               } rounded-lg px-4 py-3 text-base focus:outline-none focus:border-[#D97757] focus:ring-2 focus:ring-[#D97757] focus:ring-opacity-20 transition-all duration-200 resize-y disabled:opacity-50 disabled:cursor-not-allowed placeholder-[#4a4a4a]`}
               style={{ lineHeight: '1.6' }}
             />
             
             <div className="flex items-center justify-between mt-2">
-              {validationErrors.content && (
-                <span className="text-[#ef4444] text-xs">{validationErrors.content}</span>
-              )}
+              {/* Validation feedback */}
+              <div className="flex items-center gap-2">
+                {contentValidation.status === 'empty' && (
+                  <span className="text-[#a3a3a3] text-xs">{contentValidation.message}</span>
+                )}
+                {contentValidation.status === 'tooShort' && (
+                  <span className="text-[#f59e0b] text-xs">{contentValidation.message}</span>
+                )}
+                {contentValidation.status === 'valid' && (
+                  <span className="text-[#22c55e] text-xs">{contentValidation.message}</span>
+                )}
+                {contentValidation.status === 'tooLong' && (
+                  <span className="text-[#ef4444] text-xs">{contentValidation.message}</span>
+                )}
+              </div>
+
+              {/* Character counter */}
               <span className={`text-xs ml-auto ${getCharacterCountColor()}`}>
                 {characterCount} / 5000
               </span>
             </div>
+
+            {/* Progress bar for content */}
+            {characterCount > 0 && (
+              <div className="mt-2 h-1 bg-[#2a2a2a] rounded-full overflow-hidden">
+                <div
+                  className="h-full transition-all duration-200"
+                  style={{
+                    width: `${Math.min((characterCount / 5000) * 100, 100)}%`,
+                    background: 
+                      characterCount > 5000 ? '#ef4444' :
+                      characterCount >= 10 ? (characterCount > 4500 ? '#f59e0b' : '#22c55e') :
+                      '#6b7280'
+                  }}
+                />
+              </div>
+            )}
           </div>
 
           {/* Image Upload */}
@@ -467,11 +539,53 @@ const DarkRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, onCirc
             </div>
           )}
 
+          {/* Submission Readiness Indicator */}
+          <div className={`mb-4 p-4 rounded-lg border transition-all duration-200 ${
+            isFormReady() 
+              ? 'bg-[#22c55e] bg-opacity-5 border-[#22c55e]' 
+              : 'bg-[#2a2a2a] bg-opacity-30 border-[#2a2a2a]'
+          }`}>
+            <div className="flex items-center justify-between mb-2">
+              <span className={`text-sm font-medium ${
+                isFormReady() ? 'text-[#22c55e]' : 'text-[#a3a3a3]'
+              }`}>
+                {isFormReady() ? '✓ Ready to publish' : 'Complete these to publish:'}
+              </span>
+            </div>
+            
+            <div className="space-y-1.5 text-xs">
+              <div className="flex items-center gap-2">
+                <span className={contentValidation.isValid ? 'text-[#22c55e]' : 'text-[#a3a3a3]'}>
+                  {contentValidation.isValid ? '✓' : '○'}
+                </span>
+                <span className={contentValidation.isValid ? 'text-[#22c55e]' : 'text-[#a3a3a3]'}>
+                  Content (10-5000 characters)
+                </span>
+              </div>
+              
+              <div className="flex items-center gap-2">
+                <span className={formData.circleId ? 'text-[#22c55e]' : 'text-[#a3a3a3]'}>
+                  {formData.circleId ? '✓' : '○'}
+                </span>
+                <span className={formData.circleId ? 'text-[#22c55e]' : 'text-[#a3a3a3]'}>
+                  Circle selected
+                </span>
+              </div>
+              
+              <div className="flex items-center gap-2">
+                <span className="text-[#22c55e]">✓</span>
+                <span className="text-[#22c55e]">
+                  Category: {categories.find(c => c.value === formData.category)?.label}
+                </span>
+              </div>
+            </div>
+          </div>
+
           {/* Submit Button */}
           <Button
             type="submit"
             variant="primary"
-            disabled={loading || creatingCircle}
+            disabled={loading || creatingCircle || !isFormReady()}
             className="w-full h-12"
           >
             {loading ? (editingPost ? 'Updating...' : 'Publishing...') : (editingPost ? 'Update Post' : 'Publish to Dark Room')}
