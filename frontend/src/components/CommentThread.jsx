@@ -2,6 +2,7 @@ import { useState, memo, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { deleteComment } from '../features/commentsSlice';
 import CommentForm from './CommentForm';
+import ConfirmDialog from './ConfirmDialog';
 
 /**
  * CommentThread Component
@@ -10,6 +11,7 @@ import CommentForm from './CommentForm';
  */
 const CommentThread = memo(({ comments, postId, currentUserId, maxDepth = 3 }) => {
   const dispatch = useDispatch();
+  const [deleteCommentId, setDeleteCommentId] = useState(null);
 
   // Build comment tree structure
   const commentTree = useMemo(() => {
@@ -85,13 +87,12 @@ const CommentItem = memo(({ comment, postId, currentUserId, depth, maxDepth, dis
   };
 
   // Handle delete comment
-  const handleDelete = async () => {
-    if (window.confirm('Are you sure you want to delete this comment?')) {
-      try {
-        await dispatch(deleteComment(comment.id)).unwrap();
-      } catch (error) {
-        console.error('Failed to delete comment:', error);
-      }
+  const handleDelete = async (commentId) => {
+    try {
+      await dispatch(deleteComment(commentId)).unwrap();
+      setDeleteCommentId(null);
+    } catch (error) {
+      console.error('Failed to delete comment:', error);
     }
   };
 
@@ -147,7 +148,7 @@ const CommentItem = memo(({ comment, postId, currentUserId, depth, maxDepth, dis
             {/* Delete button (only for owner) */}
             {isOwner && (
               <button
-                onClick={handleDelete}
+                onClick={() => setDeleteCommentId(comment.id)}
                 className="text-[#a3a3a3] hover:text-red-500 transition-colors duration-200"
                 title="Delete comment"
               >
@@ -269,4 +270,35 @@ const CommentItem = memo(({ comment, postId, currentUserId, depth, maxDepth, dis
 CommentThread.displayName = 'CommentThread';
 CommentItem.displayName = 'CommentItem';
 
-export default CommentThread;
+// Add ConfirmDialog outside the CommentItem component
+const CommentThreadWrapper = (props) => {
+  const [deleteCommentId, setDeleteCommentId] = useState(null);
+  const dispatch = useDispatch();
+
+  const handleDelete = async (commentId) => {
+    try {
+      await dispatch(deleteComment(commentId)).unwrap();
+      setDeleteCommentId(null);
+    } catch (error) {
+      console.error('Failed to delete comment:', error);
+    }
+  };
+
+  return (
+    <>
+      <CommentThread {...props} setDeleteCommentId={setDeleteCommentId} handleDeleteComment={handleDelete} />
+      <ConfirmDialog
+        isOpen={!!deleteCommentId}
+        onClose={() => setDeleteCommentId(null)}
+        onConfirm={() => handleDelete(deleteCommentId)}
+        title="Delete Comment"
+        message="Are you sure you want to delete this comment? This action cannot be undone."
+        confirmText="Delete"
+        cancelText="Cancel"
+        type="danger"
+      />
+    </>
+  );
+};
+
+export default CommentThreadWrapper;

@@ -1,22 +1,19 @@
 import { useEffect, useState } from 'react';
-import useReducedMotion from '../hooks/useReducedMotion';
+import { X, CheckCircle, AlertCircle, Info, AlertTriangle } from 'lucide-react';
 
 /**
- * Toast Component
- * Notification toast with slide-in animation
- * Requirements: 35.3 - Toast slide-in animations (400ms)
- * Requirements: 35.7 - Respect prefers-reduced-motion
+ * Beautiful Toast Notification Component
+ * Cozy, artistic design matching ESO aesthetic
  */
-function Toast({ message, type = 'success', duration = 5000, onClose }) {
+const Toast = ({ message, type = 'info', duration = 3000, onClose }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [isExiting, setIsExiting] = useState(false);
-  const prefersReducedMotion = useReducedMotion();
 
   useEffect(() => {
-    // Trigger slide-in animation
+    // Fade in
     setTimeout(() => setIsVisible(true), 10);
 
-    // Auto-dismiss after duration
+    // Auto dismiss
     const timer = setTimeout(() => {
       handleClose();
     }, duration);
@@ -29,104 +26,87 @@ function Toast({ message, type = 'success', duration = 5000, onClose }) {
     setTimeout(() => {
       setIsVisible(false);
       if (onClose) onClose();
-    }, prefersReducedMotion ? 0 : 400); // Skip animation delay if reduced motion
+    }, 300);
   };
 
-  const typeStyles = {
-    success: {
-      bg: 'bg-success/10 border-success',
-      icon: 'text-success',
-      iconPath: (
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={2}
-          d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-        />
-      ),
-    },
-    error: {
-      bg: 'bg-error/10 border-error',
-      icon: 'text-error',
-      iconPath: (
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={2}
-          d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
-        />
-      ),
-    },
-    warning: {
-      bg: 'bg-warning/10 border-warning',
-      icon: 'text-warning',
-      iconPath: (
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={2}
-          d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-        />
-      ),
-    },
+  const getIcon = () => {
+    switch (type) {
+      case 'success':
+        return <CheckCircle className="w-4 h-4" />;
+      case 'error':
+        return <AlertCircle className="w-4 h-4" />;
+      case 'warning':
+        return <AlertTriangle className="w-4 h-4" />;
+      default:
+        return <Info className="w-4 h-4" />;
+    }
   };
 
-  const styles = typeStyles[type];
+  const getColors = () => {
+    switch (type) {
+      case 'success':
+        return {
+          bg: 'bg-[#0a0a0a]',
+          border: 'border-[#22c55e]',
+          icon: 'text-[#22c55e]',
+          text: 'text-[#e5e5e5]'
+        };
+      case 'error':
+        return {
+          bg: 'bg-[#0a0a0a]',
+          border: 'border-[#ef4444]',
+          icon: 'text-[#ef4444]',
+          text: 'text-[#e5e5e5]'
+        };
+      case 'warning':
+        return {
+          bg: 'bg-[#0a0a0a]',
+          border: 'border-[#f59e0b]',
+          icon: 'text-[#f59e0b]',
+          text: 'text-[#e5e5e5]'
+        };
+      default:
+        return {
+          bg: 'bg-[#0a0a0a]',
+          border: 'border-[#2EE6FF]',
+          icon: 'text-[#2EE6FF]',
+          text: 'text-[#e5e5e5]'
+        };
+    }
+  };
+
+  const colors = getColors();
 
   return (
     <div
-      className={`fixed top-4 right-4 z-50 w-96 max-w-[calc(100vw-2rem)] transition-all ease-out ${
-        prefersReducedMotion ? 'duration-0' : 'duration-400'
-      } ${
+      className={`fixed top-20 right-4 z-[9999] transition-all duration-300 ease-out ${
         isVisible && !isExiting
-          ? 'translate-x-0 opacity-100'
-          : 'translate-x-full opacity-0'
+          ? 'opacity-100 translate-x-0'
+          : 'opacity-0 translate-x-8'
       }`}
-      role="alert"
-      aria-live="polite"
     >
       <div
-        className={`${styles.bg} border rounded-lg shadow-lg p-4 flex items-start space-x-3`}
+        className={`${colors.bg} ${colors.border} border rounded-lg shadow-2xl backdrop-blur-sm`}
+        style={{
+          minWidth: '280px',
+          maxWidth: '400px',
+        }}
       >
-        {/* Icon */}
-        <div className={`flex-shrink-0 ${styles.icon}`}>
-          <svg
-            className="w-6 h-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            aria-hidden="true"
+        <div className="flex items-start gap-3 p-4">
+          <div className={colors.icon}>{getIcon()}</div>
+          <p className={`${colors.text} text-sm flex-1 leading-relaxed`}>
+            {message}
+          </p>
+          <button
+            onClick={handleClose}
+            className="text-[#a3a3a3] hover:text-[#e5e5e5] transition-colors"
           >
-            {styles.iconPath}
-          </svg>
+            <X className="w-4 h-4" />
+          </button>
         </div>
-
-        {/* Message */}
-        <div className="flex-1 text-text-primary text-sm">{message}</div>
-
-        {/* Close Button */}
-        <button
-          onClick={handleClose}
-          className="flex-shrink-0 text-text-secondary hover:text-text-primary transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-accent-primary rounded"
-          aria-label="Close notification"
-        >
-          <svg
-            className="w-5 h-5"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M6 18L18 6M6 6l12 12"
-            />
-          </svg>
-        </button>
       </div>
     </div>
   );
-}
+};
 
 export default Toast;

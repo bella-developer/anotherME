@@ -1,7 +1,9 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { FaPen, FaTrash } from 'react-icons/fa';
 import RoomReactions from './RoomReactions';
+import ConfirmDialog from './ConfirmDialog';
 
 /**
  * Philo Room Post Card Component
@@ -10,6 +12,7 @@ import RoomReactions from './RoomReactions';
  */
 function PhiloRoomCard({ post, onReaction, onEdit, onDelete }) {
   const navigate = useNavigate();
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
   const formatTimeAgo = (date) => {
     const seconds = Math.floor((new Date() - new Date(date)) / 1000);
@@ -52,11 +55,7 @@ function PhiloRoomCard({ post, onReaction, onEdit, onDelete }) {
                 <FaPen className="text-white/40 hover:text-white/70" size={10} />
               </button>
               <button
-                onClick={() => {
-                  if (window.confirm('Are you sure you want to delete this post?')) {
-                    onDelete?.(post.id);
-                  }
-                }}
+                onClick={() => setShowDeleteConfirm(true)}
                 className="p-1.5 rounded hover:bg-red-900/20 transition-colors"
                 title="Delete post"
               >
@@ -179,6 +178,21 @@ function PhiloRoomCard({ post, onReaction, onEdit, onDelete }) {
           disabled={post.isAuthor}
         />
       </div>
+
+      {/* Delete Confirmation Dialog */}
+      <ConfirmDialog
+        isOpen={showDeleteConfirm}
+        onClose={() => setShowDeleteConfirm(false)}
+        onConfirm={() => {
+          onDelete?.(post.id);
+          setShowDeleteConfirm(false);
+        }}
+        title="Delete Post"
+        message="Are you sure you want to delete this post? This action cannot be undone."
+        confirmText="Delete"
+        cancelText="Cancel"
+        type="danger"
+      />
     </div>
   );
 }
