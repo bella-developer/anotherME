@@ -186,14 +186,31 @@ function Navbar() {
             {/* Menu content */}
             <div 
               id="mobile-menu"
-              className="md:hidden fixed top-16 left-0 right-0 bottom-0 bg-primary-secondary border-b border-border shadow-lg z-50 overflow-y-auto"
+              className="md:hidden fixed top-16 left-0 right-0 bottom-0 z-50 overflow-y-auto"
+              style={{
+                background: 'rgba(10, 10, 10, 0.98)',
+                backdropFilter: 'blur(20px)',
+                WebkitBackdropFilter: 'blur(20px)',
+                borderTop: '1px solid rgba(255, 255, 255, 0.1)'
+              }}
               role="menu"
             >
               <div className="flex flex-col space-y-1 p-4">
                 <Link
                   to="/home"
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="text-text-secondary hover:text-text-primary hover:bg-primary-elevated transition-colors duration-200 py-3 px-4 rounded-lg min-h-touch flex items-center focus:outline-none focus:ring-2 focus:ring-accent-primary"
+                  className="py-3 px-4 rounded-lg min-h-touch flex items-center focus:outline-none focus:ring-2 focus:ring-white/50 transition-colors duration-200"
+                  style={{
+                    color: 'rgba(255, 255, 255, 0.7)',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.color = 'rgba(255, 255, 255, 1)';
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.color = 'rgba(255, 255, 255, 0.7)';
+                    e.currentTarget.style.background = 'transparent';
+                  }}
                   role="menuitem"
                 >
                   Home
@@ -201,7 +218,18 @@ function Navbar() {
                 <Link
                   to="/circles"
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="text-text-secondary hover:text-text-primary hover:bg-primary-elevated transition-colors duration-200 py-3 px-4 rounded-lg min-h-touch flex items-center focus:outline-none focus:ring-2 focus:ring-accent-primary"
+                  className="py-3 px-4 rounded-lg min-h-touch flex items-center focus:outline-none focus:ring-2 focus:ring-white/50 transition-colors duration-200"
+                  style={{
+                    color: 'rgba(255, 255, 255, 0.7)',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.color = 'rgba(255, 255, 255, 1)';
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.color = 'rgba(255, 255, 255, 0.7)';
+                    e.currentTarget.style.background = 'transparent';
+                  }}
                   role="menuitem"
                 >
                   Circles
@@ -209,7 +237,18 @@ function Navbar() {
                 <Link
                   to="/support"
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="text-text-secondary hover:text-text-primary hover:bg-primary-elevated transition-colors duration-200 py-3 px-4 rounded-lg min-h-touch flex items-center focus:outline-none focus:ring-2 focus:ring-accent-primary"
+                  className="py-3 px-4 rounded-lg min-h-touch flex items-center focus:outline-none focus:ring-2 focus:ring-white/50 transition-colors duration-200"
+                  style={{
+                    color: 'rgba(255, 255, 255, 0.7)',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.color = 'rgba(255, 255, 255, 1)';
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.color = 'rgba(255, 255, 255, 0.7)';
+                    e.currentTarget.style.background = 'transparent';
+                  }}
                   role="menuitem"
                 >
                   Support
@@ -217,7 +256,18 @@ function Navbar() {
                 <Link
                   to="/create"
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="text-text-secondary hover:text-text-primary hover:bg-primary-elevated transition-colors duration-200 py-3 px-4 rounded-lg min-h-touch flex items-center focus:outline-none focus:ring-2 focus:ring-accent-primary"
+                  className="py-3 px-4 rounded-lg min-h-touch flex items-center focus:outline-none focus:ring-2 focus:ring-white/50 transition-colors duration-200"
+                  style={{
+                    color: 'rgba(255, 255, 255, 0.7)',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.color = 'rgba(255, 255, 255, 1)';
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.color = 'rgba(255, 255, 255, 0.7)';
+                    e.currentTarget.style.background = 'transparent';
+                  }}
                   role="menuitem"
                 >
                   Create
@@ -225,7 +275,18 @@ function Navbar() {
                 <Link
                   to="/about"
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="text-text-secondary hover:text-text-primary hover:bg-primary-elevated transition-colors duration-200 py-3 px-4 rounded-lg min-h-touch flex items-center focus:outline-none focus:ring-2 focus:ring-accent-primary"
+                  className="py-3 px-4 rounded-lg min-h-touch flex items-center focus:outline-none focus:ring-2 focus:ring-white/50 transition-colors duration-200"
+                  style={{
+                    color: 'rgba(255, 255, 255, 0.7)',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.color = 'rgba(255, 255, 255, 1)';
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.color = 'rgba(255, 255, 255, 0.7)';
+                    e.currentTarget.style.background = 'transparent';
+                  }}
                   role="menuitem"
                 >
                   About Us
@@ -234,13 +295,30 @@ function Navbar() {
                   <Link
                     to="/profile"
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="flex items-center space-x-3 py-3 px-4 border-t border-border hover:bg-primary-elevated transition-colors rounded-lg min-h-touch mt-2 focus:outline-none focus:ring-2 focus:ring-accent-primary"
+                    className="flex items-center space-x-3 py-3 px-4 rounded-lg min-h-touch mt-2 focus:outline-none focus:ring-2 focus:ring-white/50 transition-colors duration-200"
+                    style={{
+                      borderTop: '1px solid rgba(255, 255, 255, 0.1)',
+                      color: 'rgba(255, 255, 255, 0.9)',
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.background = 'transparent';
+                    }}
                     role="menuitem"
                     aria-label={`Profile: ${user?.username || 'User'}`}
                   >
-                    <div className="w-8 h-8 rounded-full bg-accent-primary/20 flex items-center justify-center flex-shrink-0" aria-hidden="true">
+                    <div 
+                      className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" 
+                      style={{
+                        background: 'rgba(46, 230, 255, 0.2)',
+                      }}
+                      aria-hidden="true"
+                    >
                       <svg
-                        className="w-5 h-5 text-accent-primary"
+                        className="w-5 h-5"
+                        style={{ color: '#2EE6FF' }}
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -253,7 +331,7 @@ function Navbar() {
                         />
                       </svg>
                     </div>
-                    <span className="text-text-primary text-base font-medium">
+                    <span className="text-base font-medium">
                       {user?.username || 'User'}
                     </span>
                   </Link>
@@ -261,7 +339,19 @@ function Navbar() {
                   <Link
                     to="/register"
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="text-accent-primary hover:text-accent-primary/80 hover:bg-primary-elevated transition-colors duration-200 py-3 px-4 border-t border-border rounded-lg min-h-touch mt-2 flex items-center focus:outline-none focus:ring-2 focus:ring-accent-primary"
+                    className="py-3 px-4 rounded-lg min-h-touch mt-2 flex items-center focus:outline-none focus:ring-2 focus:ring-white/50 transition-colors duration-200"
+                    style={{
+                      borderTop: '1px solid rgba(255, 255, 255, 0.1)',
+                      color: '#2EE6FF',
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.color = 'rgba(46, 230, 255, 0.8)';
+                      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.color = '#2EE6FF';
+                      e.currentTarget.style.background = 'transparent';
+                    }}
                     role="menuitem"
                   >
                     Join
