@@ -38,7 +38,7 @@ function FantasyRoomCard({ post, onReaction, onEdit, onDelete }) {
             {formatTimeAgo(post.createdAt)}
           </time>
           {post.category && (
-            <span className="px-2.5 py-1 rounded-full text-[9px] font-semibold uppercase tracking-widest bg-purple-500/15 text-purple-400/90 border border-purple-500/20">
+            <span className="px-2.5 py-1 rounded-full text-[9px] font-semibold uppercase tracking-widest bg-orange-900/20 text-orange-400 border border-orange-900/30">
               {post.category}
             </span>
           )}
@@ -100,31 +100,77 @@ function FantasyRoomCard({ post, onReaction, onEdit, onDelete }) {
           dangerouslySetInnerHTML={{ __html: post.content }}
         />
         
-        {/* Image Display */}
+        {/* Image and Circles Container */}
         {post.image?.url && (
-          <div className="mb-5">
-            <div
-              className="relative overflow-hidden rounded-lg"
-              style={{
-                boxShadow: '0 4px 24px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.08)',
-              }}
-            >
-              <img
-                src={post.image.url}
-                alt={post.title || 'Post image'}
-                className="w-full h-auto"
+          <div className="flex gap-3 mb-5">
+            {/* Image - 80% width */}
+            <div className="flex-[0_0_80%] overflow-hidden">
+              <div
+                className="relative overflow-hidden"
                 style={{
-                  display: 'block',
-                  borderRadius: '6px',
+                  background: 'linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%)',
+                  borderRadius: '3px',
+                  padding: '12px',
+                  boxShadow: '0 0 0 1px rgba(255,255,255,0.1), inset 0 0 20px rgba(0,0,0,0.3)',
                 }}
-                loading="lazy"
-              />
+              >
+                <div
+                  className="relative overflow-hidden"
+                  style={{
+                    borderRadius: '2px',
+                    boxShadow: 'inset 0 0 15px rgba(0,0,0,0.5)',
+                  }}
+                >
+                  <img
+                    src={post.image.url}
+                    alt={post.title || 'Post image'}
+                    className="w-full h-auto object-cover"
+                    style={{
+                      display: 'block',
+                      maxHeight: '400px',
+                    }}
+                    loading="lazy"
+                  />
+                </div>
+                {/* Corner frames */}
+                <div className="absolute top-2 left-2" style={{ width: '16px', height: '16px', borderTop: '2px solid rgba(255,255,255,0.2)', borderLeft: '2px solid rgba(255,255,255,0.2)' }} />
+                <div className="absolute top-2 right-2" style={{ width: '16px', height: '16px', borderTop: '2px solid rgba(255,255,255,0.2)', borderRight: '2px solid rgba(255,255,255,0.2)' }} />
+                <div className="absolute bottom-2 left-2" style={{ width: '16px', height: '16px', borderBottom: '2px solid rgba(255,255,255,0.2)', borderLeft: '2px solid rgba(255,255,255,0.2)' }} />
+                <div className="absolute bottom-2 right-2" style={{ width: '16px', height: '16px', borderBottom: '2px solid rgba(255,255,255,0.2)', borderRight: '2px solid rgba(255,255,255,0.2)' }} />
+              </div>
             </div>
+
+            {/* Circles - 20% width */}
+            {post.circles && post.circles.length > 0 && (
+              <div className="flex-[0_0_20%] flex flex-col gap-2 justify-center overflow-hidden">
+                {post.circles.map((circle, index) => (
+                  <button
+                    key={index}
+                    onClick={() => {
+                      const circleIdToUse = circle.circleId || circle.id;
+                      if (circleIdToUse) {
+                        navigate(`/circles/${circleIdToUse}?from=post&postId=${post.id}`);
+                      }
+                    }}
+                    className="px-2 py-1 text-[9px] tracking-wider font-light uppercase transition-all duration-200 rounded truncate"
+                    style={{
+                      background: 'rgba(255,255,255,0.06)',
+                      color: 'rgba(255,255,255,0.5)',
+                      border: '1px solid rgba(255,255,255,0.08)',
+                    }}
+                    title={`View in ${circle.fullName || circle.name}`}
+                  >
+                    {circle.icon && <span className="mr-1">{circle.icon}</span>}
+                    <span className="truncate block">{circle.name}</span>
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
         )}
 
-        {/* Circles */}
-        {post.circles && post.circles.length > 0 && (
+        {/* Circles without image */}
+        {!post.image?.url && post.circles && post.circles.length > 0 && (
           <div className="flex flex-wrap gap-2 mb-5">
             {post.circles.map((circle, index) => (
               <button
