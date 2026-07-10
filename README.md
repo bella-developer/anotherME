@@ -17,7 +17,7 @@ Each circle has a topic limit to keep conversations focused. When a circle reach
 Three rooms define the experience:
 
 * Dark Room - Release emotions without judgment. Confessions, regrets, shadows.
-* Climb Room - Build ideas. Share ventures. Collaborate on what could be.
+* Fantasy Room - Imagine possibilities. Share dreams. Explore what could be.
 * Philo Room - Question everything. Reflect deeply. Explore meaning.
 
 ## How to Use
