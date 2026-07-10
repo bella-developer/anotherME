@@ -178,10 +178,7 @@ function Navbar() {
           <>
             {/* Backdrop */}
             <div 
-              className="md:hidden fixed inset-0 top-16 z-[60]"
-              style={{
-                background: 'rgba(0, 0, 0, 0.8)',
-              }}
+              className="md:hidden fixed inset-0 top-16 bg-black/80 z-40"
               onClick={() => setIsMobileMenuOpen(false)}
               aria-hidden="true"
             />
@@ -189,10 +186,13 @@ function Navbar() {
             {/* Menu content */}
             <div 
               id="mobile-menu"
-              className="md:hidden fixed top-16 left-0 right-0 bottom-0 z-[70] overflow-y-auto"
+              className="md:hidden fixed top-16 left-0 right-0 z-50 shadow-2xl"
               style={{
-                background: '#0a0a0a',
-                borderTop: '1px solid rgba(255, 255, 255, 0.1)'
+                background: 'rgba(10, 10, 10, 0.98)',
+                backdropFilter: 'blur(20px)',
+                borderTop: '1px solid rgba(255, 255, 255, 0.1)',
+                maxHeight: 'calc(100vh - 4rem)',
+                overflowY: 'auto'
               }}
               role="menu"
             >
@@ -200,7 +200,7 @@ function Navbar() {
                 <Link
                   to="/home"
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="py-3 px-4 rounded-lg text-white/70 hover:text-white hover:bg-white/5 transition-colors duration-200"
+                  className="py-3 px-4 rounded-lg text-white/80 hover:text-white hover:bg-white/10 transition-colors duration-200 text-base font-medium"
                   role="menuitem"
                 >
                   Home
@@ -208,7 +208,7 @@ function Navbar() {
                 <Link
                   to="/circles"
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="py-3 px-4 rounded-lg text-white/70 hover:text-white hover:bg-white/5 transition-colors duration-200"
+                  className="py-3 px-4 rounded-lg text-white/80 hover:text-white hover:bg-white/10 transition-colors duration-200 text-base font-medium"
                   role="menuitem"
                 >
                   Circles
@@ -216,53 +216,36 @@ function Navbar() {
                 <Link
                   to="/support"
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="py-3 px-4 rounded-lg text-white/70 hover:text-white hover:bg-white/5 transition-colors duration-200"
+                  className="py-3 px-4 rounded-lg text-white/80 hover:text-white hover:bg-white/10 transition-colors duration-200 text-base font-medium"
                   role="menuitem"
                 >
                   Support
                 </Link>
                 <Link
-                  to="/create"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="py-3 px-4 rounded-lg text-white/70 hover:text-white hover:bg-white/5 transition-colors duration-200"
-                  role="menuitem"
-                >
-                  Create
-                </Link>
-                <Link
                   to="/about"
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="py-3 px-4 rounded-lg text-white/70 hover:text-white hover:bg-white/5 transition-colors duration-200"
+                  className="py-3 px-4 rounded-lg text-white/80 hover:text-white hover:bg-white/10 transition-colors duration-200 text-base font-medium"
                   role="menuitem"
                 >
                   About Us
                 </Link>
+                
+                <div className="border-t border-white/10 my-2"></div>
+                
                 {isAuthenticated ? (
                   <Link
                     to="/profile"
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="flex items-center space-x-3 py-3 px-4 rounded-lg mt-2 border-t border-white/10 text-white hover:bg-white/5 transition-colors duration-200"
+                    className="flex items-center space-x-3 py-3 px-4 rounded-lg text-white hover:bg-white/10 transition-colors duration-200"
                     role="menuitem"
                     aria-label={`Profile: ${user?.username || 'User'}`}
                   >
                     <div 
-                      className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0"
-                      style={{ background: 'rgba(46, 230, 255, 0.2)' }}
-                      aria-hidden="true"
+                      className="w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0 bg-black border border-gray-700/40"
                     >
-                      <svg
-                        className="w-5 h-5 text-[#2EE6FF]"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                        />
-                      </svg>
+                      <span className="text-[#D97757] text-sm font-bold">
+                        {(user?.username || 'U').charAt(0).toUpperCase()}
+                      </span>
                     </div>
                     <span className="text-base font-medium">
                       {user?.username || 'User'}
@@ -272,10 +255,10 @@ function Navbar() {
                   <Link
                     to="/register"
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="py-3 px-4 rounded-lg mt-2 border-t border-white/10 text-[#2EE6FF] hover:text-[#2EE6FF]/80 hover:bg-white/5 transition-colors duration-200"
+                    className="py-3 px-4 rounded-lg text-[#D97757] hover:text-[#D97757]/80 hover:bg-white/10 transition-colors duration-200 text-base font-medium"
                     role="menuitem"
                   >
-                    Join
+                    Join ESO
                   </Link>
                 )}
               </div>
