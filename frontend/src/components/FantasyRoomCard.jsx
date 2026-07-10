@@ -132,11 +132,11 @@ function FantasyRoomCard({ post, onReaction, onEdit, onDelete }) {
                     loading="lazy"
                   />
                 </div>
-                {/* Corner frames */}
-                <div className="absolute top-2 left-2" style={{ width: '16px', height: '16px', borderTop: '2px solid rgba(255,255,255,0.2)', borderLeft: '2px solid rgba(255,255,255,0.2)' }} />
-                <div className="absolute top-2 right-2" style={{ width: '16px', height: '16px', borderTop: '2px solid rgba(255,255,255,0.2)', borderRight: '2px solid rgba(255,255,255,0.2)' }} />
-                <div className="absolute bottom-2 left-2" style={{ width: '16px', height: '16px', borderBottom: '2px solid rgba(255,255,255,0.2)', borderLeft: '2px solid rgba(255,255,255,0.2)' }} />
-                <div className="absolute bottom-2 right-2" style={{ width: '16px', height: '16px', borderBottom: '2px solid rgba(255,255,255,0.2)', borderRight: '2px solid rgba(255,255,255,0.2)' }} />
+                {/* Corner frames - Orange for Fantasy Room */}
+                <div className="absolute top-2 left-2" style={{ width: '16px', height: '16px', borderTop: '2px solid rgba(251, 146, 60, 0.6)', borderLeft: '2px solid rgba(251, 146, 60, 0.6)' }} />
+                <div className="absolute top-2 right-2" style={{ width: '16px', height: '16px', borderTop: '2px solid rgba(251, 146, 60, 0.6)', borderRight: '2px solid rgba(251, 146, 60, 0.6)' }} />
+                <div className="absolute bottom-2 left-2" style={{ width: '16px', height: '16px', borderBottom: '2px solid rgba(251, 146, 60, 0.6)', borderLeft: '2px solid rgba(251, 146, 60, 0.6)' }} />
+                <div className="absolute bottom-2 right-2" style={{ width: '16px', height: '16px', borderBottom: '2px solid rgba(251, 146, 60, 0.6)', borderRight: '2px solid rgba(251, 146, 60, 0.6)' }} />
               </div>
             </div>
 
@@ -152,16 +152,17 @@ function FantasyRoomCard({ post, onReaction, onEdit, onDelete }) {
                         navigate(`/circles/${circleIdToUse}?from=post&postId=${post.id}`);
                       }
                     }}
-                    className="px-2 py-1 text-[9px] tracking-wider font-light uppercase transition-all duration-200 rounded truncate"
+                    className="w-full aspect-square rounded-full flex items-center justify-center text-[11px] font-bold uppercase transition-all duration-200"
                     style={{
-                      background: 'rgba(255,255,255,0.06)',
-                      color: 'rgba(255,255,255,0.5)',
-                      border: '1px solid rgba(255,255,255,0.08)',
+                      background: 'rgba(251, 146, 60, 0.15)',
+                      color: 'rgba(251, 146, 60, 0.9)',
+                      border: '1px solid rgba(251, 146, 60, 0.3)',
                     }}
                     title={`View in ${circle.fullName || circle.name}`}
                   >
-                    {circle.icon && <span className="mr-1">{circle.icon}</span>}
-                    <span className="truncate block">{circle.name}</span>
+                    <span className="block truncate px-1 text-center">
+                      {circle.name.charAt(0).toUpperCase() + circle.name.slice(1).toLowerCase()}
+                    </span>
                   </button>
                 ))}
               </div>
