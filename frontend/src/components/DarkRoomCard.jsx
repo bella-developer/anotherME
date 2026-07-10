@@ -152,17 +152,19 @@ function DarkRoomCard({ post, onReaction, onEdit, onDelete }) {
                         navigate(`/circles/${circleIdToUse}?from=post&postId=${post.id}`);
                       }
                     }}
-                    className="aspect-square rounded-full flex items-center justify-center text-[10px] font-bold uppercase transition-all duration-200"
+                    className="flex items-center justify-center text-[9px] font-extrabold uppercase transition-all duration-200 leading-none"
                     style={{
-                      width: 'min(100%, 60px)',
-                      height: 'min(100%, 60px)',
+                      width: 'min(100%, 55px)',
+                      height: 'min(100%, 40px)',
+                      borderRadius: '50% / 60%',
                       background: 'rgba(239, 68, 68, 0.15)',
-                      color: 'rgba(239, 68, 68, 0.9)',
-                      border: '1px solid rgba(239, 68, 68, 0.3)',
+                      color: 'rgba(239, 68, 68, 1)',
+                      border: '1.5px solid rgba(239, 68, 68, 0.4)',
+                      padding: '4px 6px',
                     }}
                     title={`View in ${circle.fullName || circle.name}`}
                   >
-                    <span className="block truncate px-1 text-center leading-tight">
+                    <span className="block truncate text-center max-w-full px-0.5" style={{ lineHeight: '1.1' }}>
                       {circle.name.charAt(0).toUpperCase() + circle.name.slice(1).toLowerCase()}
                     </span>
                   </button>
