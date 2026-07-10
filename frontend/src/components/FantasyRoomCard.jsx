@@ -142,7 +142,7 @@ function FantasyRoomCard({ post, onReaction, onEdit, onDelete }) {
 
             {/* Circles - 20% width */}
             {post.circles && post.circles.length > 0 && (
-              <div className="flex-[0_0_20%] flex flex-col gap-2 justify-center overflow-hidden">
+              <div className="flex-[0_0_20%] flex flex-col gap-2 justify-center items-center overflow-hidden">
                 {post.circles.map((circle, index) => (
                   <button
                     key={index}
@@ -152,15 +152,17 @@ function FantasyRoomCard({ post, onReaction, onEdit, onDelete }) {
                         navigate(`/circles/${circleIdToUse}?from=post&postId=${post.id}`);
                       }
                     }}
-                    className="w-full aspect-square rounded-full flex items-center justify-center text-[11px] font-bold uppercase transition-all duration-200"
+                    className="aspect-square rounded-full flex items-center justify-center text-[10px] font-bold uppercase transition-all duration-200"
                     style={{
+                      width: 'min(100%, 60px)',
+                      height: 'min(100%, 60px)',
                       background: 'rgba(251, 146, 60, 0.15)',
                       color: 'rgba(251, 146, 60, 0.9)',
                       border: '1px solid rgba(251, 146, 60, 0.3)',
                     }}
                     title={`View in ${circle.fullName || circle.name}`}
                   >
-                    <span className="block truncate px-1 text-center">
+                    <span className="block truncate px-1 text-center leading-tight">
                       {circle.name.charAt(0).toUpperCase() + circle.name.slice(1).toLowerCase()}
                     </span>
                   </button>
