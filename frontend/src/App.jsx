@@ -2,6 +2,7 @@ import { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { ToastProvider } from './components/ToastContainer';
 import { StatsProvider } from './contexts/StatsContext';
+import { ThemeProvider } from './contexts/ThemeContext';
 import Layout from './components/Layout';
 import LoadingSpinner from './components/LoadingSpinner';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -67,16 +68,17 @@ function App() {
   // UI fixes deployed successfully
 
   return (
-    <Router>
-      <IntrovertsBg />
-      <ToastProvider>
-        <StatsProvider>
-          <ErrorBoundary>
-            <Routes>
-            {/* Public routes - Direct imports, no Suspense needed */}
-            <Route path="/" element={<Landing />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/login" element={<Login />} />
+    <ThemeProvider>
+      <Router>
+        <IntrovertsBg />
+        <ToastProvider>
+          <StatsProvider>
+            <ErrorBoundary>
+              <Routes>
+              {/* Public routes - Direct imports, no Suspense needed */}
+              <Route path="/" element={<Landing />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/login" element={<Login />} />
             <Route path="/auth/callback" element={<OAuthCallback />} />
             <Route path="/oauth/redirect" element={<OAuthRedirect />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
@@ -260,6 +262,7 @@ function App() {
         </StatsProvider>
       </ToastProvider>
     </Router>
+    </ThemeProvider>
   );
 }
 

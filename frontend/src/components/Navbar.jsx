@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 import NotificationBell from './NotificationBell';
 import EsoLogo from './EsoLogo';
+import ThemeToggle from './ThemeToggle';
 
 /**
  * Navbar Component
@@ -99,6 +100,7 @@ function Navbar() {
 
           {/* User Info / Auth */}
           <div className="hidden md:flex items-center space-x-4">
+            <ThemeToggle />
             <Link
               to="/about"
               className="text-sm text-white/70 hover:text-white transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white/50 rounded px-2 py-1 tracking-wider uppercase"
@@ -231,6 +233,12 @@ function Navbar() {
                 </Link>
                 
                 <div className="border-t border-white/10 my-2"></div>
+                
+                {/* Theme Toggle in Mobile Menu */}
+                <div className="py-3 px-4 flex items-center justify-between">
+                  <span className="text-white/80 text-base font-medium">Theme</span>
+                  <ThemeToggle />
+                </div>
                 
                 {isAuthenticated ? (
                   <Link
