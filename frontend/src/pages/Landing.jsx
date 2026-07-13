@@ -103,10 +103,9 @@ function Landing() {
             className="w-full h-full bg-cover bg-center" 
             style={{ 
               backgroundImage: `url(${landingHeroBg})`,
-              filter: 'contrast(1.05) brightness(0.85) saturate(1.05)',
+              filter: 'none',
             }}
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60" />
         </div>
         
         <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-12 w-full py-16 md:py-24">
