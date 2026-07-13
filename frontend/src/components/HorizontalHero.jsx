@@ -42,9 +42,30 @@ function HorizontalHero({ onRoomChange }) {
     },
   ];
 
+  // Auto-play through rooms
+  useEffect(() => {
+    const autoPlayTimer = setInterval(() => {
+      if (currentRoom < rooms.length - 1) {
+        changeRoom(currentRoom + 1);
+      } else {
+        setCurrentRoom(0);
+        onRoomChange(rooms[0]);
+        if (videoRefs.current[0]) {
+          videoRefs.current[0].play().catch(err => console.log('Video play failed:', err));
+        }
+      }
+    }, 5000); // Change every 5 seconds
+
+    return () => clearInterval(autoPlayTimer);
+  }, [currentRoom]);
+
   useEffect(() => {
     // Notify parent of initial room
     onRoomChange(rooms[0]);
+    // Play first video
+    if (videoRefs.current[0]) {
+      videoRefs.current[0].play().catch(err => console.log('Video play failed:', err));
+    }
   }, []);
 
   useEffect(() => {
@@ -151,6 +172,10 @@ function HorizontalHero({ onRoomChange }) {
             muted
             playsInline
             preload="auto"
+            autoPlay
+            style={{
+              filter: 'contrast(1.3) brightness(0.9)',
+            }}
           >
             <source src={room.videoUrl} type="video/mp4" />
           </video>
@@ -159,7 +184,7 @@ function HorizontalHero({ onRoomChange }) {
           <div 
             className="absolute inset-0 bg-black"
             style={{
-              opacity: 0.3,
+              opacity: 0.4,
             }}
           />
           
@@ -187,17 +212,18 @@ function HorizontalHero({ onRoomChange }) {
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5 }}
-            className="mb-6 md:mb-8"
+            className="mb-4"
           >
             <EsoLogo className="h-20 md:h-28 w-auto mx-auto drop-shadow-2xl" />
           </motion.div>
 
           {/* Room Title */}
           <h1 
-            className="text-6xl md:text-8xl font-bold mb-4 tracking-wider"
+            className="text-6xl md:text-8xl font-black mb-2 tracking-wider"
             style={{
               color: currentRoomData.color,
-              textShadow: `0 0 40px ${currentRoomData.bgColor}, 0 0 80px ${currentRoomData.bgColor}, 0 4px 20px rgba(0,0,0,0.9)`,
+              textShadow: `0 0 60px ${currentRoomData.bgColor}, 0 0 100px ${currentRoomData.bgColor}, 0 4px 30px rgba(0,0,0,0.95), 0 8px 40px rgba(0,0,0,0.9)`,
+              WebkitTextStroke: `1px rgba(0, 0, 0, 0.5)`,
             }}
           >
             {currentRoomData.title}
@@ -205,9 +231,9 @@ function HorizontalHero({ onRoomChange }) {
 
           {/* Subtitle */}
           <p 
-            className="text-xl md:text-2xl text-white/90 mb-6"
+            className="text-xl md:text-2xl font-bold text-white mb-3"
             style={{
-              textShadow: '0 2px 12px rgba(0, 0, 0, 0.95), 0 4px 24px rgba(0, 0, 0, 0.8)',
+              textShadow: '0 2px 16px rgba(0, 0, 0, 0.95), 0 4px 30px rgba(0, 0, 0, 0.9), 0 1px 3px rgba(0, 0, 0, 1)',
             }}
           >
             {currentRoomData.subtitle}
@@ -215,9 +241,9 @@ function HorizontalHero({ onRoomChange }) {
 
           {/* Description */}
           <p 
-            className="text-lg md:text-xl text-white/70 mb-12"
+            className="text-lg md:text-xl font-semibold text-white/95 mb-8"
             style={{
-              textShadow: '0 2px 12px rgba(0, 0, 0, 0.95)',
+              textShadow: '0 2px 16px rgba(0, 0, 0, 0.95), 0 4px 30px rgba(0, 0, 0, 0.9)',
             }}
           >
             {currentRoomData.description}
@@ -226,11 +252,12 @@ function HorizontalHero({ onRoomChange }) {
           {/* CTA Button */}
           <button
             onClick={() => navigate(`/${currentRoomData.id}`)}
-            className="px-10 py-4 text-lg font-semibold uppercase tracking-wider rounded-lg transition-all duration-300"
+            className="px-10 py-4 text-lg font-black uppercase tracking-wider rounded-lg transition-all duration-300"
             style={{
               backgroundColor: currentRoomData.color,
               color: '#ffffff',
-              boxShadow: `0 0 30px ${currentRoomData.bgColor}, 0 10px 40px rgba(0, 0, 0, 0.5)`,
+              boxShadow: `0 0 40px ${currentRoomData.bgColor}, 0 10px 50px rgba(0, 0, 0, 0.6)`,
+              textShadow: '0 2px 8px rgba(0, 0, 0, 0.8)',
             }}
           >
             Enter {currentRoomData.title}
@@ -262,7 +289,7 @@ function HorizontalHero({ onRoomChange }) {
           transition={{ duration: 1, repeat: Infinity, repeatType: 'reverse' }}
           className="absolute bottom-24 left-1/2 transform -translate-x-1/2 text-white/50 text-sm z-20"
         >
-          <p className="text-center mb-2">Scroll or use arrow keys</p>
+          <p className="text-center mb-2 font-semibold" style={{ textShadow: '0 2px 8px rgba(0, 0, 0, 0.9)' }}>Scroll or use arrow keys</p>
           <svg className="w-6 h-6 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
           </svg>
