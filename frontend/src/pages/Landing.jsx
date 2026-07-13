@@ -208,14 +208,13 @@ function Landing() {
               className="lg:ml-auto w-full max-w-md mx-auto lg:mx-0 pt-0 md:pt-8 lg:pt-32"
             >
               <div 
-                className="p-6 md:p-8 rounded-xl backdrop-blur-md border border-white/5 hover:border-white/10 transition-all duration-500 group"
+                className="p-2 rounded-xl backdrop-blur-none border-0 ml-auto"
                 style={{
-                  background: 'rgba(0,0,0,0.3)',
-                  boxShadow: '0 20px 60px rgba(0,0,0,0.5)',
+                  background: 'transparent',
+                  maxWidth: 'fit-content',
+                  marginRight: '8px',
                 }}
               >
-                <h2 className="text-xl md:text-2xl font-semibold mb-6 md:mb-8 tracking-wider">Why ESO?</h2>
-                
                 <div className="space-y-6 md:space-y-8">
                   <motion.div 
                     initial={{ opacity: 0, x: -20 }}
