@@ -64,12 +64,18 @@ function Login() {
   const isFormValid = formData.username.trim() && formData.password;
 
   return (
-    <div className="relative min-h-screen flex items-center justify-center px-4 py-8 bg-black">
-      <div className="relative z-10 w-full max-w-md animate-fadeIn">
+    <div className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      {/* Background */}
+      <IntrovertsBg />
+      
+      {/* Black Overlay */}
+      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
+      
+      <div className="relative z-10 w-full max-w-md px-4 py-6 mx-auto" style={{ transform: 'scale(0.95)' }}>
         {/* Header */}
         <div className="text-center mb-6">
           <Link to="/" className="inline-block mb-3 focus:outline-none focus:ring-2 focus:ring-white/50 rounded transform hover:scale-105 transition-transform duration-300">
-            <EsoLogo className="h-12 w-auto mx-auto" />
+            <EsoLogo className="h-14 w-auto mx-auto" />
           </Link>
           <h1 className="text-2xl md:text-3xl font-light tracking-[0.25em] text-white mb-2 uppercase animate-slideUp">
             Sign In
@@ -79,9 +85,9 @@ function Login() {
           </p>
         </div>
 
-        {/* Login Card - Dark Glassmorphic */}
+        {/* Login Card */}
         <div className="border border-white/15 rounded-lg p-6 animate-slideUp" style={{ background: 'rgba(255,255,255,0.04)', backdropFilter: 'blur(16px)', animationDelay: '0.2s' }}>
-          <form onSubmit={handleSubmit} className="space-y-4">{/* Username Field */}
+          <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label htmlFor="username" className="block text-[0.7rem] tracking-[0.15em] text-white/80 mb-2 uppercase">
                 Username
@@ -205,7 +211,7 @@ function Login() {
           </form>
 
           {/* Divider */}
-          <div className="flex items-center my-5">
+          <div className="flex items-center my-4">
             <div className="flex-1 border-t border-white/10"></div>
             <span className="px-4 text-xs text-white/40 tracking-wider uppercase">Or</span>
             <div className="flex-1 border-t border-white/10"></div>
@@ -215,7 +221,7 @@ function Login() {
           <GoogleSignInButton text="Sign in with Google" action="login" />
 
           {/* Register Link */}
-          <div className="mt-5 pt-5 border-t border-white/10 text-center">
+          <div className="mt-4 pt-4 border-t border-white/10 text-center">
             <p className="text-xs text-white/60 tracking-wide">
               Don't have an account?{' '}
               <Link to="/register" className="text-white hover:text-white/80 transition-colors uppercase tracking-wider">
@@ -226,7 +232,7 @@ function Login() {
         </div>
 
         {/* Privacy Link */}
-        <div className="mt-6 text-center">
+        <div className="mt-5 text-center">
           <p className="text-xs text-white/50">
             Read our <Link to="/privacy" className="underline hover:text-white">Privacy Policy</Link>
           </p>

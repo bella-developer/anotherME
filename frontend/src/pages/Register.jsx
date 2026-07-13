@@ -219,10 +219,15 @@ function Register() {
 
   // Registration form
   return (
-    <div className="relative min-h-screen flex items-center justify-center px-4 py-8 bg-black">
-      <div className="relative z-10 w-full max-w-lg animate-fadeIn">
-
-        <div className="text-center mb-6">
+    <div className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      {/* Background */}
+      <IntrovertsBg />
+      
+      {/* Black Overlay */}
+      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
+      
+      <div className="relative z-10 w-full max-w-lg px-4 py-6 mx-auto" style={{ transform: 'scale(0.9)' }}>
+        <div className="text-center mb-5">
           <Link to="/" className="inline-block mb-3 focus:outline-none focus:ring-2 focus:ring-white/50 rounded transform hover:scale-105 transition-transform duration-300">
             <EsoLogo className="h-12 w-auto mx-auto" />
           </Link>
@@ -232,12 +237,12 @@ function Register() {
           <p className="text-xs tracking-[0.2em] text-white/50 uppercase animate-slideUp" style={{ animationDelay: '0.1s' }}>Create Your Account</p>
         </div>
 
-        <div className="border border-white/15 rounded-lg p-6 animate-slideUp" style={{ background: 'rgba(255,255,255,0.04)', backdropFilter: 'blur(16px)', animationDelay: '0.2s' }}>
+        <div className="border border-white/15 rounded-lg p-5 animate-slideUp" style={{ background: 'rgba(255,255,255,0.04)', backdropFilter: 'blur(16px)', animationDelay: '0.2s' }}>
 
 
 
           {error && (
-            <div className="bg-[#220000] border border-[#4d0000] rounded p-3 mb-5">
+            <div className="bg-[#220000] border border-[#4d0000] rounded p-3 mb-4">
               <p className="text-xs text-[#ff6b6b] tracking-wide uppercase font-semibold mb-2">
                 {error.message || 'REGISTRATION FAILED'}
               </p>
@@ -251,7 +256,7 @@ function Register() {
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-3.5">
 
             <div>
               <label htmlFor="username" className="block text-[0.7rem] tracking-[0.15em] text-white/55 mb-2 uppercase">
@@ -468,7 +473,7 @@ function Register() {
           </form>
 
           {/* Divider */}
-          <div className="flex items-center my-5">
+          <div className="flex items-center my-4">
             <div className="flex-1 border-t border-white/10"></div>
             <span className="px-4 text-xs text-white/40 tracking-wider uppercase">Or</span>
             <div className="flex-1 border-t border-white/10"></div>
@@ -477,7 +482,7 @@ function Register() {
           {/* Google Sign In */}
           <GoogleSignInButton text="Sign up with Google" action="register" />
 
-          <div className="mt-5 pt-5 border-t border-white/10 text-center">
+          <div className="mt-4 pt-4 border-t border-white/10 text-center">
             <p className="text-xs text-white/45 tracking-wide">
               Already have an account?{' '}
               <Link to="/login" className="text-white/80 hover:text-white transition-colors uppercase tracking-wider">
