@@ -16,6 +16,7 @@ function CosmicVideoSection({
   const videoRef = useRef(null);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isVisible, setIsVisible] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -29,8 +30,10 @@ function CosmicVideoSection({
     const observer = new IntersectionObserver(
       ([entry]) => {
         setIsVisible(entry.isIntersecting);
-        if (entry.isIntersecting && videoRef.current) {
+        if (entry.isIntersecting && videoRef.current && isLoaded) {
           videoRef.current.play().catch(err => console.log('Video play failed:', err));
+        } else if (!entry.isIntersecting && videoRef.current) {
+          videoRef.current.pause();
         }
       },
       { threshold: 0.3 }
@@ -41,7 +44,14 @@ function CosmicVideoSection({
     }
 
     return () => observer.disconnect();
-  }, []);
+  }, [isLoaded]);
+
+  const handleVideoLoaded = () => {
+    setIsLoaded(true);
+    if (isVisible && videoRef.current) {
+      videoRef.current.play().catch(err => console.log('Video play failed:', err));
+    }
+  };
 
   const handleMouseMove = (e) => {
     if (sectionRef.current) {
@@ -82,19 +92,35 @@ function CosmicVideoSection({
           loop
           muted
           playsInline
+          preload="auto"
+          onLoadedData={handleVideoLoaded}
           style={{
-            mixBlendMode: 'screen',
-            filter: `hue-rotate(${index * 120}deg) saturate(1.2)`,
+            opacity: isLoaded ? 1 : 0,
+            transition: 'opacity 0.5s ease-in-out',
           }}
         >
           <source src={videoUrl} type="video/mp4" />
         </video>
         
-        {/* Color Overlay */}
+        {/* Loading placeholder */}
+        {!isLoaded && (
+          <div 
+            className="absolute inset-0 flex items-center justify-center"
+            style={{
+              background: `radial-gradient(circle at center, ${roomColor.glow} 0%, #000000 70%)`,
+            }}
+          >
+            <div className="text-white text-lg">Loading...</div>
+          </div>
+        )}
+        
+        {/* Subtle color overlay */}
         <div 
-          className="absolute inset-0"
+          className="absolute inset-0 pointer-events-none"
           style={{
-            background: `radial-gradient(circle at center, ${roomColor.glow} 0%, transparent 70%)`,
+            background: `radial-gradient(circle at center, ${roomColor.glow} 0%, transparent 60%)`,
+            mixBlendMode: 'overlay',
+            opacity: 0.3,
           }}
         />
       </motion.div>
@@ -111,7 +137,7 @@ function CosmicVideoSection({
             className="text-5xl md:text-7xl font-bold mb-6 tracking-wider"
             style={{
               color: roomColor.primary,
-              textShadow: `0 0 40px ${roomColor.glow}, 0 0 80px ${roomColor.glow}`,
+              textShadow: `0 0 40px ${roomColor.glow}, 0 0 80px ${roomColor.glow}, 0 4px 20px rgba(0,0,0,0.9)`,
             }}
           >
             {title}
@@ -119,7 +145,7 @@ function CosmicVideoSection({
           <p 
             className="text-xl md:text-2xl text-white mb-12 leading-relaxed"
             style={{
-              textShadow: '0 4px 20px rgba(0, 0, 0, 0.9)',
+              textShadow: '0 4px 20px rgba(0, 0, 0, 0.9), 0 2px 10px rgba(0, 0, 0, 0.8)',
             }}
           >
             {description}
