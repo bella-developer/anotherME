@@ -64,14 +64,14 @@ function Login() {
   const isFormValid = formData.username.trim() && formData.password;
 
   return (
-    <div className="relative min-h-screen flex items-center justify-center px-4 py-12 bg-black">
+    <div className="relative min-h-screen flex items-center justify-center px-4 py-8 bg-black">
       <div className="relative z-10 w-full max-w-md animate-fadeIn">
         {/* Header */}
-        <div className="text-center mb-8">
-          <Link to="/" className="inline-block mb-4 focus:outline-none focus:ring-2 focus:ring-white/50 rounded transform hover:scale-105 transition-transform duration-300">
-            <EsoLogo className="h-16 w-auto mx-auto" />
+        <div className="text-center mb-6">
+          <Link to="/" className="inline-block mb-3 focus:outline-none focus:ring-2 focus:ring-white/50 rounded transform hover:scale-105 transition-transform duration-300">
+            <EsoLogo className="h-12 w-auto mx-auto" />
           </Link>
-          <h1 className="text-3xl md:text-4xl font-light tracking-[0.25em] text-white mb-3 uppercase animate-slideUp">
+          <h1 className="text-2xl md:text-3xl font-light tracking-[0.25em] text-white mb-2 uppercase animate-slideUp">
             Sign In
           </h1>
           <p className="text-xs tracking-[0.2em] text-white/50 uppercase animate-slideUp" style={{ animationDelay: '0.1s' }}>
@@ -80,9 +80,8 @@ function Login() {
         </div>
 
         {/* Login Card - Dark Glassmorphic */}
-        <div className="border border-white/15 rounded-lg p-8 animate-slideUp" style={{ background: 'rgba(255,255,255,0.04)', backdropFilter: 'blur(16px)', animationDelay: '0.2s' }}>
-          <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Username Field */}
+        <div className="border border-white/15 rounded-lg p-6 animate-slideUp" style={{ background: 'rgba(255,255,255,0.04)', backdropFilter: 'blur(16px)', animationDelay: '0.2s' }}>
+          <form onSubmit={handleSubmit} className="space-y-4">{/* Username Field */}
             <div>
               <label htmlFor="username" className="block text-[0.7rem] tracking-[0.15em] text-white/80 mb-2 uppercase">
                 Username
@@ -95,7 +94,7 @@ function Login() {
                 required
                 value={formData.username}
                 onChange={handleChange}
-                className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded text-white placeholder-white/40 focus:outline-none focus:border-white/50 transition-colors text-sm tracking-wide"
+                className="w-full px-4 py-2.5 bg-white/10 border border-white/20 rounded text-white placeholder-white/40 focus:outline-none focus:border-white/50 transition-colors text-sm tracking-wide"
                 placeholder="enter username"
                 disabled={loading}
               />
@@ -115,7 +114,7 @@ function Login() {
                   required
                   value={formData.password}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 pr-12 bg-white/10 border border-white/20 rounded text-white placeholder-white/40 focus:outline-none focus:border-white/50 transition-colors text-sm tracking-wide"
+                  className="w-full px-4 py-2.5 pr-12 bg-white/10 border border-white/20 rounded text-white placeholder-white/40 focus:outline-none focus:border-white/50 transition-colors text-sm tracking-wide"
                   placeholder="enter password"
                   disabled={loading}
                 />
@@ -142,7 +141,7 @@ function Login() {
 
             {/* OAuth Error Message */}
             {oauthError && (
-              <div className="glass-dark border border-yellow-500/30 rounded p-4 mb-6">
+              <div className="glass-dark border border-yellow-500/30 rounded p-3">
                 <div className="flex items-start gap-3">
                   <svg className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
@@ -158,7 +157,7 @@ function Login() {
 
             {/* Error Message */}
             {error && (
-              <div className="glass-dark border border-red-500/30 rounded p-4">
+              <div className="glass-dark border border-red-500/30 rounded p-3">
                 <div className="flex items-start gap-3">
                   <svg className="w-5 h-5 text-red-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -188,7 +187,7 @@ function Login() {
             <button
               type="submit"
               disabled={!isFormValid || loading}
-              className="w-full py-3.5 bg-white/10 hover:bg-white/15 disabled:bg-white/5 disabled:cursor-not-allowed text-white font-medium rounded transition-colors text-sm tracking-[0.15em] uppercase border border-white/20"
+              className="w-full py-3 bg-white/10 hover:bg-white/15 disabled:bg-white/5 disabled:cursor-not-allowed text-white font-medium rounded transition-colors text-sm tracking-[0.15em] uppercase border border-white/20"
               aria-label="Sign in to your account"
             >
               {loading ? (
@@ -206,7 +205,7 @@ function Login() {
           </form>
 
           {/* Divider */}
-          <div className="flex items-center my-6">
+          <div className="flex items-center my-5">
             <div className="flex-1 border-t border-white/10"></div>
             <span className="px-4 text-xs text-white/40 tracking-wider uppercase">Or</span>
             <div className="flex-1 border-t border-white/10"></div>
@@ -216,7 +215,7 @@ function Login() {
           <GoogleSignInButton text="Sign in with Google" action="login" />
 
           {/* Register Link */}
-          <div className="mt-6 pt-6 border-t border-white/10 text-center">
+          <div className="mt-5 pt-5 border-t border-white/10 text-center">
             <p className="text-xs text-white/60 tracking-wide">
               Don't have an account?{' '}
               <Link to="/register" className="text-white hover:text-white/80 transition-colors uppercase tracking-wider">
@@ -227,7 +226,7 @@ function Login() {
         </div>
 
         {/* Privacy Link */}
-        <div className="mt-8 text-center">
+        <div className="mt-6 text-center">
           <p className="text-xs text-white/50">
             Read our <Link to="/privacy" className="underline hover:text-white">Privacy Policy</Link>
           </p>
