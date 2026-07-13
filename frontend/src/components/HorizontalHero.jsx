@@ -9,6 +9,7 @@ function HorizontalHero({ onRoomChange }) {
   const containerRef = useRef(null);
   const [currentRoom, setCurrentRoom] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [canScrollAway, setCanScrollAway] = useState(false);
   const videoRefs = useRef([]);
 
   const rooms = [
@@ -19,7 +20,7 @@ function HorizontalHero({ onRoomChange }) {
       description: 'A sanctuary for your deepest thoughts',
       videoUrl: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1783941698/darkroomeffect_owm1l3.mp4',
       color: '#ef4444',
-      bgColor: 'rgba(239, 68, 68, 0.15)',
+      bgColor: 'rgba(239, 68, 68, 0.3)',
     },
     {
       id: 'fantasy',
@@ -28,7 +29,7 @@ function HorizontalHero({ onRoomChange }) {
       description: 'Where dreams become reality',
       videoUrl: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1783941699/fantasyeffect_akv18q.mp4',
       color: '#f97316',
-      bgColor: 'rgba(249, 115, 22, 0.15)',
+      bgColor: 'rgba(249, 115, 22, 0.3)',
     },
     {
       id: 'philo',
@@ -37,25 +38,43 @@ function HorizontalHero({ onRoomChange }) {
       description: 'Explore existential questions',
       videoUrl: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1783942027/philoeffect_soso3y.mp4',
       color: '#a855f7',
-      bgColor: 'rgba(168, 85, 247, 0.15)',
+      bgColor: 'rgba(168, 85, 247, 0.3)',
     },
   ];
 
   useEffect(() => {
+    // Notify parent of initial room
+    onRoomChange(rooms[0]);
+  }, []);
+
+  useEffect(() => {
     const handleWheel = (e) => {
-      if (isTransitioning) return;
-      
-      e.preventDefault();
-      
-      if (e.deltaY > 0 || e.deltaX > 0) {
-        // Scroll down/right - next room
-        if (currentRoom < rooms.length - 1) {
-          changeRoom(currentRoom + 1);
-        }
-      } else {
-        // Scroll up/left - previous room
-        if (currentRoom > 0) {
-          changeRoom(currentRoom - 1);
+      const container = containerRef.current;
+      if (!container) return;
+
+      // If we're on the last room and scrolling down, allow normal scroll
+      if (currentRoom === rooms.length - 1 && e.deltaY > 0) {
+        setCanScrollAway(true);
+        return;
+      }
+
+      // If not on last room, prevent scroll and change rooms
+      if (currentRoom < rooms.length - 1 || e.deltaY < 0) {
+        e.preventDefault();
+        
+        if (isTransitioning) return;
+        
+        if (e.deltaY > 0 || e.deltaX > 0) {
+          // Scroll down/right - next room
+          if (currentRoom < rooms.length - 1) {
+            changeRoom(currentRoom + 1);
+          }
+        } else if (e.deltaY < 0 || e.deltaX < 0) {
+          // Scroll up/left - previous room
+          if (currentRoom > 0) {
+            setCanScrollAway(false);
+            changeRoom(currentRoom - 1);
+          }
         }
       }
     };
@@ -64,10 +83,12 @@ function HorizontalHero({ onRoomChange }) {
       if (isTransitioning) return;
       
       if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+        e.preventDefault();
         if (currentRoom < rooms.length - 1) {
           changeRoom(currentRoom + 1);
         }
       } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+        e.preventDefault();
         if (currentRoom > 0) {
           changeRoom(currentRoom - 1);
         }
@@ -109,7 +130,6 @@ function HorizontalHero({ onRoomChange }) {
     <section 
       ref={containerRef}
       className="relative h-screen w-full overflow-hidden"
-      style={{ touchAction: 'none' }}
     >
       {/* Video Backgrounds */}
       {rooms.map((room, index) => (
@@ -125,16 +145,11 @@ function HorizontalHero({ onRoomChange }) {
         >
           <video
             ref={(el) => (videoRefs.current[index] = el)}
-            className="absolute inset-0 w-full h-full"
+            className="absolute inset-0 w-full h-full object-cover"
             loop
             muted
             playsInline
             preload="auto"
-            style={{
-              objectFit: 'cover',
-              objectPosition: 'center center',
-              transform: 'scale(0.85)',
-            }}
           >
             <source src={room.videoUrl} type="video/mp4" />
           </video>
@@ -150,7 +165,7 @@ function HorizontalHero({ onRoomChange }) {
       ))}
 
       {/* Content Overlay */}
-      <div className="relative z-10 h-full flex flex-col items-center justify-center px-6">
+      <div className="relative z-10 h-full flex flex-col items-center justify-center px-6 pt-20">
         <motion.div
           key={currentRoom}
           initial={{ opacity: 0, y: 30 }}
@@ -236,7 +251,7 @@ function HorizontalHero({ onRoomChange }) {
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, repeat: Infinity, repeatType: 'reverse' }}
-          className="absolute bottom-24 left-1/2 transform -translate-x-1/2 text-white/50 text-sm"
+          className="absolute bottom-24 left-1/2 transform -translate-x-1/2 text-white/50 text-sm z-20"
         >
           <p className="text-center mb-2">Scroll or use arrow keys</p>
           <svg className="w-6 h-6 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -244,17 +259,6 @@ function HorizontalHero({ onRoomChange }) {
           </svg>
         </motion.div>
       )}
-
-      {/* Room Counter */}
-      <div 
-        className="absolute top-32 right-8 text-4xl font-bold z-20"
-        style={{
-          color: currentRoomData.color,
-          textShadow: `0 0 20px ${currentRoomData.bgColor}`,
-        }}
-      >
-        {currentRoom + 1}/{rooms.length}
-      </div>
     </section>
   );
 }

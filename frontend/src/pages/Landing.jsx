@@ -71,8 +71,11 @@ function Landing() {
         className="fixed top-0 left-0 right-0 z-50 border-b transition-all duration-500"
         style={{
           borderColor: `${currentRoomTheme.color}33`,
-          background: isScrolled ? `${currentRoomTheme.bgColor}` : 'rgba(0, 0, 0, 0.8)',
-          backdropFilter: 'blur-xl',
+          backgroundColor: isScrolled 
+            ? `rgba(0, 0, 0, 0.95)` 
+            : currentRoomTheme.bgColor,
+          backdropFilter: 'blur(12px)',
+          boxShadow: `0 4px 20px ${currentRoomTheme.bgColor}`,
         }}
       >
         <nav className="max-w-7xl mx-auto px-6 lg:px-12 py-4" role="navigation" aria-label="Main navigation">
