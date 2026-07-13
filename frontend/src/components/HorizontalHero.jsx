@@ -125,11 +125,16 @@ function HorizontalHero({ onRoomChange }) {
         >
           <video
             ref={(el) => (videoRefs.current[index] = el)}
-            className="absolute inset-0 w-full h-full object-cover"
+            className="absolute inset-0 w-full h-full"
             loop
             muted
             playsInline
             preload="auto"
+            style={{
+              objectFit: 'cover',
+              objectPosition: 'center center',
+              transform: 'scale(0.85)',
+            }}
           >
             <source src={room.videoUrl} type="video/mp4" />
           </video>
