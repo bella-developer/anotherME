@@ -16,7 +16,7 @@ function HorizontalHero({ onRoomChange }) {
   // Handle responsive video offset
   useEffect(() => {
     const updateVideoOffset = () => {
-      setVideoOffset(window.innerWidth >= 768 ? '70px' : '110px');
+      setVideoOffset(window.innerWidth >= 768 ? '70px' : '65px');
     };
     
     updateVideoOffset();
