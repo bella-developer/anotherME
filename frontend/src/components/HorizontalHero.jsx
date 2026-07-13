@@ -10,7 +10,19 @@ function HorizontalHero({ onRoomChange }) {
   const [currentRoom, setCurrentRoom] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [canScrollAway, setCanScrollAway] = useState(false);
+  const [videoOffset, setVideoOffset] = useState('110px');
   const videoRefs = useRef([]);
+
+  // Handle responsive video offset
+  useEffect(() => {
+    const updateVideoOffset = () => {
+      setVideoOffset(window.innerWidth >= 768 ? '70px' : '110px');
+    };
+    
+    updateVideoOffset();
+    window.addEventListener('resize', updateVideoOffset);
+    return () => window.removeEventListener('resize', updateVideoOffset);
+  }, []);
 
   const rooms = [
     {
@@ -157,7 +169,7 @@ function HorizontalHero({ onRoomChange }) {
         <motion.div
           key={room.id}
           className="absolute inset-0"
-          style={{ top: '110px' }}
+          style={{ top: videoOffset }}
           initial={{ opacity: 0 }}
           animate={{ 
             opacity: currentRoom === index ? 1 : 0,
