@@ -199,27 +199,27 @@ function HorizontalHero({ onRoomChange }) {
       ))}
 
       {/* Content Overlay */}
-      <div className="relative z-10 h-full flex flex-col items-center justify-center px-6 pt-64 md:pt-56">
+      <div className="relative z-10 h-full flex flex-col items-center justify-center px-6">
         <motion.div
           key={currentRoom}
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-center max-w-4xl"
+          className="text-center max-w-2xl"
         >
           {/* Logo */}
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5 }}
-            className="mb-4"
+            className="mb-3"
           >
-            <EsoLogo className="h-20 md:h-28 w-auto mx-auto drop-shadow-2xl" />
+            <EsoLogo className="h-12 md:h-16 w-auto mx-auto drop-shadow-2xl" />
           </motion.div>
 
           {/* Room Title */}
           <h1 
-            className="text-6xl md:text-8xl font-black mb-2 tracking-wider"
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-2 tracking-wider"
             style={{
               color: currentRoomData.color,
               textShadow: `0 0 60px ${currentRoomData.bgColor}, 0 0 100px ${currentRoomData.bgColor}, 0 4px 30px rgba(0,0,0,0.95), 0 8px 40px rgba(0,0,0,0.9)`,
@@ -231,9 +231,10 @@ function HorizontalHero({ onRoomChange }) {
 
           {/* Subtitle */}
           <p 
-            className="text-xl md:text-2xl font-bold text-white mb-3"
+            className="text-sm sm:text-base md:text-lg font-bold text-white mb-2"
             style={{
               textShadow: '0 2px 16px rgba(0, 0, 0, 0.95), 0 4px 30px rgba(0, 0, 0, 0.9), 0 1px 3px rgba(0, 0, 0, 1)',
+              letterSpacing: '0.05em',
             }}
           >
             {currentRoomData.subtitle}
@@ -241,9 +242,10 @@ function HorizontalHero({ onRoomChange }) {
 
           {/* Description */}
           <p 
-            className="text-lg md:text-xl font-semibold text-white/95 mb-8"
+            className="text-xs sm:text-sm md:text-base font-semibold text-white/95 mb-6"
             style={{
               textShadow: '0 2px 16px rgba(0, 0, 0, 0.95), 0 4px 30px rgba(0, 0, 0, 0.9)',
+              letterSpacing: '0.02em',
             }}
           >
             {currentRoomData.description}
@@ -252,7 +254,7 @@ function HorizontalHero({ onRoomChange }) {
           {/* CTA Button */}
           <button
             onClick={() => navigate(`/${currentRoomData.id}`)}
-            className="px-10 py-4 text-lg font-black uppercase tracking-wider rounded-lg transition-all duration-300"
+            className="px-8 py-3 text-sm md:text-base font-black uppercase tracking-wider rounded-lg transition-all duration-300"
             style={{
               backgroundColor: currentRoomData.color,
               color: '#ffffff',
