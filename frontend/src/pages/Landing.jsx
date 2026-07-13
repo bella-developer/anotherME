@@ -98,161 +98,156 @@ function Landing() {
 
       {/* HERO SECTION */}
       <section className="relative min-h-screen flex items-center pt-20 overflow-hidden">
-        {/* Background with subtle filter for depth */}
+        {/* Background - fully visible */}
         <div className="absolute inset-0 z-0">
           <div 
             className="w-full h-full bg-cover bg-center" 
             style={{ 
               backgroundImage: `url(${landingHeroBg})`,
-              filter: 'brightness(0.95) contrast(1.02)',
-            }}
-          />
-          {/* Subtle gradient overlay for readability - only 25% opacity */}
-          <div 
-            className="absolute inset-0"
-            style={{
-              background: 'linear-gradient(to right, rgba(0,0,0,0.25) 0%, transparent 50%, rgba(0,0,0,0.15) 100%)',
+              filter: 'none',
             }}
           />
         </div>
         
         <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-12 w-full py-16 md:py-24">
-          <div className="grid lg:grid-cols-2 gap-12 md:gap-16 lg:gap-32 items-center lg:items-start">
+          <div className="grid lg:grid-cols-2 gap-12 md:gap-16 lg:gap-32 items-start">
             
-            {/* LEFT SIDE - Hero Content with semi-transparent container */}
+            {/* LEFT SIDE - Hero Content - clean floating design */}
             <motion.div 
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="space-y-6 md:space-y-8 pt-0 md:pt-8 lg:pt-12 lg:max-w-xl"
+              className="space-y-6 md:space-y-8 pt-8 md:pt-16 lg:pt-20"
             >
-              {/* Content container with glassmorphic backdrop */}
-              <div 
-                className="p-6 md:p-8 rounded-2xl"
-                style={{
-                  background: 'rgba(0, 0, 0, 0.4)',
-                  backdropFilter: 'blur(12px)',
-                  boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)',
-                }}
-              >
-                <div>
-                  <motion.div 
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.4 }}
-                    className="inline-block px-4 py-2 mb-6 rounded-full"
-                    style={{
-                      background: 'rgba(139, 92, 246, 0.15)',
-                      border: '1px solid rgba(139, 92, 246, 0.3)',
-                    }}
-                  >
-                    <span 
-                      className="text-xs tracking-[0.25em] uppercase font-bold"
-                      style={{
-                        color: '#ffffff',
-                        textShadow: '0 2px 8px rgba(0, 0, 0, 0.5)',
-                      }}
-                    >
-                      Safe · Cozy · Comfy Environment
-                    </span>
-                  </motion.div>
-                  
-                  <h1 className="leading-[1.1] mb-6">
-                    <motion.div 
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.5 }}
-                      className="relative mb-6"
-                    >
-                      <EsoLogo className="h-20 sm:h-24 lg:h-32 w-auto drop-shadow-2xl" />
-                    </motion.div>
-
-                    
-                    <motion.span 
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.7 }}
-                      className="block text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-wide"
-                      style={{
-                        textShadow: '0 4px 12px rgba(0, 0, 0, 0.7), 0 2px 4px rgba(0, 0, 0, 0.5)',
-                      }}
-                    >
-                      A Space for Deep Thinkers
-                    </motion.span>
-                  </h1>
-                  
-                  <motion.p 
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.9 }}
-                    className="text-base md:text-lg text-white leading-relaxed"
-                    style={{
-                      textShadow: '0 2px 8px rgba(0, 0, 0, 0.7)',
-                    }}
-                  >
-                    A quiet corner of the internet for introverts, philosophers, creators, and people who think deeply and feel differently.
-                  </motion.p>
-                </div>
-                
-                <motion.div 
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 1.1 }}
-                  className="flex gap-3 mt-8"
-                >
-                  <button 
-                    onClick={() => navigate('/register')}
-                    className="px-7 py-4 font-semibold text-sm uppercase tracking-[0.2em] transition-all shadow-2xl rounded-lg"
-                    style={{
-                      background: 'linear-gradient(135deg, #ffffff 0%, #f3f4f6 100%)',
-                      color: '#000000',
-                      boxShadow: '0 8px 24px rgba(255, 255, 255, 0.3), 0 4px 8px rgba(0, 0, 0, 0.2)',
-                    }}
-                    aria-label="Create an account"
-                  >
-                    Step In →
-                  </button>
-                  
-                  <button 
-                    onClick={() => navigate('/explore')}
-                    className="px-7 py-4 font-semibold text-sm uppercase tracking-[0.2em] transition-all rounded-lg"
-                    style={{
-                      background: 'rgba(255, 255, 255, 0.15)',
-                      backdropFilter: 'blur(8px)',
-                      color: '#ffffff',
-                      border: '2px solid rgba(255, 255, 255, 0.5)',
-                      boxShadow: '0 4px 16px rgba(0, 0, 0, 0.3)',
-                    }}
-                    aria-label="Explore content"
-                  >
-                    Surf Around
-                  </button>
-                </motion.div>
-                
+              <div>
                 <motion.div 
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  transition={{ delay: 1.3 }}
-                  className="flex flex-col sm:flex-row items-center sm:items-center gap-3 pt-6 mt-6 border-t border-white/20"
+                  transition={{ delay: 0.4 }}
+                  className="inline-block mb-6"
                 >
-                  <div className="flex -space-x-2">
-                    <div className="w-10 h-10 rounded-full bg-cover bg-center border-2 border-white/30 shadow-lg" style={{ backgroundImage: "url('https://images.pexels.com/photos/1212984/pexels-photo-1212984.jpeg?w=100&h=100&fit=crop')" }} />
-                    <div className="w-10 h-10 rounded-full bg-cover bg-center border-2 border-white/30 shadow-lg" style={{ backgroundImage: "url('https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?w=100&h=100&fit=crop')" }} />
-                    <div className="w-10 h-10 rounded-full bg-cover bg-center border-2 border-white/30 shadow-lg" style={{ backgroundImage: "url('https://images.pexels.com/photos/1681010/pexels-photo-1681010.jpeg?w=100&h=100&fit=crop')" }} />
-                  </div>
-                  <p 
-                    className="text-sm text-white text-center sm:text-left"
+                  <span 
+                    className="text-xs tracking-[0.25em] uppercase text-white font-bold"
                     style={{
-                      textShadow: '0 2px 6px rgba(0, 0, 0, 0.6)',
+                      textShadow: '0 2px 12px rgba(0, 0, 0, 0.9), 0 4px 24px rgba(0, 0, 0, 0.7)',
                     }}
                   >
-                    <span className="font-semibold">Join us</span> and discover your tribe
-                  </p>
+                    Safe · Cozy · Comfy Environment
+                  </span>
                 </motion.div>
+                
+                <h1 className="leading-[1.1] mb-6">
+                  <motion.div 
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.5 }}
+                    className="relative mb-6"
+                  >
+                    <EsoLogo 
+                      className="h-20 sm:h-24 lg:h-28 w-auto" 
+                      style={{
+                        filter: 'drop-shadow(0 4px 12px rgba(0, 0, 0, 0.9)) drop-shadow(0 8px 32px rgba(0, 0, 0, 0.7))',
+                      }}
+                    />
+                  </motion.div>
+                  
+                  <motion.span 
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.7 }}
+                    className="block text-2xl sm:text-3xl lg:text-4xl font-bold text-white tracking-wide"
+                    style={{
+                      textShadow: '0 2px 12px rgba(0, 0, 0, 0.95), 0 4px 24px rgba(0, 0, 0, 0.8), 0 8px 48px rgba(0, 0, 0, 0.6)',
+                    }}
+                  >
+                    A Space for Deep Thinkers
+                  </motion.span>
+                </h1>
+                
+                <motion.p 
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.9 }}
+                  className="text-base text-white/95 leading-relaxed max-w-lg"
+                  style={{
+                    textShadow: '0 2px 12px rgba(0, 0, 0, 0.95), 0 4px 24px rgba(0, 0, 0, 0.8)',
+                  }}
+                >
+                  A quiet corner of the internet for introverts, philosophers, creators, and people who think deeply and feel differently.
+                </motion.p>
               </div>
+              
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 1.1 }}
+                className="flex gap-3"
+              >
+                <button 
+                  onClick={() => navigate('/register')}
+                  className="px-6 py-3 bg-white text-black font-semibold text-xs uppercase tracking-[0.2em] hover:bg-gray-200 transition-all rounded"
+                  style={{
+                    boxShadow: '0 4px 16px rgba(0, 0, 0, 0.5), 0 8px 32px rgba(0, 0, 0, 0.3)',
+                  }}
+                  aria-label="Create an account"
+                >
+                  Step In →
+                </button>
+                
+                <button 
+                  onClick={() => navigate('/explore')}
+                  className="px-6 py-3 text-white font-medium text-xs uppercase tracking-[0.2em] hover:bg-white/10 transition-all border border-white/30 hover:border-white/50 rounded"
+                  style={{
+                    textShadow: '0 2px 8px rgba(0, 0, 0, 0.9)',
+                    boxShadow: '0 4px 16px rgba(0, 0, 0, 0.5)',
+                  }}
+                  aria-label="Explore content"
+                >
+                  Surf Around
+                </button>
+              </motion.div>
+              
+              <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 1.3 }}
+                className="flex flex-col sm:flex-row items-center sm:items-center gap-3 pt-4"
+              >
+                <div className="flex -space-x-2">
+                  <div 
+                    className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-cover bg-center border-2 border-black" 
+                    style={{ 
+                      backgroundImage: "url('https://images.pexels.com/photos/1212984/pexels-photo-1212984.jpeg?w=100&h=100&fit=crop')",
+                      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.6)',
+                    }} 
+                  />
+                  <div 
+                    className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-cover bg-center border-2 border-black" 
+                    style={{ 
+                      backgroundImage: "url('https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?w=100&h=100&fit=crop')",
+                      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.6)',
+                    }} 
+                  />
+                  <div 
+                    className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-cover bg-center border-2 border-black" 
+                    style={{ 
+                      backgroundImage: "url('https://images.pexels.com/photos/1681010/pexels-photo-1681010.jpeg?w=100&h=100&fit=crop')",
+                      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.6)',
+                    }} 
+                  />
+                </div>
+                <p 
+                  className="text-xs sm:text-sm text-white text-center sm:text-left"
+                  style={{
+                    textShadow: '0 2px 12px rgba(0, 0, 0, 0.95), 0 4px 24px rgba(0, 0, 0, 0.8)',
+                  }}
+                >
+                  <span className="font-semibold">Join us</span> and discover your tribe
+                </p>
+              </motion.div>
             </motion.div>
             
-            {/* RIGHT SIDE - Feature Card with glassmorphic container */}
+            {/* RIGHT SIDE - Feature Card - clean minimal design */}
             <motion.div 
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
@@ -260,12 +255,8 @@ function Landing() {
               className="lg:ml-auto w-full max-w-md mx-auto lg:mx-0 pt-0 md:pt-8 lg:pt-32"
             >
               <div 
-                className="p-6 md:p-8 rounded-2xl ml-auto"
+                className="ml-auto"
                 style={{
-                  background: 'rgba(0, 0, 0, 0.35)',
-                  backdropFilter: 'blur(12px)',
-                  boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)',
-                  border: '1px solid rgba(255, 255, 255, 0.1)',
                   maxWidth: 'fit-content',
                   marginRight: '8px',
                 }}
@@ -278,20 +269,28 @@ function Landing() {
                     className="flex items-center gap-4"
                   >
                     <div 
-                      className="flex-shrink-0 w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center"
+                      className="flex-shrink-0 w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center bg-purple-500/10 border border-purple-500/20"
                       style={{
-                        background: 'rgba(139, 92, 246, 0.2)',
-                        border: '1px solid rgba(139, 92, 246, 0.4)',
-                        boxShadow: '0 4px 12px rgba(139, 92, 246, 0.3)',
+                        boxShadow: '0 4px 16px rgba(0, 0, 0, 0.5)',
                       }}
                     >
-                      <svg className="w-6 h-6 md:w-7 md:h-7 text-purple-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-6 h-6 md:w-7 md:h-7 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                       </svg>
                     </div>
                     <div>
-                      <p className="text-base md:text-lg text-white font-light" style={{ textShadow: '0 2px 6px rgba(0, 0, 0, 0.6)' }}>Speak freely,</p>
-                      <p className="text-base md:text-lg text-white font-light" style={{ textShadow: '0 2px 6px rgba(0, 0, 0, 0.6)' }}>stay anonymous</p>
+                      <p 
+                        className="text-base md:text-lg text-white/95 font-light" 
+                        style={{ textShadow: '0 2px 12px rgba(0, 0, 0, 0.95), 0 4px 24px rgba(0, 0, 0, 0.8)' }}
+                      >
+                        Speak freely,
+                      </p>
+                      <p 
+                        className="text-base md:text-lg text-white/95 font-light" 
+                        style={{ textShadow: '0 2px 12px rgba(0, 0, 0, 0.95), 0 4px 24px rgba(0, 0, 0, 0.8)' }}
+                      >
+                        stay anonymous
+                      </p>
                     </div>
                   </motion.div>
 
@@ -302,20 +301,28 @@ function Landing() {
                     className="flex items-center gap-4"
                   >
                     <div 
-                      className="flex-shrink-0 w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center"
+                      className="flex-shrink-0 w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center bg-purple-500/10 border border-purple-500/20"
                       style={{
-                        background: 'rgba(139, 92, 246, 0.2)',
-                        border: '1px solid rgba(139, 92, 246, 0.4)',
-                        boxShadow: '0 4px 12px rgba(139, 92, 246, 0.3)',
+                        boxShadow: '0 4px 16px rgba(0, 0, 0, 0.5)',
                       }}
                     >
-                      <svg className="w-6 h-6 md:w-7 md:h-7 text-purple-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-6 h-6 md:w-7 md:h-7 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                       </svg>
                     </div>
                     <div>
-                      <p className="text-base md:text-lg text-white font-light" style={{ textShadow: '0 2px 6px rgba(0, 0, 0, 0.6)' }}>Three rooms for</p>
-                      <p className="text-base md:text-lg text-white font-light" style={{ textShadow: '0 2px 6px rgba(0, 0, 0, 0.6)' }}>your inner world</p>
+                      <p 
+                        className="text-base md:text-lg text-white/95 font-light" 
+                        style={{ textShadow: '0 2px 12px rgba(0, 0, 0, 0.95), 0 4px 24px rgba(0, 0, 0, 0.8)' }}
+                      >
+                        Three rooms for
+                      </p>
+                      <p 
+                        className="text-base md:text-lg text-white/95 font-light" 
+                        style={{ textShadow: '0 2px 12px rgba(0, 0, 0, 0.95), 0 4px 24px rgba(0, 0, 0, 0.8)' }}
+                      >
+                        your inner world
+                      </p>
                     </div>
                   </motion.div>
 
@@ -326,20 +333,28 @@ function Landing() {
                     className="flex items-center gap-4"
                   >
                     <div 
-                      className="flex-shrink-0 w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center"
+                      className="flex-shrink-0 w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center bg-purple-500/10 border border-purple-500/20"
                       style={{
-                        background: 'rgba(139, 92, 246, 0.2)',
-                        border: '1px solid rgba(139, 92, 246, 0.4)',
-                        boxShadow: '0 4px 12px rgba(139, 92, 246, 0.3)',
+                        boxShadow: '0 4px 16px rgba(0, 0, 0, 0.5)',
                       }}
                     >
-                      <svg className="w-6 h-6 md:w-7 md:h-7 text-purple-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-6 h-6 md:w-7 md:h-7 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                       </svg>
                     </div>
                     <div>
-                      <p className="text-base md:text-lg text-white font-light" style={{ textShadow: '0 2px 6px rgba(0, 0, 0, 0.6)' }}>Raw conversations,</p>
-                      <p className="text-base md:text-lg text-white font-light" style={{ textShadow: '0 2px 6px rgba(0, 0, 0, 0.6)' }}>zero algorithms</p>
+                      <p 
+                        className="text-base md:text-lg text-white/95 font-light" 
+                        style={{ textShadow: '0 2px 12px rgba(0, 0, 0, 0.95), 0 4px 24px rgba(0, 0, 0, 0.8)' }}
+                      >
+                        Raw conversations,
+                      </p>
+                      <p 
+                        className="text-base md:text-lg text-white/95 font-light" 
+                        style={{ textShadow: '0 2px 12px rgba(0, 0, 0, 0.95), 0 4px 24px rgba(0, 0, 0, 0.8)' }}
+                      >
+                        zero algorithms
+                      </p>
                     </div>
                   </motion.div>
                 </div>
