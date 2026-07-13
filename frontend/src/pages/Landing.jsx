@@ -214,26 +214,59 @@ function Landing() {
                   boxShadow: '0 20px 60px rgba(0,0,0,0.5)',
                 }}
               >
-                <h2 className="text-xl md:text-2xl font-semibold mb-3 md:mb-4 tracking-wider">Why ESO?</h2>
-                <p className="text-xs md:text-sm text-white/70 leading-relaxed mb-4 md:mb-6">
-                  For those who think differently.
-                </p>
+                <h2 className="text-xl md:text-2xl font-semibold mb-6 md:mb-8 tracking-wider">Why ESO?</h2>
                 
-                <div className="space-y-2 md:space-y-3">
-                  {['Speak freely, stay anonymous', 'Three rooms for your inner world', 'Raw conversations, zero algorithms'].map((item, i) => (
-                    <motion.div 
-                      key={i}
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 1 + (i * 0.1) }}
-                      className="flex items-start gap-2 md:gap-3"
-                    >
-                      <svg className="w-4 h-4 md:w-5 md:h-5 text-white/60 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                <div className="space-y-6 md:space-y-8">
+                  <motion.div 
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 1 }}
+                    className="flex items-center gap-4"
+                  >
+                    <div className="flex-shrink-0 w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center bg-purple-500/10 border border-purple-500/20">
+                      <svg className="w-6 h-6 md:w-7 md:h-7 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                       </svg>
-                      <span className="text-xs md:text-sm text-white/80">{item}</span>
-                    </motion.div>
-                  ))}
+                    </div>
+                    <div>
+                      <p className="text-base md:text-lg text-white/90 font-light">Speak freely,</p>
+                      <p className="text-base md:text-lg text-white/90 font-light">stay anonymous</p>
+                    </div>
+                  </motion.div>
+
+                  <motion.div 
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 1.1 }}
+                    className="flex items-center gap-4"
+                  >
+                    <div className="flex-shrink-0 w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center bg-purple-500/10 border border-purple-500/20">
+                      <svg className="w-6 h-6 md:w-7 md:h-7 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                      </svg>
+                    </div>
+                    <div>
+                      <p className="text-base md:text-lg text-white/90 font-light">Three rooms for</p>
+                      <p className="text-base md:text-lg text-white/90 font-light">your inner world</p>
+                    </div>
+                  </motion.div>
+
+                  <motion.div 
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 1.2 }}
+                    className="flex items-center gap-4"
+                  >
+                    <div className="flex-shrink-0 w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center bg-purple-500/10 border border-purple-500/20">
+                      <svg className="w-6 h-6 md:w-7 md:h-7 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <p className="text-base md:text-lg text-white/90 font-light">Raw conversations,</p>
+                      <p className="text-base md:text-lg text-white/90 font-light">zero algorithms</p>
+                    </div>
+                  </motion.div>
                 </div>
               </div>
             </motion.div>
