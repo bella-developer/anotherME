@@ -165,7 +165,7 @@ function HorizontalHero({ onRoomChange }) {
       ))}
 
       {/* Content Overlay */}
-      <div className="relative z-10 h-full flex flex-col items-center justify-center px-6 pt-20">
+      <div className="relative z-10 h-full flex flex-col items-center justify-center px-6 pt-40 md:pt-32">
         <motion.div
           key={currentRoom}
           initial={{ opacity: 0, y: 30 }}
@@ -178,9 +178,9 @@ function HorizontalHero({ onRoomChange }) {
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5 }}
-            className="mb-8"
+            className="mb-6 md:mb-8"
           >
-            <EsoLogo className="h-24 md:h-32 w-auto mx-auto drop-shadow-2xl" />
+            <EsoLogo className="h-20 md:h-28 w-auto mx-auto drop-shadow-2xl" />
           </motion.div>
 
           {/* Room Title */}
