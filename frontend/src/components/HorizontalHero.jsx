@@ -136,6 +136,7 @@ function HorizontalHero({ onRoomChange }) {
         <motion.div
           key={room.id}
           className="absolute inset-0"
+          style={{ top: '120px' }}
           initial={{ opacity: 0 }}
           animate={{ 
             opacity: currentRoom === index ? 1 : 0,
