@@ -4,6 +4,7 @@ import { useNavigate, Link, useSearchParams } from 'react-router-dom';
 import { login, clearError, selectAuth } from '../features/authSlice';
 import EsoLogo from '../components/EsoLogo';
 import GoogleSignInButton from '../components/GoogleSignInButton';
+import IntrovertsBg from '../components/IntrovertsBg';
 import { usePageTitle } from '../hooks/usePageTitle';
 
 /**
@@ -66,12 +67,14 @@ function Login() {
   return (
     <div className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background */}
-      <IntrovertsBg />
+      <div className="absolute inset-0 z-0">
+        <IntrovertsBg />
+      </div>
       
       {/* Black Overlay */}
-      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
+      <div className="absolute inset-0 z-10 bg-black/60 backdrop-blur-sm" />
       
-      <div className="relative z-10 w-full max-w-md px-4 py-6 mx-auto" style={{ transform: 'scale(0.95)' }}>
+      <div className="relative z-20 w-full max-w-md px-4 py-6 mx-auto" style={{ transform: 'scale(0.95)' }}>
         {/* Header */}
         <div className="text-center mb-6">
           <Link to="/" className="inline-block mb-3 focus:outline-none focus:ring-2 focus:ring-white/50 rounded transform hover:scale-105 transition-transform duration-300">
