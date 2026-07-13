@@ -154,6 +154,14 @@ function HorizontalHero({ onRoomChange }) {
             <source src={room.videoUrl} type="video/mp4" />
           </video>
           
+          {/* Dimming Overlay */}
+          <div 
+            className="absolute inset-0 bg-black"
+            style={{
+              opacity: 0.3,
+            }}
+          />
+          
           {/* Color Overlay */}
           <div 
             className="absolute inset-0"
@@ -165,7 +173,7 @@ function HorizontalHero({ onRoomChange }) {
       ))}
 
       {/* Content Overlay */}
-      <div className="relative z-10 h-full flex flex-col items-center justify-center px-6 pt-40 md:pt-32">
+      <div className="relative z-10 h-full flex flex-col items-center justify-center px-6 pt-64 md:pt-56">
         <motion.div
           key={currentRoom}
           initial={{ opacity: 0, y: 30 }}
