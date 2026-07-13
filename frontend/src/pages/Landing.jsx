@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import EsoLogo from '../components/EsoLogo';
 import { usePageTitle } from '../hooks/usePageTitle';
+import CosmicPlaceholder from '../components/CosmicPlaceholder';
 
 const landingHeroBg = 'https://res.cloudinary.com/dbtm7etag/image/upload/v1782740734/landing-hero-bg_u4uoy8.png';
 
@@ -644,6 +645,32 @@ function Landing() {
           </div>
         </div>
       </motion.section>
+
+      {/* COSMIC MOTION GRAPHICS - The Three Rooms */}
+      <div className="relative">
+        {/* Using placeholder animations until videos are uploaded */}
+        {/* Replace CosmicPlaceholder with CosmicVideoSection when videos are ready */}
+        <CosmicPlaceholder
+          title="Dark Room"
+          description="A sanctuary for solitude. Share your deepest thoughts in the darkness where vulnerability becomes strength."
+          room="dark"
+          index={0}
+        />
+        
+        <CosmicPlaceholder
+          title="Fantasy Room"
+          description="Where imagination runs wild. Share your creative stories, art, and dreams without limits."
+          room="fantasy"
+          index={1}
+        />
+        
+        <CosmicPlaceholder
+          title="Philo Room"
+          description="Deep conversations await. Explore philosophy, existential questions, and meaningful dialogues."
+          room="philo"
+          index={2}
+        />
+      </div>
 
       {/* FOOTER */}
       <footer className="border-t border-white/10 relative z-10 bg-black">
