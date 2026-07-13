@@ -10,19 +10,8 @@ function HorizontalHero({ onRoomChange }) {
   const [currentRoom, setCurrentRoom] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [canScrollAway, setCanScrollAway] = useState(false);
-  const [videoOffset, setVideoOffset] = useState('110px');
+  const videoOffset = '68px';
   const videoRefs = useRef([]);
-
-  // Handle responsive video offset
-  useEffect(() => {
-    const updateVideoOffset = () => {
-      setVideoOffset(window.innerWidth >= 768 ? '70px' : '65px');
-    };
-    
-    updateVideoOffset();
-    window.addEventListener('resize', updateVideoOffset);
-    return () => window.removeEventListener('resize', updateVideoOffset);
-  }, []);
 
   const rooms = [
     {
@@ -186,7 +175,7 @@ function HorizontalHero({ onRoomChange }) {
             preload="auto"
             autoPlay
             style={{
-              filter: 'contrast(1.3) brightness(0.9)',
+              filter: 'contrast(1.5) brightness(0.75) saturate(1.2)',
             }}
           >
             <source src={room.videoUrl} type="video/mp4" />
@@ -196,7 +185,7 @@ function HorizontalHero({ onRoomChange }) {
           <div 
             className="absolute inset-0 bg-black"
             style={{
-              opacity: 0.4,
+              opacity: 0.5,
             }}
           />
           
@@ -234,8 +223,9 @@ function HorizontalHero({ onRoomChange }) {
             className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-2 tracking-wider"
             style={{
               color: currentRoomData.color,
-              textShadow: `0 0 60px ${currentRoomData.bgColor}, 0 0 100px ${currentRoomData.bgColor}, 0 4px 30px rgba(0,0,0,0.95), 0 8px 40px rgba(0,0,0,0.9)`,
-              WebkitTextStroke: `1px rgba(0, 0, 0, 0.5)`,
+              textShadow: `0 0 80px ${currentRoomData.color}99, 0 0 120px ${currentRoomData.color}66, 0 6px 40px rgba(0,0,0,1), 0 10px 60px rgba(0,0,0,0.95), 0 2px 8px rgba(0,0,0,1)`,
+              WebkitTextStroke: `1.5px rgba(0, 0, 0, 0.7)`,
+              filter: 'drop-shadow(0 0 20px rgba(0,0,0,0.9))',
             }}
           >
             {currentRoomData.title}
@@ -243,10 +233,11 @@ function HorizontalHero({ onRoomChange }) {
 
           {/* Subtitle */}
           <p 
-            className="text-sm sm:text-base md:text-lg font-bold text-white mb-2"
+            className="text-sm sm:text-base md:text-lg font-extrabold text-white mb-2"
             style={{
-              textShadow: '0 2px 16px rgba(0, 0, 0, 0.95), 0 4px 30px rgba(0, 0, 0, 0.9), 0 1px 3px rgba(0, 0, 0, 1)',
-              letterSpacing: '0.05em',
+              textShadow: '0 0 30px rgba(255,255,255,0.3), 0 4px 20px rgba(0, 0, 0, 1), 0 6px 40px rgba(0, 0, 0, 0.95), 0 2px 8px rgba(0, 0, 0, 1)',
+              letterSpacing: '0.08em',
+              filter: 'drop-shadow(0 0 15px rgba(0,0,0,0.9))',
             }}
           >
             {currentRoomData.subtitle}
@@ -254,10 +245,11 @@ function HorizontalHero({ onRoomChange }) {
 
           {/* Description */}
           <p 
-            className="text-xs sm:text-sm md:text-base font-semibold text-white/95 mb-6"
+            className="text-xs sm:text-sm md:text-base font-bold text-white mb-6"
             style={{
-              textShadow: '0 2px 16px rgba(0, 0, 0, 0.95), 0 4px 30px rgba(0, 0, 0, 0.9)',
-              letterSpacing: '0.02em',
+              textShadow: '0 0 25px rgba(255,255,255,0.2), 0 3px 18px rgba(0, 0, 0, 1), 0 5px 35px rgba(0, 0, 0, 0.95), 0 2px 6px rgba(0, 0, 0, 1)',
+              letterSpacing: '0.04em',
+              filter: 'drop-shadow(0 0 12px rgba(0,0,0,0.9))',
             }}
           >
             {currentRoomData.description}
@@ -270,8 +262,9 @@ function HorizontalHero({ onRoomChange }) {
             style={{
               backgroundColor: currentRoomData.color,
               color: '#ffffff',
-              boxShadow: `0 0 40px ${currentRoomData.bgColor}, 0 10px 50px rgba(0, 0, 0, 0.6)`,
-              textShadow: '0 2px 8px rgba(0, 0, 0, 0.8)',
+              boxShadow: `0 0 60px ${currentRoomData.color}aa, 0 0 100px ${currentRoomData.color}55, 0 12px 60px rgba(0, 0, 0, 0.8)`,
+              textShadow: '0 3px 12px rgba(0, 0, 0, 1), 0 1px 3px rgba(0, 0, 0, 1)',
+              filter: 'drop-shadow(0 0 20px rgba(0,0,0,0.9))',
             }}
           >
             Enter {currentRoomData.title}
