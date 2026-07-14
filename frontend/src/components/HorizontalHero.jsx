@@ -28,7 +28,7 @@ function HorizontalHero({ onRoomChange = () => {} }) {
       title: 'Fantasy Room',
       subtitle: 'Creativity & Imagination',
       description: 'Where dreams become reality',
-      videoUrl: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1783941699/fantasyeffect_akv18q.mp4',
+      videoUrl: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1784018105/fantasyyy_djqjgx.mp4',
       color: '#f97316',
       bgColor: 'rgba(249, 115, 22, 0.3)',
     },
