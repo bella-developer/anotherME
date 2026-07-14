@@ -432,6 +432,13 @@ body.light-mode article[class*="flex flex-col"] {
   background: transparent !important;
 }
 
+/* Force image containers to be solid black with dedicated class */
+.image-container-black,
+body.light-mode .image-container-black {
+  background: #000000 !important;
+  background-color: #000000 !important;
+}
+
 /* Image containers and their parent motion.div - force exact same appearance as dark mode */
 body.light-mode article[class*="flex flex-col"] > div[class*="relative"][class*="overflow-hidden"],
 body.light-mode article > div[class*="relative"][class*="overflow-hidden"],

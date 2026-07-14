@@ -253,12 +253,13 @@ function Landing() {
               >
                 {/* Image Container with Black Background and Centered Icon */}
                 <motion.div
-                  className="relative overflow-hidden mx-4 mt-4"
+                  className="relative overflow-hidden mx-4 mt-4 image-container-black"
                   whileHover={{ scale: 1.03 }}
                   transition={{ duration: 0.8, ease: 'easeOut' }}
                   style={{ 
                     height: '220px',
                     background: '#000000',
+                    backgroundColor: '#000000',
                     borderRadius: '8px',
                   }}
                 >
