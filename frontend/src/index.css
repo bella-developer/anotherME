@@ -15,27 +15,141 @@
     overflow-x: hidden;
   }
 
-  /* Light mode styles */
+  /* Light mode styles - Premium Reading Mode with IntrovertsBg */
   body.light-mode {
-    background: #2d2d2d;
-    color: #1a1a1a;
+    /* Base: Show IntrovertsBg */
+    background: #0a0a0f;
+    color: #000000;
+  }
+
+  /* Charcoal overlay on IntrovertsBg - creates the gray reading surface */
+  body.light-mode::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: rgba(55, 55, 55, 0.88); /* 88% charcoal overlay */
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  /* Main content container - positioned above overlay */
+  body.light-mode #root {
+    position: relative;
+    z-index: 1;
   }
 
   body.light-mode #root > main,
   body.light-mode main {
-    background: #2d2d2d;
+    background: transparent; /* Show layered background */
+    color: #000000;
+  }
+
+  /* High contrast cards - near-white with shadow for elevation */
+  body.light-mode article,
+  body.light-mode .card,
+  body.light-mode [class*="Card"] {
+    background: rgba(255, 255, 255, 0.96) !important;
+    color: #000000 !important;
+    border-color: rgba(0, 0, 0, 0.15) !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12) !important;
+  }
+
+  /* Bold, highly visible text */
+  body.light-mode h1,
+  body.light-mode h2,
+  body.light-mode h3,
+  body.light-mode h4,
+  body.light-mode h5,
+  body.light-mode h6 {
+    color: #000000 !important;
+    font-weight: 700 !important;
+  }
+
+  body.light-mode p,
+  body.light-mode span:not(.sr-only),
+  body.light-mode div:not([class*="bg-"]) {
+    color: #1a1a1a !important;
+  }
+
+  /* Visible buttons - high contrast */
+  body.light-mode button:not([class*="theme-toggle"]):not([class*="ThemeToggle"]) {
+    background: #000000 !important;
+    color: #ffffff !important;
+    border: 2px solid #000000 !important;
+    font-weight: 600 !important;
+  }
+
+  body.light-mode button:not([class*="theme-toggle"]):not([class*="ThemeToggle"]):hover {
+    background: #1a1a1a !important;
+    border-color: #1a1a1a !important;
+  }
+
+  /* Secondary/outlined buttons */
+  body.light-mode button[class*="border-white"],
+  body.light-mode button[class*="bg-white/"] {
+    background: transparent !important;
+    color: #000000 !important;
+    border: 2px solid rgba(0, 0, 0, 0.3) !important;
+  }
+
+  body.light-mode button[class*="border-white"]:hover,
+  body.light-mode button[class*="bg-white/"]:hover {
+    background: rgba(0, 0, 0, 0.05) !important;
+    border-color: rgba(0, 0, 0, 0.5) !important;
+  }
+
+  /* Visible image frames */
+  body.light-mode img {
+    border-color: rgba(0, 0, 0, 0.2) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+  }
+
+  /* Input fields - high visibility */
+  body.light-mode input,
+  body.light-mode textarea,
+  body.light-mode select {
+    background: rgba(255, 255, 255, 0.95) !important;
+    color: #000000 !important;
+    border: 1px solid rgba(0, 0, 0, 0.2) !important;
+  }
+
+  body.light-mode input::placeholder,
+  body.light-mode textarea::placeholder {
+    color: rgba(0, 0, 0, 0.5) !important;
+  }
+
+  /* Autofill styling for light mode */
+  body.light-mode input:-webkit-autofill,
+  body.light-mode input:-webkit-autofill:hover,
+  body.light-mode input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 30px rgba(255, 255, 255, 0.95) inset !important;
+    -webkit-text-fill-color: #000000 !important;
+  }
+
+  /* Links - visible and bold */
+  body.light-mode a {
+    color: #000000 !important;
+    font-weight: 500 !important;
+  }
+
+  body.light-mode a:hover {
+    color: #1a1a1a !important;
+    text-decoration: underline !important;
   }
 
   /* Light mode navbar - lace white background */
   body.light-mode nav[role="navigation"] {
-    background: rgba(250, 248, 246, 0.95) !important;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1) !important;
-    backdrop-filter: blur(20px) !important;
+    background: rgba(250, 248, 246, 0.98) !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12) !important;
+    backdrop-filter: blur(12px) !important;
+    position: relative;
+    z-index: 50;
   }
 
   body.light-mode nav a,
   body.light-mode nav button {
     color: #1a1a1a !important;
+    font-weight: 500 !important;
   }
 
   body.light-mode nav a:hover,
@@ -55,26 +169,46 @@
   /* Light mode mobile menu */
   body.light-mode nav #mobile-menu {
     background: rgba(250, 248, 246, 0.98) !important;
-    border-top: 1px solid rgba(0, 0, 0, 0.1) !important;
+    border-top: 1px solid rgba(0, 0, 0, 0.12) !important;
   }
 
   body.light-mode nav .bg-white\/10:hover {
-    background: rgba(0, 0, 0, 0.05) !important;
+    background: rgba(0, 0, 0, 0.06) !important;
   }
 
   /* Light mode mobile menu backdrop */
   body.light-mode nav .bg-black\/80 {
-    background: rgba(0, 0, 0, 0.3) !important;
+    background: rgba(0, 0, 0, 0.4) !important;
   }
 
   /* Footer remains dark in light mode */
   body.light-mode footer {
     background: #000000 !important;
     color: #ffffff !important;
+    position: relative;
+    z-index: 10;
   }
 
   body.light-mode footer * {
     color: inherit !important;
+  }
+
+  /* Time/metadata text - muted but visible */
+  body.light-mode time,
+  body.light-mode [class*="text-white/40"],
+  body.light-mode [class*="text-white/50"],
+  body.light-mode [class*="text-white/30"] {
+    color: rgba(0, 0, 0, 0.6) !important;
+  }
+
+  /* Category badges - visible with dark borders */
+  body.light-mode [class*="bg-red"],
+  body.light-mode [class*="bg-purple"],
+  body.light-mode [class*="bg-orange"] {
+    background: rgba(0, 0, 0, 0.08) !important;
+    color: #000000 !important;
+    border: 1px solid rgba(0, 0, 0, 0.2) !important;
+    font-weight: 600 !important;
   }
 
   * {
