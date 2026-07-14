@@ -4,44 +4,81 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Geist Mono', 'Space Mono', 'Courier New', 'monospace'],
-        mono: ['Geist Mono', 'Space Mono', 'Courier New', 'monospace'],
-        display: ['Space Mono', 'Geist Mono', 'monospace'],
+        sans: ['var(--font-family-primary)'],
+        mono: ['var(--font-family-primary)'],
+        display: ['var(--font-family-display)'],
       },
       colors: {
-        // Dark theme colors - Pure black and white monochrome aesthetic for Eso
+        // Semantic color aliases that use CSS variables
         primary: {
-          bg: '#000000',
-          secondary: '#0a0a0a',
-          elevated: '#141414',
-          contrast: '#1f1f1f',
+          bg: 'var(--bg-primary)',
+          text: 'var(--text-primary)',
         },
-        text: {
-          primary: '#ffffff',
-          secondary: '#a0a0a0',
-          muted: '#666666',
+        surface: {
+          subtle: 'var(--bg-surface-subtle)',
+          faint: 'var(--bg-surface-faint)',
+          light: 'var(--bg-surface-light)',
+          medium: 'var(--bg-surface-medium)',
         },
         accent: {
-          primary: '#ffffff',
-          secondary: '#e0e0e0',
+          room: 'var(--room-accent)',
+          dark: 'var(--color-dark-room)',
+          fantasy: 'var(--color-fantasy-room)',
+          philo: 'var(--color-philo-room)',
         },
-        tag: {
-          bg: '#1a1a1a',
-          hover: '#2a2a2a',
+        border: {
+          subtle: 'var(--border-subtle)',
+          faint: 'var(--border-faint)',
+          light: 'var(--border-light)',
+          medium: 'var(--border-medium)',
+          default: 'var(--border-default)',
         },
-        border: '#333333',
-        success: '#ffffff',
-        error: '#ff4444',
-        warning: '#ffaa00',
+      },
+      borderRadius: {
+        sm: 'var(--radius-sm)',
+        DEFAULT: 'var(--radius-md)',
+        md: 'var(--radius-md)',
+        lg: 'var(--radius-lg)',
+        xl: 'var(--radius-xl)',
+        '2xl': 'var(--radius-2xl)',
+        full: 'var(--radius-full)',
+      },
+      boxShadow: {
+        'border-subtle': 'var(--shadow-border-subtle)',
+        'border-faint': 'var(--shadow-border-faint)',
+        'border-light': 'var(--shadow-border-light)',
+        'border-medium': 'var(--shadow-border-medium)',
+        'card': 'var(--shadow-card)',
+        'card-hover': 'var(--shadow-card-hover)',
       },
       backdropBlur: {
-        md: '12px',
+        sm: 'var(--blur-sm)',
+        md: 'var(--blur-md)',
+        lg: 'var(--blur-lg)',
+        xl: 'var(--blur-xl)',
+      },
+      spacing: {
+        '0': 'var(--space-0)',
+        '1': 'var(--space-1)',
+        '2': 'var(--space-2)',
+        '3': 'var(--space-3)',
+        '4': 'var(--space-4)',
+        '5': 'var(--space-5)',
+        '6': 'var(--space-6)',
+        '8': 'var(--space-8)',
+        '10': 'var(--space-10)',
+        '12': 'var(--space-12)',
+        '16': 'var(--space-16)',
+        '20': 'var(--space-20)',
+        '24': 'var(--space-24)',
+      },
+      transitionDuration: {
+        fast: 'var(--transition-fast)',
+        normal: 'var(--transition-normal)',
+        slow: 'var(--transition-slow)',
       },
       scale: {
         98: '0.98',
-      },
-      transitionDuration: {
-        400: '400ms',
       },
       keyframes: {
         shimmer: {
@@ -96,19 +133,36 @@ export default {
         'fade-in-out': 'fadeInOut 3s ease-in-out',
         'pulse-slow': 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
       },
-      // Responsive font sizes
       fontSize: {
-        'xs': ['0.75rem', { lineHeight: '1rem' }],      // 12px
-        'sm': ['0.875rem', { lineHeight: '1.25rem' }],  // 14px
-        'base': ['1rem', { lineHeight: '1.5rem' }],     // 16px - desktop
-        'base-mobile': ['0.875rem', { lineHeight: '1.25rem' }], // 14px - mobile
-        'lg': ['1.125rem', { lineHeight: '1.75rem' }],  // 18px
-        'xl': ['1.25rem', { lineHeight: '1.75rem' }],   // 20px
-        '2xl': ['1.5rem', { lineHeight: '2rem' }],      // 24px
-        '3xl': ['1.875rem', { lineHeight: '2.25rem' }], // 30px
-        '4xl': ['2.25rem', { lineHeight: '2.5rem' }],   // 36px
+        'xs': ['var(--font-size-xs)', { lineHeight: '1rem' }],
+        'sm': ['var(--font-size-sm)', { lineHeight: '1.25rem' }],
+        'base': ['var(--font-size-base)', { lineHeight: '1.5rem' }],
+        'lg': ['var(--font-size-lg)', { lineHeight: '1.75rem' }],
+        'xl': ['var(--font-size-xl)', { lineHeight: '1.75rem' }],
+        '2xl': ['var(--font-size-2xl)', { lineHeight: '2rem' }],
+        '3xl': ['var(--font-size-3xl)', { lineHeight: '2.25rem' }],
+        '4xl': ['var(--font-size-4xl)', { lineHeight: '2.5rem' }],
       },
-      // Minimum touch target sizes for mobile
+      letterSpacing: {
+        tight: 'var(--tracking-tight)',
+        normal: 'var(--tracking-normal)',
+        wide: 'var(--tracking-wide)',
+        wider: 'var(--tracking-wider)',
+        widest: 'var(--tracking-widest)',
+        ultra: 'var(--tracking-ultra)',
+      },
+      zIndex: {
+        base: 'var(--z-base)',
+        raised: 'var(--z-raised)',
+        dropdown: 'var(--z-dropdown)',
+        sticky: 'var(--z-sticky)',
+        fixed: 'var(--z-fixed)',
+        'modal-backdrop': 'var(--z-modal-backdrop)',
+        modal: 'var(--z-modal)',
+        popover: 'var(--z-popover)',
+        toast: 'var(--z-toast)',
+        tooltip: 'var(--z-tooltip)',
+      },
       minHeight: {
         'touch': '48px',
       },
@@ -116,11 +170,10 @@ export default {
         'touch': '48px',
       },
     },
-    // Responsive breakpoints (matching requirements)
     screens: {
       'sm': '640px',
-      'md': '768px',   // Tablet starts here
-      'lg': '1024px',  // Desktop starts here
+      'md': '768px',
+      'lg': '1024px',
       'xl': '1280px',
       '2xl': '1536px',
     },

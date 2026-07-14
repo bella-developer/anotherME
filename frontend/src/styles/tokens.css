@@ -1,0 +1,262 @@
+/**
+ * ESO Design Token System
+ * Centralized design variables for consistent UI implementation
+ * @version 1.0.0
+ */
+
+:root {
+  /* ============================================
+     COLOR PALETTE - Base Colors
+     ============================================ */
+  
+  /* Pure Monochrome Base */
+  --color-black: #000000;
+  --color-white: #ffffff;
+  
+  /* Gray Scale */
+  --color-gray-100: #0a0a0a;
+  --color-gray-200: #141414;
+  --color-gray-300: #1f1f1f;
+  --color-gray-400: #333333;
+  --color-gray-500: #666666;
+  --color-gray-600: #a0a0a0;
+  
+  /* Room Accent Colors */
+  --color-dark-room: #ef4444;
+  --color-dark-room-rgb: 239, 68, 68;
+  --color-fantasy-room: #f97316;
+  --color-fantasy-room-rgb: 249, 115, 22;
+  --color-philo-room: #a855f7;
+  --color-philo-room-rgb: 168, 85, 247;
+  
+  /* State Colors */
+  --color-error: #ff4444;
+  --color-warning: #ffaa00;
+  --color-success: #ffffff;
+  
+  /* ============================================
+     OPACITY LEVELS - Standardized Scale
+     ============================================ */
+  
+  --opacity-subtle: 0.03;      /* Barely visible surfaces */
+  --opacity-faint: 0.05;       /* Very subtle elements */
+  --opacity-light: 0.08;       /* Light borders, dividers */
+  --opacity-medium: 0.15;      /* Interactive hover states */
+  --opacity-strong: 0.25;      /* Secondary text, icons */
+  --opacity-intense: 0.40;     /* Active states, emphasis */
+  --opacity-dominant: 0.60;    /* Primary text elements */
+  --opacity-full: 1.0;         /* Full opacity */
+  
+  /* ============================================
+     SEMANTIC COLORS - Background
+     ============================================ */
+  
+  --bg-primary: var(--color-black);
+  --bg-secondary: var(--color-gray-100);
+  --bg-elevated: var(--color-gray-200);
+  --bg-contrast: var(--color-gray-300);
+  
+  /* Surface overlays with standard opacity */
+  --bg-surface-subtle: rgba(255, 255, 255, var(--opacity-subtle));
+  --bg-surface-faint: rgba(255, 255, 255, var(--opacity-faint));
+  --bg-surface-light: rgba(255, 255, 255, var(--opacity-light));
+  --bg-surface-medium: rgba(255, 255, 255, var(--opacity-medium));
+  
+  /* Glassmorphism backgrounds */
+  --bg-glass-weak: rgba(10, 10, 15, 0.3);
+  --bg-glass-medium: rgba(15, 15, 20, 0.4);
+  --bg-glass-strong: rgba(5, 5, 10, 0.6);
+  
+  /* ============================================
+     SEMANTIC COLORS - Text
+     ============================================ */
+  
+  --text-primary: var(--color-white);
+  --text-secondary: var(--color-gray-600);
+  --text-muted: var(--color-gray-500);
+  --text-faint: rgba(255, 255, 255, var(--opacity-strong));
+  --text-subtle: rgba(255, 255, 255, var(--opacity-intense));
+  
+  /* ============================================
+     SEMANTIC COLORS - Borders
+     ============================================ */
+  
+  --border-subtle: rgba(255, 255, 255, var(--opacity-subtle));
+  --border-faint: rgba(255, 255, 255, var(--opacity-faint));
+  --border-light: rgba(255, 255, 255, var(--opacity-light));
+  --border-medium: rgba(255, 255, 255, var(--opacity-medium));
+  --border-default: var(--color-gray-400);
+  
+  /* ============================================
+     SEMANTIC COLORS - Interactive States
+     ============================================ */
+  
+  --state-hover-bg: rgba(255, 255, 255, var(--opacity-light));
+  --state-active-bg: rgba(255, 255, 255, var(--opacity-medium));
+  --state-focus-ring: #58a6ff;
+  --state-disabled-opacity: 0.4;
+  
+  /* ============================================
+     RADIUS SCALE - Consistent Border Radius
+     ============================================ */
+  
+  --radius-sm: 3px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 24px;
+  --radius-full: 9999px;
+  
+  /* ============================================
+     SHADOW SCALE - Elevation System
+     ============================================ */
+  
+  /* Hairline borders */
+  --shadow-border-subtle: 0 0 0 1px var(--border-subtle);
+  --shadow-border-faint: 0 0 0 1px var(--border-faint);
+  --shadow-border-light: 0 0 0 1px var(--border-light);
+  --shadow-border-medium: 0 0 0 1px var(--border-medium);
+  
+  /* Elevation shadows */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.6);
+  --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.7);
+  
+  /* Combined border + shadow */
+  --shadow-card: var(--shadow-border-light), var(--shadow-md);
+  --shadow-card-hover: var(--shadow-border-medium), var(--shadow-lg);
+  
+  /* Glow effects */
+  --shadow-glow-sm: 0 0 20px;
+  --shadow-glow-md: 0 0 40px;
+  --shadow-glow-lg: 0 0 60px;
+  
+  /* ============================================
+     BLUR SCALE - Backdrop Filters
+     ============================================ */
+  
+  --blur-sm: 8px;
+  --blur-md: 12px;
+  --blur-lg: 16px;
+  --blur-xl: 20px;
+  
+  /* ============================================
+     SPACING SCALE - 8-Point Grid System
+     ============================================ */
+  
+  --space-0: 0;
+  --space-1: 0.25rem;  /* 4px */
+  --space-2: 0.5rem;   /* 8px - base unit */
+  --space-3: 0.75rem;  /* 12px */
+  --space-4: 1rem;     /* 16px */
+  --space-5: 1.25rem;  /* 20px */
+  --space-6: 1.5rem;   /* 24px */
+  --space-8: 2rem;     /* 32px */
+  --space-10: 2.5rem;  /* 40px */
+  --space-12: 3rem;    /* 48px */
+  --space-16: 4rem;    /* 64px */
+  --space-20: 5rem;    /* 80px */
+  --space-24: 6rem;    /* 96px */
+  
+  /* ============================================
+     TYPOGRAPHY SCALE
+     ============================================ */
+  
+  --font-family-primary: 'Geist Mono', 'Space Mono', 'Courier New', monospace;
+  --font-family-display: 'Space Mono', 'Geist Mono', monospace;
+  
+  /* Font sizes */
+  --font-size-xs: 0.75rem;    /* 12px */
+  --font-size-sm: 0.875rem;   /* 14px */
+  --font-size-base: 1rem;     /* 16px */
+  --font-size-lg: 1.125rem;   /* 18px */
+  --font-size-xl: 1.25rem;    /* 20px */
+  --font-size-2xl: 1.5rem;    /* 24px */
+  --font-size-3xl: 1.875rem;  /* 30px */
+  --font-size-4xl: 2.25rem;   /* 36px */
+  
+  /* Letter spacing */
+  --tracking-tight: 0.05em;
+  --tracking-normal: 0.1em;
+  --tracking-wide: 0.15em;
+  --tracking-wider: 0.2em;
+  --tracking-widest: 0.25em;
+  --tracking-ultra: 0.3em;
+  
+  /* ============================================
+     TRANSITIONS - Duration & Easing
+     ============================================ */
+  
+  --transition-fast: 150ms;
+  --transition-normal: 300ms;
+  --transition-slow: 500ms;
+  
+  --easing-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --easing-decelerate: cubic-bezier(0, 0, 0.2, 1);
+  --easing-accelerate: cubic-bezier(0.4, 0, 1, 1);
+  
+  /* ============================================
+     Z-INDEX SCALE - Layering System
+     ============================================ */
+  
+  --z-base: 0;
+  --z-raised: 10;
+  --z-dropdown: 20;
+  --z-sticky: 30;
+  --z-fixed: 40;
+  --z-modal-backdrop: 50;
+  --z-modal: 60;
+  --z-popover: 70;
+  --z-toast: 80;
+  --z-tooltip: 90;
+  
+  /* ============================================
+     ROOM THEME - Dynamic Accent Colors
+     (Can be overridden per room context)
+     ============================================ */
+  
+  --room-accent: var(--color-white);
+  --room-accent-rgb: 255, 255, 255;
+  --room-accent-subtle: rgba(var(--room-accent-rgb), var(--opacity-subtle));
+  --room-accent-faint: rgba(var(--room-accent-rgb), var(--opacity-faint));
+  --room-accent-light: rgba(var(--room-accent-rgb), var(--opacity-light));
+  --room-accent-medium: rgba(var(--room-accent-rgb), var(--opacity-medium));
+  --room-accent-glow: rgba(var(--room-accent-rgb), 0.6);
+}
+
+/* ============================================
+   ROOM THEME OVERRIDES
+   ============================================ */
+
+/* Dark Room Theme */
+[data-room="dark"],
+.room-dark {
+  --room-accent: var(--color-dark-room);
+  --room-accent-rgb: var(--color-dark-room-rgb);
+}
+
+/* Fantasy Room Theme */
+[data-room="fantasy"],
+.room-fantasy {
+  --room-accent: var(--color-fantasy-room);
+  --room-accent-rgb: var(--color-fantasy-room-rgb);
+}
+
+/* Philo Room Theme */
+[data-room="philo"],
+.room-philo {
+  --room-accent: var(--color-philo-room);
+  --room-accent-rgb: var(--color-philo-room-rgb);
+}
+
+/* ============================================
+   LIGHT MODE OVERRIDES
+   ============================================ */
+
+body.light-mode {
+  --bg-primary: #2d2d2d;
+  --text-primary: #1a1a1a;
+  --text-secondary: #666666;
+  --text-muted: #999999;
+}

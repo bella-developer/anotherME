@@ -1,0 +1,171 @@
+/**
+ * ESO Utility Classes
+ * Semantic utility classes using design tokens
+ */
+
+/* ============================================
+   BACKGROUND UTILITIES
+   ============================================ */
+
+.bg-primary { background-color: var(--bg-primary); }
+.bg-secondary { background-color: var(--bg-secondary); }
+.bg-elevated { background-color: var(--bg-elevated); }
+.bg-contrast { background-color: var(--bg-contrast); }
+
+.bg-surface-subtle { background-color: var(--bg-surface-subtle); }
+.bg-surface-faint { background-color: var(--bg-surface-faint); }
+.bg-surface-light { background-color: var(--bg-surface-light); }
+.bg-surface-medium { background-color: var(--bg-surface-medium); }
+
+/* ============================================
+   TEXT UTILITIES
+   ============================================ */
+
+.text-primary { color: var(--text-primary); }
+.text-secondary { color: var(--text-secondary); }
+.text-muted { color: var(--text-muted); }
+.text-faint { color: var(--text-faint); }
+.text-subtle { color: var(--text-subtle); }
+
+/* ============================================
+   BORDER UTILITIES
+   ============================================ */
+
+.border-subtle { border-color: var(--border-subtle); }
+.border-faint { border-color: var(--border-faint); }
+.border-light { border-color: var(--border-light); }
+.border-medium { border-color: var(--border-medium); }
+.border-default { border-color: var(--border-default); }
+
+/* ============================================
+   GLASSMORPHISM UTILITIES
+   ============================================ */
+
+.glass-weak {
+  background: var(--bg-glass-weak);
+  backdrop-filter: blur(var(--blur-md));
+  -webkit-backdrop-filter: blur(var(--blur-md));
+  border: 1px solid var(--border-faint);
+}
+
+.glass-medium {
+  background: var(--bg-glass-medium);
+  backdrop-filter: blur(var(--blur-lg));
+  -webkit-backdrop-filter: blur(var(--blur-lg));
+  border: 1px solid var(--border-light);
+}
+
+.glass-strong {
+  background: var(--bg-glass-strong);
+  backdrop-filter: blur(var(--blur-lg));
+  -webkit-backdrop-filter: blur(var(--blur-lg));
+  border: 1px solid var(--border-light);
+}
+
+/* ============================================
+   CARD UTILITIES
+   ============================================ */
+
+.card {
+  background: var(--bg-surface-subtle);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-border-light);
+  transition: all var(--transition-normal) var(--easing-standard);
+}
+
+.card-elevated {
+  background: var(--bg-surface-faint);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+}
+
+.card-hover:hover {
+  background: var(--bg-surface-faint);
+  box-shadow: var(--shadow-card-hover);
+  transform: translateY(-2px);
+}
+
+/* ============================================
+   ROOM ACCENT UTILITIES
+   ============================================ */
+
+.room-accent-text { color: var(--room-accent); }
+.room-accent-bg { background-color: var(--room-accent); }
+.room-accent-border { border-color: var(--room-accent); }
+
+.room-accent-glow {
+  box-shadow: var(--shadow-glow-md) var(--room-accent-glow);
+}
+
+.room-accent-text-shadow {
+  text-shadow: var(--shadow-glow-md) var(--room-accent-glow);
+}
+
+/* ============================================
+   INTERACTIVE STATES
+   ============================================ */
+
+.hover-lift:hover {
+  transform: translateY(-2px);
+  transition: transform var(--transition-normal) var(--easing-standard);
+}
+
+.hover-scale:hover {
+  transform: scale(1.05);
+  transition: transform var(--transition-normal) var(--easing-standard);
+}
+
+.hover-glow:hover {
+  box-shadow: var(--shadow-glow-sm) var(--room-accent-glow);
+  transition: box-shadow var(--transition-normal) var(--easing-standard);
+}
+
+/* ============================================
+   FOCUS STATES
+   ============================================ */
+
+.focus-ring:focus-visible {
+  outline: 2px solid var(--state-focus-ring);
+  outline-offset: 2px;
+}
+
+/* ============================================
+   RADIUS UTILITIES
+   ============================================ */
+
+.rounded-sm { border-radius: var(--radius-sm); }
+.rounded-md { border-radius: var(--radius-md); }
+.rounded-lg { border-radius: var(--radius-lg); }
+.rounded-xl { border-radius: var(--radius-xl); }
+.rounded-2xl { border-radius: var(--radius-2xl); }
+.rounded-full { border-radius: var(--radius-full); }
+
+/* ============================================
+   SHADOW UTILITIES
+   ============================================ */
+
+.shadow-border-subtle { box-shadow: var(--shadow-border-subtle); }
+.shadow-border-faint { box-shadow: var(--shadow-border-faint); }
+.shadow-border-light { box-shadow: var(--shadow-border-light); }
+.shadow-border-medium { box-shadow: var(--shadow-border-medium); }
+
+.shadow-sm { box-shadow: var(--shadow-sm); }
+.shadow-md { box-shadow: var(--shadow-md); }
+.shadow-lg { box-shadow: var(--shadow-lg); }
+.shadow-xl { box-shadow: var(--shadow-xl); }
+
+/* ============================================
+   TRANSITION UTILITIES
+   ============================================ */
+
+.transition-fast { transition-duration: var(--transition-fast); }
+.transition-normal { transition-duration: var(--transition-normal); }
+.transition-slow { transition-duration: var(--transition-slow); }
+
+/* ============================================
+   SPACING UTILITIES (complementing Tailwind)
+   ============================================ */
+
+.gap-base { gap: var(--space-4); }
+.p-base { padding: var(--space-4); }
+.m-base { margin: var(--space-4); }
