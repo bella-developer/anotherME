@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import EsoLogo from './EsoLogo';
 
 // Horizontal Scrolling Hero with Video Backgrounds
-function HorizontalHero({ onRoomChange }) {
+function HorizontalHero({ onRoomChange = () => {} }) {
   const navigate = useNavigate();
   const containerRef = useRef(null);
   const [currentRoom, setCurrentRoom] = useState(0);
