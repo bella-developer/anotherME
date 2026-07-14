@@ -154,11 +154,12 @@ function HorizontalHero({ onRoomChange = () => {} }) {
       className="relative h-screen w-full overflow-hidden"
       style={{ background: 'var(--surface-void)' }}
     >
-      {/* Video Backgrounds - Contained with Artistic Frame */}
-      <div className="absolute inset-0 flex items-center justify-center p-8 md:p-16">
+      {/* Video Backgrounds - Wider Frame with Breathing Room */}
+      <div className="absolute inset-0 flex items-center justify-center px-4 md:px-8">
         <div 
-          className="relative w-full h-full max-w-6xl"
+          className="relative w-full h-full"
           style={{
+            maxWidth: '1800px',
             border: '1px solid var(--border-whisper)',
             borderRadius: 'var(--radius-sm)',
             overflow: 'hidden',
@@ -191,17 +192,17 @@ function HorizontalHero({ onRoomChange = () => {} }) {
                 preload="auto"
                 autoPlay
                 style={{
-                  filter: 'contrast(1.2) brightness(0.4) saturate(0.8) blur(1px)',
+                  filter: 'contrast(1.3) brightness(0.6) saturate(0.9) blur(0.5px)',
                 }}
               >
                 <source src={room.videoUrl} type="video/mp4" />
               </video>
               
-              {/* Heavy Dimming Overlay - 90% black */}
+              {/* Heavy Dimming Overlay - 75% black */}
               <div 
                 className="absolute inset-0 bg-black"
                 style={{
-                  opacity: 0.85,
+                  opacity: 0.75,
                 }}
               />
               
@@ -209,7 +210,7 @@ function HorizontalHero({ onRoomChange = () => {} }) {
               <div 
                 className="absolute inset-0"
                 style={{
-                  background: `radial-gradient(circle at center, ${room.bgColor.replace('0.3', '0.08')} 0%, transparent 60%)`,
+                  background: `radial-gradient(circle at center, ${room.bgColor.replace('0.3', '0.12')} 0%, transparent 60%)`,
                 }}
               />
               
@@ -256,13 +257,15 @@ function HorizontalHero({ onRoomChange = () => {} }) {
             {currentRoomData.subtitle}
           </p>
 
-          {/* Room Title - Editorial, mostly monochrome */}
+          {/* Room Title - Editorial with serif for premium feel */}
           <h1 
-            className="text-5xl sm:text-6xl md:text-7xl font-light mb-6"
+            className="text-5xl sm:text-6xl md:text-7xl mb-6"
             style={{
               color: 'var(--text-primary)',
               letterSpacing: 'var(--tracking-tight)',
               lineHeight: 'var(--leading-tight)',
+              fontFamily: "'EB Garamond', 'Cormorant Garamond', Georgia, serif",
+              fontWeight: '300',
             }}
           >
             {currentRoomData.title}
