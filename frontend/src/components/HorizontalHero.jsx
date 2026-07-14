@@ -288,7 +288,7 @@ function HorizontalHero({ onRoomChange = () => {} }) {
 
           {/* CTA Button - High Contrast */}
           <button
-            onClick={() => navigate(`/${currentRoomData.id}`)}
+            onClick={() => navigate('/login')}
             className="px-8 py-3 text-xs uppercase tracking-widest transition-all group font-bold"
             style={{
               backgroundColor: 'rgba(255, 255, 255, 0.15)',
@@ -309,7 +309,7 @@ function HorizontalHero({ onRoomChange = () => {} }) {
               e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.3)';
             }}
           >
-            Enter Quietly
+            Step In
           </button>
         </motion.div>
       </div>
