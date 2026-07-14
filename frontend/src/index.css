@@ -15,202 +15,6 @@
     overflow-x: hidden;
   }
 
-  /* Light mode styles - Premium Reading Mode with IntrovertsBg */
-  body.light-mode {
-    /* Base: Show IntrovertsBg */
-    background: #0a0a0f;
-    color: #000000;
-  }
-
-  /* Charcoal overlay on IntrovertsBg - creates the gray reading surface */
-  body.light-mode::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background: rgba(55, 55, 55, 0.88); /* 88% charcoal overlay */
-    z-index: 0;
-    pointer-events: none;
-  }
-
-  /* Main content container - positioned above overlay */
-  body.light-mode #root {
-    position: relative;
-    z-index: 1;
-  }
-
-  body.light-mode #root > main,
-  body.light-mode main {
-    background: transparent; /* Show layered background */
-    color: #000000;
-  }
-
-  /* High contrast cards - near-white with shadow for elevation */
-  body.light-mode article,
-  body.light-mode .card,
-  body.light-mode [class*="Card"] {
-    background: rgba(255, 255, 255, 0.96) !important;
-    color: #000000 !important;
-    border-color: rgba(0, 0, 0, 0.15) !important;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12) !important;
-  }
-
-  /* Bold, highly visible text */
-  body.light-mode h1,
-  body.light-mode h2,
-  body.light-mode h3,
-  body.light-mode h4,
-  body.light-mode h5,
-  body.light-mode h6 {
-    color: #000000 !important;
-    font-weight: 700 !important;
-  }
-
-  body.light-mode p,
-  body.light-mode span:not(.sr-only),
-  body.light-mode div:not([class*="bg-"]) {
-    color: #1a1a1a !important;
-  }
-
-  /* Visible buttons - high contrast */
-  body.light-mode button:not([class*="theme-toggle"]):not([class*="ThemeToggle"]) {
-    background: #000000 !important;
-    color: #ffffff !important;
-    border: 2px solid #000000 !important;
-    font-weight: 600 !important;
-  }
-
-  body.light-mode button:not([class*="theme-toggle"]):not([class*="ThemeToggle"]):hover {
-    background: #1a1a1a !important;
-    border-color: #1a1a1a !important;
-  }
-
-  /* Secondary/outlined buttons */
-  body.light-mode button[class*="border-white"],
-  body.light-mode button[class*="bg-white/"] {
-    background: transparent !important;
-    color: #000000 !important;
-    border: 2px solid rgba(0, 0, 0, 0.3) !important;
-  }
-
-  body.light-mode button[class*="border-white"]:hover,
-  body.light-mode button[class*="bg-white/"]:hover {
-    background: rgba(0, 0, 0, 0.05) !important;
-    border-color: rgba(0, 0, 0, 0.5) !important;
-  }
-
-  /* Visible image frames */
-  body.light-mode img {
-    border-color: rgba(0, 0, 0, 0.2) !important;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
-  }
-
-  /* Input fields - high visibility */
-  body.light-mode input,
-  body.light-mode textarea,
-  body.light-mode select {
-    background: rgba(255, 255, 255, 0.95) !important;
-    color: #000000 !important;
-    border: 1px solid rgba(0, 0, 0, 0.2) !important;
-  }
-
-  body.light-mode input::placeholder,
-  body.light-mode textarea::placeholder {
-    color: rgba(0, 0, 0, 0.5) !important;
-  }
-
-  /* Autofill styling for light mode */
-  body.light-mode input:-webkit-autofill,
-  body.light-mode input:-webkit-autofill:hover,
-  body.light-mode input:-webkit-autofill:focus {
-    -webkit-box-shadow: 0 0 0 30px rgba(255, 255, 255, 0.95) inset !important;
-    -webkit-text-fill-color: #000000 !important;
-  }
-
-  /* Links - visible and bold */
-  body.light-mode a {
-    color: #000000 !important;
-    font-weight: 500 !important;
-  }
-
-  body.light-mode a:hover {
-    color: #1a1a1a !important;
-    text-decoration: underline !important;
-  }
-
-  /* Light mode navbar - lace white background */
-  body.light-mode nav[role="navigation"] {
-    background: rgba(250, 248, 246, 0.98) !important;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.12) !important;
-    backdrop-filter: blur(12px) !important;
-    position: relative;
-    z-index: 50;
-  }
-
-  body.light-mode nav a,
-  body.light-mode nav button {
-    color: #1a1a1a !important;
-    font-weight: 500 !important;
-  }
-
-  body.light-mode nav a:hover,
-  body.light-mode nav button:hover {
-    color: #000000 !important;
-  }
-
-  body.light-mode nav .text-white\/70,
-  body.light-mode nav .text-white\/80 {
-    color: rgba(0, 0, 0, 0.7) !important;
-  }
-
-  body.light-mode nav .text-white {
-    color: #1a1a1a !important;
-  }
-
-  /* Light mode mobile menu */
-  body.light-mode nav #mobile-menu {
-    background: rgba(250, 248, 246, 0.98) !important;
-    border-top: 1px solid rgba(0, 0, 0, 0.12) !important;
-  }
-
-  body.light-mode nav .bg-white\/10:hover {
-    background: rgba(0, 0, 0, 0.06) !important;
-  }
-
-  /* Light mode mobile menu backdrop */
-  body.light-mode nav .bg-black\/80 {
-    background: rgba(0, 0, 0, 0.4) !important;
-  }
-
-  /* Footer remains dark in light mode */
-  body.light-mode footer {
-    background: #000000 !important;
-    color: #ffffff !important;
-    position: relative;
-    z-index: 10;
-  }
-
-  body.light-mode footer * {
-    color: inherit !important;
-  }
-
-  /* Time/metadata text - muted but visible */
-  body.light-mode time,
-  body.light-mode [class*="text-white/40"],
-  body.light-mode [class*="text-white/50"],
-  body.light-mode [class*="text-white/30"] {
-    color: rgba(0, 0, 0, 0.6) !important;
-  }
-
-  /* Category badges - visible with dark borders */
-  body.light-mode [class*="bg-red"],
-  body.light-mode [class*="bg-purple"],
-  body.light-mode [class*="bg-orange"] {
-    background: rgba(0, 0, 0, 0.08) !important;
-    color: #000000 !important;
-    border: 1px solid rgba(0, 0, 0, 0.2) !important;
-    font-weight: 600 !important;
-  }
-
   * {
     @apply box-border;
   }
@@ -411,4 +215,116 @@
     caret-color: #ffffff !important;
     transition: background-color 5000s ease-in-out 0s;
   }
+}
+
+/* ============================================
+   LIGHT MODE - SUBTLE ATMOSPHERIC SHIFT
+   Barely noticeable, maintains dark aesthetic
+   Borderless design for seamless integration
+   ============================================ */
+
+/* Ultra-subtle navbar lift - entire header width, no borders */
+body.light-mode header,
+body.light-mode nav[role="navigation"],
+body.light-mode header nav {
+  background: rgba(18, 18, 20, 0.92) !important;
+  backdrop-filter: blur(20px) saturate(120%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(120%) !important;
+  border: none !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
+  transition: all 600ms cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Apply to header motion wrapper */
+body.light-mode header.fixed,
+body.light-mode motion-header,
+body.light-mode [class*="motion"] header {
+  background: rgba(18, 18, 20, 0.92) !important;
+  backdrop-filter: blur(20px) saturate(120%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(120%) !important;
+  border: none !important;
+}
+
+/* Text: slightly lighter gray, barely visible difference */
+body.light-mode nav[role="navigation"] a,
+body.light-mode nav[role="navigation"] button:not([class*="theme-toggle"]):not([class*="ThemeToggle"]),
+body.light-mode header nav a,
+body.light-mode header nav button:not([class*="theme-toggle"]):not([class*="ThemeToggle"]),
+body.light-mode header a,
+body.light-mode header button:not([class*="theme-toggle"]):not([class*="ThemeToggle"]) {
+  color: rgba(255, 255, 255, 0.85) !important;
+  transition: color 400ms ease !important;
+}
+
+body.light-mode nav[role="navigation"] a:hover,
+body.light-mode nav[role="navigation"] button:not([class*="theme-toggle"]):not([class*="ThemeToggle"]):hover,
+body.light-mode header nav a:hover,
+body.light-mode header nav button:not([class*="theme-toggle"]):not([class*="ThemeToggle"]):hover,
+body.light-mode header a:hover,
+body.light-mode header button:not([class*="theme-toggle"]):not([class*="ThemeToggle"]):hover {
+  color: rgba(255, 255, 255, 1) !important;
+}
+
+body.light-mode nav[role="navigation"] .text-white,
+body.light-mode header nav .text-white,
+body.light-mode header .text-white {
+  color: rgba(255, 255, 255, 0.85) !important;
+}
+
+body.light-mode nav[role="navigation"] [class*="text-white/"],
+body.light-mode header nav [class*="text-white/"],
+body.light-mode header [class*="text-white/"] {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+/* Join button - maintain high contrast in both modes */
+.join-button {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+}
+
+.join-button:hover {
+  background-color: rgba(255, 255, 255, 0.9) !important;
+  color: #000000 !important;
+}
+
+body.light-mode .join-button {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+}
+
+body.light-mode .join-button:hover {
+  background-color: rgba(0, 0, 0, 0.9) !important;
+  color: #ffffff !important;
+}
+
+/* Mobile menu - same subtle treatment, borderless */
+body.light-mode nav[role="navigation"] #mobile-menu,
+body.light-mode header nav #mobile-menu {
+  background: rgba(18, 18, 20, 0.95) !important;
+  backdrop-filter: blur(20px) !important;
+  border: none !important;
+  border-top: none !important;
+}
+
+body.light-mode nav[role="navigation"] .bg-white\/10:hover,
+body.light-mode header nav .bg-white\/10:hover {
+  background: rgba(255, 255, 255, 0.12) !important;
+}
+
+body.light-mode nav[role="navigation"] .bg-black\/80,
+body.light-mode header nav .bg-black\/80 {
+  background: rgba(0, 0, 0, 0.6) !important;
+}
+
+/* Smooth transition for theme changes */
+
+body,
+header,
+nav,
+nav *:not(svg):not(path) {
+  transition: background-color 600ms cubic-bezier(0.4, 0, 0.2, 1),
+              color 600ms cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 600ms cubic-bezier(0.4, 0, 0.2, 1);
 }

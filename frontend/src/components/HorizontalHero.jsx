@@ -152,15 +152,56 @@ function HorizontalHero({ onRoomChange = () => {} }) {
     <section 
       ref={containerRef}
       className="relative h-screen w-full overflow-hidden"
-      style={{ background: 'var(--surface-void)', paddingTop: '80px' }}
+      style={{ background: 'var(--surface-void)' }}
     >
-      {/* Video Backgrounds - Wider Frame with Breathing Room */}
-      <div className="absolute inset-0 flex items-center justify-center px-4 md:px-8" style={{ paddingTop: '80px' }}>
+      {/* Cinematic Letterbox Bars - Top */}
+      <div 
+        className="absolute top-0 left-0 right-0 h-20 z-40 pointer-events-none"
+        style={{
+          background: 'linear-gradient(to bottom, rgba(0, 0, 0, 0.98) 0%, rgba(0, 0, 0, 0.85) 40%, transparent 100%)',
+        }}
+      />
+      
+      {/* Cinematic Letterbox Bars - Bottom */}
+      <div 
+        className="absolute bottom-0 left-0 right-0 h-32 z-40 pointer-events-none"
+        style={{
+          background: 'linear-gradient(to top, rgba(0, 0, 0, 0.98) 0%, rgba(0, 0, 0, 0.85) 25%, transparent 100%)',
+        }}
+      />
+
+      {/* Cinematic Vignette */}
+      <div 
+        className="absolute inset-0 z-30 pointer-events-none"
+        style={{
+          background: 'radial-gradient(ellipse at center, transparent 0%, transparent 50%, rgba(0, 0, 0, 0.4) 100%)',
+        }}
+      />
+
+      {/* Subtle Film Grain Texture */}
+      <div 
+        className="absolute inset-0 z-30 pointer-events-none opacity-[0.02]"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+          backgroundRepeat: 'repeat',
+          mixBlendMode: 'overlay',
+        }}
+      />
+
+      {/* Video Backgrounds - Full Width Scan Frame */}
+      <div 
+        className="absolute inset-0 flex items-center justify-center" 
+        style={{ 
+          paddingTop: 'clamp(52px, 10vw, 64px)',
+          paddingBottom: 'clamp(52px, 10vw, 64px)',
+          paddingLeft: '1.5px',
+          paddingRight: '1.5px',
+        }}
+      >
         <div 
           className="relative w-full h-full"
           style={{
-            maxWidth: '1800px',
-            border: '1px solid var(--border-whisper)',
+            border: '1px solid rgba(255, 255, 255, 0.008)',
             borderRadius: 'var(--radius-sm)',
             overflow: 'hidden',
           }}

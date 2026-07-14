@@ -35,7 +35,7 @@ function Explore() {
   ];
 
   return (
-    <div className="min-h-screen bg-black text-white relative z-10" style={{ fontFamily: "'Geist Mono', monospace" }}>
+    <div className="min-h-screen text-white relative" style={{ fontFamily: "'Geist Mono', monospace" }}>
       {/* Fixed Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-black/95 backdrop-blur-xl">
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between border-b border-white/10">
@@ -60,7 +60,7 @@ function Explore() {
       </nav>
 
       {/* FEATURES SECTION */}
-      <section className="pt-32 py-24 lg:py-32 relative z-10" style={{ background: 'rgba(0,0,0,0.6)' }}>
+      <section className="pt-32 py-24 lg:py-32 relative z-10" style={{ background: 'rgba(0,0,0,0.15)' }}>
         <div className="max-w-6xl mx-auto px-6 lg:px-8">
           
           <motion.div 
@@ -223,7 +223,7 @@ function Explore() {
         viewport={{ once: true }}
         transition={{ duration: 0.8 }}
         className="py-24 relative z-10"
-        style={{ background: 'rgba(0,0,0,0.8)' }}
+        style={{ background: 'rgba(0,0,0,0.2)' }}
       >
         <div className="max-w-4xl mx-auto px-6 text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-6 tracking-wider">Ready to Join?</h2>

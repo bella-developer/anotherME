@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import EsoLogo from '../components/EsoLogo';
 import { usePageTitle } from '../hooks/usePageTitle';
 import HorizontalHero from '../components/HorizontalHero';
+import ThemeToggle from '../components/ThemeToggle';
 
 // ESO Landing Page - Updated June 29, 2026
 function Landing() {
@@ -63,15 +64,15 @@ function Landing() {
           transitionDuration: 'var(--duration-slow)',
         }}
       >
-        <nav className="max-w-7xl mx-auto px-8 lg:px-16 py-5" role="navigation" aria-label="Main navigation">
-          <div className="flex items-center justify-between">
+        <nav className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-16 py-3" role="navigation" aria-label="Main navigation">
+          <div className="flex items-center justify-between gap-4">
             {/* Logo */}
-            <Link to="/" className="focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50 rounded transition-transform duration-300 hover:scale-105">
-              <EsoLogo className="h-8 w-auto" />
+            <Link to="/" className="focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50 rounded transition-transform duration-300 hover:scale-105 flex-shrink-0">
+              <EsoLogo className="h-8 sm:h-10 w-auto" />
             </Link>
             
             {/* Navigation - Magazine-like spacing */}
-            <div className="hidden md:flex items-center gap-12 text-xs tracking-widest uppercase">
+            <div className="hidden md:flex items-center gap-8 lg:gap-12 text-xs tracking-widest uppercase flex-1 justify-center">
               <Link 
                 to="/explore" 
                 className="text-white/50 hover:text-white transition-all duration-500 relative after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 hover:after:w-full after:bg-white after:transition-all after:duration-500"
@@ -88,19 +89,28 @@ function Landing() {
               </a>
             </div>
 
-            {/* Auth buttons - Quiet */}
-            <div className="flex items-center gap-4">
+            {/* Auth buttons - Responsive */}
+            <div className="flex items-center gap-2 sm:gap-4 flex-shrink-0">
+              <ThemeToggle />
               <Link 
                 to="/login"
-                className="px-6 py-2 text-xs text-white/60 hover:text-white transition-all duration-500 tracking-widest uppercase"
+                className="hidden sm:inline-block px-4 lg:px-6 py-2 text-xs text-white/60 hover:text-white transition-all duration-500 tracking-widest uppercase"
               >
                 Sign In
               </Link>
               <Link 
                 to="/register"
-                className="px-6 py-2 text-xs bg-white text-black hover:bg-white/90 transition-all duration-500 tracking-widest uppercase"
+                className="px-4 sm:px-6 py-2 text-xs transition-all duration-500 tracking-widest uppercase join-button"
                 style={{
+                  backgroundColor: '#ffffff',
+                  color: '#000000',
                   borderRadius: 'var(--radius-soft)',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.9)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = '#ffffff';
                 }}
               >
                 Join

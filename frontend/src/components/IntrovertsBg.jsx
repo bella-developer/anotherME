@@ -17,20 +17,15 @@ function makeStars(count, seed) {
   const r = rand(seed);
   return Array.from({ length: count }, (_, i) => {
     const brightness = r();
-    // cluster more stars toward center-bottom like a real sky
     const x = r() * 100;
     const y = r() * 100;
-    // size: 90% are 1px, rest up to 2.5px
     const size = brightness > 0.93 ? 1.8 + r() * 0.7 : brightness > 0.7 ? 1.2 : 1;
-    // opacity: dim by default, a few bright
     const opacity = brightness > 0.96
       ? 0.75 + r() * 0.25          // ~4% very bright
       : brightness > 0.80
       ? 0.35 + r() * 0.3           // ~16% medium
       : 0.08 + r() * 0.18;         // ~80% very faint
-    // a few bright stars get a very subtle blue-white tint
     const hue = brightness > 0.94 ? `rgba(210,225,255,${opacity})` : `rgba(255,255,255,${opacity})`;
-    // pulse animation only on the brightest few
     const animate = brightness > 0.97;
     const duration = 4 + r() * 8;
     const delay = r() * 10;
