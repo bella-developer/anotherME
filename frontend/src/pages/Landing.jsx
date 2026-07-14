@@ -125,11 +125,9 @@ function Landing() {
 
       {/* SLIDING TEXT SECTION - Slowed Down, Editorial */}
       <section 
-        className="relative z-10 py-24 border-y overflow-hidden"
+        className="relative z-10 py-24 overflow-hidden"
         style={{ 
-          background: 'linear-gradient(180deg, rgba(0,0,0,0.85) 0%, rgba(10,5,20,0.9) 50%, rgba(0,0,0,0.85) 100%)',
-          backdropFilter: 'blur(20px)',
-          borderColor: 'var(--border-whisper)',
+          background: '#000000',
         }}
       >
         <style>{`
@@ -146,14 +144,6 @@ function Landing() {
             animation-play-state: paused;
           }
         `}</style>
-        
-        {/* Ambient light effect */}
-        <div 
-          className="absolute inset-0 opacity-30"
-          style={{
-            background: 'radial-gradient(ellipse at 50% 50%, rgba(139, 92, 246, 0.15) 0%, transparent 60%)',
-          }}
-        />
         
         <div className="slide-track relative z-10">
           {/* Duplicate the words twice for seamless loop */}
@@ -200,14 +190,6 @@ function Landing() {
             </div>
           ))}
         </div>
-        
-        {/* Bottom fade effect */}
-        <div 
-          className="absolute bottom-0 left-0 right-0 h-12 pointer-events-none"
-          style={{
-            background: 'linear-gradient(to top, rgba(0,0,0,0.95), transparent)',
-          }}
-        />
       </section>
 
 
@@ -240,68 +222,127 @@ function Landing() {
             </p>
           </motion.div>
 
-          {/* Feature Cards - More Restraint */}
+          {/* Feature Cards - Full Uncut Colored Images, No Effects */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
             {features.map((f, i) => (
               <motion.article
                 key={i}
-                initial={{ opacity: 0, y: 40 }}
+                initial={{ opacity: 0, y: 60 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.15, duration: 0.8 }}
-                className="relative flex flex-col items-center justify-end p-8 pb-10 text-center cursor-pointer group overflow-hidden transition-all"
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ 
+                  delay: i * 0.12, 
+                  duration: 0.8,
+                  ease: [0.25, 0.46, 0.45, 0.94]
+                }}
+                className="relative flex flex-col cursor-pointer group"
                 style={{
-                  minHeight: '360px',
-                  background: 'var(--surface-1)',
-                  borderRadius: 'var(--radius-medium)',
-                  border: '1px solid var(--border-whisper)',
-                  transitionDuration: 'var(--duration-slow)',
+                  background: 'transparent',
+                  borderRadius: '12px',
+                  border: '1px solid rgba(255, 255, 255, 0.06)',
+                  transition: 'all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)',
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-4px)';
-                  e.currentTarget.style.borderColor = 'var(--border-subtle)';
+                  e.currentTarget.style.transform = 'translateY(-8px)';
+                  e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)';
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.borderColor = 'var(--border-whisper)';
+                  e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.06)';
                 }}
               >
-                {/* Background Image */}
-                <div
-                  className="absolute inset-0 bg-cover bg-center transition-transform"
+                {/* Image Container with Black Background and Centered Icon */}
+                <motion.div
+                  className="relative overflow-hidden mx-4 mt-4"
+                  whileHover={{ scale: 1.03 }}
+                  transition={{ duration: 0.8, ease: 'easeOut' }}
                   style={{ 
-                    backgroundImage: `url('${f.img}')`, 
-                    filter: 'contrast(1.05) brightness(0.7) saturate(0.9)',
-                    transitionDuration: 'var(--duration-slower)',
-                    borderRadius: 'var(--radius-medium)',
+                    height: '220px',
+                    background: '#000000',
+                    borderRadius: '8px',
                   }}
-                />
-                
-                {/* Gradient Overlay - More subtle */}
-                <div 
-                  className="absolute inset-0 transition-all"
-                  style={{ 
-                    background: 'linear-gradient(to top, rgba(0,0,0,0.98) 0%, rgba(0,0,0,0.8) 30%, transparent 70%)',
-                    borderRadius: 'var(--radius-medium)',
-                    transitionDuration: 'var(--duration-slow)',
-                  }}
-                />
+                >
+                  {/* Full Colored Image - 100% Visible */}
+                  <div
+                    className="absolute inset-0"
+                    style={{ 
+                      backgroundImage: `url('${f.img}')`,
+                      backgroundSize: 'contain',
+                      backgroundRepeat: 'no-repeat',
+                      backgroundPosition: 'center',
+                    }}
+                  />
 
-                {/* Content - Quieter */}
-                <div className="relative z-10 flex flex-col items-center">
-                  <h3 className="text-xs tracking-ultra uppercase mb-3" style={{
-                    color: 'var(--text-primary)',
-                    fontWeight: 'var(--weight-semibold)'
-                  }}>
-                    {f.title}
-                  </h3>
-                  <p className="text-xs leading-relaxed transition-all" style={{ 
-                    color: 'var(--text-tertiary)',
-                    transitionDuration: 'var(--duration-normal)'
-                  }}>
+                  {/* Icon - Centered over image */}
+                  <motion.div 
+                    className="absolute inset-0 flex items-center justify-center"
+                    whileHover={{ scale: 1.15, y: -4 }}
+                    transition={{ duration: 0.4, ease: 'easeOut' }}
+                    style={{ zIndex: 10 }}
+                  >
+                    <svg 
+                      className="w-12 h-12 transition-all duration-500" 
+                      fill="none" 
+                      stroke="currentColor" 
+                      viewBox="0 0 24 24" 
+                      strokeWidth={1.5}
+                      style={{ 
+                        color: 'rgba(255, 255, 255, 0.9)',
+                        filter: 'drop-shadow(0 2px 8px rgba(0, 0, 0, 0.8))'
+                      }}
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" d={f.icon} />
+                    </svg>
+                  </motion.div>
+                  
+                  {/* Title Overlay */}
+                  <div className="absolute inset-x-0 bottom-0 flex items-center justify-center p-4">
+                    <motion.h3 
+                      className="text-sm uppercase font-bold text-center"
+                      whileHover={{ letterSpacing: '0.25em' }}
+                      transition={{ duration: 0.3 }}
+                      style={{
+                        color: '#ffffff',
+                        letterSpacing: '0.2em',
+                        textShadow: '0 2px 12px rgba(0, 0, 0, 0.95), 0 4px 24px rgba(0, 0, 0, 0.9)',
+                      }}
+                    >
+                      {f.title}
+                    </motion.h3>
+                  </div>
+                </motion.div>
+
+                {/* Description - Bottom */}
+                <motion.div 
+                  className="flex flex-col items-center text-center px-6 py-5"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ 
+                    delay: i * 0.12 + 0.3,
+                    duration: 0.6,
+                    ease: 'easeOut'
+                  }}
+                >
+                  <motion.p 
+                    className="text-xs leading-relaxed mb-2" 
+                    style={{ 
+                      color: 'rgba(255, 255, 255, 0.7)',
+                      lineHeight: '1.6',
+                    }}
+                  >
                     {f.desc}
-                  </p>
-                </div>
+                  </motion.p>
+                  
+                  {/* Arrow indicator */}
+                  <motion.div
+                    whileHover={{ x: 4 }}
+                    transition={{ duration: 0.3 }}
+                    style={{ color: 'rgba(255, 255, 255, 0.5)' }}
+                  >
+                    →
+                  </motion.div>
+                </motion.div>
               </motion.article>
             ))}
           </div>
@@ -314,119 +355,218 @@ function Landing() {
             transition={{ delay: 0.5, duration: 0.9 }}
             className="grid grid-cols-1 lg:grid-cols-2 gap-6"
           >
-            {/* Quote Card - More breathing */}
-            <div
-              className="relative flex items-center justify-center text-center overflow-hidden min-h-[320px] transition-all"
+            {/* Quote Card - Borderless with Premium Animations */}
+            <motion.div
+              initial={{ opacity: 0, x: -60 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ 
+                duration: 0.8,
+                ease: [0.25, 0.46, 0.45, 0.94]
+              }}
+              whileHover={{ 
+                scale: 1.02,
+                y: -8,
+                transition: { duration: 0.6, ease: [0.34, 1.56, 0.64, 1] }
+              }}
+              className="relative flex items-center justify-center text-center overflow-hidden min-h-[380px] cursor-pointer"
               style={{
-                borderRadius: 'var(--radius-medium)',
-                border: '1px solid var(--border-whisper)',
-                transitionDuration: 'var(--duration-slow)',
+                background: 'linear-gradient(135deg, rgba(26, 26, 26, 0.98) 0%, rgba(20, 20, 20, 0.98) 100%)',
+                borderRadius: 'var(--radius-lg)',
+                border: 'none',
+                boxShadow: '0 4px 24px rgba(0, 0, 0, 0.4), 0 2px 12px rgba(0, 0, 0, 0.3)',
               }}
             >
-              <div 
-                className="absolute inset-0" 
+              <motion.div 
+                className="absolute inset-0"
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.8, ease: 'easeOut' }}
                 style={{ 
                   backgroundImage: `url(https://res.cloudinary.com/dbtm7etag/image/upload/v1782735075/attention_ngxcb7.png)`, 
                   backgroundSize: 'cover', 
                   backgroundPosition: 'center', 
-                  filter: 'contrast(1.05) brightness(0.7) saturate(0.9)',
-                  borderRadius: 'var(--radius-medium)',
+                  filter: 'contrast(1.1) brightness(0.5) saturate(0.8)',
+                  opacity: 0.3,
+                  mixBlendMode: 'luminosity',
+                  borderRadius: 'var(--radius-lg)',
                 }} 
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/98 via-black/70 to-transparent" style={{
-                borderRadius: 'var(--radius-medium)',
-              }} />
-              <div className="relative z-10 h-full flex flex-col justify-end p-12">
-                <div className="flex items-start gap-4 mb-5">
-                  <svg className="w-5 h-5 flex-shrink-0 mt-1" style={{ color: 'var(--text-ghost)' }} fill="currentColor" viewBox="0 0 24 24">
+              <div 
+                className="absolute inset-0" 
+                style={{
+                  background: 'linear-gradient(to top, rgba(0, 0, 0, 0.98) 0%, rgba(0, 0, 0, 0.75) 40%, transparent 100%)',
+                  borderRadius: 'var(--radius-lg)',
+                }} 
+              />
+              <motion.div 
+                className="relative z-10 px-12 py-16"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.3, duration: 0.6 }}
+              >
+                <div className="flex items-start justify-center gap-4 mb-6">
+                  <motion.svg 
+                    className="w-6 h-6 flex-shrink-0"
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.4, duration: 0.5 }}
+                    style={{ color: 'rgba(255, 255, 255, 0.2)' }} 
+                    fill="currentColor" 
+                    viewBox="0 0 24 24"
+                  >
                     <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-                  </svg>
+                  </motion.svg>
                   
-                  <p className="text-xl lg:text-2xl font-light flex-1" style={{
-                    color: 'var(--text-primary)',
-                    lineHeight: 'var(--leading-snug)',
-                    letterSpacing: 'var(--tracking-micro)'
-                  }}>
+                  <motion.p 
+                    className="text-2xl lg:text-3xl font-light max-w-lg"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.5, duration: 0.6 }}
+                    style={{
+                      color: '#ffffff',
+                      lineHeight: '1.4',
+                      letterSpacing: '-0.01em',
+                    }}
+                  >
                     Most people seek attention.<br />Few seek understanding.
-                  </p>
+                  </motion.p>
                   
-                  <svg className="w-5 h-5 flex-shrink-0 mt-1 rotate-180" style={{ color: 'var(--text-ghost)' }} fill="currentColor" viewBox="0 0 24 24">
+                  <motion.svg 
+                    className="w-6 h-6 flex-shrink-0 rotate-180"
+                    initial={{ opacity: 0, x: 20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.4, duration: 0.5 }}
+                    style={{ color: 'rgba(255, 255, 255, 0.2)' }} 
+                    fill="currentColor" 
+                    viewBox="0 0 24 24"
+                  >
                     <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-                  </svg>
+                  </motion.svg>
                 </div>
-                <div className="text-xs tracking-ultra uppercase" style={{ color: 'var(--text-quaternary)' }}>
+                <motion.div 
+                  className="text-xs tracking-[0.25em] uppercase"
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  transition={{ delay: 0.7, duration: 0.5 }}
+                  style={{ color: 'rgba(255, 255, 255, 0.4)' }}
+                >
                   — Eso Philosophy
-                </div>
-              </div>
-            </div>
+                </motion.div>
+              </motion.div>
+            </motion.div>
 
-            {/* Community Card - Simplified */}
-            <div
-              className="flex flex-col items-center justify-center text-center px-12 py-16 min-h-[320px] transition-all"
+            {/* Community Card - Borderless with Premium Animations */}
+            <motion.div
+              initial={{ opacity: 0, x: 60 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ 
+                duration: 0.8,
+                ease: [0.25, 0.46, 0.45, 0.94]
+              }}
+              whileHover={{ 
+                scale: 1.02,
+                y: -8,
+                transition: { duration: 0.6, ease: [0.34, 1.56, 0.64, 1] }
+              }}
+              className="flex flex-col items-center justify-center text-center px-12 py-16 min-h-[380px] cursor-pointer"
               style={{
-                background: 'var(--surface-2)',
-                borderRadius: 'var(--radius-medium)',
-                border: '1px solid var(--border-whisper)',
-                transitionDuration: 'var(--duration-slow)',
+                background: 'linear-gradient(135deg, rgba(26, 26, 26, 0.98) 0%, rgba(20, 20, 20, 0.98) 100%)',
+                borderRadius: 'var(--radius-lg)',
+                border: 'none',
+                boxShadow: '0 4px 24px rgba(0, 0, 0, 0.4), 0 2px 12px rgba(0, 0, 0, 0.3)',
               }}
             >
-              <div className="text-xs tracking-ultra uppercase mb-8" style={{ color: 'var(--text-quaternary)' }}>
+              {/* Header with fade-in */}
+              <motion.div 
+                className="text-[10px] tracking-[0.25em] uppercase mb-8 font-semibold"
+                initial={{ opacity: 0, y: -20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3, duration: 0.5 }}
+                style={{ color: 'rgba(255, 255, 255, 0.4)' }}
+              >
                 Who You'll Meet
-              </div>
+              </motion.div>
               
-              <div className="space-y-3 mb-10">
+              {/* List with stagger animation */}
+              <div className="space-y-4 mb-12">
                 {['The thinkers', 'The dreamers', 'The outsiders', 'The observers'].map((line, i) => (
                   <motion.div 
                     key={i}
-                    initial={{ opacity: 0, y: 10 }}
-                    whileInView={{ opacity: 1, y: 0 }}
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
-                    transition={{ delay: 0.7 + (i * 0.1), duration: 0.6 }}
-                    className="text-sm font-light"
-                    style={{ color: 'var(--text-primary)' }}
+                    transition={{ delay: 0.4 + (i * 0.1), duration: 0.5 }}
+                    whileHover={{ 
+                      x: 8,
+                      transition: { duration: 0.3 }
+                    }}
+                    className="text-base font-light"
+                    style={{ color: '#ffffff' }}
                   >
                     {line}
                   </motion.div>
                 ))}
               </div>
               
-              <p className="text-xs mb-10" style={{ color: 'var(--text-quaternary)' }}>
+              {/* Subtitle with fade */}
+              <motion.p 
+                className="text-xs mb-8"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                transition={{ delay: 0.8, duration: 0.5 }}
+                style={{ color: 'rgba(255, 255, 255, 0.5)' }}
+              >
                 They're all here, waiting.
-              </p>
+              </motion.p>
               
-              <div className="flex justify-center -space-x-2 mb-10">
+              {/* Avatars with pop animation */}
+              <div className="flex justify-center -space-x-3 mb-10">
                 {['1212984', '1438081', '1222271', '1239291', '1681010', '2379004'].map((id, i) => (
                   <motion.div 
                     key={i}
                     initial={{ opacity: 0, scale: 0 }}
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true }}
-                    transition={{ delay: 1.0 + (i * 0.05), duration: 0.4 }}
-                    className="w-10 h-10 rounded-full bg-cover bg-center border-2"
+                    transition={{ 
+                      delay: 0.9 + (i * 0.08), 
+                      duration: 0.5,
+                      type: 'spring',
+                      stiffness: 200
+                    }}
+                    whileHover={{ 
+                      scale: 1.2, 
+                      zIndex: 10,
+                      transition: { duration: 0.3 }
+                    }}
+                    className="w-12 h-12 rounded-full bg-cover bg-center border-2"
                     style={{ 
                       backgroundImage: `url('https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?w=100&h=100&fit=crop')`,
-                      borderColor: 'var(--surface-void)'
+                      borderColor: 'rgba(0, 0, 0, 0.8)',
+                      boxShadow: '0 2px 8px rgba(0, 0, 0, 0.4)',
                     }} 
                   />
                 ))}
               </div>
               
-              <button 
+              <motion.button 
                 onClick={() => navigate('/explore')}
-                className="group flex items-center gap-2 text-xs tracking-wider uppercase transition-all"
+                className="group flex items-center gap-2 text-xs tracking-wider uppercase"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                transition={{ delay: 1.5, duration: 0.5 }}
+                whileHover={{ x: 4 }}
                 style={{
-                  color: 'var(--text-tertiary)',
-                  transitionDuration: 'var(--duration-normal)'
+                  color: 'rgba(255, 255, 255, 0.6)',
                 }}
-                onMouseEnter={(e) => e.currentTarget.style.color = 'var(--text-primary)'}
-                onMouseLeave={(e) => e.currentTarget.style.color = 'var(--text-tertiary)'}
               >
                 Meet the Community
-                <svg className="w-3 h-3 group-hover:translate-x-1 transition-transform" style={{ transitionDuration: 'var(--duration-normal)' }} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+                <svg className="w-3 h-3 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
-              </button>
-            </div>
+              </motion.button>
+            </motion.div>
           </motion.div>
 
         </div>
