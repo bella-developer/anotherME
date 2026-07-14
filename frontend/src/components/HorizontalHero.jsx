@@ -192,25 +192,25 @@ function HorizontalHero({ onRoomChange = () => {} }) {
                 preload="auto"
                 autoPlay
                 style={{
-                  filter: 'contrast(1.3) brightness(0.6) saturate(0.9) blur(0.5px)',
+                  filter: 'contrast(1.2) brightness(0.85) saturate(1.1)',
                 }}
               >
                 <source src={room.videoUrl} type="video/mp4" />
               </video>
               
-              {/* Heavy Dimming Overlay - 75% black */}
+              {/* Medium Dimming Overlay - 50% black */}
               <div 
                 className="absolute inset-0 bg-black"
                 style={{
-                  opacity: 0.75,
+                  opacity: 0.5,
                 }}
               />
               
-              {/* Subtle Color Mist - Very faint */}
+              {/* Subtle Color Mist */}
               <div 
                 className="absolute inset-0"
                 style={{
-                  background: `radial-gradient(circle at center, ${room.bgColor.replace('0.3', '0.12')} 0%, transparent 60%)`,
+                  background: `radial-gradient(circle at center, ${room.bgColor.replace('0.3', '0.15')} 0%, transparent 60%)`,
                 }}
               />
               
@@ -248,59 +248,65 @@ function HorizontalHero({ onRoomChange = () => {} }) {
 
           {/* Room Label - Ultra quiet */}
           <p 
-            className="text-xs tracking-ultra uppercase mb-6"
+            className="text-xs tracking-ultra uppercase mb-6 font-bold"
             style={{
-              color: 'var(--text-ghost)',
+              color: 'rgba(255, 255, 255, 0.5)',
               letterSpacing: '0.3em',
+              textShadow: '0 2px 12px rgba(0, 0, 0, 0.9), 0 4px 24px rgba(0, 0, 0, 0.8)',
             }}
           >
             {currentRoomData.subtitle}
           </p>
 
-          {/* Room Title - Editorial with serif for premium feel */}
+          {/* Room Title - Extra Bold, High Contrast */}
           <h1 
             className="text-5xl sm:text-6xl md:text-7xl mb-6"
             style={{
-              color: 'var(--text-primary)',
+              color: '#ffffff',
               letterSpacing: 'var(--tracking-tight)',
               lineHeight: 'var(--leading-tight)',
               fontFamily: "'EB Garamond', 'Cormorant Garamond', Georgia, serif",
-              fontWeight: '300',
+              fontWeight: '700',
+              textShadow: '0 4px 20px rgba(0, 0, 0, 0.95), 0 8px 40px rgba(0, 0, 0, 0.9), 0 2px 8px rgba(0, 0, 0, 1)',
+              WebkitTextStroke: '0.5px rgba(0, 0, 0, 0.5)',
             }}
           >
             {currentRoomData.title}
           </h1>
 
-          {/* Description - Quiet */}
+          {/* Description - Bold and Visible */}
           <p 
-            className="text-base md:text-lg mb-12 max-w-xl mx-auto"
+            className="text-base md:text-lg mb-12 max-w-xl mx-auto font-semibold"
             style={{
-              color: 'var(--text-tertiary)',
+              color: 'rgba(255, 255, 255, 0.9)',
               lineHeight: 'var(--leading-relaxed)',
+              textShadow: '0 2px 16px rgba(0, 0, 0, 0.9), 0 4px 32px rgba(0, 0, 0, 0.8)',
             }}
           >
             {currentRoomData.description}
           </p>
 
-          {/* CTA Button - Precious accent on hover only */}
+          {/* CTA Button - High Contrast */}
           <button
             onClick={() => navigate(`/${currentRoomData.id}`)}
-            className="px-8 py-3 text-xs uppercase tracking-widest transition-all group"
+            className="px-8 py-3 text-xs uppercase tracking-widest transition-all group font-bold"
             style={{
-              backgroundColor: 'var(--surface-1)',
-              color: 'var(--text-tertiary)',
-              border: '1px solid var(--border-whisper)',
+              backgroundColor: 'rgba(255, 255, 255, 0.15)',
+              color: '#ffffff',
+              border: '1px solid rgba(255, 255, 255, 0.3)',
               borderRadius: 'var(--radius-soft)',
-              fontWeight: 'var(--weight-medium)',
+              fontWeight: '700',
               transitionDuration: 'var(--duration-slow)',
+              textShadow: '0 2px 8px rgba(0, 0, 0, 0.8)',
+              backdropFilter: 'blur(8px)',
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.borderColor = `${currentRoomData.color}40`;
-              e.currentTarget.style.color = currentRoomData.color;
+              e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.25)';
+              e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.5)';
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.borderColor = 'var(--border-whisper)';
-              e.currentTarget.style.color = 'var(--text-tertiary)';
+              e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.15)';
+              e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.3)';
             }}
           >
             Enter Quietly
