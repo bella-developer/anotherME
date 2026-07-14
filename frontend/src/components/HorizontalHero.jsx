@@ -199,110 +199,116 @@ function HorizontalHero({ onRoomChange = () => {} }) {
         </motion.div>
       ))}
 
-      {/* Content Overlay */}
-      <div className="relative z-10 h-full flex flex-col items-center justify-center px-6">
+      {/* Content Overlay - Premium Restraint */}
+      <div className="relative z-10 h-full flex flex-col items-center justify-center px-8">
         <motion.div
           key={currentRoom}
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-center max-w-2xl"
+          transition={{ duration: 1, delay: 0.3, ease: 'easeOut' }}
+          className="text-center max-w-3xl"
         >
-          {/* Logo */}
+          {/* Logo - Quiet */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5 }}
-            className="mb-3"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8 }}
+            className="mb-12"
           >
-            <EsoLogo className="h-12 md:h-16 w-auto mx-auto drop-shadow-2xl" />
+            <EsoLogo className="h-10 md:h-12 w-auto mx-auto" style={{ opacity: 0.6 }} />
           </motion.div>
 
-          {/* Room Title */}
-          <h1 
-            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-2 tracking-wider"
-            style={{
-              color: currentRoomData.color,
-              textShadow: `0 0 80px ${currentRoomData.color}99, 0 0 120px ${currentRoomData.color}66, 0 6px 40px rgba(0,0,0,1), 0 10px 60px rgba(0,0,0,0.95), 0 2px 8px rgba(0,0,0,1)`,
-              WebkitTextStroke: `1.5px rgba(0, 0, 0, 0.7)`,
-              filter: 'drop-shadow(0 0 20px rgba(0,0,0,0.9))',
-            }}
-          >
-            {currentRoomData.title}
-          </h1>
-
-          {/* Subtitle */}
+          {/* Room Label - Ultra quiet */}
           <p 
-            className="text-sm sm:text-base md:text-lg font-extrabold text-white mb-2"
+            className="text-xs tracking-ultra uppercase mb-6"
             style={{
-              textShadow: '0 0 30px rgba(255,255,255,0.3), 0 4px 20px rgba(0, 0, 0, 1), 0 6px 40px rgba(0, 0, 0, 0.95), 0 2px 8px rgba(0, 0, 0, 1)',
-              letterSpacing: '0.08em',
-              filter: 'drop-shadow(0 0 15px rgba(0,0,0,0.9))',
+              color: 'var(--text-ghost)',
+              letterSpacing: '0.3em',
             }}
           >
             {currentRoomData.subtitle}
           </p>
 
-          {/* Description */}
-          <p 
-            className="text-xs sm:text-sm md:text-base font-bold text-white mb-6"
+          {/* Room Title - Editorial, mostly monochrome */}
+          <h1 
+            className="text-5xl sm:text-6xl md:text-7xl font-light mb-6"
             style={{
-              textShadow: '0 0 25px rgba(255,255,255,0.2), 0 3px 18px rgba(0, 0, 0, 1), 0 5px 35px rgba(0, 0, 0, 0.95), 0 2px 6px rgba(0, 0, 0, 1)',
-              letterSpacing: '0.04em',
-              filter: 'drop-shadow(0 0 12px rgba(0,0,0,0.9))',
+              color: 'var(--text-primary)',
+              letterSpacing: 'var(--tracking-tight)',
+              lineHeight: 'var(--leading-tight)',
+            }}
+          >
+            {currentRoomData.title}
+          </h1>
+
+          {/* Description - Quiet */}
+          <p 
+            className="text-base md:text-lg mb-12 max-w-xl mx-auto"
+            style={{
+              color: 'var(--text-tertiary)',
+              lineHeight: 'var(--leading-relaxed)',
             }}
           >
             {currentRoomData.description}
           </p>
 
-          {/* CTA Button */}
+          {/* CTA Button - Precious accent on hover only */}
           <button
             onClick={() => navigate(`/${currentRoomData.id}`)}
-            className="px-8 py-3 text-sm md:text-base font-black uppercase tracking-wider rounded-lg transition-all duration-300"
+            className="px-8 py-3 text-xs uppercase tracking-widest transition-all group"
             style={{
-              backgroundColor: currentRoomData.color,
-              color: '#ffffff',
-              boxShadow: `0 0 60px ${currentRoomData.color}aa, 0 0 100px ${currentRoomData.color}55, 0 12px 60px rgba(0, 0, 0, 0.8)`,
-              textShadow: '0 3px 12px rgba(0, 0, 0, 1), 0 1px 3px rgba(0, 0, 0, 1)',
-              filter: 'drop-shadow(0 0 20px rgba(0,0,0,0.9))',
+              backgroundColor: 'var(--surface-1)',
+              color: 'var(--text-tertiary)',
+              border: '1px solid var(--border-whisper)',
+              borderRadius: 'var(--radius-soft)',
+              fontWeight: 'var(--weight-medium)',
+              transitionDuration: 'var(--duration-slow)',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.borderColor = `${currentRoomData.color}40`;
+              e.currentTarget.style.color = currentRoomData.color;
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.borderColor = 'var(--border-whisper)';
+              e.currentTarget.style.color = 'var(--text-tertiary)';
             }}
           >
-            Enter {currentRoomData.title}
+            Enter Quietly
           </button>
         </motion.div>
       </div>
 
-      {/* Navigation Dots */}
+      {/* Navigation Dots - Subtle */}
       <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 flex gap-3 z-20">
         {rooms.map((room, index) => (
           <button
             key={room.id}
             onClick={() => !isTransitioning && changeRoom(index)}
-            className="w-3 h-3 rounded-full transition-all duration-300"
+            className="w-2 h-2 rounded-full transition-all"
             style={{
-              backgroundColor: currentRoom === index ? room.color : 'rgba(255, 255, 255, 0.3)',
-              boxShadow: currentRoom === index ? `0 0 20px ${room.bgColor}` : 'none',
+              backgroundColor: currentRoom === index ? 'rgba(255, 255, 255, 0.6)' : 'rgba(255, 255, 255, 0.15)',
+              transitionDuration: 'var(--duration-slow)',
             }}
             aria-label={`Go to ${room.title}`}
           />
         ))}
       </div>
 
-      {/* Scroll Hint */}
+      {/* Scroll Hint - Minimal */}
       {currentRoom === 0 && (
         <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.5, repeat: Infinity, repeatType: 'reverse' }}
-          className="absolute bottom-20 left-1/2 transform -translate-x-1/2 text-white/40 z-20"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 2, delay: 2 }}
+          className="absolute bottom-20 left-1/2 transform -translate-x-1/2 z-20"
         >
           <svg 
-            className="w-8 h-8 mx-auto" 
+            className="w-6 h-10 animate-bounce" 
             fill="none" 
             stroke="currentColor" 
-            strokeWidth={1.5}
+            strokeWidth={1}
             viewBox="0 0 24 24"
-            style={{ filter: 'drop-shadow(0 2px 8px rgba(0, 0, 0, 0.9))' }}
+            style={{ color: 'rgba(255, 255, 255, 0.2)' }}
           >
             <rect x="8" y="5" width="8" height="14" rx="4" />
             <circle cx="12" cy="9" r="1" fill="currentColor" />
