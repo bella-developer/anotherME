@@ -432,31 +432,34 @@ body.light-mode article[class*="flex flex-col"] {
   background: transparent !important;
 }
 
-/* Image containers - force solid black background in light mode on all variations */
+/* Image containers and their parent motion.div - force exact same appearance as dark mode */
+body.light-mode article[class*="flex flex-col"] > div[class*="relative"][class*="overflow-hidden"],
+body.light-mode article > div[class*="relative"][class*="overflow-hidden"],
+body.light-mode article div[style*="height: 220px"],
+body.light-mode article div[style*="height: '220px'"],
+body.light-mode article div[style*='height: "220px"'] {
+  background: #000000 !important;
+  background-color: #000000 !important;
+}
+
+/* Target motion.div wrappers that contain the image containers */
+body.light-mode article > div[style*="borderRadius"][class*="mx-4"] {
+  background: #000000 !important;
+  background-color: #000000 !important;
+}
+
+/* Image containers - force solid black background in light mode - consolidated rules */
 body.light-mode article[class*="flex flex-col"] > div[class*="overflow-hidden"],
 body.light-mode article div[class*="overflow-hidden"][style*="background"],
 body.light-mode article div[class*="relative overflow-hidden"],
-body.light-mode article > div.relative.overflow-hidden,
-body.light-mode div[style*="height: 220px"] {
+body.light-mode article > div.relative.overflow-hidden {
   background: #000000 !important;
   background-color: #000000 !important;
 }
 
-/* Target the specific motion div wrapper for image containers */
-body.light-mode article[class*="flex flex-col"] > div[class*="relative"][class*="overflow-hidden"][class*="mx-4"] {
-  background: #000000 !important;
-  background-color: #000000 !important;
-}
-
-/* Ensure all child divs inside image containers keep black background */
+/* Keep image backgrounds transparent to show the black container behind */
 body.light-mode article div[class*="relative overflow-hidden"] > div[style*="backgroundImage"] {
   background-color: transparent !important;
-}
-
-/* Force framer-motion divs with image containers to have black background */
-body.light-mode article > div[style*="borderRadius"][style*="background"] {
-  background: #000000 !important;
-  background-color: #000000 !important;
 }
 
 body.light-mode article[class*="flex flex-col"]:hover {
