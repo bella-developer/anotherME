@@ -218,6 +218,23 @@
 }
 
 /* ============================================
+   DARK MODE - Seamless Sections (No Borders)
+   ============================================ */
+
+/* Remove all section borders in dark mode too */
+section:not(:has(video)) {
+  border: none !important;
+  box-shadow: none !important;
+}
+
+section[class*="overflow-hidden"],
+section.overflow-hidden {
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+/* ============================================
    LIGHT MODE - SUBTLE ATMOSPHERIC SHIFT
    Barely noticeable, maintains dark aesthetic
    Borderless design for seamless integration
@@ -255,6 +272,26 @@ body.light-mode header a,
 body.light-mode header button:not([class*="theme-toggle"]):not([class*="ThemeToggle"]) {
   color: rgba(255, 255, 255, 0.85) !important;
   transition: color 400ms ease !important;
+}
+
+/* ============================================
+   LIGHT MODE - Comprehensive Theme Application
+   Uses CSS variables from tokens.css
+   98% monochrome, 2% accent philosophy maintained
+   ============================================ */
+
+/* Base body styles */
+body.light-mode {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+/* Navbar - keep current subtle dark treatment */
+body.light-mode nav[role="navigation"],
+body.light-mode header {
+  background: rgba(18, 18, 20, 0.92) !important;
+  backdrop-filter: blur(20px) saturate(180%) !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
 }
 
 body.light-mode nav[role="navigation"] a:hover,
@@ -299,7 +336,7 @@ body.light-mode .join-button:hover {
   color: #ffffff !important;
 }
 
-/* Mobile menu - same subtle treatment, borderless */
+/* Mobile menu */
 body.light-mode nav[role="navigation"] #mobile-menu,
 body.light-mode header nav #mobile-menu {
   background: rgba(18, 18, 20, 0.95) !important;
@@ -319,7 +356,6 @@ body.light-mode header nav .bg-black\/80 {
 }
 
 /* Smooth transition for theme changes */
-
 body,
 header,
 nav,
@@ -327,4 +363,256 @@ nav *:not(svg):not(path) {
   transition: background-color 600ms cubic-bezier(0.4, 0, 0.2, 1),
               color 600ms cubic-bezier(0.4, 0, 0.2, 1),
               border-color 600ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ============================================
+   HERO SECTION - ALWAYS DARK (EXCLUDED FROM LIGHT MODE)
+   Keep exactly as dark mode - no changes
+   ============================================ */
+
+/* Hero section stays completely unchanged in light mode */
+body.light-mode section:has(video) {
+  /* Let hero render normally - no overrides */
+}
+
+/* ============================================
+   LIGHT MODE - Content Sections (Premium Design)
+   Borderless, seamless design - no borders or shadows between sections
+   ============================================ */
+
+/* Non-hero sections get light background */
+body.light-mode section:not(:has(video)) {
+  background: var(--bg-primary) !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Scrolling animation section - completely borderless and seamless */
+body.light-mode section[class*="py-24"].overflow-hidden,
+body.light-mode section[class*="overflow-hidden"],
+body.light-mode section.overflow-hidden {
+  background: var(--bg-primary) !important;
+  border: none !important;
+  border-top: none !important;
+  border-bottom: none !important;
+  border-left: none !important;
+  border-right: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+body.light-mode section[class*="overflow-hidden"] span {
+  color: var(--text-primary) !important;
+  text-shadow: none !important;
+}
+
+/* Remove all inline border styles */
+body.light-mode section[style*="linear-gradient"],
+body.light-mode section[style*="background"] {
+  border-top: none !important;
+  border-bottom: none !important;
+  border-left: none !important;
+  border-right: none !important;
+  box-shadow: none !important;
+}
+
+/* "For Your Inner World" section - borderless, seamless */
+body.light-mode section[class*="py-32"]:not(:has(video)),
+body.light-mode section[class*="py-24"]:not(:has(video)),
+body.light-mode section.py-32,
+body.light-mode section.py-24 {
+  background: var(--bg-primary) !important;
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+/* Feature cards - Premium light mode design */
+body.light-mode article[class*="flex flex-col"] {
+  background: transparent !important;
+}
+
+/* Image containers - always solid black background in light mode */
+body.light-mode article[class*="flex flex-col"] > div[class*="overflow-hidden"],
+body.light-mode article div[class*="overflow-hidden"][style*="background"],
+body.light-mode article div[class*="relative overflow-hidden"] {
+  background: #000000 !important;
+  background-color: #000000 !important;
+}
+
+/* Ensure all child divs inside image containers also have black background */
+body.light-mode article div[class*="relative overflow-hidden"] > div {
+  background-color: transparent !important;
+}
+
+body.light-mode article[class*="flex flex-col"]:hover {
+  transform: translateY(-8px);
+  transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Keep gradient overlays for premium depth */
+body.light-mode article[class*="flex flex-col"] > div[class*="bg-gradient-to-t"],
+body.light-mode article[class*="flex flex-col"] > div[class*="absolute inset-0"][class*="bg-gradient"],
+body.light-mode article > div[class*="bg-gradient-to-t"],
+body.light-mode article > div[class*="absolute inset-0"][class*="bg-gradient"] {
+  display: none !important;
+}
+
+/* Enhanced background images for premium feel */
+body.light-mode article[class*="flex flex-col"] > div[class*="bg-cover"],
+body.light-mode article > div[class*="bg-cover"],
+body.light-mode article div[style*="backgroundImage"] {
+  /* Keep images as-is, no filters */
+}
+
+/* Text visibility - high contrast (non-hero sections) */
+body.light-mode section:not(:has(video)) h1,
+body.light-mode section:not(:has(video)) h2,
+body.light-mode section:not(:has(video)) h3 {
+  color: var(--text-primary) !important;
+  text-shadow: none !important;
+}
+
+body.light-mode section:not(:has(video)) p {
+  color: var(--text-secondary) !important;
+  text-shadow: none !important;
+}
+
+/* Muted text elements - use semantic gray */
+body.light-mode section:not(:has(video)) [class*="text-white/60"],
+body.light-mode section:not(:has(video)) [class*="text-white/50"],
+body.light-mode section:not(:has(video)) [class*="text-white/40"] {
+  color: var(--text-muted) !important;
+}
+
+/* Card content - high contrast readable text */
+body.light-mode article svg {
+  color: var(--text-secondary) !important;
+}
+
+body.light-mode article h3 {
+  color: var(--text-primary) !important;
+  font-weight: 600 !important;
+}
+
+body.light-mode article p {
+  color: var(--text-secondary) !important;
+}
+
+body.light-mode article span {
+  color: var(--text-primary) !important;
+}
+
+/* Quote and Community cards - Premium expensive design */
+body.light-mode div[class*="rounded-xl"]:not(:has(video)) {
+  background: linear-gradient(135deg, rgba(42, 42, 42, 0.95) 0%, rgba(36, 36, 36, 0.98) 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.06) !important;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5), 
+              0 2px 12px rgba(0, 0, 0, 0.3),
+              inset 0 1px 0 rgba(255, 255, 255, 0.03) !important;
+}
+
+/* Premium gradient overlays for quote/community cards */
+body.light-mode div[class*="rounded-xl"] > div[class*="bg-gradient-to-t"],
+body.light-mode div[class*="rounded-xl"] > div[class*="absolute inset-0"][class*="bg-gradient"] {
+  background: linear-gradient(to top, rgba(26, 26, 26, 0.98) 0%, rgba(26, 26, 26, 0.6) 40%, rgba(42, 42, 42, 0.3) 70%, transparent 100%) !important;
+}
+
+/* Quote card specific styling */
+body.light-mode div[class*="rounded-xl"]:has(svg[class*="w-6"]) p {
+  color: var(--text-primary) !important;
+  font-weight: 500 !important;
+}
+
+body.light-mode div[class*="rounded-xl"]:has(svg[class*="w-6"]) svg {
+  color: var(--text-muted) !important;
+  opacity: 0.3 !important;
+}
+
+body.light-mode div[class*="rounded-xl"]:has(svg[class*="w-6"]) div[class*="text-xs"] {
+  color: var(--text-muted) !important;
+}
+
+/* User avatars in light mode - premium border */
+body.light-mode div[class*="rounded-full"][class*="bg-cover"] {
+  border: 2px solid rgba(255, 255, 255, 0.12) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* ============================================
+   EXPLORE PAGE - Premium Light Mode Design
+   ============================================ */
+
+/* Explore page background sections */
+body.light-mode .min-h-screen:not(:has(video)) {
+  background: var(--bg-primary) !important;
+}
+
+/* Explore page feature cards - expensive premium design */
+body.light-mode article[class*="rounded-xl"] > div[style*="linear-gradient"] {
+  background: linear-gradient(to top, rgba(26, 26, 26, 0.98) 0%, rgba(26, 26, 26, 0.75) 30%, rgba(42, 42, 42, 0.4) 60%, transparent 85%) !important;
+}
+
+/* Explore page card text - maximum visibility */
+body.light-mode article[class*="rounded-xl"] h3 {
+  color: var(--text-primary) !important;
+  font-weight: 600 !important;
+  text-shadow: none !important;
+}
+
+body.light-mode article[class*="rounded-xl"] p {
+  color: var(--text-secondary) !important;
+  text-shadow: none !important;
+}
+
+body.light-mode article[class*="rounded-xl"] svg {
+  color: var(--text-secondary) !important;
+}
+
+body.light-mode article[class*="rounded-xl"] span {
+  color: var(--text-primary) !important;
+}
+
+/* Buttons in light mode */
+body.light-mode button:not(.join-button):not([class*="theme-toggle"]) {
+  background: var(--bg-surface-light) !important;
+  color: var(--text-primary) !important;
+  border-color: var(--border-light) !important;
+}
+
+body.light-mode button:not(.join-button):not([class*="theme-toggle"]):hover {
+  background: var(--bg-surface-medium) !important;
+  color: var(--text-primary) !important;
+}
+
+/* Links */
+body.light-mode a:not([class*="text-white"]) {
+  color: var(--text-primary) !important;
+}
+
+body.light-mode a:hover {
+  color: var(--text-secondary) !important;
+}
+
+/* Dividers */
+body.light-mode [class*="border-t"],
+body.light-mode [class*="border-b"],
+body.light-mode hr {
+  border-color: var(--border-faint) !important;
+}
+
+/* Footer - light mode */
+body.light-mode footer {
+  background: var(--bg-secondary) !important;
+  border-color: var(--border-faint) !important;
+}
+
+body.light-mode footer h4,
+body.light-mode footer p,
+body.light-mode footer a {
+  color: var(--text-secondary) !important;
+}
+
+body.light-mode footer a:hover {
+  color: var(--text-primary) !important;
 }
