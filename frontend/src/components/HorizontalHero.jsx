@@ -152,52 +152,79 @@ function HorizontalHero({ onRoomChange = () => {} }) {
     <section 
       ref={containerRef}
       className="relative h-screen w-full overflow-hidden"
+      style={{ background: 'var(--surface-void)' }}
     >
-      {/* Video Backgrounds */}
-      {rooms.map((room, index) => (
-        <motion.div
-          key={room.id}
-          className="absolute inset-0"
-          style={{ top: videoOffset }}
-          initial={{ opacity: 0 }}
-          animate={{ 
-            opacity: currentRoom === index ? 1 : 0,
-            scale: currentRoom === index ? 1 : 1.1,
+      {/* Video Backgrounds - Contained with Artistic Frame */}
+      <div className="absolute inset-0 flex items-center justify-center p-8 md:p-16">
+        <div 
+          className="relative w-full h-full max-w-6xl"
+          style={{
+            border: '1px solid var(--border-whisper)',
+            borderRadius: 'var(--radius-sm)',
+            overflow: 'hidden',
           }}
-          transition={{ duration: 0.8, ease: 'easeInOut' }}
         >
-          <video
-            ref={(el) => (videoRefs.current[index] = el)}
-            className="absolute inset-0 w-full h-full object-cover"
-            loop
-            muted
-            playsInline
-            preload="auto"
-            autoPlay
-            style={{
-              filter: 'contrast(1.5) brightness(0.75) saturate(1.2)',
-            }}
-          >
-            <source src={room.videoUrl} type="video/mp4" />
-          </video>
+          {/* Corner Frame Accents */}
+          <div className="absolute top-0 left-0 w-12 h-12 border-t-2 border-l-2 z-30 pointer-events-none" style={{ borderColor: 'rgba(255, 255, 255, 0.1)' }} />
+          <div className="absolute top-0 right-0 w-12 h-12 border-t-2 border-r-2 z-30 pointer-events-none" style={{ borderColor: 'rgba(255, 255, 255, 0.1)' }} />
+          <div className="absolute bottom-0 left-0 w-12 h-12 border-b-2 border-l-2 z-30 pointer-events-none" style={{ borderColor: 'rgba(255, 255, 255, 0.1)' }} />
+          <div className="absolute bottom-0 right-0 w-12 h-12 border-b-2 border-r-2 z-30 pointer-events-none" style={{ borderColor: 'rgba(255, 255, 255, 0.1)' }} />
           
-          {/* Dimming Overlay */}
-          <div 
-            className="absolute inset-0 bg-black"
-            style={{
-              opacity: 0.5,
-            }}
-          />
-          
-          {/* Color Overlay */}
-          <div 
-            className="absolute inset-0"
-            style={{
-              background: `radial-gradient(circle at center, ${room.bgColor} 0%, transparent 70%)`,
-            }}
-          />
-        </motion.div>
-      ))}
+          {/* Video Container */}
+          {rooms.map((room, index) => (
+            <motion.div
+              key={room.id}
+              className="absolute inset-0"
+              initial={{ opacity: 0 }}
+              animate={{ 
+                opacity: currentRoom === index ? 1 : 0,
+                scale: currentRoom === index ? 1 : 1.05,
+              }}
+              transition={{ duration: 1, ease: 'easeInOut' }}
+            >
+              <video
+                ref={(el) => (videoRefs.current[index] = el)}
+                className="absolute inset-0 w-full h-full object-cover"
+                loop
+                muted
+                playsInline
+                preload="auto"
+                autoPlay
+                style={{
+                  filter: 'contrast(1.2) brightness(0.4) saturate(0.8) blur(1px)',
+                }}
+              >
+                <source src={room.videoUrl} type="video/mp4" />
+              </video>
+              
+              {/* Heavy Dimming Overlay - 90% black */}
+              <div 
+                className="absolute inset-0 bg-black"
+                style={{
+                  opacity: 0.85,
+                }}
+              />
+              
+              {/* Subtle Color Mist - Very faint */}
+              <div 
+                className="absolute inset-0"
+                style={{
+                  background: `radial-gradient(circle at center, ${room.bgColor.replace('0.3', '0.08')} 0%, transparent 60%)`,
+                }}
+              />
+              
+              {/* Film Grain Texture */}
+              <div 
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                  backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 400 400\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noiseFilter\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.9\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noiseFilter)\' opacity=\'0.05\'/%3E%3C/svg%3E")',
+                  opacity: 0.3,
+                }}
+              />
+            </motion.div>
+          ))}
+        </div>
+      </div>
 
       {/* Content Overlay - Premium Restraint */}
       <div className="relative z-10 h-full flex flex-col items-center justify-center px-8">
