@@ -152,10 +152,10 @@ function HorizontalHero({ onRoomChange = () => {} }) {
     <section 
       ref={containerRef}
       className="relative h-screen w-full overflow-hidden"
-      style={{ background: 'var(--surface-void)' }}
+      style={{ background: 'var(--surface-void)', paddingTop: '80px' }}
     >
       {/* Video Backgrounds - Wider Frame with Breathing Room */}
-      <div className="absolute inset-0 flex items-center justify-center px-4 md:px-8">
+      <div className="absolute inset-0 flex items-center justify-center px-4 md:px-8" style={{ paddingTop: '80px' }}>
         <div 
           className="relative w-full h-full"
           style={{
