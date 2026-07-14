@@ -3,20 +3,13 @@ import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import EsoLogo from '../components/EsoLogo';
 import { usePageTitle } from '../hooks/usePageTitle';
-import CosmicVideoSection from '../components/CosmicVideoSection';
 import HorizontalHero from '../components/HorizontalHero';
-
-const landingHeroBg = 'https://res.cloudinary.com/dbtm7etag/image/upload/v1782740734/landing-hero-bg_u4uoy8.png';
 
 // ESO Landing Page - Updated June 29, 2026
 function Landing() {
   usePageTitle('');
   const navigate = useNavigate();
   const [isScrolled, setIsScrolled] = useState(false);
-  const [currentRoomTheme, setCurrentRoomTheme] = useState({
-    color: '#ef4444',
-    bgColor: 'rgba(239, 68, 68, 0.15)',
-  });
 
   useEffect(() => {
     const handleScroll = () => {
@@ -25,13 +18,6 @@ function Landing() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
-  const handleRoomChange = (room) => {
-    setCurrentRoomTheme({
-      color: room.color,
-      bgColor: room.bgColor,
-    });
-  };
 
   const features = [
     {
@@ -125,7 +111,7 @@ function Landing() {
       </motion.header>
 
       {/* HORIZONTAL HERO SECTION */}
-      <HorizontalHero onRoomChange={handleRoomChange} />
+      <HorizontalHero />
 
       {/* SLIDING TEXT SECTION - Slowed Down, Editorial */}
       <section 
@@ -501,36 +487,6 @@ function Landing() {
           </motion.div>
         </div>
       </motion.section>
-
-      {/* COSMIC MOTION GRAPHICS - The Three Rooms */}
-      <div className="relative">
-        <CosmicVideoSection
-          videoUrl="https://res.cloudinary.com/dbtm7etag/video/upload/v1783941698/darkroomeffect_owm1l3.mp4"
-          title="Dark Room"
-          description="A sanctuary for solitude. Share your deepest thoughts in the darkness where vulnerability becomes strength."
-          color="#ef4444"
-          room="dark"
-          index={0}
-        />
-        
-        <CosmicVideoSection
-          videoUrl="https://res.cloudinary.com/dbtm7etag/video/upload/v1783941699/fantasyeffect_akv18q.mp4"
-          title="Fantasy Room"
-          description="Where imagination runs wild. Share your creative stories, art, and dreams without limits."
-          color="#f97316"
-          room="fantasy"
-          index={1}
-        />
-        
-        <CosmicVideoSection
-          videoUrl="https://res.cloudinary.com/dbtm7etag/video/upload/v1783942027/philoeffect_soso3y.mp4"
-          title="Philo Room"
-          description="Deep conversations await. Explore philosophy, existential questions, and meaningful dialogues."
-          color="#a855f7"
-          room="philo"
-          index={2}
-        />
-      </div>
 
       {/* FOOTER - Editorial Spacing */}
       <footer className="border-t relative z-10" style={{ 
