@@ -432,17 +432,31 @@ body.light-mode article[class*="flex flex-col"] {
   background: transparent !important;
 }
 
-/* Image containers - always solid black background in light mode */
+/* Image containers - force solid black background in light mode on all variations */
 body.light-mode article[class*="flex flex-col"] > div[class*="overflow-hidden"],
 body.light-mode article div[class*="overflow-hidden"][style*="background"],
-body.light-mode article div[class*="relative overflow-hidden"] {
+body.light-mode article div[class*="relative overflow-hidden"],
+body.light-mode article > div.relative.overflow-hidden,
+body.light-mode div[style*="height: 220px"] {
   background: #000000 !important;
   background-color: #000000 !important;
 }
 
-/* Ensure all child divs inside image containers also have black background */
-body.light-mode article div[class*="relative overflow-hidden"] > div {
+/* Target the specific motion div wrapper for image containers */
+body.light-mode article[class*="flex flex-col"] > div[class*="relative"][class*="overflow-hidden"][class*="mx-4"] {
+  background: #000000 !important;
+  background-color: #000000 !important;
+}
+
+/* Ensure all child divs inside image containers keep black background */
+body.light-mode article div[class*="relative overflow-hidden"] > div[style*="backgroundImage"] {
   background-color: transparent !important;
+}
+
+/* Force framer-motion divs with image containers to have black background */
+body.light-mode article > div[style*="borderRadius"][style*="background"] {
+  background: #000000 !important;
+  background-color: #000000 !important;
 }
 
 body.light-mode article[class*="flex flex-col"]:hover {
