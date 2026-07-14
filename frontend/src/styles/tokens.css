@@ -57,6 +57,12 @@
   --bg-contrast: var(--color-gray-300);
   
   /* Surface overlays with standard opacity */
+  --surface-void: var(--color-black);
+  --surface-0: rgba(0, 0, 0, 0.95);
+  --surface-1: rgba(255, 255, 255, var(--opacity-subtle));
+  --surface-2: rgba(255, 255, 255, var(--opacity-faint));
+  --surface-3: rgba(255, 255, 255, var(--opacity-light));
+  
   --bg-surface-subtle: rgba(255, 255, 255, var(--opacity-subtle));
   --bg-surface-faint: rgba(255, 255, 255, var(--opacity-faint));
   --bg-surface-light: rgba(255, 255, 255, var(--opacity-light));
@@ -73,6 +79,9 @@
   
   --text-primary: var(--color-white);
   --text-secondary: var(--color-gray-600);
+  --text-tertiary: rgba(255, 255, 255, var(--opacity-intense));
+  --text-quaternary: rgba(255, 255, 255, var(--opacity-strong));
+  --text-ghost: rgba(255, 255, 255, 0.15);
   --text-muted: var(--color-gray-500);
   --text-faint: rgba(255, 255, 255, var(--opacity-strong));
   --text-subtle: rgba(255, 255, 255, var(--opacity-intense));
@@ -81,10 +90,11 @@
      SEMANTIC COLORS - Borders
      ============================================ */
   
-  --border-subtle: rgba(255, 255, 255, var(--opacity-subtle));
-  --border-faint: rgba(255, 255, 255, var(--opacity-faint));
-  --border-light: rgba(255, 255, 255, var(--opacity-light));
-  --border-medium: rgba(255, 255, 255, var(--opacity-medium));
+  --border-whisper: rgba(255, 255, 255, var(--opacity-subtle));
+  --border-subtle: rgba(255, 255, 255, var(--opacity-faint));
+  --border-faint: rgba(255, 255, 255, var(--opacity-light));
+  --border-light: rgba(255, 255, 255, var(--opacity-medium));
+  --border-medium: rgba(255, 255, 255, 0.2);
   --border-default: var(--color-gray-400);
   
   /* ============================================
@@ -100,7 +110,9 @@
      RADIUS SCALE - Consistent Border Radius
      ============================================ */
   
+  --radius-soft: 2px;
   --radius-sm: 3px;
+  --radius-medium: 8px;
   --radius-md: 8px;
   --radius-lg: 12px;
   --radius-xl: 16px;
@@ -137,6 +149,7 @@
      ============================================ */
   
   --blur-sm: 8px;
+  --blur-medium: 12px;
   --blur-md: 12px;
   --blur-lg: 16px;
   --blur-xl: 20px;
@@ -177,6 +190,7 @@
   --font-size-4xl: 2.25rem;   /* 36px */
   
   /* Letter spacing */
+  --tracking-micro: -0.01em;
   --tracking-tight: 0.05em;
   --tracking-normal: 0.1em;
   --tracking-wide: 0.15em;
@@ -184,9 +198,27 @@
   --tracking-widest: 0.25em;
   --tracking-ultra: 0.3em;
   
+  /* Line height */
+  --leading-tight: 1.2;
+  --leading-snug: 1.4;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.7;
+  
+  /* Font weight */
+  --weight-light: 300;
+  --weight-normal: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+  
   /* ============================================
      TRANSITIONS - Duration & Easing
      ============================================ */
+  
+  --duration-fast: 200ms;
+  --duration-normal: 400ms;
+  --duration-slow: 600ms;
+  --duration-slower: 800ms;
   
   --transition-fast: 150ms;
   --transition-normal: 300ms;

@@ -63,53 +63,62 @@ function Landing() {
   return (
     <div className="min-h-screen text-white overflow-x-hidden bg-black" style={{ fontFamily: "'Geist Mono', monospace" }}>
 
-      {/* NAVIGATION */}
+      {/* NAVIGATION - Editorial Spacing */}
       <motion.header 
         initial={{ y: -100 }}
         animate={{ y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="fixed top-0 left-0 right-0 z-50 border-b transition-all duration-500"
+        transition={{ duration: 0.8, ease: 'easeOut' }}
+        className="fixed top-0 left-0 right-0 border-b transition-all"
         style={{
-          borderColor: `${currentRoomTheme.color}33`,
-          backgroundColor: isScrolled 
-            ? `rgba(0, 0, 0, 0.95)` 
-            : currentRoomTheme.bgColor,
-          backdropFilter: 'blur(12px)',
-          boxShadow: `0 4px 20px ${currentRoomTheme.bgColor}`,
+          zIndex: 50,
+          borderColor: 'var(--border-whisper)',
+          backgroundColor: isScrolled ? 'rgba(0, 0, 0, 0.95)' : 'transparent',
+          backdropFilter: 'blur(var(--blur-medium))',
+          transitionDuration: 'var(--duration-slow)',
         }}
       >
-        <nav className="max-w-7xl mx-auto px-6 lg:px-12 py-4" role="navigation" aria-label="Main navigation">
+        <nav className="max-w-7xl mx-auto px-8 lg:px-16 py-5" role="navigation" aria-label="Main navigation">
           <div className="flex items-center justify-between">
-            <Link to="/" className="focus:outline-none focus:ring-2 focus:ring-white/50 rounded">
-              <EsoLogo className="h-9 w-auto" />
+            {/* Logo */}
+            <Link to="/" className="focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50 rounded transition-transform duration-300 hover:scale-105">
+              <EsoLogo className="h-8 w-auto" />
             </Link>
             
-            <div className="flex items-center gap-8">
-              <Link to="/explore" className="text-sm text-white/60 hover:text-white transition-colors tracking-wider uppercase hidden md:inline-block">
-                Surf Around
+            {/* Navigation - Magazine-like spacing */}
+            <div className="hidden md:flex items-center gap-12 text-xs tracking-widest uppercase">
+              <Link 
+                to="/explore" 
+                className="text-white/50 hover:text-white transition-all duration-500 relative after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 hover:after:w-full after:bg-white after:transition-all after:duration-500"
+              >
+                Explore
               </Link>
               <a 
                 href="https://t.me/hesed_perspectives" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-sm text-white/60 hover:text-white transition-colors tracking-wider uppercase hidden md:inline-block"
+                className="text-white/50 hover:text-white transition-all duration-500"
               >
-                Socials
+                Community
               </a>
-              <div className="flex items-center gap-3">
-                <Link 
-                  to="/login"
-                  className="px-5 py-2 text-sm text-white/80 hover:text-white transition-colors tracking-wider uppercase border border-white/20 hover:border-white/40 rounded"
-                >
-                  Sign In
-                </Link>
-                <Link 
-                  to="/register"
-                  className="px-5 py-2 text-sm bg-white text-black font-semibold hover:bg-white/90 transition-all tracking-wider uppercase rounded"
-                >
-                  Join
-                </Link>
-              </div>
+            </div>
+
+            {/* Auth buttons - Quiet */}
+            <div className="flex items-center gap-4">
+              <Link 
+                to="/login"
+                className="px-6 py-2 text-xs text-white/60 hover:text-white transition-all duration-500 tracking-widest uppercase"
+              >
+                Sign In
+              </Link>
+              <Link 
+                to="/register"
+                className="px-6 py-2 text-xs bg-white text-black hover:bg-white/90 transition-all duration-500 tracking-widest uppercase"
+                style={{
+                  borderRadius: 'var(--radius-soft)',
+                }}
+              >
+                Join
+              </Link>
             </div>
           </div>
         </nav>
@@ -118,12 +127,13 @@ function Landing() {
       {/* HORIZONTAL HERO SECTION */}
       <HorizontalHero onRoomChange={handleRoomChange} />
 
-      {/* SLIDING TEXT SECTION - Artistic & Beautiful */}
+      {/* SLIDING TEXT SECTION - Slowed Down, Editorial */}
       <section 
-        className="relative z-10 py-24 border-y border-white/10 overflow-hidden"
+        className="relative z-10 py-24 border-y overflow-hidden"
         style={{ 
           background: 'linear-gradient(180deg, rgba(0,0,0,0.85) 0%, rgba(10,5,20,0.9) 50%, rgba(0,0,0,0.85) 100%)',
           backdropFilter: 'blur(20px)',
+          borderColor: 'var(--border-whisper)',
         }}
       >
         <style>{`
@@ -132,16 +142,12 @@ function Landing() {
             to { transform: translateX(-50%); }
           }
           .slide-track {
-            animation: slideLeft 50s linear infinite;
+            animation: slideLeft 80s linear infinite;
             display: flex;
             width: max-content;
           }
           .slide-track:hover {
             animation-play-state: paused;
-          }
-          .word-glow {
-            filter: drop-shadow(0 0 20px rgba(167, 139, 250, 0.4)) 
-                    drop-shadow(0 0 40px rgba(139, 92, 246, 0.2));
           }
         `}</style>
         
@@ -209,154 +215,218 @@ function Landing() {
       </section>
 
 
-      {/* FEATURES SECTION */}
-      <section className="py-24 lg:py-32 relative z-10" style={{ background: 'rgba(0,0,0,0.75)' }}>
-        <div className="max-w-6xl mx-auto px-6 lg:px-8">
+      {/* FEATURES SECTION - Quieter, More Space */}
+      <section className="py-32 lg:py-48 relative z-10" style={{ background: 'var(--surface-void)' }}>
+        <div className="max-w-6xl mx-auto px-8 lg:px-16">
           
+          {/* Heading - Editorial Style */}
           <motion.div 
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-            className="text-center mb-16"
+            transition={{ duration: 0.9 }}
+            className="text-center mb-24"
           >
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 tracking-wider">Spaces for Your Mind</h2>
-            <p className="text-white/60 text-sm max-w-2xl mx-auto">
-              Four unique rooms designed for different aspects of your inner world
+            <p className="text-xs tracking-ultra uppercase mb-4" style={{ color: 'var(--text-quaternary)' }}>
+              Four Spaces
+            </p>
+            <h2 className="text-4xl md:text-5xl font-light mb-6" style={{ 
+              letterSpacing: 'var(--tracking-tight)',
+              color: 'var(--text-primary)'
+            }}>
+              For Your Inner World
+            </h2>
+            <p className="text-sm max-w-xl mx-auto" style={{ 
+              color: 'var(--text-tertiary)',
+              lineHeight: 'var(--leading-relaxed)'
+            }}>
+              Each room designed as a sanctuary for different aspects of thought
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
+          {/* Feature Cards - More Restraint */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
             {features.map((f, i) => (
               <motion.article
                 key={i}
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.15, duration: 0.6 }}
-                className="relative flex flex-col items-center justify-end p-6 pb-8 text-center cursor-pointer group overflow-hidden rounded-xl transition-all duration-500 hover:-translate-y-2"
+                transition={{ delay: i * 0.15, duration: 0.8 }}
+                className="relative flex flex-col items-center justify-end p-8 pb-10 text-center cursor-pointer group overflow-hidden transition-all"
                 style={{
-                  minHeight: '320px',
-                  background: 'rgba(255,255,255,0.02)',
-                  boxShadow: '0 0 0 1px rgba(255,255,255,0.08)',
+                  minHeight: '360px',
+                  background: 'var(--surface-1)',
+                  borderRadius: 'var(--radius-medium)',
+                  border: '1px solid var(--border-whisper)',
+                  transitionDuration: 'var(--duration-slow)',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-4px)';
+                  e.currentTarget.style.borderColor = 'var(--border-subtle)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.borderColor = 'var(--border-whisper)';
                 }}
               >
+                {/* Background Image */}
                 <div
-                  className="absolute inset-0 bg-cover bg-center rounded-xl transition-transform duration-700 group-hover:scale-110"
+                  className="absolute inset-0 bg-cover bg-center transition-transform"
                   style={{ 
                     backgroundImage: `url('${f.img}')`, 
-                    filter: 'contrast(1.05) brightness(0.75) saturate(1.05)',
+                    filter: 'contrast(1.05) brightness(0.7) saturate(0.9)',
+                    transitionDuration: 'var(--duration-slower)',
+                    borderRadius: 'var(--radius-medium)',
                   }}
                 />
-                <div className="absolute inset-0 rounded-xl bg-gradient-to-t from-black/98 via-transparent to-transparent group-hover:from-black/95 transition-all duration-500" style={{ backgroundImage: 'linear-gradient(to top, rgba(0,0,0,0.98) 0%, rgba(0,0,0,0.7) 35%, transparent 70%)' }} />
+                
+                {/* Gradient Overlay - More subtle */}
+                <div 
+                  className="absolute inset-0 transition-all"
+                  style={{ 
+                    background: 'linear-gradient(to top, rgba(0,0,0,0.98) 0%, rgba(0,0,0,0.8) 30%, transparent 70%)',
+                    borderRadius: 'var(--radius-medium)',
+                    transitionDuration: 'var(--duration-slow)',
+                  }}
+                />
 
+                {/* Content - Quieter */}
                 <div className="relative z-10 flex flex-col items-center">
-                  <svg className="w-6 h-6 text-white/50 mb-3 group-hover:text-white transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d={f.icon} />
-                  </svg>
-                  <h3 className="text-sm tracking-[0.25em] uppercase font-semibold mb-2 text-white">{f.title}</h3>
-                  <p className="text-xs text-white/60 leading-relaxed group-hover:text-white/80 transition-colors duration-300 mb-3">{f.desc}</p>
-                  <span className="text-white/30 group-hover:text-white transition-all duration-300 group-hover:translate-x-1 text-lg">→</span>
+                  <h3 className="text-xs tracking-ultra uppercase mb-3" style={{
+                    color: 'var(--text-primary)',
+                    fontWeight: 'var(--weight-semibold)'
+                  }}>
+                    {f.title}
+                  </h3>
+                  <p className="text-xs leading-relaxed transition-all" style={{ 
+                    color: 'var(--text-tertiary)',
+                    transitionDuration: 'var(--duration-normal)'
+                  }}>
+                    {f.desc}
+                  </p>
                 </div>
               </motion.article>
             ))}
           </div>
 
+          {/* Editorial Cards - Refined */}
           <motion.div 
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.6, duration: 0.7 }}
-            className="grid grid-cols-1 lg:grid-cols-2 gap-5"
+            transition={{ delay: 0.5, duration: 0.9 }}
+            className="grid grid-cols-1 lg:grid-cols-2 gap-6"
           >
-            {/* Quote Card */}
+            {/* Quote Card - More breathing */}
             <div
-              className="relative flex items-center justify-center text-center overflow-hidden rounded-xl min-h-[280px]"
+              className="relative flex items-center justify-center text-center overflow-hidden min-h-[320px] transition-all"
               style={{
-                boxShadow: '0 0 0 1px rgba(255,255,255,0.07)',
+                borderRadius: 'var(--radius-medium)',
+                border: '1px solid var(--border-whisper)',
+                transitionDuration: 'var(--duration-slow)',
               }}
             >
               <div 
-                className="absolute inset-0 rounded-xl" 
+                className="absolute inset-0" 
                 style={{ 
                   backgroundImage: `url(https://res.cloudinary.com/dbtm7etag/image/upload/v1782735075/attention_ngxcb7.png)`, 
                   backgroundSize: 'cover', 
                   backgroundPosition: 'center', 
-                  filter: 'contrast(1.05) brightness(0.8) saturate(1.1)',
+                  filter: 'contrast(1.05) brightness(0.7) saturate(0.9)',
+                  borderRadius: 'var(--radius-medium)',
                 }} 
               />
-              <div className="absolute inset-0 rounded-xl bg-gradient-to-t from-black/95 via-black/60 to-transparent" />
-              <div className="relative z-10 h-full flex flex-col justify-end p-10">
-                {/* Text at bottom with quote icons */}
-                <div>
-                  <div className="flex items-start gap-3 mb-4">
-                    {/* Opening quote */}
-                    <svg className="w-6 h-6 text-white/20 flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-                    </svg>
-                    
-                    <p className="text-xl lg:text-2xl font-light leading-snug text-white flex-1">
-                      Most people seek attention.<br />Few seek understanding.
-                    </p>
-                    
-                    {/* Closing quote (rotated) */}
-                    <svg className="w-6 h-6 text-white/20 flex-shrink-0 mt-1 rotate-180" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-                    </svg>
-                  </div>
-                  <div className="text-[10px] tracking-[0.3em] text-white/40 uppercase">— Eso Philosophy</div>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/98 via-black/70 to-transparent" style={{
+                borderRadius: 'var(--radius-medium)',
+              }} />
+              <div className="relative z-10 h-full flex flex-col justify-end p-12">
+                <div className="flex items-start gap-4 mb-5">
+                  <svg className="w-5 h-5 flex-shrink-0 mt-1" style={{ color: 'var(--text-ghost)' }} fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+                  </svg>
+                  
+                  <p className="text-xl lg:text-2xl font-light flex-1" style={{
+                    color: 'var(--text-primary)',
+                    lineHeight: 'var(--leading-snug)',
+                    letterSpacing: 'var(--tracking-micro)'
+                  }}>
+                    Most people seek attention.<br />Few seek understanding.
+                  </p>
+                  
+                  <svg className="w-5 h-5 flex-shrink-0 mt-1 rotate-180" style={{ color: 'var(--text-ghost)' }} fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+                  </svg>
+                </div>
+                <div className="text-xs tracking-ultra uppercase" style={{ color: 'var(--text-quaternary)' }}>
+                  — Eso Philosophy
                 </div>
               </div>
             </div>
 
-
-            {/* Community Card */}
+            {/* Community Card - Simplified */}
             <div
-              className="flex flex-col items-center justify-center text-center px-10 py-12 rounded-xl min-h-[280px]"
+              className="flex flex-col items-center justify-center text-center px-12 py-16 min-h-[320px] transition-all"
               style={{
-                background: 'rgba(255,255,255,0.025)',
-                boxShadow: '0 0 0 1px rgba(255,255,255,0.07)',
+                background: 'var(--surface-2)',
+                borderRadius: 'var(--radius-medium)',
+                border: '1px solid var(--border-whisper)',
+                transitionDuration: 'var(--duration-slow)',
               }}
             >
-              <div className="text-[10px] tracking-[0.28em] text-white/40 uppercase mb-6">Who You'll Meet</div>
+              <div className="text-xs tracking-ultra uppercase mb-8" style={{ color: 'var(--text-quaternary)' }}>
+                Who You'll Meet
+              </div>
               
-              <div className="space-y-2 mb-8">
+              <div className="space-y-3 mb-10">
                 {['The thinkers', 'The dreamers', 'The outsiders', 'The observers'].map((line, i) => (
                   <motion.div 
                     key={i}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
+                    initial={{ opacity: 0, y: 10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{ delay: 0.8 + (i * 0.1) }}
-                    className="text-sm font-light text-white"
+                    transition={{ delay: 0.7 + (i * 0.1), duration: 0.6 }}
+                    className="text-sm font-light"
+                    style={{ color: 'var(--text-primary)' }}
                   >
                     {line}
                   </motion.div>
                 ))}
               </div>
               
-              <p className="text-xs text-white/40 mb-7">They're all here, waiting.</p>
+              <p className="text-xs mb-10" style={{ color: 'var(--text-quaternary)' }}>
+                They're all here, waiting.
+              </p>
               
-              <div className="flex justify-center -space-x-2 mb-8">
+              <div className="flex justify-center -space-x-2 mb-10">
                 {['1212984', '1438081', '1222271', '1239291', '1681010', '2379004'].map((id, i) => (
                   <motion.div 
                     key={i}
                     initial={{ opacity: 0, scale: 0 }}
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true }}
-                    transition={{ delay: 1.2 + (i * 0.05) }}
-                    className="w-10 h-10 rounded-full bg-cover bg-center border-2 border-black" 
-                    style={{ backgroundImage: `url('https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?w=100&h=100&fit=crop')` }} 
+                    transition={{ delay: 1.0 + (i * 0.05), duration: 0.4 }}
+                    className="w-10 h-10 rounded-full bg-cover bg-center border-2"
+                    style={{ 
+                      backgroundImage: `url('https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?w=100&h=100&fit=crop')`,
+                      borderColor: 'var(--surface-void)'
+                    }} 
                   />
                 ))}
               </div>
               
               <button 
                 onClick={() => navigate('/explore')}
-                className="group flex items-center gap-2 text-[11px] tracking-[0.22em] uppercase text-white/50 hover:text-white transition-colors duration-300"
+                className="group flex items-center gap-2 text-xs tracking-wider uppercase transition-all"
+                style={{
+                  color: 'var(--text-tertiary)',
+                  transitionDuration: 'var(--duration-normal)'
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.color = 'var(--text-primary)'}
+                onMouseLeave={(e) => e.currentTarget.style.color = 'var(--text-tertiary)'}
               >
                 Meet the Community
-                <svg className="w-3 h-3 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+                <svg className="w-3 h-3 group-hover:translate-x-1 transition-transform" style={{ transitionDuration: 'var(--duration-normal)' }} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
               </button>
@@ -366,35 +436,69 @@ function Landing() {
         </div>
       </section>
 
-      {/* CTA SECTION */}
+      {/* CTA SECTION - Premium Restraint */}
       <motion.section 
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.8 }}
-        className="py-24 relative z-10"
-        style={{ background: 'rgba(0,0,0,0.85)' }}
+        transition={{ duration: 1.2 }}
+        className="py-32 lg:py-48 relative z-10"
+        style={{ background: 'var(--surface-void)' }}
       >
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6 tracking-wider">Ready to Join?</h2>
-          <p className="text-white/60 text-base mb-10 max-w-2xl mx-auto leading-relaxed">
-            Create your account and start sharing your thoughts. Connect with people who value depth, 
-            philosophy, creativity, and meaningful conversations.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <button
-              onClick={() => navigate('/register')}
-              className="px-8 py-3 bg-white text-black font-semibold text-xs uppercase tracking-[0.2em] hover:bg-gray-200 transition-all shadow-lg rounded"
-            >
-              Create Account
-            </button>
-            <button
-              onClick={() => navigate('/explore')}
-              className="px-8 py-3 border border-white/30 text-white font-medium text-xs uppercase tracking-[0.2em] hover:bg-white/10 transition-all rounded"
-            >
-              Explore First
-            </button>
-          </div>
+        <div className="max-w-3xl mx-auto px-8 lg:px-16 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.3, duration: 0.9 }}
+          >
+            <p className="text-xs tracking-ultra uppercase mb-8" style={{ color: 'var(--text-quaternary)' }}>
+              Begin Your Journey
+            </p>
+            <h2 className="text-3xl md:text-4xl font-light mb-12" style={{ 
+              letterSpacing: 'var(--tracking-tight)',
+              color: 'var(--text-primary)',
+              lineHeight: 'var(--leading-tight)'
+            }}>
+              Ideas deserve more than<br />comment sections
+            </h2>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <button
+                onClick={() => navigate('/register')}
+                className="px-8 py-3 bg-white text-black text-xs uppercase tracking-widest transition-all"
+                style={{
+                  borderRadius: 'var(--radius-soft)',
+                  fontWeight: 'var(--weight-medium)',
+                  transitionDuration: 'var(--duration-slow)',
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.opacity = '0.9'}
+                onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}
+              >
+                Join ESO
+              </button>
+              <button
+                onClick={() => navigate('/explore')}
+                className="px-8 py-3 text-xs uppercase tracking-widest transition-all"
+                style={{
+                  border: '1px solid var(--border-medium)',
+                  color: 'var(--text-secondary)',
+                  borderRadius: 'var(--radius-soft)',
+                  fontWeight: 'var(--weight-medium)',
+                  transitionDuration: 'var(--duration-slow)',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.borderColor = 'var(--border-light)';
+                  e.currentTarget.style.color = 'var(--text-primary)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.borderColor = 'var(--border-medium)';
+                  e.currentTarget.style.color = 'var(--text-secondary)';
+                }}
+              >
+                Explore
+              </button>
+            </div>
+          </motion.div>
         </div>
       </motion.section>
 
@@ -428,48 +532,81 @@ function Landing() {
         />
       </div>
 
-      {/* FOOTER */}
-      <footer className="border-t border-white/10 relative z-10 bg-black">
-        <div className="max-w-7xl mx-auto px-6 lg:px-12 py-12">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+      {/* FOOTER - Editorial Spacing */}
+      <footer className="border-t relative z-10" style={{ 
+        borderColor: 'var(--border-whisper)',
+        background: 'var(--surface-void)'
+      }}>
+        <div className="max-w-7xl mx-auto px-8 lg:px-16 py-20">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-16 mb-16">
             <div>
-              <div className="mb-4">
+              <div className="mb-6">
                 <EsoLogo className="h-8 w-auto" />
               </div>
-              <p className="text-sm text-white/50 leading-relaxed">
-                Your inner world, finally understood. A safe space for introverts and deep thinkers.
+              <p className="text-xs leading-relaxed" style={{ color: 'var(--text-tertiary)' }}>
+                A digital sanctuary for introverts and deep thinkers
               </p>
             </div>
             
             <div>
-              <h4 className="text-sm font-semibold tracking-wider uppercase mb-3 text-white/70">Platform</h4>
-              <ul className="space-y-2">
-                <li><Link to="/explore" className="text-sm text-white/50 hover:text-white transition-colors">Explore</Link></li>
-                <li><Link to="/about" className="text-sm text-white/50 hover:text-white transition-colors">About</Link></li>
-                <li><Link to="/rules" className="text-sm text-white/50 hover:text-white transition-colors">Community Rules</Link></li>
+              <h4 className="text-xs tracking-ultra uppercase mb-6" style={{ color: 'var(--text-quaternary)' }}>Platform</h4>
+              <ul className="space-y-3">
+                <li><Link to="/explore" className="text-xs transition-colors" style={{ 
+                  color: 'var(--text-tertiary)',
+                  transitionDuration: 'var(--duration-normal)'
+                }} onMouseEnter={(e) => e.currentTarget.style.color = 'var(--text-primary)'}
+                onMouseLeave={(e) => e.currentTarget.style.color = 'var(--text-tertiary)'}>Explore</Link></li>
+                <li><Link to="/about" className="text-xs transition-colors" style={{ 
+                  color: 'var(--text-tertiary)',
+                  transitionDuration: 'var(--duration-normal)'
+                }} onMouseEnter={(e) => e.currentTarget.style.color = 'var(--text-primary)'}
+                onMouseLeave={(e) => e.currentTarget.style.color = 'var(--text-tertiary)'}>About</Link></li>
+                <li><Link to="/rules" className="text-xs transition-colors" style={{ 
+                  color: 'var(--text-tertiary)',
+                  transitionDuration: 'var(--duration-normal)'
+                }} onMouseEnter={(e) => e.currentTarget.style.color = 'var(--text-primary)'}
+                onMouseLeave={(e) => e.currentTarget.style.color = 'var(--text-tertiary)'}>Rules</Link></li>
               </ul>
             </div>
             
             <div>
-              <h4 className="text-sm font-semibold tracking-wider uppercase mb-3 text-white/70">Socials</h4>
-              <ul className="space-y-2">
-                <li><a href="https://t.me/hesed_perspectives" target="_blank" rel="noopener noreferrer" className="text-sm text-white/50 hover:text-white transition-colors">Telegram</a></li>
-                <li><a href="#" target="_blank" rel="noopener noreferrer" className="text-sm text-white/50 hover:text-white transition-colors">YouTube</a></li>
+              <h4 className="text-xs tracking-ultra uppercase mb-6" style={{ color: 'var(--text-quaternary)' }}>Community</h4>
+              <ul className="space-y-3">
+                <li><a href="https://t.me/hesed_perspectives" target="_blank" rel="noopener noreferrer" className="text-xs transition-colors" style={{ 
+                  color: 'var(--text-tertiary)',
+                  transitionDuration: 'var(--duration-normal)'
+                }} onMouseEnter={(e) => e.currentTarget.style.color = 'var(--text-primary)'}
+                onMouseLeave={(e) => e.currentTarget.style.color = 'var(--text-tertiary)'}>Telegram</a></li>
+                <li><a href="#" target="_blank" rel="noopener noreferrer" className="text-xs transition-colors" style={{ 
+                  color: 'var(--text-tertiary)',
+                  transitionDuration: 'var(--duration-normal)'
+                }} onMouseEnter={(e) => e.currentTarget.style.color = 'var(--text-primary)'}
+                onMouseLeave={(e) => e.currentTarget.style.color = 'var(--text-tertiary)'}>YouTube</a></li>
               </ul>
             </div>
             
             <div>
-              <h4 className="text-sm font-semibold tracking-wider uppercase mb-3 text-white/70">Connect</h4>
-              <ul className="space-y-2">
-                <li><a href="mailto:hello@eso.app" className="text-sm text-white/50 hover:text-white transition-colors">hello@eso.app</a></li>
-                <li><a href="mailto:support@eso.app" className="text-sm text-white/50 hover:text-white transition-colors">Support</a></li>
+              <h4 className="text-xs tracking-ultra uppercase mb-6" style={{ color: 'var(--text-quaternary)' }}>Connect</h4>
+              <ul className="space-y-3">
+                <li><a href="mailto:hello@eso.app" className="text-xs transition-colors" style={{ 
+                  color: 'var(--text-tertiary)',
+                  transitionDuration: 'var(--duration-normal)'
+                }} onMouseEnter={(e) => e.currentTarget.style.color = 'var(--text-primary)'}
+                onMouseLeave={(e) => e.currentTarget.style.color = 'var(--text-tertiary)'}>hello@eso.app</a></li>
+                <li><a href="mailto:support@eso.app" className="text-xs transition-colors" style={{ 
+                  color: 'var(--text-tertiary)',
+                  transitionDuration: 'var(--duration-normal)'
+                }} onMouseEnter={(e) => e.currentTarget.style.color = 'var(--text-primary)'}
+                onMouseLeave={(e) => e.currentTarget.style.color = 'var(--text-tertiary)'}>Support</a></li>
               </ul>
             </div>
           </div>
           
-          <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-xs text-white/40">© 2026 ESO. For deep thinkers and authentic minds.</p>
-            <p className="text-xs text-white/40">No algorithms. Just real conversations.</p>
+          <div className="pt-10 border-t flex flex-col md:flex-row justify-between items-center gap-4" style={{
+            borderColor: 'var(--border-whisper)'
+          }}>
+            <p className="text-xs" style={{ color: 'var(--text-ghost)' }}>© 2026 ESO</p>
+            <p className="text-xs" style={{ color: 'var(--text-ghost)' }}>No algorithms. Just real conversations.</p>
           </div>
         </div>
       </footer>
