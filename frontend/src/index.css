@@ -235,48 +235,37 @@ section.overflow-hidden {
 }
 
 /* ============================================
-   LIGHT MODE - Gray Overlay Approach
-   80% gray overlay on top of IntrovertsBg starfield
+   LIGHT MODE - "Daylight Mode" Premium Strategy
+   Pure white foundation, editorial hierarchy
+   98% white, 2% precious accent
    ============================================ */
 
-/* Activate gray overlay in light mode */
-body.light-mode .light-mode-overlay {
+/* Replace starfield with pure white in light mode */
+body.light-mode .light-mode-background {
   opacity: 1 !important;
 }
 
 /* ============================================
-   LIGHT MODE - Premium Design
-   Warm overlay with proper contrast and visibility
-   ============================================ */
-
-/* Activate overlay in light mode */
-body.light-mode .light-mode-overlay {
-  opacity: 1 !important;
-}
-
-/* ============================================
-   NAVBAR - Lace Background with Dark Logo
+   NAVBAR - Clean Editorial Design
    ============================================ */
 body.light-mode header,
 body.light-mode nav[role="navigation"] {
-  background: rgba(253, 245, 230, 0.95) !important;
-  backdrop-filter: blur(20px) saturate(120%) !important;
-  -webkit-backdrop-filter: blur(20px) saturate(120%) !important;
+  background: rgba(255, 255, 255, 0.95) !important;
+  backdrop-filter: blur(16px) saturate(100%) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(100%) !important;
   border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
 }
 
-/* Logo visibility - invert to dark in light mode */
+/* Logo - Invert to black in light mode */
 body.light-mode img[alt="ESO Logo"] {
-  filter: invert(1) brightness(0.2);
+  filter: brightness(0) !important;
 }
 
-/* Navbar text - dark on lace */
+/* Navbar text - Dark for readability */
 body.light-mode nav[role="navigation"] a,
-body.light-mode nav[role="navigation"] button:not(.join-button):not([class*="theme-toggle"]),
 body.light-mode header nav a,
-body.light-mode header nav button:not(.join-button):not([class*="theme-toggle"]),
-body.light-mode header a:not(.join-button) {
-  color: rgba(0, 0, 0, 0.75) !important;
+body.light-mode header a {
+  color: rgba(0, 0, 0, 0.7) !important;
 }
 
 body.light-mode nav[role="navigation"] a:hover,
@@ -285,122 +274,208 @@ body.light-mode header a:hover {
 }
 
 /* ============================================
-   CONTENT TEXT - Enhanced Visibility
+   CONTENT - Editorial Hierarchy & Readability
    ============================================ */
+
+/* Headings - Pure black, editorial weight */
 body.light-mode h1,
 body.light-mode h2,
 body.light-mode h3 {
-  color: #ffffff !important;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4) !important;
+  color: #000000 !important;
+  text-shadow: none !important;
 }
 
+/* Body text - High contrast */
 body.light-mode p {
-  color: rgba(255, 255, 255, 0.95) !important;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2) !important;
+  color: rgba(0, 0, 0, 0.8) !important;
 }
 
-/* Subtle text visibility boost */
+/* Subtle text - Muted but visible */
 body.light-mode [style*="rgba(255, 255, 255, 0.15)"],
 body.light-mode p[class*="text-[10px]"] {
-  color: rgba(255, 255, 255, 0.6) !important;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3) !important;
+  color: rgba(0, 0, 0, 0.4) !important;
+}
+
+/* Quaternary text (labels) */
+body.light-mode [style*="var(--text-quaternary)"] {
+  color: rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Tertiary text */
+body.light-mode [style*="var(--text-tertiary)"] {
+  color: rgba(0, 0, 0, 0.6) !important;
+}
+
+/* Ghost text (footer) */
+body.light-mode [style*="var(--text-ghost)"] {
+  color: rgba(0, 0, 0, 0.35) !important;
 }
 
 /* ============================================
-   BUTTONS - Premium Contrast
+   BUTTONS - Clear Affordances
    ============================================ */
 
-/* Category buttons enhanced */
+/* Category buttons - dark text */
 body.light-mode button {
-  color: rgba(255, 255, 255, 0.8) !important;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2) !important;
+  color: rgba(0, 0, 0, 0.7) !important;
+  background: transparent !important;
 }
 
+/* Active buttons - maintain precious accent colors */
 body.light-mode button[style*="rgba(239, 68, 68, 1)"],
 body.light-mode button[style*="rgba(168, 85, 247, 1)"],
 body.light-mode button[style*="rgba(249, 115, 22, 1)"] {
-  color: #ffffff !important;
-  text-shadow: 0 0 10px currentColor, 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+  color: currentColor !important;
+  text-shadow: none !important;
+  filter: none !important;
 }
 
-/* Room accent buttons enhanced */
-body.light-mode button[style*="rgba(239, 68, 68"] {
-  filter: brightness(1.3) saturate(1.4) !important;
-}
-
-body.light-mode button[style*="rgba(168, 85, 247"] {
-  filter: brightness(1.3) saturate(1.4) !important;
-}
-
-body.light-mode button[style*="rgba(249, 115, 22"] {
-  filter: brightness(1.3) saturate(1.4) !important;
-}
-
-/* Better border visibility */
+/* Inactive button borders - visible but subtle */
 body.light-mode button[style*="rgba(255, 255, 255, 0.04)"] {
-  border-color: rgba(255, 255, 255, 0.15) !important;
+  border-color: rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Active button backgrounds - keep accent colors visible */
+body.light-mode button[style*="background: rgba(239, 68, 68, 0.08)"] {
+  background: rgba(239, 68, 68, 0.08) !important;
+}
+
+body.light-mode button[style*="background: rgba(168, 85, 247, 0.08)"] {
+  background: rgba(168, 85, 247, 0.08) !important;
+}
+
+body.light-mode button[style*="background: rgba(249, 115, 22, 0.08)"] {
+  background: rgba(249, 115, 22, 0.08) !important;
 }
 
 /* ============================================
-   FEATURE CARDS - Enhanced Visibility
+   CARDS - Clean Elevation
    ============================================ */
-body.light-mode article,
-body.light-mode [class*="rounded-xl"] {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+
+body.light-mode article {
+  background: #FFFFFF !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 
+              0 1px 2px rgba(0, 0, 0, 0.04) !important;
 }
 
-/* Feature card icons */
-body.light-mode article svg {
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
-  color: rgba(255, 255, 255, 0.9) !important;
-}
-
-/* Feature card text */
-body.light-mode article h3 {
-  color: #ffffff !important;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5) !important;
-}
-
-body.light-mode article p {
-  color: rgba(255, 255, 255, 0.9) !important;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3) !important;
+/* Card hover states */
+body.light-mode article:hover {
+  border-color: rgba(0, 0, 0, 0.12) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), 
+              0 2px 6px rgba(0, 0, 0, 0.06) !important;
 }
 
 /* ============================================
-   LANDING PAGE SPECIFIC
+   SECTIONS & SURFACES - Clean White Foundation
    ============================================ */
 
-/* Hero video section stays dark */
-body.light-mode section:has(video) {
-  position: relative;
-  z-index: 2;
+/* Main sections - pure white/off-white */
+body.light-mode section {
+  background: #FFFFFF !important;
 }
 
-/* Scrolling text section enhancement */
-body.light-mode section[class*="overflow-hidden"] span {
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4) !important;
+/* Alternate sections */
+body.light-mode section:nth-child(even) {
+  background: #FAFAFA !important;
 }
 
-/* Quote and community cards */
-body.light-mode div[class*="rounded-xl"] {
-  background: linear-gradient(135deg, rgba(30, 30, 30, 0.95) 0%, rgba(20, 20, 20, 0.98) 100%) !important;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3) !important;
+/* Features section - maintain starfield look differently */
+body.light-mode .features-starfield {
+  background-color: #F5F5F5 !important;
+}
+
+body.light-mode .features-starfield::before {
+  background-image:
+    radial-gradient(1px 1px at 5% 12%, rgba(0,0,0,0.15) 0%, transparent 100%),
+    radial-gradient(1px 1px at 18% 7%, rgba(0,0,0,0.12) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 27% 23%, rgba(0,0,0,0.18) 0%, transparent 100%),
+    radial-gradient(1px 1px at 38% 4%, rgba(0,0,0,0.1) 0%, transparent 100%),
+    radial-gradient(1px 1px at 45% 18%, rgba(0,0,0,0.14) 0%, transparent 100%),
+    radial-gradient(1px 1px at 53% 9%, rgba(0,0,0,0.13) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 61% 31%, rgba(0,0,0,0.2) 0%, transparent 100%),
+    radial-gradient(1px 1px at 72% 5%, rgba(0,0,0,0.12) 0%, transparent 100%),
+    radial-gradient(1px 1px at 82% 16%, rgba(0,0,0,0.14) 0%, transparent 100%),
+    radial-gradient(1px 1px at 91% 11%, rgba(0,0,0,0.1) 0%, transparent 100%),
+    radial-gradient(1px 1px at 96% 26%, rgba(0,0,0,0.15) 0%, transparent 100%),
+    radial-gradient(1px 1px at 9% 38%, rgba(0,0,0,0.12) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 21% 45%, rgba(0,0,0,0.18) 0%, transparent 100%),
+    radial-gradient(1px 1px at 33% 52%, rgba(0,0,0,0.1) 0%, transparent 100%),
+    radial-gradient(1px 1px at 47% 41%, rgba(0,0,0,0.14) 0%, transparent 100%),
+    radial-gradient(1px 1px at 58% 57%, rgba(0,0,0,0.13) 0%, transparent 100%),
+    radial-gradient(1px 1px at 67% 48%, rgba(0,0,0,0.12) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 76% 63%, rgba(0,0,0,0.18) 0%, transparent 100%),
+    radial-gradient(1px 1px at 85% 39%, rgba(0,0,0,0.1) 0%, transparent 100%),
+    radial-gradient(1px 1px at 93% 54%, rgba(0,0,0,0.14) 0%, transparent 100%),
+    radial-gradient(1px 1px at 3% 67%, rgba(0,0,0,0.13) 0%, transparent 100%),
+    radial-gradient(1px 1px at 14% 74%, rgba(0,0,0,0.12) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 25% 81%, rgba(0,0,0,0.2) 0%, transparent 100%),
+    radial-gradient(1px 1px at 36% 69%, rgba(0,0,0,0.1) 0%, transparent 100%),
+    radial-gradient(1px 1px at 49% 88%, rgba(0,0,0,0.14) 0%, transparent 100%),
+    radial-gradient(1px 1px at 55% 76%, rgba(0,0,0,0.13) 0%, transparent 100%),
+    radial-gradient(1px 1px at 64% 92%, rgba(0,0,0,0.12) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 78% 83%, rgba(0,0,0,0.18) 0%, transparent 100%),
+    radial-gradient(1px 1px at 88% 71%, rgba(0,0,0,0.1) 0%, transparent 100%),
+    radial-gradient(1px 1px at 97% 86%, rgba(0,0,0,0.15) 0%, transparent 100%),
+    radial-gradient(1px 1px at 11% 95%, rgba(0,0,0,0.12) 0%, transparent 100%),
+    radial-gradient(1px 1px at 42% 97%, rgba(0,0,0,0.1) 0%, transparent 100%),
+    radial-gradient(1px 1px at 71% 99%, rgba(0,0,0,0.13) 0%, transparent 100%) !important;
+}
+
+/* Editorial cards - elevated on white */
+body.light-mode [style*="linear-gradient(135deg, rgba(26, 26, 26"] {
+  background: #FFFFFF !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Footer - subtle differentiation */
+body.light-mode footer {
+  background: #F8F8F8 !important;
+  border-top: 1px solid rgba(0, 0, 0, 0.08) !important;
 }
 
 /* ============================================
-   HOME PAGE - Room Portals
+   SLIDING TEXT SECTION - Dark on Light
    ============================================ */
 
-/* Keep room portal inner circles dark */
-body.light-mode div[style*="background: rgba(0, 0, 0, 0.85)"],
-body.light-mode div[style*="background: rgba(0,0,0,0.8)"] {
-  background: rgba(0, 0, 0, 0.9) !important;
+body.light-mode section[style*="background: #000000"] {
+  background: #FAFAFA !important;
 }
 
-/* Room portal glows enhanced */
-body.light-mode svg path,
-body.light-mode svg circle {
-  filter: brightness(1.3) saturate(1.5);
+/* Sliding text - dark on light */
+body.light-mode .slide-track span {
+  color: #000000 !important;
+  text-shadow: none !important;
+}
+
+/* Stars in sliding text - dark accent */
+body.light-mode .slide-track span[style*="rgba(167, 139, 250"] {
+  color: rgba(167, 139, 250, 0.4) !important;
+  text-shadow: none !important;
+}
+
+/* ============================================
+   MOBILE RESPONSIVE - Ensure Readability
+   ============================================ */
+
+@media (max-width: 768px) {
+  /* Remove whitespace-nowrap on mobile */
+  body.light-mode h1 {
+    white-space: normal !important;
+  }
+  
+  /* Remove excessive shadows on mobile */
+  body.light-mode h1,
+  body.light-mode h2,
+  body.light-mode h3,
+  body.light-mode p {
+    text-shadow: none !important;
+  }
+  
+  /* Slightly larger category buttons on mobile */
+  body.light-mode button {
+    min-height: 32px !important;
+  }
 }
 
 /* Join button - maintain high contrast in both modes */
@@ -435,6 +510,12 @@ nav {
 
 /* Image container for feature cards - always black */
 .image-container-black {
+  background: #000000 !important;
+  background-color: #000000 !important;
+}
+
+/* Light mode - keep image containers black for contrast */
+body.light-mode .image-container-black {
   background: #000000 !important;
   background-color: #000000 !important;
 }

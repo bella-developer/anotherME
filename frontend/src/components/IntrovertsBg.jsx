@@ -95,13 +95,13 @@ export default function IntrovertsBg() {
           />
         ))}
 
-        {/* Light mode overlay - Premium warm tone with subtle transparency */}
+        {/* Light mode - Pure white replacement */}
         <div 
-          className="light-mode-overlay"
+          className="light-mode-background"
           style={{
             position: 'absolute',
             inset: 0,
-            background: 'rgba(110, 105, 100, 0.75)',
+            background: '#FAFAFA',
             opacity: 0,
             transition: 'opacity 600ms cubic-bezier(0.4, 0, 0.2, 1)',
             pointerEvents: 'none',
