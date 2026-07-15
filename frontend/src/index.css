@@ -256,16 +256,16 @@ body.light-mode nav[role="navigation"] {
   border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
 }
 
-/* Logo - Invert to black in light mode */
+/* Logo - Warm dark brown instead of pure black */
 body.light-mode img[alt="ESO Logo"] {
-  filter: brightness(0) !important;
+  filter: brightness(0) saturate(100%) invert(20%) sepia(15%) hue-rotate(15deg) !important;
 }
 
-/* Navbar text - Dark for readability */
+/* Navbar text - Stronger contrast for readability */
 body.light-mode nav[role="navigation"] a,
 body.light-mode header nav a,
 body.light-mode header a {
-  color: rgba(0, 0, 0, 0.7) !important;
+  color: rgba(0, 0, 0, 0.85) !important;
 }
 
 body.light-mode nav[role="navigation"] a:hover,
@@ -422,16 +422,17 @@ body.light-mode .features-starfield::before {
     radial-gradient(1px 1px at 71% 99%, rgba(0,0,0,0.13) 0%, transparent 100%) !important;
 }
 
-/* Editorial cards - elevated on cream white */
+/* Editorial cards - elevated with stronger definition */
 body.light-mode [style*="linear-gradient(135deg, rgba(26, 26, 26"] {
-  background: #FFFFFF !important;
-  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  background: #FFFEF8 !important;
+  border: 1px solid rgba(0, 0, 0, 0.12) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
 }
 
-/* Footer - subtle differentiation */
+/* Footer - darker for visual grounding */
 body.light-mode footer {
-  background: #FFFADA !important;
-  border-top: 1px solid rgba(0, 0, 0, 0.08) !important;
+  background: #F3EAD3 !important;
+  border-top: 1px solid rgba(0, 0, 0, 0.1) !important;
 }
 
 /* ============================================
@@ -442,15 +443,15 @@ body.light-mode section[style*="background: #000000"] {
   background: #FFFADA !important;
 }
 
-/* Sliding text - dark on light */
+/* Sliding text - slightly softer black */
 body.light-mode .slide-track span {
-  color: #000000 !important;
+  color: rgba(0, 0, 0, 0.9) !important;
   text-shadow: none !important;
 }
 
-/* Stars in sliding text - dark accent */
+/* Stars in sliding text - stronger purple accent */
 body.light-mode .slide-track span[style*="rgba(167, 139, 250"] {
-  color: rgba(167, 139, 250, 0.4) !important;
+  color: rgba(168, 85, 247, 0.6) !important;
   text-shadow: none !important;
 }
 
@@ -514,8 +515,264 @@ nav {
   background-color: #000000 !important;
 }
 
-/* Light mode - keep image containers black for contrast */
+/* Light mode - dark brown image containers (not pure black) */
 body.light-mode .image-container-black {
-  background: #000000 !important;
-  background-color: #000000 !important;
+  background: #1A1410 !important;
+  background-color: #1A1410 !important;
+}
+
+/* ============================================
+   AUTH PAGES - Light Mode Fixes (Phase 1 Critical)
+   ============================================ */
+
+/* Form containers - Light glassmorphic design */
+body.light-mode [style*="background: rgba(0,0,0,0.4)"],
+body.light-mode [style*="background: rgba(0, 0, 0, 0.4)"] {
+  background: rgba(255, 255, 255, 0.85) !important;
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Input fields - Light mode styling */
+body.light-mode input[type="text"],
+body.light-mode input[type="email"],
+body.light-mode input[type="password"],
+body.light-mode input[type="search"] {
+  background: rgba(0, 0, 0, 0.03) !important;
+  border-color: rgba(0, 0, 0, 0.15) !important;
+  color: rgba(0, 0, 0, 0.9) !important;
+}
+
+body.light-mode input::placeholder {
+  color: rgba(0, 0, 0, 0.35) !important;
+}
+
+body.light-mode input:focus {
+  border-color: rgba(0, 0, 0, 0.3) !important;
+}
+
+body.light-mode input:disabled {
+  opacity: 0.5;
+}
+
+/* Select dropdowns */
+body.light-mode select {
+  background: rgba(0, 0, 0, 0.03) !important;
+  border-color: rgba(0, 0, 0, 0.15) !important;
+  color: rgba(0, 0, 0, 0.9) !important;
+}
+
+body.light-mode select option {
+  background: #FFFFFF !important;
+  color: rgba(0, 0, 0, 0.9) !important;
+}
+
+/* Labels - Dark text for light backgrounds */
+body.light-mode label {
+  color: rgba(0, 0, 0, 0.75) !important;
+}
+
+/* Auth page titles and descriptions */
+body.light-mode h1[class*="text-white"] {
+  color: rgba(0, 0, 0, 0.9) !important;
+}
+
+body.light-mode p[class*="text-white/40"] {
+  color: rgba(0, 0, 0, 0.5) !important;
+}
+
+body.light-mode p[class*="text-white/50"] {
+  color: rgba(0, 0, 0, 0.55) !important;
+}
+
+body.light-mode span[class*="text-white/30"] {
+  color: rgba(0, 0, 0, 0.4) !important;
+}
+
+/* Submit buttons - Dark solid buttons */
+body.light-mode button[type="submit"] {
+  background: rgba(0, 0, 0, 0.85) !important;
+  color: #FFFFFF !important;
+  border: 1px solid rgba(0, 0, 0, 0.9) !important;
+}
+
+body.light-mode button[type="submit"]:hover:not(:disabled) {
+  background: rgba(0, 0, 0, 0.75) !important;
+}
+
+body.light-mode button[type="submit"]:disabled {
+  background: rgba(0, 0, 0, 0.3) !important;
+  border-color: rgba(0, 0, 0, 0.3) !important;
+  opacity: 0.6;
+}
+
+/* Password toggle buttons */
+body.light-mode button[aria-label*="password"] {
+  color: rgba(0, 0, 0, 0.4) !important;
+}
+
+body.light-mode button[aria-label*="password"]:hover {
+  color: rgba(0, 0, 0, 0.7) !important;
+}
+
+/* Divider lines - Dark dividers */
+body.light-mode .border-white\/10 {
+  border-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+body.light-mode [class*="border-t"][class*="border-white"] {
+  border-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Error messages - Light red background */
+body.light-mode [class*="bg-red-500/5"],
+body.light-mode [class*="bg-[#220000]"] {
+  background: rgba(239, 68, 68, 0.08) !important;
+}
+
+body.light-mode [class*="border-red-500/25"],
+body.light-mode [class*="border-[#4d0000]"] {
+  border-color: rgba(239, 68, 68, 0.3) !important;
+}
+
+body.light-mode [class*="text-red-400"],
+body.light-mode [class*="text-[#ff6b6b]"],
+body.light-mode [class*="text-[#ff8888]"] {
+  color: rgba(185, 28, 28, 0.9) !important;
+}
+
+/* Warning messages - Light yellow background */
+body.light-mode [class*="bg-yellow-500/5"] {
+  background: rgba(245, 158, 11, 0.08) !important;
+}
+
+body.light-mode [class*="border-yellow-500/25"] {
+  border-color: rgba(245, 158, 11, 0.3) !important;
+}
+
+body.light-mode [class*="text-yellow-400"] {
+  color: rgba(180, 83, 9, 0.9) !important;
+}
+
+/* Password strength indicator */
+body.light-mode [class*="bg-white/5"] {
+  background: rgba(0, 0, 0, 0.1) !important;
+}
+
+body.light-mode [class*="text-white/20"] {
+  color: rgba(0, 0, 0, 0.35) !important;
+}
+
+/* Success checkmarks and indicators */
+body.light-mode [class*="text-[#2EE6FF]"] {
+  color: rgba(14, 165, 233, 0.9) !important;
+}
+
+/* Character count */
+body.light-mode span[class*="tabular-nums"] {
+  color: rgba(0, 0, 0, 0.4) !important;
+}
+
+/* Links in auth forms */
+body.light-mode a[class*="text-white/50"] {
+  color: rgba(0, 0, 0, 0.6) !important;
+}
+
+body.light-mode a[class*="text-white/75"] {
+  color: rgba(0, 0, 0, 0.75) !important;
+}
+
+body.light-mode a:hover {
+  color: rgba(0, 0, 0, 0.9) !important;
+}
+
+/* Success screen - Light mode styling */
+body.light-mode [class*="bg-[#1A1412]"] {
+  background: #FFFFFF !important;
+}
+
+body.light-mode [class*="border-[#2d2420]"] {
+  border-color: rgba(0, 0, 0, 0.15) !important;
+}
+
+body.light-mode [class*="text-[#E6D1BE]"],
+body.light-mode [class*="text-[#D9C5B2]"] {
+  color: rgba(0, 0, 0, 0.85) !important;
+}
+
+body.light-mode [class*="text-[#6B5E59]"] {
+  color: rgba(0, 0, 0, 0.55) !important;
+}
+
+body.light-mode [class*="bg-[#0d1117]"] {
+  background: rgba(0, 0, 0, 0.03) !important;
+}
+
+body.light-mode [class*="border-[#D9C5B2]"] {
+  border-color: rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Overlay on auth pages */
+body.light-mode .bg-black\/15 {
+  background: rgba(255, 250, 218, 0.3) !important;
+}
+
+/* Spinner animation colors */
+body.light-mode svg.animate-spin circle {
+  stroke: rgba(255, 255, 255, 0.3) !important;
+}
+
+body.light-mode svg.animate-spin path {
+  fill: rgba(255, 255, 255, 0.8) !important;
+}
+
+/* Success animation dot */
+body.light-mode [class*="bg-[#6B5E59]"] {
+  background: rgba(0, 0, 0, 0.55) !important;
+}
+
+/* Google Sign In Button - Light mode */
+body.light-mode button[class*="bg-white/8"] {
+  background: rgba(0, 0, 0, 0.04) !important;
+  color: rgba(0, 0, 0, 0.85) !important;
+  border-color: rgba(0, 0, 0, 0.15) !important;
+}
+
+body.light-mode button[class*="bg-white/8"]:hover {
+  background: rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Validation error styling for inputs */
+body.light-mode input[class*="border-red-500/50"] {
+  border-color: rgba(239, 68, 68, 0.4) !important;
+  background: rgba(239, 68, 68, 0.03) !important;
+}
+
+body.light-mode input[class*="bg-red-500/5"] {
+  background: rgba(239, 68, 68, 0.03) !important;
+}
+
+/* ============================================
+   HERO SECTION - Light Mode Image Overlay
+   ============================================ */
+
+/* Add subtle cream overlay to hero images in light mode */
+body.light-mode [style*="backgroundImage"] {
+  position: relative;
+}
+
+body.light-mode [style*="backgroundImage"]::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 250, 218, 0.12);
+  mix-blend-mode: lighten;
+  pointer-events: none;
+}
+
+/* Ensure content stays on top of overlay */
+body.light-mode [style*="backgroundImage"] > * {
+  position: relative;
+  z-index: 1;
 }
