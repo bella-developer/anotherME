@@ -1759,3 +1759,24 @@ body.light-mode [style*="opacity :"] {
   /* Let inline opacity work */
 }
 
+
+/* ============================================
+   HERO WHITE TEXT - ABSOLUTE OVERRIDE
+   ============================================ */
+
+/* Force hero text to stay white in ALL modes */
+.hero-white-text,
+.hero-white-text * {
+  color: #FFFFFF !important;
+}
+
+/* Ensure no opacity overrides affect readability */
+body.light-mode .hero-white-text {
+  color: #FFFFFF !important;
+}
+
+body.light-mode h1.hero-white-text,
+body.light-mode p.hero-white-text,
+body.light-mode button.hero-white-text {
+  color: #FFFFFF !important;
+}

@@ -273,9 +273,9 @@ function HorizontalHero({ onRoomChange = () => {} }) {
 
           {/* Room Label - Ultra quiet - FORCE WHITE */}
           <p 
-            className="text-xs tracking-ultra uppercase mb-6 font-bold"
+            className="text-xs tracking-ultra uppercase mb-6 font-bold hero-white-text"
             style={{
-              color: '#FFFFFF',
+              color: '#FFFFFF !important',
               opacity: 0.7,
               letterSpacing: '0.3em',
               textShadow: '0 2px 12px rgba(0, 0, 0, 0.9), 0 4px 24px rgba(0, 0, 0, 0.8)',
@@ -286,9 +286,9 @@ function HorizontalHero({ onRoomChange = () => {} }) {
 
           {/* Room Title - Extra Bold, High Contrast - FORCE WHITE */}
           <h1 
-            className="text-5xl sm:text-6xl md:text-7xl mb-6"
+            className="text-5xl sm:text-6xl md:text-7xl mb-6 hero-white-text"
             style={{
-              color: '#FFFFFF',
+              color: '#FFFFFF !important',
               letterSpacing: 'var(--tracking-tight)',
               lineHeight: 'var(--leading-tight)',
               fontFamily: "'EB Garamond', 'Cormorant Garamond', Georgia, serif",
@@ -302,9 +302,9 @@ function HorizontalHero({ onRoomChange = () => {} }) {
 
           {/* Description - Bold and Visible - FORCE WHITE */}
           <p 
-            className="text-base md:text-lg mb-12 max-w-xl mx-auto font-semibold"
+            className="text-base md:text-lg mb-12 max-w-xl mx-auto font-semibold hero-white-text"
             style={{
-              color: '#FFFFFF',
+              color: '#FFFFFF !important',
               opacity: 0.95,
               lineHeight: 'var(--leading-relaxed)',
               textShadow: '0 2px 16px rgba(0, 0, 0, 0.9), 0 4px 32px rgba(0, 0, 0, 0.8)',
@@ -316,10 +316,10 @@ function HorizontalHero({ onRoomChange = () => {} }) {
           {/* CTA Button - High Contrast - WHITE TEXT */}
           <button
             onClick={() => navigate('/login')}
-            className="px-8 py-3 text-xs uppercase tracking-widest transition-all group font-bold"
+            className="px-8 py-3 text-xs uppercase tracking-widest transition-all group font-bold hero-white-text"
             style={{
               backgroundColor: 'rgba(255, 255, 255, 0.15)',
-              color: '#FFFFFF',
+              color: '#FFFFFF !important',
               border: '1px solid rgba(255, 255, 255, 0.3)',
               borderRadius: 'var(--radius-soft)',
               fontWeight: '700',
