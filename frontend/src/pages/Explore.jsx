@@ -95,18 +95,42 @@ function Explore() {
                   className="absolute inset-0 bg-cover bg-center rounded-xl transition-transform duration-700 group-hover:scale-110"
                   style={{ 
                     backgroundImage: `url('${f.img}')`, 
-                    filter: 'contrast(1.05) brightness(0.75) saturate(1.05)',
+                    filter: 'contrast(1.1) brightness(0.7) saturate(1.1)',
                   }}
                 />
-                <div className="absolute inset-0 rounded-xl bg-gradient-to-t from-black/98 via-transparent to-transparent group-hover:from-black/95 transition-all duration-500" style={{ backgroundImage: 'linear-gradient(to top, rgba(0,0,0,0.98) 0%, rgba(0,0,0,0.7) 35%, transparent 70%)' }} />
+                <div className="absolute inset-0 rounded-xl bg-gradient-to-t from-black via-black/60 to-transparent transition-all duration-500" style={{ backgroundImage: 'linear-gradient(to top, rgba(0,0,0,0.98) 0%, rgba(0,0,0,0.8) 40%, transparent 75%)' }} />
 
                 <div className="relative z-10 flex flex-col items-center">
-                  <svg className="w-6 h-6 text-white/50 mb-3 group-hover:text-white transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}>
+                  <svg className="w-7 h-7 text-white mb-4 group-hover:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
                     <path strokeLinecap="round" strokeLinejoin="round" d={f.icon} />
                   </svg>
-                  <h3 className="text-sm tracking-[0.25em] uppercase font-semibold mb-2 text-white">{f.title}</h3>
-                  <p className="text-xs text-white/60 leading-relaxed group-hover:text-white/80 transition-colors duration-300 mb-3">{f.desc}</p>
-                  <span className="text-white/30 group-hover:text-white transition-all duration-300 group-hover:translate-x-1 text-lg">→</span>
+                  <h3 
+                    className="text-sm tracking-[0.25em] uppercase font-bold mb-3" 
+                    style={{
+                      color: '#FFFFFF',
+                      textShadow: '0 2px 8px rgba(0, 0, 0, 0.8), 0 4px 16px rgba(0, 0, 0, 0.6)'
+                    }}
+                  >
+                    {f.title}
+                  </h3>
+                  <p 
+                    className="text-xs leading-relaxed group-hover:text-white transition-colors duration-300 mb-4" 
+                    style={{
+                      color: 'rgba(255, 255, 255, 0.85)',
+                      textShadow: '0 2px 6px rgba(0, 0, 0, 0.7)'
+                    }}
+                  >
+                    {f.desc}
+                  </p>
+                  <span 
+                    className="group-hover:translate-x-1 transition-all duration-300 text-lg"
+                    style={{
+                      color: 'rgba(255, 255, 255, 0.5)',
+                      textShadow: '0 2px 4px rgba(0, 0, 0, 0.6)'
+                    }}
+                  >
+                    →
+                  </span>
                 </div>
               </motion.article>
             ))}
