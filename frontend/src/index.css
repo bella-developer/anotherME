@@ -564,8 +564,83 @@ body.light-mode div[class*="rounded-full"][class*="bg-cover"] {
 }
 
 /* ============================================
-   EXPLORE PAGE - Premium Light Mode Design
+   LIGHT MODE - COMPREHENSIVE PAGE COVERAGE
+   Applies to Home, Rooms, and Circles pages
    ============================================ */
+
+/* Home page - Room selection cards with energy rings */
+body.light-mode div[style*="radial-gradient(ellipse"] {
+  /* Keep atmospheric glows as-is */
+}
+
+/* Home page room portals - keep dark inner circles */
+body.light-mode div[style*="background: rgba(0, 0, 0, 0.85)"],
+body.light-mode div[style*="background: rgba(0,0,0,0.8)"] {
+  background: rgba(0, 0, 0, 0.85) !important;
+}
+
+/* Room pages (Dark, Fantasy, Philo) - Keep atmospheric backgrounds */
+body.light-mode div[class*="fixed inset-0 pointer-events-none"] {
+  /* Keep subtle colored atmospheric glows */
+}
+
+/* Circles page - circular avatars stay dark */
+body.light-mode div[style*="rounded-full"][style*="rgba(0, 0, 0, 0.85)"],
+body.light-mode div[style*="rounded-full"][style*="rgba(0,0,0,0.8)"] {
+  background: rgba(0, 0, 0, 0.85) !important;
+}
+
+/* All pages - ensure card backgrounds are appropriate */
+body.light-mode div[role="button"],
+body.light-mode article {
+  /* Inherit from tokens */
+}
+
+/* Preserve room-specific accent colors on buttons and badges */
+body.light-mode button[style*="rgba(239, 68, 68"],
+body.light-mode button[style*="rgba(249, 115, 22"],
+body.light-mode button[style*="rgba(168, 85, 247"],
+body.light-mode button[style*="rgba(46, 230, 255"],
+body.light-mode button[style*="rgba(255, 157, 28"],
+body.light-mode button[style*="rgba(181, 109, 255"] {
+  /* Keep room accent colors as-is */
+}
+
+/* ============================================
+   LIGHT MODE - Ensure high contrast text on all pages
+   ============================================ */
+
+/* Page headings on all pages */
+body.light-mode h1,
+body.light-mode h2,
+body.light-mode h3,
+body.light-mode h4 {
+  color: var(--text-primary) !important;
+}
+
+/* Paragraph text */
+body.light-mode p {
+  color: var(--text-secondary) !important;
+}
+
+/* Muted/ghost text elements */
+body.light-mode span[class*="text-white/"],
+body.light-mode p[class*="text-white/"],
+body.light-mode div[class*="text-white/"] {
+  color: var(--text-muted) !important;
+}
+
+/* Keep SVG energy arcs and glows with original colors */
+body.light-mode svg path,
+body.light-mode svg circle[style*="fill"] {
+  /* Preserve room accent glow effects */
+}
+
+/* Ensure Layout background uses light mode colors */
+body.light-mode .min-h-screen:not(:has(video)),
+body.light-mode main {
+  background: var(--bg-primary) !important;
+}
 
 /* Explore page background sections */
 body.light-mode .min-h-screen:not(:has(video)) {
