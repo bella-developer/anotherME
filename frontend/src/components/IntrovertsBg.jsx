@@ -101,7 +101,7 @@ export default function IntrovertsBg() {
           style={{
             position: 'absolute',
             inset: 0,
-            background: 'rgba(42, 42, 42, 0.8)',
+            background: 'rgba(90, 90, 90, 0.8)',
             opacity: 0,
             transition: 'opacity 600ms cubic-bezier(0.4, 0, 0.2, 1)',
             pointerEvents: 'none',
