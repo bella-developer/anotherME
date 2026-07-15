@@ -158,7 +158,7 @@ function PhiloRoom() {
                     The Philo Room
                   </p>
                   
-                  <h1 className="text-5xl md:text-6xl font-light mb-8" style={{
+                  <h1 className="text-5xl md:text-6xl font-light mb-8 whitespace-nowrap" style={{
                     color: 'var(--text-primary)',
                     letterSpacing: 'var(--tracking-tight)',
                     lineHeight: 'var(--leading-tight)',
@@ -205,18 +205,18 @@ function PhiloRoom() {
                 )}
               </div>
 
-              {/* Category filters - Compact, minimal borders */}
-              <div className="flex gap-3 flex-wrap mt-12">
+              {/* Category filters - Ultra compact, minimal design */}
+              <div className="flex gap-2 flex-wrap mt-12">
                 {categories.map((cat) => (
                   <button
                     key={cat.value}
                     onClick={() => setSelectedCategory(cat.value)}
-                    className="px-4 py-1.5 text-[10px] tracking-wider uppercase transition-all"
+                    className="px-3 py-1 text-[9px] tracking-wide uppercase transition-all"
                     style={{
-                      borderRadius: '4px',
-                      background: selectedCategory === cat.value ? 'rgba(168, 85, 247, 0.12)' : 'transparent',
-                      border: selectedCategory === cat.value ? '1px solid rgba(168, 85, 247, 0.3)' : '1px solid rgba(255, 255, 255, 0.06)',
-                      color: selectedCategory === cat.value ? 'rgba(168, 85, 247, 0.9)' : 'rgba(255, 255, 255, 0.25)',
+                      borderRadius: '2px',
+                      background: selectedCategory === cat.value ? 'rgba(168, 85, 247, 0.15)' : 'transparent',
+                      border: selectedCategory === cat.value ? '1px solid rgba(168, 85, 247, 0.4)' : '1px solid rgba(255, 255, 255, 0.04)',
+                      color: selectedCategory === cat.value ? 'rgba(168, 85, 247, 1)' : 'rgba(255, 255, 255, 0.2)',
                       transitionDuration: 'var(--duration-slow)',
                     }}
                   >
