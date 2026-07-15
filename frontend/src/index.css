@@ -1522,12 +1522,12 @@ body.light-mode [class*="menu"] button:hover {
   color: rgba(0, 0, 0, 0.95) !important;
 }
 
-/* Ensure all text is readable */
-body.light-mode [class*="text-white"] {
+/* Ensure all text is readable - BUT NOT ON HERO/VIDEO SECTIONS */
+body.light-mode [class*="text-white"]:not([style*="color: #FFFFFF"]):not([style*="color: #ffffff"]) {
   color: rgba(0, 0, 0, 0.85) !important;
 }
 
-body.light-mode [class*="text-white/"] {
+body.light-mode [class*="text-white/"]:not([style*="color: #FFFFFF"]):not([style*="color: #ffffff"]) {
   color: inherit !important;
   opacity: 0.7;
 }
@@ -1580,21 +1580,21 @@ body.light-mode button[class*="hover:bg-white/10"]:hover {
   background: rgba(0, 0, 0, 0.08) !important;
 }
 
-/* Text color for all buttons */
-body.light-mode button[class*="text-white"] {
+/* Text color for all buttons - EXCEPT explicit white buttons */
+body.light-mode button[class*="text-white"]:not([style*="color: #FFFFFF"]):not([style*="color: #ffffff"]) {
   color: rgba(0, 0, 0, 0.8) !important;
 }
 
-body.light-mode button[class*="text-white/"]:not([class*="bg-"]) {
+body.light-mode button[class*="text-white/"]:not([class*="bg-"]):not([style*="color: #FFFFFF"]):not([style*="color: #ffffff"]) {
   color: rgba(0, 0, 0, 0.65) !important;
 }
 
-/* Icon colors in buttons */
-body.light-mode button svg[class*="text-white"] {
+/* Icon colors in buttons - EXCEPT explicit white */
+body.light-mode button svg[class*="text-white"]:not([style*="color: #FFFFFF"]):not([style*="color: #ffffff"]) {
   color: rgba(0, 0, 0, 0.7) !important;
 }
 
-body.light-mode button:hover svg[class*="text-white"] {
+body.light-mode button:hover svg[class*="text-white"]:not([style*="color: #FFFFFF"]):not([style*="color: #ffffff"]) {
   color: rgba(0, 0, 0, 0.9) !important;
 }
 
@@ -1701,7 +1701,9 @@ body.light-mode button[class*="text-[#8b5cf6]"]:hover {
    ============================================ */
 
 /* Hero text stays WHITE in light mode (on video background) */
-/* Remove all overrides - let inline styles handle it */
+/* Remove all overrides - inline styles in components handle it */
+
+/* NO CSS overrides for hero text - components have inline styles */
 
 /* ============================================
    NAVBAR - FORCE UNIFORM BACKGROUND
@@ -1733,4 +1735,27 @@ body.light-mode header img {
 /* Ensure buttons don't get overridden */
 body.light-mode header a[href="/register"] {
   background-color: #000000 !important;
+  color: #FFFFFF !important;
 }
+
+/* CRITICAL: Prevent any text color overrides on hero and explore cards */
+body.light-mode h1[style*="color: #FFFFFF"],
+body.light-mode h1[style*="color: #ffffff"],
+body.light-mode h3[style*="color: #FFFFFF"],
+body.light-mode p[style*="color: #FFFFFF"],
+body.light-mode span[style*="color: #FFFFFF"],
+body.light-mode button[style*="color: #FFFFFF"] {
+  color: #FFFFFF !important;
+}
+
+/* Prevent SVG icon color overrides */
+body.light-mode svg[style*="color: #FFFFFF"] {
+  color: #FFFFFF !important;
+}
+
+/* Prevent opacity overrides */
+body.light-mode [style*="opacity:"],
+body.light-mode [style*="opacity :"] {
+  /* Let inline opacity work */
+}
+
