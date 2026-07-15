@@ -1697,37 +1697,8 @@ body.light-mode button[class*="text-[#8b5cf6]"]:hover {
 }
 
 /* ============================================
-   LANDING HERO - Light Mode Visibility
+   LANDING HERO - Light Mode - Keep White Text
    ============================================ */
 
-/* Hero room label text */
-body.light-mode .hero-room-label {
-  color: rgba(0, 0, 0, 0.7) !important;
-  text-shadow: none !important;
-}
-
-/* Hero room title - Dark Room etc */
-body.light-mode .hero-room-title {
-  color: rgba(0, 0, 0, 0.95) !important;
-  text-shadow: none !important;
-  -webkit-text-stroke: none !important;
-}
-
-/* Hero room description */
-body.light-mode .hero-room-desc {
-  color: rgba(0, 0, 0, 0.75) !important;
-  text-shadow: none !important;
-}
-
-/* Step In button - must be visible */
-body.light-mode .hero-step-in-btn {
-  background-color: rgba(0, 0, 0, 0.85) !important;
-  color: #FFFFFF !important;
-  border: 2px solid rgba(0, 0, 0, 1) !important;
-  text-shadow: none !important;
-}
-
-body.light-mode .hero-step-in-btn:hover {
-  background-color: rgba(0, 0, 0, 0.95) !important;
-  border-color: rgba(0, 0, 0, 1) !important;
-}
+/* Hero text stays WHITE in light mode (on video background) */
+/* Remove all overrides - let inline styles handle it */

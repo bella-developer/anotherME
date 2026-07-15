@@ -63,27 +63,28 @@ function Landing() {
           zIndex: 50,
           borderColor: isLightMode ? 'rgba(0, 0, 0, 0.08)' : 'var(--border-whisper)',
           backgroundColor: isLightMode 
-            ? 'rgba(251, 252, 248, 0.95)' 
-            : (isScrolled ? 'rgba(0, 0, 0, 0.95)' : 'transparent'),
-          backdropFilter: 'blur(12px)',
+            ? 'rgba(251, 252, 248, 0.98)' 
+            : (isScrolled ? 'rgba(0, 0, 0, 0.95)' : 'rgba(0, 0, 0, 0.5)'),
+          backdropFilter: 'blur(20px)',
+          WebkitBackdropFilter: 'blur(20px)',
           transitionDuration: 'var(--duration-slow)',
         }}
       >
-        <nav className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-16 py-3" role="navigation" aria-label="Main navigation">
-          <div className="flex items-center justify-between gap-4">
+        <nav className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-16 py-3" role="navigation" aria-label="Main navigation" style={{ background: 'transparent' }}>
+          <div className="flex items-center justify-between gap-4" style={{ background: 'transparent' }}>
             {/* Logo */}
-            <Link to="/" className="focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50 rounded transition-transform duration-300 hover:scale-105 flex-shrink-0">
+            <Link to="/" className="focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50 rounded transition-transform duration-300 hover:scale-105 flex-shrink-0" style={{ background: 'transparent' }}>
               <EsoLogo className="h-8 sm:h-10 w-auto" />
             </Link>
             
             {/* Navigation - Magazine-like spacing */}
-            <div className="hidden md:flex items-center gap-8 lg:gap-12 text-xs tracking-widest uppercase flex-1 justify-center">
+            <div className="hidden md:flex items-center gap-8 lg:gap-12 text-xs tracking-widest uppercase flex-1 justify-center" style={{ background: 'transparent' }}>
               <Link 
                 to="/explore" 
                 className="transition-all duration-500 relative after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 hover:after:w-full after:transition-all after:duration-500"
                 style={{
                   color: isLightMode ? 'rgba(0, 0, 0, 0.6)' : 'rgba(255, 255, 255, 0.5)',
-                  ...(isLightMode ? {} : { after: { backgroundColor: 'white' } })
+                  background: 'transparent',
                 }}
                 onMouseEnter={(e) => e.currentTarget.style.color = isLightMode ? 'rgba(0, 0, 0, 0.95)' : 'rgba(255, 255, 255, 1)'}
                 onMouseLeave={(e) => e.currentTarget.style.color = isLightMode ? 'rgba(0, 0, 0, 0.6)' : 'rgba(255, 255, 255, 0.5)'}
@@ -96,7 +97,8 @@ function Landing() {
                 rel="noopener noreferrer"
                 className="transition-all duration-500"
                 style={{
-                  color: isLightMode ? 'rgba(0, 0, 0, 0.6)' : 'rgba(255, 255, 255, 0.5)'
+                  color: isLightMode ? 'rgba(0, 0, 0, 0.6)' : 'rgba(255, 255, 255, 0.5)',
+                  background: 'transparent',
                 }}
                 onMouseEnter={(e) => e.currentTarget.style.color = isLightMode ? 'rgba(0, 0, 0, 0.95)' : 'rgba(255, 255, 255, 1)'}
                 onMouseLeave={(e) => e.currentTarget.style.color = isLightMode ? 'rgba(0, 0, 0, 0.6)' : 'rgba(255, 255, 255, 0.5)'}
@@ -106,13 +108,14 @@ function Landing() {
             </div>
 
             {/* Auth buttons - Responsive */}
-            <div className="flex items-center gap-2 sm:gap-4 flex-shrink-0">
+            <div className="flex items-center gap-2 sm:gap-4 flex-shrink-0" style={{ background: 'transparent' }}>
               <ThemeToggle />
               <Link 
                 to="/login"
                 className="hidden sm:inline-block px-4 lg:px-6 py-2 text-xs transition-all duration-500 tracking-widest uppercase"
                 style={{
-                  color: isLightMode ? 'rgba(0, 0, 0, 0.65)' : 'rgba(255, 255, 255, 0.6)'
+                  color: isLightMode ? 'rgba(0, 0, 0, 0.65)' : 'rgba(255, 255, 255, 0.6)',
+                  background: 'transparent',
                 }}
                 onMouseEnter={(e) => e.currentTarget.style.color = isLightMode ? 'rgba(0, 0, 0, 0.95)' : 'rgba(255, 255, 255, 1)'}
                 onMouseLeave={(e) => e.currentTarget.style.color = isLightMode ? 'rgba(0, 0, 0, 0.65)' : 'rgba(255, 255, 255, 0.6)'}
