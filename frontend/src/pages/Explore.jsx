@@ -2,10 +2,14 @@ import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import EsoLogo from '../components/EsoLogo';
 import { usePageTitle } from '../hooks/usePageTitle';
+import ThemeToggle from '../components/ThemeToggle';
+import { useTheme } from '../contexts/ThemeContext';
 
 function Explore() {
   usePageTitle('Explore');
   const navigate = useNavigate();
+  const { theme } = useTheme();
+  const isLightMode = theme === 'light';
 
   const features = [
     {
@@ -37,21 +41,37 @@ function Explore() {
   return (
     <div className="min-h-screen text-white relative" style={{ fontFamily: "'Geist Mono', monospace" }}>
       {/* Fixed Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-black/95 backdrop-blur-xl">
-        <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between border-b border-white/10">
+      <nav 
+        className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl"
+        style={{
+          background: isLightMode ? 'rgba(251, 252, 248, 0.98)' : 'rgba(0, 0, 0, 0.95)',
+          borderBottom: `1px solid ${isLightMode ? 'rgba(0, 0, 0, 0.08)' : 'rgba(255, 255, 255, 0.1)'}`,
+        }}
+      >
+        <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
           <Link to="/" className="focus:outline-none focus:ring-2 focus:ring-white/50 rounded-md">
             <EsoLogo className="h-9 w-auto" />
           </Link>
           <div className="flex items-center gap-6">
+            <ThemeToggle />
             <Link 
               to="/login" 
-              className="text-xs text-white/60 hover:text-white transition-colors tracking-[0.15em] uppercase font-medium"
+              className="text-xs transition-colors tracking-[0.15em] uppercase font-medium"
+              style={{
+                color: isLightMode ? 'rgba(0, 0, 0, 0.65)' : 'rgba(255, 255, 255, 0.6)'
+              }}
             >
               Sign In
             </Link>
             <button
               onClick={() => navigate('/register')}
-              className="px-4 py-2 text-xs text-white hover:bg-white/5 transition-all tracking-[0.15em] uppercase font-medium"
+              className="px-4 py-2 text-xs transition-all tracking-[0.15em] uppercase font-medium"
+              style={{
+                backgroundColor: isLightMode ? '#000000' : '#FFFFFF',
+                color: isLightMode ? '#FFFFFF' : '#000000',
+                border: `1px solid ${isLightMode ? '#000000' : '#FFFFFF'}`,
+                borderRadius: '4px',
+              }}
             >
               Register
             </button>
@@ -95,38 +115,56 @@ function Explore() {
                   className="absolute inset-0 bg-cover bg-center rounded-xl transition-transform duration-700 group-hover:scale-110"
                   style={{ 
                     backgroundImage: `url('${f.img}')`, 
-                    filter: 'contrast(1.1) brightness(0.7) saturate(1.1)',
+                    filter: 'contrast(1.1) brightness(0.5) saturate(1.1)',
                   }}
                 />
-                <div className="absolute inset-0 rounded-xl bg-gradient-to-t from-black via-black/60 to-transparent transition-all duration-500" style={{ backgroundImage: 'linear-gradient(to top, rgba(0,0,0,0.98) 0%, rgba(0,0,0,0.8) 40%, transparent 75%)' }} />
+                <div 
+                  className="absolute inset-0 rounded-xl transition-all duration-500" 
+                  style={{ 
+                    background: 'linear-gradient(to top, rgba(0,0,0,0.99) 0%, rgba(0,0,0,0.95) 30%, rgba(0,0,0,0.7) 60%, rgba(0,0,0,0.3) 100%)'
+                  }} 
+                />
 
                 <div className="relative z-10 flex flex-col items-center">
-                  <svg className="w-7 h-7 text-white mb-4 group-hover:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+                  <svg 
+                    className="w-8 h-8 mb-5 group-hover:scale-110 transition-transform duration-300" 
+                    fill="none" 
+                    stroke="currentColor" 
+                    viewBox="0 0 24 24" 
+                    strokeWidth={1.5}
+                    style={{
+                      color: '#FFFFFF',
+                      filter: 'drop-shadow(0 2px 8px rgba(0, 0, 0, 0.8))'
+                    }}
+                  >
                     <path strokeLinecap="round" strokeLinejoin="round" d={f.icon} />
                   </svg>
                   <h3 
-                    className="text-sm tracking-[0.25em] uppercase font-bold mb-3" 
+                    className="text-base tracking-[0.25em] uppercase font-extrabold mb-4" 
                     style={{
                       color: '#FFFFFF',
-                      textShadow: '0 2px 8px rgba(0, 0, 0, 0.8), 0 4px 16px rgba(0, 0, 0, 0.6)'
+                      textShadow: '0 2px 12px rgba(0, 0, 0, 0.95), 0 4px 24px rgba(0, 0, 0, 0.8), 0 1px 3px rgba(0, 0, 0, 1)',
+                      letterSpacing: '0.3em'
                     }}
                   >
                     {f.title}
                   </h3>
                   <p 
-                    className="text-xs leading-relaxed group-hover:text-white transition-colors duration-300 mb-4" 
+                    className="text-sm leading-relaxed transition-all duration-300 mb-5 font-medium" 
                     style={{
-                      color: 'rgba(255, 255, 255, 0.85)',
-                      textShadow: '0 2px 6px rgba(0, 0, 0, 0.7)'
+                      color: '#FFFFFF',
+                      opacity: 0.95,
+                      textShadow: '0 2px 10px rgba(0, 0, 0, 0.9), 0 4px 20px rgba(0, 0, 0, 0.7)'
                     }}
                   >
                     {f.desc}
                   </p>
                   <span 
-                    className="group-hover:translate-x-1 transition-all duration-300 text-lg"
+                    className="group-hover:translate-x-1 transition-all duration-300 text-xl font-light"
                     style={{
-                      color: 'rgba(255, 255, 255, 0.5)',
-                      textShadow: '0 2px 4px rgba(0, 0, 0, 0.6)'
+                      color: '#FFFFFF',
+                      opacity: 0.6,
+                      textShadow: '0 2px 6px rgba(0, 0, 0, 0.8)'
                     }}
                   >
                     →
