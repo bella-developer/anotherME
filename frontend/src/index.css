@@ -244,6 +244,72 @@ body.light-mode .light-mode-overlay {
   opacity: 1 !important;
 }
 
+/* Premium Light Mode - Enhanced Text Contrast */
+body.light-mode h1,
+body.light-mode h2,
+body.light-mode h3 {
+  color: #ffffff !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
+}
+
+body.light-mode p {
+  color: rgba(255, 255, 255, 0.95) !important;
+}
+
+/* Enhanced visibility for subtle text */
+body.light-mode [style*="rgba(255, 255, 255, 0.15)"],
+body.light-mode p[class*="text-[10px]"] {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+
+/* Category buttons - enhanced contrast */
+body.light-mode button {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+body.light-mode button[style*="rgba(239, 68, 68, 1)"],
+body.light-mode button[style*="rgba(168, 85, 247, 1)"],
+body.light-mode button[style*="rgba(249, 115, 22, 1)"] {
+  color: #ffffff !important;
+  text-shadow: 0 0 8px currentColor !important;
+}
+
+/* Enhance room accent colors in light mode */
+body.light-mode button[style*="rgba(239, 68, 68"] {
+  filter: brightness(1.2) saturate(1.3);
+}
+
+body.light-mode button[style*="rgba(168, 85, 247"] {
+  filter: brightness(1.2) saturate(1.3);
+}
+
+body.light-mode button[style*="rgba(249, 115, 22"] {
+  filter: brightness(1.2) saturate(1.3);
+}
+
+/* Keep borders slightly more visible */
+body.light-mode button[style*="rgba(255, 255, 255, 0.04)"] {
+  border-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+/* Enhanced card visibility */
+body.light-mode article,
+body.light-mode [class*="rounded"] {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Navigation text enhancement */
+body.light-mode nav a,
+body.light-mode nav button {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+/* Premium glow effects remain visible */
+body.light-mode [style*="text-shadow"],
+body.light-mode [style*="box-shadow"] {
+  /* Keep glows and shadows */
+}
+
 /* Join button - maintain high contrast in both modes */
 .join-button {
   background-color: #ffffff !important;
