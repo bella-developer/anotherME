@@ -461,6 +461,7 @@ body.light-mode .image-container-black {
 .join-button {
   background-color: #FFFFFF !important;
   color: #000000 !important;
+  border: 1px solid #FFFFFF !important;
 }
 
 .join-button:hover {
@@ -471,6 +472,7 @@ body.light-mode .image-container-black {
 body.light-mode .join-button {
   background-color: #000000 !important;
   color: #FFFFFF !important;
+  border: 1px solid #000000 !important;
 }
 
 body.light-mode .join-button:hover {
@@ -874,13 +876,23 @@ body.light-mode header *,
 body.light-mode nav,
 body.light-mode nav *,
 body.light-mode header a,
-body.light-mode header button,
+body.light-mode header button:not(.join-button),
 body.light-mode header div {
   background-color: transparent !important;
+  background-image: none !important;
+  background: transparent !important;
 }
 
 body.light-mode header {
   background-color: rgba(251, 252, 248, 0.95) !important;
+  background: rgba(251, 252, 248, 0.95) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+}
+
+/* Navbar component with inline styles */
+body.light-mode nav[role="navigation"] {
+  background: rgba(251, 252, 248, 0.95) !important;
   backdrop-filter: blur(12px) !important;
   -webkit-backdrop-filter: blur(12px) !important;
 }
@@ -891,6 +903,23 @@ body.light-mode header::after,
 body.light-mode nav::before,
 body.light-mode nav::after {
   display: none !important;
+}
+
+/* Dark Room description text - make visible in light mode */
+body.light-mode p[style*="rgba(255, 255, 255, 0.15)"] {
+  color: rgba(0, 0, 0, 0.45) !important;
+}
+
+/* Room page buttons - "Share Your Thoughts" etc */
+body.light-mode button[style*="var(--surface-1)"] {
+  background: rgba(0, 0, 0, 0.04) !important;
+  border: 1px solid rgba(0, 0, 0, 0.2) !important;
+  color: rgba(0, 0, 0, 0.75) !important;
+}
+
+body.light-mode button[style*="var(--surface-1)"]:hover {
+  border-color: rgba(239, 68, 68, 0.5) !important;
+  color: rgba(185, 28, 28, 0.95) !important;
 }
 
 /* Logout button - Secondary style */
@@ -939,6 +968,20 @@ body.light-mode a[href="/login"] {
 }
 
 body.light-mode a[href="/login"]:hover {
+  color: rgba(0, 0, 0, 0.95) !important;
+}
+
+/* Navbar links in Landing page */
+body.light-mode a[class*="text-white/60"] {
+  color: rgba(0, 0, 0, 0.65) !important;
+}
+
+body.light-mode a[class*="text-white/50"] {
+  color: rgba(0, 0, 0, 0.55) !important;
+}
+
+body.light-mode a[class*="text-white/60"]:hover,
+body.light-mode a[class*="text-white/50"]:hover {
   color: rgba(0, 0, 0, 0.95) !important;
 }
 
