@@ -244,88 +244,163 @@ body.light-mode .light-mode-overlay {
   opacity: 1 !important;
 }
 
-/* Premium Light Mode - Enhanced Text Contrast */
-body.light-mode h1,
-body.light-mode h2,
-body.light-mode h3 {
-  color: #ffffff !important;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
+/* ============================================
+   LIGHT MODE - Premium Design
+   Warm overlay with proper contrast and visibility
+   ============================================ */
+
+/* Activate overlay in light mode */
+body.light-mode .light-mode-overlay {
+  opacity: 1 !important;
 }
 
-body.light-mode p {
-  color: rgba(255, 255, 255, 0.95) !important;
-}
-
-/* Navbar in light mode - Lace white background */
+/* ============================================
+   NAVBAR - Lace Background with Dark Logo
+   ============================================ */
 body.light-mode header,
 body.light-mode nav[role="navigation"] {
   background: rgba(253, 245, 230, 0.95) !important;
   backdrop-filter: blur(20px) saturate(120%) !important;
   -webkit-backdrop-filter: blur(20px) saturate(120%) !important;
-  border-bottom: 1px solid rgba(253, 245, 230, 0.2) !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
 }
 
-/* Navbar text in light mode - Dark for contrast on lace */
+/* Logo visibility - invert to dark in light mode */
+body.light-mode img[alt="ESO Logo"] {
+  filter: invert(1) brightness(0.2);
+}
+
+/* Navbar text - dark on lace */
 body.light-mode nav[role="navigation"] a,
 body.light-mode nav[role="navigation"] button:not(.join-button):not([class*="theme-toggle"]),
 body.light-mode header nav a,
 body.light-mode header nav button:not(.join-button):not([class*="theme-toggle"]),
-body.light-mode header a:not(.join-button),
-body.light-mode header button:not(.join-button):not([class*="theme-toggle"]) {
-  color: rgba(0, 0, 0, 0.7) !important;
+body.light-mode header a:not(.join-button) {
+  color: rgba(0, 0, 0, 0.75) !important;
 }
 
 body.light-mode nav[role="navigation"] a:hover,
 body.light-mode header a:hover {
-  color: rgba(0, 0, 0, 0.9) !important;
+  color: rgba(0, 0, 0, 1) !important;
 }
 
-/* Enhanced visibility for subtle text */
+/* ============================================
+   CONTENT TEXT - Enhanced Visibility
+   ============================================ */
+body.light-mode h1,
+body.light-mode h2,
+body.light-mode h3 {
+  color: #ffffff !important;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4) !important;
+}
+
+body.light-mode p {
+  color: rgba(255, 255, 255, 0.95) !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Subtle text visibility boost */
 body.light-mode [style*="rgba(255, 255, 255, 0.15)"],
 body.light-mode p[class*="text-[10px]"] {
-  color: rgba(255, 255, 255, 0.5) !important;
+  color: rgba(255, 255, 255, 0.6) !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3) !important;
 }
 
-/* Category buttons - enhanced contrast */
+/* ============================================
+   BUTTONS - Premium Contrast
+   ============================================ */
+
+/* Category buttons enhanced */
 body.light-mode button {
-  color: rgba(255, 255, 255, 0.7) !important;
+  color: rgba(255, 255, 255, 0.8) !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2) !important;
 }
 
 body.light-mode button[style*="rgba(239, 68, 68, 1)"],
 body.light-mode button[style*="rgba(168, 85, 247, 1)"],
 body.light-mode button[style*="rgba(249, 115, 22, 1)"] {
   color: #ffffff !important;
-  text-shadow: 0 0 8px currentColor !important;
+  text-shadow: 0 0 10px currentColor, 0 2px 4px rgba(0, 0, 0, 0.3) !important;
 }
 
-/* Enhance room accent colors in light mode */
+/* Room accent buttons enhanced */
 body.light-mode button[style*="rgba(239, 68, 68"] {
-  filter: brightness(1.2) saturate(1.3);
+  filter: brightness(1.3) saturate(1.4) !important;
 }
 
 body.light-mode button[style*="rgba(168, 85, 247"] {
-  filter: brightness(1.2) saturate(1.3);
+  filter: brightness(1.3) saturate(1.4) !important;
 }
 
 body.light-mode button[style*="rgba(249, 115, 22"] {
-  filter: brightness(1.2) saturate(1.3);
+  filter: brightness(1.3) saturate(1.4) !important;
 }
 
-/* Keep borders slightly more visible */
+/* Better border visibility */
 body.light-mode button[style*="rgba(255, 255, 255, 0.04)"] {
-  border-color: rgba(255, 255, 255, 0.12) !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
 }
 
-/* Enhanced card visibility */
+/* ============================================
+   FEATURE CARDS - Enhanced Visibility
+   ============================================ */
 body.light-mode article,
-body.light-mode [class*="rounded"] {
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
+body.light-mode [class*="rounded-xl"] {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
 }
 
-/* Premium glow effects remain visible */
-body.light-mode [style*="text-shadow"],
-body.light-mode [style*="box-shadow"] {
-  /* Keep glows and shadows */
+/* Feature card icons */
+body.light-mode article svg {
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+/* Feature card text */
+body.light-mode article h3 {
+  color: #ffffff !important;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5) !important;
+}
+
+body.light-mode article p {
+  color: rgba(255, 255, 255, 0.9) !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* ============================================
+   LANDING PAGE SPECIFIC
+   ============================================ */
+
+/* Hero video section stays dark */
+body.light-mode section:has(video) {
+  position: relative;
+  z-index: 2;
+}
+
+/* Scrolling text section enhancement */
+body.light-mode section[class*="overflow-hidden"] span {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* Quote and community cards */
+body.light-mode div[class*="rounded-xl"] {
+  background: linear-gradient(135deg, rgba(30, 30, 30, 0.95) 0%, rgba(20, 20, 20, 0.98) 100%) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* ============================================
+   HOME PAGE - Room Portals
+   ============================================ */
+
+/* Keep room portal inner circles dark */
+body.light-mode div[style*="background: rgba(0, 0, 0, 0.85)"],
+body.light-mode div[style*="background: rgba(0,0,0,0.8)"] {
+  background: rgba(0, 0, 0, 0.9) !important;
+}
+
+/* Room portal glows enhanced */
+body.light-mode svg path,
+body.light-mode svg circle {
+  filter: brightness(1.3) saturate(1.5);
 }
 
 /* Join button - maintain high contrast in both modes */
