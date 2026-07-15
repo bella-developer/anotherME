@@ -755,3 +755,164 @@ body.light-mode [style*="backgroundImage"] > * {
   position: relative;
   z-index: 1;
 }
+
+/* ============================================
+   LIGHT MODE - BUTTON IMPROVEMENTS
+   ============================================ */
+
+/* Primary action buttons - Black (high contrast) */
+body.light-mode .join-button,
+body.light-mode button[type="submit"] {
+  background: #000000 !important;
+  color: #FFFFFF !important;
+  border: 1px solid #000000 !important;
+  font-weight: 500;
+}
+
+body.light-mode .join-button:hover,
+body.light-mode button[type="submit"]:hover:not(:disabled) {
+  background: rgba(0, 0, 0, 0.85) !important;
+}
+
+/* Secondary buttons - Outlined */
+body.light-mode button[class*="border-white"],
+body.light-mode a[class*="border"] {
+  border-color: rgba(0, 0, 0, 0.3) !important;
+  color: rgba(0, 0, 0, 0.85) !important;
+  background: transparent !important;
+}
+
+body.light-mode button[class*="border-white"]:hover,
+body.light-mode a[class*="border"]:hover {
+  border-color: rgba(0, 0, 0, 0.5) !important;
+  background: rgba(0, 0, 0, 0.03) !important;
+}
+
+/* Room accent buttons - Preserve colors */
+body.light-mode button[style*="rgba(239, 68, 68"] {
+  background: rgba(239, 68, 68, 0.12) !important;
+  color: rgb(185, 28, 28) !important;
+  border-color: rgba(239, 68, 68, 0.3) !important;
+}
+
+body.light-mode button[style*="rgba(168, 85, 247"] {
+  background: rgba(168, 85, 247, 0.12) !important;
+  color: rgb(107, 33, 168) !important;
+  border-color: rgba(168, 85, 247, 0.3) !important;
+}
+
+body.light-mode button[style*="rgba(249, 115, 22"] {
+  background: rgba(249, 115, 22, 0.12) !important;
+  color: rgb(194, 65, 12) !important;
+  border-color: rgba(249, 115, 22, 0.3) !important;
+}
+
+/* Reaction buttons - Subtle but visible */
+body.light-mode button[aria-label*="reaction"],
+body.light-mode button[class*="reaction"] {
+  background: rgba(0, 0, 0, 0.04) !important;
+  border: 1px solid rgba(0, 0, 0, 0.12) !important;
+  color: rgba(0, 0, 0, 0.75) !important;
+}
+
+body.light-mode button[aria-label*="reaction"]:hover,
+body.light-mode button[class*="reaction"]:hover {
+  background: rgba(0, 0, 0, 0.08) !important;
+  border-color: rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Text link buttons (Sign In, Explore, etc) */
+body.light-mode a[class*="text-white"] {
+  color: rgba(0, 0, 0, 0.75) !important;
+  font-weight: 500;
+}
+
+body.light-mode a[class*="text-white"]:hover {
+  color: rgba(0, 0, 0, 0.95) !important;
+}
+
+/* Google button - Outlined style */
+body.light-mode button[class*="bg-white/8"] {
+  background: transparent !important;
+  border: 1px solid rgba(0, 0, 0, 0.2) !important;
+  color: rgba(0, 0, 0, 0.85) !important;
+}
+
+body.light-mode button[class*="bg-white/8"]:hover {
+  background: rgba(0, 0, 0, 0.03) !important;
+  border-color: rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Category/filter buttons - Clear visibility */
+body.light-mode button[class*="px-3 py-1"],
+body.light-mode button[class*="text-[9px]"] {
+  background: rgba(0, 0, 0, 0.04) !important;
+  border: 1px solid rgba(0, 0, 0, 0.12) !important;
+  color: rgba(0, 0, 0, 0.75) !important;
+}
+
+body.light-mode button[class*="px-3 py-1"]:hover,
+body.light-mode button[class*="text-[9px]"]:hover {
+  background: rgba(0, 0, 0, 0.08) !important;
+  border-color: rgba(0, 0, 0, 0.2) !important;
+}
+
+/* NAVBAR FIX - Full consistent background */
+body.light-mode header nav,
+body.light-mode header nav > div,
+body.light-mode nav[role="navigation"],
+body.light-mode nav[role="navigation"] > div {
+  background: rgba(251, 252, 248, 0.95) !important;
+}
+
+/* Remove any conflicting backgrounds on nav children */
+body.light-mode header *,
+body.light-mode nav[role="navigation"] * {
+  background: transparent;
+}
+
+body.light-mode header,
+body.light-mode nav[role="navigation"] {
+  background: rgba(251, 252, 248, 0.95) !important;
+}
+
+/* Logout button - Secondary style */
+body.light-mode button[class*="logout"],
+body.light-mode a[href="/logout"] {
+  border: 1px solid rgba(0, 0, 0, 0.2) !important;
+  color: rgba(0, 0, 0, 0.75) !important;
+  background: transparent !important;
+}
+
+body.light-mode button[class*="logout"]:hover,
+body.light-mode a[href="/logout"]:hover {
+  border-color: rgba(239, 68, 68, 0.5) !important;
+  color: rgb(185, 28, 28) !important;
+  background: rgba(239, 68, 68, 0.05) !important;
+}
+
+/* Enter room buttons - Use room colors */
+body.light-mode button[class*="enter-room"] {
+  font-weight: 500;
+}
+
+/* Level badges - Maintain purple */
+body.light-mode [class*="Purple Lv"],
+body.light-mode [style*="background: rgb(168, 85, 247)"] {
+  background: rgb(168, 85, 247) !important;
+  color: #FFFFFF !important;
+}
+
+/* Mystery badges */
+body.light-mode [class*="Mystery Lv"],
+body.light-mode [style*="background: rgb(249, 115, 22)"] {
+  background: rgb(249, 115, 22) !important;
+  color: #FFFFFF !important;
+}
+
+/* Wisdom badges */
+body.light-mode [class*="Wisdom Lv"],
+body.light-mode [style*="background: rgb(14, 165, 233)"] {
+  background: rgb(14, 165, 233) !important;
+  color: #FFFFFF !important;
+}
