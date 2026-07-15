@@ -173,8 +173,8 @@ function DarkRoom() {
                     Where vulnerability becomes strength
                   </p>
                   
-                  <p className="text-xs max-w-md" style={{
-                    color: 'var(--text-quaternary)',
+                  <p className="text-[10px] max-w-md" style={{
+                    color: 'rgba(255, 255, 255, 0.15)',
                     lineHeight: 'var(--leading-relaxed)'
                   }}>
                     You are not alone in the darkness.
@@ -205,18 +205,18 @@ function DarkRoom() {
                 )}
               </div>
 
-              {/* Category filters - Quiet */}
+              {/* Category filters - Compact, minimal borders */}
               <div className="flex gap-3 flex-wrap mt-12">
                 {categories.map((cat) => (
                   <button
                     key={cat.value}
                     onClick={() => setSelectedCategory(cat.value)}
-                    className="px-4 py-2 text-xs tracking-wider uppercase transition-all"
+                    className="px-4 py-1.5 text-[10px] tracking-wider uppercase transition-all"
                     style={{
-                      borderRadius: 'var(--radius-soft)',
-                      background: selectedCategory === cat.value ? 'rgba(239, 68, 68, 0.08)' : 'var(--surface-1)',
-                      border: selectedCategory === cat.value ? '1px solid rgba(239, 68, 68, 0.25)' : '1px solid var(--border-whisper)',
-                      color: selectedCategory === cat.value ? 'rgba(239, 68, 68, 0.9)' : 'var(--text-quaternary)',
+                      borderRadius: '4px',
+                      background: selectedCategory === cat.value ? 'rgba(239, 68, 68, 0.12)' : 'transparent',
+                      border: selectedCategory === cat.value ? '1px solid rgba(239, 68, 68, 0.3)' : '1px solid rgba(255, 255, 255, 0.06)',
+                      color: selectedCategory === cat.value ? 'rgba(239, 68, 68, 0.9)' : 'rgba(255, 255, 255, 0.25)',
                       transitionDuration: 'var(--duration-slow)',
                     }}
                   >
