@@ -57,11 +57,12 @@ function RoomReactions({ room, reactions, userReactions = [], onReact, disabled 
 
   const getButtonStyle = (reactionType, hasReacted, color, colorRGB) => {
     const isAnimating = animatingReaction === reactionType;
+    const isLightMode = document.body.classList.contains('light-mode');
     
     if (hasReacted) {
       return {
-        background: `rgba(${colorRGB}, 0.08)`,
-        border: `1px solid rgba(${colorRGB}, 0.25)`,
+        background: isLightMode ? `rgba(${colorRGB}, 0.15)` : `rgba(${colorRGB}, 0.08)`,
+        border: isLightMode ? `2px solid rgba(${colorRGB}, 0.4)` : `1px solid rgba(${colorRGB}, 0.25)`,
         boxShadow: `0 0 8px rgba(${colorRGB}, 0.15), inset 0 0 12px rgba(${colorRGB}, 0.05)`,
         transform: 'scale(1.05)',
         transition: 'all 0.3s cubic-bezier(0.22, 1, 0.36, 1)',
@@ -70,16 +71,16 @@ function RoomReactions({ room, reactions, userReactions = [], onReact, disabled 
     
     if (isAnimating) {
       return {
-        background: 'rgba(255, 255, 255, 0.03)',
-        border: '1px solid rgba(255, 255, 255, 0.08)',
+        background: isLightMode ? 'rgba(0, 0, 0, 0.05)' : 'rgba(255, 255, 255, 0.03)',
+        border: isLightMode ? '2px solid rgba(0, 0, 0, 0.15)' : '1px solid rgba(255, 255, 255, 0.08)',
         transform: 'scale(0.95)',
         transition: 'all 0.15s ease',
       };
     }
     
     return {
-      background: 'rgba(255, 255, 255, 0.02)',
-      border: '1px solid rgba(255, 255, 255, 0.06)',
+      background: isLightMode ? 'rgba(0, 0, 0, 0.04)' : 'rgba(255, 255, 255, 0.02)',
+      border: isLightMode ? '2px solid rgba(0, 0, 0, 0.12)' : '1px solid rgba(255, 255, 255, 0.06)',
       transition: 'all 0.3s cubic-bezier(0.22, 1, 0.36, 1)',
     };
   };
@@ -102,16 +103,18 @@ function RoomReactions({ room, reactions, userReactions = [], onReact, disabled 
               title={label}
               onMouseEnter={(e) => {
                 if (!hasReacted) {
-                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.04)';
-                  e.currentTarget.style.border = '1px solid rgba(255, 255, 255, 0.1)';
+                  const isLightMode = document.body.classList.contains('light-mode');
+                  e.currentTarget.style.background = isLightMode ? 'rgba(0, 0, 0, 0.08)' : 'rgba(255, 255, 255, 0.04)';
+                  e.currentTarget.style.border = isLightMode ? '2px solid rgba(0, 0, 0, 0.2)' : '1px solid rgba(255, 255, 255, 0.1)';
                   e.currentTarget.style.transform = 'scale(1.05)';
                   e.currentTarget.style.boxShadow = `0 0 8px rgba(${colorRGB}, 0.1)`;
                 }
               }}
               onMouseLeave={(e) => {
                 if (!hasReacted) {
-                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.02)';
-                  e.currentTarget.style.border = '1px solid rgba(255, 255, 255, 0.06)';
+                  const isLightMode = document.body.classList.contains('light-mode');
+                  e.currentTarget.style.background = isLightMode ? 'rgba(0, 0, 0, 0.04)' : 'rgba(255, 255, 255, 0.02)';
+                  e.currentTarget.style.border = isLightMode ? '2px solid rgba(0, 0, 0, 0.12)' : '1px solid rgba(255, 255, 255, 0.06)';
                   e.currentTarget.style.transform = 'scale(1)';
                   e.currentTarget.style.boxShadow = 'none';
                 }
@@ -123,7 +126,7 @@ function RoomReactions({ room, reactions, userReactions = [], onReact, disabled 
                 strokeWidth={1.5}
                 className="flex-shrink-0"
                 style={{
-                  color: hasReacted ? color : 'rgba(255, 255, 255, 0.4)',
+                  color: hasReacted ? color : (document.body.classList.contains('light-mode') ? 'rgba(0, 0, 0, 0.6)' : 'rgba(255, 255, 255, 0.4)'),
                   filter: hasReacted ? `drop-shadow(0 0 2px rgba(${colorRGB}, 0.4))` : 'none',
                   transition: 'all 0.3s ease',
                 }}
@@ -134,7 +137,7 @@ function RoomReactions({ room, reactions, userReactions = [], onReact, disabled 
                 <span
                   className="text-[10px] sm:text-[11px] font-light tracking-wide"
                   style={{
-                    color: hasReacted ? color : 'rgba(255, 255, 255, 0.4)',
+                    color: hasReacted ? color : (document.body.classList.contains('light-mode') ? 'rgba(0, 0, 0, 0.65)' : 'rgba(255, 255, 255, 0.4)'),
                     textShadow: hasReacted ? `0 0 4px rgba(${colorRGB}, 0.3)` : 'none',
                     transition: 'all 0.3s ease',
                   }}
@@ -147,7 +150,7 @@ function RoomReactions({ room, reactions, userReactions = [], onReact, disabled 
               <span
                 className="hidden sm:block text-[8px] tracking-wide uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap"
                 style={{
-                  color: 'rgba(255, 255, 255, 0.5)',
+                  color: document.body.classList.contains('light-mode') ? 'rgba(0, 0, 0, 0.55)' : 'rgba(255, 255, 255, 0.5)',
                   letterSpacing: '0.1em',
                 }}
               >

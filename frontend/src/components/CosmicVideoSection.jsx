@@ -154,9 +154,22 @@ function CosmicVideoSection({
             onClick={() => navigate(`/${room}`)}
             className="px-8 py-4 text-lg font-semibold uppercase tracking-wider transition-all duration-300 rounded-lg"
             style={{
-              backgroundColor: roomColor.primary,
+              backgroundColor: document.body.classList.contains('light-mode') ? 'rgba(0, 0, 0, 0.9)' : roomColor.primary,
               color: '#ffffff',
-              boxShadow: `0 0 30px ${roomColor.glow}, 0 10px 40px rgba(0, 0, 0, 0.5)`,
+              boxShadow: document.body.classList.contains('light-mode') 
+                ? '0 4px 20px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(0, 0, 0, 1)'
+                : `0 0 30px ${roomColor.glow}, 0 10px 40px rgba(0, 0, 0, 0.5)`,
+              border: document.body.classList.contains('light-mode') ? '2px solid rgba(0, 0, 0, 1)' : 'none',
+            }}
+            onMouseEnter={(e) => {
+              if (document.body.classList.contains('light-mode')) {
+                e.currentTarget.style.backgroundColor = 'rgba(0, 0, 0, 0.75)';
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (document.body.classList.contains('light-mode')) {
+                e.currentTarget.style.backgroundColor = 'rgba(0, 0, 0, 0.9)';
+              }
             }}
           >
             Enter {title}

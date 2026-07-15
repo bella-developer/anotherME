@@ -459,7 +459,7 @@ body.light-mode .image-container-black {
 
 /* Join button - maintain high contrast in both modes */
 .join-button {
-  background-color: #ffffff !important;
+  background-color: #FFFFFF !important;
   color: #000000 !important;
 }
 
@@ -470,12 +470,12 @@ body.light-mode .image-container-black {
 
 body.light-mode .join-button {
   background-color: #000000 !important;
-  color: #ffffff !important;
+  color: #FFFFFF !important;
 }
 
 body.light-mode .join-button:hover {
-  background-color: rgba(0, 0, 0, 0.9) !important;
-  color: #ffffff !important;
+  background-color: rgba(0, 0, 0, 0.85) !important;
+  color: #FFFFFF !important;
 }
 
 /* Smooth transition for theme changes */
@@ -807,18 +807,29 @@ body.light-mode button[style*="rgba(249, 115, 22"] {
   border-color: rgba(249, 115, 22, 0.3) !important;
 }
 
-/* Reaction buttons - Subtle but visible */
+/* Reaction buttons - Strong visibility with room colors preserved */
 body.light-mode button[aria-label*="reaction"],
 body.light-mode button[class*="reaction"] {
-  background: rgba(0, 0, 0, 0.04) !important;
-  border: 1px solid rgba(0, 0, 0, 0.12) !important;
-  color: rgba(0, 0, 0, 0.75) !important;
+  background: rgba(0, 0, 0, 0.08) !important;
+  border: 1.5px solid rgba(0, 0, 0, 0.2) !important;
 }
 
 body.light-mode button[aria-label*="reaction"]:hover,
 body.light-mode button[class*="reaction"]:hover {
-  background: rgba(0, 0, 0, 0.08) !important;
-  border-color: rgba(0, 0, 0, 0.2) !important;
+  background: rgba(0, 0, 0, 0.12) !important;
+  border-color: rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Reaction button icons - darken for visibility */
+body.light-mode button[aria-label*="reaction"] svg,
+body.light-mode button[class*="reaction"] svg {
+  filter: brightness(0.4) !important;
+}
+
+/* Reaction button text */
+body.light-mode button[aria-label*="reaction"] span,
+body.light-mode button[class*="reaction"] span {
+  color: rgba(0, 0, 0, 0.75) !important;
 }
 
 /* Text link buttons (Sign In, Explore, etc) */
@@ -857,23 +868,29 @@ body.light-mode button[class*="text-[9px]"]:hover {
   border-color: rgba(0, 0, 0, 0.2) !important;
 }
 
-/* NAVBAR FIX - Full consistent background */
-body.light-mode header nav,
-body.light-mode header nav > div,
-body.light-mode nav[role="navigation"],
-body.light-mode nav[role="navigation"] > div {
-  background: rgba(251, 252, 248, 0.95) !important;
-}
-
-/* Remove any conflicting backgrounds on nav children */
-body.light-mode header *,
-body.light-mode nav[role="navigation"] * {
-  background: transparent;
-}
-
+/* NAVBAR FIX - Full consistent background across all elements */
 body.light-mode header,
-body.light-mode nav[role="navigation"] {
-  background: rgba(251, 252, 248, 0.95) !important;
+body.light-mode header *,
+body.light-mode nav,
+body.light-mode nav *,
+body.light-mode header a,
+body.light-mode header button,
+body.light-mode header div {
+  background-color: transparent !important;
+}
+
+body.light-mode header {
+  background-color: rgba(251, 252, 248, 0.95) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+}
+
+/* Override any gradient or image backgrounds in header */
+body.light-mode header::before,
+body.light-mode header::after,
+body.light-mode nav::before,
+body.light-mode nav::after {
+  display: none !important;
 }
 
 /* Logout button - Secondary style */
@@ -903,6 +920,129 @@ body.light-mode [style*="background: rgb(168, 85, 247)"] {
   color: #FFFFFF !important;
 }
 
+/* VIDEO SECTION BUTTONS - High contrast with backdrop */
+body.light-mode button[class*="px-8 py-4"],
+body.light-mode button[style*="backgroundColor"] {
+  background-color: rgba(0, 0, 0, 0.9) !important;
+  color: #FFFFFF !important;
+  backdrop-filter: blur(8px) !important;
+  border: 1px solid rgba(0, 0, 0, 1) !important;
+}
+
+body.light-mode button[class*="px-8 py-4"]:hover {
+  background-color: rgba(0, 0, 0, 0.75) !important;
+}
+
+/* Sign In button - Text link style */
+body.light-mode a[href="/login"] {
+  color: rgba(0, 0, 0, 0.7) !important;
+}
+
+body.light-mode a[href="/login"]:hover {
+  color: rgba(0, 0, 0, 0.95) !important;
+}
+
+/* Explore button - Outlined style */
+body.light-mode button[onclick*="explore"],
+body.light-mode a[href="/explore"],
+body.light-mode button:has-text("Explore") {
+  border-color: rgba(0, 0, 0, 0.25) !important;
+  color: rgba(0, 0, 0, 0.8) !important;
+  background: transparent !important;
+}
+
+body.light-mode button[onclick*="explore"]:hover,
+body.light-mode a[href="/explore"]:hover {
+  border-color: rgba(0, 0, 0, 0.4) !important;
+  color: rgba(0, 0, 0, 0.95) !important;
+  background: rgba(0, 0, 0, 0.03) !important;
+}
+
+/* Enter Room buttons from video sections */
+body.light-mode section button[class*="rounded-lg"] {
+  color: #FFFFFF !important;
+  font-weight: 600 !important;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* All SVG icons in buttons - ensure visibility */
+body.light-mode button svg {
+  opacity: 1 !important;
+}
+
+/* CTA Section Buttons - High contrast */
+body.light-mode button[class*="bg-white"] {
+  background: #000000 !important;
+  color: #FFFFFF !important;
+  border: 1px solid #000000 !important;
+}
+
+body.light-mode button[class*="bg-white"]:hover {
+  background: rgba(0, 0, 0, 0.85) !important;
+}
+
+/* Meet the Community button */
+body.light-mode button:has-text("Meet the Community"),
+body.light-mode button[class*="group flex items-center"] {
+  color: rgba(0, 0, 0, 0.7) !important;
+}
+
+body.light-mode button:has-text("Meet the Community"):hover {
+  color: rgba(0, 0, 0, 0.95) !important;
+}
+
+/* All button text should be readable */
+body.light-mode button {
+  font-weight: 500;
+}
+
+/* Icon-only buttons - Small action buttons */
+body.light-mode button[title],
+body.light-mode button[aria-label] {
+  background: rgba(0, 0, 0, 0.05) !important;
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+}
+
+body.light-mode button[title]:hover,
+body.light-mode button[aria-label]:hover {
+  background: rgba(0, 0, 0, 0.1) !important;
+  border-color: rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Edit and delete buttons */
+body.light-mode button[title*="Edit"],
+body.light-mode button[aria-label*="Edit"] {
+  color: rgba(0, 0, 0, 0.6) !important;
+}
+
+body.light-mode button[title*="Delete"],
+body.light-mode button[aria-label*="Delete"] {
+  color: rgba(185, 28, 28, 0.8) !important;
+}
+
+body.light-mode button[title*="Delete"]:hover,
+body.light-mode button[aria-label*="Delete"]:hover {
+  background: rgba(239, 68, 68, 0.1) !important;
+  border-color: rgba(239, 68, 68, 0.3) !important;
+}
+
+/* Comment count indicators */
+body.light-mode div[class*="text-white/40"] {
+  color: rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Ensure theme toggle is visible */
+body.light-mode button[aria-label*="theme"],
+body.light-mode button[class*="theme"] {
+  background: rgba(0, 0, 0, 0.05) !important;
+  border: 1px solid rgba(0, 0, 0, 0.15) !important;
+  color: rgba(0, 0, 0, 0.8) !important;
+}
+
+body.light-mode button[aria-label*="theme"]:hover {
+  background: rgba(0, 0, 0, 0.1) !important;
+}
+
 /* Mystery badges */
 body.light-mode [class*="Mystery Lv"],
 body.light-mode [style*="background: rgb(249, 115, 22)"] {
@@ -915,4 +1055,553 @@ body.light-mode [class*="Wisdom Lv"],
 body.light-mode [style*="background: rgb(14, 165, 233)"] {
   background: rgb(14, 165, 233) !important;
   color: #FFFFFF !important;
+}
+
+/* ============================================
+   ADDITIONAL UI/UX FIXES
+   ============================================ */
+
+/* Video section buttons - Clear visibility */
+body.light-mode button[class*="absolute"],
+body.light-mode button[class*="video"] {
+  background: rgba(0, 0, 0, 0.08) !important;
+  border: 1px solid rgba(0, 0, 0, 0.2) !important;
+  color: rgba(0, 0, 0, 0.85) !important;
+  backdrop-filter: blur(8px);
+}
+
+body.light-mode button[class*="absolute"]:hover,
+body.light-mode button[class*="video"]:hover {
+  background: rgba(0, 0, 0, 0.15) !important;
+  border-color: rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Hero section buttons on images */
+body.light-mode .hero-section button,
+body.light-mode [class*="hero"] button {
+  background: rgba(255, 255, 255, 0.95) !important;
+  color: rgba(0, 0, 0, 0.9) !important;
+  border: 1px solid rgba(0, 0, 0, 0.15) !important;
+  font-weight: 500;
+}
+
+body.light-mode .hero-section button:hover,
+body.light-mode [class*="hero"] button:hover {
+  background: #FFFFFF !important;
+  border-color: rgba(0, 0, 0, 0.25) !important;
+}
+
+/* Small icon buttons - Better visibility */
+body.light-mode button[class*="w-6"],
+body.light-mode button[class*="w-7"],
+body.light-mode button[class*="w-8"] {
+  background: rgba(0, 0, 0, 0.06) !important;
+  border: 1px solid rgba(0, 0, 0, 0.12) !important;
+}
+
+body.light-mode button[class*="w-6"]:hover,
+body.light-mode button[class*="w-7"]:hover,
+body.light-mode button[class*="w-8"]:hover {
+  background: rgba(0, 0, 0, 0.1) !important;
+  border-color: rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Dropdown menus */
+body.light-mode [role="menu"],
+body.light-mode [class*="dropdown"] {
+  background: #FAFAF8 !important;
+  border: 1px solid rgba(0, 0, 0, 0.12) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Menu items */
+body.light-mode [role="menuitem"],
+body.light-mode [class*="menu-item"] {
+  color: rgba(0, 0, 0, 0.85) !important;
+}
+
+body.light-mode [role="menuitem"]:hover,
+body.light-mode [class*="menu-item"]:hover {
+  background: rgba(0, 0, 0, 0.05) !important;
+}
+
+/* Tooltips */
+body.light-mode [role="tooltip"],
+body.light-mode [class*="tooltip"] {
+  background: rgba(0, 0, 0, 0.9) !important;
+  color: #FFFFFF !important;
+  border: none !important;
+}
+
+/* Modals and dialogs */
+body.light-mode [role="dialog"],
+body.light-mode [class*="modal"] {
+  background: #FAFAF8 !important;
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12) !important;
+}
+
+/* Tab buttons */
+body.light-mode [role="tab"],
+body.light-mode button[class*="tab"] {
+  color: rgba(0, 0, 0, 0.6) !important;
+  border-bottom: 2px solid transparent !important;
+}
+
+body.light-mode [role="tab"][aria-selected="true"],
+body.light-mode button[class*="tab"][aria-selected="true"] {
+  color: rgba(0, 0, 0, 0.9) !important;
+  border-bottom-color: rgba(0, 0, 0, 0.8) !important;
+}
+
+/* Badges and tags */
+body.light-mode [class*="badge"],
+body.light-mode [class*="tag"]:not([class*="Lv"]) {
+  background: rgba(0, 0, 0, 0.08) !important;
+  color: rgba(0, 0, 0, 0.85) !important;
+  border: 1px solid rgba(0, 0, 0, 0.12) !important;
+}
+
+/* Loading spinners - dark on light */
+body.light-mode svg.animate-spin circle {
+  stroke: rgba(0, 0, 0, 0.2) !important;
+}
+
+body.light-mode svg.animate-spin path {
+  fill: rgba(0, 0, 0, 0.8) !important;
+}
+
+/* Checkbox and radio buttons */
+body.light-mode input[type="checkbox"],
+body.light-mode input[type="radio"] {
+  border: 2px solid rgba(0, 0, 0, 0.3) !important;
+  background: transparent !important;
+}
+
+body.light-mode input[type="checkbox"]:checked,
+body.light-mode input[type="radio"]:checked {
+  background: #000000 !important;
+  border-color: #000000 !important;
+}
+
+/* Dividers */
+body.light-mode hr,
+body.light-mode [class*="divider"] {
+  border-color: rgba(0, 0, 0, 0.08) !important;
+  background: rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Placeholder text in all inputs */
+body.light-mode input::placeholder,
+body.light-mode textarea::placeholder {
+  color: rgba(0, 0, 0, 0.4) !important;
+}
+
+/* Focus states for accessibility */
+body.light-mode *:focus-visible {
+  outline: 2px solid rgba(0, 0, 0, 0.6) !important;
+  outline-offset: 2px !important;
+}
+
+/* Disabled states */
+body.light-mode button:disabled,
+body.light-mode input:disabled,
+body.light-mode select:disabled {
+  opacity: 0.5 !important;
+  cursor: not-allowed !important;
+}
+
+/* Scrollbar styling for light mode */
+body.light-mode ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+body.light-mode ::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+body.light-mode ::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+body.light-mode ::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+/* Link hover underlines */
+body.light-mode a:hover {
+  text-decoration-color: rgba(0, 0, 0, 0.4) !important;
+}
+
+/* Code blocks */
+body.light-mode code,
+body.light-mode pre {
+  background: rgba(0, 0, 0, 0.05) !important;
+  color: rgba(0, 0, 0, 0.9) !important;
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Notification dots */
+body.light-mode [class*="notification"],
+body.light-mode [class*="badge-dot"] {
+  background: #EF4444 !important;
+}
+
+/* Avatar borders */
+body.light-mode img[class*="avatar"],
+body.light-mode [class*="avatar"] img {
+  border: 2px solid rgba(0, 0, 0, 0.1) !important;
+}
+
+/* ============================================
+   COMPREHENSIVE UI/UX IMPROVEMENTS - Light Mode
+   ============================================ */
+
+/* Tooltips */
+body.light-mode [role="tooltip"],
+body.light-mode [class*="tooltip"] {
+  background: rgba(0, 0, 0, 0.9) !important;
+  color: #FFFFFF !important;
+  border: 1px solid rgba(0, 0, 0, 1) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Modals and dialogs */
+body.light-mode [role="dialog"],
+body.light-mode [class*="modal"] {
+  background: #FAFAF8 !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12) !important;
+}
+
+/* Tabs */
+body.light-mode [role="tab"] {
+  color: rgba(0, 0, 0, 0.6) !important;
+  border-bottom: 2px solid transparent !important;
+}
+
+body.light-mode [role="tab"][aria-selected="true"] {
+  color: rgba(0, 0, 0, 0.95) !important;
+  border-bottom-color: rgba(0, 0, 0, 0.9) !important;
+}
+
+body.light-mode [role="tab"]:hover {
+  color: rgba(0, 0, 0, 0.8) !important;
+  background: rgba(0, 0, 0, 0.03) !important;
+}
+
+/* Badges and tags */
+body.light-mode [class*="badge"],
+body.light-mode [class*="tag"] {
+  background: rgba(0, 0, 0, 0.06) !important;
+  color: rgba(0, 0, 0, 0.8) !important;
+  border: 1px solid rgba(0, 0, 0, 0.12) !important;
+}
+
+/* Checkboxes */
+body.light-mode input[type="checkbox"] {
+  border: 2px solid rgba(0, 0, 0, 0.3) !important;
+  background: rgba(0, 0, 0, 0.03) !important;
+}
+
+body.light-mode input[type="checkbox"]:checked {
+  background: rgba(0, 0, 0, 0.9) !important;
+  border-color: rgba(0, 0, 0, 0.9) !important;
+}
+
+/* Radio buttons */
+body.light-mode input[type="radio"] {
+  border: 2px solid rgba(0, 0, 0, 0.3) !important;
+}
+
+body.light-mode input[type="radio"]:checked {
+  border-color: rgba(0, 0, 0, 0.9) !important;
+  background: radial-gradient(circle, rgba(0, 0, 0, 0.9) 40%, transparent 40%) !important;
+}
+
+/* Scrollbars */
+body.light-mode ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+body.light-mode ::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.03) !important;
+}
+
+body.light-mode ::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2) !important;
+  border-radius: 4px;
+}
+
+body.light-mode ::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Dividers */
+body.light-mode hr {
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Progress bars */
+body.light-mode progress {
+  background: rgba(0, 0, 0, 0.08) !important;
+}
+
+body.light-mode progress::-webkit-progress-bar {
+  background: rgba(0, 0, 0, 0.08) !important;
+}
+
+body.light-mode progress::-webkit-progress-value {
+  background: rgba(0, 0, 0, 0.8) !important;
+}
+
+/* Loading spinners */
+body.light-mode [class*="spinner"],
+body.light-mode [class*="loading"] {
+  border-color: rgba(0, 0, 0, 0.15) !important;
+  border-top-color: rgba(0, 0, 0, 0.8) !important;
+}
+
+/* Avatars with borders */
+body.light-mode [class*="avatar"] {
+  border-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Focus states for accessibility */
+body.light-mode *:focus-visible {
+  outline: 2px solid rgba(0, 0, 0, 0.6) !important;
+  outline-offset: 2px !important;
+}
+
+/* Disabled states */
+body.light-mode button:disabled,
+body.light-mode input:disabled,
+body.light-mode select:disabled,
+body.light-mode textarea:disabled {
+  opacity: 0.4 !important;
+  cursor: not-allowed !important;
+}
+
+/* Code blocks */
+body.light-mode code {
+  background: rgba(0, 0, 0, 0.06) !important;
+  color: rgba(0, 0, 0, 0.85) !important;
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 0.9em;
+}
+
+body.light-mode pre {
+  background: rgba(0, 0, 0, 0.04) !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  padding: 16px;
+  border-radius: 6px;
+  overflow-x: auto;
+}
+
+body.light-mode pre code {
+  background: transparent !important;
+  border: none !important;
+  padding: 0;
+}
+
+/* Dropdown menus */
+body.light-mode [class*="dropdown"],
+body.light-mode [class*="menu"] {
+  background: #FAFAF8 !important;
+  border: 1px solid rgba(0, 0, 0, 0.12) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08) !important;
+}
+
+body.light-mode [class*="dropdown"] a,
+body.light-mode [class*="menu"] a,
+body.light-mode [class*="dropdown"] button,
+body.light-mode [class*="menu"] button {
+  color: rgba(0, 0, 0, 0.8) !important;
+}
+
+body.light-mode [class*="dropdown"] a:hover,
+body.light-mode [class*="menu"] a:hover,
+body.light-mode [class*="dropdown"] button:hover,
+body.light-mode [class*="menu"] button:hover {
+  background: rgba(0, 0, 0, 0.05) !important;
+  color: rgba(0, 0, 0, 0.95) !important;
+}
+
+/* Ensure all text is readable */
+body.light-mode [class*="text-white"] {
+  color: rgba(0, 0, 0, 0.85) !important;
+}
+
+body.light-mode [class*="text-white/"] {
+  color: inherit !important;
+  opacity: 0.7;
+}
+
+/* Fix transparent backgrounds that become invisible */
+body.light-mode [style*="background: transparent"] {
+  background: transparent !important;
+}
+
+body.light-mode [style*="rgba(255, 255, 255"] {
+  /* Let room-specific colors shine through */
+}
+
+/* ============================================
+   GLOBAL BUTTON SAFETY NET - Light Mode
+   Ensures ALL buttons are visible
+   ============================================ */
+
+/* All buttons base visibility */
+body.light-mode button:not([class*="join-button"]) {
+  min-height: 32px;
+}
+
+/* Buttons with background colors need contrast */
+body.light-mode button[class*="bg-"] {
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Purple/accent colored buttons (Circle join, etc) */
+body.light-mode button[class*="bg-[#8b5cf6]"],
+body.light-mode button[class*="bg-purple"] {
+  background: rgba(168, 85, 247, 0.9) !important;
+  color: #FFFFFF !important;
+  border: 1px solid rgba(168, 85, 247, 1) !important;
+}
+
+body.light-mode button[class*="bg-[#8b5cf6]"]:hover,
+body.light-mode button[class*="bg-purple"]:hover {
+  background: rgba(168, 85, 247, 1) !important;
+}
+
+/* Gray hover states */
+body.light-mode button[class*="hover:bg-white/5"],
+body.light-mode button[class*="hover:bg-white/10"] {
+  background: rgba(0, 0, 0, 0.03) !important;
+}
+
+body.light-mode button[class*="hover:bg-white/5"]:hover,
+body.light-mode button[class*="hover:bg-white/10"]:hover {
+  background: rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Text color for all buttons */
+body.light-mode button[class*="text-white"] {
+  color: rgba(0, 0, 0, 0.8) !important;
+}
+
+body.light-mode button[class*="text-white/"]:not([class*="bg-"]) {
+  color: rgba(0, 0, 0, 0.65) !important;
+}
+
+/* Icon colors in buttons */
+body.light-mode button svg[class*="text-white"] {
+  color: rgba(0, 0, 0, 0.7) !important;
+}
+
+body.light-mode button:hover svg[class*="text-white"] {
+  color: rgba(0, 0, 0, 0.9) !important;
+}
+
+/* Hamburger menu button */
+body.light-mode button[class*="md:hidden"] svg {
+  color: rgba(0, 0, 0, 0.8) !important;
+}
+
+/* Close buttons (X buttons) */
+body.light-mode button[class*="hover:bg-red"],
+body.light-mode button svg[class*="text-red"] {
+  color: rgba(185, 28, 28, 0.8) !important;
+}
+
+/* Upvote/downvote buttons */
+body.light-mode button[title*="vote"] {
+  color: rgba(0, 0, 0, 0.6) !important;
+}
+
+body.light-mode button[title*="vote"]:hover {
+  color: rgba(0, 0, 0, 0.9) !important;
+}
+
+/* Reply buttons */
+body.light-mode button[class*="text-xs"]:has-text("Reply") {
+  color: rgba(0, 0, 0, 0.65) !important;
+}
+
+/* Cancel buttons */
+body.light-mode button[type="button"]:has-text("Cancel") {
+  color: rgba(0, 0, 0, 0.6) !important;
+  border: 1px solid rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Notification bell */
+body.light-mode button[class*="text-gray-400"] {
+  color: rgba(0, 0, 0, 0.6) !important;
+}
+
+body.light-mode button[class*="text-gray-400"]:hover {
+  color: rgba(0, 0, 0, 0.9) !important;
+}
+
+/* Circle creation buttons */
+body.light-mode button[class*="bg-[#8b5cf6]"][class*="hover:bg-[#9d6fff]"] {
+  background: rgba(168, 85, 247, 0.85) !important;
+  color: #FFFFFF !important;
+}
+
+/* Room selector dots */
+body.light-mode button[class*="w-3 h-3"] {
+  background: rgba(0, 0, 0, 0.2) !important;
+  border: 1px solid rgba(0, 0, 0, 0.3) !important;
+}
+
+body.light-mode button[class*="w-3 h-3"][class*="opacity-100"] {
+  background: rgba(0, 0, 0, 0.8) !important;
+  border-color: rgba(0, 0, 0, 0.9) !important;
+}
+
+/* Expand/collapse buttons in modals */
+body.light-mode button[class*="bg-white/5"] {
+  background: rgba(0, 0, 0, 0.06) !important;
+  border: 1px solid rgba(0, 0, 0, 0.15) !important;
+}
+
+body.light-mode button[class*="bg-white/5"]:hover {
+  background: rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Mark all as read button */
+body.light-mode button[class*="text-[#6b7280]"] {
+  color: rgba(0, 0, 0, 0.55) !important;
+}
+
+body.light-mode button[class*="text-[#6b7280]"]:hover {
+  color: rgba(0, 0, 0, 0.8) !important;
+}
+
+/* Comment action buttons */
+body.light-mode button[class*="text-[#6B5E59]"] {
+  color: rgba(0, 0, 0, 0.6) !important;
+}
+
+body.light-mode button[class*="text-[#6B5E59]"]:hover {
+  color: rgba(0, 0, 0, 0.85) !important;
+}
+
+body.light-mode button[class*="text-[#D9C5B2]"] {
+  color: rgba(0, 0, 0, 0.75) !important;
+}
+
+/* Show more/less buttons */
+body.light-mode button[class*="text-[#8b5cf6]"] {
+  color: rgba(107, 33, 168, 0.9) !important;
+}
+
+body.light-mode button[class*="text-[#8b5cf6]"]:hover {
+  color: rgba(107, 33, 168, 1) !important;
 }

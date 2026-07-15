@@ -102,15 +102,7 @@ function Landing() {
                 to="/register"
                 className="px-4 sm:px-6 py-2 text-xs transition-all duration-500 tracking-widest uppercase join-button"
                 style={{
-                  backgroundColor: '#ffffff',
-                  color: '#000000',
                   borderRadius: 'var(--radius-soft)',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.9)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = '#ffffff';
                 }}
               >
                 Join
