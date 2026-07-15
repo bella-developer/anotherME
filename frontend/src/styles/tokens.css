@@ -287,3 +287,107 @@
    ============================================ */
 
 /* No variable overrides - light mode only affects navbar via index.css */
+
+/* ============================================
+   LIGHT MODE THEME SYSTEM
+   Maintains design philosophy: 98% monochrome, 2% accent
+   ============================================ */
+
+body.light-mode {
+  /* ============================================
+     COLOR PALETTE - Light Mode Base
+     Darkest shades of white (dark grays)
+     ============================================ */
+  
+  /* Backgrounds - Dark grays instead of whites */
+  --bg-primary: #1a1a1a;              /* Very dark charcoal background */
+  --bg-secondary: #242424;            /* Slightly lighter dark gray for cards */
+  --bg-elevated: #2a2a2a;             /* Elevated surfaces */
+  --bg-contrast: #1f1f1f;             /* Subtle contrast areas */
+  
+  /* Surface overlays */
+  --surface-void: #1a1a1a;
+  --surface-0: rgba(0, 0, 0, 0.95);
+  --surface-1: rgba(255, 255, 255, var(--opacity-subtle));     /* 3% white */
+  --surface-2: rgba(255, 255, 255, var(--opacity-faint));      /* 5% white */
+  --surface-3: rgba(255, 255, 255, var(--opacity-light));      /* 8% white */
+  
+  --bg-surface-subtle: rgba(255, 255, 255, var(--opacity-subtle));
+  --bg-surface-faint: rgba(255, 255, 255, var(--opacity-faint));
+  --bg-surface-light: rgba(255, 255, 255, var(--opacity-light));
+  --bg-surface-medium: rgba(255, 255, 255, var(--opacity-medium));
+  
+  /* Glassmorphism - darker for light mode */
+  --bg-glass-weak: rgba(36, 36, 36, 0.6);
+  --bg-glass-medium: rgba(42, 42, 42, 0.8);
+  --bg-glass-strong: rgba(26, 26, 26, 0.9);
+  
+  /* ============================================
+     SEMANTIC COLORS - Text (Light on dark)
+     ============================================ */
+  
+  --text-primary: #e5e5e5;                              /* Light gray for primary text */
+  --text-secondary: #a0a0a0;                            /* Medium gray */
+  --text-tertiary: rgba(255, 255, 255, var(--opacity-intense));   /* 40% white */
+  --text-quaternary: rgba(255, 255, 255, var(--opacity-strong));  /* 25% white */
+  --text-ghost: rgba(255, 255, 255, 0.12);              /* Very faint */
+  --text-muted: #737373;                                /* Muted gray */
+  --text-faint: rgba(255, 255, 255, var(--opacity-strong));
+  --text-subtle: rgba(255, 255, 255, var(--opacity-intense));
+  
+  /* ============================================
+     SEMANTIC COLORS - Borders
+     ============================================ */
+  
+  --border-whisper: rgba(255, 255, 255, var(--opacity-subtle));   /* 3% */
+  --border-subtle: rgba(255, 255, 255, var(--opacity-faint));     /* 5% */
+  --border-faint: rgba(255, 255, 255, var(--opacity-light));      /* 8% */
+  --border-light: rgba(255, 255, 255, var(--opacity-medium));     /* 15% */
+  --border-medium: rgba(255, 255, 255, 0.18);                     /* 18% */
+  --border-default: #404040;                                      /* Dark gray */
+  
+  /* ============================================
+     SEMANTIC COLORS - Interactive States
+     ============================================ */
+  
+  --state-hover-bg: rgba(255, 255, 255, var(--opacity-faint));     /* 5% */
+  --state-active-bg: rgba(255, 255, 255, var(--opacity-light));    /* 8% */
+  --state-focus-ring: #58a6ff;                                     /* Blue focus */
+  --state-disabled-opacity: 0.4;
+  
+  /* ============================================
+     SHADOW SCALE - Darker shadows for depth
+     ============================================ */
+  
+  /* Hairline borders */
+  --shadow-border-subtle: 0 0 0 1px var(--border-subtle);
+  --shadow-border-faint: 0 0 0 1px var(--border-faint);
+  --shadow-border-light: 0 0 0 1px var(--border-light);
+  --shadow-border-medium: 0 0 0 1px var(--border-medium);
+  
+  /* Elevation shadows - darker for contrast */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
+  --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.6);
+  
+  /* Combined border + shadow */
+  --shadow-card: var(--shadow-border-light), var(--shadow-md);
+  --shadow-card-hover: var(--shadow-border-medium), var(--shadow-lg);
+  
+  /* Glow effects */
+  --shadow-glow-sm: 0 0 15px rgba(255, 255, 255, 0.08);
+  --shadow-glow-md: 0 0 30px rgba(255, 255, 255, 0.1);
+  --shadow-glow-lg: 0 0 45px rgba(255, 255, 255, 0.12);
+  
+  /* ============================================
+     ROOM ACCENTS - Maintain Vibrancy (2% Philosophy)
+     ============================================ */
+  
+  /* Room colors stay vibrant for the 2% accent philosophy */
+  --room-accent-subtle: rgba(var(--room-accent-rgb), 0.08);
+  --room-accent-faint: rgba(var(--room-accent-rgb), 0.12);
+  --room-accent-light: rgba(var(--room-accent-rgb), 0.2);
+  --room-accent-medium: rgba(var(--room-accent-rgb), 0.3);
+  --room-accent-glow: rgba(var(--room-accent-rgb), 0.35);
+}

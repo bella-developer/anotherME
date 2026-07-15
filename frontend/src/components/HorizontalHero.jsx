@@ -152,29 +152,13 @@ function HorizontalHero({ onRoomChange = () => {} }) {
     <section 
       ref={containerRef}
       className="relative h-screen w-full overflow-hidden"
-      style={{ background: 'var(--surface-void)' }}
+      style={{ background: '#000000' }}
     >
       {/* Cinematic Letterbox Bars - Top */}
       <div 
         className="absolute top-0 left-0 right-0 h-20 z-40 pointer-events-none"
         style={{
           background: 'linear-gradient(to bottom, rgba(0, 0, 0, 0.98) 0%, rgba(0, 0, 0, 0.85) 40%, transparent 100%)',
-        }}
-      />
-      
-      {/* Cinematic Letterbox Bars - Bottom */}
-      <div 
-        className="absolute bottom-0 left-0 right-0 h-32 z-40 pointer-events-none"
-        style={{
-          background: 'linear-gradient(to top, rgba(0, 0, 0, 0.98) 0%, rgba(0, 0, 0, 0.85) 25%, transparent 100%)',
-        }}
-      />
-
-      {/* Cinematic Vignette */}
-      <div 
-        className="absolute inset-0 z-30 pointer-events-none"
-        style={{
-          background: 'radial-gradient(ellipse at center, transparent 0%, transparent 50%, rgba(0, 0, 0, 0.4) 100%)',
         }}
       />
 
@@ -356,7 +340,7 @@ function HorizontalHero({ onRoomChange = () => {} }) {
       </div>
 
       {/* Navigation Dots - Subtle */}
-      <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 flex gap-3 z-20">
+      <div className="absolute bottom-24 left-1/2 transform -translate-x-1/2 flex gap-3 z-20">
         {rooms.map((room, index) => (
           <button
             key={room.id}
@@ -377,7 +361,7 @@ function HorizontalHero({ onRoomChange = () => {} }) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 2, delay: 2 }}
-          className="absolute bottom-20 left-1/2 transform -translate-x-1/2 z-20"
+          className="absolute bottom-32 left-1/2 transform -translate-x-1/2 z-20"
         >
           <svg 
             className="w-6 h-10 animate-bounce" 
