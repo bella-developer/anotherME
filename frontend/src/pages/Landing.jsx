@@ -58,10 +58,11 @@ function Landing() {
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.8, ease: 'easeOut' }}
-        className="fixed top-0 left-0 right-0 border-b transition-all"
+        className="fixed top-0 left-0 right-0 transition-all"
         style={{
           zIndex: 50,
-          borderColor: isLightMode ? 'rgba(0, 0, 0, 0.08)' : 'var(--border-whisper)',
+          border: 'none',
+          borderBottom: `1px solid ${isLightMode ? 'rgba(0, 0, 0, 0.08)' : 'rgba(255, 255, 255, 0.1)'}`,
           backgroundColor: isLightMode 
             ? 'rgba(251, 252, 248, 0.98)' 
             : (isScrolled ? 'rgba(0, 0, 0, 0.95)' : 'rgba(0, 0, 0, 0.5)'),

@@ -1702,3 +1702,35 @@ body.light-mode button[class*="text-[#8b5cf6]"]:hover {
 
 /* Hero text stays WHITE in light mode (on video background) */
 /* Remove all overrides - let inline styles handle it */
+
+/* ============================================
+   NAVBAR - FORCE UNIFORM BACKGROUND
+   ============================================ */
+
+/* Eliminate ALL background variations in landing navbar */
+body.light-mode header *,
+body.light-mode nav *,
+body.light-mode header div,
+body.light-mode header a,
+body.light-mode header button,
+body.light-mode header svg {
+  background: none !important;
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+/* Header itself is the ONLY element with color */
+body.light-mode header {
+  background: rgba(251, 252, 248, 0.98) !important;
+  background-color: rgba(251, 252, 248, 0.98) !important;
+}
+
+/* Ensure logo doesn't have background */
+body.light-mode header img {
+  background: transparent !important;
+}
+
+/* Ensure buttons don't get overridden */
+body.light-mode header a[href="/register"] {
+  background-color: #000000 !important;
+}
