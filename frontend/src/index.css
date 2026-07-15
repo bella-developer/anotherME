@@ -235,11 +235,13 @@ section.overflow-hidden {
 }
 
 /* ============================================
-   LIGHT MODE - Premium Editorial Sage Palette
-   Inspired by Kinfolk, Cereal Magazine
+   LIGHT MODE - Kinfolk/Cereal Magazine Aesthetic
    
-   Sage #E8EEEC - Main background & cards (soft gray-green)
-   Pearl #FBFCF8 - Navbar (subtle cool white)
+   Sage #E8EEEC - Background (soft gray-green)
+   Off-white #FAFAF8 - Cards (elevated, clean)
+   Pearl #FBFCF8 - Navbar (subtle)
+   
+   KEY: Cards float above background with minimal borders
    ============================================ */
 
 /* Replace starfield with sage */
@@ -353,26 +355,26 @@ body.light-mode button[style*="background: rgba(249, 115, 22, 0.08)"] {
 }
 
 /* ============================================
-   CARDS - Sage (same as background for seamless)
+   CARDS - Off-white on sage (proper elevation)
    ============================================ */
 
 body.light-mode article {
-  background: #E8EEEC !important;
-  border: 1px solid rgba(0, 0, 0, 0.08) !important;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04),
-              0 2px 4px rgba(0, 0, 0, 0.02) !important;
+  background: #FAFAF8 !important;
+  border: 1px solid rgba(0, 0, 0, 0.04) !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03),
+              0 1px 2px rgba(0, 0, 0, 0.02) !important;
 }
 
 body.light-mode article:hover {
-  border-color: rgba(0, 0, 0, 0.12) !important;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.06),
-              0 2px 4px rgba(0, 0, 0, 0.04) !important;
-  transform: translateY(-1px);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-color: rgba(0, 0, 0, 0.06) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04),
+              0 1px 3px rgba(0, 0, 0, 0.03) !important;
+  transform: translateY(-2px);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* ============================================
-   SECTIONS - Sage editorial
+   SECTIONS - Sage background
    ============================================ */
 
 body.light-mode section {
@@ -393,10 +395,11 @@ body.light-mode .features-starfield::before {
     radial-gradient(1px 1px at 53% 9%, rgba(0,0,0,0.03) 0%, transparent 100%) !important;
 }
 
-/* Editorial cards - Sage */
+/* Editorial cards - Off-white elevation */
 body.light-mode [style*="linear-gradient(135deg, rgba(26, 26, 26"] {
-  background: #E8EEEC !important;
-  border: 1px solid rgba(0, 0, 0, 0.06) !important;
+  background: #FAFAF8 !important;
+  border: 1px solid rgba(0, 0, 0, 0.04) !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03) !important;
 }
 
 /* Footer - Pearl (matches navbar) */
@@ -500,14 +503,14 @@ body.light-mode .image-container-black {
    AUTH PAGES - Light Mode Fixes (Phase 1 Critical)
    ============================================ */
 
-/* Form containers - Sage with refined presence */
+/* Form containers - Off-white card on sage */
 body.light-mode [style*="background: rgba(0,0,0,0.4)"],
 body.light-mode [style*="background: rgba(0, 0, 0, 0.4)"] {
-  background: rgba(232, 238, 236, 0.96) !important;
+  background: rgba(250, 250, 248, 0.98) !important;
   backdrop-filter: blur(20px) saturate(150%) !important;
   -webkit-backdrop-filter: blur(20px) saturate(150%) !important;
-  border: 1px solid rgba(0, 0, 0, 0.08) !important;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04) !important;
+  border: 1px solid rgba(0, 0, 0, 0.04) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04) !important;
 }
 
 /* Input fields - Light mode styling */
@@ -663,9 +666,9 @@ body.light-mode a:hover {
   color: rgba(0, 0, 0, 0.9) !important;
 }
 
-/* Success screen - Sage background */
+/* Success screen - Off-white card */
 body.light-mode [class*="bg-[#1A1412]"] {
-  background: #E8EEEC !important;
+  background: #FAFAF8 !important;
 }
 
 body.light-mode [class*="border-[#2d2420]"] {
@@ -682,7 +685,7 @@ body.light-mode [class*="text-[#6B5E59]"] {
 }
 
 body.light-mode [class*="bg-[#0d1117]"] {
-  background: rgba(232, 238, 236, 0.4) !important;
+  background: rgba(250, 250, 248, 0.6) !important;
 }
 
 body.light-mode [class*="border-[#D9C5B2]"] {
@@ -691,7 +694,7 @@ body.light-mode [class*="border-[#D9C5B2]"] {
 
 /* Overlay on auth pages - sage tint */
 body.light-mode .bg-black\/15 {
-  background: rgba(232, 238, 236, 0.3) !important;
+  background: rgba(232, 238, 236, 0.2) !important;
 }
 
 /* Spinner animation colors */
