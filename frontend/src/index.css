@@ -246,11 +246,11 @@ body.light-mode .light-mode-background {
 }
 
 /* ============================================
-   NAVBAR - Clean Editorial Design
+   NAVBAR - Clean Editorial Design (Bone)
    ============================================ */
 body.light-mode header,
 body.light-mode nav[role="navigation"] {
-  background: rgba(255, 250, 218, 0.95) !important;
+  background: rgba(231, 222, 204, 0.95) !important;
   backdrop-filter: blur(16px) saturate(100%) !important;
   -webkit-backdrop-filter: blur(16px) saturate(100%) !important;
   border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
@@ -353,7 +353,7 @@ body.light-mode button[style*="background: rgba(249, 115, 22, 0.08)"] {
    ============================================ */
 
 body.light-mode article {
-  background: #FFF9E3 !important;
+  background: #FFFFFF !important;
   border-color: rgba(0, 0, 0, 0.08) !important;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 
               0 1px 2px rgba(0, 0, 0, 0.04) !important;
@@ -367,17 +367,17 @@ body.light-mode article:hover {
 }
 
 /* ============================================
-   SECTIONS & SURFACES - Clean Cream Foundation
+   SECTIONS & SURFACES - Cream White Foundation
    ============================================ */
 
-/* Main sections - cream/bone tones */
+/* Main sections - cream white */
 body.light-mode section {
-  background: #F3EAD3 !important;
+  background: #FFFADA !important;
 }
 
-/* Alternate sections - lighter cream */
+/* Alternate sections - same cream white */
 body.light-mode section:nth-child(even) {
-  background: #FDF6E4 !important;
+  background: #FFFADA !important;
 }
 
 /* Features section - maintain starfield look differently */
@@ -422,15 +422,15 @@ body.light-mode .features-starfield::before {
     radial-gradient(1px 1px at 71% 99%, rgba(0,0,0,0.13) 0%, transparent 100%) !important;
 }
 
-/* Editorial cards - elevated on cream */
+/* Editorial cards - elevated on cream white */
 body.light-mode [style*="linear-gradient(135deg, rgba(26, 26, 26"] {
-  background: #FFF9E3 !important;
+  background: #FFFFFF !important;
   border: 1px solid rgba(0, 0, 0, 0.08) !important;
 }
 
 /* Footer - subtle differentiation */
 body.light-mode footer {
-  background: #E7DECC !important;
+  background: #FFFADA !important;
   border-top: 1px solid rgba(0, 0, 0, 0.08) !important;
 }
 
@@ -439,7 +439,7 @@ body.light-mode footer {
    ============================================ */
 
 body.light-mode section[style*="background: #000000"] {
-  background: #FDF6E4 !important;
+  background: #FFFADA !important;
 }
 
 /* Sliding text - dark on light */
