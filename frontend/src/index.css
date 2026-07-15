@@ -235,26 +235,26 @@ section.overflow-hidden {
 }
 
 /* ============================================
-   LIGHT MODE - Frost, Cream, Bone Palette
-   Navbar: Frost #Fcfbfc
-   Content: Cream #FFFADA  
-   Cards: Bone #E7DECC
+   LIGHT MODE - Clean Monochrome Palette
+   Navbar & Footer: Frost #FCFBFC (lightest)
+   Content: Pure White #FFFFFF (clean base)
+   Cards: Bone #E7DECC (warm contrast)
    ============================================ */
 
-/* Replace starfield with cream */
+/* Replace starfield with white */
 body.light-mode .light-mode-background {
   opacity: 1 !important;
 }
 
 /* ============================================
-   NAVBAR - Frost #Fcfbfc
+   NAVBAR - Frost #FCFBFC
    ============================================ */
 body.light-mode header,
 body.light-mode nav[role="navigation"] {
   background: rgba(252, 251, 252, 0.98) !important;
   backdrop-filter: blur(12px) !important;
   -webkit-backdrop-filter: blur(12px) !important;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1) !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
 }
 
 /* Logo - Simple invert to black */
@@ -350,32 +350,32 @@ body.light-mode button[style*="background: rgba(249, 115, 22, 0.08)"] {
 }
 
 /* ============================================
-   CARDS - Bone #E7DECC
+   CARDS - Bone #E7DECC with strong borders
    ============================================ */
 
 body.light-mode article {
   background: #E7DECC !important;
-  border-color: rgba(0, 0, 0, 0.12) !important;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 
+  border-color: rgba(0, 0, 0, 0.15) !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08), 
               0 1px 2px rgba(0, 0, 0, 0.06) !important;
 }
 
 body.light-mode article:hover {
-  border-color: rgba(0, 0, 0, 0.2) !important;
+  border-color: rgba(0, 0, 0, 0.25) !important;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1), 
               0 2px 6px rgba(0, 0, 0, 0.08) !important;
 }
 
 /* ============================================
-   SECTIONS - Cream #FFFADA
+   SECTIONS - Pure White #FFFFFF
    ============================================ */
 
 body.light-mode section {
-  background: #FFFADA !important;
+  background: #FFFFFF !important;
 }
 
 body.light-mode .features-starfield {
-  background-color: #FFFADA !important;
+  background-color: #FAFAFA !important;
 }
 
 body.light-mode .features-starfield::before {
@@ -394,18 +394,18 @@ body.light-mode [style*="linear-gradient(135deg, rgba(26, 26, 26"] {
   border: 1px solid rgba(0, 0, 0, 0.12) !important;
 }
 
-/* Footer - Frost */
+/* Footer - Frost (same as navbar) */
 body.light-mode footer {
-  background: #FEFBF9 !important;
-  border-top: 1px solid rgba(0, 0, 0, 0.1) !important;
+  background: #FCFBFC !important;
+  border-top: 1px solid rgba(0, 0, 0, 0.08) !important;
 }
 
 /* ============================================
-   SLIDING TEXT SECTION - Cream background
+   SLIDING TEXT SECTION - White background
    ============================================ */
 
 body.light-mode section[style*="background: #000000"] {
-  background: #FFFADA !important;
+  background: #FFFFFF !important;
 }
 
 /* Sliding text */
@@ -495,13 +495,13 @@ body.light-mode .image-container-black {
    AUTH PAGES - Light Mode Fixes (Phase 1 Critical)
    ============================================ */
 
-/* Form containers - Light glassmorphic with bone tint */
+/* Form containers - Bone with strong presence */
 body.light-mode [style*="background: rgba(0,0,0,0.4)"],
 body.light-mode [style*="background: rgba(0, 0, 0, 0.4)"] {
-  background: rgba(231, 222, 204, 0.95) !important;
-  backdrop-filter: blur(24px) !important;
-  -webkit-backdrop-filter: blur(24px) !important;
-  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  background: rgba(231, 222, 204, 0.98) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border: 1px solid rgba(0, 0, 0, 0.12) !important;
 }
 
 /* Input fields - Light mode styling */
@@ -683,9 +683,9 @@ body.light-mode [class*="border-[#D9C5B2]"] {
   border-color: rgba(0, 0, 0, 0.3) !important;
 }
 
-/* Overlay on auth pages - cream tint */
+/* Overlay on auth pages - white tint */
 body.light-mode .bg-black\/15 {
-  background: rgba(255, 250, 218, 0.25) !important;
+  background: rgba(255, 255, 255, 0.2) !important;
 }
 
 /* Spinner animation colors */
