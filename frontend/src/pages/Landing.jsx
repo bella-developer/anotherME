@@ -55,7 +55,7 @@ function Landing() {
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.8, ease: 'easeOut' }}
-        className="fixed top-0 left-0 right-0 border-b transition-all"
+        className="fixed top-0 left-0 right-0 border-b transition-all light-mode-header"
         style={{
           zIndex: 50,
           borderColor: 'var(--border-whisper)',
@@ -75,7 +75,7 @@ function Landing() {
             <div className="hidden md:flex items-center gap-8 lg:gap-12 text-xs tracking-widest uppercase flex-1 justify-center">
               <Link 
                 to="/explore" 
-                className="text-white/50 hover:text-white transition-all duration-500 relative after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 hover:after:w-full after:bg-white after:transition-all after:duration-500"
+                className="landing-nav-link text-white/50 hover:text-white transition-all duration-500 relative after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 hover:after:w-full after:bg-white after:transition-all after:duration-500"
               >
                 Explore
               </Link>
@@ -83,7 +83,7 @@ function Landing() {
                 href="https://t.me/hesed_perspectives" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-white/50 hover:text-white transition-all duration-500"
+                className="landing-nav-link text-white/50 hover:text-white transition-all duration-500"
               >
                 Community
               </a>
@@ -94,7 +94,7 @@ function Landing() {
               <ThemeToggle />
               <Link 
                 to="/login"
-                className="hidden sm:inline-block px-4 lg:px-6 py-2 text-xs text-white/60 hover:text-white transition-all duration-500 tracking-widest uppercase"
+                className="landing-signin hidden sm:inline-block px-4 lg:px-6 py-2 text-xs text-white/60 hover:text-white transition-all duration-500 tracking-widest uppercase"
               >
                 Sign In
               </Link>

@@ -273,7 +273,7 @@ function HorizontalHero({ onRoomChange = () => {} }) {
 
           {/* Room Label - Ultra quiet */}
           <p 
-            className="text-xs tracking-ultra uppercase mb-6 font-bold"
+            className="hero-room-label text-xs tracking-ultra uppercase mb-6 font-bold"
             style={{
               color: 'rgba(255, 255, 255, 0.5)',
               letterSpacing: '0.3em',
@@ -285,7 +285,7 @@ function HorizontalHero({ onRoomChange = () => {} }) {
 
           {/* Room Title - Extra Bold, High Contrast */}
           <h1 
-            className="text-5xl sm:text-6xl md:text-7xl mb-6"
+            className="hero-room-title text-5xl sm:text-6xl md:text-7xl mb-6"
             style={{
               color: '#ffffff',
               letterSpacing: 'var(--tracking-tight)',
@@ -301,7 +301,7 @@ function HorizontalHero({ onRoomChange = () => {} }) {
 
           {/* Description - Bold and Visible */}
           <p 
-            className="text-base md:text-lg mb-12 max-w-xl mx-auto font-semibold"
+            className="hero-room-desc text-base md:text-lg mb-12 max-w-xl mx-auto font-semibold"
             style={{
               color: 'rgba(255, 255, 255, 0.9)',
               lineHeight: 'var(--leading-relaxed)',
@@ -314,7 +314,7 @@ function HorizontalHero({ onRoomChange = () => {} }) {
           {/* CTA Button - High Contrast */}
           <button
             onClick={() => navigate('/login')}
-            className="px-8 py-3 text-xs uppercase tracking-widest transition-all group font-bold"
+            className="hero-step-in-btn px-8 py-3 text-xs uppercase tracking-widest transition-all group font-bold"
             style={{
               backgroundColor: 'rgba(255, 255, 255, 0.15)',
               color: '#ffffff',

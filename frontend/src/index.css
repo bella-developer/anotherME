@@ -871,6 +871,37 @@ body.light-mode button[class*="text-[9px]"]:hover {
 }
 
 /* NAVBAR FIX - Full consistent background across all elements */
+/* Landing page header - force consistent background */
+body.light-mode .light-mode-header,
+body.light-mode .light-mode-header * {
+  background: rgba(251, 252, 248, 0.95) !important;
+  background-color: rgba(251, 252, 248, 0.95) !important;
+  background-image: none !important;
+}
+
+body.light-mode .light-mode-header {
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+}
+
+/* Landing page nav links */
+body.light-mode .landing-nav-link {
+  color: rgba(0, 0, 0, 0.6) !important;
+}
+
+body.light-mode .landing-nav-link:hover {
+  color: rgba(0, 0, 0, 0.95) !important;
+}
+
+body.light-mode .landing-signin {
+  color: rgba(0, 0, 0, 0.65) !important;
+}
+
+body.light-mode .landing-signin:hover {
+  color: rgba(0, 0, 0, 0.95) !important;
+}
+
+/* General navbar fix for app pages */
 body.light-mode header,
 body.light-mode header *,
 body.light-mode nav,
@@ -906,11 +937,27 @@ body.light-mode nav::after {
 }
 
 /* Dark Room description text - make visible in light mode */
+body.light-mode .dark-room-subtext {
+  color: rgba(0, 0, 0, 0.5) !important;
+}
+
 body.light-mode p[style*="rgba(255, 255, 255, 0.15)"] {
   color: rgba(0, 0, 0, 0.45) !important;
 }
 
 /* Room page buttons - "Share Your Thoughts" etc */
+body.light-mode .dark-room-button {
+  background: rgba(0, 0, 0, 0.06) !important;
+  border: 1.5px solid rgba(0, 0, 0, 0.25) !important;
+  color: rgba(0, 0, 0, 0.8) !important;
+}
+
+body.light-mode .dark-room-button:hover {
+  border-color: rgba(239, 68, 68, 0.6) !important;
+  color: rgba(185, 28, 28, 1) !important;
+  background: rgba(239, 68, 68, 0.08) !important;
+}
+
 body.light-mode button[style*="var(--surface-1)"] {
   background: rgba(0, 0, 0, 0.04) !important;
   border: 1px solid rgba(0, 0, 0, 0.2) !important;
@@ -1647,4 +1694,40 @@ body.light-mode button[class*="text-[#8b5cf6]"] {
 
 body.light-mode button[class*="text-[#8b5cf6]"]:hover {
   color: rgba(107, 33, 168, 1) !important;
+}
+
+/* ============================================
+   LANDING HERO - Light Mode Visibility
+   ============================================ */
+
+/* Hero room label text */
+body.light-mode .hero-room-label {
+  color: rgba(0, 0, 0, 0.7) !important;
+  text-shadow: none !important;
+}
+
+/* Hero room title - Dark Room etc */
+body.light-mode .hero-room-title {
+  color: rgba(0, 0, 0, 0.95) !important;
+  text-shadow: none !important;
+  -webkit-text-stroke: none !important;
+}
+
+/* Hero room description */
+body.light-mode .hero-room-desc {
+  color: rgba(0, 0, 0, 0.75) !important;
+  text-shadow: none !important;
+}
+
+/* Step In button - must be visible */
+body.light-mode .hero-step-in-btn {
+  background-color: rgba(0, 0, 0, 0.85) !important;
+  color: #FFFFFF !important;
+  border: 2px solid rgba(0, 0, 0, 1) !important;
+  text-shadow: none !important;
+}
+
+body.light-mode .hero-step-in-btn:hover {
+  background-color: rgba(0, 0, 0, 0.95) !important;
+  border-color: rgba(0, 0, 0, 1) !important;
 }

@@ -173,7 +173,7 @@ function DarkRoom() {
                     Where vulnerability becomes strength
                   </p>
                   
-                  <p className="text-[10px] max-w-md" style={{
+                  <p className="text-[10px] max-w-md dark-room-subtext" style={{
                     color: 'rgba(255, 255, 255, 0.15)',
                     lineHeight: 'var(--leading-relaxed)'
                   }}>
@@ -183,7 +183,7 @@ function DarkRoom() {
                 {isAuthenticated && (
                   <button
                     onClick={() => setIsPostFormOpen(true)}
-                    className="flex-shrink-0 px-6 py-3 text-xs tracking-widest uppercase transition-all"
+                    className="flex-shrink-0 px-6 py-3 text-xs tracking-widest uppercase transition-all dark-room-button"
                     style={{
                       background: 'var(--surface-1)',
                       border: '1px solid var(--border-whisper)',
