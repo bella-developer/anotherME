@@ -95,13 +95,13 @@ export default function IntrovertsBg() {
           />
         ))}
 
-        {/* Light mode - Cream white replacement */}
+        {/* Light mode - Clean white background */}
         <div 
           className="light-mode-background"
           style={{
             position: 'absolute',
             inset: 0,
-            background: '#FFFADA',
+            background: '#FFFFFF',
             opacity: 0,
             transition: 'opacity 600ms cubic-bezier(0.4, 0, 0.2, 1)',
             pointerEvents: 'none',

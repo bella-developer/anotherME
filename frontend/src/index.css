@@ -235,37 +235,36 @@ section.overflow-hidden {
 }
 
 /* ============================================
-   LIGHT MODE - "Daylight Mode" Premium Strategy
-   Warm cream/bone foundation, editorial hierarchy
-   98% cream/bone, 2% precious accent
+   LIGHT MODE - Clean & Simple Strategy
+   Pure white with strong contrast
    ============================================ */
 
-/* Replace starfield with warm cream in light mode */
+/* Replace starfield with pure white */
 body.light-mode .light-mode-background {
   opacity: 1 !important;
 }
 
 /* ============================================
-   NAVBAR - Clean Editorial Design (Bone)
+   NAVBAR - White with strong borders
    ============================================ */
 body.light-mode header,
 body.light-mode nav[role="navigation"] {
-  background: rgba(231, 222, 204, 0.95) !important;
-  backdrop-filter: blur(16px) saturate(100%) !important;
-  -webkit-backdrop-filter: blur(16px) saturate(100%) !important;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
+  background: rgba(255, 255, 255, 0.98) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1) !important;
 }
 
-/* Logo - Warm dark brown instead of pure black */
+/* Logo - Simple invert to black */
 body.light-mode img[alt="ESO Logo"] {
-  filter: brightness(0) saturate(100%) invert(20%) sepia(15%) hue-rotate(15deg) !important;
+  filter: invert(1) !important;
 }
 
-/* Navbar text - Stronger contrast for readability */
+/* Navbar text - Strong black */
 body.light-mode nav[role="navigation"] a,
 body.light-mode header nav a,
 body.light-mode header a {
-  color: rgba(0, 0, 0, 0.85) !important;
+  color: rgba(0, 0, 0, 0.8) !important;
 }
 
 body.light-mode nav[role="navigation"] a:hover,
@@ -274,10 +273,10 @@ body.light-mode header a:hover {
 }
 
 /* ============================================
-   CONTENT - Editorial Hierarchy & Readability
+   CONTENT - Strong black text, clean hierarchy
    ============================================ */
 
-/* Headings - Pure black, editorial weight */
+/* Headings - Pure black */
 body.light-mode h1,
 body.light-mode h2,
 body.light-mode h3 {
@@ -285,30 +284,30 @@ body.light-mode h3 {
   text-shadow: none !important;
 }
 
-/* Body text - High contrast */
+/* Body text - Strong contrast */
 body.light-mode p {
-  color: rgba(0, 0, 0, 0.8) !important;
+  color: rgba(0, 0, 0, 0.85) !important;
 }
 
-/* Subtle text - Muted but visible */
+/* Subtle text - Still readable */
 body.light-mode [style*="rgba(255, 255, 255, 0.15)"],
 body.light-mode p[class*="text-[10px]"] {
-  color: rgba(0, 0, 0, 0.4) !important;
+  color: rgba(0, 0, 0, 0.5) !important;
 }
 
-/* Quaternary text (labels) */
+/* Quaternary text */
 body.light-mode [style*="var(--text-quaternary)"] {
-  color: rgba(0, 0, 0, 0.5) !important;
+  color: rgba(0, 0, 0, 0.55) !important;
 }
 
 /* Tertiary text */
 body.light-mode [style*="var(--text-tertiary)"] {
-  color: rgba(0, 0, 0, 0.6) !important;
+  color: rgba(0, 0, 0, 0.65) !important;
 }
 
-/* Ghost text (footer) */
+/* Ghost text */
 body.light-mode [style*="var(--text-ghost)"] {
-  color: rgba(0, 0, 0, 0.35) !important;
+  color: rgba(0, 0, 0, 0.4) !important;
 }
 
 /* ============================================
@@ -349,90 +348,54 @@ body.light-mode button[style*="background: rgba(249, 115, 22, 0.08)"] {
 }
 
 /* ============================================
-   CARDS - Clean Elevation
+   CARDS - White with clear borders
    ============================================ */
 
 body.light-mode article {
   background: #FFFFFF !important;
-  border-color: rgba(0, 0, 0, 0.08) !important;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 
-              0 1px 2px rgba(0, 0, 0, 0.04) !important;
+  border-color: rgba(0, 0, 0, 0.12) !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 
+              0 1px 2px rgba(0, 0, 0, 0.06) !important;
 }
 
-/* Card hover states */
 body.light-mode article:hover {
-  border-color: rgba(0, 0, 0, 0.12) !important;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), 
-              0 2px 6px rgba(0, 0, 0, 0.06) !important;
+  border-color: rgba(0, 0, 0, 0.2) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12), 
+              0 2px 6px rgba(0, 0, 0, 0.08) !important;
 }
 
 /* ============================================
-   SECTIONS & SURFACES - Cream White Foundation
+   SECTIONS - Pure white throughout
    ============================================ */
 
-/* Main sections - cream white */
 body.light-mode section {
-  background: #FFFADA !important;
+  background: #FFFFFF !important;
 }
 
-/* Alternate sections - same cream white */
-body.light-mode section:nth-child(even) {
-  background: #FFFADA !important;
-}
-
-/* Features section - maintain starfield look differently */
 body.light-mode .features-starfield {
-  background-color: #FFFADA !important;
+  background-color: #F9F9F9 !important;
 }
 
 body.light-mode .features-starfield::before {
   background-image:
-    radial-gradient(1px 1px at 5% 12%, rgba(0,0,0,0.15) 0%, transparent 100%),
-    radial-gradient(1px 1px at 18% 7%, rgba(0,0,0,0.12) 0%, transparent 100%),
-    radial-gradient(1.5px 1.5px at 27% 23%, rgba(0,0,0,0.18) 0%, transparent 100%),
-    radial-gradient(1px 1px at 38% 4%, rgba(0,0,0,0.1) 0%, transparent 100%),
-    radial-gradient(1px 1px at 45% 18%, rgba(0,0,0,0.14) 0%, transparent 100%),
-    radial-gradient(1px 1px at 53% 9%, rgba(0,0,0,0.13) 0%, transparent 100%),
-    radial-gradient(1.5px 1.5px at 61% 31%, rgba(0,0,0,0.2) 0%, transparent 100%),
-    radial-gradient(1px 1px at 72% 5%, rgba(0,0,0,0.12) 0%, transparent 100%),
-    radial-gradient(1px 1px at 82% 16%, rgba(0,0,0,0.14) 0%, transparent 100%),
-    radial-gradient(1px 1px at 91% 11%, rgba(0,0,0,0.1) 0%, transparent 100%),
-    radial-gradient(1px 1px at 96% 26%, rgba(0,0,0,0.15) 0%, transparent 100%),
-    radial-gradient(1px 1px at 9% 38%, rgba(0,0,0,0.12) 0%, transparent 100%),
-    radial-gradient(1.5px 1.5px at 21% 45%, rgba(0,0,0,0.18) 0%, transparent 100%),
-    radial-gradient(1px 1px at 33% 52%, rgba(0,0,0,0.1) 0%, transparent 100%),
-    radial-gradient(1px 1px at 47% 41%, rgba(0,0,0,0.14) 0%, transparent 100%),
-    radial-gradient(1px 1px at 58% 57%, rgba(0,0,0,0.13) 0%, transparent 100%),
-    radial-gradient(1px 1px at 67% 48%, rgba(0,0,0,0.12) 0%, transparent 100%),
-    radial-gradient(1.5px 1.5px at 76% 63%, rgba(0,0,0,0.18) 0%, transparent 100%),
-    radial-gradient(1px 1px at 85% 39%, rgba(0,0,0,0.1) 0%, transparent 100%),
-    radial-gradient(1px 1px at 93% 54%, rgba(0,0,0,0.14) 0%, transparent 100%),
-    radial-gradient(1px 1px at 3% 67%, rgba(0,0,0,0.13) 0%, transparent 100%),
-    radial-gradient(1px 1px at 14% 74%, rgba(0,0,0,0.12) 0%, transparent 100%),
-    radial-gradient(1.5px 1.5px at 25% 81%, rgba(0,0,0,0.2) 0%, transparent 100%),
-    radial-gradient(1px 1px at 36% 69%, rgba(0,0,0,0.1) 0%, transparent 100%),
-    radial-gradient(1px 1px at 49% 88%, rgba(0,0,0,0.14) 0%, transparent 100%),
-    radial-gradient(1px 1px at 55% 76%, rgba(0,0,0,0.13) 0%, transparent 100%),
-    radial-gradient(1px 1px at 64% 92%, rgba(0,0,0,0.12) 0%, transparent 100%),
-    radial-gradient(1.5px 1.5px at 78% 83%, rgba(0,0,0,0.18) 0%, transparent 100%),
-    radial-gradient(1px 1px at 88% 71%, rgba(0,0,0,0.1) 0%, transparent 100%),
-    radial-gradient(1px 1px at 97% 86%, rgba(0,0,0,0.15) 0%, transparent 100%),
-    radial-gradient(1px 1px at 11% 95%, rgba(0,0,0,0.12) 0%, transparent 100%),
-    radial-gradient(1px 1px at 42% 97%, rgba(0,0,0,0.1) 0%, transparent 100%),
-    radial-gradient(1px 1px at 71% 99%, rgba(0,0,0,0.13) 0%, transparent 100%) !important;
+    radial-gradient(1px 1px at 5% 12%, rgba(0,0,0,0.08) 0%, transparent 100%),
+    radial-gradient(1px 1px at 18% 7%, rgba(0,0,0,0.06) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 27% 23%, rgba(0,0,0,0.1) 0%, transparent 100%),
+    radial-gradient(1px 1px at 38% 4%, rgba(0,0,0,0.05) 0%, transparent 100%),
+    radial-gradient(1px 1px at 45% 18%, rgba(0,0,0,0.07) 0%, transparent 100%),
+    radial-gradient(1px 1px at 53% 9%, rgba(0,0,0,0.06) 0%, transparent 100%) !important;
 }
 
-/* Editorial cards - elevated with stronger definition */
+/* Editorial cards */
 body.light-mode [style*="linear-gradient(135deg, rgba(26, 26, 26"] {
-  background: #FFFEF8 !important;
-  border: 1px solid rgba(0, 0, 0, 0.12) !important;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
+  background: #FFFFFF !important;
+  border: 1px solid rgba(0, 0, 0, 0.15) !important;
 }
 
-/* Footer - darker for visual grounding */
+/* Footer */
 body.light-mode footer {
-  background: #F3EAD3 !important;
-  border-top: 1px solid rgba(0, 0, 0, 0.1) !important;
+  background: #F5F5F5 !important;
+  border-top: 1px solid rgba(0, 0, 0, 0.12) !important;
 }
 
 /* ============================================
@@ -440,19 +403,24 @@ body.light-mode footer {
    ============================================ */
 
 body.light-mode section[style*="background: #000000"] {
-  background: #FFFADA !important;
+  background: #FFFFFF !important;
 }
 
-/* Sliding text - slightly softer black */
+/* Sliding text */
 body.light-mode .slide-track span {
-  color: rgba(0, 0, 0, 0.9) !important;
+  color: #000000 !important;
   text-shadow: none !important;
 }
 
-/* Stars in sliding text - stronger purple accent */
 body.light-mode .slide-track span[style*="rgba(167, 139, 250"] {
-  color: rgba(168, 85, 247, 0.6) !important;
+  color: rgba(168, 85, 247, 0.7) !important;
   text-shadow: none !important;
+}
+
+/* Image containers - keep black for contrast */
+body.light-mode .image-container-black {
+  background: #000000 !important;
+  background-color: #000000 !important;
 }
 
 /* ============================================
@@ -713,9 +681,9 @@ body.light-mode [class*="border-[#D9C5B2]"] {
   border-color: rgba(0, 0, 0, 0.3) !important;
 }
 
-/* Overlay on auth pages */
+/* Overlay on auth pages - light tint */
 body.light-mode .bg-black\/15 {
-  background: rgba(255, 250, 218, 0.3) !important;
+  background: rgba(255, 255, 255, 0.2) !important;
 }
 
 /* Spinner animation colors */
