@@ -256,6 +256,30 @@ body.light-mode p {
   color: rgba(255, 255, 255, 0.95) !important;
 }
 
+/* Navbar in light mode - Lace white background */
+body.light-mode header,
+body.light-mode nav[role="navigation"] {
+  background: rgba(253, 245, 230, 0.95) !important;
+  backdrop-filter: blur(20px) saturate(120%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(120%) !important;
+  border-bottom: 1px solid rgba(253, 245, 230, 0.2) !important;
+}
+
+/* Navbar text in light mode - Dark for contrast on lace */
+body.light-mode nav[role="navigation"] a,
+body.light-mode nav[role="navigation"] button:not(.join-button):not([class*="theme-toggle"]),
+body.light-mode header nav a,
+body.light-mode header nav button:not(.join-button):not([class*="theme-toggle"]),
+body.light-mode header a:not(.join-button),
+body.light-mode header button:not(.join-button):not([class*="theme-toggle"]) {
+  color: rgba(0, 0, 0, 0.7) !important;
+}
+
+body.light-mode nav[role="navigation"] a:hover,
+body.light-mode header a:hover {
+  color: rgba(0, 0, 0, 0.9) !important;
+}
+
 /* Enhanced visibility for subtle text */
 body.light-mode [style*="rgba(255, 255, 255, 0.15)"],
 body.light-mode p[class*="text-[10px]"] {
@@ -296,12 +320,6 @@ body.light-mode button[style*="rgba(255, 255, 255, 0.04)"] {
 body.light-mode article,
 body.light-mode [class*="rounded"] {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
-}
-
-/* Navigation text enhancement */
-body.light-mode nav a,
-body.light-mode nav button {
-  color: rgba(255, 255, 255, 0.9) !important;
 }
 
 /* Premium glow effects remain visible */
