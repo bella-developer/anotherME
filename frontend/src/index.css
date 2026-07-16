@@ -254,7 +254,7 @@ body.light-mode .light-mode-background {
    ============================================ */
 body.light-mode header,
 body.light-mode nav[role="navigation"] {
-  background: rgba(226, 222, 216, 0.95) !important; /* Secondary pearl with transparency */
+  background: rgba(227, 222, 214, 0.95) !important; /* Match base beige with transparency */
   backdrop-filter: blur(20px) saturate(180%) !important;
   -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
   border-bottom: 1px solid rgba(0, 0, 0, 0.06) !important;
@@ -359,10 +359,9 @@ body.light-mode button[style*="background: rgba(249, 115, 22, 0.08)"] {
    ============================================ */
 
 body.light-mode article {
-  background: #F3F1EC !important; /* Highlight pearl */
-  border: 0.5px solid rgba(0, 0, 0, 0.02) !important; /* Whisper-thin border */
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.01),
-              0 2px 4px rgba(0, 0, 0, 0.01) !important; /* Barely perceptible shadow */
+  background: #EAE6DE !important; /* Very subtle lift from background */
+  border: 0.5px solid rgba(0, 0, 0, 0.03) !important; /* Almost invisible border */
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.015) !important; /* Whisper shadow */
 }
 
 body.light-mode article:hover {
@@ -395,11 +394,11 @@ body.light-mode .features-starfield::before {
     radial-gradient(1px 1px at 53% 9%, rgba(0,0,0,0.03) 0%, transparent 100%) !important;
 }
 
-/* Editorial cards - Highlight pearl elevation */
+/* Editorial cards - Subtle elevation */
 body.light-mode [style*="linear-gradient(135deg, rgba(26, 26, 26"] {
-  background: #F3F1EC !important; /* Highlight pearl */
-  border: 0.5px solid rgba(0, 0, 0, 0.02) !important;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.01) !important;
+  background: #EAE6DE !important; /* Very subtle lift */
+  border: 0.5px solid rgba(0, 0, 0, 0.03) !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.015) !important;
 }
 
 /* Footer - Pearl (matches navbar) */
@@ -668,9 +667,9 @@ body.light-mode a:hover {
   color: rgba(0, 0, 0, 0.9) !important;
 }
 
-/* Success screen - Highlight pearl card */
+/* Success screen - Subtle card */
 body.light-mode [class*="bg-[#1A1412]"] {
-  background: #F3F1EC !important; /* Highlight pearl */
+  background: #EAE6DE !important; /* Subtle lift */
 }
 
 body.light-mode [class*="border-[#2d2420]"] {
@@ -874,8 +873,8 @@ body.light-mode button[class*="text-[9px]"]:hover {
 /* Landing page header - force consistent background */
 body.light-mode .light-mode-header,
 body.light-mode .light-mode-header * {
-  background: rgba(226, 222, 216, 0.95) !important; /* Secondary pearl */
-  background-color: rgba(226, 222, 216, 0.95) !important;
+  background: rgba(227, 222, 214, 0.95) !important; /* Match base beige */
+  background-color: rgba(227, 222, 214, 0.95) !important;
   background-image: none !important;
 }
 
@@ -915,15 +914,15 @@ body.light-mode header div {
 }
 
 body.light-mode header {
-  background-color: rgba(226, 222, 216, 0.95) !important; /* Secondary pearl */
-  background: rgba(226, 222, 216, 0.95) !important;
+  background-color: rgba(227, 222, 214, 0.95) !important; /* Match base beige */
+  background: rgba(227, 222, 214, 0.95) !important;
   backdrop-filter: blur(12px) !important;
   -webkit-backdrop-filter: blur(12px) !important;
 }
 
 /* Navbar component with inline styles */
 body.light-mode nav[role="navigation"] {
-  background: rgba(226, 222, 216, 0.95) !important; /* Secondary pearl */
+  background: rgba(227, 222, 214, 0.95) !important; /* Match base beige */
   backdrop-filter: blur(12px) !important;
   -webkit-backdrop-filter: blur(12px) !important;
 }
@@ -1199,9 +1198,9 @@ body.light-mode button[class*="w-8"]:hover {
 /* Dropdown menus */
 body.light-mode [role="menu"],
 body.light-mode [class*="dropdown"] {
-  background: #F3F1EC !important; /* Highlight pearl */
-  border: 0.5px solid rgba(0, 0, 0, 0.02) !important;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02) !important;
+  background: #EAE6DE !important; /* Subtle lift */
+  border: 0.5px solid rgba(0, 0, 0, 0.04) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03) !important;
 }
 
 /* Menu items */
@@ -1361,9 +1360,9 @@ body.light-mode [class*="tooltip"] {
 /* Modals and dialogs */
 body.light-mode [role="dialog"],
 body.light-mode [class*="modal"] {
-  background: #F3F1EC !important; /* Highlight pearl */
-  border: 0.5px solid rgba(0, 0, 0, 0.02) !important;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.02) !important;
+  background: #EAE6DE !important; /* Subtle lift */
+  border: 0.5px solid rgba(0, 0, 0, 0.04) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03) !important;
 }
 
 /* Tabs */
@@ -1502,9 +1501,9 @@ body.light-mode pre code {
 /* Dropdown menus */
 body.light-mode [class*="dropdown"],
 body.light-mode [class*="menu"] {
-  background: #F3F1EC !important; /* Highlight pearl */
-  border: 0.5px solid rgba(0, 0, 0, 0.02) !important;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02) !important;
+  background: #EAE6DE !important; /* Subtle lift */
+  border: 0.5px solid rgba(0, 0, 0, 0.04) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03) !important;
 }
 
 body.light-mode [class*="dropdown"] a,
@@ -1734,8 +1733,8 @@ body.light-mode header svg {
 
 /* Header itself is the ONLY element with color */
 body.light-mode header {
-  background: rgba(226, 222, 216, 0.98) !important; /* Secondary pearl */
-  background-color: rgba(226, 222, 216, 0.98) !important;
+  background: rgba(227, 222, 214, 0.98) !important; /* Match base beige */
+  background-color: rgba(227, 222, 214, 0.98) !important;
 }
 
 /* Ensure logo doesn't have background */
