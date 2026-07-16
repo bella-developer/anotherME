@@ -95,13 +95,13 @@ export default function IntrovertsBg() {
           />
         ))}
 
-        {/* Light mode - Sage editorial background */}
+        {/* Light mode - Warm cream editorial background */}
         <div 
           className="light-mode-background"
           style={{
             position: 'absolute',
             inset: 0,
-            background: '#E8EEEC',
+            background: '#F5F1EA',
             opacity: 0,
             transition: 'opacity 600ms cubic-bezier(0.4, 0, 0.2, 1)',
             pointerEvents: 'none',
