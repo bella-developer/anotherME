@@ -900,6 +900,67 @@ body.light-mode .landing-signin:hover {
   color: rgba(0, 0, 0, 0.95) !important;
 }
 
+/* ============================================
+   WARM GRAY PALETTE - Exact Reference Colors
+   No pure blacks or whites
+   ============================================ */
+
+/* Primary text - Headings, important content */
+body.light-mode h1,
+body.light-mode h2,
+body.light-mode h3,
+body.light-mode [class*="text-4xl"],
+body.light-mode [class*="text-5xl"],
+body.light-mode [class*="text-6xl"] {
+  color: #4A4640 !important; /* Medium warm gray-brown */
+}
+
+/* Small labels and secondary headings */
+body.light-mode [class*="text-xs"][class*="uppercase"],
+body.light-mode [class*="text-sm"][class*="uppercase"] {
+  color: #8B8378 !important; /* Light warm gray */
+  letter-spacing: 0.2em;
+}
+
+/* Navigation links */
+body.light-mode nav a,
+body.light-mode header a:not([class*="join"]):not([class*="register"]) {
+  color: #5C5750 !important; /* Medium-dark warm gray */
+}
+
+body.light-mode nav a:hover,
+body.light-mode header a:hover {
+  color: #2D2A26 !important; /* Very dark warm gray */
+}
+
+/* Room titles and important labels */
+body.light-mode [class*="uppercase"][class*="font-bold"],
+body.light-mode [class*="uppercase"][class*="tracking-wide"] {
+  color: #2D2A26 !important; /* Very dark warm gray */
+}
+
+/* Body text and descriptions */
+body.light-mode p,
+body.light-mode [class*="text-sm"]:not([class*="uppercase"]),
+body.light-mode [class*="text-base"] {
+  color: #6B6560 !important; /* Medium-light warm gray */
+}
+
+/* Button text */
+body.light-mode button:not([class*="bg-"]):not([style*="background"]) {
+  color: #5C5750 !important; /* Medium-dark warm gray */
+  border-color: #B8B0A5 !important; /* Light warm gray */
+}
+
+body.light-mode button:hover {
+  color: #2D2A26 !important; /* Very dark warm gray on hover */
+  border-color: #8B8378 !important;
+}
+
+/* ============================================
+   END WARM GRAY PALETTE
+   ============================================ */
+
 /* General navbar fix for app pages */
 body.light-mode header,
 body.light-mode header *,
