@@ -359,9 +359,9 @@ body.light-mode button[style*="background: rgba(249, 115, 22, 0.08)"] {
    ============================================ */
 
 body.light-mode article {
-  background: #E9E5DD !important; /* Warm highlight (no pure white) */
-  border: 0.5px solid rgba(0, 0, 0, 0.06) !important;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03), 0 2px 6px rgba(0, 0, 0, 0.02) !important;
+  background: #F0EDE5 !important; /* Slightly lighter warm beige for cards */
+  border: 0.5px solid rgba(139, 131, 120, 0.12) !important;
+  box-shadow: 0 1px 3px rgba(107, 101, 96, 0.04), 0 2px 6px rgba(107, 101, 96, 0.02) !important;
 }
 
 body.light-mode article:hover {
@@ -396,9 +396,9 @@ body.light-mode .features-starfield::before {
 
 /* Editorial cards - Subtle elevation */
 body.light-mode [style*="linear-gradient(135deg, rgba(26, 26, 26"] {
-  background: #E9E5DD !important; /* Warm highlight */
-  border: 0.5px solid rgba(0, 0, 0, 0.06) !important;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03) !important;
+  background: #F0EDE5 !important; /* Slightly lighter warm beige */
+  border: 0.5px solid rgba(139, 131, 120, 0.12) !important;
+  box-shadow: 0 1px 3px rgba(107, 101, 96, 0.04) !important;
 }
 
 /* Footer - Pearl (matches navbar) */
@@ -669,7 +669,7 @@ body.light-mode a:hover {
 
 /* Success screen - Subtle card */
 body.light-mode [class*="bg-[#1A1412]"] {
-  background: #E9E5DD !important; /* Warm highlight */
+  background: #F0EDE5 !important; /* Slightly lighter warm beige */
 }
 
 body.light-mode [class*="border-[#2d2420]"] {
@@ -835,12 +835,12 @@ body.light-mode button[class*="reaction"] span {
 
 /* Text link buttons (Sign In, Explore, etc) */
 body.light-mode a[class*="text-white"] {
-  color: rgba(0, 0, 0, 0.75) !important;
+  color: #5C5750 !important; /* Medium-dark warm gray */
   font-weight: 500;
 }
 
 body.light-mode a[class*="text-white"]:hover {
-  color: rgba(0, 0, 0, 1) !important;
+  color: #2D2A26 !important; /* Very dark warm gray */
 }
 
 /* Google button - Outlined style */
@@ -914,15 +914,16 @@ body.light-mode header div {
 }
 
 body.light-mode header {
-  background-color: rgba(215, 210, 202, 0.95) !important; /* Base color */
-  background: rgba(215, 210, 202, 0.95) !important;
+  background-color: rgba(232, 227, 216, 0.95) !important; /* Base warm beige */
+  background: rgba(232, 227, 216, 0.95) !important;
   backdrop-filter: blur(12px) !important;
   -webkit-backdrop-filter: blur(12px) !important;
+  border-bottom: 0.5px solid rgba(139, 131, 120, 0.15) !important;
 }
 
 /* Navbar component with inline styles */
 body.light-mode nav[role="navigation"] {
-  background: rgba(215, 210, 202, 0.95) !important; /* Base color */
+  background: rgba(232, 227, 216, 0.95) !important; /* Base warm beige */
   backdrop-filter: blur(12px) !important;
   -webkit-backdrop-filter: blur(12px) !important;
 }
@@ -1019,16 +1020,16 @@ body.light-mode a[href="/login"]:hover {
 
 /* Navbar links in Landing page */
 body.light-mode a[class*="text-white/60"] {
-  color: rgba(0, 0, 0, 0.7) !important;
+  color: #5C5750 !important; /* Medium-dark warm gray */
 }
 
 body.light-mode a[class*="text-white/50"] {
-  color: rgba(0, 0, 0, 0.65) !important;
+  color: #6B6560 !important; /* Medium-light warm gray */
 }
 
 body.light-mode a[class*="text-white/60"]:hover,
 body.light-mode a[class*="text-white/50"]:hover {
-  color: rgba(0, 0, 0, 1) !important;
+  color: #2D2A26 !important; /* Very dark warm gray */
 }
 
 /* Explore button - Outlined style */
@@ -1198,9 +1199,9 @@ body.light-mode button[class*="w-8"]:hover {
 /* Dropdown menus */
 body.light-mode [role="menu"],
 body.light-mode [class*="dropdown"] {
-  background: #E9E5DD !important; /* Warm highlight */
-  border: 0.5px solid rgba(0, 0, 0, 0.08) !important;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05) !important;
+  background: #F0EDE5 !important; /* Slightly lighter warm beige */
+  border: 0.5px solid rgba(139, 131, 120, 0.15) !important;
+  box-shadow: 0 2px 8px rgba(107, 101, 96, 0.06) !important;
 }
 
 /* Menu items */
@@ -1360,9 +1361,9 @@ body.light-mode [class*="tooltip"] {
 /* Modals and dialogs */
 body.light-mode [role="dialog"],
 body.light-mode [class*="modal"] {
-  background: #E9E5DD !important; /* Warm highlight */
-  border: 0.5px solid rgba(0, 0, 0, 0.08) !important;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06) !important;
+  background: #F0EDE5 !important; /* Slightly lighter warm beige */
+  border: 0.5px solid rgba(139, 131, 120, 0.15) !important;
+  box-shadow: 0 4px 16px rgba(107, 101, 96, 0.08) !important;
 }
 
 /* Tabs */
@@ -1501,9 +1502,9 @@ body.light-mode pre code {
 /* Dropdown menus */
 body.light-mode [class*="dropdown"],
 body.light-mode [class*="menu"] {
-  background: #E9E5DD !important; /* Warm highlight */
-  border: 0.5px solid rgba(0, 0, 0, 0.08) !important;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05) !important;
+  background: #F0EDE5 !important; /* Slightly lighter warm beige */
+  border: 0.5px solid rgba(139, 131, 120, 0.15) !important;
+  box-shadow: 0 2px 8px rgba(107, 101, 96, 0.06) !important;
 }
 
 body.light-mode [class*="dropdown"] a,
@@ -1733,8 +1734,9 @@ body.light-mode header svg {
 
 /* Header itself is the ONLY element with color */
 body.light-mode header {
-  background: rgba(215, 210, 202, 0.98) !important; /* Base color */
-  background-color: rgba(215, 210, 202, 0.98) !important;
+  background: rgba(232, 227, 216, 0.98) !important; /* Base warm beige */
+  background-color: rgba(232, 227, 216, 0.98) !important;
+  border-bottom: 0.5px solid rgba(139, 131, 120, 0.15) !important;
 }
 
 /* Ensure logo doesn't have background */
