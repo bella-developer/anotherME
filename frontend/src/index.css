@@ -277,12 +277,14 @@ body.light-mode img[alt="ESO Logo"]:hover {
   opacity: 1;
 }
 
-/* Navbar text - Strong hierarchy with smooth hover */
+/* Navbar text - Strong, crisp, no blur */
 body.light-mode nav[role="navigation"] a,
 body.light-mode header nav a,
 body.light-mode header a {
-  color: rgba(0, 0, 0, 0.65) !important;
-  font-weight: 500;
+  color: rgba(0, 0, 0, 0.75) !important;
+  font-weight: 500 !important;
+  -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale !important;
   transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
@@ -1175,27 +1177,65 @@ body.light-mode .bg-black\/80 {
    AUTH PAGES - Light Mode Fixes
    ============================================ */
 
+/* Auth page main title - pure black */
+body.light-mode h1 {
+  color: #000000 !important;
+  font-weight: 400 !important;
+  text-shadow: none !important;
+}
+
+/* Auth page subtitle - "CONTINUE YOUR JOURNEY" - visible */
+body.light-mode h1 + p,
+body.light-mode h2 + p,
+body.light-mode p[class*="text-xs"],
+body.light-mode p[class*="uppercase"] {
+  color: rgba(0, 0, 0, 0.50) !important;
+  text-shadow: none !important;
+}
+
+/* Input labels - clearly visible */
+body.light-mode label {
+  color: rgba(0, 0, 0, 0.75) !important;
+  font-weight: 500 !important;
+}
+
+/* "Need an account?" text */
+body.light-mode p[class*="text-center"],
+body.light-mode div > p {
+  color: rgba(0, 0, 0, 0.70) !important;
+}
+
+/* Links in auth pages */
+body.light-mode a {
+  color: rgba(0, 0, 0, 0.85) !important;
+  font-weight: 500 !important;
+}
+
+body.light-mode a:hover {
+  color: rgba(0, 0, 0, 1.0) !important;
+}
+
 /* Google Sign In Button - FIX black on black */
 body.light-mode button[class*="bg-white/8"],
 body.light-mode button:has(svg[class*="google"]) {
   background: rgba(255, 255, 255, 0.95) !important;
-  border: 1.5px solid rgba(0, 0, 0, 0.15) !important;
-  color: rgba(0, 0, 0, 0.85) !important;
+  border: 1.5px solid rgba(0, 0, 0, 0.20) !important;
+  color: rgba(0, 0, 0, 0.90) !important;
+  font-weight: 500 !important;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08) !important;
 }
 
 body.light-mode button[class*="bg-white/8"]:hover,
 body.light-mode button:has(svg[class*="google"]):hover {
   background: rgba(255, 255, 255, 1.0) !important;
-  border-color: rgba(0, 0, 0, 0.25) !important;
+  border-color: rgba(0, 0, 0, 0.30) !important;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12) !important;
 }
 
-/* Google button icon */
-body.light-mode button svg[class*="google"],
-body.light-mode button:has(svg) svg {
-  color: inherit !important;
-  opacity: 1 !important;
+/* Google button text - ensure visibility */
+body.light-mode button[class*="bg-white/8"] span,
+body.light-mode button:has(svg) span {
+  color: rgba(0, 0, 0, 0.90) !important;
 }
 
 /* Auth form containers - proper contrast */
@@ -1230,6 +1270,35 @@ body.light-mode input::placeholder {
 body.light-mode input:focus {
   border-color: rgba(0, 0, 0, 0.30) !important;
   background: rgba(0, 0, 0, 0.02) !important;
+}
+
+/* ============================================
+   EXPLORE SECTIONS - Consistent styling
+   Landing page AND separate explore page
+   ============================================ */
+
+/* Explore section headings */
+body.light-mode section h2,
+body.light-mode section h3 {
+  color: #000000 !important;
+  font-weight: 400 !important;
+}
+
+/* Explore section subtext */
+body.light-mode section p {
+  color: rgba(0, 0, 0, 0.65) !important;
+}
+
+/* Explore cards - ensure text is visible */
+body.light-mode article h3,
+body.light-mode .explore-card h3 {
+  color: #000000 !important;
+  font-weight: 500 !important;
+}
+
+body.light-mode article p,
+body.light-mode .explore-card p {
+  color: rgba(0, 0, 0, 0.70) !important;
 }
 
 /* ============================================
