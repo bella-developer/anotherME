@@ -4,10 +4,13 @@ import { motion } from 'framer-motion';
 import Layout from '../components/Layout';
 import PageTransition from '../components/PageTransition';
 import { usePageTitle } from '../hooks/usePageTitle';
+import { useTheme } from '../contexts/ThemeContext';
 
 function Home() {
   usePageTitle('Home');
   const navigate = useNavigate();
+  const { theme } = useTheme();
+  const isLight = theme === 'light';
   const [hovered, setHovered] = useState(null);
   const [time, setTime] = useState(new Date());
 
@@ -70,7 +73,7 @@ function Home() {
             transition={{ duration: 2, delay: 0.5 }}
             className="text-center mb-6 md:mb-8"
           >
-            <p className="text-[9px] tracking-[0.28em] text-white/15 uppercase font-light italic">
+            <p className={`text-[9px] tracking-[0.28em] uppercase font-light italic ${isLight ? 'text-black/30' : 'text-white/15'}`}>
               "{getGreeting()}"
             </p>
           </motion.div>
@@ -82,7 +85,7 @@ function Home() {
             transition={{ duration: 1.8, delay: 0.8 }}
             className="text-center mb-16 md:mb-20 lg:mb-24"
           >
-            <p className="text-[9px] tracking-[0.22em] text-white/18 uppercase mb-4 md:mb-6 font-light">
+            <p className={`text-[9px] tracking-[0.22em] uppercase mb-4 md:mb-6 font-light ${isLight ? 'text-black/35' : 'text-white/18'}`}>
               Choose Your Room
             </p>
             <motion.h1
@@ -94,7 +97,7 @@ function Home() {
                 repeat: Infinity, 
                 ease: 'easeInOut' 
               }}
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extralight tracking-[0.12em] text-white/92 px-4"
+              className={`text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extralight tracking-[0.12em] px-4 ${isLight ? 'text-black/90' : 'text-white/92'}`}
               style={{ fontWeight: 200 }}
             >
               Your Safe Space
@@ -422,7 +425,7 @@ function Home() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 2, delay: 2.5 }}
-            className="mt-16 md:mt-20 lg:mt-24 text-[8px] tracking-[0.26em] text-white/10 uppercase font-light italic px-4 text-center"
+            className={`mt-16 md:mt-20 lg:mt-24 text-[8px] tracking-[0.26em] uppercase font-light italic px-4 text-center ${isLight ? 'text-black/20' : 'text-white/10'}`}
           >
             A space to breathe, to think, to be.
           </motion.p>

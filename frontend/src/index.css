@@ -433,6 +433,26 @@ body.light-mode button[style*="background: rgba(249, 115, 22, 0.08)"] {
 }
 
 /* ============================================
+   AUTH PAGES - Google Sign In Button Override
+   MUST come after general button rules
+   ============================================ */
+body.light-mode button[class*="bg-white/8"],
+body.light-mode button[class*="bg-white"][class*="/8"] {
+  background: rgba(255, 255, 255, 0.95) !important;
+  border: 1.5px solid rgba(0, 0, 0, 0.25) !important;
+  color: rgba(0, 0, 0, 0.95) !important;
+  font-weight: 600 !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08) !important;
+}
+
+body.light-mode button[class*="bg-white/8"]:hover,
+body.light-mode button[class*="bg-white"][class*="/8"]:hover {
+  background: rgba(255, 255, 255, 1.0) !important;
+  border-color: rgba(0, 0, 0, 0.35) !important;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12) !important;
+}
+
+/* ============================================
    CARDS - Kinfolk-style: Subtle elevation with smooth hover
    ============================================ */
 
@@ -791,16 +811,6 @@ body.light-mode [class*="bg-[#6B5E59]"] {
 }
 
 /* Google Sign In Button - Light mode */
-body.light-mode button[class*="bg-white/8"] {
-  background: rgba(0, 0, 0, 0.04) !important;
-  color: rgba(0, 0, 0, 0.85) !important;
-  border-color: rgba(0, 0, 0, 0.15) !important;
-}
-
-body.light-mode button[class*="bg-white/8"]:hover {
-  background: rgba(0, 0, 0, 0.08) !important;
-}
-
 /* Validation error styling for inputs */
 body.light-mode input[class*="border-red-500/50"] {
   border-color: rgba(239, 68, 68, 0.4) !important;
@@ -911,26 +921,15 @@ body.light-mode button[class*="reaction"] span {
   color: rgba(0, 0, 0, 0.75) !important;
 }
 
-/* Text link buttons (Sign In, Explore, etc) */
-body.light-mode a[class*="text-white"] {
-  color: #5C5750 !important; /* Medium-dark warm gray */
+/* Text link buttons (Sign In, Explore, etc) - Kinfolk strong blacks */
+/* Exclude auth pages to prevent conflicts */
+body.light-mode a[class*="text-white"]:not(.min-h-screen a):not([href="/forgot-password"]):not([href="/login"]):not([href="/register"]):not([href="/privacy"]) {
+  color: rgba(0, 0, 0, 0.70) !important;
   font-weight: 500;
 }
 
-body.light-mode a[class*="text-white"]:hover {
-  color: #2D2A26 !important; /* Very dark warm gray */
-}
-
-/* Google button - Outlined style */
-body.light-mode button[class*="bg-white/8"] {
-  background: transparent !important;
-  border: 1px solid rgba(0, 0, 0, 0.2) !important;
-  color: rgba(0, 0, 0, 0.85) !important;
-}
-
-body.light-mode button[class*="bg-white/8"]:hover {
-  background: rgba(0, 0, 0, 0.03) !important;
-  border-color: rgba(0, 0, 0, 0.3) !important;
+body.light-mode a[class*="text-white"]:not(.min-h-screen a):not([href="/forgot-password"]):not([href="/login"]):not([href="/register"]):not([href="/privacy"]):hover {
+  color: rgba(0, 0, 0, 0.95) !important;
 }
 
 /* Category/filter buttons - Clear visibility */
@@ -1076,49 +1075,49 @@ body.light-mode h3,
 body.light-mode [class*="text-4xl"],
 body.light-mode [class*="text-5xl"],
 body.light-mode [class*="text-6xl"] {
-  color: #4A4640 !important; /* Medium warm gray-brown */
+  color: rgba(0, 0, 0, 0.90) !important; /* Strong black - Kinfolk style */
 }
 
 /* Small labels and secondary headings */
 body.light-mode [class*="text-xs"][class*="uppercase"],
 body.light-mode [class*="text-sm"][class*="uppercase"] {
-  color: #8B8378 !important; /* Light warm gray */
+  color: rgba(0, 0, 0, 0.65) !important; /* Strong black - readable */
   letter-spacing: 0.2em;
 }
 
 /* Navigation links */
 body.light-mode nav a,
 body.light-mode header a:not([class*="join"]):not([class*="register"]) {
-  color: #5C5750 !important; /* Medium-dark warm gray */
+  color: rgba(0, 0, 0, 0.75) !important; /* Strong black - Kinfolk style */
 }
 
 body.light-mode nav a:hover,
 body.light-mode header a:hover {
-  color: #2D2A26 !important; /* Very dark warm gray */
+  color: rgba(0, 0, 0, 0.95) !important; /* Near-black on hover */
 }
 
 /* Room titles and important labels */
 body.light-mode [class*="uppercase"][class*="font-bold"],
 body.light-mode [class*="uppercase"][class*="tracking-wide"] {
-  color: #2D2A26 !important; /* Very dark warm gray */
+  color: rgba(0, 0, 0, 0.90) !important; /* Strong black - Kinfolk style */
 }
 
 /* Body text and descriptions */
 body.light-mode p,
 body.light-mode [class*="text-sm"]:not([class*="uppercase"]),
 body.light-mode [class*="text-base"] {
-  color: #6B6560 !important; /* Medium-light warm gray */
+  color: rgba(0, 0, 0, 0.80) !important; /* Strong black - Kinfolk style */
 }
 
 /* Button text */
 body.light-mode button:not([class*="bg-"]):not([style*="background"]) {
-  color: #5C5750 !important; /* Medium-dark warm gray */
-  border-color: #B8B0A5 !important; /* Light warm gray */
+  color: rgba(0, 0, 0, 0.75) !important; /* Strong black - Kinfolk style */
+  border-color: rgba(0, 0, 0, 0.25) !important; /* Visible border */
 }
 
 body.light-mode button:hover {
-  color: #2D2A26 !important; /* Very dark warm gray on hover */
-  border-color: #8B8378 !important;
+  color: rgba(0, 0, 0, 0.95) !important; /* Near-black on hover */
+  border-color: rgba(0, 0, 0, 0.40) !important;
 }
 
 /* ============================================
@@ -1174,89 +1173,227 @@ body.light-mode .bg-black\/80 {
 }
 
 /* ============================================
-   AUTH PAGES - Light Mode Fixes
+   AUTH PAGES - Light Mode Fixes (Tailwind classes)
    ============================================ */
 
-/* Auth page main title - pure black */
-body.light-mode h1 {
+/* Auth page main title - "SIGN IN" */
+body.light-mode h1.text-white {
   color: #000000 !important;
-  font-weight: 400 !important;
+}
+
+/* Auth page subtitle - "CONTINUE YOUR JOURNEY" */
+body.light-mode p.text-white\/40,
+body.light-mode p[class*="text-white/40"] {
+  color: rgba(0, 0, 0, 0.55) !important;
+}
+/* ================================
+   AUTH PAGES - LIGHT MODE OVERRIDES
+   High specificity to override general rules
+   ================================ */
+
+/* Auth page wrapper - target auth pages specifically */
+body.light-mode .min-h-screen:has(form),
+body.light-mode div[class*="min-h-screen"]:has([id="username"]),
+body.light-mode div[class*="min-h-screen"]:has([id="password"]) {
+  /* Auth page detected */
+}
+
+/* Remove text shadows in auth pages */
+body.light-mode .min-h-screen:has(form) *,
+body.light-mode div:has([id="username"]) *,
+body.light-mode div:has([id="password"]) * {
   text-shadow: none !important;
 }
 
-/* Auth page subtitle - "CONTINUE YOUR JOURNEY" - visible */
-body.light-mode h1 + p,
-body.light-mode h2 + p,
-body.light-mode p[class*="text-xs"],
-body.light-mode p[class*="uppercase"] {
+/* "SIGN IN" / "REGISTER" page title - HIGHEST PRIORITY */
+body.light-mode .min-h-screen:has(form) h1,
+body.light-mode div:has([id="username"]) h1,
+body.light-mode div:has([id="password"]) h1 {
+  color: #000000 !important;
+}
+
+/* "CONTINUE YOUR JOURNEY" subtitle - HIGHEST PRIORITY */
+body.light-mode .min-h-screen:has(form) p[class*="text-white"],
+body.light-mode div:has([id="username"]) p[class*="text-white"],
+body.light-mode div:has([id="password"]) p[class*="text-white"] {
+  color: rgba(0, 0, 0, 0.60) !important;
+}
+
+/* Form card background - glassmorphic white card */
+body.light-mode div[style*="rgba(0,0,0,0.4)"],
+body.light-mode div[style*="rgba(0, 0, 0, 0.4)"] {
+  background: rgba(255, 255, 255, 0.85) !important;
+  backdrop-filter: blur(20px) !important;
+  border-color: rgba(0, 0, 0, 0.12) !important;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Input labels - "USERNAME", "PASSWORD" - HIGHEST PRIORITY */
+body.light-mode .min-h-screen:has(form) label,
+body.light-mode div:has([id="username"]) label,
+body.light-mode div:has([id="password"]) label {
+  color: rgba(0, 0, 0, 0.80) !important;
+  font-weight: 700 !important;
+}
+
+/* Input fields */
+body.light-mode .min-h-screen:has(form) input[type="text"],
+body.light-mode .min-h-screen:has(form) input[type="email"],
+body.light-mode .min-h-screen:has(form) input[type="password"] {
+  background: rgba(255, 255, 255, 0.70) !important;
+  border: 1px solid rgba(0, 0, 0, 0.20) !important;
+  color: rgba(0, 0, 0, 0.95) !important;
+}
+
+body.light-mode .min-h-screen:has(form) input[type="text"]:focus,
+body.light-mode .min-h-screen:has(form) input[type="email"]:focus,
+body.light-mode .min-h-screen:has(form) input[type="password"]:focus {
+  border-color: rgba(0, 0, 0, 0.40) !important;
+  background: rgba(255, 255, 255, 0.90) !important;
+}
+
+/* Input placeholder text */
+body.light-mode .min-h-screen:has(form) input::placeholder {
+  color: rgba(0, 0, 0, 0.40) !important;
+  opacity: 1 !important;
+}
+
+/* Password toggle button */
+body.light-mode .min-h-screen:has(form) button[aria-label*="password"] {
   color: rgba(0, 0, 0, 0.50) !important;
-  text-shadow: none !important;
 }
 
-/* Input labels - clearly visible */
-body.light-mode label {
-  color: rgba(0, 0, 0, 0.75) !important;
-  font-weight: 500 !important;
+body.light-mode .min-h-screen:has(form) button[aria-label*="password"]:hover {
+  color: rgba(0, 0, 0, 0.80) !important;
 }
 
-/* "Need an account?" text */
-body.light-mode p[class*="text-center"],
-body.light-mode div > p {
+/* SVG icons in password toggle */
+body.light-mode .min-h-screen:has(form) button[aria-label*="password"] svg {
+  color: rgba(0, 0, 0, 0.50) !important;
+}
+
+body.light-mode .min-h-screen:has(form) button[aria-label*="password"]:hover svg {
+  color: rgba(0, 0, 0, 0.80) !important;
+}
+
+/* "Forgot password?" link - HIGHEST PRIORITY */
+body.light-mode .min-h-screen:has(form) .text-right a,
+body.light-mode .min-h-screen:has(form) a[href="/forgot-password"],
+body.light-mode div:has([id="username"]) a[class*="text-white"] {
   color: rgba(0, 0, 0, 0.70) !important;
 }
 
-/* Links in auth pages */
-body.light-mode a {
-  color: rgba(0, 0, 0, 0.85) !important;
-  font-weight: 500 !important;
-}
-
-body.light-mode a:hover {
+body.light-mode .min-h-screen:has(form) .text-right a:hover,
+body.light-mode .min-h-screen:has(form) a[href="/forgot-password"]:hover {
   color: rgba(0, 0, 0, 1.0) !important;
 }
 
-/* Google Sign In Button - FIX black on black */
-body.light-mode button[class*="bg-white/8"],
-body.light-mode button:has(svg[class*="google"]) {
-  background: rgba(255, 255, 255, 0.95) !important;
-  border: 1.5px solid rgba(0, 0, 0, 0.20) !important;
+/* "or" divider text - HIGHEST PRIORITY */
+body.light-mode .min-h-screen:has(form) .flex.items-center span,
+body.light-mode .min-h-screen:has(form) span[class*="text-white"] {
+  color: rgba(0, 0, 0, 0.50) !important;
+}
+
+/* Divider lines */
+body.light-mode .min-h-screen:has(form) .border-t,
+body.light-mode .min-h-screen:has(form) div[class*="border-t"],
+body.light-mode .min-h-screen:has(form) .flex-1[class*="border-t"] {
+  border-color: rgba(0, 0, 0, 0.18) !important;
+}
+
+/* Error/Alert boxes */
+body.light-mode .min-h-screen:has(form) div[class*="border-red"] {
+  border-color: rgba(220, 38, 38, 0.35) !important;
+  background: rgba(220, 38, 38, 0.06) !important;
+}
+
+body.light-mode .min-h-screen:has(form) div[class*="border-yellow"] {
+  border-color: rgba(234, 179, 8, 0.35) !important;
+  background: rgba(234, 179, 8, 0.06) !important;
+}
+
+body.light-mode .min-h-screen:has(form) p[class*="text-red"] {
+  color: rgba(185, 28, 28, 0.90) !important;
+}
+
+body.light-mode .min-h-screen:has(form) p[class*="text-yellow"] {
+  color: rgba(161, 98, 7, 0.90) !important;
+}
+
+/* "Don't have an account?" section - HIGHEST PRIORITY */
+body.light-mode .min-h-screen:has(form) .border-t.text-center p,
+body.light-mode .min-h-screen:has(form) div[class*="border-t"] p {
+  color: rgba(0, 0, 0, 0.65) !important;
+}
+
+/* "Create One" / "Sign In" links - HIGHEST PRIORITY */
+body.light-mode .min-h-screen:has(form) .border-t.text-center a,
+body.light-mode .min-h-screen:has(form) div[class*="border-t"] a {
   color: rgba(0, 0, 0, 0.90) !important;
-  font-weight: 500 !important;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08) !important;
+  font-weight: 700 !important;
 }
 
-body.light-mode button[class*="bg-white/8"]:hover,
-body.light-mode button:has(svg[class*="google"]):hover {
-  background: rgba(255, 255, 255, 1.0) !important;
-  border-color: rgba(0, 0, 0, 0.30) !important;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12) !important;
+body.light-mode .min-h-screen:has(form) .border-t.text-center a:hover,
+body.light-mode .min-h-screen:has(form) div[class*="border-t"] a:hover {
+  color: rgba(0, 0, 0, 1.0) !important;
 }
 
-/* Google button text - ensure visibility */
-body.light-mode button[class*="bg-white/8"] span,
-body.light-mode button:has(svg) span {
-  color: rgba(0, 0, 0, 0.90) !important;
+/* Privacy Policy link at bottom - HIGHEST PRIORITY */
+body.light-mode .min-h-screen:has(form) .text-center p[class*="text-white"] {
+  color: rgba(0, 0, 0, 0.60) !important;
 }
 
-/* Auth form containers - proper contrast */
-body.light-mode [style*="background: rgba(0,0,0,0.4)"],
-body.light-mode [style*="background: rgba(0, 0, 0, 0.4)"],
-body.light-mode form[class*="rounded"] {
-  background: rgba(255, 255, 255, 0.95) !important;
-  border: 1px solid rgba(0, 0, 0, 0.08) !important;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
+body.light-mode .min-h-screen:has(form) a.underline,
+body.light-mode .min-h-screen:has(form) a[href="/privacy"] {
+  color: rgba(0, 0, 0, 0.70) !important;
+  text-decoration: underline !important;
 }
 
-/* Auth page titles */
-body.light-mode h1[class*="text"],
-body.light-mode h2[class*="text"] {
+body.light-mode .min-h-screen:has(form) a.underline:hover,
+body.light-mode .min-h-screen:has(form) a[href="/privacy"]:hover {
+  color: rgba(0, 0, 0, 0.95) !important;
+}
+
+/* Light overlay on auth pages - allow background to show */
+body.light-mode .min-h-screen:has(form) .absolute.inset-0.z-10,
+body.light-mode div:has([id="username"]) > div[class*="bg-black"],
+body.light-mode div:has([id="password"]) > div[class*="bg-black"] {
+  background: rgba(255, 255, 255, 0.25) !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+/* ================================
+   NUCLEAR OPTION - Override ALL text in auth forms
+   ================================ */
+body.light-mode .min-h-screen:has(form) h1,
+body.light-mode .min-h-screen:has(form) h2,
+body.light-mode .min-h-screen:has(form) h3,
+body.light-mode .min-h-screen:has(form) h4,
+body.light-mode .min-h-screen:has(form) h5,
+body.light-mode .min-h-screen:has(form) h6 {
   color: #000000 !important;
-  text-shadow: none !important;
 }
 
-/* Auth input fields - proper visibility */
-body.light-mode input[type="text"],
-body.light-mode input[type="email"],
+body.light-mode .min-h-screen:has(form) p {
+  color: rgba(0, 0, 0, 0.70) !important;
+}
+
+body.light-mode .min-h-screen:has(form) span {
+  color: rgba(0, 0, 0, 0.60) !important;
+}
+
+body.light-mode .min-h-screen:has(form) label {
+  color: rgba(0, 0, 0, 0.80) !important;
+  font-weight: 700 !important;
+}
+
+body.light-mode .min-h-screen:has(form) a {
+  color: rgba(0, 0, 0, 0.75) !important;
+}
+
+body.light-mode .min-h-screen:has(form) a:hover {
+  color: rgba(0, 0, 0, 0.95) !important;
+}
 body.light-mode input[type="password"] {
   background: rgba(0, 0, 0, 0.03) !important;
   border: 1px solid rgba(0, 0, 0, 0.15) !important;
@@ -1425,16 +1562,16 @@ body.light-mode a[href="/login"]:hover {
 
 /* Navbar links in Landing page */
 body.light-mode a[class*="text-white/60"] {
-  color: #5C5750 !important; /* Medium-dark warm gray */
+  color: rgba(0, 0, 0, 0.75) !important; /* Strong black - Kinfolk style */
 }
 
 body.light-mode a[class*="text-white/50"] {
-  color: #6B6560 !important; /* Medium-light warm gray */
+  color: rgba(0, 0, 0, 0.70) !important; /* Strong black - Kinfolk style */
 }
 
 body.light-mode a[class*="text-white/60"]:hover,
 body.light-mode a[class*="text-white/50"]:hover {
-  color: #2D2A26 !important; /* Very dark warm gray */
+  color: rgba(0, 0, 0, 0.95) !important; /* Near-black on hover */
 }
 
 /* Explore button - Outlined style */
@@ -2195,5 +2332,64 @@ body.light-mode .hero-white-text {
 body.light-mode h1.hero-white-text,
 body.light-mode p.hero-white-text,
 body.light-mode button.hero-white-text {
+  color: #FFFFFF !important;
+}
+
+
+/* ============================================
+   AUTH PAGES FINAL FIX - ULTRA HIGH SPECIFICITY
+   This section ensures auth pages work in light mode
+   ============================================ */
+
+/* Target only auth pages with forms (Login & Register) */
+body.light-mode [class*="text-white/70"],
+body.light-mode [class*="text-white/60"],
+body.light-mode [class*="text-white/50"],
+body.light-mode [class*="text-white/40"],
+body.light-mode [class*="text-white/30"],
+body.light-mode [class*="text-white/20"] {
+  color: rgba(0, 0, 0, 0.75) !important;
+}
+
+/* Auth h1 titles */
+body.light-mode h1.text-white,
+body.light-mode h1[class*="text-white"] {
+  color: rgba(0, 0, 0, 0.95) !important;
+}
+
+/* Auth p subtitles */
+body.light-mode p.text-white,
+body.light-mode p[class*="text-white"] {
+  color: rgba(0, 0, 0, 0.70) !important;
+}
+
+/* Auth labels */
+body.light-mode label.text-white,
+body.light-mode label[class*="text-white"] {
+  color: rgba(0, 0, 0, 0.85) !important;
+}
+
+/* Auth spans */
+body.light-mode span.text-white,
+body.light-mode span[class*="text-white"] {
+  color: rgba(0, 0, 0, 0.65) !important;
+}
+
+/* Auth links */
+body.light-mode a.text-white,
+body.light-mode a[class*="text-white"] {
+  color: rgba(0, 0, 0, 0.75) !important;
+}
+
+body.light-mode a.text-white:hover,
+body.light-mode a[class*="text-white"]:hover {
+  color: rgba(0, 0, 0, 0.95) !important;
+}
+
+/* BUT - Exclude hero and explore sections */
+body.light-mode .hero-white-text,
+body.light-mode .explore-white-text,
+body.light-mode .hero-white-text *,
+body.light-mode .explore-white-text * {
   color: #FFFFFF !important;
 }

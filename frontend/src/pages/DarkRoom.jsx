@@ -11,12 +11,15 @@ import DarkRoomCard from '../components/DarkRoomCard';
 import DarkRoomPostForm from '../components/DarkRoomPostForm';
 import LoadingSpinner from '../components/LoadingSpinner';
 import { usePageTitle } from '../hooks/usePageTitle';
+import { useTheme } from '../contexts/ThemeContext';
 
 function DarkRoom() {
   usePageTitle('Dark Room');
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { isAuthenticated } = useSelector(selectAuth);
+  const { theme } = useTheme();
+  const isLight = theme === 'light';
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -231,12 +234,12 @@ function DarkRoom() {
               <div className="flex justify-center py-16"><LoadingSpinner /></div>
             ) : error ? (
               <div className="text-center py-16">
-                <p className="text-white/30 text-sm mb-4">{error}</p>
-                <button onClick={() => window.location.reload()} className="text-[10px] tracking-[0.2em] uppercase text-white/30 hover:text-white/60 transition-colors">Try Again</button>
+                <p className={`text-sm mb-4 ${isLight ? 'text-black/50' : 'text-white/30'}`}>{error}</p>
+                <button onClick={() => window.location.reload()} className={`text-[10px] tracking-[0.2em] uppercase transition-colors ${isLight ? 'text-black/50 hover:text-black/70' : 'text-white/30 hover:text-white/60'}`}>Try Again</button>
               </div>
             ) : posts.length === 0 ? (
               <div className="text-center py-16">
-                <p className="text-white/25 text-sm">No posts yet. Be the first to share.</p>
+                <p className={`text-sm ${isLight ? 'text-black/40' : 'text-white/25'}`}>No posts yet. Be the first to share.</p>
               </div>
             ) : (
               <div className="space-y-3">

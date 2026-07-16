@@ -6,6 +6,7 @@ import PageTransition from '../components/PageTransition';
 import LoadingSpinner from '../components/LoadingSpinner';
 import { fetchCircles } from '../services/circleService';
 import { usePageTitle } from '../hooks/usePageTitle';
+import { useTheme } from '../contexts/ThemeContext';
 
 // Room accent config with energy ring colors matching Home page
 const roomAccent = {
@@ -283,6 +284,8 @@ function CircleCard({ circle, onClick }) {
 function Circles() {
   usePageTitle('Circles');
   const navigate = useNavigate();
+  const { theme } = useTheme();
+  const isLight = theme === 'light';
   const [circles, setCircles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState('all');
@@ -333,10 +336,10 @@ function Circles() {
           {/* Header */}
           <div className="mb-12">
             <div className="w-8 h-px mb-6" style={{ background: 'linear-gradient(to right, rgba(255,255,255,0.4), transparent)' }} />
-            <h1 className="text-3xl font-light tracking-[0.2em] text-white uppercase mb-3">
+            <h1 className={`text-3xl font-light tracking-[0.2em] uppercase mb-3 ${isLight ? 'text-black' : 'text-white'}`}>
               Circles
             </h1>
-            <p className="text-[11px] text-white/30 tracking-[0.12em]">
+            <p className={`text-[11px] tracking-[0.12em] ${isLight ? 'text-black/50' : 'text-white/30'}`}>
               Quietly explore the unspoken thoughts of the collective.
             </p>
           </div>
@@ -369,7 +372,7 @@ function Circles() {
           {/* Grid - adjusted for circular cards */}
           {visible.length === 0 ? (
             <div className="text-center py-20">
-              <p className="text-white/20 text-sm tracking-wide">No circles found.</p>
+              <p className={`text-sm tracking-wide ${isLight ? 'text-black/30' : 'text-white/20'}`}>No circles found.</p>
             </div>
           ) : (
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6">
