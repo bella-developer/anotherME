@@ -254,7 +254,7 @@ body.light-mode .light-mode-background {
    ============================================ */
 body.light-mode header,
 body.light-mode nav[role="navigation"] {
-  background: rgba(235, 230, 221, 0.95) !important; /* Match background */
+  background: rgba(215, 210, 202, 0.95) !important; /* Base color */
   backdrop-filter: blur(20px) saturate(180%) !important;
   -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
   border-bottom: 1px solid rgba(0, 0, 0, 0.06) !important;
@@ -359,9 +359,9 @@ body.light-mode button[style*="background: rgba(249, 115, 22, 0.08)"] {
    ============================================ */
 
 body.light-mode article {
-  background: #F5F2EB !important; /* Off-white card on cream background */
-  border: 0.5px solid rgba(0, 0, 0, 0.08) !important;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 2px 6px rgba(0, 0, 0, 0.02) !important;
+  background: #E9E5DD !important; /* Warm highlight (no pure white) */
+  border: 0.5px solid rgba(0, 0, 0, 0.06) !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03), 0 2px 6px rgba(0, 0, 0, 0.02) !important;
 }
 
 body.light-mode article:hover {
@@ -396,9 +396,9 @@ body.light-mode .features-starfield::before {
 
 /* Editorial cards - Subtle elevation */
 body.light-mode [style*="linear-gradient(135deg, rgba(26, 26, 26"] {
-  background: #F5F2EB !important; /* Off-white */
-  border: 0.5px solid rgba(0, 0, 0, 0.08) !important;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
+  background: #E9E5DD !important; /* Warm highlight */
+  border: 0.5px solid rgba(0, 0, 0, 0.06) !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03) !important;
 }
 
 /* Footer - Pearl (matches navbar) */
@@ -669,7 +669,7 @@ body.light-mode a:hover {
 
 /* Success screen - Subtle card */
 body.light-mode [class*="bg-[#1A1412]"] {
-  background: #F5F2EB !important; /* Off-white */
+  background: #E9E5DD !important; /* Warm highlight */
 }
 
 body.light-mode [class*="border-[#2d2420]"] {
@@ -873,8 +873,8 @@ body.light-mode button[class*="text-[9px]"]:hover {
 /* Landing page header - force consistent background */
 body.light-mode .light-mode-header,
 body.light-mode .light-mode-header * {
-  background: rgba(235, 230, 221, 0.95) !important; /* Match background */
-  background-color: rgba(235, 230, 221, 0.95) !important;
+  background: rgba(215, 210, 202, 0.95) !important; /* Base color */
+  background-color: rgba(215, 210, 202, 0.95) !important;
   background-image: none !important;
 }
 
@@ -914,15 +914,15 @@ body.light-mode header div {
 }
 
 body.light-mode header {
-  background-color: rgba(235, 230, 221, 0.95) !important; /* Match background */
-  background: rgba(235, 230, 221, 0.95) !important;
+  background-color: rgba(215, 210, 202, 0.95) !important; /* Base color */
+  background: rgba(215, 210, 202, 0.95) !important;
   backdrop-filter: blur(12px) !important;
   -webkit-backdrop-filter: blur(12px) !important;
 }
 
 /* Navbar component with inline styles */
 body.light-mode nav[role="navigation"] {
-  background: rgba(235, 230, 221, 0.95) !important; /* Match background */
+  background: rgba(215, 210, 202, 0.95) !important; /* Base color */
   backdrop-filter: blur(12px) !important;
   -webkit-backdrop-filter: blur(12px) !important;
 }
@@ -1198,9 +1198,9 @@ body.light-mode button[class*="w-8"]:hover {
 /* Dropdown menus */
 body.light-mode [role="menu"],
 body.light-mode [class*="dropdown"] {
-  background: #F5F2EB !important; /* Off-white */
-  border: 0.5px solid rgba(0, 0, 0, 0.1) !important;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06) !important;
+  background: #E9E5DD !important; /* Warm highlight */
+  border: 0.5px solid rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05) !important;
 }
 
 /* Menu items */
@@ -1360,9 +1360,9 @@ body.light-mode [class*="tooltip"] {
 /* Modals and dialogs */
 body.light-mode [role="dialog"],
 body.light-mode [class*="modal"] {
-  background: #F5F2EB !important; /* Off-white */
-  border: 0.5px solid rgba(0, 0, 0, 0.1) !important;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08) !important;
+  background: #E9E5DD !important; /* Warm highlight */
+  border: 0.5px solid rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06) !important;
 }
 
 /* Tabs */
@@ -1501,9 +1501,9 @@ body.light-mode pre code {
 /* Dropdown menus */
 body.light-mode [class*="dropdown"],
 body.light-mode [class*="menu"] {
-  background: #F5F2EB !important; /* Off-white */
-  border: 0.5px solid rgba(0, 0, 0, 0.1) !important;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06) !important;
+  background: #E9E5DD !important; /* Warm highlight */
+  border: 0.5px solid rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05) !important;
 }
 
 body.light-mode [class*="dropdown"] a,
@@ -1733,8 +1733,8 @@ body.light-mode header svg {
 
 /* Header itself is the ONLY element with color */
 body.light-mode header {
-  background: rgba(235, 230, 221, 0.98) !important; /* Match background */
-  background-color: rgba(235, 230, 221, 0.98) !important;
+  background: rgba(215, 210, 202, 0.98) !important; /* Base color */
+  background-color: rgba(215, 210, 202, 0.98) !important;
 }
 
 /* Ensure logo doesn't have background */
