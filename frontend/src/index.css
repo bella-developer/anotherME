@@ -1118,7 +1118,121 @@ body.light-mode button:hover {
 }
 
 /* ============================================
-   END WARM GRAY PALETTE
+   MOBILE RESPONSIVE - Light Mode Fixes
+   ============================================ */
+
+/* Mobile hamburger menu button - visible in light mode */
+body.light-mode button[aria-label*="menu"] {
+  color: rgba(0, 0, 0, 0.80) !important;
+}
+
+body.light-mode button[aria-label*="menu"]:hover {
+  color: rgba(0, 0, 0, 1.0) !important;
+  background: rgba(0, 0, 0, 0.04) !important;
+}
+
+/* Mobile hamburger icon SVG */
+body.light-mode button[aria-label*="menu"] svg {
+  stroke: rgba(0, 0, 0, 0.80) !important;
+  color: rgba(0, 0, 0, 0.80) !important;
+}
+
+/* Mobile menu dropdown - light mode styling */
+body.light-mode #mobile-menu {
+  background: rgba(250, 248, 245, 0.98) !important;
+  backdrop-filter: blur(20px) !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Mobile menu links */
+body.light-mode #mobile-menu a {
+  color: rgba(0, 0, 0, 0.75) !important;
+}
+
+body.light-mode #mobile-menu a:hover {
+  color: rgba(0, 0, 0, 1.0) !important;
+  background: rgba(0, 0, 0, 0.04) !important;
+}
+
+/* Mobile menu dividers */
+body.light-mode #mobile-menu .border-white\/10 {
+  border-color: rgba(0, 0, 0, 0.10) !important;
+}
+
+/* Mobile menu theme label */
+body.light-mode #mobile-menu span {
+  color: rgba(0, 0, 0, 0.75) !important;
+}
+
+/* Mobile menu backdrop */
+body.light-mode .bg-black\/80 {
+  background: rgba(0, 0, 0, 0.20) !important;
+}
+
+/* ============================================
+   AUTH PAGES - Light Mode Fixes
+   ============================================ */
+
+/* Google Sign In Button - FIX black on black */
+body.light-mode button[class*="bg-white/8"],
+body.light-mode button:has(svg[class*="google"]) {
+  background: rgba(255, 255, 255, 0.95) !important;
+  border: 1.5px solid rgba(0, 0, 0, 0.15) !important;
+  color: rgba(0, 0, 0, 0.85) !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08) !important;
+}
+
+body.light-mode button[class*="bg-white/8"]:hover,
+body.light-mode button:has(svg[class*="google"]):hover {
+  background: rgba(255, 255, 255, 1.0) !important;
+  border-color: rgba(0, 0, 0, 0.25) !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12) !important;
+}
+
+/* Google button icon */
+body.light-mode button svg[class*="google"],
+body.light-mode button:has(svg) svg {
+  color: inherit !important;
+  opacity: 1 !important;
+}
+
+/* Auth form containers - proper contrast */
+body.light-mode [style*="background: rgba(0,0,0,0.4)"],
+body.light-mode [style*="background: rgba(0, 0, 0, 0.4)"],
+body.light-mode form[class*="rounded"] {
+  background: rgba(255, 255, 255, 0.95) !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Auth page titles */
+body.light-mode h1[class*="text"],
+body.light-mode h2[class*="text"] {
+  color: #000000 !important;
+  text-shadow: none !important;
+}
+
+/* Auth input fields - proper visibility */
+body.light-mode input[type="text"],
+body.light-mode input[type="email"],
+body.light-mode input[type="password"] {
+  background: rgba(0, 0, 0, 0.03) !important;
+  border: 1px solid rgba(0, 0, 0, 0.15) !important;
+  color: rgba(0, 0, 0, 0.90) !important;
+}
+
+body.light-mode input::placeholder {
+  color: rgba(0, 0, 0, 0.40) !important;
+}
+
+body.light-mode input:focus {
+  border-color: rgba(0, 0, 0, 0.30) !important;
+  background: rgba(0, 0, 0, 0.02) !important;
+}
+
+/* ============================================
+   END LIGHT MODE FIXES
+   ============================================ */
    ============================================ */
 
 /* General navbar fix for app pages */
