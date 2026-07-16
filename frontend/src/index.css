@@ -408,7 +408,6 @@ body.light-mode button[style*="rgba(168, 85, 247, 1)"],
 body.light-mode button[style*="rgba(249, 115, 22, 1)"] {
   color: currentColor !important;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
-}
   text-shadow: none !important;
   filter: none !important;
 }
