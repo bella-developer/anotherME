@@ -127,7 +127,7 @@ function Explore() {
 
                 <div className="relative z-10 flex flex-col items-center">
                   <svg 
-                    className="w-8 h-8 mb-5 group-hover:scale-110 transition-transform duration-300" 
+                    className="w-8 h-8 mb-5 group-hover:scale-110 transition-transform duration-300 explore-white-text" 
                     fill="none" 
                     stroke="currentColor" 
                     viewBox="0 0 24 24" 
@@ -140,7 +140,7 @@ function Explore() {
                     <path strokeLinecap="round" strokeLinejoin="round" d={f.icon} />
                   </svg>
                   <h3 
-                    className="text-base tracking-[0.25em] uppercase font-extrabold mb-4" 
+                    className="text-base tracking-[0.25em] uppercase font-extrabold mb-4 explore-white-text" 
                     style={{
                       color: '#FFFFFF',
                       textShadow: '0 2px 12px rgba(0, 0, 0, 0.95), 0 4px 24px rgba(0, 0, 0, 0.8), 0 1px 3px rgba(0, 0, 0, 1)',
@@ -150,7 +150,7 @@ function Explore() {
                     {f.title}
                   </h3>
                   <p 
-                    className="text-sm leading-relaxed transition-all duration-300 mb-5 font-medium" 
+                    className="text-sm leading-relaxed transition-all duration-300 mb-5 font-medium explore-white-text" 
                     style={{
                       color: '#FFFFFF',
                       opacity: 0.95,
@@ -160,7 +160,7 @@ function Explore() {
                     {f.desc}
                   </p>
                   <span 
-                    className="group-hover:translate-x-1 transition-all duration-300 text-xl font-light"
+                    className="group-hover:translate-x-1 transition-all duration-300 text-xl font-light explore-white-text"
                     style={{
                       color: '#FFFFFF',
                       opacity: 0.6,

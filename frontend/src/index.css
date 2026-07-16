@@ -237,8 +237,8 @@ section.overflow-hidden {
 /* ============================================
    LIGHT MODE - Kinfolk/Cereal Magazine Aesthetic
    
-   Sage #E8EEEC - Background (soft gray-green)
-   Off-white #FAFAF8 - Cards (elevated, clean)
+   Warm Cream #F5F1EA - Background (warm, inviting)
+   Off-white #FEFDFB - Cards (barely elevated)
    Pearl #FBFCF8 - Navbar (subtle)
    
    KEY: Cards float above background with minimal borders
@@ -378,11 +378,11 @@ body.light-mode article:hover {
    ============================================ */
 
 body.light-mode section {
-  background: #E8EEEC !important;
+  background: #F5F1EA !important;
 }
 
 body.light-mode .features-starfield {
-  background-color: #E8EEEC !important;
+  background-color: #F5F1EA !important;
 }
 
 body.light-mode .features-starfield::before {
@@ -413,7 +413,7 @@ body.light-mode footer {
    ============================================ */
 
 body.light-mode section[style*="background: #000000"] {
-  background: #E8EEEC !important;
+  background: #F5F1EA !important;
 }
 
 /* Sliding text */
@@ -1523,13 +1523,24 @@ body.light-mode [class*="menu"] button:hover {
 }
 
 /* Ensure all text is readable - BUT NOT ON HERO/VIDEO SECTIONS */
-body.light-mode [class*="text-white"]:not([style*="color: #FFFFFF"]):not([style*="color: #ffffff"]) {
+/* Exempt hero sections and explore cards from color override */
+body.light-mode [class*="text-white"]:not(.hero-white-text):not(.explore-white-text):not([style*="color: #FFFFFF"]):not([style*="color: #ffffff"]) {
   color: rgba(0, 0, 0, 0.85) !important;
 }
 
-body.light-mode [class*="text-white/"]:not([style*="color: #FFFFFF"]):not([style*="color: #ffffff"]) {
+body.light-mode [class*="text-white/"]:not(.hero-white-text):not(.explore-white-text):not([style*="color: #FFFFFF"]):not([style*="color: #ffffff"]) {
   color: inherit !important;
   opacity: 0.7;
+}
+
+/* Force white text for hero sections */
+body.light-mode .hero-white-text {
+  color: #FFFFFF !important;
+}
+
+/* Force white text for explore card overlays */
+body.light-mode .explore-white-text {
+  color: #FFFFFF !important;
 }
 
 /* Fix transparent backgrounds that become invisible */
@@ -1580,12 +1591,12 @@ body.light-mode button[class*="hover:bg-white/10"]:hover {
   background: rgba(0, 0, 0, 0.08) !important;
 }
 
-/* Text color for all buttons - EXCEPT explicit white buttons */
-body.light-mode button[class*="text-white"]:not([style*="color: #FFFFFF"]):not([style*="color: #ffffff"]) {
+/* Text color for all buttons - EXCEPT explicit white buttons and hero buttons */
+body.light-mode button[class*="text-white"]:not(.hero-white-text):not([style*="color: #FFFFFF"]):not([style*="color: #ffffff"]) {
   color: rgba(0, 0, 0, 0.8) !important;
 }
 
-body.light-mode button[class*="text-white/"]:not([class*="bg-"]):not([style*="color: #FFFFFF"]):not([style*="color: #ffffff"]) {
+body.light-mode button[class*="text-white/"]:not(.hero-white-text):not([class*="bg-"]):not([style*="color: #FFFFFF"]):not([style*="color: #ffffff"]) {
   color: rgba(0, 0, 0, 0.65) !important;
 }
 
