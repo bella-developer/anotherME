@@ -1,7 +1,6 @@
 /**
  * PaperTextureBg — Realistic window light simulation
- * THREE diagonal light bands simulating daylight through window
- * CSS-based for guaranteed rendering
+ * Visible diagonal light bands with subtle gradients
  */
 
 export default function PaperTextureBg() {
@@ -17,69 +16,42 @@ export default function PaperTextureBg() {
         overflow: 'hidden',
         pointerEvents: 'none',
         zIndex: 0,
+        background: '#E8E3D8',
       }}
     >
-      {/* Base warm beige */}
+      {/* Composite background with all layers */}
       <div style={{
         position: 'absolute',
         inset: 0,
-        background: '#E8E3D8',
+        background: `
+          linear-gradient(125deg, 
+            transparent 0%,
+            transparent 10%,
+            rgba(255, 250, 242, 0.4) 15%,
+            rgba(255, 250, 242, 0.25) 25%,
+            transparent 35%,
+            transparent 40%,
+            rgba(252, 248, 240, 0.25) 45%,
+            rgba(252, 248, 240, 0.15) 55%,
+            transparent 65%,
+            transparent 70%,
+            rgba(250, 246, 238, 0.15) 75%,
+            rgba(250, 246, 238, 0.08) 85%,
+            transparent 95%
+          )
+        `,
+        filter: 'blur(60px)',
       }} />
 
-      {/* Fine plaster texture */}
+      {/* Fine paper texture overlay */}
       <div style={{
         position: 'absolute',
         inset: 0,
-        backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='600'%3E%3Cfilter id='texture'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.95' numOctaves='4' seed='8'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='0.025'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23texture)'/%3E%3C/svg%3E")`,
+        backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' seed='2'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E")`,
         backgroundRepeat: 'repeat',
-        backgroundSize: '600px 600px',
-        opacity: 1,
-      }} />
-
-      {/* Light Band 1 - Brightest (top-left) */}
-      <div style={{
-        position: 'absolute',
-        top: '-20%',
-        left: '-15%',
-        width: '60%',
-        height: '140%',
-        background: 'linear-gradient(125deg, rgba(255, 250, 242, 0.35) 0%, rgba(255, 250, 242, 0.15) 50%, transparent 100%)',
-        filter: 'blur(135px)',
-        transform: 'rotate(-35deg)',
-        transformOrigin: 'center center',
-      }} />
-
-      {/* Light Band 2 - Medium (middle) */}
-      <div style={{
-        position: 'absolute',
-        top: '-10%',
-        left: '5%',
-        width: '55%',
-        height: '130%',
-        background: 'linear-gradient(125deg, rgba(252, 248, 240, 0.22) 0%, rgba(252, 248, 240, 0.10) 50%, transparent 100%)',
-        filter: 'blur(150px)',
-        transform: 'rotate(-35deg)',
-        transformOrigin: 'center center',
-      }} />
-
-      {/* Light Band 3 - Subtle (lower-right) */}
-      <div style={{
-        position: 'absolute',
-        top: '0%',
-        left: '25%',
-        width: '50%',
-        height: '120%',
-        background: 'linear-gradient(125deg, rgba(250, 246, 238, 0.12) 0%, rgba(250, 246, 238, 0.05) 50%, transparent 100%)',
-        filter: 'blur(160px)',
-        transform: 'rotate(-35deg)',
-        transformOrigin: 'center center',
-      }} />
-
-      {/* Very subtle vignette */}
-      <div style={{
-        position: 'absolute',
-        inset: 0,
-        background: 'radial-gradient(ellipse at center, transparent 0%, rgba(200, 190, 175, 0.015) 100%)',
+        backgroundSize: '300px 300px',
+        mixBlendMode: 'multiply',
+        opacity: 0.8,
       }} />
     </div>
   );
