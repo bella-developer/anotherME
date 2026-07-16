@@ -244,11 +244,6 @@ section.overflow-hidden {
    KEY: Cards float above background with minimal borders
    ============================================ */
 
-/* Replace starfield with sage */
-body.light-mode .light-mode-background {
-  opacity: 1 !important;
-}
-
 /* ============================================
    NAVBAR - Pearl (subtle cool tone)
    ============================================ */
