@@ -1061,6 +1061,9 @@ body.light-mode button[style*="color: #ffffff"]:not(.hero-white-text):not(.explo
 body.light-mode button[style*="color:#FFFFFF"]:not(.hero-white-text):not(.explore-white-text) {
   color: rgba(0, 0, 0, 0.85) !important;
 }
+
+/* ============================================
+   WARM GRAY PALETTE - Exact Reference Colors
    No pure blacks or whites
    ============================================ */
 
