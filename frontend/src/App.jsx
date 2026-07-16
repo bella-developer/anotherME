@@ -9,7 +9,9 @@ import ProtectedRoute from './components/ProtectedRoute';
 import LevelUpNotification from './components/LevelUpNotification';
 import { useLevelUpNotifications } from './hooks/useLevelUpNotifications';
 import IntrovertsBg from './components/IntrovertsBg';
+import PaperTextureBg from './components/PaperTextureBg';
 import ErrorBoundary from './components/ErrorBoundary';
+import { useTheme } from './contexts/ThemeContext';
 
 // Direct imports for public pages to avoid loading issues
 import Home from './pages/Home';
@@ -62,6 +64,8 @@ function PageLoader() {
 
 function App() {
   const { currentNotification, closeNotification } = useLevelUpNotifications();
+  const { theme } = useTheme();
+  const isLightMode = theme === 'light';
 
   // Don't check session on app mount - let protected routes handle it
   // This prevents unnecessary 401 errors on public pages
@@ -70,7 +74,7 @@ function App() {
   return (
     <ThemeProvider>
       <Router>
-        <IntrovertsBg />
+        {isLightMode ? <PaperTextureBg /> : <IntrovertsBg />}
         <ToastProvider>
           <StatsProvider>
             <ErrorBoundary>

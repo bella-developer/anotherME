@@ -95,13 +95,13 @@ export default function IntrovertsBg() {
           />
         ))}
 
-        {/* Light mode - Warm cream editorial background */}
+        {/* Light mode placeholder - actual texture in PaperTextureBg */}
         <div 
           className="light-mode-background"
           style={{
             position: 'absolute',
             inset: 0,
-            background: '#F5F1EA',
+            background: '#E7E3DC',
             opacity: 0,
             transition: 'opacity 600ms cubic-bezier(0.4, 0, 0.2, 1)',
             pointerEvents: 'none',

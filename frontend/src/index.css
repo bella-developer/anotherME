@@ -254,7 +254,7 @@ body.light-mode .light-mode-background {
    ============================================ */
 body.light-mode header,
 body.light-mode nav[role="navigation"] {
-  background: rgba(251, 252, 248, 0.95) !important;
+  background: rgba(226, 222, 216, 0.95) !important; /* Secondary pearl with transparency */
   backdrop-filter: blur(20px) saturate(180%) !important;
   -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
   border-bottom: 1px solid rgba(0, 0, 0, 0.06) !important;
@@ -359,9 +359,10 @@ body.light-mode button[style*="background: rgba(249, 115, 22, 0.08)"] {
    ============================================ */
 
 body.light-mode article {
-  background: #FAFAF8 !important;
-  border: 1px solid rgba(0, 0, 0, 0.04) !important;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03),
+  background: #F3F1EC !important; /* Highlight pearl */
+  border: 0.5px solid rgba(0, 0, 0, 0.02) !important; /* Whisper-thin border */
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.01),
+              0 2px 4px rgba(0, 0, 0, 0.01) !important; /* Barely perceptible shadow */
               0 1px 2px rgba(0, 0, 0, 0.02) !important;
 }
 
@@ -395,11 +396,11 @@ body.light-mode .features-starfield::before {
     radial-gradient(1px 1px at 53% 9%, rgba(0,0,0,0.03) 0%, transparent 100%) !important;
 }
 
-/* Editorial cards - Off-white elevation */
+/* Editorial cards - Highlight pearl elevation */
 body.light-mode [style*="linear-gradient(135deg, rgba(26, 26, 26"] {
-  background: #FAFAF8 !important;
-  border: 1px solid rgba(0, 0, 0, 0.04) !important;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03) !important;
+  background: #F3F1EC !important; /* Highlight pearl */
+  border: 0.5px solid rgba(0, 0, 0, 0.02) !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.01) !important;
 }
 
 /* Footer - Pearl (matches navbar) */
@@ -668,9 +669,9 @@ body.light-mode a:hover {
   color: rgba(0, 0, 0, 0.9) !important;
 }
 
-/* Success screen - Off-white card */
+/* Success screen - Highlight pearl card */
 body.light-mode [class*="bg-[#1A1412]"] {
-  background: #FAFAF8 !important;
+  background: #F3F1EC !important; /* Highlight pearl */
 }
 
 body.light-mode [class*="border-[#2d2420]"] {
@@ -874,8 +875,8 @@ body.light-mode button[class*="text-[9px]"]:hover {
 /* Landing page header - force consistent background */
 body.light-mode .light-mode-header,
 body.light-mode .light-mode-header * {
-  background: rgba(251, 252, 248, 0.95) !important;
-  background-color: rgba(251, 252, 248, 0.95) !important;
+  background: rgba(226, 222, 216, 0.95) !important; /* Secondary pearl */
+  background-color: rgba(226, 222, 216, 0.95) !important;
   background-image: none !important;
 }
 
@@ -915,15 +916,15 @@ body.light-mode header div {
 }
 
 body.light-mode header {
-  background-color: rgba(251, 252, 248, 0.95) !important;
-  background: rgba(251, 252, 248, 0.95) !important;
+  background-color: rgba(226, 222, 216, 0.95) !important; /* Secondary pearl */
+  background: rgba(226, 222, 216, 0.95) !important;
   backdrop-filter: blur(12px) !important;
   -webkit-backdrop-filter: blur(12px) !important;
 }
 
 /* Navbar component with inline styles */
 body.light-mode nav[role="navigation"] {
-  background: rgba(251, 252, 248, 0.95) !important;
+  background: rgba(226, 222, 216, 0.95) !important; /* Secondary pearl */
   backdrop-filter: blur(12px) !important;
   -webkit-backdrop-filter: blur(12px) !important;
 }
@@ -1199,9 +1200,9 @@ body.light-mode button[class*="w-8"]:hover {
 /* Dropdown menus */
 body.light-mode [role="menu"],
 body.light-mode [class*="dropdown"] {
-  background: #FAFAF8 !important;
-  border: 1px solid rgba(0, 0, 0, 0.12) !important;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+  background: #F3F1EC !important; /* Highlight pearl */
+  border: 0.5px solid rgba(0, 0, 0, 0.02) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02) !important;
 }
 
 /* Menu items */
@@ -1226,9 +1227,9 @@ body.light-mode [class*="tooltip"] {
 /* Modals and dialogs */
 body.light-mode [role="dialog"],
 body.light-mode [class*="modal"] {
-  background: #FAFAF8 !important;
-  border: 1px solid rgba(0, 0, 0, 0.1) !important;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12) !important;
+  background: #F3F1EC !important; /* Highlight pearl */
+  border: 0.5px solid rgba(0, 0, 0, 0.02) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.02) !important;
 }
 
 /* Tab buttons */
@@ -1355,15 +1356,15 @@ body.light-mode [class*="tooltip"] {
   background: rgba(0, 0, 0, 0.9) !important;
   color: #FFFFFF !important;
   border: 1px solid rgba(0, 0, 0, 1) !important;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
 }
 
 /* Modals and dialogs */
 body.light-mode [role="dialog"],
 body.light-mode [class*="modal"] {
-  background: #FAFAF8 !important;
-  border: 1px solid rgba(0, 0, 0, 0.08) !important;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12) !important;
+  background: #F3F1EC !important; /* Highlight pearl */
+  border: 0.5px solid rgba(0, 0, 0, 0.02) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.02) !important;
 }
 
 /* Tabs */
@@ -1502,9 +1503,9 @@ body.light-mode pre code {
 /* Dropdown menus */
 body.light-mode [class*="dropdown"],
 body.light-mode [class*="menu"] {
-  background: #FAFAF8 !important;
-  border: 1px solid rgba(0, 0, 0, 0.12) !important;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08) !important;
+  background: #F3F1EC !important; /* Highlight pearl */
+  border: 0.5px solid rgba(0, 0, 0, 0.02) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02) !important;
 }
 
 body.light-mode [class*="dropdown"] a,
@@ -1734,8 +1735,8 @@ body.light-mode header svg {
 
 /* Header itself is the ONLY element with color */
 body.light-mode header {
-  background: rgba(251, 252, 248, 0.98) !important;
-  background-color: rgba(251, 252, 248, 0.98) !important;
+  background: rgba(226, 222, 216, 0.98) !important; /* Secondary pearl */
+  background-color: rgba(226, 222, 216, 0.98) !important;
 }
 
 /* Ensure logo doesn't have background */
