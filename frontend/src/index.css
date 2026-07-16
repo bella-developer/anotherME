@@ -270,42 +270,83 @@ body.light-mode nav[role="navigation"] {
 body.light-mode img[alt="ESO Logo"] {
   filter: brightness(0) saturate(100%) invert(15%) sepia(8%) !important;
   opacity: 0.9;
+  transition: opacity 0.3s ease !important;
 }
 
-/* Navbar text - Refined contrast */
+body.light-mode img[alt="ESO Logo"]:hover {
+  opacity: 1;
+}
+
+/* Navbar text - Strong hierarchy with smooth hover */
 body.light-mode nav[role="navigation"] a,
 body.light-mode header nav a,
 body.light-mode header a {
-  color: rgba(0, 0, 0, 0.75) !important;
+  color: rgba(0, 0, 0, 0.65) !important;
   font-weight: 500;
+  transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
 body.light-mode nav[role="navigation"] a:hover,
 body.light-mode header a:hover {
-  color: rgba(0, 0, 0, 0.95) !important;
+  color: rgba(0, 0, 0, 1.0) !important;
 }
 
 /* ============================================
-   CONTENT - Strong black text, clean hierarchy
+   CONTENT - Kinfolk-style hierarchy: Bold blacks with clear contrast
    ============================================ */
 
-/* Headings - Pure black */
-body.light-mode h1,
-body.light-mode h2,
-body.light-mode h3 {
+/* Main Headings - Pure black, bold */
+body.light-mode h1 {
   color: #000000 !important;
+  font-weight: 300 !important;
+  letter-spacing: 0.02em !important;
   text-shadow: none !important;
 }
 
-/* Body text - Strong contrast */
-body.light-mode p {
-  color: rgba(0, 0, 0, 0.85) !important;
+/* Secondary Headings - Strong black */
+body.light-mode h2 {
+  color: #1a1a1a !important;
+  font-weight: 400 !important;
+  text-shadow: none !important;
 }
 
-/* Subtle text - Still readable */
+/* Tertiary Headings - Dark charcoal */
+body.light-mode h3 {
+  color: #2d2d2d !important;
+  font-weight: 500 !important;
+  text-shadow: none !important;
+}
+
+/* Room titles - UPPERCASE labels - Bold and black */
+body.light-mode [class*="uppercase"] h3,
+body.light-mode [class*="uppercase"][class*="tracking"],
+body.light-mode h3[class*="uppercase"] {
+  color: #000000 !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.15em !important;
+}
+
+/* Body text - Strong readability */
+body.light-mode p {
+  color: rgba(0, 0, 0, 0.80) !important;
+  font-weight: 400 !important;
+}
+
+/* Small labels and captions - Medium gray */
 body.light-mode [style*="rgba(255, 255, 255, 0.15)"],
-body.light-mode p[class*="text-[10px]"] {
-  color: rgba(0, 0, 0, 0.5) !important;
+body.light-mode p[class*="text-[10px]"],
+body.light-mode [class*="text-xs"],
+body.light-mode [class*="text-sm"]:not(button) {
+  color: rgba(0, 0, 0, 0.60) !important;
+  font-weight: 400 !important;
+}
+
+/* "CHOOSE YOUR ROOM" label - highly visible */
+body.light-mode p[class*="text-[10px]"][class*="uppercase"],
+body.light-mode p[class*="text-xs"][class*="uppercase"] {
+  color: rgba(0, 0, 0, 0.50) !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.2em !important;
 }
 
 /* Quaternary text */
@@ -320,24 +361,54 @@ body.light-mode [style*="var(--text-tertiary)"] {
 
 /* Ghost text */
 body.light-mode [style*="var(--text-ghost)"] {
-  color: rgba(0, 0, 0, 0.4) !important;
+  color: rgba(0, 0, 0, 0.35) !important;
+}
+
+/* Room descriptions - Clear but secondary */
+body.light-mode article p,
+body.light-mode [class*="description"] {
+  color: rgba(0, 0, 0, 0.65) !important;
+  font-weight: 400 !important;
 }
 
 /* ============================================
-   BUTTONS - Clear Affordances
+   BUTTONS - Kinfolk-style: Clean with smooth hover transitions
    ============================================ */
 
-/* Category buttons - dark text */
+/* Default buttons - Clean black text */
 body.light-mode button {
-  color: rgba(0, 0, 0, 0.7) !important;
-  background: transparent !important;
+  color: rgba(0, 0, 0, 0.75) !important;
+  font-weight: 500 !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
-/* Active buttons - maintain precious accent colors */
+/* Button hover - Darken text */
+body.light-mode button:hover:not(:disabled) {
+  color: rgba(0, 0, 0, 0.95) !important;
+}
+
+/* ENTER buttons - Strong borders with hover */
+body.light-mode button[class*="border"]:not([class*="bg-"]) {
+  border-color: rgba(0, 0, 0, 0.25) !important;
+  color: rgba(0, 0, 0, 0.80) !important;
+  background: transparent !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+body.light-mode button[class*="border"]:not([class*="bg-"]):hover {
+  border-color: rgba(0, 0, 0, 0.90) !important;
+  color: rgba(0, 0, 0, 1.0) !important;
+  background: rgba(0, 0, 0, 0.02) !important;
+  transform: translateY(-1px);
+}
+
+/* Active room buttons - maintain accent colors with hover */
 body.light-mode button[style*="rgba(239, 68, 68, 1)"],
 body.light-mode button[style*="rgba(168, 85, 247, 1)"],
 body.light-mode button[style*="rgba(249, 115, 22, 1)"] {
   color: currentColor !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
   text-shadow: none !important;
   filter: none !important;
 }
@@ -361,21 +432,21 @@ body.light-mode button[style*="background: rgba(249, 115, 22, 0.08)"] {
 }
 
 /* ============================================
-   CARDS - Off-white on sage (proper elevation)
+   CARDS - Kinfolk-style: Subtle elevation with smooth hover
    ============================================ */
 
 body.light-mode article {
   background: #F0EDE5 !important; /* Slightly lighter warm beige for cards */
   border: 0.5px solid rgba(139, 131, 120, 0.12) !important;
   box-shadow: 0 1px 3px rgba(107, 101, 96, 0.04), 0 2px 6px rgba(107, 101, 96, 0.02) !important;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
 body.light-mode article:hover {
-  border-color: rgba(0, 0, 0, 0.06) !important;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04),
-              0 1px 3px rgba(0, 0, 0, 0.03) !important;
-  transform: translateY(-2px);
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border-color: rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06),
+              0 2px 6px rgba(0, 0, 0, 0.04) !important;
+  transform: translateY(-3px);
 }
 
 /* ============================================
@@ -889,25 +960,108 @@ body.light-mode .light-mode-header {
   -webkit-backdrop-filter: blur(12px) !important;
 }
 
-/* Landing page nav links */
+/* Landing page nav links - Strong hover */
 body.light-mode .landing-nav-link {
-  color: rgba(0, 0, 0, 0.6) !important;
+  color: rgba(0, 0, 0, 0.65) !important;
+  transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
 body.light-mode .landing-nav-link:hover {
-  color: rgba(0, 0, 0, 0.95) !important;
+  color: rgba(0, 0, 0, 1.0) !important;
 }
 
 body.light-mode .landing-signin {
-  color: rgba(0, 0, 0, 0.65) !important;
+  color: rgba(0, 0, 0, 0.70) !important;
+  transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
 body.light-mode .landing-signin:hover {
-  color: rgba(0, 0, 0, 0.95) !important;
+  color: rgba(0, 0, 0, 1.0) !important;
 }
 
 /* ============================================
-   WARM GRAY PALETTE - Exact Reference Colors
+   LIGHT MODE TEXT OVERRIDES - Handle inline styles
+   Force black text hierarchy across all pages
+   ============================================ */
+
+/* Main hero headings - override inline white */
+body.light-mode h1[style*="color: #FFFFFF"],
+body.light-mode h1[style*="color: #ffffff"],
+body.light-mode h1[style*="color:#FFFFFF"],
+body.light-mode h1[style*="color:#ffffff"] {
+  color: #000000 !important;
+  text-shadow: none !important;
+}
+
+/* Secondary headings */
+body.light-mode h2[style*="color"],
+body.light-mode h3[style*="color"] {
+  color: #1a1a1a !important;
+  text-shadow: none !important;
+}
+
+/* Paragraphs with inline color */
+body.light-mode p[style*="color: #FFFFFF"],
+body.light-mode p[style*="color: #ffffff"],
+body.light-mode p[style*="color:#FFFFFF"],
+body.light-mode p[style*="color:#ffffff"]:not(.hero-white-text):not(.explore-white-text) {
+  color: rgba(0, 0, 0, 0.80) !important;
+  text-shadow: none !important;
+  opacity: 1 !important;
+}
+
+/* Small text and labels */
+body.light-mode span[style*="color: #FFFFFF"],
+body.light-mode span[style*="color: #ffffff"]:not(.hero-white-text):not(.explore-white-text),
+body.light-mode div[style*="color: #FFFFFF"]:not(.hero-white-text):not(.explore-white-text) {
+  color: rgba(0, 0, 0, 0.70) !important;
+  text-shadow: none !important;
+}
+
+/* HERO and EXPLORE sections - Keep white text */
+body.light-mode .hero-white-text,
+body.light-mode .explore-white-text {
+  color: #FFFFFF !important;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.9) !important;
+}
+
+/* Room descriptions on Home page */
+body.light-mode article p[style*="color"],
+body.light-mode [class*="description"][style*="color"] {
+  color: rgba(0, 0, 0, 0.65) !important;
+  text-shadow: none !important;
+}
+
+/* Links with inline colors */
+body.light-mode a[style*="color: #FFFFFF"]:not(.hero-white-text):not(.explore-white-text),
+body.light-mode a[style*="color: #ffffff"]:not(.hero-white-text):not(.explore-white-text) {
+  color: rgba(0, 0, 0, 0.75) !important;
+  transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+body.light-mode a[style*="color: #FFFFFF"]:not(.hero-white-text):not(.explore-white-text):hover,
+body.light-mode a[style*="color: #ffffff"]:not(.hero-white-text):not(.explore-white-text):hover {
+  color: rgba(0, 0, 0, 1.0) !important;
+}
+
+/* Form inputs - override inline #e5e5e5 color */
+body.light-mode input[style*="color: #e5e5e5"],
+body.light-mode textarea[style*="color: #e5e5e5"] {
+  color: rgba(0, 0, 0, 0.90) !important;
+}
+
+/* Error messages - keep red */
+body.light-mode div[style*="color: #ef4444"],
+body.light-mode span[style*="color: #ef4444"] {
+  color: #dc2626 !important; /* Darker red for visibility */
+}
+
+/* Buttons with inline white color - except hero */
+body.light-mode button[style*="color: #FFFFFF"]:not(.hero-white-text):not(.explore-white-text),
+body.light-mode button[style*="color: #ffffff"]:not(.hero-white-text):not(.explore-white-text),
+body.light-mode button[style*="color:#FFFFFF"]:not(.hero-white-text):not(.explore-white-text) {
+  color: rgba(0, 0, 0, 0.85) !important;
+}
    No pure blacks or whites
    ============================================ */
 
