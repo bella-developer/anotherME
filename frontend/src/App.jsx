@@ -62,10 +62,16 @@ function PageLoader() {
   );
 }
 
-function App() {
-  const { currentNotification, closeNotification } = useLevelUpNotifications();
+// Background component that switches based on theme
+function ThemedBackground() {
   const { theme } = useTheme();
   const isLightMode = theme === 'light';
+  
+  return isLightMode ? <PaperTextureBg /> : <IntrovertsBg />;
+}
+
+function App() {
+  const { currentNotification, closeNotification } = useLevelUpNotifications();
 
   // Don't check session on app mount - let protected routes handle it
   // This prevents unnecessary 401 errors on public pages
@@ -74,7 +80,7 @@ function App() {
   return (
     <ThemeProvider>
       <Router>
-        {isLightMode ? <PaperTextureBg /> : <IntrovertsBg />}
+        <ThemedBackground />
         <ToastProvider>
           <StatsProvider>
             <ErrorBoundary>
