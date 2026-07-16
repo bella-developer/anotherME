@@ -1,6 +1,6 @@
 /**
- * PaperTextureBg — Simplified diagonal light simulation
- * Three visible diagonal bands from top-left to bottom-right
+ * PaperTextureBg — HIGH CONTRAST VERSION FOR TESTING
+ * Making everything VERY visible to debug
  */
 
 export default function PaperTextureBg() {
@@ -19,51 +19,41 @@ export default function PaperTextureBg() {
         background: '#E8E3D8',
       }}
     >
-      {/* Light Band 1 - Top left quadrant */}
+      {/* VERY VISIBLE diagonal stripe 1 */}
       <div style={{
         position: 'absolute',
         top: 0,
         left: 0,
         right: 0,
         bottom: 0,
-        background: 'radial-gradient(ellipse 1200px 1200px at 20% 20%, rgba(255, 250, 242, 0.5) 0%, transparent 50%)',
+        background: 'linear-gradient(125deg, rgba(255, 200, 100, 0.8) 0%, transparent 30%)',
       }} />
 
-      {/* Light Band 2 - Center */}
+      {/* VERY VISIBLE diagonal stripe 2 */}
       <div style={{
         position: 'absolute',
         top: 0,
         left: 0,
         right: 0,
         bottom: 0,
-        background: 'radial-gradient(ellipse 1000px 1000px at 45% 45%, rgba(252, 248, 240, 0.35) 0%, transparent 50%)',
+        background: 'linear-gradient(125deg, transparent 30%, rgba(255, 150, 150, 0.7) 50%, transparent 70%)',
       }} />
 
-      {/* Light Band 3 - Lower right */}
+      {/* VERY VISIBLE diagonal stripe 3 */}
       <div style={{
         position: 'absolute',
         top: 0,
         left: 0,
         right: 0,
         bottom: 0,
-        background: 'radial-gradient(ellipse 900px 900px at 70% 70%, rgba(250, 246, 238, 0.25) 0%, transparent 50%)',
+        background: 'linear-gradient(125deg, transparent 70%, rgba(150, 200, 255, 0.6) 85%, transparent 100%)',
       }} />
 
-      {/* Diagonal light overlay - actual visible diagonal */}
-      <div style={{
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        background: 'linear-gradient(135deg, rgba(255, 252, 245, 0.3) 0%, transparent 40%, transparent 100%)',
-      }} />
-
-      {/* Paper texture - clearly visible */}
+      {/* Obvious texture */}
       <div style={{
         position: 'absolute',
         inset: 0,
-        backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E")`,
+        backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.5' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23n)' opacity='0.2'/%3E%3C/svg%3E")`,
         opacity: 1,
       }} />
     </div>
