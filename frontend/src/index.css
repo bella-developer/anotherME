@@ -373,15 +373,15 @@ body.light-mode article:hover {
 }
 
 /* ============================================
-   SECTIONS - Sage background
+   SECTIONS - Transparent to show PaperTextureBg
    ============================================ */
 
 body.light-mode section {
-  background: #F5F1EA !important;
+  background: transparent !important;
 }
 
 body.light-mode .features-starfield {
-  background-color: #F5F1EA !important;
+  background-color: transparent !important;
 }
 
 body.light-mode .features-starfield::before {
@@ -412,7 +412,7 @@ body.light-mode footer {
    ============================================ */
 
 body.light-mode section[style*="background: #000000"] {
-  background: #F5F1EA !important;
+  background: transparent !important;
 }
 
 /* Sliding text */
