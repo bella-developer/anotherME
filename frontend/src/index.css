@@ -245,6 +245,17 @@ section.overflow-hidden {
    ============================================ */
 
 /* ============================================
+   BACKGROUNDS - Force PaperTextureBg visibility
+   ============================================ */
+
+/* Hide IntrovertsBg stars in light mode - only show PaperTextureBg */
+body.light-mode [aria-hidden="true"][style*="background: #000000"],
+body.light-mode [aria-hidden="true"][style*="background: rgb(0, 0, 0)"],  
+body.light-mode [aria-hidden="true"][style*='background: "#000000"'] {
+  background: transparent !important;
+}
+
+/* ============================================
    NAVBAR - Pearl (subtle cool tone)
    ============================================ */
 body.light-mode header,

@@ -67,7 +67,8 @@ function ThemedBackground() {
   const { theme } = useTheme();
   const isLightMode = theme === 'light';
   
-  return isLightMode ? <PaperTextureBg /> : <IntrovertsBg />;
+  // Force unmount/remount with key to ensure clean switch
+  return isLightMode ? <PaperTextureBg key="light" /> : <IntrovertsBg key="dark" />;
 }
 
 function App() {
