@@ -127,16 +127,16 @@ function Landing() {
                 to="/register"
                 className="px-4 sm:px-6 py-2 text-xs transition-all duration-500 tracking-widest uppercase"
                 style={{
-                  backgroundColor: isLightMode ? '#000000' : '#FFFFFF',
-                  color: isLightMode ? '#FFFFFF' : '#000000',
-                  border: `1px solid ${isLightMode ? '#000000' : '#FFFFFF'}`,
+                  backgroundColor: isLightMode ? '#FFFFFF' : '#000000',
+                  color: isLightMode ? '#000000' : '#FFFFFF',
+                  border: `1px solid ${isLightMode ? 'rgba(0, 0, 0, 0.2)' : '#FFFFFF'}`,
                   borderRadius: 'var(--radius-soft)',
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = isLightMode ? 'rgba(0, 0, 0, 0.85)' : 'rgba(255, 255, 255, 0.9)';
+                  e.currentTarget.style.backgroundColor = isLightMode ? 'rgba(255, 255, 255, 0.9)' : 'rgba(0, 0, 0, 0.85)';
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = isLightMode ? '#000000' : '#FFFFFF';
+                  e.currentTarget.style.backgroundColor = isLightMode ? '#FFFFFF' : '#000000';
                 }}
               >
                 Join
@@ -628,14 +628,20 @@ function Landing() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <button
                 onClick={() => navigate('/register')}
-                className="px-8 py-3 bg-white text-black text-xs uppercase tracking-widest transition-all"
+                className="px-8 py-3 text-xs uppercase tracking-widest transition-all"
                 style={{
+                  backgroundColor: isLightMode ? '#000000' : '#FFFFFF',
+                  color: isLightMode ? '#FFFFFF' : '#000000',
                   borderRadius: 'var(--radius-soft)',
                   fontWeight: 'var(--weight-medium)',
                   transitionDuration: 'var(--duration-slow)',
                 }}
-                onMouseEnter={(e) => e.currentTarget.style.opacity = '0.9'}
-                onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.opacity = '0.9';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.opacity = '1';
+                }}
               >
                 Join ESO
               </button>
@@ -643,19 +649,29 @@ function Landing() {
                 onClick={() => navigate('/explore')}
                 className="px-8 py-3 text-xs uppercase tracking-widest transition-all"
                 style={{
-                  border: '1px solid var(--border-medium)',
-                  color: 'var(--text-secondary)',
+                  border: isLightMode ? '1px solid rgba(0, 0, 0, 0.25)' : '1px solid var(--border-medium)',
+                  color: isLightMode ? 'rgba(0, 0, 0, 0.75)' : 'var(--text-secondary)',
                   borderRadius: 'var(--radius-soft)',
                   fontWeight: 'var(--weight-medium)',
                   transitionDuration: 'var(--duration-slow)',
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.borderColor = 'var(--border-light)';
-                  e.currentTarget.style.color = 'var(--text-primary)';
+                  if (isLightMode) {
+                    e.currentTarget.style.borderColor = 'rgba(0, 0, 0, 0.40)';
+                    e.currentTarget.style.color = 'rgba(0, 0, 0, 0.95)';
+                  } else {
+                    e.currentTarget.style.borderColor = 'var(--border-light)';
+                    e.currentTarget.style.color = 'var(--text-primary)';
+                  }
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.borderColor = 'var(--border-medium)';
-                  e.currentTarget.style.color = 'var(--text-secondary)';
+                  if (isLightMode) {
+                    e.currentTarget.style.borderColor = 'rgba(0, 0, 0, 0.25)';
+                    e.currentTarget.style.color = 'rgba(0, 0, 0, 0.75)';
+                  } else {
+                    e.currentTarget.style.borderColor = 'var(--border-medium)';
+                    e.currentTarget.style.color = 'var(--text-secondary)';
+                  }
                 }}
               >
                 Explore
