@@ -2559,3 +2559,53 @@ body.light-mode div[id="mobile-menu"] a:hover {
 body.light-mode div[id="mobile-menu"] span {
   color: rgba(0, 0, 0, 0.80) !important;
 }
+
+/* Landing page button fixes - Override inline styles */
+body.light-mode .join-button,
+body.light-mode button.join-eso-button,
+body.light-mode a[href="/register"][class*="uppercase"] {
+  background-color: #000000 !important;
+  color: #FFFFFF !important;
+  border-color: #000000 !important;
+}
+
+body.light-mode .join-button:hover,
+body.light-mode button.join-eso-button:hover,
+body.light-mode a[href="/register"][class*="uppercase"]:hover {
+  background-color: rgba(0, 0, 0, 0.85) !important;
+}
+
+/* Explore button - Light mode */
+body.light-mode button[class*="uppercase"]:has-text("Explore"),
+body.light-mode button:has(text()="Explore") {
+  border-color: rgba(0, 0, 0, 0.25) !important;
+  color: rgba(0, 0, 0, 0.75) !important;
+  background: transparent !important;
+}
+
+body.light-mode button[class*="uppercase"]:has-text("Explore"):hover,
+body.light-mode button:has(text()="Explore"):hover {
+  border-color: rgba(0, 0, 0, 0.40) !important;
+  color: rgba(0, 0, 0, 0.95) !important;
+}
+
+/* Home page room image containers - Ensure black background shows properly */
+body.light-mode div[style*="backgroundColor: rgb(0, 0, 0)"],
+body.light-mode div[style*="backgroundColor: #000000"],
+body.light-mode div[style*="backgroundColor:#000000"] {
+  background-color: #000000 !important;
+}
+
+/* STEP IN button from video section - Force white text */
+body.light-mode section:has(video) button[onclick*="login"],
+body.light-mode section:has(video) button:has-text("Step In") {
+  background-color: rgba(255, 255, 255, 0.15) !important;
+  color: #FFFFFF !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+}
+
+body.light-mode section:has(video) button[onclick*="login"]:hover,
+body.light-mode section:has(video) button:has-text("Step In"):hover {
+  background-color: rgba(255, 255, 255, 0.25) !important;
+  border-color: rgba(255, 255, 255, 0.5) !important;
+}

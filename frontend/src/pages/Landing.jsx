@@ -125,18 +125,18 @@ function Landing() {
               </Link>
               <Link 
                 to="/register"
-                className="px-4 sm:px-6 py-2 text-xs transition-all duration-500 tracking-widest uppercase"
+                className="px-4 sm:px-6 py-2 text-xs transition-all duration-500 tracking-widest uppercase join-button"
                 style={{
-                  backgroundColor: isLightMode ? '#FFFFFF' : '#000000',
-                  color: isLightMode ? '#000000' : '#FFFFFF',
-                  border: `1px solid ${isLightMode ? 'rgba(0, 0, 0, 0.2)' : '#FFFFFF'}`,
+                  backgroundColor: isLightMode ? '#000000' : '#FFFFFF',
+                  color: isLightMode ? '#FFFFFF' : '#000000',
+                  border: `1px solid ${isLightMode ? '#000000' : '#FFFFFF'}`,
                   borderRadius: 'var(--radius-soft)',
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = isLightMode ? 'rgba(255, 255, 255, 0.9)' : 'rgba(0, 0, 0, 0.85)';
+                  e.currentTarget.style.backgroundColor = isLightMode ? 'rgba(0, 0, 0, 0.85)' : 'rgba(255, 255, 255, 0.9)';
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = isLightMode ? '#FFFFFF' : '#000000';
+                  e.currentTarget.style.backgroundColor = isLightMode ? '#000000' : '#FFFFFF';
                 }}
               >
                 Join
@@ -628,7 +628,7 @@ function Landing() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <button
                 onClick={() => navigate('/register')}
-                className="px-8 py-3 text-xs uppercase tracking-widest transition-all"
+                className="px-8 py-3 text-xs uppercase tracking-widest transition-all join-eso-button"
                 style={{
                   backgroundColor: isLightMode ? '#000000' : '#FFFFFF',
                   color: isLightMode ? '#FFFFFF' : '#000000',
@@ -637,10 +637,10 @@ function Landing() {
                   transitionDuration: 'var(--duration-slow)',
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.opacity = '0.9';
+                  e.currentTarget.style.backgroundColor = isLightMode ? 'rgba(0, 0, 0, 0.85)' : 'rgba(255, 255, 255, 0.9)';
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.opacity = '1';
+                  e.currentTarget.style.backgroundColor = isLightMode ? '#000000' : '#FFFFFF';
                 }}
               >
                 Join ESO
