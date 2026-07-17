@@ -2609,3 +2609,56 @@ body.light-mode section:has(video) button:has-text("Step In"):hover {
   background-color: rgba(255, 255, 255, 0.25) !important;
   border-color: rgba(255, 255, 255, 0.5) !important;
 }
+
+/* ============================================
+   CRITICAL: Home page room image fixes
+   ============================================ */
+
+/* Force room image containers to maintain black backgrounds in light mode */
+body.light-mode .rounded-full[style*="backgroundColor: #000000"],
+body.light-mode .rounded-full[style*="backgroundColor:#000000"],
+body.light-mode .rounded-full[style*="backgroundColor: rgb(0, 0, 0)"] {
+  background-color: #000000 !important;
+}
+
+/* Ensure room images themselves are fully visible */
+body.light-mode img[src*="darkroom"],
+body.light-mode img[src*="fantasy"],
+body.light-mode img[src*="philoroom"],
+body.light-mode img[alt*="Dark"],
+body.light-mode img[alt*="Fantasy"],
+body.light-mode img[alt*="Philo"] {
+  opacity: 1 !important;
+  visibility: visible !important;
+  filter: brightness(1) contrast(1.1) saturate(1.1) !important;
+}
+
+/* Room image parent divs - ensure no light backgrounds override */
+body.light-mode div:has(> img[src*="darkroom"]),
+body.light-mode div:has(> img[src*="fantasy"]),
+body.light-mode div:has(> img[src*="philoroom"]) {
+  background-color: #000000 !important;
+}
+
+/* Dark overlays on room images - reduce in light mode so images show */
+body.light-mode div[style*="radial-gradient"][style*="rgba(0,0,0"] {
+  opacity: 0.3 !important;
+}
+
+/* Login page "Create One" link - ensure visibility */
+body.light-mode a[href="/register"] {
+  color: rgba(0, 0, 0, 0.80) !important;
+  text-decoration: underline;
+  text-decoration-color: rgba(0, 0, 0, 0.3);
+}
+
+body.light-mode a[href="/register"]:hover {
+  color: rgba(0, 0, 0, 1) !important;
+  text-decoration-color: rgba(0, 0, 0, 0.6);
+}
+
+/* Exception: navbar register button should stay styled */
+body.light-mode nav a[href="/register"],
+body.light-mode header a[href="/register"] {
+  text-decoration: none !important;
+}
