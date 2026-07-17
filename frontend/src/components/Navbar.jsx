@@ -4,6 +4,7 @@ import useAuth from '../hooks/useAuth';
 import NotificationBell from './NotificationBell';
 import EsoLogo from './EsoLogo';
 import ThemeToggle from './ThemeToggle';
+import { useTheme } from '../contexts/ThemeContext';
 
 /**
  * Navbar Component
@@ -13,6 +14,8 @@ import ThemeToggle from './ThemeToggle';
 function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { user, isAuthenticated } = useAuth();
+  const { theme } = useTheme();
+  const isLight = theme === 'light';
 
   // Don't show navbar on landing/auth pages
   const location = window.location.pathname;
@@ -53,11 +56,12 @@ function Navbar() {
 
   return (
     <nav 
-      className="fixed top-0 left-0 right-0 z-50 border-b border-white/10 h-16"
+      className="fixed top-0 left-0 right-0 z-50 h-16"
       style={{ 
-        background: 'rgba(0, 0, 0, 0.85)', 
+        background: isLight ? 'rgba(251, 252, 248, 0.98)' : 'rgba(0, 0, 0, 0.85)', 
         backdropFilter: 'blur(20px)',
-        WebkitBackdropFilter: 'blur(20px)'
+        WebkitBackdropFilter: 'blur(20px)',
+        borderBottom: isLight ? '1px solid rgba(0, 0, 0, 0.08)' : '1px solid rgba(255, 255, 255, 0.1)'
       }}
       role="navigation"
       aria-label="Main navigation"
@@ -77,21 +81,21 @@ function Navbar() {
           <div className="hidden md:flex items-center space-x-8" role="menubar">
             <Link
               to="/home"
-              className="text-sm text-white/70 hover:text-white transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white/50 rounded px-2 py-1 tracking-wider uppercase"
+              className={`text-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white/50 rounded px-2 py-1 tracking-wider uppercase ${isLight ? 'text-black/70 hover:text-black' : 'text-white/70 hover:text-white'}`}
               role="menuitem"
             >
               Home
             </Link>
             <Link
               to="/circles"
-              className="text-sm text-white/70 hover:text-white transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white/50 rounded px-2 py-1 tracking-wider uppercase"
+              className={`text-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white/50 rounded px-2 py-1 tracking-wider uppercase ${isLight ? 'text-black/70 hover:text-black' : 'text-white/70 hover:text-white'}`}
               role="menuitem"
             >
               Circles
             </Link>
             <Link
               to="/support"
-              className="text-sm text-white/70 hover:text-white transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white/50 rounded px-2 py-1 tracking-wider uppercase"
+              className={`text-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white/50 rounded px-2 py-1 tracking-wider uppercase ${isLight ? 'text-black/70 hover:text-black' : 'text-white/70 hover:text-white'}`}
               role="menuitem"
             >
               Support
@@ -103,7 +107,7 @@ function Navbar() {
             <ThemeToggle />
             <Link
               to="/about"
-              className="text-sm text-white/70 hover:text-white transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white/50 rounded px-2 py-1 tracking-wider uppercase"
+              className={`text-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white/50 rounded px-2 py-1 tracking-wider uppercase ${isLight ? 'text-black/70 hover:text-black' : 'text-white/70 hover:text-white'}`}
               role="menuitem"
             >
               About Us
@@ -136,7 +140,7 @@ function Navbar() {
           {/* Mobile Hamburger Menu - Increased touch target */}
           <button
             onClick={toggleMobileMenu}
-            className="md:hidden text-text-primary focus:outline-none focus:ring-2 focus:ring-accent-primary focus:ring-offset-2 focus:ring-offset-primary-bg rounded p-2 min-h-touch min-w-touch flex items-center justify-center"
+            className={`md:hidden focus:outline-none focus:ring-2 focus:ring-offset-2 rounded p-2 min-h-touch min-w-touch flex items-center justify-center ${isLight ? 'text-black/80 focus:ring-black/50 focus:ring-offset-white' : 'text-white focus:ring-white/50 focus:ring-offset-black'}`}
             aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
             aria-expanded={isMobileMenuOpen}
             aria-controls="mobile-menu"
@@ -180,7 +184,8 @@ function Navbar() {
           <>
             {/* Backdrop */}
             <div 
-              className="md:hidden fixed inset-0 top-16 bg-black/80 z-40"
+              className="md:hidden fixed inset-0 top-16 z-40"
+              style={{ background: isLight ? 'rgba(0, 0, 0, 0.3)' : 'rgba(0, 0, 0, 0.8)' }}
               onClick={() => setIsMobileMenuOpen(false)}
               aria-hidden="true"
             />
@@ -190,9 +195,9 @@ function Navbar() {
               id="mobile-menu"
               className="md:hidden fixed top-16 left-0 right-0 z-50 shadow-2xl"
               style={{
-                background: 'rgba(10, 10, 10, 0.98)',
+                background: isLight ? 'rgba(251, 252, 248, 0.98)' : 'rgba(10, 10, 10, 0.98)',
                 backdropFilter: 'blur(20px)',
-                borderTop: '1px solid rgba(255, 255, 255, 0.1)',
+                borderTop: isLight ? '1px solid rgba(0, 0, 0, 0.1)' : '1px solid rgba(255, 255, 255, 0.1)',
                 maxHeight: 'calc(100vh - 4rem)',
                 overflowY: 'auto'
               }}
@@ -202,7 +207,7 @@ function Navbar() {
                 <Link
                   to="/home"
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="py-3 px-4 rounded-lg text-white/80 hover:text-white hover:bg-white/10 transition-colors duration-200 text-base font-medium"
+                  className={`py-3 px-4 rounded-lg transition-colors duration-200 text-base font-medium ${isLight ? 'text-black/80 hover:text-black hover:bg-black/5' : 'text-white/80 hover:text-white hover:bg-white/10'}`}
                   role="menuitem"
                 >
                   Home
@@ -210,7 +215,7 @@ function Navbar() {
                 <Link
                   to="/circles"
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="py-3 px-4 rounded-lg text-white/80 hover:text-white hover:bg-white/10 transition-colors duration-200 text-base font-medium"
+                  className={`py-3 px-4 rounded-lg transition-colors duration-200 text-base font-medium ${isLight ? 'text-black/80 hover:text-black hover:bg-black/5' : 'text-white/80 hover:text-white hover:bg-white/10'}`}
                   role="menuitem"
                 >
                   Circles
@@ -218,7 +223,7 @@ function Navbar() {
                 <Link
                   to="/support"
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="py-3 px-4 rounded-lg text-white/80 hover:text-white hover:bg-white/10 transition-colors duration-200 text-base font-medium"
+                  className={`py-3 px-4 rounded-lg transition-colors duration-200 text-base font-medium ${isLight ? 'text-black/80 hover:text-black hover:bg-black/5' : 'text-white/80 hover:text-white hover:bg-white/10'}`}
                   role="menuitem"
                 >
                   Support
@@ -226,17 +231,17 @@ function Navbar() {
                 <Link
                   to="/about"
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="py-3 px-4 rounded-lg text-white/80 hover:text-white hover:bg-white/10 transition-colors duration-200 text-base font-medium"
+                  className={`py-3 px-4 rounded-lg transition-colors duration-200 text-base font-medium ${isLight ? 'text-black/80 hover:text-black hover:bg-black/5' : 'text-white/80 hover:text-white hover:bg-white/10'}`}
                   role="menuitem"
                 >
                   About Us
                 </Link>
                 
-                <div className="border-t border-white/10 my-2"></div>
+                <div className={`border-t my-2 ${isLight ? 'border-black/10' : 'border-white/10'}`}></div>
                 
                 {/* Theme Toggle in Mobile Menu */}
                 <div className="py-3 px-4 flex items-center justify-between">
-                  <span className="text-white/80 text-base font-medium">Theme</span>
+                  <span className={`text-base font-medium ${isLight ? 'text-black/80' : 'text-white/80'}`}>Theme</span>
                   <ThemeToggle />
                 </div>
                 
@@ -244,7 +249,7 @@ function Navbar() {
                   <Link
                     to="/profile"
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="flex items-center space-x-3 py-3 px-4 rounded-lg text-white hover:bg-white/10 transition-colors duration-200"
+                    className={`flex items-center space-x-3 py-3 px-4 rounded-lg transition-colors duration-200 ${isLight ? 'text-black hover:bg-black/5' : 'text-white hover:bg-white/10'}`}
                     role="menuitem"
                     aria-label={`Profile: ${user?.username || 'User'}`}
                   >
@@ -263,7 +268,7 @@ function Navbar() {
                   <Link
                     to="/register"
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="py-3 px-4 rounded-lg text-[#D97757] hover:text-[#D97757]/80 hover:bg-white/10 transition-colors duration-200 text-base font-medium"
+                    className={`py-3 px-4 rounded-lg transition-colors duration-200 text-base font-medium ${isLight ? 'text-[#D97757] hover:text-[#D97757]/80 hover:bg-black/5' : 'text-[#D97757] hover:text-[#D97757]/80 hover:bg-white/10'}`}
                     role="menuitem"
                   >
                     Join ESO

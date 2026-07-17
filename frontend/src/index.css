@@ -2502,3 +2502,60 @@ body.light-mode section button[style*="--border-medium"]:hover {
   border-color: rgba(0, 0, 0, 0.40) !important;
   color: rgba(0, 0, 0, 0.95) !important;
 }
+
+/* ============================================
+   ADDITIONAL LIGHT MODE REINFORCEMENTS
+   ============================================ */
+
+/* Video section - Extra reinforcement for all text elements */
+body.light-mode section:has(video) h1,
+body.light-mode section:has(video) h2,
+body.light-mode section:has(video) p,
+body.light-mode section:has(video) span,
+body.light-mode section:has(video) button,
+body.light-mode section:has(video) a,
+body.light-mode .hero-white-text {
+  color: #FFFFFF !important;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.95), 0 4px 24px rgba(0, 0, 0, 0.85), 0 1px 4px rgba(0, 0, 0, 1) !important;
+}
+
+/* Video section CTA buttons - Maximum contrast */
+body.light-mode section:has(video) button.hero-white-text,
+body.light-mode section:has(video) button[class*="px-"] {
+  background-color: rgba(255, 255, 255, 0.15) !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  color: #FFFFFF !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+}
+
+body.light-mode section:has(video) button.hero-white-text:hover,
+body.light-mode section:has(video) button[class*="px-"]:hover {
+  background-color: rgba(255, 255, 255, 0.25) !important;
+  border-color: rgba(255, 255, 255, 0.5) !important;
+}
+
+/* Home page room cards - Override inline styles in light mode */
+body.light-mode div[style*="rgba(255, 255, 255, 0.5)"] p,
+body.light-mode span[style*="rgba(255, 255, 255, 0.4)"] {
+  color: rgba(0, 0, 0, 0.55) !important;
+}
+
+/* Mobile menu theme-aware styles */
+body.light-mode div[id="mobile-menu"] {
+  background: rgba(251, 252, 248, 0.98) !important;
+  border-top: 1px solid rgba(0, 0, 0, 0.1) !important;
+}
+
+body.light-mode div[id="mobile-menu"] a {
+  color: rgba(0, 0, 0, 0.80) !important;
+}
+
+body.light-mode div[id="mobile-menu"] a:hover {
+  color: rgba(0, 0, 0, 1) !important;
+  background: rgba(0, 0, 0, 0.05) !important;
+}
+
+body.light-mode div[id="mobile-menu"] span {
+  color: rgba(0, 0, 0, 0.80) !important;
+}

@@ -319,6 +319,7 @@ function Home() {
                           left: '14px',
                           right: '14px',
                           bottom: '14px',
+                          backgroundColor: '#000000',
                           border: `1px solid rgba(${room.glowColorRGB}, ${hovered === room.id ? 0.4 : 0.2})`,
                           boxShadow: `
                             inset 0 0 40px rgba(${room.glowColorRGB}, 0.15),
@@ -382,7 +383,7 @@ function Home() {
                     <p
                       className="text-[10px] md:text-[11px] tracking-[0.15em] mb-2"
                       style={{
-                        color: 'rgba(255,255,255,0.5)',
+                        color: isLight ? 'rgba(0, 0, 0, 0.5)' : 'rgba(255,255,255,0.5)',
                       }}
                     >
                       {room.tagline}
@@ -398,7 +399,9 @@ function Home() {
                       <span
                         className="text-[9px] tracking-[0.3em] uppercase"
                         style={{
-                          color: hovered === room.id ? room.glowColor : 'rgba(255,255,255,0.4)',
+                          color: hovered === room.id 
+                            ? room.glowColor 
+                            : (isLight ? 'rgba(0, 0, 0, 0.4)' : 'rgba(255,255,255,0.4)'),
                           transition: 'color 0.6s ease',
                         }}
                       >
@@ -409,7 +412,9 @@ function Home() {
                           x: hovered === room.id ? 4 : 0,
                         }}
                         style={{
-                          color: hovered === room.id ? room.glowColor : 'rgba(255,255,255,0.4)',
+                          color: hovered === room.id 
+                            ? room.glowColor 
+                            : (isLight ? 'rgba(0, 0, 0, 0.4)' : 'rgba(255,255,255,0.4)'),
                         }}
                       >
                         →
