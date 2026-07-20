@@ -453,21 +453,16 @@ body.light-mode button[class*="bg-white"][class*="/8"]:hover {
 }
 
 /* ============================================
-   CARDS - Kinfolk-style: Subtle elevation with smooth hover
+   CARDS - Let inline styles control backgrounds
    ============================================ */
 
-body.light-mode article {
-  background: #F0EDE5 !important; /* Slightly lighter warm beige for cards */
-  border: 0.5px solid rgba(139, 131, 120, 0.12) !important;
-  box-shadow: 0 1px 3px rgba(107, 101, 96, 0.04), 0 2px 6px rgba(107, 101, 96, 0.02) !important;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
-}
+/* Removed global article background override to allow inline styles */
+/* Cards now use component-level inline styles for theme awareness */
 
 body.light-mode article:hover {
-  border-color: rgba(0, 0, 0, 0.08) !important;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06),
               0 2px 6px rgba(0, 0, 0, 0.04) !important;
-  transform: translateY(-3px);
+  transform: translateY(-2px);
 }
 
 /* ============================================
