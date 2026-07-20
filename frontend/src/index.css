@@ -337,7 +337,7 @@ body.light-mode p {
 /* Small labels and captions - Medium gray */
 body.light-mode [style*="rgba(255, 255, 255, 0.15)"],
 body.light-mode p[class*="text-[10px]"],
-body.light-mode [class*="text-xs"],
+body.light-mode [class*="text-xs"]:not(button),
 body.light-mode [class*="text-sm"]:not(button) {
   color: rgba(0, 0, 0, 0.60) !important;
   font-weight: 400 !important;
