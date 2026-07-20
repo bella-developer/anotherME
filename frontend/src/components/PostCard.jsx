@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { addReaction, removeReaction } from '../features/postsSlice';
 import { useTheme } from '../contexts/ThemeContext';
@@ -13,6 +13,15 @@ const PostCard = ({ post, onPostClick }) => {
   const isLight = theme === 'light';
   const [isExpanded, setIsExpanded] = useState(false);
   const [userReactions, setUserReactions] = useState(new Set());
+  
+  // CRITICAL: Force re-render when body class actually changes
+  // This ensures styles match the actual DOM state
+  const [, forceUpdate] = useState({});
+  
+  useEffect(() => {
+    // Re-render when theme changes to sync with body class
+    forceUpdate({});
+  }, [theme]);
 
   // Format timestamp to relative time
   const formatTimestamp = (timestamp) => {
