@@ -176,13 +176,13 @@ function PostDetail() {
               to={`/circles/${post.circle.id}`}
               className="block border transition-colors p-5 group"
               style={{
-                background: isLight ? 'rgba(0,0,0,0.06)' : '#161b22',
-                borderColor: isLight ? 'rgba(0,0,0,0.12)' : '#21262d'
+                background: isLight ? 'rgba(0,0,0,0.03)' : '#161b22',
+                borderColor: isLight ? 'rgba(0,0,0,0.08)' : '#21262d'
               }}
             >
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-4">
-                  <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ background: isLight ? 'rgba(0,0,0,0.06)' : '#21262d' }}>
+                  <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ background: isLight ? 'rgba(0,0,0,0.03)' : '#21262d' }}>
                     <svg className="w-5 h-5 text-[#ff6b35]" fill="currentColor" viewBox="0 0 20 20">
                       <circle cx="10" cy="10" r="8" />
                     </svg>
