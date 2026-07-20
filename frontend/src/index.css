@@ -374,18 +374,18 @@ body.light-mode [class*="description"] {
 }
 
 /* ============================================
-   BUTTONS - Kinfolk-style: Clean with smooth hover transitions
+   BUTTONS - Allow inline styles for reaction buttons
    ============================================ */
 
-/* Default buttons - Clean black text */
-body.light-mode button {
+/* Default buttons - Clean black text, but allow inline style overrides */
+body.light-mode button:not([style*="color:"]) {
   color: rgba(0, 0, 0, 0.75) !important;
   font-weight: 500 !important;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
-/* Button hover - Darken text */
-body.light-mode button:hover:not(:disabled) {
+/* Button hover - Darken text, but allow inline style overrides */
+body.light-mode button:hover:not(:disabled):not([style*="color:"]) {
   color: rgba(0, 0, 0, 0.95) !important;
 }
 
@@ -2464,8 +2464,8 @@ body.light-mode article div[class*="text-"] {
   color: rgba(0, 0, 0, 0.85) !important;
 }
 
-/* Comment counts and interaction text */
-body.light-mode article button span {
+/* Comment counts and interaction text - BUT NOT reaction buttons */
+body.light-mode article button.comment-count span {
   color: rgba(0, 0, 0, 0.65) !important;
 }
 
