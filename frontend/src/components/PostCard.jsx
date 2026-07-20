@@ -128,7 +128,7 @@ const PostCard = ({ post, onPostClick }) => {
               e.stopPropagation();
               handleReactionToggle('iRelate');
             }}
-            className="flex items-center gap-1.5 transition-colors text-xs"
+            className="reaction-button flex items-center gap-1.5 transition-colors text-xs"
             style={{ 
               color: isLight ? 'rgba(0, 0, 0, 0.75)' : '#918A87',
               background: isLight ? 'rgba(0, 0, 0, 0.08)' : 'transparent',
@@ -151,7 +151,7 @@ const PostCard = ({ post, onPostClick }) => {
               e.stopPropagation();
               handleReactionToggle('youreNotAlone');
             }}
-            className="flex items-center gap-1.5 transition-colors text-xs"
+            className="reaction-button flex items-center gap-1.5 transition-colors text-xs"
             style={{ 
               color: isLight ? 'rgba(0, 0, 0, 0.75)' : '#918A87',
               background: isLight ? 'rgba(0, 0, 0, 0.08)' : 'transparent',
@@ -174,7 +174,7 @@ const PostCard = ({ post, onPostClick }) => {
               e.stopPropagation();
               handleReactionToggle('imListening');
             }}
-            className="flex items-center gap-1.5 transition-colors text-xs"
+            className="reaction-button flex items-center gap-1.5 transition-colors text-xs"
             style={{ 
               color: isLight ? 'rgba(0, 0, 0, 0.75)' : '#918A87',
               background: isLight ? 'rgba(0, 0, 0, 0.08)' : 'transparent',
