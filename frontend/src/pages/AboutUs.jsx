@@ -2,6 +2,7 @@ import Layout from '../components/Layout';
 import PageTransition from '../components/PageTransition';
 import EsoLogo from '../components/EsoLogo';
 import { usePageTitle } from '../hooks/usePageTitle';
+import { useTheme } from '../contexts/ThemeContext';
 
 /**
  * About Us Page - Minimal, Artistic, Centered
@@ -9,6 +10,8 @@ import { usePageTitle } from '../hooks/usePageTitle';
  */
 function AboutUs() {
   usePageTitle('About');
+  const { theme } = useTheme();
+  const isLight = theme === 'light';
   const principles = [
     {
       title: "Silence is Sacred",
@@ -47,10 +50,10 @@ function AboutUs() {
               </div>
               
               <div className="space-y-4">
-                <h1 className="text-lg tracking-[0.3em] uppercase text-white/90 font-light">
+                <h1 className={`text-lg tracking-[0.3em] uppercase font-light ${isLight ? 'text-black/90' : 'text-white/90'}`}>
                   Inner World, Finally Understood
                 </h1>
-                <p className="text-sm text-white/50 leading-relaxed max-w-lg mx-auto">
+                <p className={`text-sm leading-relaxed max-w-lg mx-auto ${isLight ? 'text-black/60' : 'text-white/50'}`}>
                   A quiet space for introverts, deep thinkers, and those who don't fit the mold
                 </p>
               </div>
@@ -58,14 +61,14 @@ function AboutUs() {
 
             {/* Divider */}
             <div className="flex items-center gap-3 justify-center">
-              <div className="w-8 h-px bg-white/10"></div>
-              <div className="w-1 h-1 rounded-full bg-white/30"></div>
-              <div className="w-8 h-px bg-white/10"></div>
+              <div className={`w-8 h-px ${isLight ? 'bg-black/10' : 'bg-white/10'}`}></div>
+              <div className={`w-1 h-1 rounded-full ${isLight ? 'bg-black/30' : 'bg-white/30'}`}></div>
+              <div className={`w-8 h-px ${isLight ? 'bg-black/10' : 'bg-white/10'}`}></div>
             </div>
 
             {/* Core Principles */}
             <div className="space-y-8 animate-slideUp" style={{ animationDelay: '0.2s' }}>
-              <h2 className="text-xs tracking-[0.25em] uppercase text-white/40 font-medium">
+              <h2 className={`text-xs tracking-[0.25em] uppercase font-medium ${isLight ? 'text-black/40' : 'text-white/40'}`}>
                 Our Philosophy
               </h2>
               
@@ -75,15 +78,15 @@ function AboutUs() {
                     key={i}
                     className="group p-6 rounded-xl transition-all duration-500 hover:-translate-y-1"
                     style={{
-                      background: 'rgba(255,255,255,0.02)',
-                      boxShadow: '0 0 0 1px rgba(255,255,255,0.08)',
+                      background: isLight ? 'rgba(0,0,0,0.03)' : 'rgba(255,255,255,0.02)',
+                      boxShadow: isLight ? '0 0 0 1px rgba(0,0,0,0.08)' : '0 0 0 1px rgba(255,255,255,0.08)',
                     }}
                   >
                     <div className="space-y-2">
-                      <h3 className="text-sm font-semibold tracking-wide text-white group-hover:text-white/90 transition-colors">
+                      <h3 className={`text-sm font-semibold tracking-wide transition-colors ${isLight ? 'text-black group-hover:text-black/90' : 'text-white group-hover:text-white/90'}`}>
                         {item.title}
                       </h3>
-                      <p className="text-xs text-white/50 leading-relaxed">
+                      <p className={`text-xs leading-relaxed ${isLight ? 'text-black/60' : 'text-white/50'}`}>
                         {item.desc}
                       </p>
                     </div>
@@ -101,7 +104,7 @@ function AboutUs() {
 
             {/* Three Spaces */}
             <div className="space-y-8 animate-slideUp" style={{ animationDelay: '0.4s' }}>
-              <h2 className="text-xs tracking-[0.25em] uppercase text-white/40 font-medium">
+              <h2 className={`text-xs tracking-[0.25em] uppercase font-medium ${isLight ? 'text-black/40' : 'text-white/40'}`}>
                 Three Spaces
               </h2>
               
@@ -111,15 +114,15 @@ function AboutUs() {
                     key={i}
                     className="group w-full sm:w-auto flex-1 p-6 rounded-xl transition-all duration-500 hover:-translate-y-1 text-center"
                     style={{
-                      background: 'rgba(255,255,255,0.02)',
-                      boxShadow: '0 0 0 1px rgba(255,255,255,0.08)',
+                      background: isLight ? 'rgba(0,0,0,0.03)' : 'rgba(255,255,255,0.02)',
+                      boxShadow: isLight ? '0 0 0 1px rgba(0,0,0,0.08)' : '0 0 0 1px rgba(255,255,255,0.08)',
                     }}
                   >
                     <div className="space-y-2">
-                      <h3 className="text-sm font-bold tracking-wider uppercase text-white group-hover:text-white/90 transition-colors">
+                      <h3 className={`text-sm font-bold tracking-wider uppercase transition-colors ${isLight ? 'text-black group-hover:text-black/90' : 'text-white group-hover:text-white/90'}`}>
                         {space.name}
                       </h3>
-                      <p className="text-[10px] text-white/50 tracking-wide">
+                      <p className={`text-[10px] tracking-wide ${isLight ? 'text-black/60' : 'text-white/50'}`}>
                         {space.desc}
                       </p>
                     </div>
@@ -138,10 +141,10 @@ function AboutUs() {
             {/* Welcome Message */}
             <div className="space-y-6 animate-fadeIn" style={{ animationDelay: '0.6s' }}>
               <div className="space-y-4">
-                <p className="text-2xl font-light text-white/80 leading-relaxed">
+                <p className={`text-2xl font-light leading-relaxed ${isLight ? 'text-black/90' : 'text-white/80'}`}>
                   Welcome home
                 </p>
-                <p className="text-xs tracking-[0.2em] uppercase text-white/30">
+                <p className={`text-xs tracking-[0.2em] uppercase ${isLight ? 'text-black/35' : 'text-white/30'}`}>
                   For deep thinkers and authentic minds
                 </p>
               </div>

@@ -2667,3 +2667,86 @@ body.light-mode nav a[href="/register"],
 body.light-mode header a[href="/register"] {
   text-decoration: none !important;
 }
+
+/* ============================================
+   About Us and Profile Page Light Mode
+   ============================================ */
+
+/* About Us page dividers */
+body.light-mode .flex.items-center.gap-3 > div[class*="bg-white"] {
+  background: rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Profile and About sections */
+body.light-mode div[style*="rgba(255,255,255,0.03)"],
+body.light-mode div[style*="rgba(255, 255, 255, 0.03)"],
+body.light-mode div[style*="rgba(255,255,255,0.02)"],
+body.light-mode div[style*="rgba(255, 255, 255, 0.02)"] {
+  background: rgba(0, 0, 0, 0.04) !important;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Profile text elements */
+body.light-mode p[class*="text-white/"],
+body.light-mode h1[class*="text-white"],
+body.light-mode h2[class*="text-white"],
+body.light-mode h3[class*="text-white"],
+body.light-mode span[class*="text-white/"] {
+  color: rgba(0, 0, 0, 0.85) !important;
+}
+
+body.light-mode p[class*="text-white/25"],
+body.light-mode span[class*="text-white/25"] {
+  color: rgba(0, 0, 0, 0.35) !important;
+}
+
+body.light-mode p[class*="text-white/30"],
+body.light-mode span[class*="text-white/30"] {
+  color: rgba(0, 0, 0, 0.40) !important;
+}
+
+body.light-mode p[class*="text-white/40"],
+body.light-mode span[class*="text-white/40"] {
+  color: rgba(0, 0, 0, 0.50) !important;
+}
+
+body.light-mode p[class*="text-white/70"],
+body.light-mode span[class*="text-white/70"] {
+  color: rgba(0, 0, 0, 0.75) !important;
+}
+
+/* ============================================
+   Post Detail Page - Reduce card brightness
+   ============================================ */
+
+/* Post detail cards and backgrounds */
+body.light-mode .bg-\\[\\#161b22\\] {
+  background: rgba(0, 0, 0, 0.04) !important;
+}
+
+body.light-mode .border-\\[\\#21262d\\],
+body.light-mode .border-\\[\\#30363d\\] {
+  border-color: rgba(0, 0, 0, 0.12) !important;
+}
+
+body.light-mode .text-\\[\\#8b949e\\],
+body.light-mode .text-\\[\\#6e7681\\],
+body.light-mode .text-\\[\\#484f58\\] {
+  color: rgba(0, 0, 0, 0.65) !important;
+}
+
+body.light-mode .text-\\[\\#21262d\\] {
+  color: rgba(0, 0, 0, 0.50) !important;
+}
+
+/* Reaction buttons in light mode */
+body.light-mode button.border-\\[\\#30363d\\] {
+  border-color: rgba(0, 0, 0, 0.12) !important;
+  color: rgba(0, 0, 0, 0.70) !important;
+  background: rgba(0, 0, 0, 0.02) !important;
+}
+
+body.light-mode button.border-\\[\\#30363d\\]:hover {
+  border-color: rgba(0, 0, 0, 0.25) !important;
+  background: rgba(0, 0, 0, 0.04) !important;
+}
