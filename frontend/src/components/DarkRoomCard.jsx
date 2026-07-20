@@ -28,9 +28,11 @@ function DarkRoomCard({ post, onReaction, onEdit, onDelete }) {
     <article
       className="relative mb-6 transition-all duration-200"
       style={{
-        background: 'rgba(0, 0, 0, 0.4)',
+        background: isLight ? 'rgba(0, 0, 0, 0.04)' : 'rgba(0, 0, 0, 0.4)',
         backdropFilter: 'blur(12px)',
-        boxShadow: '0 0 0 1px rgba(255,255,255,0.08), 0 8px 32px rgba(0,0,0,0.5)',
+        boxShadow: isLight 
+          ? '0 0 0 1px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.04)' 
+          : '0 0 0 1px rgba(255,255,255,0.08), 0 8px 32px rgba(0,0,0,0.5)',
         borderRadius: '8px',
       }}
     >
