@@ -2611,7 +2611,7 @@ body.light-mode section:has(video) button:has-text("Step In"):hover {
 }
 
 /* ============================================
-   CRITICAL: Home page room image fixes
+   CRITICAL: Home page room image fixes for light mode
    ============================================ */
 
 /* Force room image containers to maintain black backgrounds in light mode */
