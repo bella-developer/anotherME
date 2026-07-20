@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { FaPen, FaTrash } from 'react-icons/fa';
 import RoomReactions from './RoomReactions';
 import ConfirmDialog from './ConfirmDialog';
+import { useTheme } from '../contexts/ThemeContext';
 
 /**
  * Fantasy Room Card Component
@@ -11,6 +12,8 @@ import ConfirmDialog from './ConfirmDialog';
  */
 function FantasyRoomCard({ post, onReaction, onEdit, onDelete }) {
   const navigate = useNavigate();
+  const { theme } = useTheme();
+  const isLight = theme === 'light';
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
   const formatTimeAgo = (date) => {
@@ -34,7 +37,7 @@ function FantasyRoomCard({ post, onReaction, onEdit, onDelete }) {
       {/* Header Bar */}
       <div className="flex items-center justify-between px-4 sm:px-5 pt-4 sm:pt-5 pb-3">
         <div className="flex items-center gap-2.5 flex-wrap">
-          <time className="text-[11px] text-white/40 tracking-wide font-medium">
+          <time className="text-[11px] tracking-wide font-medium" style={{ color: isLight ? 'rgba(0, 0, 0, 0.55)' : 'rgba(255, 255, 255, 0.4)' }}>
             {formatTimeAgo(post.createdAt)}
           </time>
           {post.category && (
