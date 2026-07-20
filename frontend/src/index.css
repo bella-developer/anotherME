@@ -453,15 +453,23 @@ body.light-mode button[class*="bg-white"][class*="/8"]:hover {
 }
 
 /* ============================================
-   CARDS - Let inline styles control backgrounds
+   CARDS - Refined elevation and depth
    ============================================ */
 
-/* Removed global article background override to allow inline styles */
-/* Cards now use component-level inline styles for theme awareness */
+/* Light mode cards: subtle shadows for depth without harshness */
+body.light-mode article {
+  box-shadow: 
+    0 1px 3px rgba(0, 0, 0, 0.06),
+    0 1px 2px rgba(0, 0, 0, 0.04),
+    0 0 0 1px rgba(0, 0, 0, 0.04) !important;
+  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1) !important;
+}
 
 body.light-mode article:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06),
-              0 2px 6px rgba(0, 0, 0, 0.04) !important;
+  box-shadow: 
+    0 8px 24px rgba(0, 0, 0, 0.08),
+    0 4px 12px rgba(0, 0, 0, 0.06),
+    0 0 0 1px rgba(0, 0, 0, 0.06) !important;
   transform: translateY(-2px);
 }
 

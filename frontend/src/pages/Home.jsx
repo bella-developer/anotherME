@@ -132,7 +132,7 @@ function Home() {
                         cursor: 'pointer',
                       }}
                     >
-                      {/* Stable circular border */}
+                      {/* Stable circular border - THEME AWARE */}
                       <div
                         className="rounded-full"
                         style={{
@@ -141,15 +141,24 @@ function Home() {
                           left: '4px',
                           right: '4px',
                           bottom: '4px',
-                          border: `1px solid rgba(${room.glowColorRGB}, 0.3)`,
-                          boxShadow: `
-                            inset 0 0 30px rgba(${room.glowColorRGB}, 0.1),
-                            0 0 20px rgba(${room.glowColorRGB}, 0.2)
-                          `,
+                          border: isLight 
+                            ? `2px solid rgba(${room.glowColorRGB}, 0.25)`
+                            : `1px solid rgba(${room.glowColorRGB}, 0.3)`,
+                          boxShadow: isLight
+                            ? `
+                              inset 0 0 40px rgba(${room.glowColorRGB}, 0.08),
+                              0 0 30px rgba(${room.glowColorRGB}, 0.12),
+                              0 4px 20px rgba(0, 0, 0, 0.08)
+                            `
+                            : `
+                              inset 0 0 30px rgba(${room.glowColorRGB}, 0.1),
+                              0 0 20px rgba(${room.glowColorRGB}, 0.2)
+                            `,
+                          transition: 'all 0.8s ease',
                         }}
                       />
 
-                      {/* Rotating energy arcs */}
+                      {/* Rotating energy arcs - THEME AWARE */}
                       <div
                         className="rounded-full"
                         style={{
@@ -159,6 +168,7 @@ function Home() {
                           right: '4px',
                           bottom: '4px',
                           animation: 'rotate360 20s linear infinite',
+                          opacity: isLight ? 0.7 : 1,
                         }}
                       >
                         {/* Primary energy arc */}
@@ -166,7 +176,9 @@ function Home() {
                           className="absolute inset-0 w-full h-full"
                           viewBox="0 0 400 400"
                           style={{
-                            filter: `drop-shadow(0 0 15px ${room.glowColor})`,
+                            filter: isLight 
+                              ? `drop-shadow(0 0 8px ${room.glowColor})`
+                              : `drop-shadow(0 0 15px ${room.glowColor})`,
                           }}
                         >
                           <defs>
@@ -217,7 +229,7 @@ function Home() {
                         </svg>
                       </div>
 
-                      {/* Counter-rotating secondary arc */}
+                      {/* Counter-rotating secondary arc - THEME AWARE */}
                       <div
                         className="rounded-full"
                         style={{
@@ -227,13 +239,16 @@ function Home() {
                           right: '4px',
                           bottom: '4px',
                           animation: 'rotate360reverse 15s linear infinite',
+                          opacity: isLight ? 0.5 : 0.6,
                         }}
                       >
                         <svg
                           className="absolute inset-0 w-full h-full"
                           viewBox="0 0 400 400"
                           style={{
-                            filter: `drop-shadow(0 0 10px ${room.glowColor})`,
+                            filter: isLight 
+                              ? `drop-shadow(0 0 6px ${room.glowColor})`
+                              : `drop-shadow(0 0 10px ${room.glowColor})`,
                             opacity: 0.6,
                           }}
                         >
@@ -249,7 +264,7 @@ function Home() {
                         </svg>
                       </div>
 
-                      {/* Orbital particles - positioned to orbit between the border layers */}
+                      {/* Orbital particles - THEME AWARE */}
                       <div
                         className="rounded-full pointer-events-none"
                         style={{
@@ -259,6 +274,7 @@ function Home() {
                           right: '9px',
                           bottom: '9px',
                           animation: 'rotate360 25s linear infinite',
+                          opacity: isLight ? 0.6 : 0.8,
                         }}
                       >
                         {[0, 90, 180, 270].map((angle, i) => {
@@ -298,13 +314,15 @@ function Home() {
                         }
                       `}</style>
 
-                      {/* Atmospheric glow beneath */}
+                      {/* Atmospheric glow beneath - THEME AWARE */}
                       <div
                         className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 rounded-full"
                         style={{
                           width: '70%',
                           height: '30px',
-                          background: `radial-gradient(ellipse, rgba(${room.glowColorRGB}, ${hovered === room.id ? 0.4 : 0.25}) 0%, transparent 70%)`,
+                          background: isLight
+                            ? `radial-gradient(ellipse, rgba(${room.glowColorRGB}, ${hovered === room.id ? 0.2 : 0.12}) 0%, transparent 70%)`
+                            : `radial-gradient(ellipse, rgba(${room.glowColorRGB}, ${hovered === room.id ? 0.4 : 0.25}) 0%, transparent 70%)`,
                           filter: 'blur(20px)',
                           transition: 'all 0.8s ease',
                         }}
@@ -367,13 +385,17 @@ function Home() {
                   </div>
                 </div>
 
-                  {/* Room info below circle */}
+                  {/* Room info below circle - THEME AWARE */}
                   <div className="mt-12 md:mt-14 text-center">
                     <h2
                       className="text-xl md:text-2xl font-light tracking-[0.25em] mb-3 uppercase"
                       style={{
-                        color: hovered === room.id ? room.glowColor : 'rgba(255,255,255,0.9)',
-                        textShadow: hovered === room.id 
+                        color: isLight
+                          ? (hovered === room.id ? room.glowColor : 'rgba(0,0,0,0.85)')
+                          : (hovered === room.id ? room.glowColor : 'rgba(255,255,255,0.9)'),
+                        textShadow: (hovered === room.id && isLight)
+                          ? `0 0 15px rgba(${room.glowColorRGB}, 0.4)` 
+                          : (hovered === room.id && !isLight)
                           ? `0 0 20px rgba(${room.glowColorRGB}, 0.6)` 
                           : 'none',
                         transition: 'all 0.6s ease',
