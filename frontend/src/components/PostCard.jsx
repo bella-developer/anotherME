@@ -77,7 +77,7 @@ const PostCard = memo(({ post, onPostClick }) => {
       onClick={() => onPostClick && onPostClick(post.id)}
       className="rounded-lg p-6 mb-4 transition-all duration-200 cursor-pointer"
       style={{
-        backgroundColor: isLight ? 'rgba(0, 0, 0, 0.03)' : 'rgba(0, 0, 0, 0.3)',
+        backgroundColor: isLight ? 'rgba(255, 255, 255, 0.6)' : 'rgba(0, 0, 0, 0.3)',
         backdropFilter: 'blur(10px)',
       }}
       role="article"
