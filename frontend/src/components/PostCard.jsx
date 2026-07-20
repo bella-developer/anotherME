@@ -1,4 +1,4 @@
-import { useState, memo } from 'react';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { addReaction, removeReaction } from '../features/postsSlice';
 import { useTheme } from '../contexts/ThemeContext';
@@ -7,7 +7,7 @@ import { useTheme } from '../contexts/ThemeContext';
  * PostCard Component
  * Displays a post with exact layout matching the design
  */
-const PostCard = memo(({ post, onPostClick }) => {
+const PostCard = ({ post, onPostClick }) => {
   const dispatch = useDispatch();
   const { theme } = useTheme();
   const isLight = theme === 'light';
@@ -241,8 +241,6 @@ const PostCard = memo(({ post, onPostClick }) => {
       </div>
     </article>
   );
-});
-
-PostCard.displayName = 'PostCard';
+};
 
 export default PostCard;
