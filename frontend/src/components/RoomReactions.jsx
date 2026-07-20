@@ -61,8 +61,8 @@ function RoomReactions({ room, reactions, userReactions = [], onReact, disabled 
     
     if (hasReacted) {
       return {
-        background: isLightMode ? `rgba(${colorRGB}, 0.15)` : `rgba(${colorRGB}, 0.08)`,
-        border: isLightMode ? `2px solid rgba(${colorRGB}, 0.4)` : `1px solid rgba(${colorRGB}, 0.25)`,
+        background: isLightMode ? `rgba(${colorRGB}, 0.2)` : `rgba(${colorRGB}, 0.08)`,
+        border: isLightMode ? `2px solid rgba(${colorRGB}, 0.5)` : `1px solid rgba(${colorRGB}, 0.25)`,
         boxShadow: `0 0 8px rgba(${colorRGB}, 0.15), inset 0 0 12px rgba(${colorRGB}, 0.05)`,
         transform: 'scale(1.05)',
         transition: 'all 0.3s cubic-bezier(0.22, 1, 0.36, 1)',
@@ -71,16 +71,16 @@ function RoomReactions({ room, reactions, userReactions = [], onReact, disabled 
     
     if (isAnimating) {
       return {
-        background: isLightMode ? 'rgba(0, 0, 0, 0.05)' : 'rgba(255, 255, 255, 0.03)',
-        border: isLightMode ? '2px solid rgba(0, 0, 0, 0.15)' : '1px solid rgba(255, 255, 255, 0.08)',
+        background: isLightMode ? 'rgba(0, 0, 0, 0.08)' : 'rgba(255, 255, 255, 0.03)',
+        border: isLightMode ? '2px solid rgba(0, 0, 0, 0.2)' : '1px solid rgba(255, 255, 255, 0.08)',
         transform: 'scale(0.95)',
         transition: 'all 0.15s ease',
       };
     }
     
     return {
-      background: isLightMode ? 'rgba(0, 0, 0, 0.04)' : 'rgba(255, 255, 255, 0.02)',
-      border: isLightMode ? '2px solid rgba(0, 0, 0, 0.12)' : '1px solid rgba(255, 255, 255, 0.06)',
+      background: isLightMode ? 'rgba(0, 0, 0, 0.06)' : 'rgba(255, 255, 255, 0.02)',
+      border: isLightMode ? '2px solid rgba(0, 0, 0, 0.18)' : '1px solid rgba(255, 255, 255, 0.06)',
       transition: 'all 0.3s cubic-bezier(0.22, 1, 0.36, 1)',
     };
   };
@@ -104,8 +104,8 @@ function RoomReactions({ room, reactions, userReactions = [], onReact, disabled 
               onMouseEnter={(e) => {
                 if (!hasReacted) {
                   const isLightMode = document.body.classList.contains('light-mode');
-                  e.currentTarget.style.background = isLightMode ? 'rgba(0, 0, 0, 0.08)' : 'rgba(255, 255, 255, 0.04)';
-                  e.currentTarget.style.border = isLightMode ? '2px solid rgba(0, 0, 0, 0.2)' : '1px solid rgba(255, 255, 255, 0.1)';
+                  e.currentTarget.style.background = isLightMode ? 'rgba(0, 0, 0, 0.12)' : 'rgba(255, 255, 255, 0.04)';
+                  e.currentTarget.style.border = isLightMode ? '2px solid rgba(0, 0, 0, 0.3)' : '1px solid rgba(255, 255, 255, 0.1)';
                   e.currentTarget.style.transform = 'scale(1.05)';
                   e.currentTarget.style.boxShadow = `0 0 8px rgba(${colorRGB}, 0.1)`;
                 }
@@ -113,8 +113,8 @@ function RoomReactions({ room, reactions, userReactions = [], onReact, disabled 
               onMouseLeave={(e) => {
                 if (!hasReacted) {
                   const isLightMode = document.body.classList.contains('light-mode');
-                  e.currentTarget.style.background = isLightMode ? 'rgba(0, 0, 0, 0.04)' : 'rgba(255, 255, 255, 0.02)';
-                  e.currentTarget.style.border = isLightMode ? '2px solid rgba(0, 0, 0, 0.12)' : '1px solid rgba(255, 255, 255, 0.06)';
+                  e.currentTarget.style.background = isLightMode ? 'rgba(0, 0, 0, 0.06)' : 'rgba(255, 255, 255, 0.02)';
+                  e.currentTarget.style.border = isLightMode ? '2px solid rgba(0, 0, 0, 0.18)' : '1px solid rgba(255, 255, 255, 0.06)';
                   e.currentTarget.style.transform = 'scale(1)';
                   e.currentTarget.style.boxShadow = 'none';
                 }
@@ -126,7 +126,7 @@ function RoomReactions({ room, reactions, userReactions = [], onReact, disabled 
                 strokeWidth={1.5}
                 className="flex-shrink-0"
                 style={{
-                  color: hasReacted ? color : (document.body.classList.contains('light-mode') ? 'rgba(0, 0, 0, 0.6)' : 'rgba(255, 255, 255, 0.4)'),
+                  color: hasReacted ? color : (document.body.classList.contains('light-mode') ? 'rgba(0, 0, 0, 0.7)' : 'rgba(255, 255, 255, 0.4)'),
                   filter: hasReacted ? `drop-shadow(0 0 2px rgba(${colorRGB}, 0.4))` : 'none',
                   transition: 'all 0.3s ease',
                 }}
