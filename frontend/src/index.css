@@ -2686,33 +2686,76 @@ body.light-mode div[style*="rgba(255, 255, 255, 0.02)"] {
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08) !important;
 }
 
-/* Profile text elements */
-body.light-mode p[class*="text-white/"],
-body.light-mode h1[class*="text-white"],
-body.light-mode h2[class*="text-white"],
-body.light-mode h3[class*="text-white"],
-body.light-mode span[class*="text-white/"] {
+/* Profile text elements - More specific targeting */
+body.light-mode .min-h-screen p[class*="text-white/"],
+body.light-mode .min-h-screen h1[class*="text-white"],
+body.light-mode .min-h-screen h2[class*="text-white"],
+body.light-mode .min-h-screen h3[class*="text-white"],
+body.light-mode .min-h-screen h4[class*="text-white"],
+body.light-mode .min-h-screen span[class*="text-white/"] {
   color: rgba(0, 0, 0, 0.85) !important;
 }
 
-body.light-mode p[class*="text-white/25"],
-body.light-mode span[class*="text-white/25"] {
-  color: rgba(0, 0, 0, 0.35) !important;
-}
-
-body.light-mode p[class*="text-white/30"],
-body.light-mode span[class*="text-white/30"] {
+body.light-mode .min-h-screen p[class*="text-white/25"],
+body.light-mode .min-h-screen span[class*="text-white/25"],
+body.light-mode .min-h-screen label[class*="text-white/25"] {
   color: rgba(0, 0, 0, 0.40) !important;
 }
 
-body.light-mode p[class*="text-white/40"],
-body.light-mode span[class*="text-white/40"] {
+body.light-mode .min-h-screen p[class*="text-white/30"],
+body.light-mode .min-h-screen span[class*="text-white/30"] {
+  color: rgba(0, 0, 0, 0.45) !important;
+}
+
+body.light-mode .min-h-screen p[class*="text-white/35"],
+body.light-mode .min-h-screen span[class*="text-white/35"] {
   color: rgba(0, 0, 0, 0.50) !important;
 }
 
-body.light-mode p[class*="text-white/70"],
-body.light-mode span[class*="text-white/70"] {
-  color: rgba(0, 0, 0, 0.75) !important;
+body.light-mode .min-h-screen p[class*="text-white/40"],
+body.light-mode .min-h-screen span[class*="text-white/40"] {
+  color: rgba(0, 0, 0, 0.55) !important;
+}
+
+body.light-mode .min-h-screen p[class*="text-white/70"],
+body.light-mode .min-h-screen span[class*="text-white/70"],
+body.light-mode .min-h-screen input[class*="text-white/"] {
+  color: rgba(0, 0, 0, 0.80) !important;
+}
+
+body.light-mode .min-h-screen p[class*="text-white/90"],
+body.light-mode .min-h-screen h2[class*="text-white/90"] {
+  color: rgba(0, 0, 0, 0.95) !important;
+}
+
+/* Profile card backgrounds */
+body.light-mode .min-h-screen div[style*="rgba(255,255,255,0.03)"],
+body.light-mode .min-h-screen div[style*="rgba(255, 255, 255, 0.03)"] {
+  background: rgba(0, 0, 0, 0.03) !important;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08) !important;
+}
+
+body.light-mode .min-h-screen div[style*="rgba(255,255,255,0.02)"],
+body.light-mode .min-h-screen div[style*="rgba(255, 255, 255, 0.02)"] {
+  background: rgba(0, 0, 0, 0.04) !important;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Profile input fields */
+body.light-mode .min-h-screen input[class*="bg-black"],
+body.light-mode .min-h-screen select[class*="bg-black"] {
+  background: rgba(0, 0, 0, 0.04) !important;
+  border-color: rgba(0, 0, 0, 0.15) !important;
+  color: rgba(0, 0, 0, 0.85) !important;
+}
+
+/* Profile borders and dividers */
+body.light-mode .min-h-screen div[style*="border-bottom: 1px solid rgba(255,255,255"] {
+  border-bottom-color: rgba(0, 0, 0, 0.10) !important;
+}
+
+body.light-mode .min-h-screen div[style*="background: linear-gradient(to right, rgba(255,255,255"] {
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.2), transparent) !important;
 }
 
 /* ============================================
