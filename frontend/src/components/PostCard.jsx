@@ -77,12 +77,13 @@ const PostCard = memo(({ post, onPostClick }) => {
       onClick={() => onPostClick && onPostClick(post.id)}
       className="rounded-lg p-6 mb-4 transition-all duration-200 cursor-pointer"
       style={{
-        backgroundColor: isLight ? 'rgba(255, 255, 255, 0.6)' : 'rgba(0, 0, 0, 0.3)',
+        backgroundColor: isLight ? 'rgba(255, 255, 255, 0.7)' : 'rgba(0, 0, 0, 0.3)',
         backdropFilter: 'blur(10px)',
+        border: isLight ? '1px solid rgba(0, 0, 0, 0.1)' : 'none',
       }}
       role="article"
-      onMouseEnter={(e) => e.currentTarget.style.backgroundColor = isLight ? 'rgba(0, 0, 0, 0.05)' : 'rgba(0, 0, 0, 0.35)'}
-      onMouseLeave={(e) => e.currentTarget.style.backgroundColor = isLight ? 'rgba(0, 0, 0, 0.03)' : 'rgba(0, 0, 0, 0.3)'}
+      onMouseEnter={(e) => e.currentTarget.style.backgroundColor = isLight ? 'rgba(255, 255, 255, 0.85)' : 'rgba(0, 0, 0, 0.35)'}
+      onMouseLeave={(e) => e.currentTarget.style.backgroundColor = isLight ? 'rgba(255, 255, 255, 0.7)' : 'rgba(0, 0, 0, 0.3)'}
     >
       {/* Header: Category Badge and Timestamp */}
       <div className="flex items-center justify-between mb-4">
@@ -130,21 +131,21 @@ const PostCard = memo(({ post, onPostClick }) => {
             className="flex items-center gap-1.5 transition-colors text-xs"
             style={{ 
               color: isLight ? 'rgba(0, 0, 0, 0.85)' : '#918A87',
-              background: isLight ? 'rgba(0, 0, 0, 0.08)' : 'transparent',
+              background: isLight ? 'rgba(0, 0, 0, 0.15)' : 'transparent',
               padding: '6px 12px',
               borderRadius: '6px',
-              border: isLight ? '1.5px solid rgba(0, 0, 0, 0.2)' : 'none',
+              border: isLight ? '1.5px solid rgba(0, 0, 0, 0.3)' : 'none',
               fontWeight: 500
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.color = isLight ? 'rgba(139, 74, 29, 0.9)' : '#A05A2C';
-              e.currentTarget.style.background = isLight ? 'rgba(0, 0, 0, 0.12)' : 'rgba(255,255,255,0.05)';
-              e.currentTarget.style.borderColor = isLight ? 'rgba(0, 0, 0, 0.3)' : 'transparent';
+              e.currentTarget.style.background = isLight ? 'rgba(0, 0, 0, 0.20)' : 'rgba(255,255,255,0.05)';
+              e.currentTarget.style.borderColor = isLight ? 'rgba(0, 0, 0, 0.45)' : 'transparent';
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.color = isLight ? 'rgba(0, 0, 0, 0.85)' : '#918A87';
-              e.currentTarget.style.background = isLight ? 'rgba(0, 0, 0, 0.08)' : 'transparent';
-              e.currentTarget.style.borderColor = isLight ? 'rgba(0, 0, 0, 0.2)' : 'transparent';
+              e.currentTarget.style.background = isLight ? 'rgba(0, 0, 0, 0.15)' : 'transparent';
+              e.currentTarget.style.borderColor = isLight ? 'rgba(0, 0, 0, 0.3)' : 'transparent';
             }}
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -162,21 +163,21 @@ const PostCard = memo(({ post, onPostClick }) => {
             className="flex items-center gap-1.5 transition-colors text-xs"
             style={{ 
               color: isLight ? 'rgba(0, 0, 0, 0.85)' : '#918A87',
-              background: isLight ? 'rgba(0, 0, 0, 0.08)' : 'transparent',
+              background: isLight ? 'rgba(0, 0, 0, 0.15)' : 'transparent',
               padding: '6px 12px',
               borderRadius: '6px',
-              border: isLight ? '1.5px solid rgba(0, 0, 0, 0.2)' : 'none',
+              border: isLight ? '1.5px solid rgba(0, 0, 0, 0.3)' : 'none',
               fontWeight: 500
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.color = isLight ? 'rgba(139, 74, 29, 0.9)' : '#A05A2C';
-              e.currentTarget.style.background = isLight ? 'rgba(0, 0, 0, 0.12)' : 'rgba(255,255,255,0.05)';
-              e.currentTarget.style.borderColor = isLight ? 'rgba(0, 0, 0, 0.3)' : 'transparent';
+              e.currentTarget.style.background = isLight ? 'rgba(0, 0, 0, 0.20)' : 'rgba(255,255,255,0.05)';
+              e.currentTarget.style.borderColor = isLight ? 'rgba(0, 0, 0, 0.45)' : 'transparent';
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.color = isLight ? 'rgba(0, 0, 0, 0.85)' : '#918A87';
-              e.currentTarget.style.background = isLight ? 'rgba(0, 0, 0, 0.08)' : 'transparent';
-              e.currentTarget.style.borderColor = isLight ? 'rgba(0, 0, 0, 0.2)' : 'transparent';
+              e.currentTarget.style.background = isLight ? 'rgba(0, 0, 0, 0.15)' : 'transparent';
+              e.currentTarget.style.borderColor = isLight ? 'rgba(0, 0, 0, 0.3)' : 'transparent';
             }}
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -194,21 +195,21 @@ const PostCard = memo(({ post, onPostClick }) => {
             className="flex items-center gap-1.5 transition-colors text-xs"
             style={{ 
               color: isLight ? 'rgba(0, 0, 0, 0.85)' : '#918A87',
-              background: isLight ? 'rgba(0, 0, 0, 0.08)' : 'transparent',
+              background: isLight ? 'rgba(0, 0, 0, 0.15)' : 'transparent',
               padding: '6px 12px',
               borderRadius: '6px',
-              border: isLight ? '1.5px solid rgba(0, 0, 0, 0.2)' : 'none',
+              border: isLight ? '1.5px solid rgba(0, 0, 0, 0.3)' : 'none',
               fontWeight: 500
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.color = isLight ? 'rgba(139, 74, 29, 0.9)' : '#A05A2C';
-              e.currentTarget.style.background = isLight ? 'rgba(0, 0, 0, 0.12)' : 'rgba(255,255,255,0.05)';
-              e.currentTarget.style.borderColor = isLight ? 'rgba(0, 0, 0, 0.3)' : 'transparent';
+              e.currentTarget.style.background = isLight ? 'rgba(0, 0, 0, 0.20)' : 'rgba(255,255,255,0.05)';
+              e.currentTarget.style.borderColor = isLight ? 'rgba(0, 0, 0, 0.45)' : 'transparent';
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.color = isLight ? 'rgba(0, 0, 0, 0.85)' : '#918A87';
-              e.currentTarget.style.background = isLight ? 'rgba(0, 0, 0, 0.08)' : 'transparent';
-              e.currentTarget.style.borderColor = isLight ? 'rgba(0, 0, 0, 0.2)' : 'transparent';
+              e.currentTarget.style.background = isLight ? 'rgba(0, 0, 0, 0.15)' : 'transparent';
+              e.currentTarget.style.borderColor = isLight ? 'rgba(0, 0, 0, 0.3)' : 'transparent';
             }}
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
