@@ -356,7 +356,9 @@ function Home() {
                             left: 0,
                             right: 0,
                             bottom: 0,
-                            background: `radial-gradient(circle, transparent 30%, rgba(0,0,0,${hovered === room.id ? 0.2 : 0.4}) 100%)`,
+                            background: isLight 
+                              ? `radial-gradient(circle, transparent 50%, rgba(0,0,0,${hovered === room.id ? 0.1 : 0.15}) 100%)`
+                              : `radial-gradient(circle, transparent 30%, rgba(0,0,0,${hovered === room.id ? 0.2 : 0.4}) 100%)`,
                             transition: 'background 0.8s ease',
                           }}
                         />

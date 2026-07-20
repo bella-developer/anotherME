@@ -509,7 +509,9 @@ body.light-mode footer {
    SLIDING TEXT SECTION
    ============================================ */
 
-body.light-mode section[style*="background: #000000"] {
+/* Landing page sections with black background - make transparent in light mode */
+body.light-mode section.py-24[style*="background: #000000"],
+body.light-mode section.py-32[style*="background: #000000"] {
   background: transparent !important;
 }
 
@@ -825,12 +827,14 @@ body.light-mode input[class*="bg-red-500/5"] {
    HERO SECTION - Light Mode Image Overlay
    ============================================ */
 
-/* Add subtle cream overlay to hero images in light mode */
-body.light-mode [style*="backgroundImage"] {
+/* Add subtle cream overlay to landing hero images in light mode - NOT room images */
+body.light-mode section[style*="backgroundImage"],
+body.light-mode article[style*="backgroundImage"] {
   position: relative;
 }
 
-body.light-mode [style*="backgroundImage"]::after {
+body.light-mode section[style*="backgroundImage"]::after,
+body.light-mode article[style*="backgroundImage"]::after {
   content: '';
   position: absolute;
   inset: 0;
@@ -840,7 +844,8 @@ body.light-mode [style*="backgroundImage"]::after {
 }
 
 /* Ensure content stays on top of overlay */
-body.light-mode [style*="backgroundImage"] > * {
+body.light-mode section[style*="backgroundImage"] > *,
+body.light-mode article[style*="backgroundImage"] > * {
   position: relative;
   z-index: 1;
 }
