@@ -72,25 +72,6 @@ const PostCard = ({ post, onPostClick }) => {
     }
   };
 
-  // Button mouse handlers that check theme dynamically
-  const handleButtonMouseEnter = (e) => {
-    const currentIsLight = document.body.classList.contains('light-mode');
-    e.currentTarget.style.color = currentIsLight ? 'rgba(139, 74, 29, 0.9)' : '#A05A2C';
-    if (currentIsLight) {
-      e.currentTarget.style.background = 'rgba(0, 0, 0, 0.20)';
-      e.currentTarget.style.border = '1.5px solid rgba(0, 0, 0, 0.45)';
-    }
-  };
-
-  const handleButtonMouseLeave = (e) => {
-    const currentIsLight = document.body.classList.contains('light-mode');
-    e.currentTarget.style.color = currentIsLight ? 'rgba(0, 0, 0, 0.85)' : '#918A87';
-    if (currentIsLight) {
-      e.currentTarget.style.background = 'rgba(0, 0, 0, 0.15)';
-      e.currentTarget.style.border = '1.5px solid rgba(0, 0, 0, 0.3)';
-    }
-  };
-
   return (
     <article 
       onClick={() => onPostClick && onPostClick(post.id)}
@@ -149,15 +130,14 @@ const PostCard = ({ post, onPostClick }) => {
             }}
             className="flex items-center gap-1.5 transition-colors text-xs"
             style={{ 
-              color: isLight ? 'rgba(0, 0, 0, 0.85)' : '#918A87',
-              background: isLight ? 'rgba(0, 0, 0, 0.15)' : 'transparent',
-              padding: '6px 12px',
-              borderRadius: '6px',
-              border: isLight ? '1.5px solid rgba(0, 0, 0, 0.3)' : 'none',
-              fontWeight: 500
+              color: isLight ? 'rgba(0, 0, 0, 0.75)' : '#918A87',
+              background: isLight ? 'rgba(0, 0, 0, 0.08)' : 'transparent',
+              border: isLight ? '1px solid rgba(0, 0, 0, 0.15)' : 'none',
+              padding: isLight ? '4px 10px' : '0',
+              borderRadius: isLight ? '6px' : '0'
             }}
-            onMouseEnter={handleButtonMouseEnter}
-            onMouseLeave={handleButtonMouseLeave}
+            onMouseEnter={(e) => e.currentTarget.style.color = isLight ? 'rgba(139, 74, 29, 0.9)' : '#A05A2C'}
+            onMouseLeave={(e) => e.currentTarget.style.color = isLight ? 'rgba(0, 0, 0, 0.75)' : '#918A87'}
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <circle cx="12" cy="12" r="10" strokeWidth={1.5} />
@@ -173,15 +153,14 @@ const PostCard = ({ post, onPostClick }) => {
             }}
             className="flex items-center gap-1.5 transition-colors text-xs"
             style={{ 
-              color: isLight ? 'rgba(0, 0, 0, 0.85)' : '#918A87',
-              background: isLight ? 'rgba(0, 0, 0, 0.15)' : 'transparent',
-              padding: '6px 12px',
-              borderRadius: '6px',
-              border: isLight ? '1.5px solid rgba(0, 0, 0, 0.3)' : 'none',
-              fontWeight: 500
+              color: isLight ? 'rgba(0, 0, 0, 0.75)' : '#918A87',
+              background: isLight ? 'rgba(0, 0, 0, 0.08)' : 'transparent',
+              border: isLight ? '1px solid rgba(0, 0, 0, 0.15)' : 'none',
+              padding: isLight ? '4px 10px' : '0',
+              borderRadius: isLight ? '6px' : '0'
             }}
-            onMouseEnter={handleButtonMouseEnter}
-            onMouseLeave={handleButtonMouseLeave}
+            onMouseEnter={(e) => e.currentTarget.style.color = isLight ? 'rgba(139, 74, 29, 0.9)' : '#A05A2C'}
+            onMouseLeave={(e) => e.currentTarget.style.color = isLight ? 'rgba(0, 0, 0, 0.75)' : '#918A87'}
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20 12H4" />
@@ -197,15 +176,14 @@ const PostCard = ({ post, onPostClick }) => {
             }}
             className="flex items-center gap-1.5 transition-colors text-xs"
             style={{ 
-              color: isLight ? 'rgba(0, 0, 0, 0.85)' : '#918A87',
-              background: isLight ? 'rgba(0, 0, 0, 0.15)' : 'transparent',
-              padding: '6px 12px',
-              borderRadius: '6px',
-              border: isLight ? '1.5px solid rgba(0, 0, 0, 0.3)' : 'none',
-              fontWeight: 500
+              color: isLight ? 'rgba(0, 0, 0, 0.75)' : '#918A87',
+              background: isLight ? 'rgba(0, 0, 0, 0.08)' : 'transparent',
+              border: isLight ? '1px solid rgba(0, 0, 0, 0.15)' : 'none',
+              padding: isLight ? '4px 10px' : '0',
+              borderRadius: isLight ? '6px' : '0'
             }}
-            onMouseEnter={handleButtonMouseEnter}
-            onMouseLeave={handleButtonMouseLeave}
+            onMouseEnter={(e) => e.currentTarget.style.color = isLight ? 'rgba(139, 74, 29, 0.9)' : '#A05A2C'}
+            onMouseLeave={(e) => e.currentTarget.style.color = isLight ? 'rgba(0, 0, 0, 0.75)' : '#918A87'}
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
