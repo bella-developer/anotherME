@@ -904,30 +904,8 @@ body.light-mode button[style*="rgba(249, 115, 22"] {
   border-color: rgba(249, 115, 22, 0.3) !important;
 }
 
-/* Reaction buttons - Strong visibility with room colors preserved */
-body.light-mode button[aria-label*="reaction"],
-body.light-mode button[class*="reaction"] {
-  background: rgba(0, 0, 0, 0.08) !important;
-  border: 1.5px solid rgba(0, 0, 0, 0.2) !important;
-}
-
-body.light-mode button[aria-label*="reaction"]:hover,
-body.light-mode button[class*="reaction"]:hover {
-  background: rgba(0, 0, 0, 0.12) !important;
-  border-color: rgba(0, 0, 0, 0.3) !important;
-}
-
-/* Reaction button icons - darken for visibility */
-body.light-mode button[aria-label*="reaction"] svg,
-body.light-mode button[class*="reaction"] svg {
-  filter: brightness(0.4) !important;
-}
-
-/* Reaction button text */
-body.light-mode button[aria-label*="reaction"] span,
-body.light-mode button[class*="reaction"] span {
-  color: rgba(0, 0, 0, 0.75) !important;
-}
+/* REMOVED: Reaction button overrides - let inline styles work */
+/* RoomReactions component and PostCard handle their own styling */
 
 /* Text link buttons (Sign In, Explore, etc) - Kinfolk strong blacks */
 /* Exclude auth pages to prevent conflicts */
