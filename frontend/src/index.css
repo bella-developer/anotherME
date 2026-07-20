@@ -2426,12 +2426,8 @@ body.light-mode svg[viewBox="0 0 400 400"] {
   /* SVG room borders should remain visible */
 }
 
-/* 3. Post Cards - Reduce bright background in light mode */
-body.light-mode article[style*="rgba(0, 0, 0, 0.4)"] {
-  background: rgba(240, 237, 229, 0.7) !important;
-  border: 1px solid rgba(0, 0, 0, 0.08) !important;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
-}
+/* REMOVED: Old post card override that was forcing bright backgrounds */
+/* Cards now use inline styles from components for proper theme control */
 
 /* Post card text readability */
 body.light-mode article time,
