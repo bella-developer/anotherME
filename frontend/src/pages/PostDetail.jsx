@@ -115,10 +115,10 @@ function PostDetail() {
       <div className="max-w-3xl mx-auto px-6 py-12">
         {/* Breadcrumb */}
         <div className="mb-12">
-          <div className="flex items-center text-xs uppercase tracking-[0.2em]" style={{ color: isLight ? 'rgba(0,0,0,0.35)' : '#484f58' }}>
+          <div className="flex items-center text-xs uppercase tracking-[0.2em]" style={{ color: isLight ? 'rgba(0,0,0,0.45)' : '#484f58' }}>
             {post.circle && (
               <>
-                <Link to={`/circles/${post.circle.id}`} className="transition-colors" style={{ color: isLight ? 'rgba(0,0,0,0.50)' : '#8b949e' }}>
+                <Link to={`/circles/${post.circle.id}`} className="transition-colors" style={{ color: isLight ? 'rgba(0,0,0,0.60)' : '#8b949e' }}>
                   {post.circle.name}
                   {post.circle.room && (
                     <span className={`ml-2 px-1.5 py-0.5 text-[10px] font-medium rounded ${
@@ -134,13 +134,13 @@ function PostDetail() {
                 <span className="mx-3">›</span>
               </>
             )}
-            <span style={{ color: isLight ? 'rgba(0,0,0,0.45)' : '#6e7681' }}>post {post.id.slice(-5)}</span>
+            <span style={{ color: isLight ? 'rgba(0,0,0,0.55)' : '#6e7681' }}>post {post.id.slice(-5)}</span>
           </div>
         </div>
 
         {/* Post Header */}
         <div className="mb-8 flex items-center justify-between">
-          <div className="text-xs uppercase tracking-[0.15em]" style={{ color: isLight ? 'rgba(0,0,0,0.35)' : '#484f58' }}>
+          <div className="text-xs uppercase tracking-[0.15em]" style={{ color: isLight ? 'rgba(0,0,0,0.55)' : '#484f58' }}>
             Observer {formatTimeAgo(post.createdAt)}
           </div>
           <button className="px-4 py-1.5 text-xs uppercase tracking-wider transition-all" style={{
@@ -169,15 +169,15 @@ function PostDetail() {
         {/* Linked Reference Section */}
         {post.circle && (
           <div className="mb-12">
-            <div className="text-[0.65rem] uppercase tracking-[0.2em] mb-4" style={{ color: isLight ? 'rgba(0,0,0,0.35)' : '#484f58' }}>
+            <div className="text-[0.65rem] uppercase tracking-[0.2em] mb-4" style={{ color: isLight ? 'rgba(0,0,0,0.45)' : '#484f58' }}>
               Linked Reference
             </div>
             <Link
               to={`/circles/${post.circle.id}`}
               className="block border transition-colors p-5 group"
               style={{
-                background: isLight ? 'rgba(0,0,0,0.03)' : '#161b22',
-                borderColor: isLight ? 'rgba(0,0,0,0.10)' : '#21262d'
+                background: isLight ? 'rgba(0,0,0,0.06)' : '#161b22',
+                borderColor: isLight ? 'rgba(0,0,0,0.12)' : '#21262d'
               }}
             >
               <div className="flex items-center justify-between">
