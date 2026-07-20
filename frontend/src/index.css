@@ -2767,3 +2767,35 @@ body.light-mode button.border-\\[\\#30363d\\]:hover {
   border-color: rgba(0, 0, 0, 0.25) !important;
   background: rgba(0, 0, 0, 0.04) !important;
 }
+
+/* ============================================
+   POST REACTION BUTTONS - Professional CSS Solution
+   ============================================ */
+
+/* Dark mode (default) - Simple text buttons */
+.post-reaction-btn {
+  color: #918A87;
+  background: transparent;
+  border: none;
+  padding: 0;
+  border-radius: 0;
+  transition: color 0.2s ease;
+  font-size: 0.75rem;
+}
+
+.post-reaction-btn:hover {
+  color: #A05A2C;
+}
+
+/* Light mode - Visible buttons with background and border */
+body.light-mode .post-reaction-btn {
+  color: rgba(0, 0, 0, 0.75);
+  background: rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+
+body.light-mode .post-reaction-btn:hover {
+  color: rgba(139, 74, 29, 0.9);
+}
