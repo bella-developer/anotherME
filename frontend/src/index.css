@@ -1101,10 +1101,7 @@ body.light-mode button:not([class*="bg-"]):not([style*="background"]) {
   border-color: rgba(0, 0, 0, 0.25) !important; /* Visible border */
 }
 
-body.light-mode button:hover {
-  color: rgba(0, 0, 0, 0.95) !important; /* Near-black on hover */
-  border-color: rgba(0, 0, 0, 0.40) !important;
-}
+/* REMOVED: body.light-mode button:hover - was too broad and overriding reaction buttons */
 
 /* ============================================
    MOBILE RESPONSIVE - Light Mode Fixes
