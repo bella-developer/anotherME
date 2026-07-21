@@ -138,16 +138,8 @@ function Home() {
                           left: '4px',
                           right: '4px',
                           bottom: '4px',
-                          border: isLight 
-                            ? `3px solid rgba(${room.glowColorRGB}, 0.5)`
-                            : `1px solid rgba(${room.glowColorRGB}, 0.3)`,
-                          boxShadow: isLight
-                            ? `
-                              inset 0 0 60px rgba(${room.glowColorRGB}, 0.15),
-                              0 0 40px rgba(${room.glowColorRGB}, 0.25),
-                              0 8px 32px rgba(0, 0, 0, 0.12)
-                            `
-                            : `
+                          border: `1px solid rgba(${room.glowColorRGB}, 0.3)`,
+                          boxShadow: `
                               inset 0 0 30px rgba(${room.glowColorRGB}, 0.1),
                               0 0 20px rgba(${room.glowColorRGB}, 0.2)
                             `,
@@ -165,7 +157,7 @@ function Home() {
                           right: '4px',
                           bottom: '4px',
                           animation: 'rotate360 20s linear infinite',
-                          opacity: isLight ? 0.9 : 1,
+                          opacity: 1,
                         }}
                       >
                         {/* Primary energy arc */}
@@ -173,9 +165,7 @@ function Home() {
                           className="absolute inset-0 w-full h-full"
                           viewBox="0 0 400 400"
                           style={{
-                            filter: isLight 
-                              ? `drop-shadow(0 0 12px ${room.glowColor}) drop-shadow(0 0 20px ${room.glowColor})`
-                              : `drop-shadow(0 0 15px ${room.glowColor})`,
+                            filter: `drop-shadow(0 0 15px ${room.glowColor})`,
                           }}
                         >
                           <defs>
@@ -236,16 +226,14 @@ function Home() {
                           right: '4px',
                           bottom: '4px',
                           animation: 'rotate360reverse 15s linear infinite',
-                          opacity: isLight ? 0.75 : 0.6,
+                          opacity: 0.6,
                         }}
                       >
                         <svg
                           className="absolute inset-0 w-full h-full"
                           viewBox="0 0 400 400"
                           style={{
-                            filter: isLight 
-                              ? `drop-shadow(0 0 10px ${room.glowColor})`
-                              : `drop-shadow(0 0 10px ${room.glowColor})`,
+                            filter: `drop-shadow(0 0 10px ${room.glowColor})`,
                             opacity: 0.6,
                           }}
                         >
@@ -271,7 +259,7 @@ function Home() {
                           right: '9px',
                           bottom: '9px',
                           animation: 'rotate360 25s linear infinite',
-                          opacity: isLight ? 0.85 : 0.8,
+                          opacity: 0.8,
                         }}
                       >
                         {[0, 90, 180, 270].map((angle, i) => {
@@ -287,13 +275,11 @@ function Home() {
                                 height: '4px',
                                 borderRadius: '50%',
                                 background: room.glowColor,
-                                boxShadow: isLight 
-                                  ? `0 0 15px ${room.glowColor}, 0 0 8px ${room.glowColor}`
-                                  : `0 0 10px ${room.glowColor}`,
+                                boxShadow: `0 0 10px ${room.glowColor}`,
                                 top: `${y}%`,
                                 left: `${x}%`,
                                 transform: 'translate(-50%, -50%)',
-                                opacity: isLight ? 0.9 : 0.8,
+                                opacity: 0.8,
                                 mixBlendMode: 'screen',
                               }}
                             />
@@ -319,9 +305,7 @@ function Home() {
                         style={{
                           width: '70%',
                           height: '30px',
-                          background: isLight
-                            ? `radial-gradient(ellipse, rgba(${room.glowColorRGB}, ${hovered === room.id ? 0.35 : 0.25}) 0%, transparent 70%)`
-                            : `radial-gradient(ellipse, rgba(${room.glowColorRGB}, ${hovered === room.id ? 0.4 : 0.25}) 0%, transparent 70%)`,
+                          background: `radial-gradient(ellipse, rgba(${room.glowColorRGB}, ${hovered === room.id ? 0.4 : 0.25}) 0%, transparent 70%)`,
                           filter: 'blur(20px)',
                           transition: 'all 0.8s ease',
                         }}
@@ -373,9 +357,7 @@ function Home() {
                             left: 0,
                             right: 0,
                             bottom: 0,
-                            background: isLight 
-                              ? `radial-gradient(circle, transparent 50%, rgba(0,0,0,${hovered === room.id ? 0.1 : 0.15}) 100%)`
-                              : `radial-gradient(circle, transparent 30%, rgba(0,0,0,${hovered === room.id ? 0.2 : 0.4}) 100%)`,
+                            background: `radial-gradient(circle, transparent 30%, rgba(0,0,0,${hovered === room.id ? 0.2 : 0.4}) 100%)`,
                             transition: 'background 0.8s ease',
                           }}
                         />
@@ -389,12 +371,10 @@ function Home() {
                     <h2
                       className="text-xl md:text-2xl font-light tracking-[0.25em] mb-3 uppercase"
                       style={{
-                        color: isLight
-                          ? (hovered === room.id ? room.glowColor : 'rgba(0,0,0,0.85)')
-                          : (hovered === room.id ? room.glowColor : 'rgba(255,255,255,0.9)'),
-                        textShadow: (hovered === room.id && isLight)
+                        color: hovered === room.id ? room.glowColor : 'rgba(255,255,255,0.9)',
+                        textShadow: false
                           ? `0 0 15px rgba(${room.glowColorRGB}, 0.4)` 
-                          : (hovered === room.id && !isLight)
+                          : (hovered === room.id)
                           ? `0 0 20px rgba(${room.glowColorRGB}, 0.6)` 
                           : 'none',
                         transition: 'all 0.6s ease',

@@ -57,12 +57,11 @@ function RoomReactions({ room, reactions, userReactions = [], onReact, disabled 
 
   const getButtonStyle = (reactionType, hasReacted, color, colorRGB) => {
     const isAnimating = animatingReaction === reactionType;
-    const isLightMode = document.body.classList.contains('light-mode');
     
     if (hasReacted) {
       return {
-        background: isLightMode ? `rgba(${colorRGB}, 0.2)` : `rgba(${colorRGB}, 0.08)`,
-        border: isLightMode ? `2px solid rgba(${colorRGB}, 0.5)` : `1px solid rgba(${colorRGB}, 0.25)`,
+        background: `rgba(${colorRGB}, 0.08)`,
+        border: `1px solid rgba(${colorRGB}, 0.25)`,
         boxShadow: `0 0 8px rgba(${colorRGB}, 0.15), inset 0 0 12px rgba(${colorRGB}, 0.05)`,
         transform: 'scale(1.05)',
         transition: 'all 0.3s cubic-bezier(0.22, 1, 0.36, 1)',
@@ -71,16 +70,16 @@ function RoomReactions({ room, reactions, userReactions = [], onReact, disabled 
     
     if (isAnimating) {
       return {
-        background: isLightMode ? 'rgba(0, 0, 0, 0.12)' : 'rgba(255, 255, 255, 0.03)',
-        border: isLightMode ? '2px solid rgba(0, 0, 0, 0.25)' : '1px solid rgba(255, 255, 255, 0.08)',
+        background: 'rgba(255, 255, 255, 0.03)',
+        border: '1px solid rgba(255, 255, 255, 0.08)',
         transform: 'scale(0.95)',
         transition: 'all 0.15s ease',
       };
     }
     
     return {
-      background: isLightMode ? 'rgba(0, 0, 0, 0.10)' : 'rgba(255, 255, 255, 0.02)',
-      border: isLightMode ? '2px solid rgba(0, 0, 0, 0.25)' : '1px solid rgba(255, 255, 255, 0.06)',
+      background: 'rgba(255, 255, 255, 0.02)',
+      border: '1px solid rgba(255, 255, 255, 0.06)',
       transition: 'all 0.3s cubic-bezier(0.22, 1, 0.36, 1)',
     };
   };
@@ -103,18 +102,16 @@ function RoomReactions({ room, reactions, userReactions = [], onReact, disabled 
               title={label}
               onMouseEnter={(e) => {
                 if (!hasReacted) {
-                  const isLightMode = document.body.classList.contains('light-mode');
-                  e.currentTarget.style.background = isLightMode ? 'rgba(0, 0, 0, 0.16)' : 'rgba(255, 255, 255, 0.04)';
-                  e.currentTarget.style.border = isLightMode ? '2px solid rgba(0, 0, 0, 0.35)' : '1px solid rgba(255, 255, 255, 0.1)';
+                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.04)';
+                  e.currentTarget.style.border = '1px solid rgba(255, 255, 255, 0.1)';
                   e.currentTarget.style.transform = 'scale(1.05)';
                   e.currentTarget.style.boxShadow = `0 0 8px rgba(${colorRGB}, 0.1)`;
                 }
               }}
               onMouseLeave={(e) => {
                 if (!hasReacted) {
-                  const isLightMode = document.body.classList.contains('light-mode');
-                  e.currentTarget.style.background = isLightMode ? 'rgba(0, 0, 0, 0.10)' : 'rgba(255, 255, 255, 0.02)';
-                  e.currentTarget.style.border = isLightMode ? '2px solid rgba(0, 0, 0, 0.25)' : '1px solid rgba(255, 255, 255, 0.06)';
+                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.02)';
+                  e.currentTarget.style.border = '1px solid rgba(255, 255, 255, 0.06)';
                   e.currentTarget.style.transform = 'scale(1)';
                   e.currentTarget.style.boxShadow = 'none';
                 }

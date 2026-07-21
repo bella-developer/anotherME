@@ -58,10 +58,8 @@ function Landing() {
         style={{
           zIndex: 50,
           border: 'none',
-          borderBottom: `1px solid ${'rgba(255, 255, 255, 0.1)'}`,
-          backgroundColor: isLightMode 
-            ? 'rgba(251, 252, 248, 0.98)' 
-            : (isScrolled ? 'rgba(0, 0, 0, 0.95)' : 'rgba(0, 0, 0, 0.5)'),
+          borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+          backgroundColor: isScrolled ? 'rgba(0, 0, 0, 0.95)' : 'rgba(0, 0, 0, 0.5)',
           backdropFilter: 'blur(20px)',
           WebkitBackdropFilter: 'blur(20px)',
           transitionDuration: 'var(--duration-slow)',
@@ -651,19 +649,11 @@ function Landing() {
                   transitionDuration: 'var(--duration-slow)',
                 }}
                 onMouseEnter={(e) => {
-                  if (isLightMode) {
-                    e.currentTarget.style.borderColor = 'rgba(0, 0, 0, 0.40)';
-                    e.currentTarget.style.color = 'rgba(0, 0, 0, 0.95)';
-                  } else {
                     e.currentTarget.style.borderColor = 'var(--border-light)';
                     e.currentTarget.style.color = 'var(--text-primary)';
                   }
                 }}
                 onMouseLeave={(e) => {
-                  if (isLightMode) {
-                    e.currentTarget.style.borderColor = 'rgba(0, 0, 0, 0.25)';
-                    e.currentTarget.style.color = 'rgba(0, 0, 0, 0.75)';
-                  } else {
                     e.currentTarget.style.borderColor = 'var(--border-medium)';
                     e.currentTarget.style.color = 'var(--text-secondary)';
                   }

@@ -9,8 +9,7 @@ function EsoLogo({ className = "h-10 w-auto" }) {
     <img 
       src={logoImageDark}
       alt="ESO Logo" 
-      className={`${className} ${''}`}
-      style={isLightMode ? { filter: 'brightness(0) saturate(100%)' } : {}}
+      className={className}
     />
   );
 }
