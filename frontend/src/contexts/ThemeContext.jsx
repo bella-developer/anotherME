@@ -6,10 +6,14 @@ const ThemeContext = createContext();
 export function ThemeProvider({ children }) {
   const [theme, setTheme] = useState(() => {
     const saved = localStorage.getItem('theme');
+    console.log('[ThemeContext] Initial theme from localStorage:', saved || 'dark');
     return saved || 'dark';
   });
 
   useLayoutEffect(() => {
+    console.log('[ThemeContext] useLayoutEffect running, theme:', theme);
+    console.log('[ThemeContext] Body classList BEFORE:', document.body.classList.toString());
+    
     localStorage.setItem('theme', theme);
     
     if (theme === 'light') {
@@ -17,10 +21,17 @@ export function ThemeProvider({ children }) {
     } else {
       document.body.classList.remove('light-mode');
     }
+    
+    console.log('[ThemeContext] Body classList AFTER:', document.body.classList.toString());
   }, [theme]);
 
   const toggleTheme = () => {
-    setTheme(prev => prev === 'dark' ? 'light' : 'dark');
+    console.log('[ThemeContext] toggleTheme called, current theme:', theme);
+    setTheme(prev => {
+      const newTheme = prev === 'dark' ? 'light' : 'dark';
+      console.log('[ThemeContext] Setting new theme:', newTheme);
+      return newTheme;
+    });
   };
 
   return (

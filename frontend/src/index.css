@@ -2789,13 +2789,14 @@ body.light-mode button.border-\\[\\#30363d\\]:hover {
 
 /* Light mode - Visible buttons with background and border */
 body.light-mode .post-reaction-btn {
-  color: rgba(0, 0, 0, 0.75);
-  background: rgba(0, 0, 0, 0.08);
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  padding: 4px 10px;
-  border-radius: 6px;
+  color: rgba(0, 0, 0, 0.75) !important;
+  background: rgba(0, 0, 0, 0.08) !important;
+  border: 1px solid rgba(0, 0, 0, 0.15) !important;
+  padding: 4px 10px !important;
+  border-radius: 6px !important;
 }
 
 body.light-mode .post-reaction-btn:hover {
-  color: rgba(139, 74, 29, 0.9);
+  color: rgba(139, 74, 29, 0.9) !important;
+  background: rgba(0, 0, 0, 0.12) !important;
 }
