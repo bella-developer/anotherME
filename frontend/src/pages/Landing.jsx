@@ -47,7 +47,7 @@ function Landing() {
   ];
 
   return (
-    <div className="min-h-screen text-white overflow-x-hidden bg-black" style={{ fontFamily: "'Geist Mono', monospace" }}>
+    <div className="min-h-screen text-white overflow-x-hidden bg-black" style={{ fontFamily: "var(--font-body)" }}>
 
       {/* NAVIGATION - Editorial Spacing */}
       <motion.header 
@@ -213,7 +213,7 @@ function Landing() {
 
 
       {/* FEATURES SECTION - Quieter, More Space */}
-      <section className="py-32 lg:py-48 relative z-10" style={{ background: 'var(--surface-void)' }}>
+      <section className="py-32 lg:py-48 relative z-10" style={{ background: 'transparent' }}>
         <div className="max-w-6xl mx-auto px-8 lg:px-16">
           
           {/* Heading - Editorial Style */}
@@ -599,7 +599,7 @@ function Landing() {
         viewport={{ once: true }}
         transition={{ duration: 1.2 }}
         className="py-32 lg:py-48 relative z-10"
-        style={{ background: 'var(--surface-void)' }}
+        style={{ background: 'transparent' }}
       >
         <div className="max-w-3xl mx-auto px-8 lg:px-16 text-center">
           <motion.div

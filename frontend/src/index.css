@@ -1,3 +1,6 @@
+/* Google Fonts - Nostalgic Artistic Monospace */
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&family=VT323&display=swap');
+
 @import './styles/tokens.css';
 @import './styles/utilities.css';
 
@@ -6,8 +9,15 @@
 @tailwind utilities;
 
 @layer base {
+  /* CSS Custom Properties for Font Families */
+  :root {
+    --font-body: 'IBM Plex Mono', 'Courier New', monospace;
+    --font-heading: 'Space Mono', 'IBM Plex Mono', monospace;
+    --font-accent: 'VT323', 'Courier New', monospace;
+  }
+
   body {
-    font-family: 'Courier New', 'Courier', 'Monaco', 'Lucida Console', monospace;
+    font-family: var(--font-body);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     background: #000000;
@@ -139,17 +149,29 @@
     border-radius: inherit;
   }
 
-  /* Typewriter text effect */
+  /* Typewriter text effect - Primary body text */
   .typewriter-text {
-    font-family: 'Courier New', 'Courier', monospace;
+    font-family: var(--font-body);
     letter-spacing: 0.05em;
     font-weight: 400;
   }
 
   .typewriter-text-light {
-    font-family: 'Courier New', 'Courier', monospace;
+    font-family: var(--font-body);
     letter-spacing: 0.05em;
     font-weight: 300;
+  }
+
+  /* Heading text - Artistic bold */
+  .heading-text {
+    font-family: var(--font-heading);
+    letter-spacing: 0.05em;
+  }
+
+  /* Accent text - Vintage timestamps/labels */
+  .accent-text {
+    font-family: var(--font-accent);
+    letter-spacing: 0.05em;
   }
 
   /* Vintage vignette effect */

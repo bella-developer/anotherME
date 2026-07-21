@@ -34,7 +34,10 @@ function PhiloRoomCard({ post, onReaction, onEdit, onDelete }) {
       {/* Header Bar */}
       <div className="flex items-center justify-between px-4 sm:px-5 pt-4 sm:pt-5 pb-3">
         <div className="flex items-center gap-2.5 flex-wrap">
-          <time className="text-[11px] tracking-wide font-medium" style={{ color: 'rgba(255, 255, 255, 0.4)' }}>
+          <time className="text-[11px] tracking-wide font-medium accent-text" style={{ 
+            fontFamily: 'var(--font-accent)', 
+            color: 'rgba(255, 255, 255, 0.4)' 
+          }}>
             {formatTimeAgo(post.createdAt)}
           </time>
           {post.category && (
@@ -85,11 +88,11 @@ function PhiloRoomCard({ post, onReaction, onEdit, onDelete }) {
         {/* Title */}
         {post.title && (
           <h2 
-            className="text-2xl sm:text-3xl text-white mb-4 sm:mb-5 leading-tight typewriter-text"
+            className="text-2xl sm:text-3xl text-white mb-4 sm:mb-5 leading-tight heading-text"
             style={{
-              fontFamily: 'Courier New, Courier, monospace',
+              fontFamily: 'var(--font-heading)',
               letterSpacing: '0.02em',
-              fontWeight: '500',
+              fontWeight: '700',
             }}
           >
             {post.title}
@@ -100,7 +103,7 @@ function PhiloRoomCard({ post, onReaction, onEdit, onDelete }) {
         <div 
           className="text-[15px] sm:text-base text-white/85 leading-relaxed mb-5 typewriter-text-light"
           style={{
-            fontFamily: 'Courier New, Courier, monospace',
+            fontFamily: 'var(--font-body)',
             lineHeight: '1.8',
           }}
           dangerouslySetInnerHTML={{ __html: post.content }}
