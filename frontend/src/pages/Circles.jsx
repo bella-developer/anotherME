@@ -239,7 +239,7 @@ function CircleCard({ circle, onClick }) {
       <p
         className="text-[10px] leading-relaxed mb-3 text-center transition-colors duration-300 line-clamp-2"
         style={{ 
-          color: hovered ? ('rgba(255,255,255,0.45)') : ('rgba(255,255,255,0.28)'),
+          color: hovered ? '#c9d1d9' : '#8b949e',
           maxWidth: '200px',
         }}
       >
@@ -250,14 +250,14 @@ function CircleCard({ circle, onClick }) {
       <div className="flex items-center gap-2">
         <span
           className="text-[9px] tracking-[0.12em] transition-colors duration-300"
-          style={{ color: hovered ? ('rgba(255,255,255,0.3)') : ('rgba(255,255,255,0.18)') }}
+          style={{ color: hovered ? '#c9d1d9' : '#8b949e' }}
         >
           {(circle.activeUserCount || 0).toLocaleString()} souls
         </span>
         <span
           className="text-[9px] transition-all duration-300"
           style={{
-            color: hovered ? accent.color : ('rgba(255,255,255,0.15)'),
+            color: hovered ? accent.color : '#8b949e',
             transform: hovered ? 'translateX(2px)' : 'translateX(0)',
           }}
         >
@@ -333,10 +333,10 @@ function Circles() {
           {/* Header */}
           <div className="mb-12">
             <div className="w-8 h-px mb-6" style={{ background: 'linear-gradient(to right, rgba(255,255,255,0.4), transparent)' }} />
-            <h1 className={`text-3xl font-light tracking-[0.2em] uppercase mb-3 ${'text-white'}`}>
+            <h1 className="text-3xl font-light tracking-[0.2em] uppercase mb-3" style={{ color: '#ffffff' }}>
               Circles
             </h1>
-            <p className={`text-[11px] tracking-[0.12em] ${'text-white/30'}`}>
+            <p className="text-[11px] tracking-[0.12em]" style={{ color: '#8b949e' }}>
               Quietly explore the unspoken thoughts of the collective.
             </p>
           </div>
@@ -354,14 +354,14 @@ function Circles() {
                   style={{
                     borderRadius: '2px',
                     background: active 
-                      ? (acc ? acc.bg : ('rgba(255,255,255,0.06)')) 
-                      : ('rgba(255,255,255,0.025)'),
+                      ? (acc ? acc.bg : 'rgba(255,255,255,0.06)') 
+                      : 'rgba(255,255,255,0.025)',
                     boxShadow: active
-                      ? `0 0 0 1px ${acc ? acc.color + '44' : ('rgba(255,255,255,0.2)')}`
-                      : ('0 0 0 1px rgba(255,255,255,0.07)'),
+                      ? `0 0 0 1px ${acc ? acc.color + '44' : 'rgba(255,255,255,0.2)'}`
+                      : '0 0 0 1px rgba(255,255,255,0.07)',
                     color: active 
-                      ? (acc ? acc.color : ('rgba(255,255,255,0.8)')) 
-                      : ('rgba(255,255,255,0.3)'),
+                      ? (acc ? acc.color : '#ffffff') 
+                      : '#8b949e',
                   }}
                 >
                   {f.label}
@@ -373,7 +373,7 @@ function Circles() {
           {/* Grid - adjusted for circular cards */}
           {visible.length === 0 ? (
             <div className="text-center py-20">
-              <p className={`text-sm tracking-wide ${'text-white/20'}`}>No circles found.</p>
+              <p className="text-sm tracking-wide" style={{ color: '#8b949e' }}>No circles found.</p>
             </div>
           ) : (
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6">

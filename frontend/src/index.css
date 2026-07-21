@@ -236,11 +236,12 @@ section.overflow-hidden {
 
 /* ============================================
    POST REACTION BUTTONS - Dark Mode Only
+   Strong whites for Patreon-style aesthetic
    ============================================ */
 
 /* Simple text buttons with hover effect */
 .post-reaction-btn {
-  color: #918A87;
+  color: #c9d1d9;
   background: transparent;
   border: none;
   padding: 0;
@@ -250,6 +251,6 @@ section.overflow-hidden {
 }
 
 .post-reaction-btn:hover {
-  color: #A05A2C;
+  color: #ffffff;
 }
 

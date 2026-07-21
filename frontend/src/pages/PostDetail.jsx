@@ -115,7 +115,7 @@ function PostDetail() {
           <div className="flex items-center text-xs uppercase tracking-[0.2em]" style={{ color: '#484f58' }}>
             {post.circle && (
               <>
-                <Link to={`/circles/${post.circle.id}`} className="transition-colors" style={{ color: '#8b949e' }}>
+                <Link to={`/circles/${post.circle.id}`} className="transition-colors" style={{ color: '#ffffff', fontWeight: '500' }}>
                   {post.circle.name}
                   {post.circle.room && (
                     <span className={`ml-2 px-1.5 py-0.5 text-[10px] font-medium rounded ${

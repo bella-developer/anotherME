@@ -70,7 +70,7 @@ function Home() {
             transition={{ duration: 2, delay: 0.5 }}
             className="text-center mb-6 md:mb-8"
           >
-            <p className={`text-[9px] tracking-[0.28em] uppercase font-light italic ${'text-white/15'}`}>
+            <p className="text-[9px] tracking-[0.28em] uppercase font-light italic" style={{ color: '#6e7681' }}>
               "{getGreeting()}"
             </p>
           </motion.div>
@@ -82,7 +82,7 @@ function Home() {
             transition={{ duration: 1.8, delay: 0.8 }}
             className="text-center mb-16 md:mb-20 lg:mb-24"
           >
-            <p className={`text-[9px] tracking-[0.22em] uppercase mb-4 md:mb-6 font-light ${'text-white/18'}`}>
+            <p className="text-[9px] tracking-[0.22em] uppercase mb-4 md:mb-6 font-light" style={{ color: '#6e7681' }}>
               Choose Your Room
             </p>
             <motion.h1
@@ -94,8 +94,8 @@ function Home() {
                 repeat: Infinity, 
                 ease: 'easeInOut' 
               }}
-              className={`text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extralight tracking-[0.12em] px-4 ${'text-white/92'}`}
-              style={{ fontWeight: 200 }}
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extralight tracking-[0.12em] px-4"
+              style={{ fontWeight: 200, color: '#ffffff' }}
             >
               Your Safe Space
             </motion.h1>
@@ -366,15 +366,13 @@ function Home() {
                   </div>
                 </div>
 
-                  {/* Room info below circle - THEME AWARE */}
+                  {/* Room info below circle - Strong whites */}
                   <div className="mt-12 md:mt-14 text-center">
                     <h2
                       className="text-xl md:text-2xl font-light tracking-[0.25em] mb-3 uppercase"
                       style={{
-                        color: hovered === room.id ? room.glowColor : 'rgba(255,255,255,0.9)',
-                        textShadow: false
-                          ? `0 0 15px rgba(${room.glowColorRGB}, 0.4)` 
-                          : (hovered === room.id)
+                        color: hovered === room.id ? room.glowColor : '#ffffff',
+                        textShadow: (hovered === room.id)
                           ? `0 0 20px rgba(${room.glowColorRGB}, 0.6)` 
                           : 'none',
                         transition: 'all 0.6s ease',
@@ -386,7 +384,7 @@ function Home() {
                     <p
                       className="text-[10px] md:text-[11px] tracking-[0.15em] mb-2"
                       style={{
-                        color: 'rgba(255,255,255,0.5)',
+                        color: '#e6edf3',
                       }}
                     >
                       {room.tagline}
@@ -404,7 +402,7 @@ function Home() {
                         style={{
                           color: hovered === room.id 
                             ? room.glowColor 
-                            : ('rgba(255,255,255,0.4)'),
+                            : '#8b949e',
                           transition: 'color 0.6s ease',
                         }}
                       >
@@ -417,7 +415,7 @@ function Home() {
                         style={{
                           color: hovered === room.id 
                             ? room.glowColor 
-                            : ('rgba(255,255,255,0.4)'),
+                            : '#8b949e',
                         }}
                       >
                         →
@@ -433,7 +431,8 @@ function Home() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 2, delay: 2.5 }}
-            className={`mt-16 md:mt-20 lg:mt-24 text-[8px] tracking-[0.26em] uppercase font-light italic px-4 text-center ${'text-white/10'}`}
+            className="mt-16 md:mt-20 lg:mt-24 text-[8px] tracking-[0.26em] uppercase font-light italic px-4 text-center"
+            style={{ color: '#484f58' }}
           >
             A space to breathe, to think, to be.
           </motion.p>
