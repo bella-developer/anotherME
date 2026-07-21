@@ -27,7 +27,7 @@ function PhiloRoomCard({ post, onReaction, onEdit, onDelete }) {
       style={{
         background: 'rgba(0, 0, 0, 0.4)',
         backdropFilter: 'blur(12px)',
-        boxShadow: '0 0 0 1px rgba(255,255,255,0.08), 0 8px 32px rgba(0,0,0,0.5)',
+        boxShadow: '0 0 0 1px rgba(255,255,255,0.03), 0 8px 32px rgba(0,0,0,0.5)',
         borderRadius: '8px',
       }}
     >
@@ -108,10 +108,10 @@ function PhiloRoomCard({ post, onReaction, onEdit, onDelete }) {
               <div
                 className="relative overflow-hidden"
                 style={{
-                  background: 'linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%)',
+                  background: 'linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%)',
                   borderRadius: '3px',
                   padding: '12px',
-                  boxShadow: '0 0 0 1px rgba(255,255,255,0.1), inset 0 0 20px rgba(0,0,0,0.3)',
+                  boxShadow: '0 0 0 1px rgba(255,255,255,0.04), inset 0 0 20px rgba(0,0,0,0.3)',
                 }}
               >
                 <div
@@ -124,19 +124,18 @@ function PhiloRoomCard({ post, onReaction, onEdit, onDelete }) {
                   <img
                     src={post.image.url}
                     alt={post.title || 'Post image'}
-                    className="w-full h-auto object-cover"
+                    className="w-full h-auto object-contain"
                     style={{
                       display: 'block',
-                      maxHeight: '400px',
                     }}
                     loading="lazy"
                   />
                 </div>
                 {/* Corner frames - Purple for Philo Room */}
-                <div className="absolute top-2 left-2" style={{ width: '16px', height: '16px', borderTop: '2px solid rgba(168, 85, 247, 0.6)', borderLeft: '2px solid rgba(168, 85, 247, 0.6)' }} />
-                <div className="absolute top-2 right-2" style={{ width: '16px', height: '16px', borderTop: '2px solid rgba(168, 85, 247, 0.6)', borderRight: '2px solid rgba(168, 85, 247, 0.6)' }} />
-                <div className="absolute bottom-2 left-2" style={{ width: '16px', height: '16px', borderBottom: '2px solid rgba(168, 85, 247, 0.6)', borderLeft: '2px solid rgba(168, 85, 247, 0.6)' }} />
-                <div className="absolute bottom-2 right-2" style={{ width: '16px', height: '16px', borderBottom: '2px solid rgba(168, 85, 247, 0.6)', borderRight: '2px solid rgba(168, 85, 247, 0.6)' }} />
+                <div className="absolute top-2 left-2" style={{ width: '16px', height: '16px', borderTop: '2px solid rgba(168, 85, 247, 0.25)', borderLeft: '2px solid rgba(168, 85, 247, 0.25)' }} />
+                <div className="absolute top-2 right-2" style={{ width: '16px', height: '16px', borderTop: '2px solid rgba(168, 85, 247, 0.25)', borderRight: '2px solid rgba(168, 85, 247, 0.25)' }} />
+                <div className="absolute bottom-2 left-2" style={{ width: '16px', height: '16px', borderBottom: '2px solid rgba(168, 85, 247, 0.25)', borderLeft: '2px solid rgba(168, 85, 247, 0.25)' }} />
+                <div className="absolute bottom-2 right-2" style={{ width: '16px', height: '16px', borderBottom: '2px solid rgba(168, 85, 247, 0.25)', borderRight: '2px solid rgba(168, 85, 247, 0.25)' }} />
               </div>
             </div>
 
