@@ -19,7 +19,7 @@ function HorizontalHero({ onRoomChange = () => {} }) {
       title: 'Dark Room',
       subtitle: 'Solitude & Introspection',
       description: 'A sanctuary for your deepest thoughts',
-      videoUrl: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1783941698/darkroomeffect_owm1l3.mp4',
+      videoUrl: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1784620588/darkvi_lgfqhs.mp4',
       color: '#ef4444',
       bgColor: 'rgba(239, 68, 68, 0.3)',
     },
