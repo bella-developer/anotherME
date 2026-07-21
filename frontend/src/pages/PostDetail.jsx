@@ -109,9 +109,9 @@ function PostDetail() {
 
   return (
     <div className="min-h-screen">
-      <div className="max-w-3xl mx-auto px-6 py-12">
+      <div className="max-w-3xl mx-auto px-6 py-6 md:py-8">
         {/* Breadcrumb */}
-        <div className="mb-12">
+        <div className="mb-6 md:mb-8">
           <div className="flex flex-col gap-3">
             {/* ROOMS label - strong white bold and larger */}
             <div className="text-xs uppercase tracking-[0.25em]" style={{ color: '#e6edf3', fontWeight: '700' }}>
@@ -139,7 +139,7 @@ function PostDetail() {
         </div>
 
         {/* Post Header */}
-        <div className="mb-8 flex items-center justify-between">
+        <div className="mb-4 md:mb-6 flex items-center justify-between">
           <div className="text-xs uppercase tracking-[0.15em]" style={{ color: '#484f58', fontWeight: '300' }}>
             Observer {formatTimeAgo(post.createdAt)}
           </div>
@@ -153,7 +153,7 @@ function PostDetail() {
         </div>
 
         {/* Post Title - First paragraph as title - much smaller and weaker */}
-        <h1 className="leading-relaxed mb-8" style={{ 
+        <h1 className="leading-relaxed mb-4 md:mb-6" style={{ 
           color: '#6e7681',
           fontWeight: '300',
           fontSize: '0.95rem',
@@ -163,7 +163,7 @@ function PostDetail() {
         </h1>
 
         {/* Post Content - Remaining paragraphs */}
-        <div className="space-y-6 mb-12">
+        <div className="space-y-4 mb-8 md:mb-10">
           {post.content.split('\n\n').slice(1).map((paragraph, index) => (
             <p key={index} className="leading-relaxed" style={{ 
               color: '#575455',
@@ -178,13 +178,13 @@ function PostDetail() {
 
         {/* Linked Reference Section */}
         {post.circle && (
-          <div className="mb-12">
-            <div className="text-[0.65rem] uppercase tracking-[0.2em] mb-4" style={{ color: '#484f58', fontWeight: '300' }}>
+          <div className="mb-8 md:mb-10">
+            <div className="text-[0.65rem] uppercase tracking-[0.2em] mb-3" style={{ color: '#484f58', fontWeight: '300' }}>
               Linked Reference
             </div>
             <Link
               to={`/circles/${post.circle.id}`}
-              className="block border transition-colors p-5 group"
+              className="block border transition-colors p-4 group"
               style={{
                 background: '#161b22',
                 borderColor: '#21262d'
@@ -228,8 +228,8 @@ function PostDetail() {
         )}
 
         {/* Reactions Section */}
-        <div className="mb-16">
-          <div className="text-[0.65rem] uppercase tracking-[0.2em] text-[#484f58] mb-4" style={{ fontWeight: '300' }}>
+        <div className="mb-10 md:mb-12">
+          <div className="text-[0.65rem] uppercase tracking-[0.2em] text-[#484f58] mb-3" style={{ fontWeight: '300' }}>
             Reactions
           </div>
           <div className="flex items-center space-x-3">
