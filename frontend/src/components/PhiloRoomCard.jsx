@@ -38,7 +38,12 @@ function PhiloRoomCard({ post, onReaction, onEdit, onDelete }) {
             {formatTimeAgo(post.createdAt)}
           </time>
           {post.category && (
-            <span className="px-2.5 py-1 rounded-full text-[9px] font-semibold uppercase tracking-widest bg-purple-900/20 text-purple-400 border border-purple-900/30">
+            <span className="px-2.5 py-1 rounded-full text-[9px] uppercase tracking-widest border" style={{
+              backgroundColor: 'rgba(168, 85, 247, 0.08)',
+              color: '#c9d1d9',
+              borderColor: 'rgba(168, 85, 247, 0.15)',
+              fontWeight: '300'
+            }}>
               {post.category}
             </span>
           )}

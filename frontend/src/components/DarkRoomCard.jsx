@@ -38,7 +38,12 @@ function DarkRoomCard({ post, onReaction, onEdit, onDelete }) {
             {formatTimeAgo(post.createdAt)}
           </time>
           {post.category && (
-            <span className="px-2.5 py-1 rounded-full text-[9px] font-semibold uppercase tracking-widest bg-red-900/20 text-red-400 border border-red-900/30">
+            <span className="px-2.5 py-1 rounded-full text-[9px] uppercase tracking-widest border" style={{
+              backgroundColor: 'rgba(46, 230, 255, 0.08)',
+              color: '#c9d1d9',
+              borderColor: 'rgba(46, 230, 255, 0.15)',
+              fontWeight: '300'
+            }}>
               {post.category}
             </span>
           )}

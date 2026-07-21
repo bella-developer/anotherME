@@ -182,8 +182,8 @@ function FantasyRoom() {
                     Dream Without Limits
                   </p>
                   
-                  <p className="text-[10px] max-w-md" style={{
-                    color: '#575455',
+                  <p className="text-[11px] max-w-md" style={{
+                    color: '#c9d1d9',
                     lineHeight: 'var(--leading-relaxed)',
                     fontWeight: '300'
                   }}>
@@ -195,22 +195,25 @@ function FantasyRoom() {
                     onClick={() => setIsPostFormOpen(true)}
                     className="flex-shrink-0 px-6 py-3 text-xs tracking-widest uppercase transition-all"
                     style={{
-                      background: 'var(--surface-1)',
-                      border: '1px solid var(--border-whisper)',
-                      color: 'var(--text-tertiary)',
+                      background: 'rgba(0, 0, 0, 0.3)',
+                      border: '1px solid rgba(249, 115, 22, 0.15)',
+                      color: '#c9d1d9',
                       borderRadius: 'var(--radius-soft)',
                       transitionDuration: 'var(--duration-slow)',
+                      fontWeight: '400',
                     }}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.borderColor = 'rgba(249, 115, 22, 0.3)';
-                      e.currentTarget.style.color = 'rgba(249, 115, 22, 0.9)';
+                      e.currentTarget.style.color = '#FF9D1C';
+                      e.currentTarget.style.background = 'rgba(249, 115, 22, 0.05)';
                     }}
                     onMouseLeave={(e) => {
-                      e.currentTarget.style.borderColor = 'var(--border-whisper)';
-                      e.currentTarget.style.color = 'var(--text-tertiary)';
+                      e.currentTarget.style.borderColor = 'rgba(249, 115, 22, 0.15)';
+                      e.currentTarget.style.color = '#c9d1d9';
+                      e.currentTarget.style.background = 'rgba(0, 0, 0, 0.3)';
                     }}
                   >
-                    Create Dream
+                    Post
                   </button>
                 )}
               </div>
