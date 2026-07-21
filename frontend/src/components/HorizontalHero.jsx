@@ -19,7 +19,7 @@ function HorizontalHero({ onRoomChange = () => {} }) {
       title: 'Dark Room',
       subtitle: 'Solitude & Introspection',
       description: 'A sanctuary for your deepest thoughts',
-      videoUrl: 'https://res.cloudinary.com/dbtm7etag/video/upload/e_brightness:20,e_contrast:15/so_2.0/v1784620588/darkvi_lgfqhs.mp4',
+      videoUrl: 'https://res.cloudinary.com/dbtm7etag/video/upload/so_2.0/v1784620588/darkvi_lgfqhs.mp4',
       color: '#ef4444',
       bgColor: 'rgba(239, 68, 68, 0.3)',
     },
@@ -28,7 +28,7 @@ function HorizontalHero({ onRoomChange = () => {} }) {
       title: 'Fantasy Room',
       subtitle: 'Creativity & Imagination',
       description: 'Where dreams become reality',
-      videoUrl: 'https://res.cloudinary.com/dbtm7etag/video/upload/e_brightness:20,e_contrast:15/v1784018105/fantasyyy_djqjgx.mp4',
+      videoUrl: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1784018105/fantasyyy_djqjgx.mp4',
       color: '#f97316',
       bgColor: 'rgba(249, 115, 22, 0.3)',
     },
@@ -37,7 +37,7 @@ function HorizontalHero({ onRoomChange = () => {} }) {
       title: 'Philo Room',
       subtitle: 'Philosophy & Deep Thought',
       description: 'Explore existential questions',
-      videoUrl: 'https://res.cloudinary.com/dbtm7etag/video/upload/e_brightness:20,e_contrast:15/v1783942027/philoeffect_soso3y.mp4',
+      videoUrl: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1783942027/philoeffect_soso3y.mp4',
       color: '#a855f7',
       bgColor: 'rgba(168, 85, 247, 0.3)',
     },
@@ -162,17 +162,6 @@ function HorizontalHero({ onRoomChange = () => {} }) {
         }}
       />
 
-      {/* Subtle Film Grain Texture */}
-
-      {/* Subtle Film Grain Texture */}
-      <div 
-        className="absolute inset-0 z-30 pointer-events-none opacity-[0.015]"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
-          backgroundRepeat: 'repeat',
-          mixBlendMode: 'overlay',
-        }}
-      />
 
       {/* Video Backgrounds - Full Width Scan Frame */}
       <div 
@@ -218,54 +207,14 @@ function HorizontalHero({ onRoomChange = () => {} }) {
                 playsInline
                 preload="auto"
                 autoPlay
-                style={{
-                  filter: 'contrast(1.2) brightness(0.85) saturate(1.1)',
-                }}
               >
                 <source src={room.videoUrl} type="video/mp4" />
               </video>
               
-              {/* Dimming Overlay - 30% for balance */}
-              <div 
-                className="absolute inset-0 bg-black"
-                style={{
-                  opacity: 0.3,
-                }}
-              />
               
-              {/* Vignette Effect */}
-              <div 
-                className="absolute inset-0 pointer-events-none"
-                style={{
-                  background: 'radial-gradient(circle, transparent 30%, rgba(0,0,0,0.4) 100%)',
-                }}
-              />
               
-              {/* Subtle Color Mist */}
-              <div 
-                className="absolute inset-0 pointer-events-none"
-                style={{
-                  background: `radial-gradient(circle at 30% 50%, ${room.bgColor} 0%, transparent 50%)`,
-                  opacity: 0.15,
-                }}
-              />
               
-              {/* Film Grain Texture */}
-              <div 
-                className="absolute inset-0 pointer-events-none"
-                style={{
-                  backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 400 400\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noiseFilter\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.9\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noiseFilter)\' opacity=\'0.05\'/%3E%3C/svg%3E")',
-                  opacity: 0.2,
-                }}
-              />
               
-              {/* Subtle Color Mist */}
-              <div 
-                className="absolute inset-0"
-                style={{
-                  background: `radial-gradient(circle at center, ${room.bgColor.replace('0.3', '0.15')} 0%, transparent 60%)`,
-                }}
-              />
               
             </motion.div>
           ))}
