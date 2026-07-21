@@ -19,7 +19,7 @@ function HorizontalHero({ onRoomChange = () => {} }) {
       title: 'Dark Room',
       subtitle: 'Solitude & Introspection',
       description: 'A sanctuary for your deepest thoughts',
-      videoUrl: 'https://res.cloudinary.com/dbtm7etag/video/upload/so_2.0/v1784620588/darkvi_lgfqhs.mp4',
+      videoUrl: 'https://res.cloudinary.com/dbtm7etag/video/upload/e_brightness:20/so_2.0/v1784620588/darkvi_lgfqhs.mp4',
       color: '#ef4444',
       bgColor: 'rgba(239, 68, 68, 0.3)',
     },
@@ -28,7 +28,7 @@ function HorizontalHero({ onRoomChange = () => {} }) {
       title: 'Fantasy Room',
       subtitle: 'Creativity & Imagination',
       description: 'Where dreams become reality',
-      videoUrl: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1784018105/fantasyyy_djqjgx.mp4',
+      videoUrl: 'https://res.cloudinary.com/dbtm7etag/video/upload/e_brightness:20/v1784018105/fantasyyy_djqjgx.mp4',
       color: '#f97316',
       bgColor: 'rgba(249, 115, 22, 0.3)',
     },
@@ -37,7 +37,7 @@ function HorizontalHero({ onRoomChange = () => {} }) {
       title: 'Philo Room',
       subtitle: 'Philosophy & Deep Thought',
       description: 'Explore existential questions',
-      videoUrl: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1783942027/philoeffect_soso3y.mp4',
+      videoUrl: 'https://res.cloudinary.com/dbtm7etag/video/upload/e_brightness:20/v1783942027/philoeffect_soso3y.mp4',
       color: '#a855f7',
       bgColor: 'rgba(168, 85, 247, 0.3)',
     },
@@ -158,19 +158,11 @@ function HorizontalHero({ onRoomChange = () => {} }) {
       <div 
         className="absolute top-0 left-0 right-0 h-20 z-40 pointer-events-none"
         style={{
-          background: 'linear-gradient(to bottom, rgba(0, 0, 0, 0.98) 0%, rgba(0, 0, 0, 0.85) 40%, transparent 100%)',
+          background: 'linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.1) 40%, transparent 100%)',
         }}
       />
 
       {/* Subtle Film Grain Texture */}
-      <div 
-        className="absolute inset-0 z-30 pointer-events-none opacity-[0.02]"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
-          backgroundRepeat: 'repeat',
-          mixBlendMode: 'overlay',
-        }}
-      />
 
       {/* Video Backgrounds - Full Width Scan Frame */}
       <div 
@@ -223,11 +215,11 @@ function HorizontalHero({ onRoomChange = () => {} }) {
                 <source src={room.videoUrl} type="video/mp4" />
               </video>
               
-              {/* Medium Dimming Overlay - 50% black */}
+              {/* Light Dimming Overlay - Reduced for clarity */}
               <div 
                 className="absolute inset-0 bg-black"
                 style={{
-                  opacity: 0.5,
+                  opacity: 0.15,
                 }}
               />
               
@@ -239,14 +231,6 @@ function HorizontalHero({ onRoomChange = () => {} }) {
                 }}
               />
               
-              {/* Film Grain Texture */}
-              <div 
-                className="absolute inset-0 pointer-events-none"
-                style={{
-                  backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 400 400\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noiseFilter\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.9\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noiseFilter)\' opacity=\'0.05\'/%3E%3C/svg%3E")',
-                  opacity: 0.3,
-                }}
-              />
             </motion.div>
           ))}
         </div>
