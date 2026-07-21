@@ -23,7 +23,7 @@ function DarkRoomCard({ post, onReaction, onEdit, onDelete }) {
 
   return (
     <article
-      className="relative mb-6 transition-all duration-200"
+      className="relative mb-6 transition-all duration-200 analog-texture paper-texture"
       style={{
         background: 'rgba(0, 0, 0, 0.4)',
         backdropFilter: 'blur(12px)',
@@ -85,10 +85,11 @@ function DarkRoomCard({ post, onReaction, onEdit, onDelete }) {
         {/* Title */}
         {post.title && (
           <h2 
-            className="text-2xl sm:text-3xl text-white mb-4 sm:mb-5 font-bold leading-tight"
+            className="text-2xl sm:text-3xl text-white mb-4 sm:mb-5 leading-tight typewriter-text"
             style={{
-              fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-              letterSpacing: '-0.03em',
+              fontFamily: 'Courier New, Courier, monospace',
+              letterSpacing: '0.02em',
+              fontWeight: '500',
             }}
           >
             {post.title}
@@ -97,10 +98,10 @@ function DarkRoomCard({ post, onReaction, onEdit, onDelete }) {
 
         {/* Content Text */}
         <div 
-          className="text-[15px] sm:text-base text-white/85 leading-relaxed mb-5"
+          className="text-[15px] sm:text-base text-white/85 leading-relaxed mb-5 typewriter-text-light"
           style={{
-            fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-            lineHeight: '1.7',
+            fontFamily: 'Courier New, Courier, monospace',
+            lineHeight: '1.8',
           }}
           dangerouslySetInnerHTML={{ __html: post.content }}
         />
