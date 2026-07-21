@@ -649,14 +649,12 @@ function Landing() {
                   transitionDuration: 'var(--duration-slow)',
                 }}
                 onMouseEnter={(e) => {
-                    e.currentTarget.style.borderColor = 'var(--border-light)';
-                    e.currentTarget.style.color = 'var(--text-primary)';
-                  }
+                  e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.3)';
+                  e.currentTarget.style.color = 'rgba(255, 255, 255, 1)';
                 }}
                 onMouseLeave={(e) => {
-                    e.currentTarget.style.borderColor = 'var(--border-medium)';
-                    e.currentTarget.style.color = 'var(--text-secondary)';
-                  }
+                  e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+                  e.currentTarget.style.color = 'rgba(255, 255, 255, 0.8)';
                 }}
               >
                 Explore
