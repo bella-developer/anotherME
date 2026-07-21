@@ -164,6 +164,16 @@ function HorizontalHero({ onRoomChange = () => {} }) {
 
       {/* Subtle Film Grain Texture */}
 
+      {/* Subtle Film Grain Texture */}
+      <div 
+        className="absolute inset-0 z-30 pointer-events-none opacity-[0.015]"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+          backgroundRepeat: 'repeat',
+          mixBlendMode: 'overlay',
+        }}
+      />
+
       {/* Video Backgrounds - Full Width Scan Frame */}
       <div 
         className="absolute inset-0 flex items-center justify-center" 
@@ -215,11 +225,37 @@ function HorizontalHero({ onRoomChange = () => {} }) {
                 <source src={room.videoUrl} type="video/mp4" />
               </video>
               
-              {/* Light Dimming Overlay - Reduced for clarity */}
+              {/* Dimming Overlay - 30% for balance */}
               <div 
                 className="absolute inset-0 bg-black"
                 style={{
+                  opacity: 0.3,
+                }}
+              />
+              
+              {/* Vignette Effect */}
+              <div 
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                  background: 'radial-gradient(circle, transparent 30%, rgba(0,0,0,0.4) 100%)',
+                }}
+              />
+              
+              {/* Subtle Color Mist */}
+              <div 
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                  background: `radial-gradient(circle at 30% 50%, ${room.bgColor} 0%, transparent 50%)`,
                   opacity: 0.15,
+                }}
+              />
+              
+              {/* Film Grain Texture */}
+              <div 
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                  backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 400 400\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noiseFilter\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.9\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noiseFilter)\' opacity=\'0.05\'/%3E%3C/svg%3E")',
+                  opacity: 0.2,
                 }}
               />
               
