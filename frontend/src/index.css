@@ -5,6 +5,47 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ============================================
+   POST REACTION BUTTONS - Must come after Tailwind
+   High specificity to override everything
+   ============================================ */
+@layer components {
+  /* Dark mode (default) - Simple text buttons */
+  .post-reaction-btn {
+    color: #918A87 !important;
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    transition: color 0.2s ease !important;
+    font-size: 0.75rem !important;
+  }
+
+  .post-reaction-btn:hover {
+    color: #A05A2C !important;
+  }
+
+  /* Light mode - Visible buttons with background and border */
+  body.light-mode .post-reaction-btn,
+  body.light-mode button.post-reaction-btn,
+  body.light-mode .post-reaction-btn.flex {
+    color: rgba(0, 0, 0, 0.75) !important;
+    background: rgba(0, 0, 0, 0.08) !important;
+    border: 1px solid rgba(0, 0, 0, 0.15) !important;
+    padding: 4px 10px !important;
+    border-radius: 6px !important;
+    font-size: 0.75rem !important;
+  }
+
+  body.light-mode .post-reaction-btn:hover,
+  body.light-mode button.post-reaction-btn:hover,
+  body.light-mode .post-reaction-btn.flex:hover {
+    color: rgba(139, 74, 29, 0.9) !important;
+    background: rgba(0, 0, 0, 0.12) !important;
+    border-color: rgba(0, 0, 0, 0.25) !important;
+  }
+}
+
 @layer base {
   body {
     font-family: 'Geist Mono', 'Space Mono', 'Courier New', monospace;
@@ -2766,37 +2807,4 @@ body.light-mode button.border-\\[\\#30363d\\] {
 body.light-mode button.border-\\[\\#30363d\\]:hover {
   border-color: rgba(0, 0, 0, 0.25) !important;
   background: rgba(0, 0, 0, 0.04) !important;
-}
-
-/* ============================================
-   POST REACTION BUTTONS - Clean CSS Solution
-   ============================================ */
-
-/* Dark mode (default) - Simple text buttons */
-.post-reaction-btn {
-  color: #918A87;
-  background: transparent;
-  border: none;
-  padding: 0;
-  border-radius: 0;
-  transition: color 0.2s ease;
-  font-size: 0.75rem;
-}
-
-.post-reaction-btn:hover {
-  color: #A05A2C;
-}
-
-/* Light mode - Visible buttons with background and border */
-body.light-mode .post-reaction-btn {
-  color: rgba(0, 0, 0, 0.75) !important;
-  background: rgba(0, 0, 0, 0.08) !important;
-  border: 1px solid rgba(0, 0, 0, 0.15) !important;
-  padding: 4px 10px !important;
-  border-radius: 6px !important;
-}
-
-body.light-mode .post-reaction-btn:hover {
-  color: rgba(139, 74, 29, 0.9) !important;
-  background: rgba(0, 0, 0, 0.12) !important;
 }
