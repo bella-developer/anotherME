@@ -19,9 +19,12 @@ const PostCard = ({ post, onPostClick }) => {
   const [, forceUpdate] = useState({});
   
   useEffect(() => {
+    console.log('[PostCard] Theme changed to:', theme);
+    console.log('[PostCard] isLight:', isLight);
+    console.log('[PostCard] body.classList:', document.body.classList.toString());
     // Re-render when theme changes to sync with body class
     forceUpdate({});
-  }, [theme]);
+  }, [theme, isLight]);
 
   // Format timestamp to relative time
   const formatTimestamp = (timestamp) => {
