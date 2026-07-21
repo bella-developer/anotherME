@@ -82,19 +82,19 @@ const PostCard = ({ post, onPostClick }) => {
       onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'rgba(0, 0, 0, 0.3)'}
     >
       {/* Header: Room Section and Timestamp */}
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex items-center justify-between mb-6">
         {/* Room Header */}
         {post.circle?.room && (
-          <div className="flex flex-col gap-1">
-            <span className="text-[10px] tracking-[0.2em] uppercase" style={{ color: '#e6edf3', fontWeight: '600' }}>
+          <div className="flex flex-col gap-2">
+            <span className="text-xs tracking-[0.25em] uppercase" style={{ color: '#e6edf3', fontWeight: '700' }}>
               ROOMS
             </span>
-            <span className="text-sm tracking-[0.1em] uppercase" style={{ 
+            <span className="text-lg tracking-[0.12em] uppercase" style={{ 
               color: post.circle.room === 'dark' ? '#2EE6FF' :
                      post.circle.room === 'fantasy' ? '#FF9D1C' :
                      post.circle.room === 'philo' ? '#B56DFF' :
                      '#ffffff',
-              fontWeight: '700'
+              fontWeight: '800'
             }}>
               THE {post.circle.room.toUpperCase()} ROOM
             </span>
@@ -102,23 +102,23 @@ const PostCard = ({ post, onPostClick }) => {
         )}
 
         {/* Timestamp */}
-        <span className="text-[10px]" style={{ color: '#6e7681', fontWeight: '300' }}>
+        <span className="text-[10px]" style={{ color: '#484f58', fontWeight: '300' }}>
           <time dateTime={post.createdAt}>
             {formatTimestamp(post.createdAt)}
           </time>
         </span>
       </div>
 
-      {/* Content with paragraph breaks */}
+      {/* Content with paragraph breaks - smaller and weaker */}
       <div className="mb-4">
         {paragraphs.map((paragraph, index) => (
           <p 
             key={index} 
             className="leading-relaxed mb-3 last:mb-0"
             style={{ 
-              color: index === 0 ? '#8b949e' : '#6e7681', 
+              color: index === 0 ? '#6e7681' : '#575455', 
               fontWeight: '300',
-              fontSize: index === 0 ? '13px' : '12px'
+              fontSize: index === 0 ? '11px' : '10px'
             }}
           >
             {paragraph}

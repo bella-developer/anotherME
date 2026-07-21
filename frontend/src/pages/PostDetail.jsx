@@ -112,26 +112,26 @@ function PostDetail() {
       <div className="max-w-3xl mx-auto px-6 py-12">
         {/* Breadcrumb */}
         <div className="mb-12">
-          <div className="flex flex-col gap-2">
-            {/* ROOMS label - strong white bold */}
-            <div className="text-[10px] uppercase tracking-[0.2em]" style={{ color: '#e6edf3', fontWeight: '600' }}>
+          <div className="flex flex-col gap-3">
+            {/* ROOMS label - strong white bold and larger */}
+            <div className="text-xs uppercase tracking-[0.25em]" style={{ color: '#e6edf3', fontWeight: '700' }}>
               ROOMS
             </div>
-            {/* Room name as main heading - strongest and boldest */}
+            {/* Room name as main heading - strongest, boldest, and largest */}
             {post.circle?.room && (
-              <h2 className="text-xl uppercase tracking-[0.1em]" style={{ 
+              <h2 className="text-2xl uppercase tracking-[0.12em]" style={{ 
                 color: post.circle.room === 'dark' ? '#2EE6FF' :
                        post.circle.room === 'fantasy' ? '#FF9D1C' :
                        post.circle.room === 'philo' ? '#B56DFF' :
                        '#ffffff',
-                fontWeight: '700'
+                fontWeight: '800'
               }}>
                 THE {post.circle.room.toUpperCase()} ROOM
               </h2>
             )}
             {/* Circle name as weak white */}
             {post.circle && (
-              <Link to={`/circles/${post.circle.id}`} className="transition-colors text-xs" style={{ color: '#6e7681', fontWeight: '300' }}>
+              <Link to={`/circles/${post.circle.id}`} className="transition-colors text-[11px]" style={{ color: '#6e7681', fontWeight: '300' }}>
                 Circle: {post.circle.name}
               </Link>
             )}
@@ -152,12 +152,12 @@ function PostDetail() {
           </button>
         </div>
 
-        {/* Post Title - First paragraph as title - weaker and smaller */}
-        <h1 className="leading-tight mb-8" style={{ 
-          color: '#8b949e',
+        {/* Post Title - First paragraph as title - much smaller and weaker */}
+        <h1 className="leading-relaxed mb-8" style={{ 
+          color: '#6e7681',
           fontWeight: '300',
-          fontSize: '1.5rem',
-          letterSpacing: '-0.01em'
+          fontSize: '0.95rem',
+          letterSpacing: '0'
         }}>
           {post.content.split('\n\n')[0]}
         </h1>
@@ -166,10 +166,10 @@ function PostDetail() {
         <div className="space-y-6 mb-12">
           {post.content.split('\n\n').slice(1).map((paragraph, index) => (
             <p key={index} className="leading-relaxed" style={{ 
-              color: '#6e7681',
+              color: '#575455',
               lineHeight: '1.8',
               fontWeight: '300',
-              fontSize: '0.95rem'
+              fontSize: '0.85rem'
             }}>
               {paragraph}
             </p>
