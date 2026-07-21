@@ -178,8 +178,8 @@ function HorizontalHero({ onRoomChange = () => {} }) {
       <div 
         className="absolute inset-0 flex items-center justify-center" 
         style={{ 
-          paddingTop: 'clamp(52px, 10vw, 64px)',
-          paddingBottom: 'clamp(52px, 10vw, 64px)',
+          paddingTop: 'clamp(52px, 10vw, 60px)',
+          paddingBottom: 'clamp(52px, 10vw, 60px)',
           paddingLeft: '1.5px',
           paddingRight: '1.5px',
         }}
@@ -220,7 +220,6 @@ function HorizontalHero({ onRoomChange = () => {} }) {
                 autoPlay
                 style={{
                   filter: 'contrast(1.2) brightness(0.85) saturate(1.1)',
-                  transform: 'scale(0.85)',
                 }}
               >
                 <source src={room.videoUrl} type="video/mp4" />
