@@ -86,15 +86,15 @@ const PostCard = ({ post, onPostClick }) => {
         {/* Room Header */}
         {post.circle?.room && (
           <div className="flex flex-col gap-1">
-            <span className="text-[9px] tracking-[0.2em] uppercase" style={{ color: '#8b949e', fontWeight: '300' }}>
+            <span className="text-[10px] tracking-[0.2em] uppercase" style={{ color: '#e6edf3', fontWeight: '600' }}>
               ROOMS
             </span>
-            <span className="text-xs tracking-[0.15em] uppercase" style={{ 
+            <span className="text-sm tracking-[0.1em] uppercase" style={{ 
               color: post.circle.room === 'dark' ? '#2EE6FF' :
                      post.circle.room === 'fantasy' ? '#FF9D1C' :
                      post.circle.room === 'philo' ? '#B56DFF' :
                      '#ffffff',
-              fontWeight: '600'
+              fontWeight: '700'
             }}>
               THE {post.circle.room.toUpperCase()} ROOM
             </span>
@@ -102,7 +102,7 @@ const PostCard = ({ post, onPostClick }) => {
         )}
 
         {/* Timestamp */}
-        <span className="text-xs" style={{ color: '#575455', fontWeight: '300' }}>
+        <span className="text-[10px]" style={{ color: '#6e7681', fontWeight: '300' }}>
           <time dateTime={post.createdAt}>
             {formatTimestamp(post.createdAt)}
           </time>
@@ -114,8 +114,12 @@ const PostCard = ({ post, onPostClick }) => {
         {paragraphs.map((paragraph, index) => (
           <p 
             key={index} 
-            className="text-sm leading-relaxed mb-3 last:mb-0"
-            style={{ color: '#c9d1d9', fontWeight: '300' }}
+            className="leading-relaxed mb-3 last:mb-0"
+            style={{ 
+              color: index === 0 ? '#8b949e' : '#6e7681', 
+              fontWeight: '300',
+              fontSize: index === 0 ? '13px' : '12px'
+            }}
           >
             {paragraph}
           </p>
@@ -133,9 +137,9 @@ const PostCard = ({ post, onPostClick }) => {
               handleReactionToggle('iRelate');
             }}
             className="post-reaction-btn flex items-center gap-1.5"
-            style={{ color: '#c9d1d9' }}
+            style={{ color: '#6e7681', fontSize: '11px', fontWeight: '300' }}
           >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <circle cx="12" cy="12" r="10" strokeWidth={1.5} />
             </svg>
             <span>I relate</span>
@@ -148,9 +152,9 @@ const PostCard = ({ post, onPostClick }) => {
               handleReactionToggle('youreNotAlone');
             }}
             className="post-reaction-btn flex items-center gap-1.5"
-            style={{ color: '#c9d1d9' }}
+            style={{ color: '#6e7681', fontSize: '11px', fontWeight: '300' }}
           >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20 12H4" />
             </svg>
             <span>You're not alone</span>
@@ -163,9 +167,9 @@ const PostCard = ({ post, onPostClick }) => {
               handleReactionToggle('imListening');
             }}
             className="post-reaction-btn flex items-center gap-1.5"
-            style={{ color: '#c9d1d9' }}
+            style={{ color: '#6e7681', fontSize: '11px', fontWeight: '300' }}
           >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
             </svg>
             <span>I'm listening</span>
@@ -174,8 +178,8 @@ const PostCard = ({ post, onPostClick }) => {
 
         {/* Circle Badge */}
         {post.circle && (
-          <div className="flex items-center gap-1.5 text-xs" style={{ color: '#6e7681', fontWeight: '300' }}>
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="flex items-center gap-1.5 text-[10px]" style={{ color: '#484f58', fontWeight: '300' }}>
+            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
             </svg>
             <span>{post.circle.name}</span>

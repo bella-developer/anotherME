@@ -112,29 +112,29 @@ function PostDetail() {
       <div className="max-w-3xl mx-auto px-6 py-12">
         {/* Breadcrumb */}
         <div className="mb-12">
-          <div className="flex items-center text-xs uppercase tracking-[0.2em]" style={{ color: '#484f58', fontWeight: '300' }}>
-            {post.circle && (
-              <>
-                <Link to={`/circles/${post.circle.id}`} className="transition-colors" style={{ color: '#8b949e', fontWeight: '300' }}>
-                  {post.circle.name}
-                  {post.circle.room && (
-                    <span className="ml-2 px-1.5 py-0.5 text-[10px] rounded" style={{
-                      backgroundColor: post.circle.room === 'dark' ? '#2a1a1a' :
-                                      post.circle.room === 'fantasy' ? '#2a1a0a' :
-                                      post.circle.room === 'philo' ? '#1a1a2a' : '#2a2a2a',
-                      color: post.circle.room === 'dark' ? '#2EE6FF' :
-                             post.circle.room === 'fantasy' ? '#FF9D1C' :
-                             post.circle.room === 'philo' ? '#B56DFF' : '#918A87',
-                      fontWeight: '600'
-                    }}>
-                      THE {post.circle.room.toUpperCase()} ROOM
-                    </span>
-                  )}
-                </Link>
-                <span className="mx-3">›</span>
-              </>
+          <div className="flex flex-col gap-2">
+            {/* ROOMS label - strong white bold */}
+            <div className="text-[10px] uppercase tracking-[0.2em]" style={{ color: '#e6edf3', fontWeight: '600' }}>
+              ROOMS
+            </div>
+            {/* Room name as main heading - strongest and boldest */}
+            {post.circle?.room && (
+              <h2 className="text-xl uppercase tracking-[0.1em]" style={{ 
+                color: post.circle.room === 'dark' ? '#2EE6FF' :
+                       post.circle.room === 'fantasy' ? '#FF9D1C' :
+                       post.circle.room === 'philo' ? '#B56DFF' :
+                       '#ffffff',
+                fontWeight: '700'
+              }}>
+                THE {post.circle.room.toUpperCase()} ROOM
+              </h2>
             )}
-            <span style={{ color: '#6e7681' }}>post {post.id.slice(-5)}</span>
+            {/* Circle name as weak white */}
+            {post.circle && (
+              <Link to={`/circles/${post.circle.id}`} className="transition-colors text-xs" style={{ color: '#6e7681', fontWeight: '300' }}>
+                Circle: {post.circle.name}
+              </Link>
+            )}
           </div>
         </div>
 
@@ -152,10 +152,11 @@ function PostDetail() {
           </button>
         </div>
 
-        {/* Post Title - First paragraph as title */}
-        <h1 className="text-[2rem] leading-tight font-normal mb-8" style={{ 
-          color: '#ffffff',
-          fontWeight: '400',
+        {/* Post Title - First paragraph as title - weaker and smaller */}
+        <h1 className="leading-tight mb-8" style={{ 
+          color: '#8b949e',
+          fontWeight: '300',
+          fontSize: '1.5rem',
           letterSpacing: '-0.01em'
         }}>
           {post.content.split('\n\n')[0]}
@@ -164,10 +165,11 @@ function PostDetail() {
         {/* Post Content - Remaining paragraphs */}
         <div className="space-y-6 mb-12">
           {post.content.split('\n\n').slice(1).map((paragraph, index) => (
-            <p key={index} className="text-[1.05rem] leading-relaxed" style={{ 
-              color: '#c9d1d9',
+            <p key={index} className="leading-relaxed" style={{ 
+              color: '#6e7681',
               lineHeight: '1.8',
-              fontWeight: '300'
+              fontWeight: '300',
+              fontSize: '0.95rem'
             }}>
               {paragraph}
             </p>
