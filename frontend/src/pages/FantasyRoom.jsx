@@ -136,15 +136,26 @@ function FantasyRoom() {
             <div className="mb-20">
               <button
                 onClick={() => navigate('/home')}
-                className="text-xs tracking-ultra uppercase mb-12 transition-all flex items-center gap-2"
+                className="px-4 py-2 text-xs tracking-wide uppercase mb-12 transition-all flex items-center gap-2 rounded"
                 style={{
-                  color: 'var(--text-ghost)',
+                  color: '#e6edf3',
+                  border: '1px solid rgba(249, 115, 22, 0.3)',
+                  backgroundColor: 'rgba(249, 115, 22, 0.05)',
+                  fontWeight: '500',
                   transitionDuration: 'var(--duration-slow)',
                 }}
-                onMouseEnter={(e) => e.currentTarget.style.color = 'var(--text-tertiary)'}
-                onMouseLeave={(e) => e.currentTarget.style.color = 'var(--text-ghost)'}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = 'rgba(249, 115, 22, 0.1)';
+                  e.currentTarget.style.borderColor = 'rgba(249, 115, 22, 0.5)';
+                  e.currentTarget.style.color = '#FF9D1C';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = 'rgba(249, 115, 22, 0.05)';
+                  e.currentTarget.style.borderColor = 'rgba(249, 115, 22, 0.3)';
+                  e.currentTarget.style.color = '#e6edf3';
+                }}
               >
-                ← Rooms
+                ← ROOMS
               </button>
 
               <div className="flex items-start justify-between gap-8">
@@ -153,10 +164,6 @@ function FantasyRoom() {
                   <div className="w-12 h-px mb-8" style={{ 
                     background: 'linear-gradient(to right, rgba(249, 115, 22, 0.4), transparent)' 
                   }} />
-                  
-                  <p className="text-xs tracking-ultra uppercase mb-4" style={{ color: '#e6edf3', fontWeight: '700' }}>
-                    ROOMS
-                  </p>
                   
                   <h1 className="text-4xl md:text-5xl uppercase mb-8 whitespace-nowrap" style={{
                     color: '#FF9D1C',
@@ -167,20 +174,12 @@ function FantasyRoom() {
                     THE FANTASY ROOM
                   </h1>
                   
-                  <p className="text-sm mb-4 max-w-md" style={{
-                    color: '#8b949e',
+                  <p className="text-lg mb-4 max-w-md" style={{
+                    color: '#e6edf3',
                     lineHeight: 'var(--leading-relaxed)',
-                    fontWeight: '300'
+                    fontWeight: '600'
                   }}>
                     Dream Without Limits
-                  </p>
-                  
-                  <p className="text-xs max-w-md" style={{
-                    color: '#6e7681',
-                    lineHeight: 'var(--leading-relaxed)',
-                    fontWeight: '300'
-                  }}>
-                    Where imagination becomes tangible
                   </p>
                   
                   <p className="text-[10px] max-w-md" style={{
