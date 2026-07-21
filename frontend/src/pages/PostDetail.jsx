@@ -150,14 +150,21 @@ function PostDetail() {
         </div>
 
         {/* Post Title - First paragraph as title */}
-        <h1 className="text-[2rem] leading-tight font-normal mb-8" style={{ color: 'white' }}>
+        <h1 className="text-[2rem] leading-tight font-normal mb-8" style={{ 
+          color: '#ffffff',
+          fontWeight: '400',
+          letterSpacing: '-0.01em'
+        }}>
           {post.content.split('\n\n')[0]}
         </h1>
 
         {/* Post Content - Remaining paragraphs */}
         <div className="space-y-6 mb-12">
           {post.content.split('\n\n').slice(1).map((paragraph, index) => (
-            <p key={index} className="text-[1rem] leading-relaxed" style={{ color: '#8b949e' }}>
+            <p key={index} className="text-[1.05rem] leading-relaxed" style={{ 
+              color: '#e6edf3',
+              lineHeight: '1.8'
+            }}>
               {paragraph}
             </p>
           ))}
@@ -185,7 +192,10 @@ function PostDetail() {
                     </svg>
                   </div>
                   <div>
-                    <div className="text-sm mb-1" style={{ color: 'white' }}>
+                    <div className="text-sm mb-1" style={{ 
+                      color: '#ffffff',
+                      fontWeight: '500'
+                    }}>
                       Circle: {post.circle.name}
                       {post.circle.room && (
                         <span className={`ml-2 px-2 py-0.5 text-xs font-medium rounded ${
@@ -199,7 +209,7 @@ function PostDetail() {
                       )}
                     </div>
                     {post.circle.description && (
-                      <div className="text-xs" style={{ color: '#6e7681' }}>{post.circle.description}</div>
+                      <div className="text-xs" style={{ color: '#8b949e' }}>{post.circle.description}</div>
                     )}
                   </div>
                 </div>
