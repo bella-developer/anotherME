@@ -6,7 +6,6 @@ import * as postService from '../services/postService';
 import * as commentService from '../services/commentService';
 import LoadingSpinner from '../components/LoadingSpinner';
 import { usePageTitle } from '../hooks/usePageTitle';
-import { useTheme } from '../contexts/ThemeContext';
 
 /**
  * Post Detail Page
@@ -18,8 +17,6 @@ function PostDetail() {
   const { postId } = useParams();
   const navigate = useNavigate();
   const { isAuthenticated } = useSelector(selectAuth);
-  const { theme } = useTheme();
-  const isLight = theme === 'light';
 
   const [post, setPost] = useState(null);
   const [comments, setComments] = useState([]);
@@ -115,10 +112,10 @@ function PostDetail() {
       <div className="max-w-3xl mx-auto px-6 py-12">
         {/* Breadcrumb */}
         <div className="mb-12">
-          <div className="flex items-center text-xs uppercase tracking-[0.2em]" style={{ color: isLight ? 'rgba(0,0,0,0.45)' : '#484f58' }}>
+          <div className="flex items-center text-xs uppercase tracking-[0.2em]" style={{ color: '#484f58' }}>
             {post.circle && (
               <>
-                <Link to={`/circles/${post.circle.id}`} className="transition-colors" style={{ color: isLight ? 'rgba(0,0,0,0.60)' : '#8b949e' }}>
+                <Link to={`/circles/${post.circle.id}`} className="transition-colors" style={{ color: '#8b949e' }}>
                   {post.circle.name}
                   {post.circle.room && (
                     <span className={`ml-2 px-1.5 py-0.5 text-[10px] font-medium rounded ${
@@ -134,18 +131,18 @@ function PostDetail() {
                 <span className="mx-3">›</span>
               </>
             )}
-            <span style={{ color: isLight ? 'rgba(0,0,0,0.55)' : '#6e7681' }}>post {post.id.slice(-5)}</span>
+            <span style={{ color: '#6e7681' }}>post {post.id.slice(-5)}</span>
           </div>
         </div>
 
         {/* Post Header */}
         <div className="mb-8 flex items-center justify-between">
-          <div className="text-xs uppercase tracking-[0.15em]" style={{ color: isLight ? 'rgba(0,0,0,0.55)' : '#484f58' }}>
+          <div className="text-xs uppercase tracking-[0.15em]" style={{ color: '#484f58' }}>
             Observer {formatTimeAgo(post.createdAt)}
           </div>
           <button className="px-4 py-1.5 text-xs uppercase tracking-wider transition-all" style={{
-            border: isLight ? '1px solid rgba(239, 68, 68, 0.4)' : '1px solid #ff6b35',
-            color: isLight ? 'rgba(239, 68, 68, 0.9)' : '#ff6b35',
+            border: '1px solid #ff6b35',
+            color: '#ff6b35',
             background: 'transparent'
           }}>
             Resonate
@@ -153,14 +150,14 @@ function PostDetail() {
         </div>
 
         {/* Post Title - First paragraph as title */}
-        <h1 className="text-[2rem] leading-tight font-normal mb-8" style={{ color: isLight ? 'rgba(0,0,0,0.90)' : 'white' }}>
+        <h1 className="text-[2rem] leading-tight font-normal mb-8" style={{ color: 'white' }}>
           {post.content.split('\n\n')[0]}
         </h1>
 
         {/* Post Content - Remaining paragraphs */}
         <div className="space-y-6 mb-12">
           {post.content.split('\n\n').slice(1).map((paragraph, index) => (
-            <p key={index} className="text-[1rem] leading-relaxed" style={{ color: isLight ? 'rgba(0,0,0,0.70)' : '#8b949e' }}>
+            <p key={index} className="text-[1rem] leading-relaxed" style={{ color: '#8b949e' }}>
               {paragraph}
             </p>
           ))}
@@ -169,26 +166,26 @@ function PostDetail() {
         {/* Linked Reference Section */}
         {post.circle && (
           <div className="mb-12">
-            <div className="text-[0.65rem] uppercase tracking-[0.2em] mb-4" style={{ color: isLight ? 'rgba(0,0,0,0.45)' : '#484f58' }}>
+            <div className="text-[0.65rem] uppercase tracking-[0.2em] mb-4" style={{ color: '#484f58' }}>
               Linked Reference
             </div>
             <Link
               to={`/circles/${post.circle.id}`}
               className="block border transition-colors p-5 group"
               style={{
-                background: isLight ? 'rgba(0,0,0,0.03)' : '#161b22',
-                borderColor: isLight ? 'rgba(0,0,0,0.08)' : '#21262d'
+                background: '#161b22',
+                borderColor: '#21262d'
               }}
             >
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-4">
-                  <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ background: isLight ? 'rgba(0,0,0,0.03)' : '#21262d' }}>
+                  <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ background: '#21262d' }}>
                     <svg className="w-5 h-5 text-[#ff6b35]" fill="currentColor" viewBox="0 0 20 20">
                       <circle cx="10" cy="10" r="8" />
                     </svg>
                   </div>
                   <div>
-                    <div className="text-sm mb-1" style={{ color: isLight ? 'rgba(0,0,0,0.85)' : 'white' }}>
+                    <div className="text-sm mb-1" style={{ color: 'white' }}>
                       Circle: {post.circle.name}
                       {post.circle.room && (
                         <span className={`ml-2 px-2 py-0.5 text-xs font-medium rounded ${
@@ -202,11 +199,11 @@ function PostDetail() {
                       )}
                     </div>
                     {post.circle.description && (
-                      <div className="text-xs" style={{ color: isLight ? 'rgba(0,0,0,0.55)' : '#6e7681' }}>{post.circle.description}</div>
+                      <div className="text-xs" style={{ color: '#6e7681' }}>{post.circle.description}</div>
                     )}
                   </div>
                 </div>
-                <svg className="w-5 h-5 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ color: isLight ? 'rgba(0,0,0,0.40)' : '#484f58' }}>
+                <svg className="w-5 h-5 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ color: '#484f58' }}>
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
               </div>

@@ -4,15 +4,11 @@ import { useEffect, useState } from 'react';
 import EsoLogo from '../components/EsoLogo';
 import { usePageTitle } from '../hooks/usePageTitle';
 import HorizontalHero from '../components/HorizontalHero';
-import ThemeToggle from '../components/ThemeToggle';
-import { useTheme } from '../contexts/ThemeContext';
 
 // ESO Landing Page - Updated June 29, 2026
 function Landing() {
   usePageTitle('');
   const navigate = useNavigate();
-  const { theme } = useTheme();
-  const isLightMode = theme === 'light';
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
@@ -62,7 +58,7 @@ function Landing() {
         style={{
           zIndex: 50,
           border: 'none',
-          borderBottom: `1px solid ${isLightMode ? 'rgba(0, 0, 0, 0.08)' : 'rgba(255, 255, 255, 0.1)'}`,
+          borderBottom: `1px solid ${'rgba(255, 255, 255, 0.1)'}`,
           backgroundColor: isLightMode 
             ? 'rgba(251, 252, 248, 0.98)' 
             : (isScrolled ? 'rgba(0, 0, 0, 0.95)' : 'rgba(0, 0, 0, 0.5)'),
@@ -84,11 +80,11 @@ function Landing() {
                 to="/explore" 
                 className="transition-all duration-500 relative after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 hover:after:w-full after:transition-all after:duration-500"
                 style={{
-                  color: isLightMode ? 'rgba(0, 0, 0, 0.6)' : 'rgba(255, 255, 255, 0.5)',
+                  color: 'rgba(255, 255, 255, 0.5)',
                   background: 'transparent',
                 }}
-                onMouseEnter={(e) => e.currentTarget.style.color = isLightMode ? 'rgba(0, 0, 0, 0.95)' : 'rgba(255, 255, 255, 1)'}
-                onMouseLeave={(e) => e.currentTarget.style.color = isLightMode ? 'rgba(0, 0, 0, 0.6)' : 'rgba(255, 255, 255, 0.5)'}
+                onMouseEnter={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 1)'}
+                onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.5)'}
               >
                 Explore
               </Link>
@@ -98,11 +94,11 @@ function Landing() {
                 rel="noopener noreferrer"
                 className="transition-all duration-500"
                 style={{
-                  color: isLightMode ? 'rgba(0, 0, 0, 0.6)' : 'rgba(255, 255, 255, 0.5)',
+                  color: 'rgba(255, 255, 255, 0.5)',
                   background: 'transparent',
                 }}
-                onMouseEnter={(e) => e.currentTarget.style.color = isLightMode ? 'rgba(0, 0, 0, 0.95)' : 'rgba(255, 255, 255, 1)'}
-                onMouseLeave={(e) => e.currentTarget.style.color = isLightMode ? 'rgba(0, 0, 0, 0.6)' : 'rgba(255, 255, 255, 0.5)'}
+                onMouseEnter={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 1)'}
+                onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.5)'}
               >
                 Community
               </a>
@@ -110,16 +106,15 @@ function Landing() {
 
             {/* Auth buttons - Responsive */}
             <div className="flex items-center gap-2 sm:gap-4 flex-shrink-0" style={{ background: 'transparent' }}>
-              <ThemeToggle />
               <Link 
                 to="/login"
                 className="hidden sm:inline-block px-4 lg:px-6 py-2 text-xs transition-all duration-500 tracking-widest uppercase"
                 style={{
-                  color: isLightMode ? 'rgba(0, 0, 0, 0.65)' : 'rgba(255, 255, 255, 0.6)',
+                  color: 'rgba(255, 255, 255, 0.6)',
                   background: 'transparent',
                 }}
-                onMouseEnter={(e) => e.currentTarget.style.color = isLightMode ? 'rgba(0, 0, 0, 0.95)' : 'rgba(255, 255, 255, 1)'}
-                onMouseLeave={(e) => e.currentTarget.style.color = isLightMode ? 'rgba(0, 0, 0, 0.65)' : 'rgba(255, 255, 255, 0.6)'}
+                onMouseEnter={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 1)'}
+                onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.6)'}
               >
                 Sign In
               </Link>
@@ -127,16 +122,16 @@ function Landing() {
                 to="/register"
                 className="px-4 sm:px-6 py-2 text-xs transition-all duration-500 tracking-widest uppercase join-button"
                 style={{
-                  backgroundColor: isLightMode ? '#000000' : '#FFFFFF',
-                  color: isLightMode ? '#FFFFFF' : '#000000',
-                  border: `1px solid ${isLightMode ? '#000000' : '#FFFFFF'}`,
+                  backgroundColor: '#FFFFFF',
+                  color: '#000000',
+                  border: `1px solid ${'#FFFFFF'}`,
                   borderRadius: 'var(--radius-soft)',
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = isLightMode ? 'rgba(0, 0, 0, 0.85)' : 'rgba(255, 255, 255, 0.9)';
+                  e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.9)';
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = isLightMode ? '#000000' : '#FFFFFF';
+                  e.currentTarget.style.backgroundColor = '#FFFFFF';
                 }}
               >
                 Join
@@ -630,17 +625,17 @@ function Landing() {
                 onClick={() => navigate('/register')}
                 className="px-8 py-3 text-xs uppercase tracking-widest transition-all join-eso-button"
                 style={{
-                  backgroundColor: isLightMode ? '#000000' : '#FFFFFF',
-                  color: isLightMode ? '#FFFFFF' : '#000000',
+                  backgroundColor: '#FFFFFF',
+                  color: '#000000',
                   borderRadius: 'var(--radius-soft)',
                   fontWeight: 'var(--weight-medium)',
                   transitionDuration: 'var(--duration-slow)',
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = isLightMode ? 'rgba(0, 0, 0, 0.85)' : 'rgba(255, 255, 255, 0.9)';
+                  e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.9)';
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = isLightMode ? '#000000' : '#FFFFFF';
+                  e.currentTarget.style.backgroundColor = '#FFFFFF';
                 }}
               >
                 Join ESO
@@ -649,8 +644,8 @@ function Landing() {
                 onClick={() => navigate('/explore')}
                 className="px-8 py-3 text-xs uppercase tracking-widest transition-all"
                 style={{
-                  border: isLightMode ? '1px solid rgba(0, 0, 0, 0.25)' : '1px solid var(--border-medium)',
-                  color: isLightMode ? 'rgba(0, 0, 0, 0.75)' : 'var(--text-secondary)',
+                  border: '1px solid var(--border-medium)',
+                  color: 'var(--text-secondary)',
                   borderRadius: 'var(--radius-soft)',
                   fontWeight: 'var(--weight-medium)',
                   transitionDuration: 'var(--duration-slow)',

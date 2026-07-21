@@ -2,7 +2,6 @@ import { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { ToastProvider } from './components/ToastContainer';
 import { StatsProvider } from './contexts/StatsContext';
-import { ThemeProvider } from './contexts/ThemeContext';
 import Layout from './components/Layout';
 import LoadingSpinner from './components/LoadingSpinner';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -79,9 +78,8 @@ function App() {
   // UI fixes deployed successfully
 
   return (
-    <ThemeProvider>
-      <Router>
-        <ThemedBackground />
+    <Router>
+      <ThemedBackground />
         <ToastProvider>
           <StatsProvider>
             <ErrorBoundary>
@@ -273,7 +271,6 @@ function App() {
         </StatsProvider>
       </ToastProvider>
     </Router>
-    </ThemeProvider>
   );
 }
 

@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { FaPen, FaTrash } from 'react-icons/fa';
 import RoomReactions from './RoomReactions';
 import ConfirmDialog from './ConfirmDialog';
-import { useTheme } from '../contexts/ThemeContext';
 
 /**
  * Philo Room Card Component
@@ -12,8 +11,6 @@ import { useTheme } from '../contexts/ThemeContext';
  */
 function PhiloRoomCard({ post, onReaction, onEdit, onDelete }) {
   const navigate = useNavigate();
-  const { theme } = useTheme();
-  const isLight = theme === 'light';
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
   const formatTimeAgo = (date) => {
@@ -28,18 +25,16 @@ function PhiloRoomCard({ post, onReaction, onEdit, onDelete }) {
     <article
       className="relative mb-6 transition-all duration-200"
       style={{
-        background: isLight ? 'rgba(0, 0, 0, 0.04)' : 'rgba(0, 0, 0, 0.4)',
+        background: 'rgba(0, 0, 0, 0.4)',
         backdropFilter: 'blur(12px)',
-        boxShadow: isLight 
-          ? '0 0 0 1px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.04)' 
-          : '0 0 0 1px rgba(255,255,255,0.08), 0 8px 32px rgba(0,0,0,0.5)',
+        boxShadow: '0 0 0 1px rgba(255,255,255,0.08), 0 8px 32px rgba(0,0,0,0.5)',
         borderRadius: '8px',
       }}
     >
       {/* Header Bar */}
       <div className="flex items-center justify-between px-4 sm:px-5 pt-4 sm:pt-5 pb-3">
         <div className="flex items-center gap-2.5 flex-wrap">
-          <time className="text-[11px] tracking-wide font-medium" style={{ color: isLight ? 'rgba(0, 0, 0, 0.55)' : 'rgba(255, 255, 255, 0.4)' }}>
+          <time className="text-[11px] tracking-wide font-medium" style={{ color: 'rgba(255, 255, 255, 0.4)' }}>
             {formatTimeAgo(post.createdAt)}
           </time>
           {post.category && (

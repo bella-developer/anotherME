@@ -6,7 +6,6 @@ import EsoLogo from '../components/EsoLogo';
 import GoogleSignInButton from '../components/GoogleSignInButton';
 import IntrovertsBg from '../components/IntrovertsBg';
 import { usePageTitle } from '../hooks/usePageTitle';
-import { useTheme } from '../contexts/ThemeContext';
 
 /**
  * Login Page - Dark Glassmorphic Design with Cosmic Nebula Background
@@ -18,7 +17,6 @@ function Login() {
   const navigate = useNavigate();
   const { isAuthenticated, loading, error } = useSelector(selectAuth);
   const [searchParams] = useSearchParams();
-  const { theme } = useTheme();
 
   const [formData, setFormData] = useState({
     username: '',
@@ -65,7 +63,6 @@ function Login() {
   };
 
   const isFormValid = formData.username.trim() && formData.password;
-  const isLight = theme === 'light';
 
   return (
     <div className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -83,10 +80,10 @@ function Login() {
           <Link to="/" className="inline-block mb-1 focus:outline-none focus:ring-2 focus:ring-white/50 rounded transform hover:scale-105 transition-transform duration-300">
             <EsoLogo className="h-12 w-auto mx-auto" />
           </Link>
-          <h1 className={`text-xl md:text-2xl font-light tracking-[0.25em] mb-1 uppercase ${isLight ? 'text-black' : 'text-white'}`}>
+          <h1 className={`text-xl md:text-2xl font-light tracking-[0.25em] mb-1 uppercase ${'text-white'}`}>
             Sign In
           </h1>
-          <p className={`text-[0.65rem] tracking-[0.2em] uppercase ${isLight ? 'text-black/60' : 'text-white/40'}`}>
+          <p className={`text-[0.65rem] tracking-[0.2em] uppercase ${'text-white/40'}`}>
             Continue Your Journey
           </p>
         </div>
@@ -95,7 +92,7 @@ function Login() {
         <div className="border border-white/10 rounded-lg p-4" style={{ background: 'rgba(0,0,0,0.4)', backdropFilter: 'blur(16px)' }}>
           <form onSubmit={handleSubmit} className="space-y-3">
             <div>
-              <label htmlFor="username" className={`block text-[0.7rem] tracking-[0.15em] mb-1.5 uppercase font-bold ${isLight ? 'text-black/80' : 'text-white/70'}`}>
+              <label htmlFor="username" className={`block text-[0.7rem] tracking-[0.15em] mb-1.5 uppercase font-bold ${'text-white/70'}`}>
                 Username
               </label>
               <input
@@ -114,7 +111,7 @@ function Login() {
 
             {/* Password Field */}
             <div>
-              <label htmlFor="password" className={`block text-[0.7rem] tracking-[0.15em] mb-1.5 uppercase font-bold ${isLight ? 'text-black/80' : 'text-white/70'}`}>
+              <label htmlFor="password" className={`block text-[0.7rem] tracking-[0.15em] mb-1.5 uppercase font-bold ${'text-white/70'}`}>
                 Password
               </label>
               <div className="relative">
@@ -176,7 +173,7 @@ function Login() {
 
             {/* Forgot Password Link */}
             <div className="text-right">
-              <Link to="/forgot-password" className={`text-[0.65rem] transition-colors tracking-wide ${isLight ? 'text-black/70 hover:text-black/90' : 'text-white/50 hover:text-white/80'}`}>
+              <Link to="/forgot-password" className={`text-[0.65rem] transition-colors tracking-wide ${'text-white/50 hover:text-white/80'}`}>
                 Forgot password?
               </Link>
             </div>
@@ -205,7 +202,7 @@ function Login() {
           {/* Divider */}
           <div className="flex items-center my-3">
             <div className="flex-1 border-t border-white/10"></div>
-            <span className={`px-3 text-[0.6rem] tracking-wider ${isLight ? 'text-black/50' : 'text-white/30'}`}>or</span>
+            <span className={`px-3 text-[0.6rem] tracking-wider ${'text-white/30'}`}>or</span>
             <div className="flex-1 border-t border-white/10"></div>
           </div>
 
@@ -214,9 +211,9 @@ function Login() {
 
           {/* Register Link */}
           <div className="mt-3 pt-3 border-t border-white/10 text-center">
-            <p className={`text-[0.65rem] tracking-wide ${isLight ? 'text-black/60' : 'text-white/40'}`}>
+            <p className={`text-[0.65rem] tracking-wide ${'text-white/40'}`}>
               Don't have an account?{' '}
-              <Link to="/register" className={`transition-colors uppercase tracking-wider ${isLight ? 'text-black/80 hover:text-black' : 'text-white/75 hover:text-white'}`}>
+              <Link to="/register" className={`transition-colors uppercase tracking-wider ${'text-white/75 hover:text-white'}`}>
                 Create One
               </Link>
             </p>
@@ -225,8 +222,8 @@ function Login() {
 
         {/* Privacy Link */}
         <div className="mt-3 text-center">
-          <p className={`text-[0.65rem] ${isLight ? 'text-black/60' : 'text-white/40'}`}>
-            Read our <Link to="/privacy" className={`underline ${isLight ? 'hover:text-black/90' : 'hover:text-white/70'}`}>Privacy Policy</Link>
+          <p className={`text-[0.65rem] ${'text-white/40'}`}>
+            Read our <Link to="/privacy" className={`underline ${'hover:text-white/70'}`}>Privacy Policy</Link>
           </p>
         </div>
       </div>
