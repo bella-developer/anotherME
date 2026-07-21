@@ -3,8 +3,6 @@ import { Link } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 import NotificationBell from './NotificationBell';
 import EsoLogo from './EsoLogo';
-import ThemeToggle from './ThemeToggle';
-import { useTheme } from '../contexts/ThemeContext';
 
 /**
  * Navbar Component
@@ -14,8 +12,6 @@ import { useTheme } from '../contexts/ThemeContext';
 function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { user, isAuthenticated } = useAuth();
-  const { theme } = useTheme();
-  const isLight = theme === 'light';
 
   // Don't show navbar on landing/auth pages
   const location = window.location.pathname;
@@ -104,10 +100,9 @@ function Navbar() {
 
           {/* User Info / Auth */}
           <div className="hidden md:flex items-center space-x-4">
-            <ThemeToggle />
             <Link
               to="/about"
-              className={`text-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white/50 rounded px-2 py-1 tracking-wider uppercase ${isLight ? 'text-black/70 hover:text-black' : 'text-white/70 hover:text-white'}`}
+              className="text-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white/50 rounded px-2 py-1 tracking-wider uppercase text-white/70 hover:text-white"
               role="menuitem"
             >
               About Us
@@ -237,19 +232,13 @@ function Navbar() {
                   About Us
                 </Link>
                 
-                <div className={`border-t my-2 ${isLight ? 'border-black/10' : 'border-white/10'}`}></div>
-                
-                {/* Theme Toggle in Mobile Menu */}
-                <div className="py-3 px-4 flex items-center justify-between">
-                  <span className={`text-base font-medium ${isLight ? 'text-black/80' : 'text-white/80'}`}>Theme</span>
-                  <ThemeToggle />
-                </div>
+                <div className="border-t my-2 border-white/10"></div>
                 
                 {isAuthenticated ? (
                   <Link
                     to="/profile"
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className={`flex items-center space-x-3 py-3 px-4 rounded-lg transition-colors duration-200 ${isLight ? 'text-black hover:bg-black/5' : 'text-white hover:bg-white/10'}`}
+                    className="flex items-center space-x-3 py-3 px-4 rounded-lg transition-colors duration-200 text-white hover:bg-white/10"
                     role="menuitem"
                     aria-label={`Profile: ${user?.username || 'User'}`}
                   >

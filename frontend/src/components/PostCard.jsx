@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { addReaction, removeReaction } from '../features/postsSlice';
-import { useTheme } from '../contexts/ThemeContext';
 
 /**
  * PostCard Component
@@ -9,22 +8,8 @@ import { useTheme } from '../contexts/ThemeContext';
  */
 const PostCard = ({ post, onPostClick }) => {
   const dispatch = useDispatch();
-  const { theme } = useTheme();
-  const isLight = theme === 'light';
   const [isExpanded, setIsExpanded] = useState(false);
   const [userReactions, setUserReactions] = useState(new Set());
-  
-  // CRITICAL: Force re-render when body class actually changes
-  // This ensures styles match the actual DOM state
-  const [, forceUpdate] = useState({});
-  
-  useEffect(() => {
-    console.log('[PostCard] Theme changed to:', theme);
-    console.log('[PostCard] isLight:', isLight);
-    console.log('[PostCard] body.classList:', document.body.classList.toString());
-    // Re-render when theme changes to sync with body class
-    forceUpdate({});
-  }, [theme, isLight]);
 
   // Format timestamp to relative time
   const formatTimestamp = (timestamp) => {
@@ -89,28 +74,27 @@ const PostCard = ({ post, onPostClick }) => {
       onClick={() => onPostClick && onPostClick(post.id)}
       className="rounded-lg p-6 mb-4 transition-all duration-200 cursor-pointer"
       style={{
-        backgroundColor: isLight ? 'rgba(255, 255, 255, 0.7)' : 'rgba(0, 0, 0, 0.3)',
+        backgroundColor: 'rgba(0, 0, 0, 0.3)',
         backdropFilter: 'blur(10px)',
-        border: isLight ? '1px solid rgba(0, 0, 0, 0.1)' : 'none',
       }}
       role="article"
-      onMouseEnter={(e) => e.currentTarget.style.backgroundColor = isLight ? 'rgba(255, 255, 255, 0.85)' : 'rgba(0, 0, 0, 0.35)'}
-      onMouseLeave={(e) => e.currentTarget.style.backgroundColor = isLight ? 'rgba(255, 255, 255, 0.7)' : 'rgba(0, 0, 0, 0.3)'}
+      onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'rgba(0, 0, 0, 0.35)'}
+      onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'rgba(0, 0, 0, 0.3)'}
     >
       {/* Header: Category Badge and Timestamp */}
       <div className="flex items-center justify-between mb-4">
         {/* Category Badge */}
         {post.category && (
           <span className="text-xs px-2.5 py-1 rounded font-medium uppercase" style={{
-            background: isLight ? 'rgba(139, 74, 29, 0.15)' : '#8B4A1D',
-            color: isLight ? 'rgba(139, 74, 29, 0.9)' : '#E6D1BE'
+            background: '#8B4A1D',
+            color: '#E6D1BE'
           }}>
             {post.category}
           </span>
         )}
 
         {/* Timestamp */}
-        <span className="text-xs" style={{ color: isLight ? 'rgba(0, 0, 0, 0.55)' : '#575455' }}>
+        <span className="text-xs" style={{ color: '#575455' }}>
           <time dateTime={post.createdAt}>
             {formatTimestamp(post.createdAt)}
           </time>
@@ -123,7 +107,7 @@ const PostCard = ({ post, onPostClick }) => {
           <p 
             key={index} 
             className="text-sm leading-relaxed mb-3 last:mb-0"
-            style={{ color: isLight ? 'rgba(0, 0, 0, 0.80)' : '#E6D1BE' }}
+            style={{ color: '#E6D1BE' }}
           >
             {paragraph}
           </p>
@@ -131,7 +115,7 @@ const PostCard = ({ post, onPostClick }) => {
       </div>
 
       {/* Footer: Reaction Buttons and Circle Badge */}
-      <div className="flex items-center justify-between pt-3" style={{ borderTop: isLight ? '1px solid rgba(0, 0, 0, 0.10)' : '1px solid #251E1D' }}>
+      <div className="flex items-center justify-between pt-3" style={{ borderTop: '1px solid #251E1D' }}>
         {/* Reaction Buttons */}
         <div className="flex items-center gap-4">
           {/* I relate */}
@@ -179,7 +163,7 @@ const PostCard = ({ post, onPostClick }) => {
 
         {/* Circle Badge */}
         {post.circle && (
-          <div className="flex items-center gap-1.5 text-xs" style={{ color: isLight ? 'rgba(0, 0, 0, 0.60)' : '#918A87' }}>
+          <div className="flex items-center gap-1.5 text-xs" style={{ color: '#918A87' }}>
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
             </svg>
