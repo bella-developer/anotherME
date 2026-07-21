@@ -154,28 +154,39 @@ function FantasyRoom() {
                     background: 'linear-gradient(to right, rgba(249, 115, 22, 0.4), transparent)' 
                   }} />
                   
-                  <p className="text-xs tracking-ultra uppercase mb-6" style={{ color: 'var(--text-ghost)' }}>
-                    The Fantasy Room
+                  <p className="text-xs tracking-ultra uppercase mb-4" style={{ color: '#e6edf3', fontWeight: '700' }}>
+                    ROOMS
                   </p>
                   
-                  <h1 className="text-5xl md:text-6xl font-light mb-8 whitespace-nowrap" style={{
-                    color: 'var(--text-primary)',
-                    letterSpacing: 'var(--tracking-tight)',
+                  <h1 className="text-4xl md:text-5xl uppercase mb-8 whitespace-nowrap" style={{
+                    color: '#FF9D1C',
+                    letterSpacing: '0.1em',
                     lineHeight: 'var(--leading-tight)',
+                    fontWeight: '800'
                   }}>
-                    Dream Without Limits
+                    THE FANTASY ROOM
                   </h1>
                   
-                  <p className="text-base mb-4 max-w-md" style={{
-                    color: 'var(--text-tertiary)',
-                    lineHeight: 'var(--leading-relaxed)'
+                  <p className="text-sm mb-4 max-w-md" style={{
+                    color: '#8b949e',
+                    lineHeight: 'var(--leading-relaxed)',
+                    fontWeight: '300'
+                  }}>
+                    Dream Without Limits
+                  </p>
+                  
+                  <p className="text-xs max-w-md" style={{
+                    color: '#6e7681',
+                    lineHeight: 'var(--leading-relaxed)',
+                    fontWeight: '300'
                   }}>
                     Where imagination becomes tangible
                   </p>
                   
                   <p className="text-[10px] max-w-md" style={{
-                    color: 'rgba(255, 255, 255, 0.15)',
-                    lineHeight: 'var(--leading-relaxed)'
+                    color: '#575455',
+                    lineHeight: 'var(--leading-relaxed)',
+                    fontWeight: '300'
                   }}>
                     Stories, art, and dreams from creative minds.
                   </p>
