@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState, useLayoutEffect } from 'react';
 import PropTypes from 'prop-types';
 
 const ThemeContext = createContext();
@@ -9,7 +9,7 @@ export function ThemeProvider({ children }) {
     return saved || 'dark';
   });
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     localStorage.setItem('theme', theme);
     
     if (theme === 'light') {
