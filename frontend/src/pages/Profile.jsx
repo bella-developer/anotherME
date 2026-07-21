@@ -9,7 +9,6 @@ import LevelBadge from '../components/LevelBadge';
 import { getCurrentUser, updateUserProfile, fetchUserStats } from '../services/userService';
 import { logout } from '../services/authService';
 import { usePageTitle } from '../hooks/usePageTitle';
-import { useTheme } from '../contexts/ThemeContext';
 
 /**
  * Profile Page - Artistic Redesign
@@ -21,8 +20,6 @@ function Profile() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user, isAuthenticated } = useSelector(selectAuth);
-  const { theme } = useTheme();
-  const isLight = theme === 'light';
   
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -198,18 +195,18 @@ function Profile() {
               <button
                 onClick={() => navigate(-1)}
                 className="text-[10px] tracking-[0.2em] hover:opacity-70 transition-colors mb-8 uppercase flex items-center gap-2"
-                style={{ color: isLight ? 'rgba(0,0,0,0.40)' : 'rgba(255,255,255,0.30)' }}
+                style={{ color: 'rgba(255,255,255,0.30)' }}
               >
                 ← Back
               </button>
 
               <div className="flex items-start justify-between gap-4">
                 <div>
-                  <div className="w-8 h-px mb-5" style={{ background: isLight ? 'linear-gradient(to right, rgba(0,0,0,0.2), transparent)' : 'linear-gradient(to right, rgba(255,255,255,0.2), transparent)' }} />
-                  <h1 className="text-3xl font-light tracking-[0.25em] uppercase mb-3" style={{ color: isLight ? 'rgba(0,0,0,0.90)' : 'rgba(255,255,255,0.90)' }}>
+                  <div className="w-8 h-px mb-5" style={{ background: 'linear-gradient(to right, rgba(255,255,255,0.2), transparent)' }} />
+                  <h1 className="text-3xl font-light tracking-[0.25em] uppercase mb-3" style={{ color: 'rgba(255,255,255,0.90)' }}>
                     Profile
                   </h1>
-                  <p className="text-[11px] tracking-[0.15em] uppercase" style={{ color: isLight ? 'rgba(0,0,0,0.40)' : 'rgba(255,255,255,0.35)' }}>
+                  <p className="text-[11px] tracking-[0.15em] uppercase" style={{ color: 'rgba(255,255,255,0.35)' }}>
                     Your Identity · Stats · Progress
                   </p>
                 </div>
@@ -234,7 +231,7 @@ function Profile() {
               borderRadius: '4px'
             }}>
               {/* Username Display */}
-              <div className="flex items-center gap-6 mb-8 pb-8" style={{ borderBottom: isLight ? '1px solid rgba(0,0,0,0.08)' : '1px solid rgba(255,255,255,0.06)' }}>
+              <div className="flex items-center gap-6 mb-8 pb-8" style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
                 <div className="relative flex-shrink-0">
                   {/* Concentric circles */}
                   <div className="absolute inset-0 rounded-full" style={{
@@ -257,14 +254,14 @@ function Profile() {
                 </div>
                 <div className="flex-1">
                   <div className="flex items-center gap-3 mb-2">
-                    <h2 className="text-2xl font-light tracking-wide" style={{ color: isLight ? 'rgba(0,0,0,0.90)' : 'rgba(255,255,255,0.90)' }}>
+                    <h2 className="text-2xl font-light tracking-wide" style={{ color: 'rgba(255,255,255,0.90)' }}>
                       {profileData.fullName || profileData.username}
                     </h2>
                     {highestStat && (
                       <LevelBadge stat={highestStat.stat} level={highestStat.level} size="md" />
                     )}
                   </div>
-                  <p className="text-[10px] tracking-[0.15em] uppercase" style={{ color: isLight ? 'rgba(0,0,0,0.35)' : 'rgba(255,255,255,0.30)' }}>
+                  <p className="text-[10px] tracking-[0.15em] uppercase" style={{ color: 'rgba(255,255,255,0.30)' }}>
                     @{profileData.username}
                   </p>
                 </div>
@@ -274,21 +271,21 @@ function Profile() {
               {!isEditing ? (
                 <div className="grid grid-cols-3 gap-6 mb-6">
                   <div>
-                    <p className="text-[9px] tracking-[0.2em] uppercase mb-2" style={{ color: isLight ? 'rgba(0,0,0,0.35)' : 'rgba(255,255,255,0.25)' }}>Name</p>
-                    <p className="text-lg font-light" style={{ color: isLight ? 'rgba(0,0,0,0.75)' : 'rgba(255,255,255,0.70)' }}>
-                      {profileData.fullName || <span style={{ color: isLight ? 'rgba(0,0,0,0.25)' : 'rgba(255,255,255,0.20)' }}>Not specified</span>}
+                    <p className="text-[9px] tracking-[0.2em] uppercase mb-2" style={{ color: 'rgba(255,255,255,0.25)' }}>Name</p>
+                    <p className="text-lg font-light" style={{ color: 'rgba(255,255,255,0.70)' }}>
+                      {profileData.fullName || <span style={{ color: 'rgba(255,255,255,0.20)' }}>Not specified</span>}
                     </p>
                   </div>
                   <div>
-                    <p className="text-[9px] tracking-[0.2em] uppercase mb-2" style={{ color: isLight ? 'rgba(0,0,0,0.35)' : 'rgba(255,255,255,0.25)' }}>Age</p>
-                    <p className="text-lg font-light" style={{ color: isLight ? 'rgba(0,0,0,0.75)' : 'rgba(255,255,255,0.70)' }}>
-                      {profileData.age || <span style={{ color: isLight ? 'rgba(0,0,0,0.25)' : 'rgba(255,255,255,0.20)' }}>Not specified</span>}
+                    <p className="text-[9px] tracking-[0.2em] uppercase mb-2" style={{ color: 'rgba(255,255,255,0.25)' }}>Age</p>
+                    <p className="text-lg font-light" style={{ color: 'rgba(255,255,255,0.70)' }}>
+                      {profileData.age || <span style={{ color: 'rgba(255,255,255,0.20)' }}>Not specified</span>}
                     </p>
                   </div>
                   <div>
-                    <p className="text-[9px] tracking-[0.2em] uppercase mb-2" style={{ color: isLight ? 'rgba(0,0,0,0.35)' : 'rgba(255,255,255,0.25)' }}>Gender</p>
-                    <p className="text-lg font-light capitalize" style={{ color: isLight ? 'rgba(0,0,0,0.75)' : 'rgba(255,255,255,0.70)' }}>
-                      {profileData.gender ? profileData.gender.replace('-', ' ') : <span style={{ color: isLight ? 'rgba(0,0,0,0.25)' : 'rgba(255,255,255,0.20)' }}>Not specified</span>}
+                    <p className="text-[9px] tracking-[0.2em] uppercase mb-2" style={{ color: 'rgba(255,255,255,0.25)' }}>Gender</p>
+                    <p className="text-lg font-light capitalize" style={{ color: 'rgba(255,255,255,0.70)' }}>
+                      {profileData.gender ? profileData.gender.replace('-', ' ') : <span style={{ color: 'rgba(255,255,255,0.20)' }}>Not specified</span>}
                     </p>
                   </div>
                 </div>
@@ -443,8 +440,8 @@ function Profile() {
             {stats && (
               <div className="space-y-6">
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="w-8 h-px" style={{ background: isLight ? 'linear-gradient(to right, rgba(0,0,0,0.2), transparent)' : 'linear-gradient(to right, rgba(255,255,255,0.2), transparent)' }} />
-                  <h3 className="text-[10px] tracking-[0.2em] uppercase" style={{ color: isLight ? 'rgba(0,0,0,0.35)' : 'rgba(255,255,255,0.30)' }}>Your Stats</h3>
+                  <div className="w-8 h-px" style={{ background: 'linear-gradient(to right, rgba(255,255,255,0.2), transparent)' }} />
+                  <h3 className="text-[10px] tracking-[0.2em] uppercase" style={{ color: 'rgba(255,255,255,0.30)' }}>Your Stats</h3>
                 </div>
 
                 {/* Room Stats */}
@@ -466,10 +463,10 @@ function Profile() {
                       <div className="grid grid-cols-3 gap-4">
                         {Object.entries(stats[room]).map(([stat, data]) => (
                           <div key={stat} className="text-center">
-                            <p className="text-[9px] tracking-[0.15em] uppercase mb-2" style={{ color: isLight ? 'rgba(0,0,0,0.35)' : 'rgba(255,255,255,0.25)' }}>{stat}</p>
+                            <p className="text-[9px] tracking-[0.15em] uppercase mb-2" style={{ color: 'rgba(255,255,255,0.25)' }}>{stat}</p>
                             <div className="flex flex-col items-center gap-1">
                               <LevelBadge stat={stat} level={data.level} size="sm" />
-                              <p className="text-[10px]" style={{ color: isLight ? 'rgba(0,0,0,0.50)' : 'rgba(255,255,255,0.40)' }}>{data.xp} XP</p>
+                              <p className="text-[10px]" style={{ color: 'rgba(255,255,255,0.40)' }}>{data.xp} XP</p>
                             </div>
                           </div>
                         ))}

@@ -2,14 +2,10 @@ import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import EsoLogo from '../components/EsoLogo';
 import { usePageTitle } from '../hooks/usePageTitle';
-import ThemeToggle from '../components/ThemeToggle';
-import { useTheme } from '../contexts/ThemeContext';
 
 function Explore() {
   usePageTitle('Explore');
   const navigate = useNavigate();
-  const { theme } = useTheme();
-  const isLightMode = theme === 'light';
 
   const features = [
     {
@@ -44,8 +40,8 @@ function Explore() {
       <nav 
         className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl"
         style={{
-          background: isLightMode ? 'rgba(251, 252, 248, 0.98)' : 'rgba(0, 0, 0, 0.95)',
-          borderBottom: `1px solid ${isLightMode ? 'rgba(0, 0, 0, 0.08)' : 'rgba(255, 255, 255, 0.1)'}`,
+          background: 'rgba(0, 0, 0, 0.95)',
+          borderBottom: `1px solid ${'rgba(255, 255, 255, 0.1)'}`,
         }}
       >
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
@@ -53,12 +49,11 @@ function Explore() {
             <EsoLogo className="h-9 w-auto" />
           </Link>
           <div className="flex items-center gap-6">
-            <ThemeToggle />
             <Link 
               to="/login" 
               className="text-xs transition-colors tracking-[0.15em] uppercase font-medium"
               style={{
-                color: isLightMode ? 'rgba(0, 0, 0, 0.65)' : 'rgba(255, 255, 255, 0.6)'
+                color: 'rgba(255, 255, 255, 0.6)'
               }}
             >
               Sign In
@@ -67,9 +62,9 @@ function Explore() {
               onClick={() => navigate('/register')}
               className="px-4 py-2 text-xs transition-all tracking-[0.15em] uppercase font-medium"
               style={{
-                backgroundColor: isLightMode ? '#000000' : '#FFFFFF',
-                color: isLightMode ? '#FFFFFF' : '#000000',
-                border: `1px solid ${isLightMode ? '#000000' : '#FFFFFF'}`,
+                backgroundColor: '#FFFFFF',
+                color: '#000000',
+                border: `1px solid ${'#FFFFFF'}`,
                 borderRadius: '4px',
               }}
             >

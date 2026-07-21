@@ -6,15 +6,12 @@ import IntrovertsBg from '../components/IntrovertsBg';
 import EsoLogo from '../components/EsoLogo';
 import GoogleSignInButton from '../components/GoogleSignInButton';
 import { usePageTitle } from '../hooks/usePageTitle';
-import { useTheme } from '../contexts/ThemeContext';
 
 function Register() {
   usePageTitle('Register');
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { user, isAuthenticated, loading, error } = useSelector(selectAuth);
-  const { theme } = useTheme();
-  const isLight = theme === 'light';
 
   const [showSuccess, setShowSuccess] = useState(false);
   const [formData, setFormData] = useState({
@@ -236,10 +233,10 @@ function Register() {
           <Link to="/" className="inline-block mb-1 focus:outline-none focus:ring-2 focus:ring-white/50 rounded transform hover:scale-105 transition-transform duration-300">
             <EsoLogo className="h-12 w-auto mx-auto" />
           </Link>
-          <h1 className={`text-xl md:text-2xl font-light tracking-[0.25em] mb-1 uppercase ${isLight ? 'text-black' : 'text-white'}`}>
+          <h1 className={`text-xl md:text-2xl font-light tracking-[0.25em] mb-1 uppercase ${'text-white'}`}>
             Register
           </h1>
-          <p className={`text-[0.65rem] tracking-[0.2em] uppercase ${isLight ? 'text-black/60' : 'text-white/40'}`}>Create Your Account</p>
+          <p className={`text-[0.65rem] tracking-[0.2em] uppercase ${'text-white/40'}`}>Create Your Account</p>
         </div>
 
         <div className="border border-white/10 rounded-lg p-4" style={{ background: 'rgba(0,0,0,0.4)', backdropFilter: 'blur(16px)' }}>
@@ -264,8 +261,8 @@ function Register() {
           <form onSubmit={handleSubmit} className="space-y-3">
 
             <div>
-              <label htmlFor="username" className={`block text-[0.7rem] tracking-[0.15em] mb-2 uppercase font-bold ${isLight ? 'text-black/80' : 'text-white/70'}`}>
-                Username <span className={isLight ? 'text-black/80' : 'text-white/80'}>*</span>
+              <label htmlFor="username" className={`block text-[0.7rem] tracking-[0.15em] mb-2 uppercase font-bold ${'text-white/70'}`}>
+                Username <span className={'text-white/80'}>*</span>
               </label>
               <input
                 id="username"
@@ -300,8 +297,8 @@ function Register() {
             </div>
 
             <div>
-              <label htmlFor="email" className={`block text-[0.7rem] tracking-[0.15em] mb-2 uppercase font-bold ${isLight ? 'text-black/80' : 'text-white/70'}`}>
-                Email <span className={isLight ? 'text-black/80' : 'text-white/80'}>*</span>
+              <label htmlFor="email" className={`block text-[0.7rem] tracking-[0.15em] mb-2 uppercase font-bold ${'text-white/70'}`}>
+                Email <span className={'text-white/80'}>*</span>
               </label>
               <input
                 id="email"
@@ -323,8 +320,8 @@ function Register() {
             </div>
 
             <div>
-              <label htmlFor="password" className={`block text-[0.7rem] tracking-[0.15em] mb-2 uppercase font-bold ${isLight ? 'text-black/80' : 'text-white/70'}`}>
-                Password <span className={isLight ? 'text-black/80' : 'text-white/80'}>*</span>
+              <label htmlFor="password" className={`block text-[0.7rem] tracking-[0.15em] mb-2 uppercase font-bold ${'text-white/70'}`}>
+                Password <span className={'text-white/80'}>*</span>
               </label>
               <div className="relative">
                 <input
@@ -414,8 +411,8 @@ function Register() {
             </div>
 
             <div>
-              <label htmlFor="confirmPassword" className={`block text-[0.7rem] tracking-[0.15em] mb-2 uppercase font-bold ${isLight ? 'text-black/80' : 'text-white/70'}`}>
-                Confirm Password <span className={isLight ? 'text-black/80' : 'text-white/80'}>*</span>
+              <label htmlFor="confirmPassword" className={`block text-[0.7rem] tracking-[0.15em] mb-2 uppercase font-bold ${'text-white/70'}`}>
+                Confirm Password <span className={'text-white/80'}>*</span>
               </label>
               <input
                 id="confirmPassword"
@@ -436,7 +433,7 @@ function Register() {
 
             <div className="grid grid-cols-2 gap-4">
               <div className="flex items-center gap-2.5">
-                <label htmlFor="age" className={`text-[0.65rem] tracking-[0.15em] uppercase whitespace-nowrap font-bold ${isLight ? 'text-black/70' : 'text-white/60'}`}>Age</label>
+                <label htmlFor="age" className={`text-[0.65rem] tracking-[0.15em] uppercase whitespace-nowrap font-bold ${'text-white/60'}`}>Age</label>
                 <select id="age" name="age" value={formData.age} onChange={handleChange} disabled={loading} style={selectStyle}
                   className="w-20 px-1.5 py-1.5 border border-white/10 bg-black/50 rounded text-white text-[0.7rem] focus:outline-none focus:border-white/25 transition-colors appearance-none cursor-pointer">
                   <option value="" className="bg-neutral-900"></option>
@@ -447,7 +444,7 @@ function Register() {
                 </select>
               </div>
               <div className="flex items-center gap-2.5">
-                <label htmlFor="gender" className={`text-[0.65rem] tracking-[0.15em] uppercase whitespace-nowrap font-bold ${isLight ? 'text-black/70' : 'text-white/60'}`}>Gender</label>
+                <label htmlFor="gender" className={`text-[0.65rem] tracking-[0.15em] uppercase whitespace-nowrap font-bold ${'text-white/60'}`}>Gender</label>
                 <select id="gender" name="gender" value={formData.gender} onChange={handleChange} disabled={loading} style={selectStyle}
                   className="w-24 px-1.5 py-1.5 border border-white/10 bg-black/50 rounded text-white text-[0.7rem] focus:outline-none focus:border-white/25 transition-colors appearance-none cursor-pointer">
                   <option value="" className="bg-neutral-900"></option>
@@ -480,7 +477,7 @@ function Register() {
           {/* Divider */}
           <div className="flex items-center my-3">
             <div className="flex-1 border-t border-white/10"></div>
-            <span className={`px-3 text-[0.6rem] tracking-wider ${isLight ? 'text-black/50' : 'text-white/30'}`}>or</span>
+            <span className={`px-3 text-[0.6rem] tracking-wider ${'text-white/30'}`}>or</span>
             <div className="flex-1 border-t border-white/10"></div>
           </div>
 
@@ -488,9 +485,9 @@ function Register() {
           <GoogleSignInButton text="Sign up with Google" action="register" />
 
           <div className="mt-3 pt-3 border-t border-white/10 text-center">
-            <p className={`text-[0.65rem] tracking-wide ${isLight ? 'text-black/60' : 'text-white/40'}`}>
+            <p className={`text-[0.65rem] tracking-wide ${'text-white/40'}`}>
               Already have an account?{' '}
-              <Link to="/login" className={`transition-colors uppercase tracking-wider ${isLight ? 'text-black/80 hover:text-black' : 'text-white/75 hover:text-white'}`}>
+              <Link to="/login" className={`transition-colors uppercase tracking-wider ${'text-white/75 hover:text-white'}`}>
                 Sign In
               </Link>
             </p>

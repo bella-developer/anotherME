@@ -10,7 +10,6 @@ import { useLevelUpNotifications } from './hooks/useLevelUpNotifications';
 import IntrovertsBg from './components/IntrovertsBg';
 import PaperTextureBg from './components/PaperTextureBg';
 import ErrorBoundary from './components/ErrorBoundary';
-import { useTheme } from './contexts/ThemeContext';
 
 // Direct imports for public pages to avoid loading issues
 import Home from './pages/Home';
@@ -61,13 +60,9 @@ function PageLoader() {
   );
 }
 
-// Background component that switches based on theme
+// Background component - Dark mode only
 function ThemedBackground() {
-  const { theme } = useTheme();
-  const isLightMode = theme === 'light';
-  
-  // Force unmount/remount with key to ensure clean switch
-  return isLightMode ? <PaperTextureBg key="light" /> : <IntrovertsBg key="dark" />;
+  return <IntrovertsBg />;
 }
 
 function App() {
