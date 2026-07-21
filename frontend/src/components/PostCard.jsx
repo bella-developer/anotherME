@@ -81,20 +81,28 @@ const PostCard = ({ post, onPostClick }) => {
       onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'rgba(0, 0, 0, 0.35)'}
       onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'rgba(0, 0, 0, 0.3)'}
     >
-      {/* Header: Category Badge and Timestamp */}
+      {/* Header: Room Section and Timestamp */}
       <div className="flex items-center justify-between mb-4">
-        {/* Category Badge */}
-        {post.category && (
-          <span className="text-xs px-2.5 py-1 rounded font-medium uppercase" style={{
-            background: '#8B4A1D',
-            color: '#E6D1BE'
-          }}>
-            {post.category}
-          </span>
+        {/* Room Header */}
+        {post.circle?.room && (
+          <div className="flex flex-col gap-1">
+            <span className="text-[9px] tracking-[0.2em] uppercase" style={{ color: '#8b949e', fontWeight: '300' }}>
+              ROOMS
+            </span>
+            <span className="text-xs tracking-[0.15em] uppercase" style={{ 
+              color: post.circle.room === 'dark' ? '#2EE6FF' :
+                     post.circle.room === 'fantasy' ? '#FF9D1C' :
+                     post.circle.room === 'philo' ? '#B56DFF' :
+                     '#ffffff',
+              fontWeight: '600'
+            }}>
+              THE {post.circle.room.toUpperCase()} ROOM
+            </span>
+          </div>
         )}
 
         {/* Timestamp */}
-        <span className="text-xs" style={{ color: '#575455' }}>
+        <span className="text-xs" style={{ color: '#575455', fontWeight: '300' }}>
           <time dateTime={post.createdAt}>
             {formatTimestamp(post.createdAt)}
           </time>
@@ -107,7 +115,7 @@ const PostCard = ({ post, onPostClick }) => {
           <p 
             key={index} 
             className="text-sm leading-relaxed mb-3 last:mb-0"
-            style={{ color: '#e6edf3' }}
+            style={{ color: '#c9d1d9', fontWeight: '300' }}
           >
             {paragraph}
           </p>
@@ -166,21 +174,11 @@ const PostCard = ({ post, onPostClick }) => {
 
         {/* Circle Badge */}
         {post.circle && (
-          <div className="flex items-center gap-1.5 text-xs" style={{ color: '#918A87' }}>
+          <div className="flex items-center gap-1.5 text-xs" style={{ color: '#6e7681', fontWeight: '300' }}>
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
             </svg>
             <span>{post.circle.name}</span>
-            {post.circle.room && (
-              <span className={`ml-1 px-1.5 py-0.5 text-[10px] font-medium rounded ${
-                post.circle.room === 'dark' ? 'bg-[#2a1a1a] text-[#D97757]' :
-                post.circle.room === 'fantasy' ? 'bg-[#2a1a0a] text-[#FF9D1C]' :
-                post.circle.room === 'philo' ? 'bg-[#1a1a2a] text-[#8B9DC3]' :
-                'bg-[#2a2a2a] text-[#918A87]'
-              }`}>
-                {post.circle.room.toUpperCase()}
-              </span>
-            )}
           </div>
         )}
       </div>

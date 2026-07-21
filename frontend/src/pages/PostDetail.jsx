@@ -112,19 +112,22 @@ function PostDetail() {
       <div className="max-w-3xl mx-auto px-6 py-12">
         {/* Breadcrumb */}
         <div className="mb-12">
-          <div className="flex items-center text-xs uppercase tracking-[0.2em]" style={{ color: '#484f58' }}>
+          <div className="flex items-center text-xs uppercase tracking-[0.2em]" style={{ color: '#484f58', fontWeight: '300' }}>
             {post.circle && (
               <>
-                <Link to={`/circles/${post.circle.id}`} className="transition-colors" style={{ color: '#ffffff', fontWeight: '500' }}>
+                <Link to={`/circles/${post.circle.id}`} className="transition-colors" style={{ color: '#8b949e', fontWeight: '300' }}>
                   {post.circle.name}
                   {post.circle.room && (
-                    <span className={`ml-2 px-1.5 py-0.5 text-[10px] font-medium rounded ${
-                      post.circle.room === 'dark' ? 'bg-[#2a1a1a] text-[#D97757]' :
-                      post.circle.room === 'climb' ? 'bg-[#1a2a1a] text-[#7BC96F]' :
-                      post.circle.room === 'philo' ? 'bg-[#1a1a2a] text-[#8B9DC3]' :
-                      'bg-[#2a2a2a] text-[#918A87]'
-                    }`}>
-                      {post.circle.room.toUpperCase()}
+                    <span className="ml-2 px-1.5 py-0.5 text-[10px] rounded" style={{
+                      backgroundColor: post.circle.room === 'dark' ? '#2a1a1a' :
+                                      post.circle.room === 'fantasy' ? '#2a1a0a' :
+                                      post.circle.room === 'philo' ? '#1a1a2a' : '#2a2a2a',
+                      color: post.circle.room === 'dark' ? '#2EE6FF' :
+                             post.circle.room === 'fantasy' ? '#FF9D1C' :
+                             post.circle.room === 'philo' ? '#B56DFF' : '#918A87',
+                      fontWeight: '600'
+                    }}>
+                      THE {post.circle.room.toUpperCase()} ROOM
                     </span>
                   )}
                 </Link>
@@ -137,7 +140,7 @@ function PostDetail() {
 
         {/* Post Header */}
         <div className="mb-8 flex items-center justify-between">
-          <div className="text-xs uppercase tracking-[0.15em]" style={{ color: '#484f58' }}>
+          <div className="text-xs uppercase tracking-[0.15em]" style={{ color: '#484f58', fontWeight: '300' }}>
             Observer {formatTimeAgo(post.createdAt)}
           </div>
           <button className="px-4 py-1.5 text-xs uppercase tracking-wider transition-all" style={{
@@ -162,8 +165,9 @@ function PostDetail() {
         <div className="space-y-6 mb-12">
           {post.content.split('\n\n').slice(1).map((paragraph, index) => (
             <p key={index} className="text-[1.05rem] leading-relaxed" style={{ 
-              color: '#e6edf3',
-              lineHeight: '1.8'
+              color: '#c9d1d9',
+              lineHeight: '1.8',
+              fontWeight: '300'
             }}>
               {paragraph}
             </p>
@@ -173,7 +177,7 @@ function PostDetail() {
         {/* Linked Reference Section */}
         {post.circle && (
           <div className="mb-12">
-            <div className="text-[0.65rem] uppercase tracking-[0.2em] mb-4" style={{ color: '#484f58' }}>
+            <div className="text-[0.65rem] uppercase tracking-[0.2em] mb-4" style={{ color: '#484f58', fontWeight: '300' }}>
               Linked Reference
             </div>
             <Link
@@ -209,7 +213,7 @@ function PostDetail() {
                       )}
                     </div>
                     {post.circle.description && (
-                      <div className="text-xs" style={{ color: '#8b949e' }}>{post.circle.description}</div>
+                      <div className="text-xs" style={{ color: '#6e7681', fontWeight: '300' }}>{post.circle.description}</div>
                     )}
                   </div>
                 </div>
@@ -223,7 +227,7 @@ function PostDetail() {
 
         {/* Reactions Section */}
         <div className="mb-16">
-          <div className="text-[0.65rem] uppercase tracking-[0.2em] text-[#484f58] mb-4">
+          <div className="text-[0.65rem] uppercase tracking-[0.2em] text-[#484f58] mb-4" style={{ fontWeight: '300' }}>
             Reactions
           </div>
           <div className="flex items-center space-x-3">
