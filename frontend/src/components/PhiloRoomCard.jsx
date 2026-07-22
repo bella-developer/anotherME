@@ -29,8 +29,8 @@ function PhiloRoomCard({ post, onReaction, onEdit, onDelete }) {
         backdropFilter: 'blur(12px)',
         boxShadow: '0 0 0 1px rgba(255,255,255,0.03), 0 8px 32px rgba(0,0,0,0.5)',
         borderRadius: '24px',
-        maxHeight: '520px',
-        minHeight: '420px',
+        maxHeight: '720px',
+        minHeight: '580px',
       }}
     >
       {/* Header Bar - Compact */}
@@ -85,12 +85,12 @@ function PhiloRoomCard({ post, onReaction, onEdit, onDelete }) {
         </div>
       </div>
 
-      {/* Main Content - Compact with controlled height */}
-      <div className="px-5 pb-4 flex flex-col" style={{ maxHeight: '460px' }}>
-        {/* Title - More compact */}
+      {/* Main Content - More spacious with controlled height */}
+      <div className="px-5 pb-5 flex flex-col" style={{ maxHeight: '660px' }}>
+        {/* Title - Larger and more visible */}
         {post.title && (
           <h2 
-            className="text-lg sm:text-xl text-white mb-3 leading-tight heading-text line-clamp-2"
+            className="text-xl sm:text-2xl text-white mb-4 leading-tight heading-text line-clamp-2"
             style={{
               fontFamily: 'var(--font-heading)',
               letterSpacing: '0.01em',
@@ -101,41 +101,41 @@ function PhiloRoomCard({ post, onReaction, onEdit, onDelete }) {
           </h2>
         )}
 
-        {/* Content Text - Truncated with line-clamp */}
+        {/* Content Text - Larger and more readable */}
         <div 
-          className="text-[13px] sm:text-[14px] text-white/75 leading-relaxed mb-4 typewriter-text-light line-clamp-3"
+          className="text-[14px] sm:text-[15px] text-white/75 leading-relaxed mb-5 typewriter-text-light line-clamp-4"
           style={{
             fontFamily: 'var(--font-body)',
-            lineHeight: '1.6',
+            lineHeight: '1.7',
             display: '-webkit-box',
-            WebkitLineClamp: '3',
+            WebkitLineClamp: '4',
             WebkitBoxOrient: 'vertical',
             overflow: 'hidden',
           }}
           dangerouslySetInnerHTML={{ __html: post.content }}
         />
         
-        {/* Image and Circles Container - Compact artistic layout */}
+        {/* Image and Circles Container - Larger and more spacious */}
         {post.image?.url && (
-          <div className="flex gap-2 mb-3 flex-1">
-            {/* Image - More compact with rounded corners */}
+          <div className="flex gap-3 mb-4 flex-1">
+            {/* Image - Much larger with better visibility */}
             <div className="flex-[0_0_75%] overflow-hidden">
               <div
                 className="relative overflow-hidden"
                 style={{
                   background: 'linear-gradient(135deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0.01) 100%)',
-                  borderRadius: '16px',
-                  padding: '8px',
-                  boxShadow: '0 0 0 1px rgba(255,255,255,0.03), inset 0 0 15px rgba(0,0,0,0.3)',
-                  maxHeight: '240px',
+                  borderRadius: '20px',
+                  padding: '12px',
+                  boxShadow: '0 0 0 1px rgba(255,255,255,0.04), inset 0 0 20px rgba(0,0,0,0.3)',
+                  maxHeight: '380px',
                 }}
               >
                 <div
                   className="relative overflow-hidden"
                   style={{
-                    borderRadius: '12px',
-                    boxShadow: 'inset 0 0 12px rgba(0,0,0,0.5)',
-                    maxHeight: '224px',
+                    borderRadius: '14px',
+                    boxShadow: 'inset 0 0 16px rgba(0,0,0,0.5)',
+                    maxHeight: '356px',
                   }}
                 >
                   <img
@@ -144,22 +144,22 @@ function PhiloRoomCard({ post, onReaction, onEdit, onDelete }) {
                     className="w-full h-full object-contain"
                     style={{
                       display: 'block',
-                      maxHeight: '224px',
+                      maxHeight: '356px',
                     }}
                     loading="lazy"
                   />
                 </div>
-                {/* Corner frames - Purple for Philo Room - Smaller */}
-                <div className="absolute top-1.5 left-1.5" style={{ width: '12px', height: '12px', borderTop: '1.5px solid rgba(168, 85, 247, 0.25)', borderLeft: '1.5px solid rgba(168, 85, 247, 0.25)' }} />
-                <div className="absolute top-1.5 right-1.5" style={{ width: '12px', height: '12px', borderTop: '1.5px solid rgba(168, 85, 247, 0.25)', borderRight: '1.5px solid rgba(168, 85, 247, 0.25)' }} />
-                <div className="absolute bottom-1.5 left-1.5" style={{ width: '12px', height: '12px', borderBottom: '1.5px solid rgba(168, 85, 247, 0.25)', borderLeft: '1.5px solid rgba(168, 85, 247, 0.25)' }} />
-                <div className="absolute bottom-1.5 right-1.5" style={{ width: '12px', height: '12px', borderBottom: '1.5px solid rgba(168, 85, 247, 0.25)', borderRight: '1.5px solid rgba(168, 85, 247, 0.25)' }} />
+                {/* Corner frames - Purple for Philo Room - Larger and more visible */}
+                <div className="absolute top-2 left-2" style={{ width: '20px', height: '20px', borderTop: '2px solid rgba(168, 85, 247, 0.35)', borderLeft: '2px solid rgba(168, 85, 247, 0.35)' }} />
+                <div className="absolute top-2 right-2" style={{ width: '20px', height: '20px', borderTop: '2px solid rgba(168, 85, 247, 0.35)', borderRight: '2px solid rgba(168, 85, 247, 0.35)' }} />
+                <div className="absolute bottom-2 left-2" style={{ width: '20px', height: '20px', borderBottom: '2px solid rgba(168, 85, 247, 0.35)', borderLeft: '2px solid rgba(168, 85, 247, 0.35)' }} />
+                <div className="absolute bottom-2 right-2" style={{ width: '20px', height: '20px', borderBottom: '2px solid rgba(168, 85, 247, 0.35)', borderRight: '2px solid rgba(168, 85, 247, 0.35)' }} />
               </div>
             </div>
 
-            {/* Circles - Compact stacked vertically */}
+            {/* Circles - Larger and more visible */}
             {post.circles && post.circles.length > 0 && (
-              <div className="flex-[0_0_25%] flex flex-col gap-1.5 justify-center items-center overflow-hidden">
+              <div className="flex-[0_0_25%] flex flex-col gap-2 justify-center items-center overflow-hidden">
                 {post.circles.slice(0, 3).map((circle, index) => (
                   <button
                     key={index}
@@ -169,20 +169,20 @@ function PhiloRoomCard({ post, onReaction, onEdit, onDelete }) {
                         navigate(`/circles/${circleIdToUse}?from=post&postId=${post.id}`);
                       }
                     }}
-                    className="flex items-center justify-center text-[8px] font-extrabold uppercase transition-all duration-200 leading-none"
+                    className="flex items-center justify-center text-[9px] font-extrabold uppercase transition-all duration-200 leading-none hover:bg-opacity-20"
                     style={{
                       width: '100%',
-                      maxWidth: '48px',
-                      height: '32px',
+                      maxWidth: '60px',
+                      height: '40px',
                       borderRadius: '50% / 60%',
                       background: 'rgba(168, 85, 247, 0.12)',
                       color: 'rgba(168, 85, 247, 1)',
-                      border: '1px solid rgba(168, 85, 247, 0.3)',
-                      padding: '3px 5px',
+                      border: '1.5px solid rgba(168, 85, 247, 0.35)',
+                      padding: '4px 6px',
                     }}
                     title={`View in ${circle.fullName || circle.name}`}
                   >
-                    <span className="block truncate text-center max-w-full px-0.5" style={{ lineHeight: '1.1', fontSize: '7px' }}>
+                    <span className="block truncate text-center max-w-full px-1" style={{ lineHeight: '1.1', fontSize: '8px' }}>
                       {circle.name.charAt(0).toUpperCase() + circle.name.slice(1, 6).toLowerCase()}
                     </span>
                   </button>
@@ -192,9 +192,9 @@ function PhiloRoomCard({ post, onReaction, onEdit, onDelete }) {
           </div>
         )}
 
-        {/* Circles without image - Compact horizontal layout */}
+        {/* Circles without image - Larger horizontal layout */}
         {!post.image?.url && post.circles && post.circles.length > 0 && (
-          <div className="flex flex-wrap gap-1.5 mb-3">
+          <div className="flex flex-wrap gap-2 mb-4">
             {post.circles.slice(0, 4).map((circle, index) => (
               <button
                 key={index}
@@ -204,7 +204,7 @@ function PhiloRoomCard({ post, onReaction, onEdit, onDelete }) {
                     navigate(`/circles/${circleIdToUse}?from=post&postId=${post.id}`);
                   }
                 }}
-                className="px-2 py-1 text-[9px] tracking-wider font-medium uppercase transition-all duration-200 rounded-full hover:bg-white/15"
+                className="px-3 py-1.5 text-[10px] tracking-wider font-medium uppercase transition-all duration-200 rounded-full hover:bg-white/15"
                 style={{
                   background: 'rgba(255,255,255,0.06)',
                   color: 'rgba(255,255,255,0.5)',
@@ -219,8 +219,8 @@ function PhiloRoomCard({ post, onReaction, onEdit, onDelete }) {
           </div>
         )}
 
-        {/* Reactions - Compact footer */}
-        <div className="pt-3 border-t mt-auto" style={{ borderColor: 'rgba(168, 85, 247, 0.15)' }}>
+        {/* Reactions - More spacious footer */}
+        <div className="pt-4 border-t mt-auto" style={{ borderColor: 'rgba(168, 85, 247, 0.15)' }}>
           <RoomReactions
             room="philo"
             reactions={post.reactions || {}}
