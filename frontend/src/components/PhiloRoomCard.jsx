@@ -23,12 +23,14 @@ function PhiloRoomCard({ post, onReaction, onEdit, onDelete }) {
 
   return (
     <article
-      className="relative mb-6 transition-all duration-200 analog-texture paper-texture"
+      className="relative mb-6 transition-all duration-200 analog-texture paper-texture overflow-hidden"
       style={{
         background: 'rgba(0, 0, 0, 0.4)',
         backdropFilter: 'blur(12px)',
         boxShadow: '0 0 0 1px rgba(255,255,255,0.03), 0 8px 32px rgba(0,0,0,0.5)',
-        borderRadius: '8px',
+        borderRadius: '24px',
+        maxHeight: '520px',
+        minHeight: '420px',
       }}
     >
       {/* Header Bar */}
