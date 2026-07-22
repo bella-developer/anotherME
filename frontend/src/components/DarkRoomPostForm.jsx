@@ -120,7 +120,14 @@ const DarkRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, onCirc
       
       if (onCircleCreated) onCircleCreated();
     } catch (err) {
-      setCircleError(err.message || 'Failed to create circle');
+      // Handle specific error codes with better messages
+      if (err.code === 'CIRCLE_LIMIT_PER_ROOM') {
+        setCircleError('You already have a circle in this room. Each user can create only 1 circle per room.');
+      } else if (err.code === 'DAILY_CIRCLE_LIMIT') {
+        setCircleError('Daily limit reached. You can create up to 3 circles per day. Try again tomorrow.');
+      } else {
+        setCircleError(err.message || 'Failed to create circle');
+      }
     } finally {
       setCreatingCircle(false);
     }

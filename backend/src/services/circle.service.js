@@ -59,6 +59,48 @@ export async function createCircle(userId, circleData) {
     throw error;
   }
 
+  // Validate room if provided
+  if (room && !['dark', 'fantasy', 'philo'].includes(room)) {
+    const error = new Error('Invalid room value');
+    error.statusCode = 400;
+    error.code = 'INVALID_ROOM';
+    error.userMessage = 'Room must be either dark, fantasy, or philo';
+    throw error;
+  }
+
+  // Check if user already has a circle in this room (1 circle per room limit)
+  if (room) {
+    const existingCircleInRoom = await Circle.findOne({
+      creatorId: userId,
+      room: room
+    });
+
+    if (existingCircleInRoom) {
+      const error = new Error('You already have a circle in this room');
+      error.statusCode = 400;
+      error.code = 'CIRCLE_LIMIT_PER_ROOM';
+      error.userMessage = `You can only create one circle per room. You already have "${existingCircleInRoom.name}" in the ${room} room.`;
+      throw error;
+    }
+  }
+
+  // Check total circles created by user today (3 circles per day limit)
+  const todayStart = new Date();
+  todayStart.setHours(0, 0, 0, 0);
+  
+  const circlesCreatedToday = await Circle.countDocuments({
+    creatorId: userId,
+    createdAt: { $gte: todayStart }
+  });
+
+  if (circlesCreatedToday >= 3) {
+    const error = new Error('Daily circle creation limit reached');
+    error.statusCode = 429;
+    error.code = 'DAILY_CIRCLE_LIMIT';
+    error.userMessage = 'You can only create 3 circles per day. Please try again tomorrow.';
+    throw error;
+  }
+
   // Create circle document
   const circle = new Circle({
     name: name.trim(),
