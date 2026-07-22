@@ -7,7 +7,7 @@ import ConfirmDialog from './ConfirmDialog';
 
 /**
  * Dark Room Card Component
- * Professional mobile-first design with clean typography and spacing
+ * Mobile-first responsive design with vintage aesthetic
  */
 function DarkRoomCard({ post, onReaction, onEdit, onDelete }) {
   const navigate = useNavigate();
@@ -23,26 +23,26 @@ function DarkRoomCard({ post, onReaction, onEdit, onDelete }) {
 
   return (
     <article
-      className="relative mb-6 transition-all duration-200 analog-texture paper-texture overflow-hidden"
+      className="relative mb-4 sm:mb-6 transition-all duration-200 analog-texture paper-texture overflow-hidden"
       style={{
         background: 'rgba(0, 0, 0, 0.4)',
         backdropFilter: 'blur(12px)',
         boxShadow: '0 0 0 1px rgba(255,255,255,0.03), 0 8px 32px rgba(0,0,0,0.5)',
-        borderRadius: '24px',
-        minHeight: '520px',
+        borderRadius: '16px',
+        minHeight: '420px',
       }}
     >
-      {/* Header Bar - Compact */}
-      <div className="flex items-center justify-between px-5 pt-4 pb-2">
-        <div className="flex items-center gap-2 flex-wrap">
-          <time className="text-[10px] tracking-wide font-medium accent-text" style={{ 
+      {/* Header Bar - Responsive */}
+      <div className="flex items-center justify-between px-3 sm:px-5 pt-3 sm:pt-4 pb-2">
+        <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
+          <time className="text-[9px] sm:text-[10px] tracking-wide font-medium accent-text" style={{ 
             fontFamily: 'var(--font-accent)', 
             color: 'rgba(255, 255, 255, 0.35)' 
           }}>
             {formatTimeAgo(post.createdAt)}
           </time>
           {post.category && (
-            <span className="px-2 py-0.5 rounded-full text-[8px] uppercase tracking-widest border" style={{
+            <span className="px-1.5 sm:px-2 py-0.5 rounded-full text-[7px] sm:text-[8px] uppercase tracking-widest border" style={{
               backgroundColor: 'rgba(46, 230, 255, 0.08)',
               color: '#c9d1d9',
               borderColor: 'rgba(46, 230, 255, 0.15)',
@@ -52,30 +52,30 @@ function DarkRoomCard({ post, onReaction, onEdit, onDelete }) {
             </span>
           )}
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1 sm:gap-2">
           {post.isAuthor && (
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-0.5 sm:gap-1">
               <button
                 onClick={() => onEdit?.(post)}
-                className="p-1.5 rounded-full hover:bg-white/10 transition-colors"
+                className="p-1 sm:p-1.5 rounded-full hover:bg-white/10 transition-colors"
                 title="Edit post"
                 aria-label="Edit post"
               >
-                <FaPen className="text-white/50 hover:text-white/80" size={10} />
+                <FaPen className="text-white/50 hover:text-white/80" size={9} />
               </button>
               <button
                 onClick={() => setShowDeleteConfirm(true)}
-                className="p-1.5 rounded-full hover:bg-red-500/15 transition-colors"
+                className="p-1 sm:p-1.5 rounded-full hover:bg-red-500/15 transition-colors"
                 title="Delete post"
                 aria-label="Delete post"
               >
-                <FaTrash className="text-red-400/50 hover:text-red-400/80" size={10} />
+                <FaTrash className="text-red-400/50 hover:text-red-400/80" size={9} />
               </button>
             </div>
           )}
           {post.commentCount > 0 && (
-            <div className="flex items-center gap-1 text-[10px] text-white/35 font-medium">
-              <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="flex items-center gap-0.5 sm:gap-1 text-[9px] sm:text-[10px] text-white/35 font-medium">
+              <svg className="w-2.5 h-2.5 sm:w-3 sm:h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
               </svg>
               <span>{post.commentCount}</span>
@@ -84,12 +84,12 @@ function DarkRoomCard({ post, onReaction, onEdit, onDelete }) {
         </div>
       </div>
 
-      {/* Main Content - More spacious with flexible height */}
-      <div className="px-5 pb-5 flex flex-col">
-        {/* Title - Larger and more visible */}
+      {/* Main Content - Responsive padding */}
+      <div className="px-3 sm:px-5 pb-3 sm:pb-5 flex flex-col">
+        {/* Title - Smaller, more compact */}
         {post.title && (
           <h2 
-            className="text-xl sm:text-2xl text-white mb-4 leading-tight heading-text line-clamp-2"
+            className="text-sm sm:text-lg md:text-xl text-white mb-2 sm:mb-3 leading-tight heading-text line-clamp-2"
             style={{
               fontFamily: 'var(--font-heading)',
               letterSpacing: '0.01em',
@@ -100,43 +100,43 @@ function DarkRoomCard({ post, onReaction, onEdit, onDelete }) {
           </h2>
         )}
 
-        {/* Content Text - Larger and more readable */}
+        {/* Content Text - Compact */}
         <div 
-          className="text-[14px] sm:text-[15px] text-white/75 leading-relaxed mb-5 typewriter-text-light line-clamp-4"
+          className="text-[11px] sm:text-xs md:text-sm text-white/75 leading-relaxed mb-2 sm:mb-3 typewriter-text-light line-clamp-2 sm:line-clamp-3"
           style={{
             fontFamily: 'var(--font-body)',
-            lineHeight: '1.7',
+            lineHeight: '1.5',
             display: '-webkit-box',
-            WebkitLineClamp: '4',
+            WebkitLineClamp: '2',
             WebkitBoxOrient: 'vertical',
             overflow: 'hidden',
           }}
           dangerouslySetInnerHTML={{ __html: post.content }}
         />
         
-        {/* Image and Circles Container - Vintage Polaroid style with dynamic height */}
+        {/* Image and Circles Container - Always horizontal: 85% image, 15% circles */}
         {post.image?.url && (
-          <div className="flex gap-3 mb-4 flex-1">
-            {/* Image - Polaroid-style mat border with dynamic sizing */}
-            <div className="flex-[0_0_75%] overflow-hidden">
+          <div className="flex flex-row gap-2 mb-3 flex-1">
+            {/* Image - 85% width */}
+            <div className="flex-[0_0_85%] overflow-hidden">
               <div
                 className="relative overflow-hidden w-full"
                 style={{
                   background: 'linear-gradient(145deg, rgba(250, 248, 245, 0.03) 0%, rgba(240, 238, 235, 0.02) 100%)',
                   borderRadius: '4px',
-                  padding: '16px 16px 24px 16px',
+                  padding: '10px 10px 16px 10px',
                   boxShadow: '0 4px 12px rgba(0,0,0,0.5), 0 0 0 1px rgba(239, 68, 68, 0.15), inset 0 1px 0 rgba(255,255,255,0.03)',
                 }}
               >
-                {/* Vintage photo container with dynamic aspect ratio */}
+                {/* Vintage photo container - Responsive height */}
                 <div
                   className="relative overflow-hidden w-full"
                   style={{
                     borderRadius: '2px',
                     boxShadow: 'inset 0 0 20px rgba(0,0,0,0.4), 0 2px 4px rgba(0,0,0,0.3)',
                     background: 'rgba(0, 0, 0, 0.8)',
-                    minHeight: '280px',
-                    maxHeight: '500px',
+                    minHeight: '200px',
+                    maxHeight: '380px',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -148,7 +148,7 @@ function DarkRoomCard({ post, onReaction, onEdit, onDelete }) {
                     className="max-w-full max-h-full object-contain"
                     style={{
                       display: 'block',
-                      maxHeight: '500px',
+                      maxHeight: '380px',
                       filter: 'contrast(1.05) brightness(0.98)',
                     }}
                     loading="lazy"
@@ -172,17 +172,17 @@ function DarkRoomCard({ post, onReaction, onEdit, onDelete }) {
                   />
                 </div>
                 
-                {/* Vintage corner brackets - artistic accent */}
-                <div className="absolute top-2 left-2 pointer-events-none" style={{ width: '24px', height: '24px', borderTop: '2.5px solid rgba(239, 68, 68, 0.25)', borderLeft: '2.5px solid rgba(239, 68, 68, 0.25)', opacity: 0.6 }} />
-                <div className="absolute top-2 right-2 pointer-events-none" style={{ width: '24px', height: '24px', borderTop: '2.5px solid rgba(239, 68, 68, 0.25)', borderRight: '2.5px solid rgba(239, 68, 68, 0.25)', opacity: 0.6 }} />
-                <div className="absolute bottom-2 left-2 pointer-events-none" style={{ width: '24px', height: '24px', borderBottom: '2.5px solid rgba(239, 68, 68, 0.25)', borderLeft: '2.5px solid rgba(239, 68, 68, 0.25)', opacity: 0.6 }} />
-                <div className="absolute bottom-2 right-2 pointer-events-none" style={{ width: '24px', height: '24px', borderBottom: '2.5px solid rgba(239, 68, 68, 0.25)', borderRight: '2.5px solid rgba(239, 68, 68, 0.25)', opacity: 0.6 }} />
+                {/* Vintage corner brackets - Responsive sizing */}
+                <div className="absolute top-1.5 left-1.5 pointer-events-none" style={{ width: '16px', height: '16px', borderTop: '2px solid rgba(239, 68, 68, 0.25)', borderLeft: '2px solid rgba(239, 68, 68, 0.25)', opacity: 0.6 }} />
+                <div className="absolute top-1.5 right-1.5 pointer-events-none" style={{ width: '16px', height: '16px', borderTop: '2px solid rgba(239, 68, 68, 0.25)', borderRight: '2px solid rgba(239, 68, 68, 0.25)', opacity: 0.6 }} />
+                <div className="absolute bottom-1.5 left-1.5 pointer-events-none" style={{ width: '16px', height: '16px', borderBottom: '2px solid rgba(239, 68, 68, 0.25)', borderLeft: '2px solid rgba(239, 68, 68, 0.25)', opacity: 0.6 }} />
+                <div className="absolute bottom-1.5 right-1.5 pointer-events-none" style={{ width: '16px', height: '16px', borderBottom: '2px solid rgba(239, 68, 68, 0.25)', borderRight: '2px solid rgba(239, 68, 68, 0.25)', opacity: 0.6 }} />
               </div>
             </div>
 
-            {/* Circles - Larger and more visible */}
+            {/* Circles - 15% width, always vertical */}
             {post.circles && post.circles.length > 0 && (
-              <div className="flex-[0_0_25%] flex flex-col gap-2 justify-center items-center overflow-hidden">
+              <div className="flex-[0_0_15%] flex flex-col gap-1.5 justify-center items-center overflow-hidden">
                 {post.circles.slice(0, 3).map((circle, index) => (
                   <button
                     key={index}
@@ -192,21 +192,21 @@ function DarkRoomCard({ post, onReaction, onEdit, onDelete }) {
                         navigate(`/circles/${circleIdToUse}?from=post&postId=${post.id}`);
                       }
                     }}
-                    className="flex items-center justify-center text-[9px] font-extrabold uppercase transition-all duration-200 leading-none hover:bg-opacity-20"
+                    className="flex items-center justify-center text-[7px] sm:text-[8px] font-extrabold uppercase transition-all duration-200 leading-none hover:bg-opacity-20"
                     style={{
                       width: '100%',
-                      maxWidth: '60px',
-                      height: '40px',
+                      maxWidth: '48px',
+                      height: '28px',
                       borderRadius: '50% / 60%',
                       background: 'rgba(239, 68, 68, 0.12)',
                       color: 'rgba(239, 68, 68, 1)',
                       border: '1.5px solid rgba(239, 68, 68, 0.35)',
-                      padding: '4px 6px',
+                      padding: '3px 4px',
                     }}
                     title={`View in ${circle.fullName || circle.name}`}
                   >
-                    <span className="block truncate text-center max-w-full px-1" style={{ lineHeight: '1.1', fontSize: '8px' }}>
-                      {circle.name.charAt(0).toUpperCase() + circle.name.slice(1, 6).toLowerCase()}
+                    <span className="block truncate text-center max-w-full px-0.5" style={{ lineHeight: '1.1' }}>
+                      {circle.name.charAt(0).toUpperCase() + circle.name.slice(1, 5).toLowerCase()}
                     </span>
                   </button>
                 ))}
@@ -215,9 +215,9 @@ function DarkRoomCard({ post, onReaction, onEdit, onDelete }) {
           </div>
         )}
 
-        {/* Circles without image - Larger horizontal layout */}
+        {/* Circles without image - Responsive layout */}
         {!post.image?.url && post.circles && post.circles.length > 0 && (
-          <div className="flex flex-wrap gap-2 mb-4">
+          <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-3 sm:mb-4">
             {post.circles.slice(0, 4).map((circle, index) => (
               <button
                 key={index}
@@ -227,7 +227,7 @@ function DarkRoomCard({ post, onReaction, onEdit, onDelete }) {
                     navigate(`/circles/${circleIdToUse}?from=post&postId=${post.id}`);
                   }
                 }}
-                className="px-3 py-1.5 text-[10px] tracking-wider font-medium uppercase transition-all duration-200 rounded-full hover:bg-white/15"
+                className="px-2 sm:px-3 py-1 sm:py-1.5 text-[8px] sm:text-[10px] tracking-wider font-medium uppercase transition-all duration-200 rounded-full hover:bg-white/15"
                 style={{
                   background: 'rgba(255,255,255,0.06)',
                   color: 'rgba(255,255,255,0.5)',
@@ -242,8 +242,8 @@ function DarkRoomCard({ post, onReaction, onEdit, onDelete }) {
           </div>
         )}
 
-        {/* Reactions - More spacious footer */}
-        <div className="pt-4 border-t mt-auto" style={{ borderColor: 'rgba(46, 230, 255, 0.15)' }}>
+        {/* Reactions - Responsive spacing */}
+        <div className="pt-3 sm:pt-4 border-t mt-auto" style={{ borderColor: 'rgba(46, 230, 255, 0.15)' }}>
           <RoomReactions
             room="dark"
             reactions={post.reactions || {}}

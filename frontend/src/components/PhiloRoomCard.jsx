@@ -86,10 +86,10 @@ function PhiloRoomCard({ post, onReaction, onEdit, onDelete }) {
 
       {/* Main Content - Responsive padding */}
       <div className="px-3 sm:px-5 pb-3 sm:pb-5 flex flex-col">
-        {/* Title - Responsive sizing */}
+        {/* Title - Smaller, more compact */}
         {post.title && (
           <h2 
-            className="text-base sm:text-xl md:text-2xl text-white mb-2 sm:mb-4 leading-tight heading-text line-clamp-2"
+            className="text-sm sm:text-lg md:text-xl text-white mb-2 sm:mb-3 leading-tight heading-text line-clamp-2"
             style={{
               fontFamily: 'var(--font-heading)',
               letterSpacing: '0.01em',
@@ -100,31 +100,31 @@ function PhiloRoomCard({ post, onReaction, onEdit, onDelete }) {
           </h2>
         )}
 
-        {/* Content Text - Responsive sizing */}
+        {/* Content Text - Compact */}
         <div 
-          className="text-xs sm:text-[14px] md:text-[15px] text-white/75 leading-relaxed mb-3 sm:mb-5 typewriter-text-light line-clamp-3 sm:line-clamp-4"
+          className="text-[11px] sm:text-xs md:text-sm text-white/75 leading-relaxed mb-2 sm:mb-3 typewriter-text-light line-clamp-2 sm:line-clamp-3"
           style={{
             fontFamily: 'var(--font-body)',
-            lineHeight: '1.6',
+            lineHeight: '1.5',
             display: '-webkit-box',
-            WebkitLineClamp: '3',
+            WebkitLineClamp: '2',
             WebkitBoxOrient: 'vertical',
             overflow: 'hidden',
           }}
           dangerouslySetInnerHTML={{ __html: post.content }}
         />
         
-        {/* Image and Circles Container - Mobile: Stack vertically, Desktop: Side by side */}
+        {/* Image and Circles Container - Always horizontal: 85% image, 15% circles */}
         {post.image?.url && (
-          <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 mb-3 sm:mb-4 flex-1">
-            {/* Image - Full width on mobile, 75% on desktop */}
-            <div className="w-full sm:flex-[0_0_75%] overflow-hidden">
+          <div className="flex flex-row gap-2 mb-3 flex-1">
+            {/* Image - 85% width */}
+            <div className="flex-[0_0_85%] overflow-hidden">
               <div
                 className="relative overflow-hidden w-full"
                 style={{
                   background: 'linear-gradient(145deg, rgba(250, 248, 245, 0.03) 0%, rgba(240, 238, 235, 0.02) 100%)',
                   borderRadius: '4px',
-                  padding: '12px 12px 18px 12px',
+                  padding: '10px 10px 16px 10px',
                   boxShadow: '0 4px 12px rgba(0,0,0,0.5), 0 0 0 1px rgba(168, 85, 247, 0.15), inset 0 1px 0 rgba(255,255,255,0.03)',
                 }}
               >
@@ -136,7 +136,7 @@ function PhiloRoomCard({ post, onReaction, onEdit, onDelete }) {
                     boxShadow: 'inset 0 0 20px rgba(0,0,0,0.4), 0 2px 4px rgba(0,0,0,0.3)',
                     background: 'rgba(0, 0, 0, 0.8)',
                     minHeight: '200px',
-                    maxHeight: '400px',
+                    maxHeight: '380px',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -148,7 +148,7 @@ function PhiloRoomCard({ post, onReaction, onEdit, onDelete }) {
                     className="max-w-full max-h-full object-contain"
                     style={{
                       display: 'block',
-                      maxHeight: '400px',
+                      maxHeight: '380px',
                       filter: 'contrast(1.05) brightness(0.98)',
                     }}
                     loading="lazy"
@@ -173,16 +173,16 @@ function PhiloRoomCard({ post, onReaction, onEdit, onDelete }) {
                 </div>
                 
                 {/* Vintage corner brackets - Responsive sizing */}
-                <div className="absolute top-1.5 sm:top-2 left-1.5 sm:left-2 pointer-events-none" style={{ width: '18px', height: '18px', borderTop: '2px solid rgba(168, 85, 247, 0.25)', borderLeft: '2px solid rgba(168, 85, 247, 0.25)', opacity: 0.6 }} />
-                <div className="absolute top-1.5 sm:top-2 right-1.5 sm:right-2 pointer-events-none" style={{ width: '18px', height: '18px', borderTop: '2px solid rgba(168, 85, 247, 0.25)', borderRight: '2px solid rgba(168, 85, 247, 0.25)', opacity: 0.6 }} />
-                <div className="absolute bottom-1.5 sm:bottom-2 left-1.5 sm:left-2 pointer-events-none" style={{ width: '18px', height: '18px', borderBottom: '2px solid rgba(168, 85, 247, 0.25)', borderLeft: '2px solid rgba(168, 85, 247, 0.25)', opacity: 0.6 }} />
-                <div className="absolute bottom-1.5 sm:bottom-2 right-1.5 sm:right-2 pointer-events-none" style={{ width: '18px', height: '18px', borderBottom: '2px solid rgba(168, 85, 247, 0.25)', borderRight: '2px solid rgba(168, 85, 247, 0.25)', opacity: 0.6 }} />
+                <div className="absolute top-1.5 left-1.5 pointer-events-none" style={{ width: '16px', height: '16px', borderTop: '2px solid rgba(168, 85, 247, 0.25)', borderLeft: '2px solid rgba(168, 85, 247, 0.25)', opacity: 0.6 }} />
+                <div className="absolute top-1.5 right-1.5 pointer-events-none" style={{ width: '16px', height: '16px', borderTop: '2px solid rgba(168, 85, 247, 0.25)', borderRight: '2px solid rgba(168, 85, 247, 0.25)', opacity: 0.6 }} />
+                <div className="absolute bottom-1.5 left-1.5 pointer-events-none" style={{ width: '16px', height: '16px', borderBottom: '2px solid rgba(168, 85, 247, 0.25)', borderLeft: '2px solid rgba(168, 85, 247, 0.25)', opacity: 0.6 }} />
+                <div className="absolute bottom-1.5 right-1.5 pointer-events-none" style={{ width: '16px', height: '16px', borderBottom: '2px solid rgba(168, 85, 247, 0.25)', borderRight: '2px solid rgba(168, 85, 247, 0.25)', opacity: 0.6 }} />
               </div>
             </div>
 
-            {/* Circles - Horizontal on mobile, Vertical on desktop */}
+            {/* Circles - 15% width, always vertical */}
             {post.circles && post.circles.length > 0 && (
-              <div className="flex sm:flex-col flex-row gap-1.5 sm:gap-2 justify-start sm:justify-center items-center overflow-hidden">
+              <div className="flex-[0_0_15%] flex flex-col gap-1.5 justify-center items-center overflow-hidden">
                 {post.circles.slice(0, 3).map((circle, index) => (
                   <button
                     key={index}
@@ -192,22 +192,21 @@ function PhiloRoomCard({ post, onReaction, onEdit, onDelete }) {
                         navigate(`/circles/${circleIdToUse}?from=post&postId=${post.id}`);
                       }
                     }}
-                    className="flex items-center justify-center text-[8px] sm:text-[9px] font-extrabold uppercase transition-all duration-200 leading-none hover:bg-opacity-20"
+                    className="flex items-center justify-center text-[7px] sm:text-[8px] font-extrabold uppercase transition-all duration-200 leading-none hover:bg-opacity-20"
                     style={{
-                      width: 'auto',
-                      minWidth: '45px',
-                      maxWidth: '55px',
-                      height: '32px',
+                      width: '100%',
+                      maxWidth: '48px',
+                      height: '28px',
                       borderRadius: '50% / 60%',
                       background: 'rgba(168, 85, 247, 0.12)',
                       color: 'rgba(168, 85, 247, 1)',
                       border: '1.5px solid rgba(168, 85, 247, 0.35)',
-                      padding: '4px 6px',
+                      padding: '3px 4px',
                     }}
                     title={`View in ${circle.fullName || circle.name}`}
                   >
-                    <span className="block truncate text-center max-w-full px-1" style={{ lineHeight: '1.1' }}>
-                      {circle.name.charAt(0).toUpperCase() + circle.name.slice(1, 6).toLowerCase()}
+                    <span className="block truncate text-center max-w-full px-0.5" style={{ lineHeight: '1.1' }}>
+                      {circle.name.charAt(0).toUpperCase() + circle.name.slice(1, 5).toLowerCase()}
                     </span>
                   </button>
                 ))}
