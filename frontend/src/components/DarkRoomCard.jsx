@@ -29,7 +29,6 @@ function DarkRoomCard({ post, onReaction, onEdit, onDelete }) {
         backdropFilter: 'blur(12px)',
         boxShadow: '0 0 0 1px rgba(255,255,255,0.03), 0 8px 32px rgba(0,0,0,0.5)',
         borderRadius: '24px',
-        maxHeight: '720px',
         minHeight: '580px',
       }}
     >
@@ -85,8 +84,8 @@ function DarkRoomCard({ post, onReaction, onEdit, onDelete }) {
         </div>
       </div>
 
-      {/* Main Content - More spacious with controlled height */}
-      <div className="px-5 pb-5 flex flex-col" style={{ maxHeight: '660px' }}>
+      {/* Main Content - More spacious with flexible height */}
+      <div className="px-5 pb-5 flex flex-col">
         {/* Title - Larger and more visible */}
         {post.title && (
           <h2 
@@ -115,36 +114,39 @@ function DarkRoomCard({ post, onReaction, onEdit, onDelete }) {
           dangerouslySetInnerHTML={{ __html: post.content }}
         />
         
-        {/* Image and Circles Container - Larger and more spacious */}
+        {/* Image and Circles Container - Adaptive to image aspect ratio */}
         {post.image?.url && (
           <div className="flex gap-3 mb-4 flex-1">
-            {/* Image - Much larger with better visibility */}
+            {/* Image - Responsive to aspect ratio */}
             <div className="flex-[0_0_75%] overflow-hidden">
               <div
-                className="relative overflow-hidden"
+                className="relative overflow-hidden w-full"
                 style={{
                   background: 'linear-gradient(135deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0.01) 100%)',
                   borderRadius: '20px',
                   padding: '12px',
                   boxShadow: '0 0 0 1px rgba(255,255,255,0.04), inset 0 0 20px rgba(0,0,0,0.3)',
-                  maxHeight: '380px',
                 }}
               >
                 <div
-                  className="relative overflow-hidden"
+                  className="relative overflow-hidden w-full"
                   style={{
                     borderRadius: '14px',
                     boxShadow: 'inset 0 0 16px rgba(0,0,0,0.5)',
-                    maxHeight: '356px',
+                    minHeight: '280px',
+                    maxHeight: '480px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
                   }}
                 >
                   <img
                     src={post.image.url}
                     alt={post.title || 'Post image'}
-                    className="w-full h-full object-contain"
+                    className="w-full object-contain"
                     style={{
                       display: 'block',
-                      maxHeight: '356px',
+                      maxHeight: '480px',
                     }}
                     loading="lazy"
                   />
