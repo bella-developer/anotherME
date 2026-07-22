@@ -114,44 +114,40 @@ function DarkRoomCard({ post, onReaction, onEdit, onDelete }) {
           dangerouslySetInnerHTML={{ __html: post.content }}
         />
         
-        {/* Image and Circles Container - Adaptive to image aspect ratio */}
+        {/* Image and Circles Container - Full image visible with fixed frame */}
         {post.image?.url && (
           <div className="flex gap-3 mb-4 flex-1">
-            {/* Image - Responsive to aspect ratio */}
+            {/* Image - Fixed height container with object-contain (no cropping) */}
             <div className="flex-[0_0_75%] overflow-hidden">
               <div
                 className="relative overflow-hidden w-full"
                 style={{
-                  background: 'linear-gradient(135deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0.01) 100%)',
+                  background: 'linear-gradient(135deg, rgba(20, 5, 5, 0.6) 0%, rgba(15, 0, 0, 0.8) 100%)',
                   borderRadius: '20px',
                   padding: '12px',
                   boxShadow: '0 0 0 1px rgba(255,255,255,0.04), inset 0 0 20px rgba(0,0,0,0.3)',
+                  height: '360px',
                 }}
               >
                 <div
-                  className="relative overflow-hidden w-full"
+                  className="relative overflow-hidden w-full h-full flex items-center justify-center"
                   style={{
                     borderRadius: '14px',
                     boxShadow: 'inset 0 0 16px rgba(0,0,0,0.5)',
-                    minHeight: '280px',
-                    maxHeight: '480px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
+                    background: 'rgba(0, 0, 0, 0.3)',
                   }}
                 >
                   <img
                     src={post.image.url}
                     alt={post.title || 'Post image'}
-                    className="w-full object-contain"
+                    className="max-w-full max-h-full object-contain"
                     style={{
                       display: 'block',
-                      maxHeight: '480px',
                     }}
                     loading="lazy"
                   />
                 </div>
-                {/* Corner frames - Red for Dark Room - Larger and more visible */}
+                {/* Corner frames - Red for Dark Room */}
                 <div className="absolute top-2 left-2" style={{ width: '20px', height: '20px', borderTop: '2px solid rgba(239, 68, 68, 0.35)', borderLeft: '2px solid rgba(239, 68, 68, 0.35)' }} />
                 <div className="absolute top-2 right-2" style={{ width: '20px', height: '20px', borderTop: '2px solid rgba(239, 68, 68, 0.35)', borderRight: '2px solid rgba(239, 68, 68, 0.35)' }} />
                 <div className="absolute bottom-2 left-2" style={{ width: '20px', height: '20px', borderBottom: '2px solid rgba(239, 68, 68, 0.35)', borderLeft: '2px solid rgba(239, 68, 68, 0.35)' }} />
