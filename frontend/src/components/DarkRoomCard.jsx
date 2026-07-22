@@ -33,17 +33,17 @@ function DarkRoomCard({ post, onReaction, onEdit, onDelete }) {
         minHeight: '420px',
       }}
     >
-      {/* Header Bar */}
-      <div className="flex items-center justify-between px-4 sm:px-5 pt-4 sm:pt-5 pb-3">
-        <div className="flex items-center gap-2.5 flex-wrap">
-          <time className="text-[11px] tracking-wide font-medium accent-text" style={{ 
+      {/* Header Bar - Compact */}
+      <div className="flex items-center justify-between px-5 pt-4 pb-2">
+        <div className="flex items-center gap-2 flex-wrap">
+          <time className="text-[10px] tracking-wide font-medium accent-text" style={{ 
             fontFamily: 'var(--font-accent)', 
-            color: 'rgba(255, 255, 255, 0.4)' 
+            color: 'rgba(255, 255, 255, 0.35)' 
           }}>
             {formatTimeAgo(post.createdAt)}
           </time>
           {post.category && (
-            <span className="px-2.5 py-1 rounded-full text-[9px] uppercase tracking-widest border" style={{
+            <span className="px-2 py-0.5 rounded-full text-[8px] uppercase tracking-widest border" style={{
               backgroundColor: 'rgba(46, 230, 255, 0.08)',
               color: '#c9d1d9',
               borderColor: 'rgba(46, 230, 255, 0.15)',
@@ -53,30 +53,30 @@ function DarkRoomCard({ post, onReaction, onEdit, onDelete }) {
             </span>
           )}
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
           {post.isAuthor && (
-            <div className="flex items-center gap-1.5">
+            <div className="flex items-center gap-1">
               <button
                 onClick={() => onEdit?.(post)}
-                className="p-2 rounded-full hover:bg-white/10 transition-colors"
+                className="p-1.5 rounded-full hover:bg-white/10 transition-colors"
                 title="Edit post"
                 aria-label="Edit post"
               >
-                <FaPen className="text-white/50 hover:text-white/80" size={11} />
+                <FaPen className="text-white/50 hover:text-white/80" size={10} />
               </button>
               <button
                 onClick={() => setShowDeleteConfirm(true)}
-                className="p-2 rounded-full hover:bg-red-500/15 transition-colors"
+                className="p-1.5 rounded-full hover:bg-red-500/15 transition-colors"
                 title="Delete post"
                 aria-label="Delete post"
               >
-                <FaTrash className="text-red-400/50 hover:text-red-400/80" size={11} />
+                <FaTrash className="text-red-400/50 hover:text-red-400/80" size={10} />
               </button>
             </div>
           )}
           {post.commentCount > 0 && (
-            <div className="flex items-center gap-1.5 text-[11px] text-white/40 font-medium">
-              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="flex items-center gap-1 text-[10px] text-white/35 font-medium">
+              <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
               </svg>
               <span>{post.commentCount}</span>
@@ -85,15 +85,15 @@ function DarkRoomCard({ post, onReaction, onEdit, onDelete }) {
         </div>
       </div>
 
-      {/* Main Content */}
-      <div className="px-4 sm:px-5 pb-4 sm:pb-5">
-        {/* Title */}
+      {/* Main Content - Compact with controlled height */}
+      <div className="px-5 pb-4 flex flex-col" style={{ maxHeight: '460px' }}>
+        {/* Title - More compact */}
         {post.title && (
           <h2 
-            className="text-2xl sm:text-3xl text-white mb-4 sm:mb-5 leading-tight heading-text"
+            className="text-lg sm:text-xl text-white mb-3 leading-tight heading-text line-clamp-2"
             style={{
               fontFamily: 'var(--font-heading)',
-              letterSpacing: '0.02em',
+              letterSpacing: '0.01em',
               fontWeight: '700',
             }}
           >
@@ -101,59 +101,66 @@ function DarkRoomCard({ post, onReaction, onEdit, onDelete }) {
           </h2>
         )}
 
-        {/* Content Text */}
+        {/* Content Text - Truncated with line-clamp */}
         <div 
-          className="text-[15px] sm:text-base text-white/85 leading-relaxed mb-5 typewriter-text-light"
+          className="text-[13px] sm:text-[14px] text-white/75 leading-relaxed mb-4 typewriter-text-light line-clamp-3"
           style={{
             fontFamily: 'var(--font-body)',
-            lineHeight: '1.8',
+            lineHeight: '1.6',
+            display: '-webkit-box',
+            WebkitLineClamp: '3',
+            WebkitBoxOrient: 'vertical',
+            overflow: 'hidden',
           }}
           dangerouslySetInnerHTML={{ __html: post.content }}
         />
         
-        {/* Image and Circles Container */}
+        {/* Image and Circles Container - Compact artistic layout */}
         {post.image?.url && (
-          <div className="flex gap-3 mb-5">
-            {/* Image - 80% width */}
-            <div className="flex-[0_0_80%] overflow-hidden">
+          <div className="flex gap-2 mb-3 flex-1">
+            {/* Image - More compact with rounded corners */}
+            <div className="flex-[0_0_75%] overflow-hidden">
               <div
                 className="relative overflow-hidden"
                 style={{
-                  background: 'linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%)',
-                  borderRadius: '3px',
-                  padding: '12px',
-                  boxShadow: '0 0 0 1px rgba(255,255,255,0.04), inset 0 0 20px rgba(0,0,0,0.3)',
+                  background: 'linear-gradient(135deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0.01) 100%)',
+                  borderRadius: '16px',
+                  padding: '8px',
+                  boxShadow: '0 0 0 1px rgba(255,255,255,0.03), inset 0 0 15px rgba(0,0,0,0.3)',
+                  maxHeight: '240px',
                 }}
               >
                 <div
                   className="relative overflow-hidden"
                   style={{
-                    borderRadius: '2px',
-                    boxShadow: 'inset 0 0 15px rgba(0,0,0,0.5)',
+                    borderRadius: '12px',
+                    boxShadow: 'inset 0 0 12px rgba(0,0,0,0.5)',
+                    maxHeight: '224px',
                   }}
                 >
                   <img
                     src={post.image.url}
                     alt={post.title || 'Post image'}
-                    className="w-full h-auto object-contain"
+                    className="w-full h-full object-contain"
                     style={{
                       display: 'block',
+                      maxHeight: '224px',
                     }}
                     loading="lazy"
                   />
                 </div>
-                {/* Corner frames - Red for Dark Room */}
-                <div className="absolute top-2 left-2" style={{ width: '16px', height: '16px', borderTop: '2px solid rgba(239, 68, 68, 0.25)', borderLeft: '2px solid rgba(239, 68, 68, 0.25)' }} />
-                <div className="absolute top-2 right-2" style={{ width: '16px', height: '16px', borderTop: '2px solid rgba(239, 68, 68, 0.25)', borderRight: '2px solid rgba(239, 68, 68, 0.25)' }} />
-                <div className="absolute bottom-2 left-2" style={{ width: '16px', height: '16px', borderBottom: '2px solid rgba(239, 68, 68, 0.25)', borderLeft: '2px solid rgba(239, 68, 68, 0.25)' }} />
-                <div className="absolute bottom-2 right-2" style={{ width: '16px', height: '16px', borderBottom: '2px solid rgba(239, 68, 68, 0.25)', borderRight: '2px solid rgba(239, 68, 68, 0.25)' }} />
+                {/* Corner frames - Red for Dark Room - Smaller */}
+                <div className="absolute top-1.5 left-1.5" style={{ width: '12px', height: '12px', borderTop: '1.5px solid rgba(239, 68, 68, 0.25)', borderLeft: '1.5px solid rgba(239, 68, 68, 0.25)' }} />
+                <div className="absolute top-1.5 right-1.5" style={{ width: '12px', height: '12px', borderTop: '1.5px solid rgba(239, 68, 68, 0.25)', borderRight: '1.5px solid rgba(239, 68, 68, 0.25)' }} />
+                <div className="absolute bottom-1.5 left-1.5" style={{ width: '12px', height: '12px', borderBottom: '1.5px solid rgba(239, 68, 68, 0.25)', borderLeft: '1.5px solid rgba(239, 68, 68, 0.25)' }} />
+                <div className="absolute bottom-1.5 right-1.5" style={{ width: '12px', height: '12px', borderBottom: '1.5px solid rgba(239, 68, 68, 0.25)', borderRight: '1.5px solid rgba(239, 68, 68, 0.25)' }} />
               </div>
             </div>
 
-            {/* Circles - 20% width */}
+            {/* Circles - Compact stacked vertically */}
             {post.circles && post.circles.length > 0 && (
-              <div className="flex-[0_0_20%] flex flex-col gap-2 justify-center items-center overflow-hidden">
-                {post.circles.map((circle, index) => (
+              <div className="flex-[0_0_25%] flex flex-col gap-1.5 justify-center items-center overflow-hidden">
+                {post.circles.slice(0, 3).map((circle, index) => (
                   <button
                     key={index}
                     onClick={() => {
@@ -162,20 +169,21 @@ function DarkRoomCard({ post, onReaction, onEdit, onDelete }) {
                         navigate(`/circles/${circleIdToUse}?from=post&postId=${post.id}`);
                       }
                     }}
-                    className="flex items-center justify-center text-[9px] font-extrabold uppercase transition-all duration-200 leading-none"
+                    className="flex items-center justify-center text-[8px] font-extrabold uppercase transition-all duration-200 leading-none"
                     style={{
-                      width: 'min(100%, 55px)',
-                      height: 'min(100%, 40px)',
+                      width: '100%',
+                      maxWidth: '48px',
+                      height: '32px',
                       borderRadius: '50% / 60%',
-                      background: 'rgba(239, 68, 68, 0.15)',
+                      background: 'rgba(239, 68, 68, 0.12)',
                       color: 'rgba(239, 68, 68, 1)',
-                      border: '1.5px solid rgba(239, 68, 68, 0.4)',
-                      padding: '4px 6px',
+                      border: '1px solid rgba(239, 68, 68, 0.3)',
+                      padding: '3px 5px',
                     }}
                     title={`View in ${circle.fullName || circle.name}`}
                   >
-                    <span className="block truncate text-center max-w-full px-0.5" style={{ lineHeight: '1.1' }}>
-                      {circle.name.charAt(0).toUpperCase() + circle.name.slice(1).toLowerCase()}
+                    <span className="block truncate text-center max-w-full px-0.5" style={{ lineHeight: '1.1', fontSize: '7px' }}>
+                      {circle.name.charAt(0).toUpperCase() + circle.name.slice(1, 6).toLowerCase()}
                     </span>
                   </button>
                 ))}
@@ -184,10 +192,10 @@ function DarkRoomCard({ post, onReaction, onEdit, onDelete }) {
           </div>
         )}
 
-        {/* Circles without image */}
+        {/* Circles without image - Compact horizontal layout */}
         {!post.image?.url && post.circles && post.circles.length > 0 && (
-          <div className="flex flex-wrap gap-2 mb-5">
-            {post.circles.map((circle, index) => (
+          <div className="flex flex-wrap gap-1.5 mb-3">
+            {post.circles.slice(0, 4).map((circle, index) => (
               <button
                 key={index}
                 onClick={() => {
@@ -196,23 +204,23 @@ function DarkRoomCard({ post, onReaction, onEdit, onDelete }) {
                     navigate(`/circles/${circleIdToUse}?from=post&postId=${post.id}`);
                   }
                 }}
-                className="px-3 py-1.5 text-[10px] tracking-wider font-medium uppercase transition-all duration-200 rounded-full hover:bg-white/15"
+                className="px-2 py-1 text-[9px] tracking-wider font-medium uppercase transition-all duration-200 rounded-full hover:bg-white/15"
                 style={{
-                  background: 'rgba(255,255,255,0.08)',
-                  color: 'rgba(255,255,255,0.6)',
-                  border: '1px solid rgba(255,255,255,0.1)',
+                  background: 'rgba(255,255,255,0.06)',
+                  color: 'rgba(255,255,255,0.5)',
+                  border: '1px solid rgba(255,255,255,0.08)',
                 }}
                 title={`View in ${circle.fullName || circle.name}`}
               >
-                {circle.icon && <span className="mr-1.5">{circle.icon}</span>}
-                {circle.name}
+                {circle.icon && <span className="mr-1">{circle.icon}</span>}
+                {circle.name.slice(0, 8)}
               </button>
             ))}
           </div>
         )}
 
-        {/* Reactions */}
-        <div className="pt-5 border-t" style={{ borderColor: 'rgba(46, 230, 255, 0.2)' }}>
+        {/* Reactions - Compact footer */}
+        <div className="pt-3 border-t mt-auto" style={{ borderColor: 'rgba(46, 230, 255, 0.15)' }}>
           <RoomReactions
             room="dark"
             reactions={post.reactions || {}}
