@@ -29,7 +29,7 @@ function FantasyRoomCard({ post, onReaction, onEdit, onDelete }) {
         backdropFilter: 'blur(12px)',
         boxShadow: '0 0 0 1px rgba(255,255,255,0.03), 0 8px 32px rgba(0,0,0,0.5)',
         borderRadius: '24px',
-        minHeight: '580px',
+        minHeight: '520px',
       }}
     >
       {/* Header Bar - Compact */}
@@ -114,27 +114,32 @@ function FantasyRoomCard({ post, onReaction, onEdit, onDelete }) {
           dangerouslySetInnerHTML={{ __html: post.content }}
         />
         
-        {/* Image and Circles Container - Full image visible with fixed frame */}
+        {/* Image and Circles Container - Vintage Polaroid style with dynamic height */}
         {post.image?.url && (
           <div className="flex gap-3 mb-4 flex-1">
-            {/* Image - Fixed height container with object-contain (no cropping) */}
+            {/* Image - Polaroid-style mat border with dynamic sizing */}
             <div className="flex-[0_0_75%] overflow-hidden">
               <div
                 className="relative overflow-hidden w-full"
                 style={{
-                  background: 'linear-gradient(135deg, rgba(25, 15, 5, 0.6) 0%, rgba(20, 10, 0, 0.8) 100%)',
-                  borderRadius: '20px',
-                  padding: '12px',
-                  boxShadow: '0 0 0 1px rgba(255,255,255,0.04), inset 0 0 20px rgba(0,0,0,0.3)',
-                  height: '360px',
+                  background: 'linear-gradient(145deg, rgba(250, 248, 245, 0.03) 0%, rgba(240, 238, 235, 0.02) 100%)',
+                  borderRadius: '4px',
+                  padding: '16px 16px 24px 16px',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.5), 0 0 0 1px rgba(251, 146, 60, 0.15), inset 0 1px 0 rgba(255,255,255,0.03)',
                 }}
               >
+                {/* Vintage photo container with dynamic aspect ratio */}
                 <div
-                  className="relative overflow-hidden w-full h-full flex items-center justify-center"
+                  className="relative overflow-hidden w-full"
                   style={{
-                    borderRadius: '14px',
-                    boxShadow: 'inset 0 0 16px rgba(0,0,0,0.5)',
-                    background: 'rgba(0, 0, 0, 0.3)',
+                    borderRadius: '2px',
+                    boxShadow: 'inset 0 0 20px rgba(0,0,0,0.4), 0 2px 4px rgba(0,0,0,0.3)',
+                    background: 'rgba(0, 0, 0, 0.8)',
+                    minHeight: '280px',
+                    maxHeight: '500px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
                   }}
                 >
                   <img
@@ -143,15 +148,35 @@ function FantasyRoomCard({ post, onReaction, onEdit, onDelete }) {
                     className="max-w-full max-h-full object-contain"
                     style={{
                       display: 'block',
+                      maxHeight: '500px',
+                      filter: 'contrast(1.05) brightness(0.98)',
                     }}
                     loading="lazy"
                   />
+                  {/* Vintage vignette overlay */}
+                  <div 
+                    className="absolute inset-0 pointer-events-none"
+                    style={{
+                      background: 'radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.3) 100%)',
+                      mixBlendMode: 'multiply',
+                    }}
+                  />
+                  {/* Film grain texture */}
+                  <div 
+                    className="absolute inset-0 pointer-events-none opacity-[0.02]"
+                    style={{
+                      backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 256 256\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noise\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.9\' numOctaves=\'4\' /%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noise)\' /%3E%3C/svg%3E")',
+                      backgroundRepeat: 'repeat',
+                      backgroundSize: '128px',
+                    }}
+                  />
                 </div>
-                {/* Corner frames - Orange for Fantasy Room */}
-                <div className="absolute top-2 left-2" style={{ width: '20px', height: '20px', borderTop: '2px solid rgba(251, 146, 60, 0.35)', borderLeft: '2px solid rgba(251, 146, 60, 0.35)' }} />
-                <div className="absolute top-2 right-2" style={{ width: '20px', height: '20px', borderTop: '2px solid rgba(251, 146, 60, 0.35)', borderRight: '2px solid rgba(251, 146, 60, 0.35)' }} />
-                <div className="absolute bottom-2 left-2" style={{ width: '20px', height: '20px', borderBottom: '2px solid rgba(251, 146, 60, 0.35)', borderLeft: '2px solid rgba(251, 146, 60, 0.35)' }} />
-                <div className="absolute bottom-2 right-2" style={{ width: '20px', height: '20px', borderBottom: '2px solid rgba(251, 146, 60, 0.35)', borderRight: '2px solid rgba(251, 146, 60, 0.35)' }} />
+                
+                {/* Vintage corner brackets - artistic accent */}
+                <div className="absolute top-2 left-2 pointer-events-none" style={{ width: '24px', height: '24px', borderTop: '2.5px solid rgba(251, 146, 60, 0.25)', borderLeft: '2.5px solid rgba(251, 146, 60, 0.25)', opacity: 0.6 }} />
+                <div className="absolute top-2 right-2 pointer-events-none" style={{ width: '24px', height: '24px', borderTop: '2.5px solid rgba(251, 146, 60, 0.25)', borderRight: '2.5px solid rgba(251, 146, 60, 0.25)', opacity: 0.6 }} />
+                <div className="absolute bottom-2 left-2 pointer-events-none" style={{ width: '24px', height: '24px', borderBottom: '2.5px solid rgba(251, 146, 60, 0.25)', borderLeft: '2.5px solid rgba(251, 146, 60, 0.25)', opacity: 0.6 }} />
+                <div className="absolute bottom-2 right-2 pointer-events-none" style={{ width: '24px', height: '24px', borderBottom: '2.5px solid rgba(251, 146, 60, 0.25)', borderRight: '2.5px solid rgba(251, 146, 60, 0.25)', opacity: 0.6 }} />
               </div>
             </div>
 
