@@ -7,7 +7,7 @@ import { Readable } from 'stream';
  */
 
 /**
- * Upload image to Cloudinary with smart widescreen conversion
+ * Upload image to Cloudinary
  * @param {Buffer} fileBuffer - File buffer from multer
  * @param {string} folder - Cloudinary folder name
  * @returns {Promise<Object>} Upload result with URL
@@ -19,21 +19,9 @@ export async function uploadImage(fileBuffer, folder = 'eso/posts') {
         folder: folder,
         resource_type: 'auto',
         transformation: [
-          // Step 1: Limit max size to 1200px while preserving aspect ratio
-          { width: 1200, height: 1200, crop: 'limit' },
-          
-          // Step 2: Convert to widescreen 16:9 format with smart padding
-          { 
-            width: 1200, 
-            height: 675,  // 16:9 ratio (1200/675 = 1.78)
-            crop: 'pad',  // Adds padding without distortion
-            background: 'auto:predominant_gradient',  // Smart blur background from image colors
-            gravity: 'center'  // Center the original image
-          },
-          
-          // Step 3: Quality and format optimization
-          { quality: 'auto:good' },
-          { fetch_format: 'auto' }
+          { width: 1200, height: 1200, crop: 'limit' }, // Max dimensions
+          { quality: 'auto:good' }, // Auto quality optimization
+          { fetch_format: 'auto' } // Auto format selection (WebP when supported)
         ]
       },
       (error, result) => {
