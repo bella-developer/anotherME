@@ -129,11 +129,11 @@ function PhiloRoom() {
           }}
         />
         
-        <div className="min-h-screen pt-16 pb-24 px-6 relative z-10">
-          <div className="max-w-3xl mx-auto">
+        <div className="min-h-screen pt-16 pb-24 px-3 sm:px-4 md:px-6 relative z-10">
+          <div className="max-w-full sm:max-w-2xl md:max-w-3xl mx-auto">
 
-            {/* Room header - Modern Monastery */}
-            <div className="mb-20">
+            {/* Room header - Compact on mobile */}
+            <div className="mb-12 sm:mb-20">
               <button
                 onClick={() => navigate('/home')}
                 className="px-4 py-2 text-xs tracking-wide uppercase mb-12 transition-all flex items-center gap-2 rounded"
@@ -158,24 +158,27 @@ function PhiloRoom() {
                 ← ROOMS
               </button>
 
-              <div className="flex items-start justify-between gap-8">
-                <div className="flex-1">
+              <div className="flex items-start justify-between gap-4 sm:gap-8">
+                <div className="flex-1 min-w-0">
                   {/* Precious purple accent - used sparingly */}
-                  <div className="w-12 h-px mb-8" style={{ 
+                  <div className="w-12 h-px mb-6 sm:mb-8" style={{ 
                     background: 'linear-gradient(to right, rgba(168, 85, 247, 0.4), transparent)' 
                   }} />
                   
-                  <h1 className="text-4xl md:text-5xl uppercase mb-8 whitespace-nowrap heading-text" style={{
+                  <h1 className="text-xl sm:text-4xl md:text-5xl uppercase mb-6 sm:mb-8 heading-text" style={{
                     color: '#B56DFF',
                     fontFamily: 'var(--font-heading)',
-                    letterSpacing: '0.1em',
+                    letterSpacing: '0.08em',
                     lineHeight: 'var(--leading-tight)',
-                    fontWeight: '700'
+                    fontWeight: '700',
+                    whiteSpace: 'nowrap',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis'
                   }}>
                     THE PHILO ROOM
                   </h1>
                   
-                  <p className="text-lg mb-4 max-w-md" style={{
+                  <p className="text-base sm:text-lg mb-3 sm:mb-4 max-w-md" style={{
                     color: '#e6edf3',
                     lineHeight: 'var(--leading-relaxed)',
                     fontWeight: '600'
@@ -183,7 +186,7 @@ function PhiloRoom() {
                     What is Truth?
                   </p>
                   
-                  <p className="text-[11px] max-w-md" style={{
+                  <p className="text-xs sm:text-[11px] max-w-md" style={{
                     color: '#c9d1d9',
                     lineHeight: 'var(--leading-relaxed)',
                     fontWeight: '300'
@@ -194,7 +197,7 @@ function PhiloRoom() {
                 {isAuthenticated && (
                   <button
                     onClick={() => setIsPostFormOpen(true)}
-                    className="flex-shrink-0 px-6 py-3 text-xs tracking-widest uppercase transition-all"
+                    className="flex-shrink-0 px-4 sm:px-6 py-2 sm:py-3 text-[10px] sm:text-xs tracking-widest uppercase transition-all"
                     style={{
                       background: 'rgba(0, 0, 0, 0.3)',
                       border: '1px solid rgba(181, 109, 255, 0.15)',
@@ -219,13 +222,13 @@ function PhiloRoom() {
                 )}
               </div>
 
-              {/* Category filters - Ultra compact, minimal design */}
-              <div className="flex gap-2 flex-wrap mt-12">
+              {/* Category filters - Compact single line on mobile */}
+              <div className="flex gap-1.5 sm:gap-2 overflow-x-auto mt-8 sm:mt-12 pb-2" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
                 {categories.map((cat) => (
                   <button
                     key={cat.value}
                     onClick={() => setSelectedCategory(cat.value)}
-                    className="px-3 py-1 text-[9px] tracking-wide uppercase transition-all"
+                    className="px-3 sm:px-4 py-2 text-[9px] sm:text-[11px] tracking-wide uppercase transition-all whitespace-nowrap flex-shrink-0"
                     style={{
                       borderRadius: '2px',
                       background: selectedCategory === cat.value ? 'rgba(168, 85, 247, 0.15)' : 'transparent',

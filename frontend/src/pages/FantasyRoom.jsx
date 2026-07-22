@@ -165,13 +165,15 @@ function FantasyRoom() {
                     background: 'linear-gradient(to right, rgba(249, 115, 22, 0.4), transparent)' 
                   }} />
                   
-                  <h1 className="text-2xl sm:text-4xl md:text-5xl uppercase mb-6 sm:mb-8 heading-text overflow-hidden" style={{
+                  <h1 className="text-xl sm:text-4xl md:text-5xl uppercase mb-6 sm:mb-8 heading-text" style={{
                     color: '#FF9D1C',
                     fontFamily: 'var(--font-heading)',
                     letterSpacing: '0.08em',
                     lineHeight: 'var(--leading-tight)',
                     fontWeight: '700',
-                    wordBreak: 'break-word'
+                    whiteSpace: 'nowrap',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis'
                   }}>
                     THE FANTASY ROOM
                   </h1>
@@ -220,13 +222,13 @@ function FantasyRoom() {
                 )}
               </div>
 
-              {/* Category filters - Responsive with better touch targets */}
-              <div className="flex gap-2 flex-wrap mt-8 sm:mt-12">
+              {/* Category filters - Compact single line on mobile */}
+              <div className="flex gap-1.5 sm:gap-2 overflow-x-auto mt-8 sm:mt-12 pb-2" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
                 {categories.map((cat) => (
                   <button
                     key={cat.value}
                     onClick={() => setSelectedCategory(cat.value)}
-                    className="px-4 py-2 text-[10px] sm:text-[11px] tracking-wide uppercase transition-all"
+                    className="px-3 sm:px-4 py-2 text-[9px] sm:text-[11px] tracking-wide uppercase transition-all whitespace-nowrap flex-shrink-0"
                     style={{
                       borderRadius: '2px',
                       background: selectedCategory === cat.value ? 'rgba(249, 115, 22, 0.15)' : 'transparent',
