@@ -141,7 +141,7 @@ function FantasyRoomCard({ post, onReaction, onEdit, onDelete }) {
                   <img
                     src={post.image.url}
                     alt={post.title || 'Post image'}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-contain"
                     style={{
                       display: 'block',
                       maxHeight: '224px',
