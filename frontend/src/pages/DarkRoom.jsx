@@ -165,10 +165,10 @@ function DarkRoom() {
                     background: 'linear-gradient(to right, rgba(239, 68, 68, 0.4), transparent)' 
                   }} />
                   
-                  <h1 className="text-xl sm:text-4xl md:text-5xl uppercase mb-6 sm:mb-8 heading-text" style={{
+                  <h1 className="text-lg sm:text-4xl md:text-5xl uppercase mb-6 sm:mb-8 heading-text" style={{
                     color: '#2EE6FF',
                     fontFamily: 'var(--font-heading)',
-                    letterSpacing: '0.08em',
+                    letterSpacing: '0.05em',
                     lineHeight: 'var(--leading-tight)',
                     fontWeight: '700',
                     whiteSpace: 'nowrap',

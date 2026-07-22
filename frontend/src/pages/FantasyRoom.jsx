@@ -165,10 +165,10 @@ function FantasyRoom() {
                     background: 'linear-gradient(to right, rgba(249, 115, 22, 0.4), transparent)' 
                   }} />
                   
-                  <h1 className="text-xl sm:text-4xl md:text-5xl uppercase mb-6 sm:mb-8 heading-text" style={{
+                  <h1 className="text-lg sm:text-4xl md:text-5xl uppercase mb-6 sm:mb-8 heading-text" style={{
                     color: '#FF9D1C',
                     fontFamily: 'var(--font-heading)',
-                    letterSpacing: '0.08em',
+                    letterSpacing: '0.05em',
                     lineHeight: 'var(--leading-tight)',
                     fontWeight: '700',
                     whiteSpace: 'nowrap',
