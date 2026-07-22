@@ -1,18 +1,24 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createPost, updatePost, clearError } from '../features/postsSlice';
+import { createCircle } from '../services/circleService';
 import ImageUpload from './ImageUpload';
 import useReducedMotion from '../hooks/useReducedMotion';
 import { X } from 'lucide-react';
 
 /**
  * Dark Room Post Form Component
- * Compact modern design with inline validation
+ * Compact modern design with inline validation and circle creation
  */
-const DarkRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, editingPost = null }) => {
+const DarkRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, onCircleCreated, editingPost = null }) => {
   const dispatch = useDispatch();
   const { loading, error } = useSelector((state) => state.posts);
   const prefersReducedMotion = useReducedMotion();
+
+  const [showCircleCreation, setShowCircleCreation] = useState(false);
+  const [creatingCircle, setCreatingCircle] = useState(false);
+  const [newCircle, setNewCircle] = useState({ name: '', description: '' });
+  const [circleError, setCircleError] = useState('');
 
   const [formData, setFormData] = useState({
     content: '',
@@ -44,6 +50,9 @@ const DarkRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, editin
         category: 'CONFESSION',
         image: null,
       });
+      setShowCircleCreation(false);
+      setNewCircle({ name: '', description: '' });
+      setCircleError('');
       dispatch(clearError());
     } else if (isOpen && editingPost) {
       const tempDiv = document.createElement('div');
@@ -80,6 +89,41 @@ const DarkRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, editin
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleCreateCircle = async () => {
+    setCircleError('');
+    
+    if (!newCircle.name.trim() || newCircle.name.length < 3) {
+      setCircleError('Circle name must be at least 3 characters');
+      return;
+    }
+    
+    if (!newCircle.description.trim() || newCircle.description.length < 10) {
+      setCircleError('Description must be at least 10 characters');
+      return;
+    }
+
+    try {
+      setCreatingCircle(true);
+      const result = await createCircle({
+        name: newCircle.name.trim(),
+        description: newCircle.description.trim(),
+        room: 'dark',
+        visibility: 'public',
+        categories: [formData.category]
+      });
+      
+      setFormData(prev => ({ ...prev, circleId: result.circle.id }));
+      setShowCircleCreation(false);
+      setNewCircle({ name: '', description: '' });
+      
+      if (onCircleCreated) onCircleCreated();
+    } catch (err) {
+      setCircleError(err.message || 'Failed to create circle');
+    } finally {
+      setCreatingCircle(false);
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -198,27 +242,110 @@ const DarkRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, editin
           />
 
           {/* Circle */}
-          <select
-            name="circleId"
-            value={formData.circleId}
-            onChange={handleChange}
-            disabled={loading}
-            className="w-full px-3 py-2 rounded text-sm transition-all disabled:opacity-50"
-            style={{
-              background: 'rgba(255, 255, 255, 0.02)',
-              border: '1px solid rgba(255, 255, 255, 0.06)',
-              color: formData.circleId ? '#e5e5e5' : '#6b7280',
-            }}
-            onFocus={(e) => e.target.style.borderColor = 'rgba(46, 230, 255, 0.25)'}
-            onBlur={(e) => e.target.style.borderColor = 'rgba(255, 255, 255, 0.06)'}
-          >
-            <option value="">Select circle</option>
-            {circles.filter(circle => circle.room === 'dark').map((circle) => (
-              <option key={circle.id} value={circle.id} disabled={(circle.topicCount || 0) >= 3}>
-                {circle.name}{(circle.topicCount || 0) >= 3 ? ' (busy)' : ''}
-              </option>
-            ))}
-          </select>
+          <div>
+            <select
+              name="circleId"
+              value={formData.circleId}
+              onChange={handleChange}
+              disabled={loading || showCircleCreation}
+              className="w-full px-3 py-2 rounded text-sm transition-all disabled:opacity-50"
+              style={{
+                background: 'rgba(255, 255, 255, 0.02)',
+                border: '1px solid rgba(255, 255, 255, 0.06)',
+                color: formData.circleId ? '#e5e5e5' : '#6b7280',
+              }}
+              onFocus={(e) => e.target.style.borderColor = 'rgba(46, 230, 255, 0.25)'}
+              onBlur={(e) => e.target.style.borderColor = 'rgba(255, 255, 255, 0.06)'}
+            >
+              <option value="">Select circle</option>
+              {circles.filter(circle => circle.room === 'dark').map((circle) => (
+                <option key={circle.id} value={circle.id} disabled={(circle.topicCount || 0) >= 3}>
+                  {circle.name}{(circle.topicCount || 0) >= 3 ? ' (busy)' : ''}
+                </option>
+              ))}
+            </select>
+            
+            {!showCircleCreation && (
+              <button
+                type="button"
+                onClick={() => setShowCircleCreation(true)}
+                disabled={loading}
+                className="text-[11px] mt-1.5 px-1 transition-colors disabled:opacity-50"
+                style={{ color: '#2EE6FF' }}
+              >
+                + Create new circle
+              </button>
+            )}
+
+            {showCircleCreation && (
+              <div className="mt-2 space-y-2 p-3 rounded" style={{
+                background: 'rgba(46, 230, 255, 0.05)',
+                border: '1px solid rgba(46, 230, 255, 0.15)'
+              }}>
+                <input
+                  type="text"
+                  placeholder="Circle name (3-100 chars)"
+                  value={newCircle.name}
+                  onChange={(e) => setNewCircle(prev => ({ ...prev, name: e.target.value }))}
+                  disabled={creatingCircle}
+                  className="w-full px-2.5 py-1.5 rounded text-xs disabled:opacity-50"
+                  style={{
+                    background: 'rgba(0, 0, 0, 0.3)',
+                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                    color: '#e5e5e5',
+                  }}
+                />
+                <textarea
+                  placeholder="Circle description (10-500 chars)"
+                  value={newCircle.description}
+                  onChange={(e) => setNewCircle(prev => ({ ...prev, description: e.target.value }))}
+                  disabled={creatingCircle}
+                  rows={2}
+                  className="w-full px-2.5 py-1.5 rounded text-xs resize-none disabled:opacity-50"
+                  style={{
+                    background: 'rgba(0, 0, 0, 0.3)',
+                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                    color: '#e5e5e5',
+                  }}
+                />
+                {circleError && (
+                  <div className="text-[10px]" style={{ color: '#ef4444' }}>
+                    {circleError}
+                  </div>
+                )}
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    onClick={handleCreateCircle}
+                    disabled={creatingCircle}
+                    className="flex-1 px-3 py-1.5 rounded text-xs font-medium transition-all disabled:opacity-50"
+                    style={{
+                      background: '#2EE6FF',
+                      color: '#000',
+                    }}
+                  >
+                    {creatingCircle ? 'Creating...' : 'Create'}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setShowCircleCreation(false);
+                      setNewCircle({ name: '', description: '' });
+                      setCircleError('');
+                    }}
+                    disabled={creatingCircle}
+                    className="px-3 py-1.5 rounded text-xs transition-all disabled:opacity-50"
+                    style={{
+                      background: 'rgba(255, 255, 255, 0.05)',
+                      color: '#9ca3af',
+                    }}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
 
           {/* Error */}
           {error && (
