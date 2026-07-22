@@ -37,6 +37,7 @@ const Rules = lazy(() => import('./pages/Rules'));
 const AboutUs = lazy(() => import('./pages/AboutUs'));
 const Support = lazy(() => import('./pages/Support'));
 const Manifesto = lazy(() => import('./pages/Manifesto'));
+const AdminDashboard = lazy(() => import('./pages/AdminDashboard'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 
 // Placeholder Create component
@@ -238,6 +239,16 @@ function App() {
                 <ProtectedRoute>
                   <Suspense fallback={<PageLoader />}>
                     <AboutUs />
+                  </Suspense>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin"
+              element={
+                <ProtectedRoute>
+                  <Suspense fallback={<PageLoader />}>
+                    <AdminDashboard />
                   </Suspense>
                 </ProtectedRoute>
               }
