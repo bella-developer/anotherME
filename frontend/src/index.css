@@ -337,7 +337,7 @@ section.overflow-hidden {
 
 /* ============================================
    FANTASY ROOM - PAINT BRUSH TITLE EFFECT
-   Compact, textured brush stroke matching mockup design
+   Short, compact brush that fits the title exactly
    ============================================ */
 
 .fantasy-brush-title {
@@ -354,67 +354,50 @@ section.overflow-hidden {
 .fantasy-brush-title::before {
   content: "";
   position: absolute;
-  left: -10px;
+  left: -8px;
   top: 50%;
-  transform: translateY(-50%) rotate(-1deg);
+  transform: translateY(-50%) rotate(-0.8deg);
   
-  /* Compact brush stroke - just slightly wider than text */
-  width: calc(100% + 25px);
-  height: 24px;
+  /* SHORT brush - just covers the text, no extra length */
+  width: calc(100% + 16px);
+  height: 20px;
   
   background:
-    /* Darker burnt orange matching mockup */
     linear-gradient(
       90deg,
-      rgba(139, 69, 19, 0) 0%,
-      #8B4513 5%,
-      #A0522D 15%,
-      #B8652F 30%,
+      rgba(139, 69, 19, 0.3) 0%,
+      #8B4513 8%,
+      #A0522D 20%,
+      #B8652F 40%,
       #C47236 50%,
-      #B8652F 70%,
-      #A0522D 85%,
-      #8B4513 95%,
-      rgba(139, 69, 19, 0) 100%
+      #B8652F 60%,
+      #A0522D 80%,
+      #8B4513 92%,
+      rgba(139, 69, 19, 0.3) 100%
     );
   
-  /* Subtle blur for paint texture */
-  filter: blur(0.5px);
+  filter: blur(0.4px);
   
-  /* Rough, irregular brush stroke edges */
+  /* Simple irregular edges - not too crazy */
   clip-path: polygon(
-    0% 50%, 
-    2% 30%, 3% 45%, 5% 25%, 7% 40%, 
-    10% 20%, 13% 38%, 16% 22%, 20% 35%, 
-    25% 18%, 30% 32%, 35% 20%, 40% 30%, 
-    45% 15%, 50% 28%, 55% 18%, 60% 32%, 
-    65% 20%, 70% 30%, 75% 22%, 80% 35%, 
-    85% 20%, 88% 38%, 91% 25%, 94% 40%, 
-    97% 30%, 99% 45%, 100% 50%,
-    99% 55%, 97% 70%, 94% 60%, 91% 75%, 
-    88% 62%, 85% 80%, 80% 65%, 75% 78%, 
-    70% 70%, 65% 80%, 60% 68%, 55% 82%, 
-    50% 72%, 45% 85%, 40% 70%, 35% 80%, 
-    30% 68%, 25% 82%, 20% 65%, 16% 78%, 
-    13% 62%, 10% 80%, 7% 60%, 5% 75%, 
-    3% 55%, 2% 70%, 0% 50%
+    0% 45%, 5% 25%, 10% 35%, 15% 20%, 20% 30%,
+    30% 18%, 40% 28%, 50% 15%, 60% 25%, 70% 18%,
+    80% 28%, 85% 20%, 90% 32%, 95% 25%, 100% 40%,
+    95% 70%, 90% 60%, 85% 75%, 80% 65%, 70% 78%,
+    60% 70%, 50% 82%, 40% 68%, 30% 80%, 20% 65%,
+    15% 75%, 10% 62%, 5% 72%, 0% 55%
   );
   
-  opacity: 0.8;
+  opacity: 0.75;
   z-index: 1;
 }
 
-/* Responsive adjustments */
+/* Responsive */
 @media (max-width: 640px) {
   .fantasy-brush-title::before {
-    left: -8px;
-    width: calc(100% + 18px);
-    height: 18px;
-  }
-}
-
-@media (min-width: 768px) {
-  .fantasy-brush-title::before {
-    height: 26px;
+    left: -6px;
+    width: calc(100% + 12px);
+    height: 16px;
   }
 }
 
