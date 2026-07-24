@@ -86,17 +86,17 @@ function FantasyRoomCard({ post, onReaction, onEdit, onDelete }) {
 
       {/* Main Content - Responsive padding */}
       <div className="px-3 sm:px-5 pb-3 sm:pb-5 flex flex-col">
-        {/* Title - Smaller, more compact */}
+        {/* Title - Smaller, more compact with paint brush effect */}
         {post.title && (
           <h2 
-            className="text-sm sm:text-lg md:text-xl text-white mb-2 sm:mb-3 leading-tight heading-text line-clamp-2"
+            className="fantasy-brush-title text-sm sm:text-lg md:text-xl text-white mb-2 sm:mb-3 leading-tight heading-text line-clamp-2"
             style={{
               fontFamily: 'var(--font-heading)',
               letterSpacing: '0.01em',
               fontWeight: '700',
             }}
           >
-            {post.title}
+            <span>{post.title}</span>
           </h2>
         )}
 

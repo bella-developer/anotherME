@@ -335,3 +335,64 @@ section.overflow-hidden {
    for better control and premium UI appearance
    ============================================ */
 
+/* ============================================
+   FANTASY ROOM - PAINT BRUSH TITLE EFFECT
+   Premium CSS brush stroke behind titles
+   ============================================ */
+
+.fantasy-brush-title {
+  position: relative;
+  display: inline-block;
+  z-index: 1;
+}
+
+.fantasy-brush-title span {
+  position: relative;
+  z-index: 2;
+}
+
+.fantasy-brush-title::before {
+  content: "";
+  position: absolute;
+  left: -18px;
+  top: 50%;
+  transform: translateY(-50%) rotate(-1.5deg);
+  
+  width: calc(100% + 45px);
+  height: 70%;
+  
+  background:
+    radial-gradient(circle at 8% 50%, rgba(255,150,60,.9) 0%, transparent 12%),
+    linear-gradient(
+      90deg,
+      #7b3a0d 0%,
+      #b85c1b 20%,
+      #d97b2b 50%,
+      #a24d18 75%,
+      #6f3210 100%
+    );
+  
+  border-radius: 30px;
+  filter: blur(.3px);
+  
+  clip-path: polygon(
+    2% 35%, 5% 18%, 12% 12%, 22% 18%,
+    35% 8%, 55% 15%, 72% 5%, 85% 18%,
+    100% 30%, 95% 52%, 100% 72%,
+    88% 90%, 70% 82%, 55% 92%,
+    35% 82%, 18% 88%, 8% 72%, 0% 55%
+  );
+  
+  opacity: .85;
+  z-index: 1;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .fantasy-brush-title::before {
+    left: -12px;
+    width: calc(100% + 30px);
+    height: 65%;
+  }
+}
+
