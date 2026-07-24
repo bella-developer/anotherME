@@ -1,7 +1,7 @@
 import express from 'express';
 import * as adminController from '../controllers/admin.controller.js';
 import { authenticate } from '../middlewares/auth.middleware.js';
-import { generalRateLimiter } from '../middlewares/rateLimit.middleware.js';
+import { readRateLimiter } from '../middlewares/rateLimit.middleware.js';
 
 const router = express.Router();
 
@@ -12,7 +12,7 @@ const router = express.Router();
  */
 router.get('/stats',
   authenticate,
-  generalRateLimiter,
+  readRateLimiter,
   adminController.getStatistics
 );
 
