@@ -86,21 +86,21 @@ function FantasyRoomCard({ post, onReaction, onEdit, onDelete }) {
 
       {/* Main Content - Responsive padding */}
       <div className="px-3 sm:px-5 pb-3 sm:pb-5 flex flex-col">
-        {/* Title - Compact with paint brush background */}
+        {/* Title - Inner wrapper for precise brush sizing */}
         {post.title && (
-          <div className="fantasy-brush-container mb-2 sm:mb-3">
-            <h2 
-              className="text-sm sm:text-lg md:text-xl text-white leading-tight heading-text"
-              style={{
-                fontFamily: 'var(--font-heading)',
-                letterSpacing: '0.01em',
-                fontWeight: '700',
-                position: 'relative',
-                zIndex: 2,
-              }}
-            >
-              {post.title}
-            </h2>
+          <div className="mb-2 sm:mb-3">
+            <div className="fantasy-brush-wrapper">
+              <h2 
+                className="text-sm sm:text-lg md:text-xl text-white leading-tight heading-text"
+                style={{
+                  fontFamily: 'var(--font-heading)',
+                  letterSpacing: '0.01em',
+                  fontWeight: '700',
+                }}
+              >
+                {post.title}
+              </h2>
+            </div>
           </div>
         )}
 

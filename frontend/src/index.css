@@ -337,72 +337,73 @@ section.overflow-hidden {
 
 /* ============================================
    FANTASY ROOM - PAINT BRUSH TITLE EFFECT
-   Precise asymmetric brush matching mockup
+   Inner wrapper approach: hugs text exactly, brush extends right
    ============================================ */
 
-.fantasy-brush-container {
+.fantasy-brush-wrapper {
   position: relative;
-  display: inline-block;
+  display: inline-block;  /* Shrinks to exact text width */
 }
 
-.fantasy-brush-container::before {
+.fantasy-brush-wrapper::before {
   content: "";
   position: absolute;
-  left: -5px;
+  /* Starts at text beginning (no left offset) */
+  left: 0;
   top: 50%;
   transform: translateY(-50%) rotate(-0.3deg);
   
-  /* Shorter extension - only 85px beyond text */
-  width: calc(100% + 85px);
-  height: 18px;
+  /* Base width = text width (100%), extends 130px to the right */
+  width: calc(100% + 130px);
+  height: 17px;
   
   background:
     linear-gradient(
       90deg,
-      rgba(160, 82, 45, 0.85) 0%,
-      rgba(184, 101, 47, 0.9) 12%,
-      #C47236 30%,
-      #D88547 45%,
-      #C47236 65%,
-      rgba(196, 114, 54, 0.7) 82%,
-      rgba(160, 82, 45, 0.5) 92%,
-      rgba(139, 69, 19, 0.25) 100%
+      rgba(184, 101, 47, 0.75) 0%,
+      rgba(196, 114, 54, 0.85) 10%,
+      #C47236 25%,
+      #D88547 40%,
+      #D88547 55%,
+      #C47236 70%,
+      rgba(196, 114, 54, 0.6) 85%,
+      rgba(160, 82, 45, 0.3) 100%
     );
   
   filter: blur(0.4px);
   
+  /* Organic paint stroke edges */
   clip-path: polygon(
-    0% 45%, 3% 30%, 7% 40%, 12% 28%, 18% 38%,
-    25% 25%, 32% 35%, 40% 22%, 48% 32%, 56% 20%,
-    64% 30%, 72% 18%, 80% 28%, 88% 22%, 94% 32%,
-    97% 28%, 100% 40%,
-    97% 68%, 94% 62%, 88% 72%, 80% 65%, 72% 75%,
-    64% 68%, 56% 78%, 48% 65%, 40% 75%, 32% 62%,
-    25% 72%, 18% 60%, 12% 68%, 7% 58%, 3% 65%, 0% 55%
+    0% 42%, 4% 28%, 8% 38%, 14% 25%, 20% 35%,
+    28% 22%, 36% 32%, 44% 20%, 52% 30%, 60% 18%,
+    68% 28%, 76% 20%, 84% 30%, 90% 24%, 95% 32%,
+    98% 28%, 100% 38%,
+    98% 68%, 95% 62%, 90% 72%, 84% 65%, 76% 75%,
+    68% 68%, 60% 78%, 52% 66%, 44% 76%, 36% 64%,
+    28% 74%, 20% 62%, 14% 72%, 8% 60%, 4% 68%, 0% 56%
   );
   
   opacity: 1;
   z-index: 1;
 }
 
-.fantasy-brush-container h2 {
+.fantasy-brush-wrapper h2 {
   position: relative;
   z-index: 2;
 }
 
 /* Responsive */
 @media (max-width: 640px) {
-  .fantasy-brush-container::before {
-    left: -3px;
-    width: calc(100% + 60px);
-    height: 15px;
+  .fantasy-brush-wrapper::before {
+    width: calc(100% + 90px);
+    height: 14px;
   }
 }
 
 @media (min-width: 1024px) {
-  .fantasy-brush-container::before {
-    width: calc(100% + 95px);
-    height: 20px;
+  .fantasy-brush-wrapper::before {
+    width: calc(100% + 150px);
+    height: 19px;
   }
 }
 
