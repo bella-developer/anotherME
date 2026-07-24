@@ -6,10 +6,16 @@
 
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
 import User from '../src/models/User.model.js';
 
-// Load environment variables
-dotenv.config();
+// Get the directory name
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+// Load environment variables from backend/.env
+dotenv.config({ path: join(__dirname, '../.env') });
 
 const ADMIN_EMAIL = 'belackhaile@gmail.com';
 
@@ -17,6 +23,7 @@ async function setAdminRole() {
   try {
     // Connect to MongoDB
     console.log('Connecting to MongoDB...');
+    console.log('MongoDB URI:', process.env.MONGODB_URI ? 'Found' : 'Not found');
     await mongoose.connect(process.env.MONGODB_URI);
     console.log('Connected to MongoDB');
 
@@ -31,6 +38,7 @@ async function setAdminRole() {
       user.role = 'admin';
       await user.save();
       console.log(`✓ Successfully set admin role for user: ${user.username} (${user.email})`);
+      console.log(`User role: ${user.role}`);
     }
 
     // Disconnect

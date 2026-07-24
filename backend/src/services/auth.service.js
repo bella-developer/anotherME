@@ -173,6 +173,7 @@ export async function register(registrationData = {}) {
         email: user.email,
         age: user.age,
         gender: user.gender,
+        role: user.role || 'user', // Include role
         createdAt: user.createdAt
       }
     };
@@ -300,6 +301,7 @@ export async function login(loginData) {
       email: user.email,
       age: user.age,
       gender: user.gender,
+      role: user.role || 'user', // Include role for authorization
       createdAt: user.createdAt
     }
   };
@@ -387,6 +389,7 @@ export async function getSessionUser(userId) {
       email: user.email,
       age: user.age,
       gender: user.gender,
+      role: user.role || 'user', // Include role for authorization
       createdAt: user.createdAt
     }
   };
