@@ -159,17 +159,72 @@ function PostDetail() {
           fontSize: '0.95rem',
           letterSpacing: '0'
         }}>
-          {post.content.split('\n\n')[0]}
+          {post.title || post.content.split('\n\n')[0]}
         </h1>
 
-        {/* Post Content - Remaining paragraphs */}
+        {/* Post Image - if exists */}
+        {post.image?.url && (
+          <div className="mb-8 md:mb-10">
+            <div style={{
+              position: 'relative',
+              width: '100%',
+              maxWidth: '600px',
+              margin: '0 auto',
+              padding: '20px',
+              background: 'rgba(255,255,255,0.03)',
+              border: '1px solid rgba(255,255,255,0.1)',
+              borderRadius: '4px'
+            }}>
+              {/* Polaroid-style mat with thicker bottom */}
+              <div style={{
+                padding: '16px 16px 48px',
+                background: 'linear-gradient(180deg, rgba(240,240,240,0.95) 0%, rgba(230,230,230,0.93) 100%)',
+                boxShadow: '0 4px 12px rgba(0,0,0,0.3), 0 1px 3px rgba(0,0,0,0.2)',
+                position: 'relative'
+              }}>
+                <div style={{
+                  position: 'relative',
+                  width: '100%',
+                  aspectRatio: `${post.image.width || 4} / ${post.image.height || 3}`,
+                  overflow: 'hidden',
+                  background: '#000000'
+                }}>
+                  <img
+                    src={post.image.url}
+                    alt={post.title || 'Post image'}
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'contain',
+                      display: 'block'
+                    }}
+                    loading="lazy"
+                  />
+                  {/* Vintage vignette overlay */}
+                  <div style={{
+                    position: 'absolute',
+                    inset: 0,
+                    background: 'radial-gradient(circle at center, transparent 30%, rgba(0,0,0,0.15) 100%)',
+                    pointerEvents: 'none',
+                    mixBlendMode: 'multiply'
+                  }} />
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Post Content - Remaining paragraphs or full content if no title */}
         <div className="space-y-4 mb-8 md:mb-10">
-          {post.content.split('\n\n').slice(1).map((paragraph, index) => (
+          {(post.title ? 
+            post.content.split('\n\n') : 
+            post.content.split('\n\n').slice(1)
+          ).map((paragraph, index) => (
             <p key={index} className="leading-relaxed" style={{ 
-              color: '#575455',
+              color: '#8b949e',
               lineHeight: '1.8',
               fontWeight: '300',
-              fontSize: '0.85rem'
+              fontSize: '0.95rem'
             }}>
               {paragraph}
             </p>

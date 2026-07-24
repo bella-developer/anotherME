@@ -5,8 +5,6 @@ import { fetchStatistics, fetchDetailedUsers, fetchDetailedPosts, fetchDetailedC
 import { Users, FileText, Circle, MessageSquare, TrendingUp, Image, ChevronDown, ChevronUp } from 'lucide-react';
 
 function AdminDashboard() {
-  console.log('[AdminDashboard] Component rendering');
-  
   const { user, isAuthenticated, loading: authLoading } = useAuth();
   const navigate = useNavigate();
   const [stats, setStats] = useState(null);
@@ -18,54 +16,42 @@ function AdminDashboard() {
   const [expandedSection, setExpandedSection] = useState(null);
 
   useEffect(() => {
-    console.log('[AdminDashboard] Auth state:', { isAuthenticated, user, authLoading });
-
     // Wait for auth to load
     if (authLoading) {
-      console.log('[AdminDashboard] Auth still loading...');
       return;
     }
 
     // Check if user is authenticated
     if (!isAuthenticated) {
-      console.log('[AdminDashboard] Not authenticated, redirecting to login');
       navigate('/login');
       return;
     }
 
     // Check if user data exists
     if (!user) {
-      console.log('[AdminDashboard] No user data yet');
       return;
     }
 
-    console.log('[AdminDashboard] User role:', user.role);
-
     // Check if user is admin
     if (user.role !== 'admin') {
-      console.log('[AdminDashboard] User is not admin, redirecting to home');
       navigate('/home');
       return;
     }
 
     // Only fetch if we haven't loaded stats yet
     if (stats) {
-      console.log('[AdminDashboard] Stats already loaded, skipping fetch');
       setLoading(false);
       return;
     }
 
     // Fetch statistics
-    console.log('[AdminDashboard] Fetching statistics...');
     setLoading(true);
     fetchStatistics()
       .then(data => {
-        console.log('[AdminDashboard] Statistics loaded:', data);
         setStats(data);
         setLoading(false);
       })
       .catch(err => {
-        console.error('[AdminDashboard] Error fetching statistics:', err);
         setError(err.message || 'Failed to load statistics');
         setLoading(false);
       });
@@ -84,7 +70,7 @@ function AdminDashboard() {
         setDetailedCircles(data.circles || []);
       }
     } catch (err) {
-      console.error('Failed to load detailed data:', err);
+      // Silent fail - data already loaded or network error
     }
   };
 
