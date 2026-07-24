@@ -337,7 +337,7 @@ section.overflow-hidden {
 
 /* ============================================
    FANTASY ROOM - PAINT BRUSH TITLE EFFECT
-   Asymmetric brush: starts at text, extends far right
+   Precise asymmetric brush matching mockup
    ============================================ */
 
 .fantasy-brush-container {
@@ -348,31 +348,29 @@ section.overflow-hidden {
 .fantasy-brush-container::before {
   content: "";
   position: absolute;
-  /* Minimal left offset, extends primarily to the right */
   left: -5px;
   top: 50%;
   transform: translateY(-50%) rotate(-0.3deg);
   
-  /* Extends ~120px beyond text to the right */
-  width: calc(100% + 125px);
-  height: 20px;
+  /* Shorter extension - only 85px beyond text */
+  width: calc(100% + 85px);
+  height: 18px;
   
   background:
     linear-gradient(
       90deg,
-      rgba(184, 101, 47, 0.7) 0%,
-      rgba(196, 114, 54, 0.85) 15%,
-      rgba(216, 133, 71, 0.95) 35%,
-      #D88547 50%,
-      rgba(216, 133, 71, 0.8) 70%,
-      rgba(196, 114, 54, 0.5) 85%,
-      rgba(184, 101, 47, 0.3) 100%
+      rgba(160, 82, 45, 0.85) 0%,
+      rgba(184, 101, 47, 0.9) 12%,
+      #C47236 30%,
+      #D88547 45%,
+      #C47236 65%,
+      rgba(196, 114, 54, 0.7) 82%,
+      rgba(160, 82, 45, 0.5) 92%,
+      rgba(139, 69, 19, 0.25) 100%
     );
   
-  /* Minimal blur for soft paint texture */
   filter: blur(0.4px);
   
-  /* Organic irregular edges - subtle variation */
   clip-path: polygon(
     0% 45%, 3% 30%, 7% 40%, 12% 28%, 18% 38%,
     25% 25%, 32% 35%, 40% 22%, 48% 32%, 56% 20%,
@@ -396,15 +394,15 @@ section.overflow-hidden {
 @media (max-width: 640px) {
   .fantasy-brush-container::before {
     left: -3px;
-    width: calc(100% + 80px);
-    height: 16px;
+    width: calc(100% + 60px);
+    height: 15px;
   }
 }
 
 @media (min-width: 1024px) {
   .fantasy-brush-container::before {
-    width: calc(100% + 140px);
-    height: 22px;
+    width: calc(100% + 95px);
+    height: 20px;
   }
 }
 
