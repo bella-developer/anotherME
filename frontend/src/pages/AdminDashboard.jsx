@@ -164,7 +164,9 @@ function AdminDashboard() {
       background: '#0a0a0a',
       color: '#ffffff',
       padding: '80px 20px 40px',
-      fontFamily: "'IBM Plex Mono', monospace"
+      fontFamily: "'IBM Plex Mono', monospace",
+      position: 'relative',
+      zIndex: 1
     }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
         {/* Header */}
