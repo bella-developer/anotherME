@@ -363,7 +363,7 @@ function PostDetail() {
         </div>
 
         {/* Return Button */}
-        <div className="mb-8">
+        <div className="mt-6 mb-4">
           <button
             onClick={() => navigate(-1)}
             className="text-[#6e7681] hover:text-[#8b949e] transition-colors text-xs uppercase tracking-[0.15em] inline-flex items-center"
