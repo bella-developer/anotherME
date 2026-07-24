@@ -38,6 +38,7 @@ const AboutUs = lazy(() => import('./pages/AboutUs'));
 const Support = lazy(() => import('./pages/Support'));
 const Manifesto = lazy(() => import('./pages/Manifesto'));
 const AdminDashboard = lazy(() => import('./pages/AdminDashboard'));
+const DebugAuth = lazy(() => import('./pages/DebugAuth'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 
 // Placeholder Create component
@@ -251,6 +252,14 @@ function App() {
                     <AdminDashboard />
                   </Suspense>
                 </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/debug-auth"
+              element={
+                <Suspense fallback={<PageLoader />}>
+                  <DebugAuth />
+                </Suspense>
               }
             />
 
