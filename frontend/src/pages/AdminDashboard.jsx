@@ -5,7 +5,9 @@ import { fetchStatistics, fetchDetailedUsers, fetchDetailedPosts, fetchDetailedC
 import { Users, FileText, Circle, MessageSquare, TrendingUp, Image, ChevronDown, ChevronUp } from 'lucide-react';
 
 function AdminDashboard() {
-  const { user, isAuthenticated } = useAuth();
+  console.log('[AdminDashboard] Component rendering');
+  
+  const { user, isAuthenticated, loading: authLoading } = useAuth();
   const navigate = useNavigate();
   const [stats, setStats] = useState(null);
   const [detailedUsers, setDetailedUsers] = useState([]);
@@ -16,28 +18,50 @@ function AdminDashboard() {
   const [expandedSection, setExpandedSection] = useState(null);
 
   useEffect(() => {
-    // Check if user is authenticated and is admin
+    console.log('[AdminDashboard] Auth state:', { isAuthenticated, user, authLoading });
+
+    // Wait for auth to load
+    if (authLoading) {
+      console.log('[AdminDashboard] Auth still loading...');
+      return;
+    }
+
+    // Check if user is authenticated
     if (!isAuthenticated) {
+      console.log('[AdminDashboard] Not authenticated, redirecting to login');
       navigate('/login');
       return;
     }
 
-    if (user && user.role !== 'admin') {
+    // Check if user data exists
+    if (!user) {
+      console.log('[AdminDashboard] No user data yet');
+      return;
+    }
+
+    console.log('[AdminDashboard] User role:', user.role);
+
+    // Check if user is admin
+    if (user.role !== 'admin') {
+      console.log('[AdminDashboard] User is not admin, redirecting to home');
       navigate('/home');
       return;
     }
 
     // Fetch statistics
+    console.log('[AdminDashboard] Fetching statistics...');
     fetchStatistics()
       .then(data => {
+        console.log('[AdminDashboard] Statistics loaded:', data);
         setStats(data);
         setLoading(false);
       })
       .catch(err => {
+        console.error('[AdminDashboard] Error fetching statistics:', err);
         setError(err.message || 'Failed to load statistics');
         setLoading(false);
       });
-  }, [isAuthenticated, user, navigate]);
+  }, [isAuthenticated, user, authLoading, navigate]);
 
   const loadDetailedData = async (type) => {
     try {
@@ -82,7 +106,7 @@ function AdminDashboard() {
     }
   };
 
-  if (loading) {
+  if (authLoading || loading) {
     return (
       <div style={{
         minHeight: '100vh',
@@ -93,7 +117,7 @@ function AdminDashboard() {
         color: '#ffffff',
         fontFamily: "'IBM Plex Mono', monospace"
       }}>
-        Loading...
+        Loading admin dashboard...
       </div>
     );
   }
@@ -104,13 +128,30 @@ function AdminDashboard() {
         minHeight: '100vh',
         background: '#0a0a0a',
         display: 'flex',
+        flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
         color: '#ff4444',
         fontFamily: "'IBM Plex Mono', monospace",
-        padding: '20px'
+        padding: '20px',
+        textAlign: 'center'
       }}>
-        Error: {error}
+        <div style={{ fontSize: '24px', marginBottom: '20px' }}>⚠️ Error Loading Dashboard</div>
+        <div style={{ marginBottom: '20px' }}>{error}</div>
+        <button
+          onClick={() => navigate('/home')}
+          style={{
+            background: 'rgba(255,255,255,0.1)',
+            border: '1px solid rgba(255,255,255,0.2)',
+            color: '#ffffff',
+            padding: '10px 20px',
+            borderRadius: '4px',
+            cursor: 'pointer',
+            fontFamily: "'Space Mono', monospace"
+          }}
+        >
+          Go Home
+        </button>
       </div>
     );
   }
