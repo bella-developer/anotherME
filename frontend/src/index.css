@@ -337,67 +337,55 @@ section.overflow-hidden {
 
 /* ============================================
    FANTASY ROOM - PAINT BRUSH TITLE EFFECT
-   Short, compact brush that fits the title exactly
+   Container-based approach for exact brush sizing
    ============================================ */
 
-.fantasy-brush-title {
+.fantasy-brush-container {
   position: relative;
   display: inline-block;
-  z-index: 1;
+  padding: 4px 8px;
 }
 
-.fantasy-brush-title span {
-  position: relative;
-  z-index: 2;
-}
-
-.fantasy-brush-title::before {
+.fantasy-brush-container::before {
   content: "";
   position: absolute;
-  left: -8px;
-  top: 50%;
-  transform: translateY(-50%) rotate(-0.8deg);
-  
-  /* SHORT brush - just covers the text, no extra length */
-  width: calc(100% + 16px);
-  height: 20px;
+  inset: 0;
   
   background:
     linear-gradient(
       90deg,
-      rgba(139, 69, 19, 0.3) 0%,
-      #8B4513 8%,
-      #A0522D 20%,
-      #B8652F 40%,
+      rgba(139, 69, 19, 0.2) 0%,
+      #8B4513 10%,
+      #A0522D 25%,
       #C47236 50%,
-      #B8652F 60%,
-      #A0522D 80%,
-      #8B4513 92%,
-      rgba(139, 69, 19, 0.3) 100%
+      #A0522D 75%,
+      #8B4513 90%,
+      rgba(139, 69, 19, 0.2) 100%
     );
   
-  filter: blur(0.4px);
+  filter: blur(0.3px);
   
-  /* Simple irregular edges - not too crazy */
   clip-path: polygon(
-    0% 45%, 5% 25%, 10% 35%, 15% 20%, 20% 30%,
-    30% 18%, 40% 28%, 50% 15%, 60% 25%, 70% 18%,
-    80% 28%, 85% 20%, 90% 32%, 95% 25%, 100% 40%,
-    95% 70%, 90% 60%, 85% 75%, 80% 65%, 70% 78%,
-    60% 70%, 50% 82%, 40% 68%, 30% 80%, 20% 65%,
-    15% 75%, 10% 62%, 5% 72%, 0% 55%
+    0% 40%, 8% 25%, 15% 35%, 25% 20%, 35% 30%,
+    50% 18%, 65% 28%, 75% 22%, 85% 32%, 92% 25%, 100% 38%,
+    92% 68%, 85% 60%, 75% 72%, 65% 65%, 50% 78%,
+    35% 68%, 25% 75%, 15% 62%, 8% 70%, 0% 58%
   );
   
   opacity: 0.75;
   z-index: 1;
+  border-radius: 2px;
+}
+
+.fantasy-brush-container h2 {
+  position: relative;
+  z-index: 2;
 }
 
 /* Responsive */
 @media (max-width: 640px) {
-  .fantasy-brush-title::before {
-    left: -6px;
-    width: calc(100% + 12px);
-    height: 16px;
+  .fantasy-brush-container {
+    padding: 3px 6px;
   }
 }
 
