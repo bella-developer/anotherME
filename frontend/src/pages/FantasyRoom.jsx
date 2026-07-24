@@ -190,14 +190,14 @@ function FantasyRoom() {
             </div>
 
             {/* Compact Sticky Bar */}
-            <div className="sticky top-20 z-20 mb-6 py-3 flex items-center justify-between gap-3" style={{
-              backgroundColor: 'rgba(0, 0, 0, 0.85)',
+            <div className="sticky top-20 z-20 mb-6 -mx-3 sm:mx-0 px-3 sm:px-4 py-3 flex items-center justify-between gap-3" style={{
+              backgroundColor: 'rgba(0, 0, 0, 0.95)',
               backdropFilter: 'blur(12px)',
               borderBottom: '1px solid rgba(249, 115, 22, 0.15)',
             }}>
               {/* Room Title + Categories */}
-              <div className="flex items-center gap-3 flex-1 min-w-0 overflow-x-auto" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-                <h2 className="text-xs sm:text-sm uppercase tracking-wider whitespace-nowrap" style={{
+              <div className="flex items-center gap-2 sm:gap-3 flex-1 min-w-0">
+                <h2 className="text-xs sm:text-sm uppercase tracking-wider whitespace-nowrap flex-shrink-0" style={{
                   color: '#FF9D1C',
                   fontFamily: 'var(--font-heading)',
                   fontWeight: '700',
@@ -205,26 +205,49 @@ function FantasyRoom() {
                   FANTASY
                 </h2>
                 
-                <div className="h-4 w-px bg-white/10"></div>
+                <div className="h-4 w-px bg-white/10 flex-shrink-0"></div>
                 
-                {/* Category filters - horizontal scroll */}
-                <div className="flex gap-2">
-                  {categories.map((cat) => (
-                    <button
-                      key={cat.value}
-                      onClick={() => setSelectedCategory(cat.value)}
-                      className="px-3 py-1.5 text-[9px] sm:text-[10px] tracking-wide uppercase transition-all whitespace-nowrap"
-                      style={{
-                        borderRadius: '2px',
-                        background: selectedCategory === cat.value ? 'rgba(249, 115, 22, 0.15)' : 'transparent',
-                        border: selectedCategory === cat.value ? '1px solid rgba(249, 115, 22, 0.4)' : '1px solid rgba(255, 255, 255, 0.04)',
-                        color: selectedCategory === cat.value ? 'rgba(249, 115, 22, 1)' : 'rgba(255, 255, 255, 0.3)',
-                        transitionDuration: 'var(--duration-slow)',
-                      }}
-                    >
-                      {cat.label}
-                    </button>
-                  ))}
+                {/* Category Dropdown on Mobile, Horizontal on Desktop */}
+                <div className="flex-1 min-w-0">
+                  {/* Mobile Dropdown */}
+                  <select
+                    value={selectedCategory}
+                    onChange={(e) => setSelectedCategory(e.target.value)}
+                    className="sm:hidden w-full px-3 py-1.5 text-[10px] tracking-wide uppercase transition-all"
+                    style={{
+                      borderRadius: '2px',
+                      background: 'rgba(249, 115, 22, 0.15)',
+                      border: '1px solid rgba(249, 115, 22, 0.4)',
+                      color: 'rgba(249, 115, 22, 1)',
+                      fontWeight: '500',
+                    }}
+                  >
+                    {categories.map((cat) => (
+                      <option key={cat.value} value={cat.value} style={{ background: '#000', color: '#fff' }}>
+                        {cat.label}
+                      </option>
+                    ))}
+                  </select>
+                  
+                  {/* Desktop Horizontal Tabs */}
+                  <div className="hidden sm:flex gap-2 overflow-x-auto" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+                    {categories.map((cat) => (
+                      <button
+                        key={cat.value}
+                        onClick={() => setSelectedCategory(cat.value)}
+                        className="px-3 py-1.5 text-[9px] sm:text-[10px] tracking-wide uppercase transition-all whitespace-nowrap"
+                        style={{
+                          borderRadius: '2px',
+                          background: selectedCategory === cat.value ? 'rgba(249, 115, 22, 0.15)' : 'transparent',
+                          border: selectedCategory === cat.value ? '1px solid rgba(249, 115, 22, 0.4)' : '1px solid rgba(255, 255, 255, 0.04)',
+                          color: selectedCategory === cat.value ? 'rgba(249, 115, 22, 1)' : 'rgba(255, 255, 255, 0.3)',
+                          transitionDuration: 'var(--duration-slow)',
+                        }}
+                      >
+                        {cat.label}
+                      </button>
+                    ))}
+                  </div>
                 </div>
               </div>
 
@@ -232,7 +255,7 @@ function FantasyRoom() {
               {isAuthenticated && (
                 <button
                   onClick={() => setIsPostFormOpen(true)}
-                  className="flex-shrink-0 px-4 py-2 text-[10px] tracking-widest uppercase transition-all"
+                  className="flex-shrink-0 px-3 sm:px-4 py-1.5 sm:py-2 text-[9px] sm:text-[10px] tracking-widest uppercase transition-all"
                   style={{
                     background: 'rgba(0, 0, 0, 0.3)',
                     border: '1px solid rgba(249, 115, 22, 0.15)',
