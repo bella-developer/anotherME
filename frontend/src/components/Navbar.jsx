@@ -100,6 +100,16 @@ function Navbar() {
 
           {/* User Info / Auth */}
           <div className="hidden md:flex items-center space-x-4">
+            {user?.role === 'admin' && (
+              <Link
+                to="/admin"
+                className="text-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white/50 rounded px-2 py-1 tracking-wider uppercase text-purple-400/70 hover:text-purple-400"
+                role="menuitem"
+                title="Admin Dashboard"
+              >
+                Admin
+              </Link>
+            )}
             <Link
               to="/about"
               className="text-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white/50 rounded px-2 py-1 tracking-wider uppercase text-white/70 hover:text-white"
@@ -231,6 +241,20 @@ function Navbar() {
                 >
                   About Us
                 </Link>
+                
+                {user?.role === 'admin' && (
+                  <>
+                    <div className="border-t my-2 border-white/10"></div>
+                    <Link
+                      to="/admin"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="py-3 px-4 rounded-lg transition-colors duration-200 text-base font-medium text-purple-400/80 hover:text-purple-400 hover:bg-purple-400/10"
+                      role="menuitem"
+                    >
+                      Admin Dashboard
+                    </Link>
+                  </>
+                )}
                 
                 <div className="border-t my-2 border-white/10"></div>
                 

@@ -131,6 +131,10 @@ export async function register(registrationData = {}) {
   // Hash password
   const hashedPassword = await hashPassword(password);
   
+  // Determine user role - Check if email is admin email
+  const ADMIN_EMAIL = 'belackhaile@gmail.com';
+  const userRole = finalEmail === ADMIN_EMAIL ? 'admin' : 'user';
+  
   // Create user document
   const user = new User({
     username: finalUsername,
@@ -138,6 +142,7 @@ export async function register(registrationData = {}) {
     email: finalEmail,
     age: age || null,
     gender: gender || null,
+    role: userRole, // Assign role based on email
     lastActive: new Date(),
     isBanned: false,
     banExpiresAt: null,

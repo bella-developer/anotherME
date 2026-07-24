@@ -86,10 +86,16 @@ passport.use(
           attempts++;
         }
         
+        // Determine user role - Check if email is admin email
+        const ADMIN_EMAIL = 'belackhaile@gmail.com';
+        const normalizedEmail = email ? email.toLowerCase().trim() : '';
+        const userRole = normalizedEmail === ADMIN_EMAIL ? 'admin' : 'user';
+        
         user = await User.create({
           googleId: profile.id,
           username,
           email: email || `${profile.id}@google-oauth.local`,
+          role: userRole, // Assign role based on email
           // No password needed for OAuth users
           profilePicture: profile.photos?.[0]?.value || '',
           fullName: profile.displayName || '',

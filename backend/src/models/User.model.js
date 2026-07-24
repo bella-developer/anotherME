@@ -90,6 +90,13 @@ const userSchema = new mongoose.Schema(
       default: null
     },
 
+    // User role for authorization
+    role: {
+      type: String,
+      enum: ['user', 'admin'],
+      default: 'user'
+    },
+
     // Failed login attempts tracking
     failedLoginAttempts: {
       type: Number,

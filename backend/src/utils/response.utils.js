@@ -81,6 +81,7 @@ export function sanitizeUser(user) {
     username: userData.username,
     age: userData.age || null,
     gender: userData.gender || null,
+    role: userData.role || 'user', // Include role for authorization
     createdAt: userData.createdAt,
   };
 }
