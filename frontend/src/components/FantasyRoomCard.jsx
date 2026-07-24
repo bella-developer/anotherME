@@ -29,7 +29,7 @@ function FantasyRoomCard({ post, onReaction, onEdit, onDelete }) {
         backdropFilter: 'blur(12px)',
         boxShadow: '0 0 0 1px rgba(255,255,255,0.03), 0 8px 32px rgba(0,0,0,0.5)',
         borderRadius: '16px',
-        minHeight: '420px',
+        minHeight: post.image?.url ? '420px' : 'auto',
       }}
     >
       {/* Header Bar - Responsive */}
