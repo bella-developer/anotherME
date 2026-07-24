@@ -152,15 +152,17 @@ function PostDetail() {
           </button>
         </div>
 
-        {/* Post Title - First paragraph as title - much smaller and weaker */}
-        <h1 className="leading-relaxed mb-4 md:mb-6" style={{ 
-          color: '#6e7681',
-          fontWeight: '300',
-          fontSize: '0.95rem',
-          letterSpacing: '0'
-        }}>
-          {post.title || post.content.split('\n\n')[0]}
-        </h1>
+        {/* Post Title */}
+        {post.title && (
+          <h1 className="leading-relaxed mb-4 md:mb-6" style={{ 
+            color: '#e6edf3',
+            fontWeight: '600',
+            fontSize: '1.5rem',
+            letterSpacing: '0'
+          }}>
+            {post.title}
+          </h1>
+        )}
 
         {/* Post Image - if exists */}
         {post.image?.url && (
@@ -214,22 +216,23 @@ function PostDetail() {
           </div>
         )}
 
-        {/* Post Content - Remaining paragraphs or full content if no title */}
-        <div className="space-y-4 mb-8 md:mb-10">
-          {(post.title ? 
-            post.content.split('\n\n') : 
-            post.content.split('\n\n').slice(1)
-          ).map((paragraph, index) => (
-            <p key={index} className="leading-relaxed" style={{ 
-              color: '#8b949e',
-              lineHeight: '1.8',
-              fontWeight: '300',
-              fontSize: '0.95rem'
-            }}>
-              {paragraph}
-            </p>
-          ))}
-        </div>
+        {/* Post Content */}
+        {post.content && (
+          <div className="space-y-4 mb-8 md:mb-10">
+            {post.content.split('\n\n').map((paragraph, index) => (
+              paragraph.trim() && (
+                <p key={index} className="leading-relaxed" style={{ 
+                  color: '#c9d1d9',
+                  lineHeight: '1.8',
+                  fontWeight: '400',
+                  fontSize: '1rem'
+                }}>
+                  {paragraph}
+                </p>
+              )
+            ))}
+          </div>
+        )}
 
         {/* Linked Reference Section */}
         {post.circle && (
