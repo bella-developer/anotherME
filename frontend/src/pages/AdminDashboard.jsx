@@ -48,8 +48,16 @@ function AdminDashboard() {
       return;
     }
 
+    // Only fetch if we haven't loaded stats yet
+    if (stats) {
+      console.log('[AdminDashboard] Stats already loaded, skipping fetch');
+      setLoading(false);
+      return;
+    }
+
     // Fetch statistics
     console.log('[AdminDashboard] Fetching statistics...');
+    setLoading(true);
     fetchStatistics()
       .then(data => {
         console.log('[AdminDashboard] Statistics loaded:', data);
@@ -61,7 +69,7 @@ function AdminDashboard() {
         setError(err.message || 'Failed to load statistics');
         setLoading(false);
       });
-  }, [isAuthenticated, user, authLoading, navigate]);
+  }, [isAuthenticated, user, authLoading, navigate, stats]);
 
   const loadDetailedData = async (type) => {
     try {
@@ -115,7 +123,9 @@ function AdminDashboard() {
         alignItems: 'center',
         justifyContent: 'center',
         color: '#ffffff',
-        fontFamily: "'IBM Plex Mono', monospace"
+        fontFamily: "'IBM Plex Mono', monospace",
+        position: 'relative',
+        zIndex: 1
       }}>
         Loading admin dashboard...
       </div>
@@ -134,7 +144,9 @@ function AdminDashboard() {
         color: '#ff4444',
         fontFamily: "'IBM Plex Mono', monospace",
         padding: '20px',
-        textAlign: 'center'
+        textAlign: 'center',
+        position: 'relative',
+        zIndex: 1
       }}>
         <div style={{ fontSize: '24px', marginBottom: '20px' }}>⚠️ Error Loading Dashboard</div>
         <div style={{ marginBottom: '20px' }}>{error}</div>
