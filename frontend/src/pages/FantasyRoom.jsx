@@ -177,7 +177,7 @@ function FantasyRoom() {
                 lineHeight: 'var(--leading-relaxed)',
                 fontWeight: '600'
               }}>
-                Dream Without Limits
+                Unleash Your Imagination
               </p>
               
               <p className="text-xs sm:text-[11px] max-w-md" style={{
@@ -185,7 +185,7 @@ function FantasyRoom() {
                 lineHeight: 'var(--leading-relaxed)',
                 fontWeight: '300'
               }}>
-                Stories, art, and dreams from creative minds.
+                Stories, art, and visions from creative minds.
               </p>
             </div>
 
@@ -266,7 +266,7 @@ function FantasyRoom() {
               </div>
             ) : posts.length === 0 ? (
               <div className="text-center py-16">
-                <p className={`text-sm ${'text-white/25'}`}>No dreams yet. Be the first to imagine.</p>
+                <p className={`text-sm ${'text-white/25'}`}>The canvas awaits. Share your first fantasy.</p>
               </div>
             ) : (
               <div className="space-y-3">
@@ -291,7 +291,7 @@ function FantasyRoom() {
               </div>
             ) : posts.length === 0 ? (
               <div className="text-center py-16">
-                <p className={`text-sm ${'text-white/25'}`}>No dreams yet. Be the first to imagine.</p>
+                <p className={`text-sm ${'text-white/25'}`}>The canvas awaits. Share your first fantasy.</p>
               </div>
             ) : (
               <div className="space-y-3">

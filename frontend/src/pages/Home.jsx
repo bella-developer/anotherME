@@ -39,7 +39,7 @@ function Home() {
     {
       id: 'fantasy',
       name: 'FANTASY ROOM',
-      tagline: 'Dream. Create. Imagine.',
+      tagline: 'Create. Imagine. Inspire.',
       description: 'Where imagination roams free.',
       path: '/rooms/fantasy',
       img: 'https://res.cloudinary.com/dbtm7etag/image/upload/v1783511770/fantasy_tsqwja.png',
