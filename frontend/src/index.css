@@ -330,22 +330,8 @@ section.overflow-hidden {
 }
 
 /* ============================================
-   POST REACTION BUTTONS - Dark Mode Only
-   Strong whites for Patreon-style aesthetic
+   POST REACTION BUTTONS
+   Styles are now handled via inline styles in RoomReactions component
+   for better control and premium UI appearance
    ============================================ */
-
-/* Simple text buttons with hover effect */
-.post-reaction-btn {
-  color: #c9d1d9;
-  background: transparent;
-  border: none;
-  padding: 0;
-  border-radius: 0;
-  transition: color 0.2s ease;
-  font-size: 0.75rem;
-}
-
-.post-reaction-btn:hover {
-  color: #ffffff;
-}
 

@@ -136,7 +136,7 @@ const PostCard = ({ post, onPostClick }) => {
               e.stopPropagation();
               handleReactionToggle('iRelate');
             }}
-            className="post-reaction-btn flex items-center gap-1.5"
+            className="flex items-center gap-1.5"
             style={{ color: '#6e7681', fontSize: '11px', fontWeight: '300' }}
           >
             <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -151,7 +151,7 @@ const PostCard = ({ post, onPostClick }) => {
               e.stopPropagation();
               handleReactionToggle('youreNotAlone');
             }}
-            className="post-reaction-btn flex items-center gap-1.5"
+            className="flex items-center gap-1.5"
             style={{ color: '#6e7681', fontSize: '11px', fontWeight: '300' }}
           >
             <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -166,7 +166,7 @@ const PostCard = ({ post, onPostClick }) => {
               e.stopPropagation();
               handleReactionToggle('imListening');
             }}
-            className="post-reaction-btn flex items-center gap-1.5"
+            className="flex items-center gap-1.5"
             style={{ color: '#6e7681', fontSize: '11px', fontWeight: '300' }}
           >
             <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
