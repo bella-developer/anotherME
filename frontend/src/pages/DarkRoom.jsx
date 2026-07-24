@@ -129,11 +129,14 @@ function DarkRoom() {
           }}
         />
         
-        <div className="min-h-screen pt-16 pb-24 px-3 sm:px-4 md:px-6 relative z-10">
-          <div className="max-w-full sm:max-w-2xl md:max-w-3xl mx-auto">
+        <div className="min-h-screen pt-16 pb-24 px-3 sm:px-4 md:px-6 relative z-10 flex flex-col">
+          <div className="max-w-full sm:max-w-2xl md:max-w-3xl mx-auto w-full flex flex-col flex-1">
 
-            {/* Room header - Compact on mobile */}
-            <div className="mb-12 sm:mb-20">
+            {/* Room header - Sticky */}
+            <div className="sticky top-16 z-20 mb-8 sm:mb-12 pb-4" style={{
+              background: 'linear-gradient(to bottom, rgba(10, 10, 10, 0.98) 0%, rgba(10, 10, 10, 0.95) 80%, transparent 100%)',
+              backdropFilter: 'blur(12px)',
+            }}>
               <button
                 onClick={() => navigate('/home')}
                 className="px-4 py-2 text-xs tracking-wide uppercase mb-12 transition-all flex items-center gap-2 rounded"
@@ -243,7 +246,8 @@ function DarkRoom() {
               </div>
             </div>
 
-            {/* Feed */}
+            {/* Feed - Scrollable */}
+            <div className="flex-1 overflow-y-auto">
             {loading ? (
               <div className="flex justify-center py-16"><LoadingSpinner /></div>
             ) : error ? (
@@ -268,6 +272,7 @@ function DarkRoom() {
                 ))}
               </div>
             )}
+            </div>
           </div>
         </div>
 

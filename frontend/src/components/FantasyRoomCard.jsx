@@ -217,30 +217,42 @@ function FantasyRoomCard({ post, onReaction, onEdit, onDelete }) {
           </div>
         )}
 
-        {/* Circles without image - Responsive layout */}
+        {/* Circles without image - Vertical layout like posts with images */}
         {!post.image?.url && post.circles && post.circles.length > 0 && (
-          <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-3 sm:mb-4">
-            {post.circles.slice(0, 4).map((circle, index) => (
-              <button
-                key={index}
-                onClick={() => {
-                  const circleIdToUse = circle.circleId || circle.id;
-                  if (circleIdToUse) {
-                    navigate(`/circles/${circleIdToUse}?from=post&postId=${post.id}`);
-                  }
-                }}
-                className="px-2 sm:px-3 py-1 sm:py-1.5 text-[8px] sm:text-[10px] tracking-wider font-medium uppercase transition-all duration-200 rounded-full hover:bg-white/15"
-                style={{
-                  background: 'rgba(255,255,255,0.06)',
-                  color: 'rgba(255,255,255,0.5)',
-                  border: '1px solid rgba(255,255,255,0.08)',
-                }}
-                title={`View in ${circle.fullName || circle.name}`}
-              >
-                {circle.icon && <span className="mr-1">{circle.icon}</span>}
-                {circle.name.slice(0, 8)}
-              </button>
-            ))}
+          <div className="flex flex-row gap-2 mb-3">
+            {/* Spacer to match 85% layout */}
+            <div className="flex-[0_0_85%]"></div>
+            
+            {/* Circles - 15% width, vertical */}
+            <div className="flex-[0_0_15%] flex flex-col gap-1.5 justify-start items-center">
+              {post.circles.slice(0, 3).map((circle, index) => (
+                <button
+                  key={index}
+                  onClick={() => {
+                    const circleIdToUse = circle.circleId || circle.id;
+                    if (circleIdToUse) {
+                      navigate(`/circles/${circleIdToUse}?from=post&postId=${post.id}`);
+                    }
+                  }}
+                  className="flex items-center justify-center text-[7px] sm:text-[8px] font-extrabold uppercase transition-all duration-200 leading-none hover:bg-opacity-20"
+                  style={{
+                    width: '100%',
+                    maxWidth: '48px',
+                    height: '28px',
+                    borderRadius: '50% / 60%',
+                    background: 'rgba(251, 146, 60, 0.12)',
+                    color: 'rgba(251, 146, 60, 1)',
+                    border: '1.5px solid rgba(251, 146, 60, 0.35)',
+                    padding: '3px 4px',
+                  }}
+                  title={`View in ${circle.fullName || circle.name}`}
+                >
+                  <span className="block truncate text-center max-w-full px-0.5" style={{ lineHeight: '1.1' }}>
+                    {circle.name.charAt(0).toUpperCase() + circle.name.slice(1, 5).toLowerCase()}
+                  </span>
+                </button>
+              ))}
+            </div>
           </div>
         )}
 
