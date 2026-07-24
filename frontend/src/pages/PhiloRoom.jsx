@@ -133,10 +133,7 @@ function PhiloRoom() {
           <div className="max-w-full sm:max-w-2xl md:max-w-3xl mx-auto w-full flex flex-col flex-1">
 
             {/* Room header - Sticky */}
-            <div className="sticky top-16 z-20 mb-8 sm:mb-12 pb-4" style={{
-              background: 'linear-gradient(to bottom, rgba(10, 10, 10, 0.98) 0%, rgba(10, 10, 10, 0.95) 80%, transparent 100%)',
-              backdropFilter: 'blur(12px)',
-            }}>
+            <div className="sticky top-16 z-20 mb-8 sm:mb-12">
               <button
                 onClick={() => navigate('/home')}
                 className="px-4 py-2 text-xs tracking-wide uppercase mb-12 transition-all flex items-center gap-2 rounded"
