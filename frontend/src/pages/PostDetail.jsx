@@ -139,26 +139,32 @@ function PostDetail() {
         </div>
 
         {/* Post Header */}
-        <div className="mb-4 md:mb-6 flex items-center justify-between">
-          <div className="text-xs uppercase tracking-[0.15em]" style={{ color: '#484f58', fontWeight: '300' }}>
-            Observer {formatTimeAgo(post.createdAt)}
+        <div className="mb-6 md:mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          {/* Category and timestamp */}
+          <div className="flex items-center gap-4">
+            {post.category && (
+              <span className="px-3 py-1 text-[10px] uppercase tracking-widest font-semibold rounded" style={{
+                background: 'rgba(46, 230, 255, 0.1)',
+                border: '1px solid rgba(46, 230, 255, 0.3)',
+                color: '#2EE6FF'
+              }}>
+                {post.category}
+              </span>
+            )}
+            <div className="text-xs uppercase tracking-[0.15em]" style={{ color: '#8b949e', fontWeight: '400' }}>
+              {formatTimeAgo(post.createdAt)}
+            </div>
           </div>
-          <button className="px-4 py-1.5 text-xs uppercase tracking-wider transition-all" style={{
-            border: '1px solid #ff6b35',
-            color: '#ff6b35',
-            background: 'transparent'
-          }}>
-            Resonate
-          </button>
         </div>
 
         {/* Post Title */}
         {post.title && (
-          <h1 className="leading-relaxed mb-4 md:mb-6" style={{ 
-            color: '#e6edf3',
+          <h1 className="leading-relaxed mb-6 md:mb-8" style={{ 
+            color: '#ffffff',
             fontWeight: '600',
-            fontSize: '1.5rem',
-            letterSpacing: '0'
+            fontSize: '1.75rem',
+            letterSpacing: '-0.01em',
+            fontFamily: "'Space Mono', monospace"
           }}>
             {post.title}
           </h1>
@@ -217,22 +223,23 @@ function PostDetail() {
         )}
 
         {/* Post Content */}
-        {post.content && (
-          <div className="space-y-4 mb-8 md:mb-10">
-            {post.content.split('\n\n').map((paragraph, index) => (
-              paragraph.trim() && (
-                <p key={index} className="leading-relaxed" style={{ 
-                  color: '#c9d1d9',
-                  lineHeight: '1.8',
-                  fontWeight: '400',
-                  fontSize: '1rem'
-                }}>
-                  {paragraph}
-                </p>
-              )
-            ))}
-          </div>
-        )}
+        <div className="space-y-5 mb-10 md:mb-12">
+          {post.content ? (
+            post.content.split('\n').filter(line => line.trim()).map((paragraph, index) => (
+              <p key={index} className="leading-relaxed" style={{ 
+                color: '#e6edf3',
+                lineHeight: '1.9',
+                fontWeight: '400',
+                fontSize: '1.05rem',
+                fontFamily: "'IBM Plex Mono', monospace"
+              }}>
+                {paragraph}
+              </p>
+            ))
+          ) : (
+            <p style={{ color: '#8b949e', fontStyle: 'italic' }}>No content available</p>
+          )}
+        </div>
 
         {/* Linked Reference Section */}
         {post.circle && (
