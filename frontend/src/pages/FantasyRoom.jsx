@@ -132,10 +132,9 @@ function FantasyRoom() {
         <div className="min-h-screen pt-16 pb-24 px-3 sm:px-4 md:px-6 relative z-10 flex flex-col">
           <div className="max-w-full sm:max-w-2xl md:max-w-3xl mx-auto w-full flex flex-col flex-1">
 
-            {/* Room header - Sticky with semi-transparent background */}
+            {/* Room header - Sticky with solid black background */}
             <div className="sticky top-16 z-20 mb-8 sm:mb-12" style={{
-              backgroundColor: 'rgba(10, 10, 10, 0.85)',
-              backdropFilter: 'blur(8px)',
+              backgroundColor: '#0a0a0a',
             }}>
               <button
                 onClick={() => navigate('/home')}
