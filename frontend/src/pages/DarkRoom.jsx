@@ -190,14 +190,14 @@ function DarkRoom() {
             </div>
 
             {/* Compact Sticky Bar */}
-            <div className="sticky top-20 z-20 mb-6 -mx-3 sm:mx-0 px-3 sm:px-4 py-3 flex items-center justify-between gap-3" style={{
+            <div className="sticky top-16 z-20 mb-6 -mx-3 sm:mx-0 px-3 sm:px-4 py-2 flex items-center justify-between gap-2" style={{
               backgroundColor: 'rgba(0, 0, 0, 0.95)',
               backdropFilter: 'blur(12px)',
               borderBottom: '1px solid rgba(46, 230, 255, 0.15)',
             }}>
               {/* Room Title + Categories */}
-              <div className="flex items-center gap-2 sm:gap-3 flex-1 min-w-0">
-                <h2 className="text-xs sm:text-sm uppercase tracking-wider whitespace-nowrap flex-shrink-0" style={{
+              <div className="flex items-center gap-2 flex-1 min-w-0">
+                <h2 className="text-[10px] sm:text-sm uppercase tracking-wider whitespace-nowrap flex-shrink-0" style={{
                   color: '#2EE6FF',
                   fontFamily: 'var(--font-heading)',
                   fontWeight: '700',
@@ -205,7 +205,7 @@ function DarkRoom() {
                   DARK
                 </h2>
                 
-                <div className="h-4 w-px bg-white/10 flex-shrink-0"></div>
+                <div className="h-3 w-px bg-white/10 flex-shrink-0"></div>
                 
                 {/* Category Dropdown on Mobile, Horizontal on Desktop */}
                 <div className="flex-1 min-w-0">
@@ -213,7 +213,7 @@ function DarkRoom() {
                   <select
                     value={selectedCategory}
                     onChange={(e) => setSelectedCategory(e.target.value)}
-                    className="sm:hidden w-full px-3 py-1.5 text-[10px] tracking-wide uppercase transition-all"
+                    className="sm:hidden w-full px-2 py-1 text-[9px] tracking-wide uppercase transition-all"
                     style={{
                       borderRadius: '2px',
                       background: 'rgba(239, 68, 68, 0.15)',
@@ -255,7 +255,7 @@ function DarkRoom() {
               {isAuthenticated && (
                 <button
                   onClick={() => setIsPostFormOpen(true)}
-                  className="flex-shrink-0 px-3 sm:px-4 py-1.5 sm:py-2 text-[9px] sm:text-[10px] tracking-widest uppercase transition-all"
+                  className="flex-shrink-0 px-2 sm:px-4 py-1 sm:py-2 text-[9px] sm:text-[10px] tracking-widest uppercase transition-all"
                   style={{
                     background: 'rgba(0, 0, 0, 0.3)',
                     border: '1px solid rgba(46, 230, 255, 0.15)',
