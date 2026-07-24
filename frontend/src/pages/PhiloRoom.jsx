@@ -129,14 +129,11 @@ function PhiloRoom() {
           }}
         />
         
-        <div className="min-h-screen pt-4 pb-24 px-3 sm:px-4 md:px-6 relative z-10 flex flex-col">
-          <div className="max-w-full sm:max-w-2xl md:max-w-3xl mx-auto w-full flex flex-col flex-1">
+        <div className="min-h-screen pt-4 pb-24 px-3 sm:px-4 md:px-6 relative z-10">
+          <div className="max-w-full sm:max-w-2xl md:max-w-3xl mx-auto">
 
-            {/* Room header - Sticky with semi-transparent overlay */}
-            <div className="sticky top-20 z-20 mb-8 sm:mb-12 pt-4 pb-4" style={{
-              backgroundColor: 'rgba(0, 0, 0, 0.7)',
-              backdropFilter: 'blur(8px)',
-            }}>
+            {/* Hero Header - Scrolls away */}
+            <div className="mb-8 sm:mb-12">
               <button
                 onClick={() => navigate('/home')}
                 className="px-4 py-2 text-xs tracking-wide uppercase mb-12 transition-all flex items-center gap-2 rounded"
@@ -161,93 +158,104 @@ function PhiloRoom() {
                 ← ROOMS
               </button>
 
-              <div className="flex items-start justify-between gap-4 sm:gap-8">
-                <div className="flex-1 min-w-0">
-                  {/* Precious purple accent - used sparingly */}
-                  <div className="w-12 h-px mb-6 sm:mb-8" style={{ 
-                    background: 'linear-gradient(to right, rgba(168, 85, 247, 0.4), transparent)' 
-                  }} />
-                  
-                  <h1 className="text-lg sm:text-4xl md:text-5xl uppercase mb-6 sm:mb-8 heading-text" style={{
-                    color: '#B56DFF',
-                    fontFamily: 'var(--font-heading)',
-                    letterSpacing: '0.05em',
-                    lineHeight: 'var(--leading-tight)',
-                    fontWeight: '700',
-                    whiteSpace: 'nowrap',
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis'
-                  }}>
-                    THE PHILO ROOM
-                  </h1>
-                  
-                  <p className="text-base sm:text-lg mb-3 sm:mb-4 max-w-md" style={{
-                    color: '#e6edf3',
-                    lineHeight: 'var(--leading-relaxed)',
-                    fontWeight: '600'
-                  }}>
-                    What is Truth?
-                  </p>
-                  
-                  <p className="text-xs sm:text-[11px] max-w-md" style={{
-                    color: '#c9d1d9',
-                    lineHeight: 'var(--leading-relaxed)',
-                    fontWeight: '300'
-                  }}>
-                    Questions are encouraged. Certainty is optional.
-                  </p>
-                </div>
-                {isAuthenticated && (
-                  <button
-                    onClick={() => setIsPostFormOpen(true)}
-                    className="flex-shrink-0 px-4 sm:px-6 py-2 sm:py-3 text-[10px] sm:text-xs tracking-widest uppercase transition-all"
-                    style={{
-                      background: 'rgba(0, 0, 0, 0.3)',
-                      border: '1px solid rgba(181, 109, 255, 0.15)',
-                      color: '#c9d1d9',
-                      borderRadius: 'var(--radius-soft)',
-                      transitionDuration: 'var(--duration-slow)',
-                      fontWeight: '400',
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.borderColor = 'rgba(181, 109, 255, 0.3)';
-                      e.currentTarget.style.color = '#B56DFF';
-                      e.currentTarget.style.background = 'rgba(181, 109, 255, 0.05)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.borderColor = 'rgba(181, 109, 255, 0.15)';
-                      e.currentTarget.style.color = '#c9d1d9';
-                      e.currentTarget.style.background = 'rgba(0, 0, 0, 0.3)';
-                    }}
-                  >
-                    Post
-                  </button>
-                )}
-              </div>
-
-              {/* Category filters - Compact single line on mobile */}
-              <div className="flex gap-1.5 sm:gap-2 overflow-x-auto mt-8 sm:mt-12 pb-2" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-                {categories.map((cat) => (
-                  <button
-                    key={cat.value}
-                    onClick={() => setSelectedCategory(cat.value)}
-                    className="px-3 sm:px-4 py-2 text-[9px] sm:text-[11px] tracking-wide uppercase transition-all whitespace-nowrap flex-shrink-0"
-                    style={{
-                      borderRadius: '2px',
-                      background: selectedCategory === cat.value ? 'rgba(168, 85, 247, 0.15)' : 'transparent',
-                      border: selectedCategory === cat.value ? '1px solid rgba(168, 85, 247, 0.4)' : '1px solid rgba(255, 255, 255, 0.04)',
-                      color: selectedCategory === cat.value ? 'rgba(168, 85, 247, 1)' : 'rgba(255, 255, 255, 0.2)',
-                      transitionDuration: 'var(--duration-slow)',
-                    }}
-                  >
-                    {cat.label}
-                  </button>
-                ))}
-              </div>
+              <div className="w-12 h-px mb-6 sm:mb-8" style={{ 
+                background: 'linear-gradient(to right, rgba(168, 85, 247, 0.4), transparent)' 
+              }} />
+              
+              <h1 className="text-lg sm:text-4xl md:text-5xl uppercase mb-6 sm:mb-8 heading-text" style={{
+                color: '#B56DFF',
+                fontFamily: 'var(--font-heading)',
+                letterSpacing: '0.05em',
+                lineHeight: 'var(--leading-tight)',
+                fontWeight: '700',
+              }}>
+                THE PHILO ROOM
+              </h1>
+              
+              <p className="text-base sm:text-lg mb-3 sm:mb-4 max-w-md" style={{
+                color: '#e6edf3',
+                lineHeight: 'var(--leading-relaxed)',
+                fontWeight: '600'
+              }}>
+                What is Truth?
+              </p>
+              
+              <p className="text-xs sm:text-[11px] max-w-md" style={{
+                color: '#c9d1d9',
+                lineHeight: 'var(--leading-relaxed)',
+                fontWeight: '300'
+              }}>
+                Questions are encouraged. Certainty is optional.
+              </p>
             </div>
 
-            {/* Feed - Scrollable */}
-            <div className="flex-1 overflow-y-auto">
+            {/* Compact Sticky Bar */}
+            <div className="sticky top-20 z-20 mb-6 py-3 flex items-center justify-between gap-3" style={{
+              backgroundColor: 'rgba(0, 0, 0, 0.85)',
+              backdropFilter: 'blur(12px)',
+              borderBottom: '1px solid rgba(181, 109, 255, 0.15)',
+            }}>
+              {/* Room Title + Categories */}
+              <div className="flex items-center gap-3 flex-1 min-w-0 overflow-x-auto" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+                <h2 className="text-xs sm:text-sm uppercase tracking-wider whitespace-nowrap" style={{
+                  color: '#B56DFF',
+                  fontFamily: 'var(--font-heading)',
+                  fontWeight: '700',
+                }}>
+                  PHILO
+                </h2>
+                
+                <div className="h-4 w-px bg-white/10"></div>
+                
+                {/* Category filters - horizontal scroll */}
+                <div className="flex gap-2">
+                  {categories.map((cat) => (
+                    <button
+                      key={cat.value}
+                      onClick={() => setSelectedCategory(cat.value)}
+                      className="px-3 py-1.5 text-[9px] sm:text-[10px] tracking-wide uppercase transition-all whitespace-nowrap"
+                      style={{
+                        borderRadius: '2px',
+                        background: selectedCategory === cat.value ? 'rgba(168, 85, 247, 0.15)' : 'transparent',
+                        border: selectedCategory === cat.value ? '1px solid rgba(168, 85, 247, 0.4)' : '1px solid rgba(255, 255, 255, 0.04)',
+                        color: selectedCategory === cat.value ? 'rgba(168, 85, 247, 1)' : 'rgba(255, 255, 255, 0.3)',
+                        transitionDuration: 'var(--duration-slow)',
+                      }}
+                    >
+                      {cat.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* POST Button */}
+              {isAuthenticated && (
+                <button
+                  onClick={() => setIsPostFormOpen(true)}
+                  className="flex-shrink-0 px-4 py-2 text-[10px] tracking-widest uppercase transition-all"
+                  style={{
+                    background: 'rgba(0, 0, 0, 0.3)',
+                    border: '1px solid rgba(181, 109, 255, 0.15)',
+                    color: '#c9d1d9',
+                    borderRadius: 'var(--radius-soft)',
+                    transitionDuration: 'var(--duration-slow)',
+                    fontWeight: '400',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.borderColor = 'rgba(181, 109, 255, 0.3)';
+                    e.currentTarget.style.color = '#B56DFF';
+                    e.currentTarget.style.background = 'rgba(181, 109, 255, 0.05)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.borderColor = 'rgba(181, 109, 255, 0.15)';
+                    e.currentTarget.style.color = '#c9d1d9';
+                    e.currentTarget.style.background = 'rgba(0, 0, 0, 0.3)';
+                  }}
+                >
+                  Post
+                </button>
+              )}
+            </div>
             {loading ? (
               <div className="flex justify-center py-16"><LoadingSpinner /></div>
             ) : error ? (
@@ -272,9 +280,7 @@ function PhiloRoom() {
                 ))}
               </div>
             )}
-            </div>
-          </div>
-        </div>
+            {/* Feed */}
 
         <PhiloRoomPostForm
           isOpen={isPostFormOpen}
