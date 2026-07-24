@@ -337,55 +337,63 @@ section.overflow-hidden {
 
 /* ============================================
    FANTASY ROOM - PAINT BRUSH TITLE EFFECT
-   Container-based approach for exact brush sizing
+   Container wraps text exactly, brush fills it completely
    ============================================ */
 
 .fantasy-brush-container {
   position: relative;
   display: inline-block;
-  padding: 4px 8px;
+  /* No extra padding - container is exactly text size */
 }
 
 .fantasy-brush-container::before {
   content: "";
   position: absolute;
-  inset: 0;
+  /* Cover entire container - top, bottom, left, right */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   
   background:
     linear-gradient(
       90deg,
-      rgba(139, 69, 19, 0.2) 0%,
-      #8B4513 10%,
-      #A0522D 25%,
+      #7a3d15 0%,
+      #8B4513 15%,
+      #A0522D 30%,
       #C47236 50%,
-      #A0522D 75%,
-      #8B4513 90%,
-      rgba(139, 69, 19, 0.2) 100%
+      #A0522D 70%,
+      #8B4513 85%,
+      #7a3d15 100%
     );
   
   filter: blur(0.3px);
   
+  /* Rough paint stroke edges all around */
   clip-path: polygon(
-    0% 40%, 8% 25%, 15% 35%, 25% 20%, 35% 30%,
-    50% 18%, 65% 28%, 75% 22%, 85% 32%, 92% 25%, 100% 38%,
-    92% 68%, 85% 60%, 75% 72%, 65% 65%, 50% 78%,
-    35% 68%, 25% 75%, 15% 62%, 8% 70%, 0% 58%
+    0% 35%, 5% 20%, 10% 30%, 15% 18%, 20% 28%,
+    30% 15%, 40% 25%, 50% 12%, 60% 22%, 70% 15%,
+    80% 25%, 85% 18%, 90% 28%, 95% 20%, 100% 32%,
+    95% 75%, 90% 65%, 85% 78%, 80% 68%, 70% 82%,
+    60% 72%, 50% 85%, 40% 70%, 30% 80%, 20% 68%,
+    15% 78%, 10% 65%, 5% 75%, 0% 62%
   );
   
-  opacity: 0.75;
+  opacity: 0.8;
   z-index: 1;
-  border-radius: 2px;
 }
 
 .fantasy-brush-container h2 {
   position: relative;
   z-index: 2;
+  /* Small padding inside for text breathing room */
+  padding: 2px 6px;
 }
 
 /* Responsive */
 @media (max-width: 640px) {
-  .fantasy-brush-container {
-    padding: 3px 6px;
+  .fantasy-brush-container h2 {
+    padding: 2px 5px;
   }
 }
 
