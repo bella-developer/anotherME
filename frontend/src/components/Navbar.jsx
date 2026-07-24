@@ -77,21 +77,21 @@ function Navbar() {
           <div className="hidden md:flex items-center space-x-8" role="menubar">
             <Link
               to="/home"
-              className="text-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white/50 rounded px-2 py-1 tracking-wider uppercase text-white/70 hover:text-white"
+              className="text-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white/50 rounded px-2 py-1 tracking-wider uppercase text-white/85 hover:text-white font-medium"
               role="menuitem"
             >
               Home
             </Link>
             <Link
               to="/circles"
-              className="text-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white/50 rounded px-2 py-1 tracking-wider uppercase text-white/70 hover:text-white"
+              className="text-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white/50 rounded px-2 py-1 tracking-wider uppercase text-white/85 hover:text-white font-medium"
               role="menuitem"
             >
               Circles
             </Link>
             <Link
               to="/support"
-              className="text-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white/50 rounded px-2 py-1 tracking-wider uppercase text-white/70 hover:text-white"
+              className="text-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white/50 rounded px-2 py-1 tracking-wider uppercase text-white/85 hover:text-white font-medium"
               role="menuitem"
             >
               Support
@@ -103,7 +103,7 @@ function Navbar() {
             {user?.role === 'admin' && (
               <Link
                 to="/admin"
-                className="text-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white/50 rounded px-2 py-1 tracking-wider uppercase text-purple-400/70 hover:text-purple-400"
+                className="text-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white/50 rounded px-2 py-1 tracking-wider uppercase text-purple-400/85 hover:text-purple-400 font-medium"
                 role="menuitem"
                 title="Admin Dashboard"
               >
@@ -112,7 +112,7 @@ function Navbar() {
             )}
             <Link
               to="/about"
-              className="text-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white/50 rounded px-2 py-1 tracking-wider uppercase text-white/70 hover:text-white"
+              className="text-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white/50 rounded px-2 py-1 tracking-wider uppercase text-white/85 hover:text-white font-medium"
               role="menuitem"
             >
               About Us

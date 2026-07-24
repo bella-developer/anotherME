@@ -60,9 +60,9 @@ function RoomReactions({ room, reactions, userReactions = [], onReact, disabled 
     
     if (hasReacted) {
       return {
-        background: `rgba(${colorRGB}, 0.08)`,
-        border: `1px solid rgba(${colorRGB}, 0.25)`,
-        boxShadow: `0 0 8px rgba(${colorRGB}, 0.15), inset 0 0 12px rgba(${colorRGB}, 0.05)`,
+        background: `rgba(${colorRGB}, 0.12)`,
+        border: `1px solid rgba(${colorRGB}, 0.35)`,
+        boxShadow: `0 0 12px rgba(${colorRGB}, 0.2), inset 0 0 16px rgba(${colorRGB}, 0.08)`,
         transform: 'scale(1.05)',
         transition: 'all 0.3s cubic-bezier(0.22, 1, 0.36, 1)',
       };
@@ -70,16 +70,16 @@ function RoomReactions({ room, reactions, userReactions = [], onReact, disabled 
     
     if (isAnimating) {
       return {
-        background: 'rgba(255, 255, 255, 0.03)',
-        border: '1px solid rgba(255, 255, 255, 0.08)',
+        background: 'rgba(255, 255, 255, 0.05)',
+        border: '1px solid rgba(255, 255, 255, 0.12)',
         transform: 'scale(0.95)',
         transition: 'all 0.15s ease',
       };
     }
     
     return {
-      background: 'rgba(255, 255, 255, 0.02)',
-      border: '1px solid rgba(255, 255, 255, 0.06)',
+      background: 'rgba(255, 255, 255, 0.04)',
+      border: '1px solid rgba(255, 255, 255, 0.1)',
       transition: 'all 0.3s cubic-bezier(0.22, 1, 0.36, 1)',
     };
   };
@@ -97,46 +97,47 @@ function RoomReactions({ room, reactions, userReactions = [], onReact, disabled 
               key={type}
               onClick={() => handleReactionClick(type)}
               disabled={disabled}
-              className="group relative px-2 sm:px-2.5 py-1.5 sm:py-2 rounded flex items-center gap-1.5 cursor-pointer outline-none"
+              className="group relative px-2.5 sm:px-3 py-2 sm:py-2.5 rounded-md flex items-center gap-2 cursor-pointer outline-none min-h-[36px]"
               style={getButtonStyle(type, hasReacted, color, colorRGB)}
               title={label}
               onMouseEnter={(e) => {
                 if (!hasReacted) {
-                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.04)';
-                  e.currentTarget.style.border = '1px solid rgba(255, 255, 255, 0.1)';
-                  e.currentTarget.style.transform = 'scale(1.05)';
-                  e.currentTarget.style.boxShadow = `0 0 8px rgba(${colorRGB}, 0.1)`;
+                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.08)';
+                  e.currentTarget.style.border = '1px solid rgba(255, 255, 255, 0.15)';
+                  e.currentTarget.style.transform = 'translateY(-2px) scale(1.05)';
+                  e.currentTarget.style.boxShadow = `0 4px 12px rgba(${colorRGB}, 0.15)`;
                 }
               }}
               onMouseLeave={(e) => {
                 if (!hasReacted) {
-                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.02)';
-                  e.currentTarget.style.border = '1px solid rgba(255, 255, 255, 0.06)';
-                  e.currentTarget.style.transform = 'scale(1)';
+                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.04)';
+                  e.currentTarget.style.border = '1px solid rgba(255, 255, 255, 0.1)';
+                  e.currentTarget.style.transform = 'translateY(0) scale(1)';
                   e.currentTarget.style.boxShadow = 'none';
                 }
               }}
             >
-              {/* Icon with subtle glow effect - responsive sizing */}
+              {/* Icon with subtle glow effect - Premium sizing */}
               <Icon 
-                size={14}
-                strokeWidth={1.5}
+                size={16}
+                strokeWidth={1.8}
                 className="flex-shrink-0"
                 style={{
-                  color: hasReacted ? color : (document.body.classList.contains('light-mode') ? 'rgba(0, 0, 0, 0.7)' : 'rgba(255, 255, 255, 0.4)'),
-                  filter: hasReacted ? `drop-shadow(0 0 2px rgba(${colorRGB}, 0.4))` : 'none',
+                  color: hasReacted ? color : 'rgba(255, 255, 255, 0.55)',
+                  filter: hasReacted ? `drop-shadow(0 0 3px rgba(${colorRGB}, 0.5))` : 'none',
                   transition: 'all 0.3s ease',
                 }}
               />
               
-              {/* Count - only show if > 0 */}
+              {/* Count - Premium visibility */}
               {count > 0 && (
                 <span
-                  className="text-[10px] sm:text-[11px] font-light tracking-wide"
+                  className="text-[11px] sm:text-xs font-medium tracking-wide"
                   style={{
-                    color: hasReacted ? color : (document.body.classList.contains('light-mode') ? 'rgba(0, 0, 0, 0.65)' : 'rgba(255, 255, 255, 0.4)'),
-                    textShadow: hasReacted ? `0 0 4px rgba(${colorRGB}, 0.3)` : 'none',
+                    color: hasReacted ? color : 'rgba(255, 255, 255, 0.65)',
+                    textShadow: hasReacted ? `0 0 6px rgba(${colorRGB}, 0.4)` : 'none',
                     transition: 'all 0.3s ease',
+                    fontWeight: '500',
                   }}
                 >
                   {count}
