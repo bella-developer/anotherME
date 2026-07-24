@@ -132,7 +132,7 @@ function DarkRoom() {
         <div className="min-h-screen pt-16 pb-24 px-3 sm:px-4 md:px-6 relative z-10 flex flex-col">
           <div className="max-w-full sm:max-w-2xl md:max-w-3xl mx-auto w-full flex flex-col flex-1">
 
-            {/* Room header - Sticky with padding to prevent overlap */}
+            {/* Room header - Sticky with page-matching background */}
             <div className="sticky top-16 z-20 mb-8 sm:mb-12 pt-4 pb-4" style={{
               backgroundColor: '#0a0a0a',
             }}>
