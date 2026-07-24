@@ -100,16 +100,18 @@ function DarkRoomCard({ post, onReaction, onEdit, onDelete }) {
           </h2>
         )}
 
-        {/* Content Text - Compact */}
+        {/* Content Text - Show full text for posts without images */}
         <div 
-          className="text-[11px] sm:text-xs md:text-sm text-white/75 leading-relaxed mb-2 sm:mb-3 typewriter-text-light line-clamp-2 sm:line-clamp-3"
+          className={`text-[11px] sm:text-xs md:text-sm text-white/75 leading-relaxed mb-2 sm:mb-3 typewriter-text-light ${post.image?.url ? 'line-clamp-2 sm:line-clamp-3' : ''}`}
           style={{
             fontFamily: 'var(--font-body)',
             lineHeight: '1.5',
-            display: '-webkit-box',
-            WebkitLineClamp: '2',
-            WebkitBoxOrient: 'vertical',
-            overflow: 'hidden',
+            ...(post.image?.url && {
+              display: '-webkit-box',
+              WebkitLineClamp: '2',
+              WebkitBoxOrient: 'vertical',
+              overflow: 'hidden',
+            })
           }}
           dangerouslySetInnerHTML={{ __html: post.content }}
         />
