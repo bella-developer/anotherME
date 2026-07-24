@@ -337,63 +337,78 @@ section.overflow-hidden {
 
 /* ============================================
    FANTASY ROOM - PAINT BRUSH TITLE EFFECT
-   Container wraps text exactly, brush fills it completely
+   Long dramatic brush stroke that text sits on top of
    ============================================ */
 
 .fantasy-brush-container {
   position: relative;
   display: inline-block;
-  /* No extra padding - container is exactly text size */
 }
 
 .fantasy-brush-container::before {
   content: "";
   position: absolute;
-  /* Cover entire container - top, bottom, left, right */
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  /* Starts well before text, extends far beyond */
+  left: -60px;
+  top: 50%;
+  transform: translateY(-50%) rotate(-0.5deg);
+  
+  /* Long dramatic stroke - extends 200px beyond text width */
+  width: calc(100% + 200px);
+  height: 22px;
   
   background:
     linear-gradient(
       90deg,
-      #7a3d15 0%,
-      #8B4513 15%,
-      #A0522D 30%,
+      rgba(160, 82, 45, 0) 0%,
+      rgba(160, 82, 45, 0.4) 10%,
+      #A0522D 20%,
+      #B8652F 35%,
       #C47236 50%,
-      #A0522D 70%,
-      #8B4513 85%,
-      #7a3d15 100%
+      #B8652F 65%,
+      #A0522D 80%,
+      rgba(160, 82, 45, 0.4) 90%,
+      rgba(160, 82, 45, 0) 100%
     );
   
-  filter: blur(0.3px);
+  /* Organic paint texture */
+  filter: blur(0.6px);
   
-  /* Rough paint stroke edges all around */
+  /* Irregular brush stroke edges */
   clip-path: polygon(
-    0% 35%, 5% 20%, 10% 30%, 15% 18%, 20% 28%,
-    30% 15%, 40% 25%, 50% 12%, 60% 22%, 70% 15%,
-    80% 25%, 85% 18%, 90% 28%, 95% 20%, 100% 32%,
-    95% 75%, 90% 65%, 85% 78%, 80% 68%, 70% 82%,
-    60% 72%, 50% 85%, 40% 70%, 30% 80%, 20% 68%,
-    15% 78%, 10% 65%, 5% 75%, 0% 62%
+    0% 50%, 2% 35%, 5% 45%, 8% 30%, 12% 40%,
+    18% 25%, 25% 35%, 32% 22%, 40% 32%, 48% 20%,
+    56% 30%, 64% 18%, 72% 28%, 80% 20%, 88% 30%,
+    92% 25%, 95% 38%, 98% 32%, 100% 45%,
+    98% 65%, 95% 58%, 92% 70%, 88% 62%, 80% 75%,
+    72% 68%, 64% 78%, 56% 65%, 48% 76%, 40% 64%,
+    32% 74%, 25% 62%, 18% 72%, 12% 58%, 8% 68%,
+    5% 55%, 2% 62%, 0% 50%
   );
   
-  opacity: 0.8;
+  opacity: 0.75;
   z-index: 1;
 }
 
 .fantasy-brush-container h2 {
   position: relative;
   z-index: 2;
-  /* Small padding inside for text breathing room */
-  padding: 2px 6px;
 }
 
 /* Responsive */
 @media (max-width: 640px) {
-  .fantasy-brush-container h2 {
-    padding: 2px 5px;
+  .fantasy-brush-container::before {
+    left: -40px;
+    width: calc(100% + 120px);
+    height: 18px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .fantasy-brush-container::before {
+    left: -80px;
+    width: calc(100% + 250px);
+    height: 24px;
   }
 }
 
