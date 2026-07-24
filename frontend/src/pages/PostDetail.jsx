@@ -108,8 +108,8 @@ function PostDetail() {
   }
 
   return (
-    <div className="min-h-screen">
-      <div className="max-w-3xl mx-auto px-6 py-6 md:py-8">
+    <div>
+      <div className="max-w-3xl mx-auto px-6 py-6 md:py-8 min-h-[calc(100vh-4rem)]">
         {/* Breadcrumb */}
         <div className="mb-6 md:mb-8">
           <div className="flex flex-col gap-3">
