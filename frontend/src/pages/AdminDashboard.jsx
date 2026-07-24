@@ -1,421 +1,560 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { selectAuth } from '../features/authSlice';
-import { fetchStatistics } from '../services/adminService';
-import Layout from '../components/Layout';
-import PageTransition from '../components/PageTransition';
-import LoadingSpinner from '../components/LoadingSpinner';
-import { usePageTitle } from '../hooks/usePageTitle';
+import useAuth from '../hooks/useAuth';
+import { fetchStatistics, fetchDetailedUsers, fetchDetailedPosts, fetchDetailedCircles } from '../services/adminService';
+import { Users, FileText, Circle, MessageSquare, TrendingUp, Image, ChevronDown, ChevronUp } from 'lucide-react';
 
 function AdminDashboard() {
-  usePageTitle('Admin Dashboard');
+  const { user, isAuthenticated } = useAuth();
   const navigate = useNavigate();
-  const { user } = useSelector(selectAuth);
   const [stats, setStats] = useState(null);
+  const [detailedUsers, setDetailedUsers] = useState([]);
+  const [detailedPosts, setDetailedPosts] = useState([]);
+  const [detailedCircles, setDetailedCircles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [expandedSection, setExpandedSection] = useState(null);
 
   useEffect(() => {
-    // Check if user is admin
-    if (!user || user.role !== 'admin') {
+    // Check if user is authenticated and is admin
+    if (!isAuthenticated) {
+      navigate('/login');
+      return;
+    }
+
+    if (user && user.role !== 'admin') {
       navigate('/home');
       return;
     }
 
-    loadStatistics();
-  }, [user, navigate]);
+    // Fetch statistics
+    fetchStatistics()
+      .then(data => {
+        setStats(data);
+        setLoading(false);
+      })
+      .catch(err => {
+        setError(err.message || 'Failed to load statistics');
+        setLoading(false);
+      });
+  }, [isAuthenticated, user, navigate]);
 
-  const loadStatistics = async () => {
+  const loadDetailedData = async (type) => {
     try {
-      setLoading(true);
-      setError(null);
-      const data = await fetchStatistics();
-      setStats(data);
+      if (type === 'users' && detailedUsers.length === 0) {
+        const data = await fetchDetailedUsers();
+        setDetailedUsers(data.users || []);
+      } else if (type === 'posts' && detailedPosts.length === 0) {
+        const data = await fetchDetailedPosts();
+        setDetailedPosts(data.posts || []);
+      } else if (type === 'circles' && detailedCircles.length === 0) {
+        const data = await fetchDetailedCircles();
+        setDetailedCircles(data.circles || []);
+      }
     } catch (err) {
-      setError(err.message || 'Failed to load statistics');
-    } finally {
-      setLoading(false);
+      console.error('Failed to load detailed data:', err);
+    }
+  };
+
+  const toggleSection = async (section) => {
+    if (expandedSection === section) {
+      setExpandedSection(null);
+    } else {
+      setExpandedSection(section);
+      await loadDetailedData(section);
+    }
+  };
+
+  const formatDate = (dateString) => {
+    return new Date(dateString).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
+    });
+  };
+
+  const getRoomColor = (room) => {
+    switch (room) {
+      case 'dark': return '#2EE6FF';
+      case 'fantasy': return '#FF9D1C';
+      case 'philo': return '#B56DFF';
+      default: return '#8b949e';
     }
   };
 
   if (loading) {
     return (
-      <PageTransition>
-        <Layout leftSidebar={null} rightSidebar={null}>
-          <div className="min-h-screen flex items-center justify-center">
-            <LoadingSpinner />
-          </div>
-        </Layout>
-      </PageTransition>
+      <div style={{
+        minHeight: '100vh',
+        background: '#0a0a0a',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        color: '#ffffff',
+        fontFamily: "'IBM Plex Mono', monospace"
+      }}>
+        Loading...
+      </div>
     );
   }
 
   if (error) {
     return (
-      <PageTransition>
-        <Layout leftSidebar={null} rightSidebar={null}>
-          <div className="min-h-screen flex items-center justify-center px-4">
-            <div className="text-center">
-              <p className="text-red-400 mb-4">{error}</p>
-              <button
-                onClick={loadStatistics}
-                className="px-4 py-2 bg-white/10 hover:bg-white/20 rounded transition-colors"
-                style={{ color: '#e6edf3' }}
-              >
-                Retry
-              </button>
-            </div>
-          </div>
-        </Layout>
-      </PageTransition>
+      <div style={{
+        minHeight: '100vh',
+        background: '#0a0a0a',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        color: '#ff4444',
+        fontFamily: "'IBM Plex Mono', monospace",
+        padding: '20px'
+      }}>
+        Error: {error}
+      </div>
     );
   }
 
-  const StatCard = ({ title, value, subtitle, color = '#e6edf3', icon }) => (
-    <div
-      className="p-6 rounded-lg transition-all duration-300 hover:scale-105"
-      style={{
-        background: 'rgba(0, 0, 0, 0.4)',
-        backdropFilter: 'blur(12px)',
-        border: '1px solid rgba(255, 255, 255, 0.06)',
-        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)',
-      }}
-    >
-      <div className="flex items-start justify-between mb-3">
-        <h3 className="text-xs uppercase tracking-wider" style={{ 
-          color: 'rgba(255, 255, 255, 0.4)',
-          fontFamily: 'var(--font-heading)',
-          letterSpacing: '0.1em'
-        }}>
-          {title}
-        </h3>
-        {icon && <span className="text-xl opacity-50">{icon}</span>}
-      </div>
-      <p className="text-4xl font-bold mb-2" style={{ 
-        color,
-        fontFamily: 'var(--font-heading)'
-      }}>
-        {value.toLocaleString()}
-      </p>
-      {subtitle && (
-        <p className="text-xs" style={{ color: 'rgba(255, 255, 255, 0.3)' }}>
-          {subtitle}
-        </p>
-      )}
-    </div>
-  );
-
-  const ProgressBar = ({ label, value, max, color }) => {
-    const percentage = max > 0 ? (value / max) * 100 : 0;
-    return (
-      <div className="mb-4">
-        <div className="flex justify-between mb-2">
-          <span className="text-xs uppercase tracking-wide" style={{ color: 'rgba(255, 255, 255, 0.5)' }}>
-            {label}
-          </span>
-          <span className="text-xs font-bold" style={{ color }}>
-            {value.toLocaleString()}
-          </span>
-        </div>
-        <div className="w-full h-2 rounded-full overflow-hidden" style={{ background: 'rgba(255, 255, 255, 0.05)' }}>
-          <div
-            className="h-full transition-all duration-500 rounded-full"
-            style={{ width: `${percentage}%`, background: color }}
-          />
-        </div>
-      </div>
-    );
-  };
+  if (!stats) return null;
 
   return (
-    <PageTransition>
-      <Layout leftSidebar={null} rightSidebar={null}>
-        {/* Background gradient */}
-        <div 
-          className="fixed inset-0 pointer-events-none"
-          style={{
-            background: 'radial-gradient(ellipse at 50% 20%, rgba(168, 85, 247, 0.08) 0%, transparent 60%)',
-            zIndex: 1,
-          }}
-        />
+    <div style={{
+      minHeight: '100vh',
+      background: '#0a0a0a',
+      color: '#ffffff',
+      padding: '80px 20px 40px',
+      fontFamily: "'IBM Plex Mono', monospace"
+    }}>
+      <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+        {/* Header */}
+        <div style={{ marginBottom: '40px' }}>
+          <button
+            onClick={() => navigate('/home')}
+            style={{
+              background: 'transparent',
+              border: '1px solid rgba(255,255,255,0.2)',
+              color: '#ffffff',
+              padding: '8px 16px',
+              borderRadius: '4px',
+              cursor: 'pointer',
+              fontFamily: "'Space Mono', monospace",
+              fontSize: '11px',
+              marginBottom: '20px',
+              letterSpacing: '0.05em'
+            }}
+          >
+            ← BACK
+          </button>
+          <h1 style={{
+            fontFamily: "'Space Mono', monospace",
+            fontSize: '32px',
+            letterSpacing: '0.1em',
+            color: '#B56DFF',
+            marginBottom: '10px'
+          }}>
+            ADMIN DASHBOARD
+          </h1>
+          <p style={{
+            color: '#8b949e',
+            fontSize: '12px',
+            letterSpacing: '0.05em'
+          }}>
+            Platform analytics and operations • Updated: {new Date().toLocaleString()}
+          </p>
+        </div>
 
-        <div className="min-h-screen pt-16 pb-24 px-4 sm:px-6 relative z-10">
-          <div className="max-w-7xl mx-auto">
-            
-            {/* Header */}
-            <div className="mb-12">
-              <button
-                onClick={() => navigate('/home')}
-                className="px-4 py-2 text-xs tracking-wide uppercase mb-8 transition-all flex items-center gap-2 rounded"
-                style={{
-                  color: '#e6edf3',
-                  border: '1px solid rgba(168, 85, 247, 0.3)',
-                  backgroundColor: 'rgba(168, 85, 247, 0.05)',
-                  fontWeight: '500',
-                }}
-              >
-                ← BACK
-              </button>
-
-              <div className="flex items-center gap-4 mb-4">
-                <div className="w-12 h-px" style={{ 
-                  background: 'linear-gradient(to right, rgba(168, 85, 247, 0.4), transparent)' 
-                }} />
-                <h1 className="text-3xl md:text-5xl uppercase heading-text" style={{
-                  color: '#B56DFF',
-                  fontFamily: 'var(--font-heading)',
-                  letterSpacing: '0.1em',
-                  fontWeight: '700'
-                }}>
-                  ADMIN DASHBOARD
-                </h1>
-              </div>
-              <p className="text-sm" style={{ color: 'rgba(255, 255, 255, 0.4)' }}>
-                Platform analytics and statistics • Updated: {new Date(stats.timestamp).toLocaleString()}
-              </p>
+        {/* Stats Grid */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+          gap: '20px',
+          marginBottom: '40px'
+        }}>
+          {/* Total Users */}
+          <div
+            onClick={() => toggleSection('users')}
+            style={{
+              background: 'rgba(46, 230, 255, 0.05)',
+              border: '1px solid rgba(46, 230, 255, 0.2)',
+              borderRadius: '8px',
+              padding: '20px',
+              cursor: 'pointer',
+              transition: 'all 0.2s'
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
+              <Users size={20} color="#2EE6FF" />
+              {expandedSection === 'users' ? <ChevronUp size={16} color="#2EE6FF" /> : <ChevronDown size={16} color="#2EE6FF" />}
             </div>
-
-            {/* Quick Stats Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-              <StatCard
-                title="Total Users"
-                value={stats.users.total}
-                subtitle={`+${stats.users.new24h} last 24h`}
-                color="#2EE6FF"
-                icon="👥"
-              />
-              <StatCard
-                title="Total Posts"
-                value={stats.posts.total}
-                subtitle={`+${stats.posts.new24h} last 24h`}
-                color="#FF9D1C"
-                icon="📝"
-              />
-              <StatCard
-                title="Total Circles"
-                value={stats.circles.total}
-                subtitle="Active communities"
-                color="#B56DFF"
-                icon="⭕"
-              />
-              <StatCard
-                title="Total Comments"
-                value={stats.comments.total}
-                subtitle={`+${stats.comments.new24h} last 24h`}
-                color="#22c55e"
-                icon="💬"
-              />
+            <div style={{ fontSize: '36px', fontWeight: 'bold', color: '#2EE6FF', marginBottom: '5px' }}>
+              {stats.users.total}
             </div>
-
-            {/* Two Column Layout */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-              
-              {/* User Growth */}
-              <div className="p-6 rounded-lg" style={{
-                background: 'rgba(0, 0, 0, 0.4)',
-                backdropFilter: 'blur(12px)',
-                border: '1px solid rgba(255, 255, 255, 0.06)',
-              }}>
-                <h2 className="text-lg uppercase mb-6" style={{
-                  color: '#2EE6FF',
-                  fontFamily: 'var(--font-heading)',
-                  letterSpacing: '0.08em'
-                }}>
-                  User Growth
-                </h2>
-                <div className="space-y-4">
-                  <div>
-                    <span className="text-sm" style={{ color: 'rgba(255, 255, 255, 0.5)' }}>Last 24 hours</span>
-                    <p className="text-3xl font-bold" style={{ color: '#2EE6FF' }}>+{stats.users.new24h}</p>
-                  </div>
-                  <div>
-                    <span className="text-sm" style={{ color: 'rgba(255, 255, 255, 0.5)' }}>Last 7 days</span>
-                    <p className="text-3xl font-bold" style={{ color: '#2EE6FF' }}>+{stats.users.new7d}</p>
-                  </div>
-                  <div>
-                    <span className="text-sm" style={{ color: 'rgba(255, 255, 255, 0.5)' }}>Last 30 days</span>
-                    <p className="text-3xl font-bold" style={{ color: '#2EE6FF' }}>+{stats.users.new30d}</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Gender Distribution */}
-              <div className="p-6 rounded-lg" style={{
-                background: 'rgba(0, 0, 0, 0.4)',
-                backdropFilter: 'blur(12px)',
-                border: '1px solid rgba(255, 255, 255, 0.06)',
-              }}>
-                <h2 className="text-lg uppercase mb-6" style={{
-                  color: '#B56DFF',
-                  fontFamily: 'var(--font-heading)',
-                  letterSpacing: '0.08em'
-                }}>
-                  Gender Distribution
-                </h2>
-                <ProgressBar
-                  label="Male"
-                  value={stats.users.gender.male}
-                  max={stats.users.total}
-                  color="#2EE6FF"
-                />
-                <ProgressBar
-                  label="Female"
-                  value={stats.users.gender.female}
-                  max={stats.users.total}
-                  color="#FF9D1C"
-                />
-                <ProgressBar
-                  label="Other/Not Specified"
-                  value={stats.users.gender.other}
-                  max={stats.users.total}
-                  color="#B56DFF"
-                />
-                <div className="mt-4 flex justify-around text-center">
-                  <div>
-                    <p className="text-2xl font-bold" style={{ color: '#2EE6FF' }}>{stats.users.gender.malePercentage}%</p>
-                    <p className="text-xs" style={{ color: 'rgba(255, 255, 255, 0.4)' }}>Male</p>
-                  </div>
-                  <div>
-                    <p className="text-2xl font-bold" style={{ color: '#FF9D1C' }}>{stats.users.gender.femalePercentage}%</p>
-                    <p className="text-xs" style={{ color: 'rgba(255, 255, 255, 0.4)' }}>Female</p>
-                  </div>
-                  <div>
-                    <p className="text-2xl font-bold" style={{ color: '#B56DFF' }}>{stats.users.gender.otherPercentage}%</p>
-                    <p className="text-xs" style={{ color: 'rgba(255, 255, 255, 0.4)' }}>Other</p>
-                  </div>
-                </div>
-              </div>
+            <div style={{ fontSize: '11px', color: '#8b949e', letterSpacing: '0.05em' }}>
+              TOTAL USERS
             </div>
-
-            {/* Room Statistics */}
-            <div className="p-6 rounded-lg mb-8" style={{
-              background: 'rgba(0, 0, 0, 0.4)',
-              backdropFilter: 'blur(12px)',
-              border: '1px solid rgba(255, 255, 255, 0.06)',
-            }}>
-              <h2 className="text-lg uppercase mb-6" style={{
-                color: '#FF9D1C',
-                fontFamily: 'var(--font-heading)',
-                letterSpacing: '0.08em'
-              }}>
-                Room Statistics
-              </h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {stats.rooms.map((room) => (
-                  <div key={room.room} className="p-4 rounded" style={{
-                    background: 'rgba(255, 255, 255, 0.02)',
-                    border: '1px solid rgba(255, 255, 255, 0.05)'
-                  }}>
-                    <h3 className="text-sm uppercase mb-4" style={{
-                      color: room.room === 'dark' ? '#2EE6FF' : room.room === 'fantasy' ? '#FF9D1C' : '#B56DFF',
-                      fontFamily: 'var(--font-heading)',
-                      letterSpacing: '0.1em'
-                    }}>
-                      {room.room.toUpperCase()} ROOM
-                    </h3>
-                    <div className="space-y-3">
-                      <div className="flex justify-between">
-                        <span className="text-xs" style={{ color: 'rgba(255, 255, 255, 0.5)' }}>Posts</span>
-                        <span className="text-sm font-bold" style={{ color: '#e6edf3' }}>{room.posts}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-xs" style={{ color: 'rgba(255, 255, 255, 0.5)' }}>Circles</span>
-                        <span className="text-sm font-bold" style={{ color: '#e6edf3' }}>{room.circles}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-xs" style={{ color: 'rgba(255, 255, 255, 0.5)' }}>Comments</span>
-                        <span className="text-sm font-bold" style={{ color: '#e6edf3' }}>{room.comments}</span>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
+            <div style={{ fontSize: '10px', color: '#6b7985', marginTop: '8px' }}>
+              +{stats.users.new24h} last 24h
             </div>
+          </div>
 
-            {/* Engagement & Content */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              
-              {/* Engagement Metrics */}
-              <div className="p-6 rounded-lg" style={{
-                background: 'rgba(0, 0, 0, 0.4)',
-                backdropFilter: 'blur(12px)',
-                border: '1px solid rgba(255, 255, 255, 0.06)',
-              }}>
-                <h2 className="text-lg uppercase mb-6" style={{
-                  color: '#22c55e',
-                  fontFamily: 'var(--font-heading)',
-                  letterSpacing: '0.08em'
-                }}>
-                  Engagement Metrics
-                </h2>
-                <div className="space-y-4">
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm" style={{ color: 'rgba(255, 255, 255, 0.5)' }}>Total Reactions</span>
-                    <span className="text-xl font-bold" style={{ color: '#22c55e' }}>
-                      {stats.engagement.totalReactions.toLocaleString()}
-                    </span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm" style={{ color: 'rgba(255, 255, 255, 0.5)' }}>Engagement Rate</span>
-                    <span className="text-xl font-bold" style={{ color: '#22c55e' }}>
-                      {stats.engagement.engagementRate}
-                    </span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm" style={{ color: 'rgba(255, 255, 255, 0.5)' }}>Avg Comments/Post</span>
-                    <span className="text-xl font-bold" style={{ color: '#22c55e' }}>
-                      {stats.engagement.averageCommentsPerPost}
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Content Stats */}
-              <div className="p-6 rounded-lg" style={{
-                background: 'rgba(0, 0, 0, 0.4)',
-                backdropFilter: 'blur(12px)',
-                border: '1px solid rgba(255, 255, 255, 0.06)',
-              }}>
-                <h2 className="text-lg uppercase mb-6" style={{
-                  color: '#f59e0b',
-                  fontFamily: 'var(--font-heading)',
-                  letterSpacing: '0.08em'
-                }}>
-                  Content Statistics
-                </h2>
-                <div className="space-y-4">
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm" style={{ color: 'rgba(255, 255, 255, 0.5)' }}>Posts with Images</span>
-                    <span className="text-xl font-bold" style={{ color: '#f59e0b' }}>
-                      {stats.posts.withImages.toLocaleString()}
-                    </span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm" style={{ color: 'rgba(255, 255, 255, 0.5)' }}>Image Upload Rate</span>
-                    <span className="text-xl font-bold" style={{ color: '#f59e0b' }}>
-                      {stats.posts.imagePercentage}%
-                    </span>
-                  </div>
-                  <div className="mt-4">
-                    <div className="w-full h-3 rounded-full overflow-hidden" style={{ background: 'rgba(255, 255, 255, 0.05)' }}>
-                      <div
-                        className="h-full transition-all duration-500"
-                        style={{
-                          width: `${stats.posts.imagePercentage}%`,
-                          background: 'linear-gradient(to right, #f59e0b, #fb923c)'
-                        }}
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
+          {/* Total Posts */}
+          <div
+            onClick={() => toggleSection('posts')}
+            style={{
+              background: 'rgba(255, 157, 28, 0.05)',
+              border: '1px solid rgba(255, 157, 28, 0.2)',
+              borderRadius: '8px',
+              padding: '20px',
+              cursor: 'pointer',
+              transition: 'all 0.2s'
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
+              <FileText size={20} color="#FF9D1C" />
+              {expandedSection === 'posts' ? <ChevronUp size={16} color="#FF9D1C" /> : <ChevronDown size={16} color="#FF9D1C" />}
             </div>
+            <div style={{ fontSize: '36px', fontWeight: 'bold', color: '#FF9D1C', marginBottom: '5px' }}>
+              {stats.posts.total}
+            </div>
+            <div style={{ fontSize: '11px', color: '#8b949e', letterSpacing: '0.05em' }}>
+              TOTAL POSTS
+            </div>
+            <div style={{ fontSize: '10px', color: '#6b7985', marginTop: '8px' }}>
+              +{stats.posts.new24h} last 24h
+            </div>
+          </div>
 
+          {/* Total Circles */}
+          <div
+            onClick={() => toggleSection('circles')}
+            style={{
+              background: 'rgba(181, 109, 255, 0.05)',
+              border: '1px solid rgba(181, 109, 255, 0.2)',
+              borderRadius: '8px',
+              padding: '20px',
+              cursor: 'pointer',
+              transition: 'all 0.2s'
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
+              <Circle size={20} color="#B56DFF" />
+              {expandedSection === 'circles' ? <ChevronUp size={16} color="#B56DFF" /> : <ChevronDown size={16} color="#B56DFF" />}
+            </div>
+            <div style={{ fontSize: '36px', fontWeight: 'bold', color: '#B56DFF', marginBottom: '5px' }}>
+              {stats.circles.total}
+            </div>
+            <div style={{ fontSize: '11px', color: '#8b949e', letterSpacing: '0.05em' }}>
+              ACTIVE COMMUNITIES
+            </div>
+          </div>
+
+          {/* Total Comments */}
+          <div style={{
+            background: 'rgba(139, 148, 158, 0.05)',
+            border: '1px solid rgba(139, 148, 158, 0.2)',
+            borderRadius: '8px',
+            padding: '20px'
+          }}>
+            <div style={{ marginBottom: '10px' }}>
+              <MessageSquare size={20} color="#8b949e" />
+            </div>
+            <div style={{ fontSize: '36px', fontWeight: 'bold', color: '#ffffff', marginBottom: '5px' }}>
+              {stats.comments.total}
+            </div>
+            <div style={{ fontSize: '11px', color: '#8b949e', letterSpacing: '0.05em' }}>
+              TOTAL COMMENTS
+            </div>
+            <div style={{ fontSize: '10px', color: '#6b7985', marginTop: '8px' }}>
+              +{stats.comments.new24h} last 24h
+            </div>
           </div>
         </div>
-      </Layout>
-    </PageTransition>
+
+        {/* Detailed Users List */}
+        {expandedSection === 'users' && detailedUsers.length > 0 && (
+          <div style={{
+            background: 'rgba(46, 230, 255, 0.05)',
+            border: '1px solid rgba(46, 230, 255, 0.2)',
+            borderRadius: '8px',
+            padding: '20px',
+            marginBottom: '30px'
+          }}>
+            <h2 style={{
+              fontFamily: "'Space Mono', monospace",
+              fontSize: '16px',
+              color: '#2EE6FF',
+              marginBottom: '20px',
+              letterSpacing: '0.1em'
+            }}>
+              ALL USERS ({detailedUsers.length})
+            </h2>
+            <div style={{ overflowX: 'auto' }}>
+              <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '11px' }}>
+                <thead>
+                  <tr style={{ borderBottom: '1px solid rgba(46, 230, 255, 0.2)' }}>
+                    <th style={{ textAlign: 'left', padding: '10px', color: '#2EE6FF', fontWeight: 'normal' }}>USERNAME</th>
+                    <th style={{ textAlign: 'left', padding: '10px', color: '#2EE6FF', fontWeight: 'normal' }}>GENDER</th>
+                    <th style={{ textAlign: 'center', padding: '10px', color: '#2EE6FF', fontWeight: 'normal' }}>TOTAL</th>
+                    <th style={{ textAlign: 'center', padding: '10px', color: '#2EE6FF', fontWeight: 'normal' }}>DARK</th>
+                    <th style={{ textAlign: 'center', padding: '10px', color: '#FF9D1C', fontWeight: 'normal' }}>FANTASY</th>
+                    <th style={{ textAlign: 'center', padding: '10px', color: '#B56DFF', fontWeight: 'normal' }}>PHILO</th>
+                    <th style={{ textAlign: 'left', padding: '10px', color: '#2EE6FF', fontWeight: 'normal' }}>JOINED</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {detailedUsers.map((user, idx) => (
+                    <tr key={user._id} style={{
+                      borderBottom: '1px solid rgba(255,255,255,0.05)',
+                      background: idx % 2 === 0 ? 'transparent' : 'rgba(255,255,255,0.02)'
+                    }}>
+                      <td style={{ padding: '10px', color: '#ffffff' }}>{user.username}</td>
+                      <td style={{ padding: '10px', color: '#8b949e' }}>{user.gender || '-'}</td>
+                      <td style={{ padding: '10px', textAlign: 'center', color: '#ffffff', fontWeight: 'bold' }}>
+                        {user.totalPosts}
+                      </td>
+                      <td style={{ padding: '10px', textAlign: 'center', color: '#2EE6FF' }}>
+                        {user.darkPosts}
+                      </td>
+                      <td style={{ padding: '10px', textAlign: 'center', color: '#FF9D1C' }}>
+                        {user.fantasyPosts}
+                      </td>
+                      <td style={{ padding: '10px', textAlign: 'center', color: '#B56DFF' }}>
+                        {user.philoPosts}
+                      </td>
+                      <td style={{ padding: '10px', color: '#6b7985', fontFamily: "'VT323', monospace" }}>
+                        {formatDate(user.createdAt)}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
+
+        {/* Detailed Posts List */}
+        {expandedSection === 'posts' && detailedPosts.length > 0 && (
+          <div style={{
+            background: 'rgba(255, 157, 28, 0.05)',
+            border: '1px solid rgba(255, 157, 28, 0.2)',
+            borderRadius: '8px',
+            padding: '20px',
+            marginBottom: '30px'
+          }}>
+            <h2 style={{
+              fontFamily: "'Space Mono', monospace",
+              fontSize: '16px',
+              color: '#FF9D1C',
+              marginBottom: '20px',
+              letterSpacing: '0.1em'
+            }}>
+              ALL POSTS ({detailedPosts.length})
+            </h2>
+            <div style={{ overflowX: 'auto' }}>
+              <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '11px' }}>
+                <thead>
+                  <tr style={{ borderBottom: '1px solid rgba(255, 157, 28, 0.2)' }}>
+                    <th style={{ textAlign: 'left', padding: '10px', color: '#FF9D1C', fontWeight: 'normal', width: '30%' }}>TITLE</th>
+                    <th style={{ textAlign: 'left', padding: '10px', color: '#FF9D1C', fontWeight: 'normal' }}>AUTHOR</th>
+                    <th style={{ textAlign: 'center', padding: '10px', color: '#FF9D1C', fontWeight: 'normal' }}>ROOM</th>
+                    <th style={{ textAlign: 'left', padding: '10px', color: '#FF9D1C', fontWeight: 'normal' }}>CATEGORY</th>
+                    <th style={{ textAlign: 'center', padding: '10px', color: '#FF9D1C', fontWeight: 'normal' }}>IMG</th>
+                    <th style={{ textAlign: 'center', padding: '10px', color: '#FF9D1C', fontWeight: 'normal' }}>💬</th>
+                    <th style={{ textAlign: 'center', padding: '10px', color: '#FF9D1C', fontWeight: 'normal' }}>❤️</th>
+                    <th style={{ textAlign: 'left', padding: '10px', color: '#FF9D1C', fontWeight: 'normal' }}>DATE</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {detailedPosts.map((post, idx) => (
+                    <tr key={post.id} style={{
+                      borderBottom: '1px solid rgba(255,255,255,0.05)',
+                      background: idx % 2 === 0 ? 'transparent' : 'rgba(255,255,255,0.02)'
+                    }}>
+                      <td style={{ padding: '10px', color: '#ffffff', maxWidth: '300px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                        {post.title || 'Untitled'}
+                      </td>
+                      <td style={{ padding: '10px', color: '#8b949e' }}>{post.author}</td>
+                      <td style={{ padding: '10px', textAlign: 'center', color: getRoomColor(post.room), fontWeight: 'bold' }}>
+                        {post.room.toUpperCase()}
+                      </td>
+                      <td style={{ padding: '10px', color: '#6b7985' }}>{post.category}</td>
+                      <td style={{ padding: '10px', textAlign: 'center' }}>
+                        {post.hasImage && <Image size={14} color="#8b949e" />}
+                      </td>
+                      <td style={{ padding: '10px', textAlign: 'center', color: '#ffffff' }}>
+                        {post.commentCount}
+                      </td>
+                      <td style={{ padding: '10px', textAlign: 'center', color: '#ffffff' }}>
+                        {post.reactionCount}
+                      </td>
+                      <td style={{ padding: '10px', color: '#6b7985', fontFamily: "'VT323', monospace" }}>
+                        {formatDate(post.createdAt)}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
+
+        {/* Detailed Circles List */}
+        {expandedSection === 'circles' && detailedCircles.length > 0 && (
+          <div style={{
+            background: 'rgba(181, 109, 255, 0.05)',
+            border: '1px solid rgba(181, 109, 255, 0.2)',
+            borderRadius: '8px',
+            padding: '20px',
+            marginBottom: '30px'
+          }}>
+            <h2 style={{
+              fontFamily: "'Space Mono', monospace",
+              fontSize: '16px',
+              color: '#B56DFF',
+              marginBottom: '20px',
+              letterSpacing: '0.1em'
+            }}>
+              ALL CIRCLES ({detailedCircles.length})
+            </h2>
+            <div style={{ overflowX: 'auto' }}>
+              <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '11px' }}>
+                <thead>
+                  <tr style={{ borderBottom: '1px solid rgba(181, 109, 255, 0.2)' }}>
+                    <th style={{ textAlign: 'left', padding: '10px', color: '#B56DFF', fontWeight: 'normal', width: '30%' }}>NAME</th>
+                    <th style={{ textAlign: 'left', padding: '10px', color: '#B56DFF', fontWeight: 'normal' }}>CREATOR</th>
+                    <th style={{ textAlign: 'center', padding: '10px', color: '#B56DFF', fontWeight: 'normal' }}>ROOM</th>
+                    <th style={{ textAlign: 'center', padding: '10px', color: '#B56DFF', fontWeight: 'normal' }}>MEMBERS</th>
+                    <th style={{ textAlign: 'center', padding: '10px', color: '#B56DFF', fontWeight: 'normal' }}>POSTS</th>
+                    <th style={{ textAlign: 'left', padding: '10px', color: '#B56DFF', fontWeight: 'normal' }}>CREATED</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {detailedCircles.map((circle, idx) => (
+                    <tr key={circle.id} style={{
+                      borderBottom: '1px solid rgba(255,255,255,0.05)',
+                      background: idx % 2 === 0 ? 'transparent' : 'rgba(255,255,255,0.02)'
+                    }}>
+                      <td style={{ padding: '10px', color: '#ffffff' }}>{circle.name}</td>
+                      <td style={{ padding: '10px', color: '#8b949e' }}>{circle.creator}</td>
+                      <td style={{ padding: '10px', textAlign: 'center', color: getRoomColor(circle.room), fontWeight: 'bold' }}>
+                        {circle.room.toUpperCase()}
+                      </td>
+                      <td style={{ padding: '10px', textAlign: 'center', color: '#ffffff' }}>
+                        {circle.memberCount}
+                      </td>
+                      <td style={{ padding: '10px', textAlign: 'center', color: '#ffffff', fontWeight: 'bold' }}>
+                        {circle.postCount}
+                      </td>
+                      <td style={{ padding: '10px', color: '#6b7985', fontFamily: "'VT323', monospace" }}>
+                        {formatDate(circle.createdAt)}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
+
+        {/* Gender Distribution */}
+        <div style={{
+          background: 'rgba(255,255,255,0.03)',
+          border: '1px solid rgba(255,255,255,0.1)',
+          borderRadius: '8px',
+          padding: '20px',
+          marginBottom: '30px'
+        }}>
+          <h2 style={{
+            fontFamily: "'Space Mono', monospace",
+            fontSize: '14px',
+            color: '#ffffff',
+            marginBottom: '15px',
+            letterSpacing: '0.1em'
+          }}>
+            GENDER DISTRIBUTION
+          </h2>
+          <div style={{ display: 'flex', gap: '10px', marginBottom: '10px' }}>
+            <div style={{
+              flex: stats.users.gender.malePercentage,
+              height: '40px',
+              background: 'linear-gradient(90deg, #2EE6FF, #1a8a9a)',
+              borderRadius: '4px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: '12px',
+              fontWeight: 'bold'
+            }}>
+              {stats.users.gender.malePercentage}%
+            </div>
+            <div style={{
+              flex: stats.users.gender.femalePercentage,
+              height: '40px',
+              background: 'linear-gradient(90deg, #FF9D1C, #cc7d16)',
+              borderRadius: '4px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: '12px',
+              fontWeight: 'bold'
+            }}>
+              {stats.users.gender.femalePercentage}%
+            </div>
+            {stats.users.gender.other > 0 && (
+              <div style={{
+                flex: stats.users.gender.otherPercentage,
+                height: '40px',
+                background: 'linear-gradient(90deg, #B56DFF, #8a53cc)',
+                borderRadius: '4px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '12px',
+                fontWeight: 'bold'
+              }}>
+                {stats.users.gender.otherPercentage}%
+              </div>
+            )}
+          </div>
+          <div style={{ display: 'flex', gap: '20px', fontSize: '11px', color: '#8b949e' }}>
+            <div>MALE: {stats.users.gender.male}</div>
+            <div>FEMALE: {stats.users.gender.female}</div>
+            {stats.users.gender.other > 0 && <div>OTHER: {stats.users.gender.other}</div>}
+          </div>
+        </div>
+
+        {/* Room Statistics */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+          gap: '20px'
+        }}>
+          {stats.rooms.map(room => (
+            <div key={room.room} style={{
+              background: `rgba(${room.room === 'dark' ? '46, 230, 255' : room.room === 'fantasy' ? '255, 157, 28' : '181, 109, 255'}, 0.05)`,
+              border: `1px solid rgba(${room.room === 'dark' ? '46, 230, 255' : room.room === 'fantasy' ? '255, 157, 28' : '181, 109, 255'}, 0.2)`,
+              borderRadius: '8px',
+              padding: '20px'
+            }}>
+              <h3 style={{
+                fontFamily: "'Space Mono', monospace",
+                fontSize: '14px',
+                color: getRoomColor(room.room),
+                marginBottom: '15px',
+                letterSpacing: '0.1em'
+              }}>
+                {room.room.toUpperCase()} ROOM
+              </h3>
+              <div style={{ fontSize: '11px', lineHeight: '1.8', color: '#c9d1d9' }}>
+                <div>Posts: <span style={{ fontWeight: 'bold', color: '#ffffff' }}>{room.posts}</span></div>
+                <div>Circles: <span style={{ fontWeight: 'bold', color: '#ffffff' }}>{room.circles}</span></div>
+                <div>Comments: <span style={{ fontWeight: 'bold', color: '#ffffff' }}>{room.comments}</span></div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
   );
 }
 

@@ -199,3 +199,166 @@ export async function getStatistics(req, res, next) {
     next(error);
   }
 }
+
+/**
+ * GET /api/admin/users
+ * Get detailed list of all users with post counts
+ */
+export async function getDetailedUsers(req, res, next) {
+  try {
+    // Verify admin access
+    const user = await User.findById(req.user.id);
+    if (!user || user.role !== 'admin') {
+      const error = new Error('Access denied. Admin privileges required.');
+      error.statusCode = 403;
+      error.code = 'ADMIN_ACCESS_DENIED';
+      throw error;
+    }
+
+    // Get all users with post counts per room
+    const users = await User.aggregate([
+      {
+        $lookup: {
+          from: 'posts',
+          localField: '_id',
+          foreignField: 'authorId',
+          as: 'posts'
+        }
+      },
+      {
+        $addFields: {
+          totalPosts: { $size: '$posts' },
+          darkPosts: {
+            $size: {
+              $filter: {
+                input: '$posts',
+                as: 'post',
+                cond: { $eq: ['$$post.room', 'dark'] }
+              }
+            }
+          },
+          fantasyPosts: {
+            $size: {
+              $filter: {
+                input: '$posts',
+                as: 'post',
+                cond: { $eq: ['$$post.room', 'fantasy'] }
+              }
+            }
+          },
+          philoPosts: {
+            $size: {
+              $filter: {
+                input: '$posts',
+                as: 'post',
+                cond: { $eq: ['$$post.room', 'philo'] }
+              }
+            }
+          }
+        }
+      },
+      {
+        $project: {
+          username: 1,
+          email: 1,
+          gender: 1,
+          createdAt: 1,
+          totalPosts: 1,
+          darkPosts: 1,
+          fantasyPosts: 1,
+          philoPosts: 1
+        }
+      },
+      { $sort: { totalPosts: -1 } }
+    ]);
+
+    res.status(200).json(
+      createSuccessResponse({ users }, 'User details retrieved successfully')
+    );
+  } catch (error) {
+    next(error);
+  }
+}
+
+/**
+ * GET /api/admin/posts
+ * Get detailed list of all posts
+ */
+export async function getDetailedPosts(req, res, next) {
+  try {
+    // Verify admin access
+    const user = await User.findById(req.user.id);
+    if (!user || user.role !== 'admin') {
+      const error = new Error('Access denied. Admin privileges required.');
+      error.statusCode = 403;
+      error.code = 'ADMIN_ACCESS_DENIED';
+      throw error;
+    }
+
+    // Get all posts with author info
+    const posts = await Post.find()
+      .select('title room category createdAt authorId commentCount reactions image')
+      .populate('authorId', 'username')
+      .sort({ createdAt: -1 })
+      .lean();
+
+    // Calculate total reactions for each post
+    const postsWithStats = posts.map(post => ({
+      id: post._id,
+      title: post.title,
+      author: post.authorId?.username || 'Unknown',
+      room: post.room,
+      category: post.category,
+      hasImage: !!post.image?.url,
+      commentCount: post.commentCount || 0,
+      reactionCount: Object.values(post.reactions || {}).reduce((a, b) => a + b, 0),
+      createdAt: post.createdAt
+    }));
+
+    res.status(200).json(
+      createSuccessResponse({ posts: postsWithStats }, 'Post details retrieved successfully')
+    );
+  } catch (error) {
+    next(error);
+  }
+}
+
+/**
+ * GET /api/admin/circles
+ * Get detailed list of all circles
+ */
+export async function getDetailedCircles(req, res, next) {
+  try {
+    // Verify admin access
+    const user = await User.findById(req.user.id);
+    if (!user || user.role !== 'admin') {
+      const error = new Error('Access denied. Admin privileges required.');
+      error.statusCode = 403;
+      error.code = 'ADMIN_ACCESS_DENIED';
+      throw error;
+    }
+
+    // Get all circles with creator info
+    const circles = await Circle.find()
+      .select('name room memberCount postCount createdAt creatorId')
+      .populate('creatorId', 'username')
+      .sort({ postCount: -1 })
+      .lean();
+
+    const circlesWithStats = circles.map(circle => ({
+      id: circle._id,
+      name: circle.name,
+      creator: circle.creatorId?.username || 'Unknown',
+      room: circle.room,
+      memberCount: circle.memberCount || 0,
+      postCount: circle.postCount || 0,
+      createdAt: circle.createdAt
+    }));
+
+    res.status(200).json(
+      createSuccessResponse({ circles: circlesWithStats }, 'Circle details retrieved successfully')
+    );
+  } catch (error) {
+    next(error);
+  }
+}
