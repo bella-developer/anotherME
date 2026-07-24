@@ -132,8 +132,11 @@ function DarkRoom() {
         <div className="min-h-screen pt-16 pb-24 px-3 sm:px-4 md:px-6 relative z-10 flex flex-col">
           <div className="max-w-full sm:max-w-2xl md:max-w-3xl mx-auto w-full flex flex-col flex-1">
 
-            {/* Room header - Sticky */}
-            <div className="sticky top-16 z-20 mb-8 sm:mb-12 pt-4 pb-4">
+            {/* Room header - Sticky with semi-transparent overlay */}
+            <div className="sticky top-16 z-20 mb-8 sm:mb-12 pt-4 pb-4" style={{
+              backgroundColor: 'rgba(0, 0, 0, 0.7)',
+              backdropFilter: 'blur(8px)',
+            }}>
               <button
                 onClick={() => navigate('/home')}
                 className="px-4 py-2 text-xs tracking-wide uppercase mb-12 transition-all flex items-center gap-2 rounded"
