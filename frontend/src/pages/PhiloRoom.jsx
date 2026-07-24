@@ -190,94 +190,72 @@ function PhiloRoom() {
             </div>
 
             {/* Compact Sticky Bar */}
-            <div className="sticky top-16 z-20 mb-6 -mx-3 sm:mx-0 px-3 sm:px-4 py-2 flex items-center justify-between gap-2" style={{
+            <div className="sticky top-16 z-20 mb-6 -mx-3 sm:mx-0 px-3 sm:px-4 py-2 flex items-center justify-between gap-3" style={{
               backgroundColor: 'rgba(0, 0, 0, 0.95)',
               backdropFilter: 'blur(12px)',
               borderBottom: '1px solid rgba(181, 109, 255, 0.15)',
             }}>
-              {/* Room Title + Categories */}
-              <div className="flex items-center gap-2 flex-1 min-w-0">
-                <h2 className="text-[10px] sm:text-sm uppercase tracking-wider whitespace-nowrap flex-shrink-0" style={{
-                  color: '#B56DFF',
-                  fontFamily: 'var(--font-heading)',
-                  fontWeight: '700',
-                }}>
-                  PHILO
-                </h2>
-                
-                <div className="h-3 w-px bg-white/10 flex-shrink-0"></div>
-                
-                {/* Category Dropdown on Mobile, Horizontal on Desktop */}
-                <div className="flex-1 min-w-0">
-                  {/* Mobile Dropdown */}
-                  <select
-                    value={selectedCategory}
-                    onChange={(e) => setSelectedCategory(e.target.value)}
-                    className="sm:hidden w-full px-2 py-1 text-[9px] tracking-wide uppercase transition-all"
-                    style={{
-                      borderRadius: '2px',
-                      background: 'rgba(168, 85, 247, 0.15)',
-                      border: '1px solid rgba(168, 85, 247, 0.4)',
-                      color: 'rgba(168, 85, 247, 1)',
-                      fontWeight: '500',
-                    }}
-                  >
-                    {categories.map((cat) => (
-                      <option key={cat.value} value={cat.value} style={{ background: '#000', color: '#fff' }}>
-                        {cat.label}
-                      </option>
-                    ))}
-                  </select>
-                  
-                  {/* Desktop Horizontal Tabs */}
-                  <div className="hidden sm:flex gap-2 overflow-x-auto" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-                    {categories.map((cat) => (
-                      <button
-                        key={cat.value}
-                        onClick={() => setSelectedCategory(cat.value)}
-                        className="px-3 py-1.5 text-[9px] sm:text-[10px] tracking-wide uppercase transition-all whitespace-nowrap"
-                        style={{
-                          borderRadius: '2px',
-                          background: selectedCategory === cat.value ? 'rgba(168, 85, 247, 0.15)' : 'transparent',
-                          border: selectedCategory === cat.value ? '1px solid rgba(168, 85, 247, 0.4)' : '1px solid rgba(255, 255, 255, 0.04)',
-                          color: selectedCategory === cat.value ? 'rgba(168, 85, 247, 1)' : 'rgba(255, 255, 255, 0.3)',
-                          transitionDuration: 'var(--duration-slow)',
-                        }}
-                      >
-                        {cat.label}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              </div>
+              {/* Left: Room Title */}
+              <h2 className="text-[10px] sm:text-sm uppercase tracking-wider whitespace-nowrap flex-shrink-0" style={{
+                color: '#B56DFF',
+                fontFamily: 'var(--font-heading)',
+                fontWeight: '700',
+              }}>
+                PHILO ROOM
+              </h2>
 
-              {/* POST Button */}
-              {isAuthenticated && (
-                <button
-                  onClick={() => setIsPostFormOpen(true)}
-                  className="flex-shrink-0 px-2 sm:px-4 py-1 sm:py-2 text-[9px] sm:text-[10px] tracking-widest uppercase transition-all"
+              {/* Right: Categories + POST Button */}
+              <div className="flex items-center gap-2 ml-auto">
+                {/* Category Dropdown - Compact, auto-width */}
+                <select
+                  value={selectedCategory}
+                  onChange={(e) => setSelectedCategory(e.target.value)}
+                  className="px-2 py-1 text-[9px] tracking-wide uppercase transition-all cursor-pointer"
                   style={{
-                    background: 'rgba(0, 0, 0, 0.3)',
-                    border: '1px solid rgba(181, 109, 255, 0.15)',
-                    color: '#c9d1d9',
-                    borderRadius: 'var(--radius-soft)',
-                    transitionDuration: 'var(--duration-slow)',
-                    fontWeight: '400',
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.borderColor = 'rgba(181, 109, 255, 0.3)';
-                    e.currentTarget.style.color = '#B56DFF';
-                    e.currentTarget.style.background = 'rgba(181, 109, 255, 0.05)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.borderColor = 'rgba(181, 109, 255, 0.15)';
-                    e.currentTarget.style.color = '#c9d1d9';
-                    e.currentTarget.style.background = 'rgba(0, 0, 0, 0.3)';
+                    borderRadius: '2px',
+                    background: 'rgba(168, 85, 247, 0.15)',
+                    border: '1px solid rgba(168, 85, 247, 0.4)',
+                    color: 'rgba(168, 85, 247, 1)',
+                    fontWeight: '500',
+                    width: 'auto',
+                    minWidth: 'fit-content',
                   }}
                 >
-                  Post
-                </button>
-              )}
+                  {categories.map((cat) => (
+                    <option key={cat.value} value={cat.value} style={{ background: '#000', color: '#fff' }}>
+                      {cat.label}
+                    </option>
+                  ))}
+                </select>
+
+                {/* POST Button */}
+                {isAuthenticated && (
+                  <button
+                    onClick={() => setIsPostFormOpen(true)}
+                    className="flex-shrink-0 px-2 sm:px-4 py-1 sm:py-2 text-[9px] sm:text-[10px] tracking-widest uppercase transition-all"
+                    style={{
+                      background: 'rgba(0, 0, 0, 0.3)',
+                      border: '1px solid rgba(181, 109, 255, 0.15)',
+                      color: '#c9d1d9',
+                      borderRadius: 'var(--radius-soft)',
+                      transitionDuration: 'var(--duration-slow)',
+                      fontWeight: '400',
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.borderColor = 'rgba(181, 109, 255, 0.3)';
+                      e.currentTarget.style.color = '#B56DFF';
+                      e.currentTarget.style.background = 'rgba(181, 109, 255, 0.05)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.borderColor = 'rgba(181, 109, 255, 0.15)';
+                      e.currentTarget.style.color = '#c9d1d9';
+                      e.currentTarget.style.background = 'rgba(0, 0, 0, 0.3)';
+                    }}
+                  >
+                    Post
+                  </button>
+                )}
+              </div>
             </div>
             {loading ? (
               <div className="flex justify-center py-16"><LoadingSpinner /></div>
