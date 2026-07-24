@@ -337,7 +337,7 @@ section.overflow-hidden {
 
 /* ============================================
    FANTASY ROOM - PAINT BRUSH TITLE EFFECT
-   VERY COMPACT: minimal 45px right extension matching mockup
+   TALL & SHORT: >40px height, <45px extension
    ============================================ */
 
 .fantasy-brush-wrapper {
@@ -352,9 +352,10 @@ section.overflow-hidden {
   top: 50%;
   transform: translateY(-50%) rotate(-0.5deg);
   
-  /* VERY SHORT: only 45px extension */
-  width: calc(100% + 45px);
-  height: 19px;
+  /* SHORTER width: 40px extension (less than 45px) */
+  width: calc(100% + 40px);
+  /* TALLER height: 42px (more than 40px) */
+  height: 42px;
   
   background:
     linear-gradient(
@@ -372,13 +373,13 @@ section.overflow-hidden {
   
   filter: blur(0.4px);
   
-  /* Less dramatic taper - more uniform thickness */
+  /* Adjusted for taller height - less vertical variation */
   clip-path: polygon(
-    0% 42%, 6% 30%, 12% 38%, 20% 28%, 30% 36%,
-    42% 24%, 54% 32%, 66% 22%, 78% 30%, 88% 26%,
-    95% 32%, 100% 36%,
-    95% 68%, 88% 72%, 78% 66%, 66% 74%, 54% 66%,
-    42% 72%, 30% 64%, 20% 70%, 12% 60%, 6% 66%, 0% 56%
+    0% 46%, 6% 38%, 12% 44%, 20% 36%, 30% 42%,
+    42% 34%, 54% 40%, 66% 32%, 78% 38%, 88% 34%,
+    95% 40%, 100% 44%,
+    95% 60%, 88% 66%, 78% 62%, 66% 68%, 54% 60%,
+    42% 66%, 30% 58%, 20% 64%, 12% 56%, 6% 62%, 0% 54%
   );
   
   opacity: 1;
@@ -393,15 +394,15 @@ section.overflow-hidden {
 /* Responsive */
 @media (max-width: 640px) {
   .fantasy-brush-wrapper::before {
-    width: calc(100% + 35px);
-    height: 16px;
+    width: calc(100% + 30px);
+    height: 35px;
   }
 }
 
 @media (min-width: 1024px) {
   .fantasy-brush-wrapper::before {
-    width: calc(100% + 55px);
-    height: 20px;
+    width: calc(100% + 45px);
+    height: 45px;
   }
 }
 
