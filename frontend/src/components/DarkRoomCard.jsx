@@ -86,23 +86,40 @@ function DarkRoomCard({ post, onReaction, onEdit, onDelete }) {
 
       {/* Main Content - Responsive padding */}
       <div className="px-3 sm:px-5 pb-3 sm:pb-5 flex flex-col">
-        {/* Title - Red brush effect */}
-        {post.title && (
-          <div className="mb-2 sm:mb-3">
-            <div className="dark-brush-wrapper">
-              <h2 
-                className="text-sm sm:text-lg md:text-xl text-white leading-tight heading-text"
-                style={{
-                  fontFamily: 'var(--font-heading)',
-                  letterSpacing: '0.01em',
-                  fontWeight: '700',
-                }}
-              >
-                {post.title}
-              </h2>
+        {/* Title - Red brush effect - Extract from content if no title */}
+        {(() => {
+          // Extract title: use post.title or extract from first line of content (35-45 chars)
+          let displayTitle = post.title;
+          if (!displayTitle && post.content) {
+            // Strip HTML tags and get plain text
+            const plainText = post.content.replace(/<[^>]*>/g, '').trim();
+            // Get first line
+            const firstLine = plainText.split('\n')[0];
+            // Extract 35-45 characters
+            displayTitle = firstLine.length > 45 
+              ? firstLine.substring(0, 45).trim() + '...'
+              : firstLine.length >= 35
+              ? firstLine.substring(0, firstLine.length).trim()
+              : firstLine.substring(0, 35).trim() + (firstLine.length > 35 ? '...' : '');
+          }
+          
+          return displayTitle ? (
+            <div className="mb-2 sm:mb-3">
+              <div className="dark-brush-wrapper">
+                <h2 
+                  className="text-sm sm:text-lg md:text-xl text-white leading-tight heading-text"
+                  style={{
+                    fontFamily: 'var(--font-heading)',
+                    letterSpacing: '0.01em',
+                    fontWeight: '700',
+                  }}
+                >
+                  {displayTitle}
+                </h2>
+              </div>
             </div>
-          </div>
-        )}
+          ) : null;
+        })()}
 
         {/* Content Text - Show full text for posts without images */}
         <div 

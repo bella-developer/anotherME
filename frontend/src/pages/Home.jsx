@@ -63,26 +63,44 @@ function Home() {
       <Layout leftSidebar={null} rightSidebar={null}>
         <div className="min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 md:px-8 py-6 md:py-10 lg:py-14 relative z-10">
 
-          {/* Opening quote - fades in slowly */}
+          {/* Opening quote - fades in slowly with artistic styling */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 2, delay: 0.5 }}
             className="text-center mb-6 md:mb-8"
           >
-            <p className="text-[9px] tracking-[0.28em] uppercase font-light italic" style={{ color: '#6e7681' }}>
-              "{getGreeting()}"
+            <p 
+              className="text-sm md:text-base tracking-[0.35em] uppercase font-light"
+              style={{ 
+                color: '#ffffff',
+                fontFamily: 'var(--font-heading)',
+                textShadow: '0 0 20px rgba(255, 255, 255, 0.3), 0 0 40px rgba(255, 255, 255, 0.15)',
+                letterSpacing: '0.4em',
+                fontWeight: '300',
+              }}
+            >
+              {getGreeting()}
             </p>
           </motion.div>
 
-          {/* Header - refined, breathing */}
+          {/* Header - refined, breathing with artistic styling */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.8, delay: 0.8 }}
             className="text-center mb-16 md:mb-20 lg:mb-24"
           >
-            <p className="text-[9px] tracking-[0.22em] uppercase mb-4 md:mb-6 font-light" style={{ color: '#6e7681' }}>
+            <p 
+              className="text-xs md:text-sm tracking-[0.35em] uppercase mb-4 md:mb-6 font-light"
+              style={{ 
+                color: '#ffffff',
+                fontFamily: 'var(--font-heading)',
+                textShadow: '0 0 15px rgba(255, 255, 255, 0.25)',
+                letterSpacing: '0.45em',
+                fontWeight: '400',
+              }}
+            >
               Choose Your Room
             </p>
             <motion.h1

@@ -213,9 +213,9 @@ function FantasyRoom() {
                   className="px-1.5 py-0.5 text-[8px] tracking-wide uppercase transition-all cursor-pointer"
                   style={{
                     borderRadius: '2px',
-                    background: 'rgba(249, 115, 22, 0.1)',
-                    border: '1px solid rgba(249, 115, 22, 0.3)',
-                    color: 'rgba(249, 115, 22, 0.9)',
+                    background: 'rgba(255, 255, 255, 0.05)',
+                    border: '1px solid rgba(255, 255, 255, 0.2)',
+                    color: '#ffffff',
                     fontWeight: '500',
                     width: 'auto',
                     minWidth: 'fit-content',
@@ -235,19 +235,19 @@ function FantasyRoom() {
                   className="px-2 py-0.5 text-[8px] tracking-wide uppercase transition-all"
                   style={{
                     borderRadius: '2px',
-                    background: 'rgba(249, 115, 22, 0.1)',
-                    border: '1px solid rgba(249, 115, 22, 0.3)',
-                    color: 'rgba(249, 115, 22, 0.9)',
+                    background: 'rgba(255, 255, 255, 0.05)',
+                    border: '1px solid rgba(255, 255, 255, 0.2)',
+                    color: '#ffffff',
                     fontWeight: '500',
                     height: '20px',
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.background = 'rgba(249, 115, 22, 0.2)';
-                    e.currentTarget.style.borderColor = 'rgba(249, 115, 22, 0.5)';
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)';
+                    e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.3)';
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.background = 'rgba(249, 115, 22, 0.1)';
-                    e.currentTarget.style.borderColor = 'rgba(249, 115, 22, 0.3)';
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)';
+                    e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)';
                   }}
                 >
                   BACK
