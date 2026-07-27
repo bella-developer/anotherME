@@ -231,9 +231,8 @@ function Rules() {
             </div>
           </div>
         </div>
-      </div>
-    </PageTransition>
-  );
-}
-
-export default Rules;
+      </PageTransition>
+    );
+  }
+  
+  export default Rules;
