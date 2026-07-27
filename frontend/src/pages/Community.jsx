@@ -1,11 +1,13 @@
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import PageTransition from '../components/PageTransition';
-import Layout from '../components/Layout';
+import EsoLogo from '../components/EsoLogo';
 import { usePageTitle } from '../hooks/usePageTitle';
 import { FaTelegram, FaTwitter, FaLinkedin, FaYoutube, FaDiscord } from 'react-icons/fa';
 
 function Community() {
   usePageTitle('Community');
+  const navigate = useNavigate();
 
   const socialLinks = [
     {
@@ -47,26 +49,63 @@ function Community() {
 
   return (
     <PageTransition>
-      <Layout leftSidebar={null} rightSidebar={null}>
-        <div className="max-w-4xl mx-auto px-4 py-12">
-          {/* Header */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-12"
-          >
-            <div className="w-16 h-px mx-auto mb-6 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-            <h1 className="text-4xl font-light tracking-[0.15em] text-white uppercase mb-4">
-              Community
-            </h1>
-            <p className="text-sm text-white/40 tracking-wide max-w-xl mx-auto">
-              Connect with us across platforms. Join the conversation wherever you feel most comfortable.
-            </p>
-          </motion.div>
+      <div className="min-h-screen bg-black text-white relative">
+        {/* Background */}
+        <div 
+          className="fixed inset-0 pointer-events-none"
+          style={{
+            background: 'radial-gradient(ellipse at 50% 20%, rgba(167, 139, 250, 0.03) 0%, transparent 60%)',
+            zIndex: 1,
+          }}
+        />
+        
+        {/* Back Button - Compact */}
+        <button
+          onClick={() => navigate(-1)}
+          className="fixed top-6 left-6 z-50 text-xs uppercase tracking-wider transition-colors flex items-center gap-2 px-3 py-1.5 rounded"
+          style={{
+            color: 'rgba(255, 255, 255, 0.5)',
+            border: '1px solid rgba(255, 255, 255, 0.1)',
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.color = 'rgba(255, 255, 255, 0.9)';
+            e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.color = 'rgba(255, 255, 255, 0.5)';
+            e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+          }}
+        >
+          <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+          </svg>
+          Back
+        </button>
 
-          {/* Social Links Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="min-h-screen flex items-center justify-center px-6 py-12 relative z-10">
+          <div className="max-w-4xl w-full">
+            
+            {/* Logo + Title Section */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="text-center mb-12"
+            >
+              <div className="inline-block mb-6">
+                <EsoLogo className="h-16 w-auto mx-auto" />
+              </div>
+              <div className="w-16 h-px mx-auto mb-6 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+              <h1 className="text-4xl font-light tracking-[0.15em] text-white uppercase mb-4">
+                Community
+              </h1>
+              <p className="text-sm text-white/40 tracking-wide max-w-xl mx-auto">
+                Connect with us across platforms. Join the conversation wherever you feel most comfortable.
+              </p>
+            </motion.div>
+
+            {/* Social Links Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {socialLinks.map((link, index) => {
               const Icon = link.icon;
               return (
@@ -136,27 +175,28 @@ function Community() {
                 </motion.a>
               );
             })}
-          </div>
+            </div>
 
-          {/* Footer note */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.5 }}
-            className="text-center mt-12 pt-8 border-t border-white/5"
-          >
-            <p className="text-xs text-white/30 tracking-wide">
-              Have questions? Reach out to us at{' '}
-              <a
-                href="mailto:hello@eso.app"
-                className="text-white/50 hover:text-white/80 transition-colors underline"
-              >
-                hello@eso.app
-              </a>
-            </p>
-          </motion.div>
+            {/* Footer note */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.5 }}
+              className="text-center mt-12 pt-8 border-t border-white/5"
+            >
+              <p className="text-xs text-white/30 tracking-wide">
+                Have questions? Reach out to us at{' '}
+                <a
+                  href="mailto:hello@eso.app"
+                  className="text-white/50 hover:text-white/80 transition-colors underline"
+                >
+                  hello@eso.app
+                </a>
+              </p>
+            </motion.div>
+          </div>
         </div>
-      </Layout>
+      </div>
     </PageTransition>
   );
 }

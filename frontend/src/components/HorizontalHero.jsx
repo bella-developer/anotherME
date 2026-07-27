@@ -230,83 +230,141 @@ function HorizontalHero({ onRoomChange = () => {} }) {
           transition={{ duration: 1, delay: 0.3, ease: 'easeOut' }}
           className="text-center max-w-3xl"
         >
-          {/* Logo - Quiet */}
+          {/* Logo - Cinematic Glow */}
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8 }}
-            className="mb-12"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1.2, ease: 'easeOut' }}
+            className="mb-16"
           >
-            <EsoLogo className="h-10 md:h-12 w-auto mx-auto" style={{ opacity: 0.6 }} />
+            <EsoLogo 
+              className="h-12 md:h-14 w-auto mx-auto" 
+              style={{ 
+                filter: 'drop-shadow(0 0 20px rgba(255, 255, 255, 0.3)) drop-shadow(0 4px 40px rgba(0, 0, 0, 0.9))',
+                opacity: 0.9
+              }} 
+            />
           </motion.div>
 
-          {/* Room Label - Ultra quiet - FORCE WHITE */}
-          <p 
-            className="text-xs tracking-ultra uppercase mb-6 font-bold hero-white-text"
+          {/* Room Label - Cinematic Typography */}
+          <motion.p 
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="text-sm tracking-[0.35em] uppercase mb-8 font-extrabold"
             style={{
-              color: '#FFFFFF !important',
-              opacity: 0.7,
-              letterSpacing: '0.3em',
-              textShadow: '0 2px 12px rgba(0, 0, 0, 0.9), 0 4px 24px rgba(0, 0, 0, 0.8)',
+              color: '#FFFFFF',
+              opacity: 0.85,
+              letterSpacing: '0.35em',
+              textShadow: `
+                0 0 30px rgba(255, 255, 255, 0.5),
+                0 0 60px rgba(255, 255, 255, 0.3),
+                0 2px 20px rgba(0, 0, 0, 1),
+                0 4px 40px rgba(0, 0, 0, 0.95),
+                0 8px 60px rgba(0, 0, 0, 0.9)
+              `,
+              WebkitTextStroke: '0.5px rgba(255, 255, 255, 0.2)',
             }}
           >
             {currentRoomData.subtitle}
-          </p>
+          </motion.p>
 
-          {/* Room Title - Extra Bold, High Contrast - FORCE WHITE */}
-          <h1 
-            className="text-5xl sm:text-6xl md:text-7xl mb-6 hero-white-text"
+          {/* Room Title - Dramatic Cinematic Effect */}
+          <motion.h1 
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1, delay: 0.4 }}
+            className="text-6xl sm:text-7xl md:text-8xl mb-10"
             style={{
-              color: '#FFFFFF !important',
-              letterSpacing: 'var(--tracking-tight)',
-              lineHeight: 'var(--leading-tight)',
-              fontFamily: "'EB Garamond', 'Cormorant Garamond', Georgia, serif",
-              fontWeight: '700',
-              textShadow: '0 4px 20px rgba(0, 0, 0, 0.95), 0 8px 40px rgba(0, 0, 0, 0.9), 0 2px 8px rgba(0, 0, 0, 1)',
-              WebkitTextStroke: '0.5px rgba(0, 0, 0, 0.5)',
+              color: '#FFFFFF',
+              letterSpacing: '0.02em',
+              lineHeight: '1.1',
+              fontFamily: "'Playfair Display', 'EB Garamond', 'Cormorant Garamond', Georgia, serif",
+              fontWeight: '900',
+              textShadow: `
+                0 0 40px rgba(255, 255, 255, 0.6),
+                0 0 80px rgba(255, 255, 255, 0.4),
+                0 2px 10px rgba(0, 0, 0, 1),
+                0 4px 30px rgba(0, 0, 0, 1),
+                0 8px 60px rgba(0, 0, 0, 0.95),
+                0 16px 100px rgba(0, 0, 0, 0.9)
+              `,
+              WebkitTextStroke: '1px rgba(255, 255, 255, 0.1)',
+              filter: 'drop-shadow(0 0 20px rgba(255, 255, 255, 0.4))',
             }}
           >
             {currentRoomData.title}
-          </h1>
+          </motion.h1>
 
-          {/* Description - Bold and Visible - FORCE WHITE */}
-          <p 
-            className="text-base md:text-lg mb-12 max-w-xl mx-auto font-semibold hero-white-text"
+          {/* Description - Elegant & Legible */}
+          <motion.p 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+            className="text-lg md:text-xl mb-14 max-w-2xl mx-auto font-light"
             style={{
-              color: '#FFFFFF !important',
+              color: '#FFFFFF',
               opacity: 0.95,
-              lineHeight: 'var(--leading-relaxed)',
-              textShadow: '0 2px 16px rgba(0, 0, 0, 0.9), 0 4px 32px rgba(0, 0, 0, 0.8)',
+              lineHeight: '1.7',
+              letterSpacing: '0.03em',
+              textShadow: `
+                0 0 20px rgba(255, 255, 255, 0.3),
+                0 2px 15px rgba(0, 0, 0, 1),
+                0 4px 30px rgba(0, 0, 0, 0.95),
+                0 8px 50px rgba(0, 0, 0, 0.9)
+              `,
+              fontWeight: '300',
             }}
           >
             {currentRoomData.description}
-          </p>
+          </motion.p>
 
-          {/* CTA Button - High Contrast - WHITE TEXT */}
-          <button
+          {/* CTA Button - Cinematic Glass Effect */}
+          <motion.button
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.8 }}
             onClick={() => navigate('/login')}
-            className="px-8 py-3 text-xs uppercase tracking-widest transition-all group font-bold hero-white-text"
+            className="px-10 py-4 text-sm uppercase tracking-[0.25em] transition-all group font-bold relative overflow-hidden"
             style={{
-              backgroundColor: 'rgba(255, 255, 255, 0.15)',
-              color: '#FFFFFF !important',
-              border: '1px solid rgba(255, 255, 255, 0.3)',
-              borderRadius: 'var(--radius-soft)',
+              backgroundColor: 'rgba(255, 255, 255, 0.12)',
+              color: '#FFFFFF',
+              border: '2px solid rgba(255, 255, 255, 0.4)',
+              borderRadius: '8px',
               fontWeight: '700',
-              transitionDuration: 'var(--duration-slow)',
-              textShadow: '0 2px 8px rgba(0, 0, 0, 0.8)',
-              backdropFilter: 'blur(8px)',
+              transitionDuration: '0.4s',
+              textShadow: '0 2px 10px rgba(0, 0, 0, 0.9)',
+              backdropFilter: 'blur(12px)',
+              boxShadow: `
+                0 4px 20px rgba(0, 0, 0, 0.5),
+                0 8px 40px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2)
+              `,
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.25)';
-              e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.5)';
+              e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.6)';
+              e.currentTarget.style.transform = 'translateY(-2px) scale(1.02)';
+              e.currentTarget.style.boxShadow = `
+                0 6px 30px rgba(0, 0, 0, 0.6),
+                0 12px 60px rgba(0, 0, 0, 0.4),
+                0 0 40px rgba(255, 255, 255, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3)
+              `;
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.15)';
-              e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.3)';
+              e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.12)';
+              e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.4)';
+              e.currentTarget.style.transform = 'translateY(0) scale(1)';
+              e.currentTarget.style.boxShadow = `
+                0 4px 20px rgba(0, 0, 0, 0.5),
+                0 8px 40px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2)
+              `;
             }}
           >
             Step In
-          </button>
+          </motion.button>
         </motion.div>
       </div>
 
