@@ -299,10 +299,6 @@ function Circles() {
   };
 
   useEffect(() => { loadCircles(); }, []);
-  useEffect(() => {
-    const interval = setInterval(loadCircles, 10000);
-    return () => clearInterval(interval);
-  }, []);
 
   const filters = [
     { value: 'all', label: 'All' },

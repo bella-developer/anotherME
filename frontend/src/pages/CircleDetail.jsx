@@ -81,10 +81,6 @@ function CircleDetail() {
 
   useEffect(() => { if (id && !topicsLoaded) loadTopicPosts(); }, [id, topicsLoaded, loadTopicPosts]);
   useEffect(() => { if (id) loadCircle(); }, [id, loadCircle]);
-  useEffect(() => {
-    const interval = setInterval(loadCircle, 5000);
-    return () => clearInterval(interval);
-  }, [loadCircle]);
 
   // Load comments with polling for real-time updates
   const loadComments = useCallback(async (reset = false, silent = false) => {
@@ -119,11 +115,48 @@ function CircleDetail() {
   useEffect(() => { if (id && activeTopicId) loadComments(true, false); }, [id, activeTopicId]);
 
   // Poll for new comments every 3 seconds for real-time updates (silent background refresh)
-  // Stays under rate limit: 20 req/min < 100 req/15min limit
+  // Uses Page Visibility API to pause polling when tab is not visible
+  // Stays under rate limit: 20 req/min when active
   useEffect(() => {
     if (!id || !activeTopicId) return;
-    const interval = setInterval(() => loadComments(true, true), 3000);
-    return () => clearInterval(interval);
+    
+    let interval = null;
+    
+    const startPolling = () => {
+      if (interval) return; // Already polling
+      interval = setInterval(() => loadComments(true, true), 3000);
+    };
+    
+    const stopPolling = () => {
+      if (interval) {
+        clearInterval(interval);
+        interval = null;
+      }
+    };
+    
+    // Handle visibility changes
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        stopPolling();
+      } else {
+        // Refresh immediately when tab becomes visible
+        loadComments(true, true);
+        startPolling();
+      }
+    };
+    
+    // Start polling if page is visible
+    if (!document.hidden) {
+      startPolling();
+    }
+    
+    // Listen for visibility changes
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    
+    return () => {
+      stopPolling();
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
   }, [id, activeTopicId, loadComments]);
 
   const handleSubmit = async (e) => {
