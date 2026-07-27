@@ -63,31 +63,26 @@ function Home() {
       <Layout leftSidebar={null} rightSidebar={null}>
         <div className="min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 md:px-8 py-6 md:py-10 lg:py-14 relative z-10">
 
-          {/* Opening quote - fades in slowly with artistic styling */}
+          {/* Opening quote - small and subtle */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 2, delay: 0.5 }}
-            className="text-center mb-8 md:mb-10"
+            className="text-center mb-2"
           >
             <p 
-              className="text-xl md:text-2xl lg:text-3xl tracking-[0.3em] uppercase"
+              className="text-[10px] md:text-xs tracking-[0.35em] uppercase"
               style={{ 
-                fontFamily: 'var(--font-heading)',
-                fontWeight: '600',
-                background: 'linear-gradient(135deg, #ffffff 0%, #a0a0a0 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text',
-                filter: 'drop-shadow(0 0 30px rgba(255, 255, 255, 0.4)) drop-shadow(0 4px 10px rgba(0, 0, 0, 0.8))',
-                letterSpacing: '0.35em',
+                fontFamily: 'var(--font-body)',
+                fontWeight: '300',
+                color: 'rgba(255, 255, 255, 0.4)',
               }}
             >
               {getGreeting()}
             </p>
           </motion.div>
 
-          {/* Header - refined, breathing with artistic styling */}
+          {/* Header - refined, breathing */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -95,16 +90,11 @@ function Home() {
             className="text-center mb-16 md:mb-20 lg:mb-24"
           >
             <p 
-              className="text-base md:text-lg lg:text-xl tracking-[0.4em] uppercase mb-6 md:mb-8"
+              className="text-[11px] md:text-sm tracking-[0.35em] uppercase mb-6 md:mb-8"
               style={{ 
-                fontFamily: 'var(--font-heading)',
-                fontWeight: '500',
-                background: 'linear-gradient(135deg, #ffffff 0%, #c0c0c0 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text',
-                filter: 'drop-shadow(0 0 25px rgba(255, 255, 255, 0.35)) drop-shadow(0 3px 8px rgba(0, 0, 0, 0.7))',
-                letterSpacing: '0.5em',
+                fontFamily: 'var(--font-body)',
+                fontWeight: '400',
+                color: 'rgba(255, 255, 255, 0.5)',
               }}
             >
               Choose Your Room
@@ -450,16 +440,28 @@ function Home() {
             ))}
           </div>
 
-          {/* Closing thought - contemplative */}
-          <motion.p
+          {/* Footer text with divider lines */}
+          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 2, delay: 2.5 }}
-            className="mt-16 md:mt-20 lg:mt-24 text-[8px] tracking-[0.26em] uppercase font-light italic px-4 text-center"
-            style={{ color: '#484f58' }}
+            className="mt-16 md:mt-20 lg:mt-24 text-center"
           >
-            A space to breathe, to think, to be.
-          </motion.p>
+            <div className="flex items-center justify-center gap-4">
+              <div className="h-px flex-1 max-w-[100px]" style={{ background: 'rgba(255, 255, 255, 0.1)' }} />
+              <p
+                className="text-[10px] md:text-xs tracking-[0.25em] uppercase"
+                style={{ 
+                  color: 'rgba(255, 255, 255, 0.3)',
+                  fontFamily: 'var(--font-body)',
+                  fontWeight: '300',
+                }}
+              >
+                This is your space. Take your time.
+              </p>
+              <div className="h-px flex-1 max-w-[100px]" style={{ background: 'rgba(255, 255, 255, 0.1)' }} />
+            </div>
+          </motion.div>
 
         </div>
       </Layout>
