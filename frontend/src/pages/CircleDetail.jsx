@@ -91,10 +91,10 @@ function CircleDetail() {
     try {
       if (!silent) setLoadingComments(true);
       
-      // Always fetch from beginning (no pagination cursor) to get all comments
+      // Always fetch from beginning (no pagination cursor) to get all comments with nested replies
       const data = await fetchCircleComments({ circleId: id, cursor: null, postId: activeTopicId });
       
-      // Intelligent merge: keep existing comments, add only new ones
+      // Replace all comments to ensure nested replies are updated
       setComments(prevComments => {
         const newComments = data.comments;
         
@@ -103,20 +103,9 @@ function CircleDetail() {
           return newComments.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
         }
         
-        // For background updates, merge intelligently
-        const existingIds = new Set(prevComments.map(c => c.id));
-        const freshComments = newComments.filter(c => !existingIds.has(c.id));
-        
-        // If no new comments, update existing ones (for reaction counts, reply counts)
-        if (freshComments.length === 0) {
-          // Update existing comments with latest data (reactions, replies, etc.)
-          const updatedMap = new Map(newComments.map(c => [c.id, c]));
-          return prevComments.map(c => updatedMap.get(c.id) || c);
-        }
-        
-        // Combine and sort chronologically
-        const merged = [...prevComments, ...freshComments];
-        return merged.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+        // For background updates: completely replace to get updated nested structure
+        // This ensures replies show up in real-time
+        return newComments.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
       });
       
       setCursor(data.cursor);
@@ -413,6 +402,8 @@ function CommentItem({ comment, depth, circleId, accent }) {
   const stars = getEngagementStars(replyCount);
   const hasReacted = (type) => userReactions.includes(type);
 
+  // Sync replies from server data (critical for real-time updates from other users)
+  useEffect(() => { setReplies(comment.replies || []); }, [comment.replies]);
   useEffect(() => { setReplyCount(comment.replyCount || 0); }, [comment.replyCount]);
   useEffect(() => { setReactions(comment.reactions || { resonate: 0, echo: 0 }); setUserReactions(comment.userReactions || []); }, [comment.reactions, comment.userReactions]);
 
