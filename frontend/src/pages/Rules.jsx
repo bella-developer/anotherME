@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import PageTransition from '../components/PageTransition';
+import Layout from '../components/Layout';
 
 /**
  * Rules Page
@@ -37,114 +38,202 @@ function Rules() {
 
   return (
     <PageTransition>
-      <div className="min-h-screen">
-        {/* Header */}
-        <div className="sticky top-0 z-50">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      <Layout leftSidebar={null} rightSidebar={null}>
+        <div className="min-h-screen relative" style={{ fontFamily: 'var(--font-body)' }}>
+          {/* Background atmospheric effect */}
+          <div 
+            className="fixed inset-0 pointer-events-none"
+            style={{
+              background: 'radial-gradient(ellipse at 50% 20%, rgba(217, 119, 87, 0.03) 0%, transparent 60%)',
+              zIndex: 1,
+            }}
+          />
+
+          {/* Content */}
+          <div className="max-w-3xl mx-auto px-4 sm:px-6 py-8 relative z-10">
+            {/* Header - Compact */}
             <button
               onClick={() => navigate(-1)}
-              className="text-[#918A87] hover:text-white transition-colors text-sm mb-4 flex items-center gap-2"
+              className="mb-6 text-xs uppercase tracking-wider transition-colors flex items-center gap-2 px-3 py-1.5 rounded"
+              style={{
+                color: 'rgba(255, 255, 255, 0.5)',
+                border: '1px solid rgba(255, 255, 255, 0.1)',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.color = 'rgba(255, 255, 255, 0.9)';
+                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.color = 'rgba(255, 255, 255, 0.5)';
+                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+              }}
             >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
               </svg>
               Back
             </button>
-            <h1 className="text-4xl font-bold text-white mb-2">Community Guidelines</h1>
-            <p className="text-[#918A87] text-sm">
+
+            <h1 
+              className="text-2xl sm:text-3xl font-bold mb-2"
+              style={{ 
+                color: '#ffffff',
+                fontFamily: 'var(--font-heading)',
+                letterSpacing: '0.02em'
+              }}
+            >
+              Community Guidelines
+            </h1>
+            <p className="text-xs sm:text-sm mb-8" style={{ color: 'rgba(255, 255, 255, 0.5)' }}>
               These rules exist to protect this space and everyone in it.
             </p>
-          </div>
-        </div>
 
-        {/* Content */}
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          {/* Warning Banner */}
-          <div className="p-6 mb-8">
-            <div className="flex items-start gap-4">
-              <span className="text-3xl">⚠️</span>
-              <div>
-                <h2 className="text-[#D97757] font-bold text-lg mb-2">Important Notice</h2>
-                <p className="text-[#D1D1D1] leading-relaxed">
-                  Violations of these rules may result in content removal, temporary suspension, or permanent ban. 
-                  We take the safety and well-being of our community seriously.
+            {/* Warning Banner - Compact */}
+            <div 
+              className="p-4 mb-6 rounded-lg"
+              style={{
+                background: 'rgba(217, 119, 87, 0.08)',
+                border: '1px solid rgba(217, 119, 87, 0.2)',
+              }}
+            >
+              <div className="flex items-start gap-3">
+                <span className="text-xl">⚠️</span>
+                <div>
+                  <h2 
+                    className="font-bold text-sm mb-1"
+                    style={{ 
+                      color: '#D97757',
+                      fontFamily: 'var(--font-heading)'
+                    }}
+                  >
+                    Important Notice
+                  </h2>
+                  <p className="text-xs leading-relaxed" style={{ color: 'rgba(255, 255, 255, 0.7)' }}>
+                    Violations may result in content removal, suspension, or permanent ban. 
+                    We take community safety seriously.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Rules - Compact Single Panel */}
+            <div 
+              className="p-6 mb-6 rounded-lg"
+              style={{
+                background: 'rgba(0, 0, 0, 0.4)',
+                backdropFilter: 'blur(12px)',
+                border: '1px solid rgba(255, 255, 255, 0.08)',
+              }}
+            >
+              <div className="space-y-6">
+                {rules.map((rule, index) => (
+                  <div key={index}>
+                    <div className="flex items-start gap-4">
+                      {/* Number Circle - Smaller */}
+                      <div className="flex-shrink-0">
+                        <div 
+                          className="w-9 h-9 rounded-full flex items-center justify-center"
+                          style={{
+                            background: 'rgba(217, 119, 87, 0.15)',
+                          }}
+                        >
+                          <span 
+                            className="font-bold text-sm"
+                            style={{ color: '#D97757' }}
+                          >
+                            {rule.number}
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Content - Compact */}
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-1.5">
+                          <span className="text-base">{rule.icon}</span>
+                          <h3 
+                            className="text-base font-bold"
+                            style={{ 
+                              color: '#ffffff',
+                              fontFamily: 'var(--font-heading)'
+                            }}
+                          >
+                            {rule.title}
+                          </h3>
+                        </div>
+                        <p 
+                          className="text-xs leading-relaxed"
+                          style={{ color: 'rgba(255, 255, 255, 0.7)' }}
+                        >
+                          {rule.description}
+                        </p>
+                      </div>
+                    </div>
+                    
+                    {/* Divider between rules (except last one) */}
+                    {index < rules.length - 1 && (
+                      <div 
+                        className="mt-6 h-px"
+                        style={{ background: 'rgba(255, 255, 255, 0.05)' }}
+                      />
+                    )}
+                  </div>
+                ))}
+              </div>
+
+              {/* Footer inside panel - Compact */}
+              <div 
+                className="mt-6 pt-6 text-center"
+                style={{ borderTop: '1px solid rgba(255, 255, 255, 0.05)' }}
+              >
+                <p className="text-xs leading-relaxed" style={{ color: 'rgba(255, 255, 255, 0.5)' }}>
+                  This is a safe space for vulnerability, growth, and human connection. 
+                  By participating, you agree to uphold these guidelines.
+                </p>
+                <p className="text-[10px] mt-2" style={{ color: 'rgba(255, 255, 255, 0.3)' }}>
+                  If you witness a violation, please report it to the circle moderators.
                 </p>
               </div>
             </div>
-          </div>
 
-          {/* Single Panel with All Rules */}
-          <div className="p-8 mb-8">
-            <div className="space-y-8">
-              {rules.map((rule, index) => (
-                <div key={index}>
-                  <div className="flex items-start gap-6">
-                    {/* Number Circle */}
-                    <div className="flex-shrink-0">
-                      <div className="w-12 h-12 rounded-full bg-[#D97757]/20 flex items-center justify-center">
-                        <span className="text-[#D97757] font-bold text-lg">{rule.number}</span>
-                      </div>
-                    </div>
-
-                    {/* Content */}
-                    <div className="flex-1">
-                      <div className="flex items-center gap-3 mb-2">
-                        <span className="text-xl">{rule.icon}</span>
-                        <h3 className="text-xl font-bold text-white">{rule.title}</h3>
-                      </div>
-                      <p className="text-[#D1D1D1] leading-relaxed text-sm">
-                        {rule.description}
-                      </p>
-                    </div>
-                  </div>
-                  
-                  {/* Spacer between rules (except last one) */}
-                  {index < rules.length - 1 && (
-                    <div className="mt-8"></div>
-                  )}
-                </div>
-              ))}
-            </div>
-
-            {/* Footer inside panel */}
-            <div className="mt-8 pt-8 text-center">
-              <p className="text-[#918A87] text-sm leading-relaxed">
-                This is a safe space for vulnerability, growth, and human connection. 
-                By participating, you agree to uphold these guidelines and help maintain 
-                a supportive environment for all.
+            {/* Crisis Resources - Compact */}
+            <div 
+              className="p-4 rounded-lg"
+              style={{
+                background: 'rgba(0, 0, 0, 0.3)',
+                border: '1px solid rgba(255, 255, 255, 0.08)',
+              }}
+            >
+              <h3 
+                className="font-bold text-sm mb-2 flex items-center gap-2"
+                style={{ 
+                  color: '#ffffff',
+                  fontFamily: 'var(--font-heading)'
+                }}
+              >
+                <span>🆘</span>
+                Need Immediate Help?
+              </h3>
+              <p className="text-xs mb-3 leading-relaxed" style={{ color: 'rgba(255, 255, 255, 0.6)' }}>
+                If you're in crisis, please reach out to professional resources:
               </p>
-              <p className="text-[#6B5E59] text-xs mt-4">
-                If you witness a violation, please report it to the circle moderators.
-              </p>
+              <ul className="space-y-1.5 text-[10px]" style={{ color: 'rgba(255, 255, 255, 0.5)' }}>
+                <li className="flex items-center gap-2">
+                  <span style={{ color: '#D97757' }}>•</span>
+                  National Suicide Prevention Lifeline: 988 (US)
+                </li>
+                <li className="flex items-center gap-2">
+                  <span style={{ color: '#D97757' }}>•</span>
+                  Crisis Text Line: Text HOME to 741741
+                </li>
+                <li className="flex items-center gap-2">
+                  <span style={{ color: '#D97757' }}>•</span>
+                  International Association for Suicide Prevention: iasp.info
+                </li>
+              </ul>
             </div>
-          </div>
-
-          {/* Crisis Resources */}
-          <div className="p-6">
-            <h3 className="text-white font-bold text-base mb-3 flex items-center gap-2">
-              <span>🆘</span>
-              Need Immediate Help?
-            </h3>
-            <p className="text-[#D1D1D1] mb-3 leading-relaxed text-sm">
-              If you're in crisis or experiencing thoughts of self-harm, please reach out to professional resources:
-            </p>
-            <ul className="space-y-2 text-[#918A87] text-xs">
-              <li className="flex items-center gap-2">
-                <span className="text-[#D97757]">•</span>
-                National Suicide Prevention Lifeline: 988 (US)
-              </li>
-              <li className="flex items-center gap-2">
-                <span className="text-[#D97757]">•</span>
-                Crisis Text Line: Text HOME to 741741
-              </li>
-              <li className="flex items-center gap-2">
-                <span className="text-[#D97757]">•</span>
-                International Association for Suicide Prevention: iasp.info
-              </li>
-            </ul>
           </div>
         </div>
-      </div>
+      </Layout>
     </PageTransition>
   );
 }
