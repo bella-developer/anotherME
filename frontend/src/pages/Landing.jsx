@@ -241,352 +241,184 @@ function Landing() {
             </p>
           </motion.div>
 
-          {/* Feature Cards - Full Uncut Colored Images, No Effects */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+          {/* Feature Cards - Clean Explore.jsx Style */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
             {features.map((f, i) => (
               <motion.article
                 key={i}
-                initial={{ opacity: 0, y: 60 }}
+                initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ 
-                  delay: i * 0.12, 
-                  duration: 0.8,
-                  ease: [0.25, 0.46, 0.45, 0.94]
-                }}
-                className="relative flex flex-col cursor-pointer group"
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.15, duration: 0.6 }}
+                className="relative flex flex-col items-center justify-end p-6 pb-8 text-center cursor-pointer group overflow-hidden rounded-xl transition-all duration-500 hover:-translate-y-2"
                 style={{
-                  background: 'transparent',
-                  borderRadius: '12px',
-                  border: '1px solid rgba(255, 255, 255, 0.06)',
-                  transition: 'all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-8px)';
-                  e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.06)';
+                  minHeight: '320px',
+                  background: 'rgba(255,255,255,0.02)',
+                  boxShadow: '0 0 0 1px rgba(255,255,255,0.08)',
                 }}
               >
-                {/* Image Container with Black Background and Centered Icon */}
-                <motion.div
-                  className="relative overflow-hidden mx-4 mt-4 image-container-black"
-                  whileHover={{ scale: 1.03 }}
-                  transition={{ duration: 0.8, ease: 'easeOut' }}
+                <div
+                  className="absolute inset-0 bg-cover bg-center rounded-xl transition-transform duration-700 group-hover:scale-110"
                   style={{ 
-                    height: '220px',
-                    background: '#000000',
-                    backgroundColor: '#000000',
-                    borderRadius: '8px',
+                    backgroundImage: `url('${f.img}')`, 
+                    filter: 'contrast(1.1) brightness(0.5) saturate(1.1)',
                   }}
-                >
-                  {/* Full Colored Image - 100% Visible */}
-                  <div
-                    className="absolute inset-0"
-                    style={{ 
-                      backgroundImage: `url('${f.img}')`,
-                      backgroundSize: 'contain',
-                      backgroundRepeat: 'no-repeat',
-                      backgroundPosition: 'center',
+                />
+                <div 
+                  className="absolute inset-0 rounded-xl transition-all duration-500" 
+                  style={{ 
+                    background: 'linear-gradient(to top, rgba(0,0,0,0.99) 0%, rgba(0,0,0,0.95) 30%, rgba(0,0,0,0.7) 60%, rgba(0,0,0,0.3) 100%)'
+                  }} 
+                />
+
+                <div className="relative z-10 flex flex-col items-center">
+                  <svg 
+                    className="w-8 h-8 mb-5 group-hover:scale-110 transition-transform duration-300" 
+                    fill="none" 
+                    stroke="currentColor" 
+                    viewBox="0 0 24 24" 
+                    strokeWidth={1.5}
+                    style={{
+                      color: '#FFFFFF',
+                      filter: 'drop-shadow(0 2px 8px rgba(0, 0, 0, 0.8))'
                     }}
-                  />
-
-                  {/* Icon - Centered over image */}
-                  <motion.div 
-                    className="absolute inset-0 flex items-center justify-center"
-                    whileHover={{ scale: 1.15, y: -4 }}
-                    transition={{ duration: 0.4, ease: 'easeOut' }}
-                    style={{ zIndex: 10 }}
                   >
-                    <svg 
-                      className="w-12 h-12 transition-all duration-500" 
-                      fill="none" 
-                      stroke="currentColor" 
-                      viewBox="0 0 24 24" 
-                      strokeWidth={1.5}
-                      style={{ 
-                        color: 'rgba(255, 255, 255, 0.9)',
-                        filter: 'drop-shadow(0 2px 8px rgba(0, 0, 0, 0.8))'
-                      }}
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" d={f.icon} />
-                    </svg>
-                  </motion.div>
-                  
-                  {/* Title Overlay */}
-                  <div className="absolute inset-x-0 bottom-0 flex items-center justify-center p-4">
-                    <motion.h3 
-                      className="text-sm uppercase font-bold text-center"
-                      whileHover={{ letterSpacing: '0.25em' }}
-                      transition={{ duration: 0.3 }}
-                      style={{
-                        color: '#ffffff',
-                        letterSpacing: '0.2em',
-                        textShadow: '0 2px 12px rgba(0, 0, 0, 0.95), 0 4px 24px rgba(0, 0, 0, 0.9)',
-                      }}
-                    >
-                      {f.title}
-                    </motion.h3>
-                  </div>
-                </motion.div>
-
-                {/* Description - Bottom */}
-                <motion.div 
-                  className="flex flex-col items-center text-center px-6 py-5"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ 
-                    delay: i * 0.12 + 0.3,
-                    duration: 0.6,
-                    ease: 'easeOut'
-                  }}
-                >
-                  <motion.p 
-                    className="text-xs leading-relaxed mb-2" 
-                    style={{ 
-                      color: 'rgba(255, 255, 255, 0.7)',
-                      lineHeight: '1.6',
+                    <path strokeLinecap="round" strokeLinejoin="round" d={f.icon} />
+                  </svg>
+                  <h3 
+                    className="text-base tracking-[0.25em] uppercase font-extrabold mb-4" 
+                    style={{
+                      color: '#FFFFFF',
+                      textShadow: '0 2px 12px rgba(0, 0, 0, 0.95), 0 4px 24px rgba(0, 0, 0, 0.8), 0 1px 3px rgba(0, 0, 0, 1)',
+                      letterSpacing: '0.3em'
+                    }}
+                  >
+                    {f.title}
+                  </h3>
+                  <p 
+                    className="text-sm leading-relaxed transition-all duration-300 mb-5 font-medium" 
+                    style={{
+                      color: '#FFFFFF',
+                      opacity: 0.95,
+                      textShadow: '0 2px 10px rgba(0, 0, 0, 0.9), 0 4px 20px rgba(0, 0, 0, 0.7)'
                     }}
                   >
                     {f.desc}
-                  </motion.p>
-                  
-                  {/* Arrow indicator */}
-                  <motion.div
-                    whileHover={{ x: 4 }}
-                    transition={{ duration: 0.3 }}
-                    style={{ color: 'rgba(255, 255, 255, 0.5)' }}
+                  </p>
+                  <span 
+                    className="group-hover:translate-x-1 transition-all duration-300 text-xl font-light"
+                    style={{
+                      color: '#FFFFFF',
+                      opacity: 0.6,
+                      textShadow: '0 2px 6px rgba(0, 0, 0, 0.8)'
+                    }}
                   >
                     →
-                  </motion.div>
-                </motion.div>
+                  </span>
+                </div>
               </motion.article>
             ))}
           </div>
 
-          {/* Editorial Cards - Refined */}
+          {/* Editorial Cards - Clean Explore.jsx Style */}
           <motion.div 
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.5, duration: 0.9 }}
-            className="grid grid-cols-1 lg:grid-cols-2 gap-6"
+            transition={{ delay: 0.6, duration: 0.7 }}
+            className="grid grid-cols-1 lg:grid-cols-2 gap-5"
           >
-            {/* Quote Card - Borderless with Premium Animations */}
-            <motion.div
-              initial={{ opacity: 0, x: -60 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ 
-                duration: 0.8,
-                ease: [0.25, 0.46, 0.45, 0.94]
-              }}
-              whileHover={{ 
-                scale: 1.02,
-                y: -8,
-                transition: { duration: 0.6, ease: [0.34, 1.56, 0.64, 1] }
-              }}
-              className="relative flex items-center justify-center text-center overflow-hidden min-h-[380px] cursor-pointer"
+            {/* Quote Card - Explore.jsx Style */}
+            <div
+              className="relative flex items-center justify-center text-center overflow-hidden rounded-xl min-h-[280px]"
               style={{
-                background: 'linear-gradient(135deg, rgba(26, 26, 26, 0.98) 0%, rgba(20, 20, 20, 0.98) 100%)',
-                borderRadius: 'var(--radius-lg)',
-                border: 'none',
-                boxShadow: '0 4px 24px rgba(0, 0, 0, 0.4), 0 2px 12px rgba(0, 0, 0, 0.3)',
+                boxShadow: '0 0 0 1px rgba(255,255,255,0.07)',
               }}
             >
-              <motion.div 
-                className="absolute inset-0"
-                whileHover={{ scale: 1.05 }}
-                transition={{ duration: 0.8, ease: 'easeOut' }}
+              <div 
+                className="absolute inset-0 rounded-xl" 
                 style={{ 
                   backgroundImage: `url(https://res.cloudinary.com/dbtm7etag/image/upload/v1782735075/attention_ngxcb7.png)`, 
                   backgroundSize: 'cover', 
                   backgroundPosition: 'center', 
-                  filter: 'contrast(1.1) brightness(0.5) saturate(0.8)',
-                  opacity: 0.3,
-                  mixBlendMode: 'luminosity',
-                  borderRadius: 'var(--radius-lg)',
+                  filter: 'contrast(1.05) brightness(0.8) saturate(1.1)',
                 }} 
               />
-              <div 
-                className="absolute inset-0" 
-                style={{
-                  background: 'linear-gradient(to top, rgba(0, 0, 0, 0.98) 0%, rgba(0, 0, 0, 0.75) 40%, transparent 100%)',
-                  borderRadius: 'var(--radius-lg)',
-                }} 
-              />
-              <motion.div 
-                className="relative z-10 px-12 py-16"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.3, duration: 0.6 }}
-              >
-                <div className="flex items-start justify-center gap-4 mb-6">
-                  <motion.svg 
-                    className="w-6 h-6 flex-shrink-0"
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.4, duration: 0.5 }}
-                    style={{ color: 'rgba(255, 255, 255, 0.2)' }} 
-                    fill="currentColor" 
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-                  </motion.svg>
-                  
-                  <motion.p 
-                    className="text-2xl lg:text-3xl font-light max-w-lg"
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.5, duration: 0.6 }}
-                    style={{
-                      color: '#ffffff',
-                      lineHeight: '1.4',
-                      letterSpacing: '-0.01em',
-                    }}
-                  >
-                    Most people seek attention.<br />Few seek understanding.
-                  </motion.p>
-                  
-                  <motion.svg 
-                    className="w-6 h-6 flex-shrink-0 rotate-180"
-                    initial={{ opacity: 0, x: 20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.4, duration: 0.5 }}
-                    style={{ color: 'rgba(255, 255, 255, 0.2)' }} 
-                    fill="currentColor" 
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-                  </motion.svg>
+              <div className="absolute inset-0 rounded-xl bg-gradient-to-t from-black/95 via-black/60 to-transparent" />
+              <div className="relative z-10 h-full flex flex-col justify-end p-10">
+                {/* Text at bottom with quote icons */}
+                <div>
+                  <div className="flex items-start gap-3 mb-4">
+                    {/* Opening quote */}
+                    <svg className="w-6 h-6 text-white/20 flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+                    </svg>
+                    
+                    <p className="text-xl lg:text-2xl font-light leading-snug text-white flex-1">
+                      Most people seek attention.<br />Few seek understanding.
+                    </p>
+                    
+                    {/* Closing quote (rotated) */}
+                    <svg className="w-6 h-6 text-white/20 flex-shrink-0 mt-1 rotate-180" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+                    </svg>
+                  </div>
+                  <div className="text-[10px] tracking-[0.3em] text-white/40 uppercase">— Eso Philosophy</div>
                 </div>
-                <motion.div 
-                  className="text-xs tracking-[0.25em] uppercase"
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  transition={{ delay: 0.7, duration: 0.5 }}
-                  style={{ color: 'rgba(255, 255, 255, 0.4)' }}
-                >
-                  — Eso Philosophy
-                </motion.div>
-              </motion.div>
-            </motion.div>
+              </div>
+            </div>
 
-            {/* Community Card - Borderless with Premium Animations */}
-            <motion.div
-              initial={{ opacity: 0, x: 60 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ 
-                duration: 0.8,
-                ease: [0.25, 0.46, 0.45, 0.94]
-              }}
-              whileHover={{ 
-                scale: 1.02,
-                y: -8,
-                transition: { duration: 0.6, ease: [0.34, 1.56, 0.64, 1] }
-              }}
-              className="flex flex-col items-center justify-center text-center px-12 py-16 min-h-[380px] cursor-pointer"
+            {/* Community Card - Explore.jsx Style */}
+            <div
+              className="flex flex-col items-center justify-center text-center px-10 py-12 rounded-xl min-h-[280px]"
               style={{
-                background: 'linear-gradient(135deg, rgba(26, 26, 26, 0.98) 0%, rgba(20, 20, 20, 0.98) 100%)',
-                borderRadius: 'var(--radius-lg)',
-                border: 'none',
-                boxShadow: '0 4px 24px rgba(0, 0, 0, 0.4), 0 2px 12px rgba(0, 0, 0, 0.3)',
+                background: 'rgba(255,255,255,0.025)',
+                boxShadow: '0 0 0 1px rgba(255,255,255,0.07)',
               }}
             >
-              {/* Header with fade-in */}
-              <motion.div 
-                className="text-[10px] tracking-[0.25em] uppercase mb-8 font-semibold"
-                initial={{ opacity: 0, y: -20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3, duration: 0.5 }}
-                style={{ color: 'rgba(255, 255, 255, 0.4)' }}
-              >
-                Who You'll Meet
-              </motion.div>
+              <div className="text-[10px] tracking-[0.28em] text-white/40 uppercase mb-6">Who You'll Meet</div>
               
-              {/* List with stagger animation */}
-              <div className="space-y-4 mb-12">
+              <div className="space-y-2 mb-8">
                 {['The thinkers', 'The dreamers', 'The outsiders', 'The observers'].map((line, i) => (
                   <motion.div 
                     key={i}
                     initial={{ opacity: 0, x: -20 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
-                    transition={{ delay: 0.4 + (i * 0.1), duration: 0.5 }}
-                    whileHover={{ 
-                      x: 8,
-                      transition: { duration: 0.3 }
-                    }}
-                    className="text-base font-light"
-                    style={{ color: '#ffffff' }}
+                    transition={{ delay: 0.8 + (i * 0.1) }}
+                    className="text-sm font-light text-white"
                   >
                     {line}
                   </motion.div>
                 ))}
               </div>
               
-              {/* Subtitle with fade */}
-              <motion.p 
-                className="text-xs mb-8"
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                transition={{ delay: 0.8, duration: 0.5 }}
-                style={{ color: 'rgba(255, 255, 255, 0.5)' }}
-              >
-                They're all here, waiting.
-              </motion.p>
+              <p className="text-xs text-white/40 mb-7">They're all here, waiting.</p>
               
-              {/* Avatars with pop animation */}
-              <div className="flex justify-center -space-x-3 mb-10">
+              <div className="flex justify-center -space-x-2 mb-8">
                 {['1212984', '1438081', '1222271', '1239291', '1681010', '2379004'].map((id, i) => (
                   <motion.div 
                     key={i}
                     initial={{ opacity: 0, scale: 0 }}
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true }}
-                    transition={{ 
-                      delay: 0.9 + (i * 0.08), 
-                      duration: 0.5,
-                      type: 'spring',
-                      stiffness: 200
-                    }}
-                    whileHover={{ 
-                      scale: 1.2, 
-                      zIndex: 10,
-                      transition: { duration: 0.3 }
-                    }}
-                    className="w-12 h-12 rounded-full bg-cover bg-center border-2"
-                    style={{ 
-                      backgroundImage: `url('https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?w=100&h=100&fit=crop')`,
-                      borderColor: 'rgba(0, 0, 0, 0.8)',
-                      boxShadow: '0 2px 8px rgba(0, 0, 0, 0.4)',
-                    }} 
+                    transition={{ delay: 1.2 + (i * 0.05) }}
+                    className="w-10 h-10 rounded-full bg-cover bg-center border-2 border-black" 
+                    style={{ backgroundImage: `url('https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?w=100&h=100&fit=crop')` }} 
                   />
                 ))}
               </div>
               
-              <motion.button 
+              <button 
                 onClick={() => navigate('/explore')}
-                className="group flex items-center gap-2 text-xs tracking-wider uppercase"
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                transition={{ delay: 1.5, duration: 0.5 }}
-                whileHover={{ x: 4 }}
-                style={{
-                  color: 'rgba(255, 255, 255, 0.6)',
-                }}
+                className="group flex items-center gap-2 text-[11px] tracking-[0.22em] uppercase text-white/50 hover:text-white transition-colors duration-300"
               >
-                Meet the Community
-                <svg className="w-3 h-3 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+                Join the Community
+                <svg className="w-3 h-3 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
-              </motion.button>
-            </motion.div>
+              </button>
+            </div>
           </motion.div>
 
         </div>
