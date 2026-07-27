@@ -74,8 +74,8 @@ function Landing() {
             
             {/* Navigation - Magazine-like spacing */}
             <div className="hidden md:flex items-center gap-8 lg:gap-12 text-xs tracking-widest uppercase flex-1 justify-center" style={{ background: 'transparent' }}>
-              <Link 
-                to="/explore" 
+              <a 
+                href="#explore" 
                 className="transition-all duration-500 relative after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 hover:after:w-full after:transition-all after:duration-500"
                 style={{
                   color: 'rgba(255, 255, 255, 0.5)',
@@ -85,7 +85,7 @@ function Landing() {
                 onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.5)'}
               >
                 Explore
-              </Link>
+              </a>
               <a 
                 href="https://t.me/hesed_perspectives" 
                 target="_blank" 
@@ -144,6 +144,7 @@ function Landing() {
 
       {/* SLIDING TEXT SECTION - Slowed Down, Editorial */}
       <section 
+        id="explore"
         className="relative z-10 py-24 overflow-hidden"
         style={{ 
           background: '#000000',
@@ -410,7 +411,12 @@ function Landing() {
               </div>
               
               <button 
-                onClick={() => navigate('/explore')}
+                onClick={() => {
+                  const exploreSection = document.getElementById('explore');
+                  if (exploreSection) {
+                    exploreSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  }
+                }}
                 className="group flex items-center gap-2 text-[11px] tracking-[0.22em] uppercase text-white/50 hover:text-white transition-colors duration-300"
               >
                 Join the Community
@@ -471,7 +477,12 @@ function Landing() {
                 Join ESO
               </button>
               <button
-                onClick={() => navigate('/explore')}
+                onClick={() => {
+                  const exploreSection = document.getElementById('explore');
+                  if (exploreSection) {
+                    exploreSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  }
+                }}
                 className="px-8 py-3 text-xs uppercase tracking-widest transition-all"
                 style={{
                   border: '1px solid var(--border-medium)',

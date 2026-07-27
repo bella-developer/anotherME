@@ -16,6 +16,10 @@
     --font-accent: 'VT323', 'Courier New', monospace;
   }
 
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
     font-family: var(--font-body);
     -webkit-font-smoothing: antialiased;

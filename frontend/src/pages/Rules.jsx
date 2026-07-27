@@ -12,26 +12,22 @@ function Rules() {
     {
       number: '01',
       title: 'No Sexual Content',
-      description: 'This is a space for emotional support and growth, not for sexual content or advances. Any sexually explicit material or behavior will result in immediate removal.',
-      icon: '⚠️'
+      description: 'Keep it clean. This isn\'t the place for that.'
     },
     {
       number: '02',
-      title: 'No Harassment or Violation',
-      description: 'Respect is non-negotiable. Harassment, threats, doxxing, or any form of violation against others will not be tolerated. We protect the safety of all souls here.',
-      icon: '🛡️'
+      title: 'No Harassment',
+      description: 'Treat others with respect. Threats, doxxing, or bullying gets you banned.'
     },
     {
       number: '03',
       title: 'No Self-Harm Promotion',
-      description: 'While we welcome vulnerability and pain, we do not allow content that promotes, encourages, or glorifies self-harm or suicide. If you\'re struggling, we encourage seeking professional help.',
-      icon: '💔'
+      description: 'Share your pain, not methods. We\'re here to support recovery, not encourage harm.'
     },
     {
       number: '04',
-      title: 'No Political Content',
-      description: 'This space is for personal reflection and human connection, not political debate. Keep discussions focused on individual experiences rather than political ideologies.',
-      icon: '🚫'
+      title: 'No Politics',
+      description: 'Save it for another platform. This space is for personal reflection, not debate.'
     }
   ];
 
@@ -52,7 +48,7 @@ function Rules() {
             {/* Header - Compact */}
             <button
               onClick={() => navigate(-1)}
-              className="mb-6 text-xs uppercase tracking-wider transition-colors flex items-center gap-2 px-3 py-1.5 rounded"
+              className="mb-4 text-xs uppercase tracking-wider transition-colors flex items-center gap-2 px-3 py-1.5 rounded"
               style={{
                 color: 'rgba(255, 255, 255, 0.5)',
                 border: '1px solid rgba(255, 255, 255, 0.1)',
@@ -73,70 +69,41 @@ function Rules() {
             </button>
 
             <h1 
-              className="text-2xl sm:text-3xl font-bold mb-2"
+              className="text-xl sm:text-2xl font-bold mb-1"
               style={{ 
                 color: '#ffffff',
                 fontFamily: 'var(--font-heading)',
-                letterSpacing: '0.02em'
               }}
             >
               Community Guidelines
             </h1>
-            <p className="text-xs sm:text-sm mb-8" style={{ color: 'rgba(255, 255, 255, 0.5)' }}>
-              These rules exist to protect this space and everyone in it.
+            <p className="text-[10px] mb-6" style={{ color: 'rgba(255, 255, 255, 0.4)' }}>
+              Break these, you're out.
             </p>
 
-            {/* Warning Banner - Compact */}
+            {/* Rules - Super Compact */}
             <div 
-              className="p-4 mb-6 rounded-lg"
-              style={{
-                background: 'rgba(217, 119, 87, 0.08)',
-                border: '1px solid rgba(217, 119, 87, 0.2)',
-              }}
-            >
-              <div className="flex items-start gap-3">
-                <span className="text-xl">⚠️</span>
-                <div>
-                  <h2 
-                    className="font-bold text-sm mb-1"
-                    style={{ 
-                      color: '#D97757',
-                      fontFamily: 'var(--font-heading)'
-                    }}
-                  >
-                    Important Notice
-                  </h2>
-                  <p className="text-xs leading-relaxed" style={{ color: 'rgba(255, 255, 255, 0.7)' }}>
-                    Violations may result in content removal, suspension, or permanent ban. 
-                    We take community safety seriously.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Rules - Compact Single Panel */}
-            <div 
-              className="p-6 mb-6 rounded-lg"
+              className="p-5 mb-4 rounded-lg"
               style={{
                 background: 'rgba(0, 0, 0, 0.4)',
                 backdropFilter: 'blur(12px)',
                 border: '1px solid rgba(255, 255, 255, 0.08)',
               }}
             >
-              <div className="space-y-6">
+              <div className="space-y-4">
                 {rules.map((rule, index) => (
                   <div key={index}>
-                    <div className="flex items-start gap-4">
-                      {/* Number Circle - Smaller */}
+                    <div className="flex items-start gap-3">
+                      {/* Number Circle - Small */}
                       <div className="flex-shrink-0">
                         <div 
-                          className="w-9 h-9 rounded-full flex items-center justify-center"
+                          className="w-7 h-7 rounded-full flex items-center justify-center"
                           style={{
                             background: 'rgba(217, 119, 87, 0.15)',
                           }}
                         >
                           <span 
-                            className="font-bold text-sm"
+                            className="font-bold text-xs"
                             style={{ color: '#D97757' }}
                           >
                             {rule.number}
@@ -146,31 +113,28 @@ function Rules() {
 
                       {/* Content - Compact */}
                       <div className="flex-1">
-                        <div className="flex items-center gap-2 mb-1.5">
-                          <span className="text-base">{rule.icon}</span>
-                          <h3 
-                            className="text-base font-bold"
-                            style={{ 
-                              color: '#ffffff',
-                              fontFamily: 'var(--font-heading)'
-                            }}
-                          >
-                            {rule.title}
-                          </h3>
-                        </div>
+                        <h3 
+                          className="text-sm font-bold mb-1"
+                          style={{ 
+                            color: '#ffffff',
+                            fontFamily: 'var(--font-heading)'
+                          }}
+                        >
+                          {rule.title}
+                        </h3>
                         <p 
-                          className="text-xs leading-relaxed"
-                          style={{ color: 'rgba(255, 255, 255, 0.7)' }}
+                          className="text-[11px] leading-relaxed"
+                          style={{ color: 'rgba(255, 255, 255, 0.6)' }}
                         >
                           {rule.description}
                         </p>
                       </div>
                     </div>
                     
-                    {/* Divider between rules (except last one) */}
+                    {/* Divider */}
                     {index < rules.length - 1 && (
                       <div 
-                        className="mt-6 h-px"
+                        className="mt-4 h-px"
                         style={{ background: 'rgba(255, 255, 255, 0.05)' }}
                       />
                     )}
@@ -178,56 +142,28 @@ function Rules() {
                 ))}
               </div>
 
-              {/* Footer inside panel - Compact */}
+              {/* Footer - Compact */}
               <div 
-                className="mt-6 pt-6 text-center"
+                className="mt-5 pt-5 text-center"
                 style={{ borderTop: '1px solid rgba(255, 255, 255, 0.05)' }}
               >
-                <p className="text-xs leading-relaxed" style={{ color: 'rgba(255, 255, 255, 0.5)' }}>
-                  This is a safe space for vulnerability, growth, and human connection. 
-                  By participating, you agree to uphold these guidelines.
-                </p>
-                <p className="text-[10px] mt-2" style={{ color: 'rgba(255, 255, 255, 0.3)' }}>
-                  If you witness a violation, please report it to the circle moderators.
+                <p className="text-[10px] leading-relaxed" style={{ color: 'rgba(255, 255, 255, 0.4)' }}>
+                  See something wrong? Report it.
                 </p>
               </div>
             </div>
 
-            {/* Crisis Resources - Compact */}
+            {/* Crisis Help - Minimal */}
             <div 
-              className="p-4 rounded-lg"
+              className="p-3 rounded-lg"
               style={{
                 background: 'rgba(0, 0, 0, 0.3)',
                 border: '1px solid rgba(255, 255, 255, 0.08)',
               }}
             >
-              <h3 
-                className="font-bold text-sm mb-2 flex items-center gap-2"
-                style={{ 
-                  color: '#ffffff',
-                  fontFamily: 'var(--font-heading)'
-                }}
-              >
-                <span>🆘</span>
-                Need Immediate Help?
-              </h3>
-              <p className="text-xs mb-3 leading-relaxed" style={{ color: 'rgba(255, 255, 255, 0.6)' }}>
-                If you're in crisis, please reach out to professional resources:
+              <p className="text-[10px] mb-2" style={{ color: 'rgba(255, 255, 255, 0.5)' }}>
+                In crisis? <span style={{ color: 'rgba(217, 119, 87, 0.8)' }}>Call 988 (US)</span> or <span style={{ color: 'rgba(217, 119, 87, 0.8)' }}>text HOME to 741741</span>
               </p>
-              <ul className="space-y-1.5 text-[10px]" style={{ color: 'rgba(255, 255, 255, 0.5)' }}>
-                <li className="flex items-center gap-2">
-                  <span style={{ color: '#D97757' }}>•</span>
-                  National Suicide Prevention Lifeline: 988 (US)
-                </li>
-                <li className="flex items-center gap-2">
-                  <span style={{ color: '#D97757' }}>•</span>
-                  Crisis Text Line: Text HOME to 741741
-                </li>
-                <li className="flex items-center gap-2">
-                  <span style={{ color: '#D97757' }}>•</span>
-                  International Association for Suicide Prevention: iasp.info
-                </li>
-              </ul>
             </div>
           </div>
         </div>
