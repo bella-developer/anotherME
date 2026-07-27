@@ -352,8 +352,8 @@ function CircleDetail() {
           style={{ background: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(16px)', borderTop: '1px solid rgba(255,255,255,0.07)' }}
         >
           <div className="max-w-2xl mx-auto">
-            <form onSubmit={handleSubmit} className="space-y-2">
-              <div className="flex items-start gap-3">
+            <form onSubmit={handleSubmit}>
+              <div className="flex items-start gap-3 pb-1">
                 <textarea
                   value={commentContent}
                   onChange={(e) => setCommentContent(e.target.value)}
@@ -384,7 +384,7 @@ function CircleDetail() {
                 </button>
               </div>
               {/* Character counter with progress indicator */}
-              <div className="flex items-center gap-2 px-1">
+              <div className="flex items-center gap-2 px-1 mt-1">
                 <div className="flex-1 h-0.5 bg-white/5 rounded-full overflow-hidden">
                   <div
                     className="h-full transition-all duration-200"
@@ -583,14 +583,14 @@ function CommentItem({ comment, depth, circleId, accent }) {
 
         {/* Reply form */}
         {showReplyForm && (
-          <div className="mt-3 pl-8 space-y-1">
-            <div className="flex items-center gap-2">
+          <div className="mt-3 pl-8">
+            <div className="flex items-center gap-2 border-b border-white/5 pb-1">
               <textarea
                 value={replyContent}
                 onChange={(e) => setReplyContent(e.target.value)}
                 onKeyDown={handleReplyKey}
                 placeholder="add your thoughts..."
-                className="flex-1 text-white/65 text-[12px] resize-none focus:outline-none placeholder-white/20 bg-transparent border-b border-white/10 py-1"
+                className="flex-1 text-white/65 text-[12px] resize-none focus:outline-none placeholder-white/20 bg-transparent"
                 rows={1}
                 maxLength={2000}
                 style={{ minHeight: '28px', maxHeight: '28px' }}
@@ -611,7 +611,7 @@ function CommentItem({ comment, depth, circleId, accent }) {
               </button>
             </div>
             {/* Character counter with progress */}
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 mt-1">
               <div className="flex-1 h-0.5 bg-white/5 rounded-full overflow-hidden">
                 <div
                   className="h-full transition-all duration-200"
