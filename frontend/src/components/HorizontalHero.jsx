@@ -74,6 +74,8 @@ function HorizontalHero({ onRoomChange = () => {} }) {
       videoUrl: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1785159408/darkroomvidbg_eccnlm.mp4',
       color: '#ef4444',
       bgColor: 'rgba(239, 68, 68, 0.3)',
+      glowColor: '#d4af37', // Rich gold
+      glowRgb: '212, 175, 55', // For rgba usage
     },
     {
       id: 'fantasy',
@@ -83,6 +85,8 @@ function HorizontalHero({ onRoomChange = () => {} }) {
       videoUrl: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1784018105/fantasyyy_djqjgx.mp4',
       color: '#f97316',
       bgColor: 'rgba(249, 115, 22, 0.3)',
+      glowColor: '#ff6b35', // Vibrant orange-red
+      glowRgb: '255, 107, 53',
     },
     {
       id: 'philo',
@@ -92,6 +96,8 @@ function HorizontalHero({ onRoomChange = () => {} }) {
       videoUrl: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1783942027/philoeffect_soso3y.mp4',
       color: '#a855f7',
       bgColor: 'rgba(168, 85, 247, 0.3)',
+      glowColor: '#9d4edd', // Deep purple
+      glowRgb: '157, 78, 221',
     },
   ];
 
@@ -297,7 +303,7 @@ function HorizontalHero({ onRoomChange = () => {} }) {
             <EsoLogo 
               className="h-12 md:h-14 w-auto mx-auto" 
               style={{ 
-                filter: 'drop-shadow(0 0 20px rgba(255, 255, 255, 0.3)) drop-shadow(0 4px 40px rgba(0, 0, 0, 0.9))',
+                filter: `drop-shadow(0 0 20px ${currentRoomData.glowColor}20) drop-shadow(0 4px 40px rgba(0, 0, 0, 0.9))`,
                 opacity: 0.9
               }} 
             />
@@ -318,15 +324,16 @@ function HorizontalHero({ onRoomChange = () => {} }) {
                 fontFamily: "'Playfair Display', 'EB Garamond', 'Cormorant Garamond', Georgia, serif",
                 fontWeight: '900',
                 textShadow: `
-                  0 0 60px rgba(255, 255, 255, 0.9),
-                  0 0 120px rgba(255, 255, 255, 0.6),
+                  0 0 60px ${currentRoomData.glowColor}33,
+                  0 0 120px ${currentRoomData.glowColor}22,
+                  0 0 180px ${currentRoomData.glowColor}11,
                   0 2px 10px rgba(0, 0, 0, 1),
                   0 4px 30px rgba(0, 0, 0, 1),
                   0 8px 60px rgba(0, 0, 0, 0.95),
                   0 16px 100px rgba(0, 0, 0, 0.9)
                 `,
-                WebkitTextStroke: '1.5px rgba(255, 255, 255, 0.2)',
-                filter: 'drop-shadow(0 0 30px rgba(255, 255, 255, 0.6))',
+                WebkitTextStroke: `1.5px rgba(${currentRoomData.glowRgb}, 0.08)`,
+                filter: `drop-shadow(0 0 40px ${currentRoomData.glowColor}1A) drop-shadow(0 0 80px ${currentRoomData.glowColor}0D)`,
               }}
               onComplete={() => setShowSubtitle(true)}
             />
@@ -346,14 +353,14 @@ function HorizontalHero({ onRoomChange = () => {} }) {
                   opacity: 0.95,
                   letterSpacing: '0.35em',
                   textShadow: `
-                    0 0 40px rgba(255, 255, 255, 0.8),
-                    0 0 80px rgba(255, 255, 255, 0.5),
+                    0 0 40px ${currentRoomData.glowColor}2A,
+                    0 0 80px ${currentRoomData.glowColor}18,
                     0 2px 20px rgba(0, 0, 0, 1),
                     0 4px 40px rgba(0, 0, 0, 0.95),
                     0 8px 60px rgba(0, 0, 0, 0.9)
                   `,
-                  WebkitTextStroke: '0.5px rgba(255, 255, 255, 0.3)',
-                  filter: 'drop-shadow(0 0 10px rgba(255, 255, 255, 0.5))',
+                  WebkitTextStroke: `0.5px rgba(${currentRoomData.glowRgb}, 0.1)`,
+                  filter: `drop-shadow(0 0 20px ${currentRoomData.glowColor}15)`,
                 }}
                 onComplete={() => setShowDescription(true)}
               />
@@ -375,13 +382,14 @@ function HorizontalHero({ onRoomChange = () => {} }) {
                   lineHeight: '1.7',
                   letterSpacing: '0.05em',
                   textShadow: `
-                    0 0 30px rgba(255, 255, 255, 0.5),
+                    0 0 30px ${currentRoomData.glowColor}22,
+                    0 0 60px ${currentRoomData.glowColor}11,
                     0 2px 15px rgba(0, 0, 0, 1),
                     0 4px 30px rgba(0, 0, 0, 0.95),
                     0 8px 50px rgba(0, 0, 0, 0.9)
                   `,
                   fontWeight: '300',
-                  filter: 'drop-shadow(0 0 15px rgba(255, 255, 255, 0.3))',
+                  filter: `drop-shadow(0 0 20px ${currentRoomData.glowColor}12)`,
                 }}
                 onComplete={() => setShowButton(true)}
               />
@@ -399,38 +407,39 @@ function HorizontalHero({ onRoomChange = () => {} }) {
               style={{
                 backgroundColor: 'rgba(255, 255, 255, 0.15)',
                 color: '#FFFFFF',
-                border: '2px solid rgba(255, 255, 255, 0.5)',
+                border: `2px solid rgba(${currentRoomData.glowRgb}, 0.25)`,
                 borderRadius: '8px',
                 fontWeight: '700',
                 transitionDuration: '0.4s',
-                textShadow: '0 2px 10px rgba(0, 0, 0, 0.9), 0 0 20px rgba(255, 255, 255, 0.3)',
+                textShadow: `0 2px 10px rgba(0, 0, 0, 0.9), 0 0 20px ${currentRoomData.glowColor}20`,
                 backdropFilter: 'blur(12px)',
                 boxShadow: `
                   0 4px 20px rgba(0, 0, 0, 0.5),
                   0 8px 40px rgba(0, 0, 0, 0.3),
-                  0 0 30px rgba(255, 255, 255, 0.2),
+                  0 0 40px ${currentRoomData.glowColor}0D,
                   inset 0 1px 0 rgba(255, 255, 255, 0.3)
                 `,
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.3)';
-                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.8)';
+                e.currentTarget.style.backgroundColor = `rgba(${currentRoomData.glowRgb}, 0.12)`;
+                e.currentTarget.style.borderColor = `rgba(${currentRoomData.glowRgb}, 0.4)`;
                 e.currentTarget.style.transform = 'translateY(-2px) scale(1.05)';
                 e.currentTarget.style.boxShadow = `
                   0 6px 30px rgba(0, 0, 0, 0.6),
                   0 12px 60px rgba(0, 0, 0, 0.4),
-                  0 0 50px rgba(255, 255, 255, 0.5),
+                  0 0 60px ${currentRoomData.glowColor}18,
+                  0 0 100px ${currentRoomData.glowColor}0A,
                   inset 0 1px 0 rgba(255, 255, 255, 0.4)
                 `;
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.15)';
-                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.5)';
+                e.currentTarget.style.borderColor = `rgba(${currentRoomData.glowRgb}, 0.25)`;
                 e.currentTarget.style.transform = 'translateY(0) scale(1)';
                 e.currentTarget.style.boxShadow = `
                   0 4px 20px rgba(0, 0, 0, 0.5),
                   0 8px 40px rgba(0, 0, 0, 0.3),
-                  0 0 30px rgba(255, 255, 255, 0.2),
+                  0 0 40px ${currentRoomData.glowColor}0D,
                   inset 0 1px 0 rgba(255, 255, 255, 0.3)
                 `;
               }}
