@@ -118,10 +118,11 @@ function CircleDetail() {
 
   useEffect(() => { if (id && activeTopicId) loadComments(true, false); }, [id, activeTopicId]);
 
-  // Poll for new comments every 500ms for real-time updates (silent background refresh)
+  // Poll for new comments every 3 seconds for real-time updates (silent background refresh)
+  // Stays under rate limit: 20 req/min < 100 req/15min limit
   useEffect(() => {
     if (!id || !activeTopicId) return;
-    const interval = setInterval(() => loadComments(true, true), 500);
+    const interval = setInterval(() => loadComments(true, true), 3000);
     return () => clearInterval(interval);
   }, [id, activeTopicId, loadComments]);
 
