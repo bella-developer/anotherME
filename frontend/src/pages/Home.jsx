@@ -68,16 +68,19 @@ function Home() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 2, delay: 0.5 }}
-            className="text-center mb-6 md:mb-8"
+            className="text-center mb-8 md:mb-10"
           >
             <p 
-              className="text-sm md:text-base tracking-[0.35em] uppercase font-light"
+              className="text-xl md:text-2xl lg:text-3xl tracking-[0.3em] uppercase"
               style={{ 
-                color: '#ffffff',
                 fontFamily: 'var(--font-heading)',
-                textShadow: '0 0 20px rgba(255, 255, 255, 0.3), 0 0 40px rgba(255, 255, 255, 0.15)',
-                letterSpacing: '0.4em',
-                fontWeight: '300',
+                fontWeight: '600',
+                background: 'linear-gradient(135deg, #ffffff 0%, #a0a0a0 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text',
+                filter: 'drop-shadow(0 0 30px rgba(255, 255, 255, 0.4)) drop-shadow(0 4px 10px rgba(0, 0, 0, 0.8))',
+                letterSpacing: '0.35em',
               }}
             >
               {getGreeting()}
@@ -92,13 +95,16 @@ function Home() {
             className="text-center mb-16 md:mb-20 lg:mb-24"
           >
             <p 
-              className="text-xs md:text-sm tracking-[0.35em] uppercase mb-4 md:mb-6 font-light"
+              className="text-base md:text-lg lg:text-xl tracking-[0.4em] uppercase mb-6 md:mb-8"
               style={{ 
-                color: '#ffffff',
                 fontFamily: 'var(--font-heading)',
-                textShadow: '0 0 15px rgba(255, 255, 255, 0.25)',
-                letterSpacing: '0.45em',
-                fontWeight: '400',
+                fontWeight: '500',
+                background: 'linear-gradient(135deg, #ffffff 0%, #c0c0c0 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text',
+                filter: 'drop-shadow(0 0 25px rgba(255, 255, 255, 0.35)) drop-shadow(0 3px 8px rgba(0, 0, 0, 0.7))',
+                letterSpacing: '0.5em',
               }}
             >
               Choose Your Room
