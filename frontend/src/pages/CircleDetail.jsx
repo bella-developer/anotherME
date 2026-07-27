@@ -87,9 +87,9 @@ function CircleDetail() {
   }, [loadCircle]);
 
   // Load comments with polling for real-time updates
-  const loadComments = useCallback(async (reset = false) => {
+  const loadComments = useCallback(async (reset = false, silent = false) => {
     try {
-      setLoadingComments(true);
+      if (!silent) setLoadingComments(true);
       const data = await fetchCircleComments({ circleId: id, cursor: reset ? null : cursor, postId: activeTopicId });
       // Sort chronologically: oldest first (like Discord, Slack)
       setComments(data.comments.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt)));
@@ -97,16 +97,16 @@ function CircleDetail() {
     } catch (err) {
       console.error('Failed to load comments:', err);
     } finally {
-      setLoadingComments(false);
+      if (!silent) setLoadingComments(false);
     }
   }, [id, cursor, activeTopicId]);
 
-  useEffect(() => { if (id && activeTopicId) loadComments(true); }, [id, activeTopicId]);
+  useEffect(() => { if (id && activeTopicId) loadComments(true, false); }, [id, activeTopicId]);
 
-  // Poll for new comments every 3 seconds for real-time updates
+  // Poll for new comments every 3 seconds for real-time updates (silent background refresh)
   useEffect(() => {
     if (!id || !activeTopicId) return;
-    const interval = setInterval(() => loadComments(true), 3000);
+    const interval = setInterval(() => loadComments(true, true), 3000);
     return () => clearInterval(interval);
   }, [id, activeTopicId, loadComments]);
 
