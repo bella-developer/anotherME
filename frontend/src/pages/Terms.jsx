@@ -1,99 +1,164 @@
 import { Link } from 'react-router-dom';
 import EsoLogo from '../components/EsoLogo';
 import { usePageTitle } from '../hooks/usePageTitle';
+import Layout from '../components/Layout';
+import PageTransition from '../components/PageTransition';
 
 function Terms() {
   usePageTitle('Terms');
+  
+  const terms = [
+    {
+      title: 'Acceptance of Terms',
+      content: 'By using ESO, you agree to these terms. If you don\'t agree, please don\'t use the platform.'
+    },
+    {
+      title: 'Community Guidelines',
+      content: 'ESO is for deep thinkers. Harassment, spam, or disruptive content is prohibited.'
+    },
+    {
+      title: 'Content Ownership',
+      content: 'You own your posts. By posting, you grant ESO license to display your content within the platform.'
+    },
+    {
+      title: 'Account Termination',
+      content: 'We reserve the right to terminate accounts that violate these terms or disrupt the community.'
+    },
+    {
+      title: 'Platform Availability',
+      content: 'ESO is provided \'as is\' without warranty. We don\'t guarantee error-free or continuous availability.'
+    },
+    {
+      title: 'Changes to Terms',
+      content: 'We may update these terms. Continued use after changes constitutes acceptance.'
+    }
+  ];
+
   return (
-    <div className="min-h-screen bg-black text-white relative z-10" style={{ fontFamily: "'Geist Mono', monospace" }}>
-      {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 border-b border-white/10 bg-black/95 backdrop-blur-xl">
-        <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-          <Link to="/">
-            <EsoLogo className="h-9 w-auto" />
-          </Link>
-          <div className="flex items-center gap-6">
-            <Link to="/login" className="text-white">Sign In</Link>
-            <Link to="/register" className="text-white">Register</Link>
+    <PageTransition>
+      <Layout leftSidebar={null} rightSidebar={null}>
+        <div className="min-h-screen relative" style={{ fontFamily: 'var(--font-body)' }}>
+          {/* Background atmospheric effect */}
+          <div 
+            className="fixed inset-0 pointer-events-none"
+            style={{
+              background: 'radial-gradient(ellipse at 50% 20%, rgba(167, 139, 250, 0.03) 0%, transparent 60%)',
+              zIndex: 1,
+            }}
+          />
+
+          {/* Content */}
+          <div className="max-w-3xl mx-auto px-4 sm:px-6 py-8 relative z-10">
+            {/* Header - Compact */}
+            <Link
+              to="/"
+              className="mb-6 text-xs uppercase tracking-wider transition-colors flex items-center gap-2 px-3 py-1.5 rounded inline-flex"
+              style={{
+                color: 'rgba(255, 255, 255, 0.5)',
+                border: '1px solid rgba(255, 255, 255, 0.1)',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.color = 'rgba(255, 255, 255, 0.9)';
+                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.color = 'rgba(255, 255, 255, 0.5)';
+                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+              }}
+            >
+              <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+              </svg>
+              Back
+            </Link>
+
+            <div className="text-center mb-8">
+              <div className="inline-block mb-4">
+                <EsoLogo className="h-12 w-auto mx-auto" />
+              </div>
+              <h1 
+                className="text-2xl sm:text-3xl font-bold mb-2"
+                style={{ 
+                  color: '#ffffff',
+                  fontFamily: 'var(--font-heading)',
+                  letterSpacing: '0.08em'
+                }}
+              >
+                Terms of Service
+              </h1>
+              <p className="text-xs" style={{ color: 'rgba(255, 255, 255, 0.5)' }}>
+                Platform Guidelines
+              </p>
+            </div>
+
+            {/* Terms Sections - Compact Single Panel */}
+            <div 
+              className="p-6 mb-6 rounded-lg"
+              style={{
+                background: 'rgba(0, 0, 0, 0.4)',
+                backdropFilter: 'blur(12px)',
+                border: '1px solid rgba(255, 255, 255, 0.08)',
+              }}
+            >
+              <div className="space-y-6">
+                {terms.map((term, index) => (
+                  <div key={index}>
+                    <h2 
+                      className="text-base font-bold mb-2"
+                      style={{ 
+                        color: '#ffffff',
+                        fontFamily: 'var(--font-heading)'
+                      }}
+                    >
+                      {term.title}
+                    </h2>
+                    <p 
+                      className="text-xs leading-relaxed"
+                      style={{ color: 'rgba(255, 255, 255, 0.7)' }}
+                    >
+                      {term.content}
+                    </p>
+                    
+                    {/* Divider between sections (except last one) */}
+                    {index < terms.length - 1 && (
+                      <div 
+                        className="mt-6 h-px"
+                        style={{ background: 'rgba(255, 255, 255, 0.05)' }}
+                      />
+                    )}
+                  </div>
+                ))}
+
+                {/* Contact Section inside panel - Compact */}
+                <div 
+                  className="mt-6 pt-6 text-center"
+                  style={{ borderTop: '1px solid rgba(255, 255, 255, 0.05)' }}
+                >
+                  <h2 
+                    className="text-sm font-bold mb-2"
+                    style={{ 
+                      color: '#ffffff',
+                      fontFamily: 'var(--font-heading)'
+                    }}
+                  >
+                    Legal Questions?
+                  </h2>
+                  <a 
+                    href="mailto:legal@eso.app" 
+                    className="text-xs transition-colors"
+                    style={{ color: 'rgba(167, 139, 250, 0.8)' }}
+                    onMouseEnter={(e) => e.currentTarget.style.color = 'rgba(167, 139, 250, 1)'}
+                    onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(167, 139, 250, 0.8)'}
+                  >
+                    legal@eso.app
+                  </a>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-      </nav>
-
-      {/* Content */}
-      <main className="pt-32 px-6">
-        <div className="max-w-4xl mx-auto text-center">
-          
-          <div className="mb-12">
-            <EsoLogo className="h-24 w-auto mx-auto mb-8" />
-            <h1 className="text-6xl font-bold text-white mb-6">
-              TERMS OF SERVICE
-            </h1>
-            <p className="text-2xl text-white mb-4">
-              Platform Guidelines
-            </p>
-          </div>
-
-          <div className="space-y-16 text-white">
-            
-            <div>
-              <h2 className="text-3xl font-bold mb-4">ACCEPTANCE OF TERMS</h2>
-              <p className="text-xl">
-                By using ESO, you agree to these terms. If you don't agree, please don't use the platform.
-              </p>
-            </div>
-
-            <div>
-              <h2 className="text-3xl font-bold mb-4">COMMUNITY GUIDELINES</h2>
-              <p className="text-xl">
-                ESO is for deep thinkers. Harassment, spam, or disruptive content is prohibited.
-              </p>
-            </div>
-
-            <div>
-              <h2 className="text-3xl font-bold mb-4">CONTENT OWNERSHIP</h2>
-              <p className="text-xl">
-                You own your posts. By posting, you grant ESO license to display your content within the platform.
-              </p>
-            </div>
-
-            <div>
-              <h2 className="text-3xl font-bold mb-4">ACCOUNT TERMINATION</h2>
-              <p className="text-xl">
-                We reserve the right to terminate accounts that violate these terms or disrupt the community.
-              </p>
-            </div>
-
-            <div>
-              <h2 className="text-3xl font-bold mb-4">PLATFORM AVAILABILITY</h2>
-              <p className="text-xl">
-                ESO is provided 'as is' without warranty. We don't guarantee error-free or continuous availability.
-              </p>
-            </div>
-
-            <div>
-              <h2 className="text-3xl font-bold mb-4">CHANGES TO TERMS</h2>
-              <p className="text-xl">
-                We may update these terms. Continued use after changes constitutes acceptance.
-              </p>
-            </div>
-
-            <div className="pt-12">
-              <h2 className="text-3xl font-bold mb-4">LEGAL QUESTIONS?</h2>
-              <a href="mailto:legal@eso.app" className="text-2xl text-white hover:underline">
-                legal@eso.app
-              </a>
-            </div>
-
-            <div className="pt-8 pb-16">
-              <Link to="/" className="text-xl text-white/70 hover:text-white">
-                ← Back to Home
-              </Link>
-            </div>
-
-          </div>
-        </div>
-      </main>
-    </div>
+      </Layout>
+    </PageTransition>
   );
 }
 

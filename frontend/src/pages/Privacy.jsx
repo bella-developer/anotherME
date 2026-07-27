@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
 import EsoLogo from '../components/EsoLogo';
 import { usePageTitle } from '../hooks/usePageTitle';
+import Layout from '../components/Layout';
+import PageTransition from '../components/PageTransition';
 
 function Privacy() {
   usePageTitle('Privacy');
@@ -28,85 +30,130 @@ function Privacy() {
   ];
 
   return (
-    <div className="min-h-screen bg-black text-white relative z-10" style={{ fontFamily: "'Geist Mono', monospace" }}>
-      {/* Fixed Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 border-b border-white/10 bg-black/95 backdrop-blur-xl">
-        <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-          <Link to="/" className="focus:outline-none focus:ring-2 focus:ring-white/50 rounded-md">
-            <EsoLogo className="h-9 w-auto" />
-          </Link>
-          <div className="flex items-center gap-6">
-            <Link 
-              to="/login" 
-              className="text-xs text-white/60 hover:text-white transition-colors tracking-[0.15em] uppercase font-medium"
-            >
-              Sign In
-            </Link>
+    <PageTransition>
+      <Layout leftSidebar={null} rightSidebar={null}>
+        <div className="min-h-screen relative" style={{ fontFamily: 'var(--font-body)' }}>
+          {/* Background atmospheric effect */}
+          <div 
+            className="fixed inset-0 pointer-events-none"
+            style={{
+              background: 'radial-gradient(ellipse at 50% 20%, rgba(167, 139, 250, 0.03) 0%, transparent 60%)',
+              zIndex: 1,
+            }}
+          />
+
+          {/* Content */}
+          <div className="max-w-3xl mx-auto px-4 sm:px-6 py-8 relative z-10">
+            {/* Header - Compact */}
             <Link
-              to="/register"
-              className="px-4 py-2 text-xs text-white hover:bg-white/5 transition-all tracking-[0.15em] uppercase font-medium"
+              to="/"
+              className="mb-6 text-xs uppercase tracking-wider transition-colors flex items-center gap-2 px-3 py-1.5 rounded inline-flex"
+              style={{
+                color: 'rgba(255, 255, 255, 0.5)',
+                border: '1px solid rgba(255, 255, 255, 0.1)',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.color = 'rgba(255, 255, 255, 0.9)';
+                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.color = 'rgba(255, 255, 255, 0.5)';
+                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+              }}
             >
-              Register
+              <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+              </svg>
+              Back
             </Link>
-          </div>
-        </div>
-      </nav>
 
-      {/* Main Content */}
-      <main className="pt-24 pb-16">
-        <div className="max-w-6xl mx-auto px-6">
-          {/* Header */}
-          <div className="text-center mb-20">
-            <div className="inline-block mb-6">
-              <EsoLogo className="h-20 w-auto mx-auto" />
-            </div>
-            <h1 className="text-5xl md:text-6xl font-light tracking-[0.2em] uppercase mb-4 text-white">
-              Privacy Policy
-            </h1>
-            <p className="text-sm tracking-[0.15em] text-white/50 uppercase mb-8">
-              How We Protect Your Data
-            </p>
-          </div>
-
-          {/* Content Sections */}
-          <div className="max-w-3xl mx-auto space-y-12 mb-20">
-            {sections.map((section) => (
-              <div key={section.id} className="text-center">
-                <h2 className="text-2xl font-semibold tracking-wider uppercase text-white mb-4">
-                  {section.title}
-                </h2>
-                <p className="text-white/80 text-lg leading-relaxed">
-                  {section.content}
-                </p>
+            <div className="text-center mb-8">
+              <div className="inline-block mb-4">
+                <EsoLogo className="h-12 w-auto mx-auto" />
               </div>
-            ))}
-          </div>
+              <h1 
+                className="text-2xl sm:text-3xl font-bold mb-2"
+                style={{ 
+                  color: '#ffffff',
+                  fontFamily: 'var(--font-heading)',
+                  letterSpacing: '0.08em'
+                }}
+              >
+                Privacy Policy
+              </h1>
+              <p className="text-xs" style={{ color: 'rgba(255, 255, 255, 0.5)' }}>
+                How We Protect Your Data
+              </p>
+            </div>
 
-          {/* Contact Section */}
-          <div className="text-center mb-12">
-            <h2 className="text-2xl font-semibold tracking-wider uppercase text-white mb-4">
-              Questions?
-            </h2>
-            <a 
-              href="mailto:privacy@eso.app" 
-              className="text-lg text-white/80 hover:text-white transition-colors"
+            {/* Content Sections - Compact Single Panel */}
+            <div 
+              className="p-6 mb-6 rounded-lg"
+              style={{
+                background: 'rgba(0, 0, 0, 0.4)',
+                backdropFilter: 'blur(12px)',
+                border: '1px solid rgba(255, 255, 255, 0.08)',
+              }}
             >
-              privacy@eso.app
-            </a>
-          </div>
+              <div className="space-y-6">
+                {sections.map((section, index) => (
+                  <div key={section.id}>
+                    <h2 
+                      className="text-base font-bold mb-2"
+                      style={{ 
+                        color: '#ffffff',
+                        fontFamily: 'var(--font-heading)'
+                      }}
+                    >
+                      {section.title}
+                    </h2>
+                    <p 
+                      className="text-xs leading-relaxed"
+                      style={{ color: 'rgba(255, 255, 255, 0.7)' }}
+                    >
+                      {section.content}
+                    </p>
+                    
+                    {/* Divider between sections (except last one) */}
+                    {index < sections.length - 1 && (
+                      <div 
+                        className="mt-6 h-px"
+                        style={{ background: 'rgba(255, 255, 255, 0.05)' }}
+                      />
+                    )}
+                  </div>
+                ))}
 
-          {/* Back Link */}
-          <div className="text-center">
-            <Link 
-              to="/" 
-              className="text-sm text-white/50 hover:text-white/70 transition-colors tracking-wider uppercase"
-            >
-              ← Back to Home
-            </Link>
+                {/* Contact Section inside panel - Compact */}
+                <div 
+                  className="mt-6 pt-6 text-center"
+                  style={{ borderTop: '1px solid rgba(255, 255, 255, 0.05)' }}
+                >
+                  <h2 
+                    className="text-sm font-bold mb-2"
+                    style={{ 
+                      color: '#ffffff',
+                      fontFamily: 'var(--font-heading)'
+                    }}
+                  >
+                    Questions?
+                  </h2>
+                  <a 
+                    href="mailto:privacy@eso.app" 
+                    className="text-xs transition-colors"
+                    style={{ color: 'rgba(167, 139, 250, 0.8)' }}
+                    onMouseEnter={(e) => e.currentTarget.style.color = 'rgba(167, 139, 250, 1)'}
+                    onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(167, 139, 250, 0.8)'}
+                  >
+                    privacy@eso.app
+                  </a>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-      </main>
-    </div>
+      </Layout>
+    </PageTransition>
   );
 }
 
