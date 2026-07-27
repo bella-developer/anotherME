@@ -25,11 +25,12 @@ function createRateLimitHandler(limitType) {
 
 /**
  * Standard rate limiter for read endpoints (GET)
- * 100 requests per 15 minutes per IP/token
+ * Development: 500 requests per 15 minutes per IP/token
+ * Production: 100 requests per 15 minutes per IP/token
  */
 export const readRateLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // 100 requests per window
+  max: process.env.NODE_ENV === 'production' ? 100 : 500, // Higher limit for development
   standardHeaders: true, // Return rate limit info in `RateLimit-*` headers
   legacyHeaders: false, // Disable `X-RateLimit-*` headers
   message: {
