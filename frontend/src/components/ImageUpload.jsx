@@ -14,15 +14,16 @@ const ImageUpload = ({ onImageSelect, onImageRemove, disabled = false }) => {
   const validateAndProcessFile = (file) => {
     if (!file) return false;
 
-    // Validate file type
-    if (!file.type.startsWith('image/')) {
-      alert('Please select an image file');
+    // Validate file type (images including GIF)
+    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
+    if (!allowedTypes.includes(file.type)) {
+      alert('Please select an image file (JPEG, PNG, GIF, or WebP)');
       return false;
     }
 
     // Validate file size (5MB max)
     if (file.size > 5 * 1024 * 1024) {
-      alert('Image size must be less than 5MB');
+      alert('Image/GIF size must be less than 5MB');
       return false;
     }
 
@@ -98,7 +99,7 @@ const ImageUpload = ({ onImageSelect, onImageRemove, disabled = false }) => {
       <input
         ref={fileInputRef}
         type="file"
-        accept="image/*"
+        accept="image/jpeg,image/jpg,image/png,image/gif,image/webp"
         onChange={handleFileChange}
         className="hidden"
         disabled={disabled}
@@ -131,11 +132,11 @@ const ImageUpload = ({ onImageSelect, onImageRemove, disabled = false }) => {
                 className="text-xs font-light tracking-wide block"
                 style={{ color: isDragging ? 'rgba(161, 98, 7, 0.9)' : 'rgba(161, 98, 7, 0.7)' }}
               >
-                {isDragging ? 'Drop your image here' : 'Add image (optional)'}
+                {isDragging ? 'Drop your image here' : 'Add image or GIF (optional)'}
               </span>
               {!isDragging && (
                 <span className="text-white/30 text-[10px] block mt-1">
-                  Click or drag & drop • Max 5MB
+                  Click or drag & drop • Max 5MB • JPG, PNG, GIF, WebP
                 </span>
               )}
             </div>

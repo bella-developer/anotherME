@@ -23,6 +23,7 @@ import Explore from './pages/Explore';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 import OAuthRedirect from './pages/OAuthRedirect';
+import Community from './pages/Community';
 
 // Lazy load protected route components for code splitting
 const Circles = lazy(() => import('./pages/Circles'));
@@ -91,6 +92,7 @@ function App() {
             <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/explore" element={<Explore />} />
             <Route path="/privacy" element={<Privacy />} />
+            <Route path="/community" element={<Community />} />
 
             {/* Protected routes - Lazy loaded, wrapped in Suspense */}
             <Route

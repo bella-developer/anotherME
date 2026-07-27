@@ -86,10 +86,8 @@ function Landing() {
               >
                 Explore
               </a>
-              <a 
-                href="https://t.me/hesed_perspectives" 
-                target="_blank" 
-                rel="noopener noreferrer"
+              <Link
+                to="/community"
                 className="transition-all duration-500"
                 style={{
                   color: 'rgba(255, 255, 255, 0.5)',
@@ -99,7 +97,7 @@ function Landing() {
                 onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.5)'}
               >
                 Community
-              </a>
+              </Link>
             </div>
 
             {/* Auth buttons - Responsive */}
