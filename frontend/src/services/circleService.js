@@ -165,9 +165,22 @@ export const fetchCircleComments = async ({ circleId, cursor, postId } = {}) => 
 
     const params = {};
     if (cursor) params.cursor = cursor;
-    if (postId) params.postId = postId; // Add postId filter
+    if (postId) params.postId = postId;
+    
+    // Add cache-busting timestamp to force fresh data
+    params._t = Date.now();
 
-    const response = await apiClient.get(`/circles/${circleId}/comments`, { params });
+    // Configure headers to prevent browser caching
+    const config = {
+      params,
+      headers: {
+        'Cache-Control': 'no-cache, no-store, must-revalidate',
+        'Pragma': 'no-cache',
+        'Expires': '0'
+      }
+    };
+
+    const response = await apiClient.get(`/circles/${circleId}/comments`, config);
     
     // Response format: { status: 'success', data: { data: [...], pagination: {...} } }
     const responseData = response.data?.data || response.data;

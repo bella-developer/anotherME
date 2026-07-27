@@ -90,7 +90,9 @@ function CircleDetail() {
   const loadComments = useCallback(async (reset = false, silent = false) => {
     try {
       if (!silent) setLoadingComments(true);
-      const data = await fetchCircleComments({ circleId: id, cursor: reset ? null : cursor, postId: activeTopicId });
+      
+      // Always fetch from beginning (no pagination cursor) to get all comments
+      const data = await fetchCircleComments({ circleId: id, cursor: null, postId: activeTopicId });
       
       // Intelligent merge: keep existing comments, add only new ones
       setComments(prevComments => {
@@ -123,14 +125,14 @@ function CircleDetail() {
     } finally {
       if (!silent) setLoadingComments(false);
     }
-  }, [id, cursor, activeTopicId]);
+  }, [id, activeTopicId]);
 
   useEffect(() => { if (id && activeTopicId) loadComments(true, false); }, [id, activeTopicId]);
 
-  // Poll for new comments every 1 second for real-time updates (silent background refresh)
+  // Poll for new comments every 500ms for real-time updates (silent background refresh)
   useEffect(() => {
     if (!id || !activeTopicId) return;
-    const interval = setInterval(() => loadComments(true, true), 1000);
+    const interval = setInterval(() => loadComments(true, true), 500);
     return () => clearInterval(interval);
   }, [id, activeTopicId, loadComments]);
 
@@ -151,7 +153,7 @@ function CircleDetail() {
       setCommentContent('');
       
       // Trigger immediate refresh to get server state
-      setTimeout(() => loadComments(true, true), 100);
+      setTimeout(() => loadComments(true, true), 50);
     } catch (err) {
       console.error('Failed to create comment:', err);
     } finally {
