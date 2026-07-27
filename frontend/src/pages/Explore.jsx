@@ -305,48 +305,78 @@ function Explore() {
         </div>
       </motion.section>
 
-      {/* FOOTER */}
-      <footer className="border-t border-white/10 relative z-10 bg-black">
-        <div className="max-w-7xl mx-auto px-6 lg:px-12 py-12">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+      {/* FOOTER - Match Landing.jsx Style */}
+      <footer className="border-t relative z-10" style={{ 
+        borderColor: 'rgba(255, 255, 255, 0.08)',
+        background: '#000000'
+      }}>
+        <div className="max-w-7xl mx-auto px-8 lg:px-16 py-20">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-16 mb-16">
             <div>
-              <div className="mb-4">
+              <div className="mb-6">
                 <EsoLogo className="h-8 w-auto" />
               </div>
-              <p className="text-sm text-white/50 leading-relaxed">
-                Your inner world, finally understood. A safe space for introverts and deep thinkers.
+              <p className="text-xs leading-relaxed" style={{ color: 'rgba(255, 255, 255, 0.5)' }}>
+                A digital sanctuary for introverts and deep thinkers
               </p>
             </div>
             
             <div>
-              <h4 className="text-sm font-semibold tracking-wider uppercase mb-3 text-white/70">Platform</h4>
-              <ul className="space-y-2">
-                <li><Link to="/" className="text-sm text-white/50 hover:text-white transition-colors">Home</Link></li>
-                <li><Link to="/about" className="text-sm text-white/50 hover:text-white transition-colors">About</Link></li>
-                <li><Link to="/rules" className="text-sm text-white/50 hover:text-white transition-colors">Community Rules</Link></li>
+              <h4 className="text-xs tracking-[0.25em] uppercase mb-6" style={{ color: 'rgba(255, 255, 255, 0.4)' }}>Platform</h4>
+              <ul className="space-y-3">
+                <li><Link to="/" className="text-xs transition-colors" style={{ 
+                  color: 'rgba(255, 255, 255, 0.5)',
+                }} onMouseEnter={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 1)'}
+                onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.5)'}>Home</Link></li>
+                <li><Link to="/explore" className="text-xs transition-colors" style={{ 
+                  color: 'rgba(255, 255, 255, 0.5)',
+                }} onMouseEnter={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 1)'}
+                onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.5)'}>Explore</Link></li>
+                <li><Link to="/about" className="text-xs transition-colors" style={{ 
+                  color: 'rgba(255, 255, 255, 0.5)',
+                }} onMouseEnter={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 1)'}
+                onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.5)'}>About</Link></li>
+                <li><Link to="/rules" className="text-xs transition-colors" style={{ 
+                  color: 'rgba(255, 255, 255, 0.5)',
+                }} onMouseEnter={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 1)'}
+                onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.5)'}>Rules</Link></li>
               </ul>
             </div>
             
             <div>
-              <h4 className="text-sm font-semibold tracking-wider uppercase mb-3 text-white/70">Socials</h4>
-              <ul className="space-y-2">
-                <li><a href="https://t.me/hesed_perspectives" target="_blank" rel="noopener noreferrer" className="text-sm text-white/50 hover:text-white transition-colors">Telegram</a></li>
-                <li><a href="#" target="_blank" rel="noopener noreferrer" className="text-sm text-white/50 hover:text-white transition-colors">YouTube</a></li>
+              <h4 className="text-xs tracking-[0.25em] uppercase mb-6" style={{ color: 'rgba(255, 255, 255, 0.4)' }}>Community</h4>
+              <ul className="space-y-3">
+                <li><a href="https://t.me/hesed_perspectives" target="_blank" rel="noopener noreferrer" className="text-xs transition-colors" style={{ 
+                  color: 'rgba(255, 255, 255, 0.5)',
+                }} onMouseEnter={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 1)'}
+                onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.5)'}>Telegram</a></li>
+                <li><a href="#" target="_blank" rel="noopener noreferrer" className="text-xs transition-colors" style={{ 
+                  color: 'rgba(255, 255, 255, 0.5)',
+                }} onMouseEnter={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 1)'}
+                onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.5)'}>YouTube</a></li>
               </ul>
             </div>
             
             <div>
-              <h4 className="text-sm font-semibold tracking-wider uppercase mb-3 text-white/70">Connect</h4>
-              <ul className="space-y-2">
-                <li><a href="mailto:hello@eso.app" className="text-sm text-white/50 hover:text-white transition-colors">hello@eso.app</a></li>
-                <li><a href="mailto:support@eso.app" className="text-sm text-white/50 hover:text-white transition-colors">Support</a></li>
+              <h4 className="text-xs tracking-[0.25em] uppercase mb-6" style={{ color: 'rgba(255, 255, 255, 0.4)' }}>Connect</h4>
+              <ul className="space-y-3">
+                <li><a href="mailto:hello@eso.app" className="text-xs transition-colors" style={{ 
+                  color: 'rgba(255, 255, 255, 0.5)',
+                }} onMouseEnter={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 1)'}
+                onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.5)'}>hello@eso.app</a></li>
+                <li><a href="mailto:support@eso.app" className="text-xs transition-colors" style={{ 
+                  color: 'rgba(255, 255, 255, 0.5)',
+                }} onMouseEnter={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 1)'}
+                onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.5)'}>Support</a></li>
               </ul>
             </div>
           </div>
           
-          <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-xs text-white/40">© 2026 ESO. For deep thinkers and authentic minds.</p>
-            <p className="text-xs text-white/40">No algorithms. Just real conversations.</p>
+          <div className="pt-10 border-t flex flex-col md:flex-row justify-between items-center gap-4" style={{
+            borderColor: 'rgba(255, 255, 255, 0.08)'
+          }}>
+            <p className="text-xs" style={{ color: 'rgba(255, 255, 255, 0.3)' }}>© 2026 ESO</p>
+            <p className="text-xs" style={{ color: 'rgba(255, 255, 255, 0.3)' }}>No algorithms. Just real conversations.</p>
           </div>
         </div>
       </footer>

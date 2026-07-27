@@ -227,21 +227,17 @@ function App() {
             <Route
               path="/rules"
               element={
-                <ProtectedRoute>
-                  <Suspense fallback={<PageLoader />}>
-                    <Rules />
-                  </Suspense>
-                </ProtectedRoute>
+                <Suspense fallback={<PageLoader />}>
+                  <Rules />
+                </Suspense>
               }
             />
             <Route
               path="/about"
               element={
-                <ProtectedRoute>
-                  <Suspense fallback={<PageLoader />}>
-                    <AboutUs />
-                  </Suspense>
-                </ProtectedRoute>
+                <Suspense fallback={<PageLoader />}>
+                  <AboutUs />
+                </Suspense>
               }
             />
             <Route
