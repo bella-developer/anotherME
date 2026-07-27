@@ -282,30 +282,7 @@ function FantasyRoom() {
                 )}
               </div>
             </div>
-            {loading ? (
-              <div className="flex justify-center py-16"><LoadingSpinner /></div>
-            ) : error ? (
-              <div className="text-center py-16">
-                <p className={`text-sm mb-4 ${'text-white/30'}`}>{error}</p>
-                <button onClick={() => window.location.reload()} className={`text-[10px] tracking-[0.2em] uppercase transition-colors ${'text-white/30 hover:text-white/60'}`}>Try Again</button>
-              </div>
-            ) : posts.length === 0 ? (
-              <div className="text-center py-16">
-                <p className={`text-sm ${'text-white/25'}`}>The canvas awaits. Share your first fantasy.</p>
-              </div>
-            ) : (
-              <div className="space-y-3">
-                {posts.map((post) => (
-                  <FantasyRoomCard 
-                    key={post.id} 
-                    post={post} 
-                    onReaction={handleReaction}
-                    onEdit={handleEdit}
-                    onDelete={handleDelete}
-                  />
-                ))}
-              </div>
-            )}
+
             {/* Feed */}
             {loading ? (
               <div className="flex justify-center py-16"><LoadingSpinner /></div>
