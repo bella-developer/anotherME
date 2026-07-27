@@ -310,7 +310,7 @@ function HorizontalHero({ onRoomChange = () => {} }) {
           </motion.div>
 
           {/* Room Title - First! Dramatic Cinematic Typewriter */}
-          <div className="mb-10 min-h-[140px] md:min-h-[160px]">
+          <div className="mb-6 min-h-[140px] md:min-h-[160px]">
             <TypewriterText
               key={`title-${currentRoom}`}
               text={currentRoomData.title}
@@ -340,7 +340,7 @@ function HorizontalHero({ onRoomChange = () => {} }) {
           </div>
 
           {/* Room Label - Second - Cinematic Typewriter */}
-          <div className="mb-8 min-h-[28px]">
+          <div className="mb-5 min-h-[28px]">
             {showSubtitle && (
               <TypewriterText
                 key={`subtitle-${currentRoom}`}
@@ -368,7 +368,7 @@ function HorizontalHero({ onRoomChange = () => {} }) {
           </div>
 
           {/* Description - Third - Elegant Typewriter */}
-          <div className="mb-14 min-h-[60px] max-w-2xl mx-auto">
+          <div className="mb-8 min-h-[60px] max-w-2xl mx-auto">
             {showDescription && (
               <TypewriterText
                 key={`desc-${currentRoom}`}
