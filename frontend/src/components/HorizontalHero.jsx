@@ -1,7 +1,56 @@
 import { useEffect, useRef, useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useAnimation } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import EsoLogo from './EsoLogo';
+
+// Typewriter component for cinematic text reveal
+function TypewriterText({ text, delay = 0, speed = 0.05, className, style, onComplete }) {
+  const [displayedText, setDisplayedText] = useState('');
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    setDisplayedText('');
+    setCurrentIndex(0);
+  }, [text]);
+
+  useEffect(() => {
+    if (currentIndex < text.length) {
+      const timeout = setTimeout(() => {
+        setDisplayedText(prev => prev + text[currentIndex]);
+        setCurrentIndex(prev => prev + 1);
+      }, speed * 1000);
+      return () => clearTimeout(timeout);
+    } else if (onComplete && currentIndex === text.length) {
+      onComplete();
+    }
+  }, [currentIndex, text, speed, onComplete]);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.3, delay }}
+      className={className}
+      style={style}
+    >
+      {displayedText}
+      {currentIndex < text.length && (
+        <motion.span
+          animate={{ opacity: [1, 0] }}
+          transition={{ duration: 0.5, repeat: Infinity, repeatType: 'reverse' }}
+          style={{
+            display: 'inline-block',
+            width: '3px',
+            height: '0.9em',
+            backgroundColor: 'rgba(255, 255, 255, 0.9)',
+            marginLeft: '4px',
+            verticalAlign: 'middle',
+          }}
+        />
+      )}
+    </motion.div>
+  );
+}
 
 // Horizontal Scrolling Hero with Video Backgrounds
 function HorizontalHero({ onRoomChange = () => {} }) {
@@ -10,6 +59,9 @@ function HorizontalHero({ onRoomChange = () => {} }) {
   const [currentRoom, setCurrentRoom] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [canScrollAway, setCanScrollAway] = useState(false);
+  const [showSubtitle, setShowSubtitle] = useState(false);
+  const [showDescription, setShowDescription] = useState(false);
+  const [showButton, setShowButton] = useState(false);
   const videoOffset = '68px';
   const videoRefs = useRef([]);
 
@@ -136,6 +188,11 @@ function HorizontalHero({ onRoomChange = () => {} }) {
     setCurrentRoom(newRoom);
     onRoomChange(rooms[newRoom]);
     
+    // Reset typewriter states
+    setShowSubtitle(false);
+    setShowDescription(false);
+    setShowButton(false);
+    
     // Play video for current room
     if (videoRefs.current[newRoom]) {
       videoRefs.current[newRoom].play().catch(err => console.log('Video play failed:', err));
@@ -246,125 +303,141 @@ function HorizontalHero({ onRoomChange = () => {} }) {
             />
           </motion.div>
 
-          {/* Room Label - Cinematic Typography */}
-          <motion.p 
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-sm tracking-[0.35em] uppercase mb-8 font-extrabold"
-            style={{
-              color: '#FFFFFF',
-              opacity: 0.85,
-              letterSpacing: '0.35em',
-              textShadow: `
-                0 0 30px rgba(255, 255, 255, 0.5),
-                0 0 60px rgba(255, 255, 255, 0.3),
-                0 2px 20px rgba(0, 0, 0, 1),
-                0 4px 40px rgba(0, 0, 0, 0.95),
-                0 8px 60px rgba(0, 0, 0, 0.9)
-              `,
-              WebkitTextStroke: '0.5px rgba(255, 255, 255, 0.2)',
-            }}
-          >
-            {currentRoomData.subtitle}
-          </motion.p>
+          {/* Room Label - Cinematic Typewriter */}
+          <div className="mb-8 min-h-[28px]">
+            <TypewriterText
+              key={`subtitle-${currentRoom}`}
+              text={currentRoomData.subtitle}
+              delay={0.3}
+              speed={0.06}
+              className="text-sm tracking-[0.35em] uppercase font-extrabold"
+              style={{
+                color: '#FFFFFF',
+                opacity: 0.95,
+                letterSpacing: '0.35em',
+                textShadow: `
+                  0 0 40px rgba(255, 255, 255, 0.8),
+                  0 0 80px rgba(255, 255, 255, 0.5),
+                  0 2px 20px rgba(0, 0, 0, 1),
+                  0 4px 40px rgba(0, 0, 0, 0.95),
+                  0 8px 60px rgba(0, 0, 0, 0.9)
+                `,
+                WebkitTextStroke: '0.5px rgba(255, 255, 255, 0.3)',
+                filter: 'drop-shadow(0 0 10px rgba(255, 255, 255, 0.5))',
+              }}
+              onComplete={() => setShowSubtitle(true)}
+            />
+          </div>
 
-          {/* Room Title - Dramatic Cinematic Effect */}
-          <motion.h1 
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, delay: 0.4 }}
-            className="text-6xl sm:text-7xl md:text-8xl mb-10"
-            style={{
-              color: '#FFFFFF',
-              letterSpacing: '0.02em',
-              lineHeight: '1.1',
-              fontFamily: "'Playfair Display', 'EB Garamond', 'Cormorant Garamond', Georgia, serif",
-              fontWeight: '900',
-              textShadow: `
-                0 0 40px rgba(255, 255, 255, 0.6),
-                0 0 80px rgba(255, 255, 255, 0.4),
-                0 2px 10px rgba(0, 0, 0, 1),
-                0 4px 30px rgba(0, 0, 0, 1),
-                0 8px 60px rgba(0, 0, 0, 0.95),
-                0 16px 100px rgba(0, 0, 0, 0.9)
-              `,
-              WebkitTextStroke: '1px rgba(255, 255, 255, 0.1)',
-              filter: 'drop-shadow(0 0 20px rgba(255, 255, 255, 0.4))',
-            }}
-          >
-            {currentRoomData.title}
-          </motion.h1>
+          {/* Room Title - Dramatic Cinematic Typewriter */}
+          <div className="mb-10 min-h-[140px] md:min-h-[160px]">
+            {showSubtitle && (
+              <TypewriterText
+                key={`title-${currentRoom}`}
+                text={currentRoomData.title}
+                delay={0.2}
+                speed={0.08}
+                className="text-6xl sm:text-7xl md:text-8xl"
+                style={{
+                  color: '#FFFFFF',
+                  letterSpacing: '0.05em',
+                  lineHeight: '1.1',
+                  fontFamily: "'Playfair Display', 'EB Garamond', 'Cormorant Garamond', Georgia, serif",
+                  fontWeight: '900',
+                  textShadow: `
+                    0 0 60px rgba(255, 255, 255, 0.9),
+                    0 0 120px rgba(255, 255, 255, 0.6),
+                    0 2px 10px rgba(0, 0, 0, 1),
+                    0 4px 30px rgba(0, 0, 0, 1),
+                    0 8px 60px rgba(0, 0, 0, 0.95),
+                    0 16px 100px rgba(0, 0, 0, 0.9)
+                  `,
+                  WebkitTextStroke: '1.5px rgba(255, 255, 255, 0.2)',
+                  filter: 'drop-shadow(0 0 30px rgba(255, 255, 255, 0.6))',
+                }}
+                onComplete={() => setShowDescription(true)}
+              />
+            )}
+          </div>
 
-          {/* Description - Elegant & Legible */}
-          <motion.p 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-            className="text-lg md:text-xl mb-14 max-w-2xl mx-auto font-light"
-            style={{
-              color: '#FFFFFF',
-              opacity: 0.95,
-              lineHeight: '1.7',
-              letterSpacing: '0.03em',
-              textShadow: `
-                0 0 20px rgba(255, 255, 255, 0.3),
-                0 2px 15px rgba(0, 0, 0, 1),
-                0 4px 30px rgba(0, 0, 0, 0.95),
-                0 8px 50px rgba(0, 0, 0, 0.9)
-              `,
-              fontWeight: '300',
-            }}
-          >
-            {currentRoomData.description}
-          </motion.p>
+          {/* Description - Elegant Typewriter */}
+          <div className="mb-14 min-h-[60px] max-w-2xl mx-auto">
+            {showDescription && (
+              <TypewriterText
+                key={`desc-${currentRoom}`}
+                text={currentRoomData.description}
+                delay={0.1}
+                speed={0.04}
+                className="text-lg md:text-xl font-light"
+                style={{
+                  color: '#FFFFFF',
+                  opacity: 0.98,
+                  lineHeight: '1.7',
+                  letterSpacing: '0.05em',
+                  textShadow: `
+                    0 0 30px rgba(255, 255, 255, 0.5),
+                    0 2px 15px rgba(0, 0, 0, 1),
+                    0 4px 30px rgba(0, 0, 0, 0.95),
+                    0 8px 50px rgba(0, 0, 0, 0.9)
+                  `,
+                  fontWeight: '300',
+                  filter: 'drop-shadow(0 0 15px rgba(255, 255, 255, 0.3))',
+                }}
+                onComplete={() => setShowButton(true)}
+              />
+            )}
+          </div>
 
-          {/* CTA Button - Cinematic Glass Effect */}
-          <motion.button
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.8 }}
-            onClick={() => navigate('/login')}
-            className="px-10 py-4 text-sm uppercase tracking-[0.25em] transition-all group font-bold relative overflow-hidden"
-            style={{
-              backgroundColor: 'rgba(255, 255, 255, 0.12)',
-              color: '#FFFFFF',
-              border: '2px solid rgba(255, 255, 255, 0.4)',
-              borderRadius: '8px',
-              fontWeight: '700',
-              transitionDuration: '0.4s',
-              textShadow: '0 2px 10px rgba(0, 0, 0, 0.9)',
-              backdropFilter: 'blur(12px)',
-              boxShadow: `
-                0 4px 20px rgba(0, 0, 0, 0.5),
-                0 8px 40px rgba(0, 0, 0, 0.3),
-                inset 0 1px 0 rgba(255, 255, 255, 0.2)
-              `,
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.25)';
-              e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.6)';
-              e.currentTarget.style.transform = 'translateY(-2px) scale(1.02)';
-              e.currentTarget.style.boxShadow = `
-                0 6px 30px rgba(0, 0, 0, 0.6),
-                0 12px 60px rgba(0, 0, 0, 0.4),
-                0 0 40px rgba(255, 255, 255, 0.3),
-                inset 0 1px 0 rgba(255, 255, 255, 0.3)
-              `;
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.12)';
-              e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.4)';
-              e.currentTarget.style.transform = 'translateY(0) scale(1)';
-              e.currentTarget.style.boxShadow = `
-                0 4px 20px rgba(0, 0, 0, 0.5),
-                0 8px 40px rgba(0, 0, 0, 0.3),
-                inset 0 1px 0 rgba(255, 255, 255, 0.2)
-              `;
-            }}
-          >
-            Step In
-          </motion.button>
+          {/* CTA Button - Cinematic Reveal */}
+          {showButton && (
+            <motion.button
+              initial={{ opacity: 0, y: 20, scale: 0.9 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ duration: 0.6, ease: 'easeOut' }}
+              onClick={() => navigate('/login')}
+              className="px-10 py-4 text-sm uppercase tracking-[0.25em] transition-all group font-bold relative overflow-hidden"
+              style={{
+                backgroundColor: 'rgba(255, 255, 255, 0.15)',
+                color: '#FFFFFF',
+                border: '2px solid rgba(255, 255, 255, 0.5)',
+                borderRadius: '8px',
+                fontWeight: '700',
+                transitionDuration: '0.4s',
+                textShadow: '0 2px 10px rgba(0, 0, 0, 0.9), 0 0 20px rgba(255, 255, 255, 0.3)',
+                backdropFilter: 'blur(12px)',
+                boxShadow: `
+                  0 4px 20px rgba(0, 0, 0, 0.5),
+                  0 8px 40px rgba(0, 0, 0, 0.3),
+                  0 0 30px rgba(255, 255, 255, 0.2),
+                  inset 0 1px 0 rgba(255, 255, 255, 0.3)
+                `,
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.3)';
+                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.8)';
+                e.currentTarget.style.transform = 'translateY(-2px) scale(1.05)';
+                e.currentTarget.style.boxShadow = `
+                  0 6px 30px rgba(0, 0, 0, 0.6),
+                  0 12px 60px rgba(0, 0, 0, 0.4),
+                  0 0 50px rgba(255, 255, 255, 0.5),
+                  inset 0 1px 0 rgba(255, 255, 255, 0.4)
+                `;
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.15)';
+                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.5)';
+                e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                e.currentTarget.style.boxShadow = `
+                  0 4px 20px rgba(0, 0, 0, 0.5),
+                  0 8px 40px rgba(0, 0, 0, 0.3),
+                  0 0 30px rgba(255, 255, 255, 0.2),
+                  inset 0 1px 0 rgba(255, 255, 255, 0.3)
+                `;
+              }}
+            >
+              Step In
+            </motion.button>
+          )}
         </motion.div>
       </div>
 
