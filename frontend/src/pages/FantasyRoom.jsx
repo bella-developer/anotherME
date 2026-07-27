@@ -204,21 +204,22 @@ function FantasyRoom() {
                 FANTASY ROOM
               </h2>
 
-              {/* Right: Categories + POST Button */}
+              {/* Right: Categories + BACK + POST Button */}
               <div className="flex items-center gap-2 ml-auto">
-                {/* Category Dropdown - Compact, auto-width */}
+                {/* Category Dropdown - Tiny and compact */}
                 <select
                   value={selectedCategory}
                   onChange={(e) => setSelectedCategory(e.target.value)}
-                  className="px-2 py-1 text-[9px] tracking-wide uppercase transition-all cursor-pointer"
+                  className="px-1.5 py-0.5 text-[8px] tracking-wide uppercase transition-all cursor-pointer"
                   style={{
                     borderRadius: '2px',
-                    background: 'rgba(249, 115, 22, 0.15)',
-                    border: '1px solid rgba(249, 115, 22, 0.4)',
-                    color: 'rgba(249, 115, 22, 1)',
+                    background: 'rgba(249, 115, 22, 0.1)',
+                    border: '1px solid rgba(249, 115, 22, 0.3)',
+                    color: 'rgba(249, 115, 22, 0.9)',
                     fontWeight: '500',
                     width: 'auto',
                     minWidth: 'fit-content',
+                    height: '20px',
                   }}
                 >
                   {categories.map((cat) => (
@@ -227,6 +228,30 @@ function FantasyRoom() {
                     </option>
                   ))}
                 </select>
+
+                {/* BACK Button */}
+                <button
+                  onClick={() => navigate('/home')}
+                  className="px-2 py-0.5 text-[8px] tracking-wide uppercase transition-all"
+                  style={{
+                    borderRadius: '2px',
+                    background: 'rgba(249, 115, 22, 0.1)',
+                    border: '1px solid rgba(249, 115, 22, 0.3)',
+                    color: 'rgba(249, 115, 22, 0.9)',
+                    fontWeight: '500',
+                    height: '20px',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = 'rgba(249, 115, 22, 0.2)';
+                    e.currentTarget.style.borderColor = 'rgba(249, 115, 22, 0.5)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = 'rgba(249, 115, 22, 0.1)';
+                    e.currentTarget.style.borderColor = 'rgba(249, 115, 22, 0.3)';
+                  }}
+                >
+                  BACK
+                </button>
 
                 {/* POST Button */}
                 {isAuthenticated && (
