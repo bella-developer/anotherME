@@ -243,7 +243,16 @@ function CircleDetail() {
 
           {/* Circle header */}
           <div className="mb-10">
-            <button onClick={() => navigate('/circles')} className="text-[10px] tracking-[0.2em] text-white/25 hover:text-white/60 uppercase transition-colors mb-7 flex items-center gap-2">
+            <button 
+              onClick={() => navigate('/circles')} 
+              className="text-[11px] tracking-[0.18em] uppercase transition-all mb-7 flex items-center gap-2 px-4 py-2 hover:scale-105 active:scale-95"
+              style={{
+                color: 'rgba(255,255,255,0.6)',
+                background: 'rgba(255,255,255,0.05)',
+                border: '1px solid rgba(255,255,255,0.15)',
+                borderRadius: '4px',
+              }}
+            >
               ← Circles
             </button>
 
