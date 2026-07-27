@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { FaStar } from 'react-icons/fa';
+import { ChevronsRight } from 'lucide-react';
 import { selectAuth } from '../features/authSlice';
 import PageTransition from '../components/PageTransition';
 import LoadingSpinner from '../components/LoadingSpinner';
@@ -85,11 +86,13 @@ function CircleDetail() {
     return () => clearInterval(interval);
   }, [loadCircle]);
 
+  // Load comments with polling for real-time updates
   const loadComments = useCallback(async (reset = false) => {
     try {
       setLoadingComments(true);
       const data = await fetchCircleComments({ circleId: id, cursor: reset ? null : cursor, postId: activeTopicId });
-      setComments(prev => reset ? data.comments : [...prev, ...data.comments]);
+      // Sort chronologically: oldest first (like Discord, Slack)
+      setComments(data.comments.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt)));
       setCursor(data.cursor);
     } catch (err) {
       console.error('Failed to load comments:', err);
@@ -100,13 +103,21 @@ function CircleDetail() {
 
   useEffect(() => { if (id && activeTopicId) loadComments(true); }, [id, activeTopicId]);
 
+  // Poll for new comments every 3 seconds for real-time updates
+  useEffect(() => {
+    if (!id || !activeTopicId) return;
+    const interval = setInterval(() => loadComments(true), 3000);
+    return () => clearInterval(interval);
+  }, [id, activeTopicId, loadComments]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!commentContent.trim() || submitting) return;
     try {
       setSubmitting(true);
       const newComment = await createCircleComment(id, commentContent, activeTopicId);
-      setComments(prev => [newComment, ...prev]);
+      // Add new comment at the end (bottom) for chronological order
+      setComments(prev => [...prev, newComment]);
       setCommentContent('');
     } catch (err) {
       console.error('Failed to create comment:', err);
@@ -206,25 +217,40 @@ function CircleDetail() {
           {topicPosts.length > 0 && (
             <div className="mb-8">
               <p className="text-[9px] tracking-[0.25em] text-white/20 uppercase mb-3">Topics</p>
-              <div className={`grid gap-2 ${topicPosts.length === 1 ? 'grid-cols-1' : topicPosts.length === 2 ? 'grid-cols-2' : 'grid-cols-3'}`}>
+              <div className={`grid gap-3 ${topicPosts.length === 1 ? 'grid-cols-1' : topicPosts.length === 2 ? 'grid-cols-2' : 'grid-cols-3'}`}>
                 {topicPosts.map((topic) => {
                   const active = activeTopicId === topic.id;
                   return (
                     <button
                       key={topic.id}
                       onClick={() => setActiveTopicId(topic.id)}
-                      className="text-left p-3 transition-all duration-200"
+                      className="text-left p-3 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
                       style={{
-                        borderRadius: '3px',
-                        background: active ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.02)',
-                        boxShadow: active ? `0 0 0 1px ${accent}55` : '0 0 0 1px rgba(255,255,255,0.06)',
+                        borderRadius: '4px',
+                        background: active ? `${accent}15` : 'rgba(255,255,255,0.03)',
+                        boxShadow: active ? `0 0 0 2px ${accent}66, 0 2px 8px rgba(0,0,0,0.3)` : '0 0 0 1px rgba(255,255,255,0.08)',
+                        cursor: 'pointer',
                       }}
                     >
                       <div className="flex items-center gap-2 mb-1.5">
-                        <span className="text-[8px] tracking-[0.2em] uppercase px-1.5 py-0.5" style={{ color: accent, background: accent + '18', borderRadius: '2px' }}>Topic</span>
+                        <span 
+                          className="text-[8px] tracking-[0.2em] uppercase px-1.5 py-0.5 font-medium" 
+                          style={{ 
+                            color: active ? accent : 'rgba(255,255,255,0.5)', 
+                            background: active ? `${accent}25` : 'rgba(255,255,255,0.08)', 
+                            borderRadius: '2px' 
+                          }}
+                        >
+                          Topic
+                        </span>
                         <span className="text-[9px] text-white/25">{topic.commentCount || 0} responses</span>
                       </div>
-                      <p className="text-[11px] text-white/55 leading-relaxed line-clamp-2">{firstSentence(topic.content)}</p>
+                      <p 
+                        className="text-[11px] leading-relaxed line-clamp-2"
+                        style={{ color: active ? 'rgba(255,255,255,0.75)' : 'rgba(255,255,255,0.5)' }}
+                      >
+                        {firstSentence(topic.content)}
+                      </p>
                     </button>
                   );
                 })}
@@ -274,20 +300,29 @@ function CircleDetail() {
                   value={commentContent}
                   onChange={(e) => setCommentContent(e.target.value)}
                   onKeyDown={handleKeyDown}
-                  placeholder="Whisper into the void..."
+                  placeholder="share your vibe"
                   className="flex-1 text-white/70 text-sm resize-none focus:outline-none placeholder-white/20 bg-transparent"
                   rows={1}
                   maxLength={2000}
                   style={{ minHeight: '36px', maxHeight: '36px' }}
                 />
-                <span className="hidden sm:block text-[9px] tracking-[0.18em] text-white/15 uppercase whitespace-nowrap">Anon</span>
                 <button
                   type="submit"
                   disabled={!commentContent.trim() || submitting}
-                  className="flex-shrink-0 px-4 py-2 text-[10px] tracking-[0.18em] uppercase transition-all disabled:opacity-30"
-                  style={{ background: accent + '22', color: accent, borderRadius: '2px', border: `1px solid ${accent}44` }}
+                  className="flex-shrink-0 p-2 transition-all disabled:opacity-30 hover:scale-110 active:scale-95"
+                  style={{ 
+                    background: `${accent}25`, 
+                    color: accent, 
+                    borderRadius: '4px', 
+                    border: `1px solid ${accent}55` 
+                  }}
+                  title="Send message"
                 >
-                  {submitting ? '...' : 'Share'}
+                  {submitting ? (
+                    <span className="text-xs">...</span>
+                  ) : (
+                    <ChevronsRight className="w-5 h-5" />
+                  )}
                 </button>
               </div>
               {/* Character counter with progress indicator */}
@@ -379,6 +414,7 @@ function CommentItem({ comment, depth, circleId, accent }) {
       setReplyCount(p => p + 1);
       const { createCommentReply } = await import('../services/circleService');
       const newReply = await createCommentReply(comment.id, replyContent);
+      // Add new reply at the end (chronological order)
       setReplies(p => [...p, { ...newReply, replies: [] }]);
       setReplyContent('');
       setShowReplyForm(false);
@@ -486,7 +522,7 @@ function CommentItem({ comment, depth, circleId, accent }) {
                 value={replyContent}
                 onChange={(e) => setReplyContent(e.target.value)}
                 onKeyDown={handleReplyKey}
-                placeholder="The same here..."
+                placeholder="add your thoughts..."
                 className="flex-1 text-white/65 text-[12px] resize-none focus:outline-none placeholder-white/20 bg-transparent border-b border-white/10 py-1"
                 rows={1}
                 maxLength={2000}
@@ -496,10 +532,15 @@ function CommentItem({ comment, depth, circleId, accent }) {
                 type="submit"
                 onClick={handleReplySubmit}
                 disabled={!replyContent.trim() || submitting}
-                className="text-[10px] tracking-[0.15em] uppercase transition-all disabled:opacity-30 px-3 py-1"
-                style={{ color: accent || '#c4a882', background: (accent || '#c4a882') + '18', borderRadius: '2px' }}
+                className="transition-all disabled:opacity-30 hover:scale-110 active:scale-95 p-1.5"
+                style={{ color: accent || '#c4a882', background: (accent || '#c4a882') + '20', borderRadius: '3px', border: `1px solid ${accent || '#c4a882'}40` }}
+                title="Reply"
               >
-                {submitting ? '...' : 'Post'}
+                {submitting ? (
+                  <span className="text-[10px]">...</span>
+                ) : (
+                  <ChevronsRight className="w-4 h-4" />
+                )}
               </button>
             </div>
             {/* Character counter with progress */}
