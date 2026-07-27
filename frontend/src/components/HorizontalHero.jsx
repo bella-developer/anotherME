@@ -303,64 +303,64 @@ function HorizontalHero({ onRoomChange = () => {} }) {
             />
           </motion.div>
 
-          {/* Room Label - Cinematic Typewriter */}
-          <div className="mb-8 min-h-[28px]">
+          {/* Room Title - First! Dramatic Cinematic Typewriter */}
+          <div className="mb-10 min-h-[140px] md:min-h-[160px]">
             <TypewriterText
-              key={`subtitle-${currentRoom}`}
-              text={currentRoomData.subtitle}
+              key={`title-${currentRoom}`}
+              text={currentRoomData.title}
               delay={0.3}
-              speed={0.06}
-              className="text-sm tracking-[0.35em] uppercase font-extrabold"
+              speed={0.1}
+              className="text-6xl sm:text-7xl md:text-8xl"
               style={{
                 color: '#FFFFFF',
-                opacity: 0.95,
-                letterSpacing: '0.35em',
+                letterSpacing: '0.05em',
+                lineHeight: '1.1',
+                fontFamily: "'Playfair Display', 'EB Garamond', 'Cormorant Garamond', Georgia, serif",
+                fontWeight: '900',
                 textShadow: `
-                  0 0 40px rgba(255, 255, 255, 0.8),
-                  0 0 80px rgba(255, 255, 255, 0.5),
-                  0 2px 20px rgba(0, 0, 0, 1),
-                  0 4px 40px rgba(0, 0, 0, 0.95),
-                  0 8px 60px rgba(0, 0, 0, 0.9)
+                  0 0 60px rgba(255, 255, 255, 0.9),
+                  0 0 120px rgba(255, 255, 255, 0.6),
+                  0 2px 10px rgba(0, 0, 0, 1),
+                  0 4px 30px rgba(0, 0, 0, 1),
+                  0 8px 60px rgba(0, 0, 0, 0.95),
+                  0 16px 100px rgba(0, 0, 0, 0.9)
                 `,
-                WebkitTextStroke: '0.5px rgba(255, 255, 255, 0.3)',
-                filter: 'drop-shadow(0 0 10px rgba(255, 255, 255, 0.5))',
+                WebkitTextStroke: '1.5px rgba(255, 255, 255, 0.2)',
+                filter: 'drop-shadow(0 0 30px rgba(255, 255, 255, 0.6))',
               }}
               onComplete={() => setShowSubtitle(true)}
             />
           </div>
 
-          {/* Room Title - Dramatic Cinematic Typewriter */}
-          <div className="mb-10 min-h-[140px] md:min-h-[160px]">
+          {/* Room Label - Second - Cinematic Typewriter */}
+          <div className="mb-8 min-h-[28px]">
             {showSubtitle && (
               <TypewriterText
-                key={`title-${currentRoom}`}
-                text={currentRoomData.title}
+                key={`subtitle-${currentRoom}`}
+                text={currentRoomData.subtitle}
                 delay={0.2}
-                speed={0.08}
-                className="text-6xl sm:text-7xl md:text-8xl"
+                speed={0.05}
+                className="text-sm tracking-[0.35em] uppercase font-extrabold"
                 style={{
                   color: '#FFFFFF',
-                  letterSpacing: '0.05em',
-                  lineHeight: '1.1',
-                  fontFamily: "'Playfair Display', 'EB Garamond', 'Cormorant Garamond', Georgia, serif",
-                  fontWeight: '900',
+                  opacity: 0.95,
+                  letterSpacing: '0.35em',
                   textShadow: `
-                    0 0 60px rgba(255, 255, 255, 0.9),
-                    0 0 120px rgba(255, 255, 255, 0.6),
-                    0 2px 10px rgba(0, 0, 0, 1),
-                    0 4px 30px rgba(0, 0, 0, 1),
-                    0 8px 60px rgba(0, 0, 0, 0.95),
-                    0 16px 100px rgba(0, 0, 0, 0.9)
+                    0 0 40px rgba(255, 255, 255, 0.8),
+                    0 0 80px rgba(255, 255, 255, 0.5),
+                    0 2px 20px rgba(0, 0, 0, 1),
+                    0 4px 40px rgba(0, 0, 0, 0.95),
+                    0 8px 60px rgba(0, 0, 0, 0.9)
                   `,
-                  WebkitTextStroke: '1.5px rgba(255, 255, 255, 0.2)',
-                  filter: 'drop-shadow(0 0 30px rgba(255, 255, 255, 0.6))',
+                  WebkitTextStroke: '0.5px rgba(255, 255, 255, 0.3)',
+                  filter: 'drop-shadow(0 0 10px rgba(255, 255, 255, 0.5))',
                 }}
                 onComplete={() => setShowDescription(true)}
               />
             )}
           </div>
 
-          {/* Description - Elegant Typewriter */}
+          {/* Description - Third - Elegant Typewriter */}
           <div className="mb-14 min-h-[60px] max-w-2xl mx-auto">
             {showDescription && (
               <TypewriterText
@@ -388,7 +388,7 @@ function HorizontalHero({ onRoomChange = () => {} }) {
             )}
           </div>
 
-          {/* CTA Button - Cinematic Reveal */}
+          {/* CTA Button - Last - Cinematic Reveal */}
           {showButton && (
             <motion.button
               initial={{ opacity: 0, y: 20, scale: 0.9 }}
