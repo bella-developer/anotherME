@@ -22,9 +22,9 @@ function Layout({ leftSidebar, rightSidebar, children }) {
       <Navbar />
 
       {/* Main content area — sits above the fixed bg (z-index > 0) */}
-      <div className="relative z-10 pt-20">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 md:py-6">
-          <div className="grid grid-cols-1 md:grid-cols-12 lg:grid-cols-12 gap-4 md:gap-6">
+      <div className="relative z-10 pt-16">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-3 md:py-4">
+          <div className="grid grid-cols-1 md:grid-cols-12 lg:grid-cols-12 gap-3 md:gap-4">
             {leftSidebar && (
               <aside className="hidden md:block md:col-span-4 lg:col-span-3" aria-label="Category filters">
                 <div className="sticky top-20">{leftSidebar}</div>

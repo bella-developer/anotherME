@@ -61,14 +61,14 @@ function Home() {
   return (
     <PageTransition>
       <Layout leftSidebar={null} rightSidebar={null}>
-        <div className="min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 md:px-8 py-6 md:py-10 lg:py-14 relative z-10">
+        <div className="min-h-[calc(100vh-4rem)] flex flex-col items-center justify-center px-3 sm:px-4 md:px-6 py-4 md:py-6 lg:py-8 relative z-10 scale-[0.92] lg:scale-[0.95] origin-top">
 
           {/* Opening quote - small with background highlight */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 2, delay: 0.5 }}
-            className="text-center mb-8 md:mb-10"
+            className="text-center mb-6 md:mb-8"
           >
             <span 
               className="text-[10px] md:text-xs tracking-[0.35em] uppercase inline-block px-3 py-1.5 rounded"
@@ -89,7 +89,7 @@ function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.8, delay: 0.8 }}
-            className="text-center mb-16 md:mb-20 lg:mb-24"
+            className="text-center mb-12 md:mb-16 lg:mb-18"
           >
             <p 
               className="text-[11px] md:text-sm tracking-[0.35em] uppercase mb-6 md:mb-8"

@@ -89,7 +89,7 @@ function Login() {
         </div>
 
         {/* Login Card */}
-        <div className="border border-white/10 rounded-lg p-4" style={{ background: 'rgba(0,0,0,0.4)', backdropFilter: 'blur(16px)' }}>
+        <div className="border border-white/5 rounded-lg p-4" style={{ background: 'rgba(0,0,0,0.4)', backdropFilter: 'blur(16px)' }}>
           <form onSubmit={handleSubmit} className="space-y-3">
             <div>
               <label htmlFor="username" className={`block text-[0.7rem] tracking-[0.15em] mb-1.5 uppercase font-bold ${'text-white/70'}`}>
@@ -103,7 +103,7 @@ function Login() {
                 required
                 value={formData.username}
                 onChange={handleChange}
-                className="w-full px-3 py-2 bg-black/50 border border-white/10 rounded text-white placeholder-white/20 focus:outline-none focus:border-white/25 transition-colors text-sm tracking-wide"
+                className="w-full px-3 py-2 bg-black/50 border border-white/5 rounded text-white placeholder-white/20 focus:outline-none focus:border-white/15 transition-colors text-sm tracking-wide"
                 placeholder="enter username"
                 disabled={loading}
               />
@@ -123,7 +123,7 @@ function Login() {
                   required
                   value={formData.password}
                   onChange={handleChange}
-                  className="w-full px-3 py-2 pr-10 bg-black/50 border border-white/10 rounded text-white placeholder-white/20 focus:outline-none focus:border-white/25 transition-colors text-sm tracking-wide"
+                  className="w-full px-3 py-2 pr-10 bg-black/50 border border-white/5 rounded text-white placeholder-white/20 focus:outline-none focus:border-white/15 transition-colors text-sm tracking-wide"
                   placeholder="enter password"
                   disabled={loading}
                 />
@@ -182,7 +182,7 @@ function Login() {
             <button
               type="submit"
               disabled={!isFormValid || loading}
-              className="w-full py-2 bg-white/10 hover:bg-white/15 disabled:bg-white/5 disabled:cursor-not-allowed text-white font-medium rounded transition-colors text-[0.7rem] tracking-[0.15em] uppercase border border-white/15"
+              className="w-full py-2 bg-white/10 hover:bg-white/15 disabled:bg-white/5 disabled:cursor-not-allowed text-white font-medium rounded transition-colors text-[0.7rem] tracking-[0.15em] uppercase border border-white/10"
               aria-label="Sign in to your account"
             >
               {loading ? (
@@ -199,18 +199,18 @@ function Login() {
             </button>
           </form>
 
-          {/* Divider */}
+            {/* Divider */}
           <div className="flex items-center my-3">
-            <div className="flex-1 border-t border-white/10"></div>
+            <div className="flex-1 border-t border-white/5"></div>
             <span className={`px-3 text-[0.6rem] tracking-wider ${'text-white/30'}`}>or</span>
-            <div className="flex-1 border-t border-white/10"></div>
+            <div className="flex-1 border-t border-white/5"></div>
           </div>
 
           {/* Google Sign In */}
           <GoogleSignInButton text="Sign in with Google" action="login" />
 
           {/* Register Link */}
-          <div className="mt-3 pt-3 border-t border-white/10 text-center">
+          <div className="mt-3 pt-3 border-t border-white/5 text-center">
             <p className={`text-[0.65rem] tracking-wide ${'text-white/40'}`}>
               Don't have an account?{' '}
               <Link to="/register" className={`transition-colors uppercase tracking-wider ${'text-white/75 hover:text-white'}`}>

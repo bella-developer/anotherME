@@ -239,7 +239,7 @@ function Register() {
           <p className={`text-[0.65rem] tracking-[0.2em] uppercase ${'text-white/40'}`}>Create Your Account</p>
         </div>
 
-        <div className="border border-white/10 rounded-lg p-4" style={{ background: 'rgba(0,0,0,0.4)', backdropFilter: 'blur(16px)' }}>
+        <div className="border border-white/5 rounded-lg p-4" style={{ background: 'rgba(0,0,0,0.4)', backdropFilter: 'blur(16px)' }}>
 
 
 
@@ -273,7 +273,7 @@ function Register() {
                 onChange={handleChange}
                 onBlur={handleBlur}
                 maxLength={30}
-                className={`w-full px-4 py-2.5 rounded text-white placeholder-white/25 focus:outline-none transition-colors text-sm tracking-wide ${validationErrors.username ? 'border border-red-500/50 bg-red-500/5' : 'border border-white/15 bg-white/5'}`}
+                className={`w-full px-4 py-2.5 rounded text-white placeholder-white/25 focus:outline-none transition-colors text-sm tracking-wide ${validationErrors.username ? 'border border-red-500/50 bg-red-500/5' : 'border border-white/10 bg-white/5'}`}
                 placeholder="choose your username"
                 disabled={loading}
                 aria-describedby={validationErrors.username ? 'username-error' : undefined}
@@ -309,7 +309,7 @@ function Register() {
                 value={formData.email}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                className={`w-full px-4 py-2.5 rounded text-white placeholder-white/25 focus:outline-none transition-colors text-sm tracking-wide ${validationErrors.email ? 'border border-red-500/50 bg-red-500/5' : 'border border-white/15 bg-white/5'}`}
+                className={`w-full px-4 py-2.5 rounded text-white placeholder-white/25 focus:outline-none transition-colors text-sm tracking-wide ${validationErrors.email ? 'border border-red-500/50 bg-red-500/5' : 'border border-white/10 bg-white/5'}`}
                 placeholder="your@email.com"
                 disabled={loading}
                 aria-describedby={validationErrors.email ? 'email-error' : undefined}
@@ -331,7 +331,7 @@ function Register() {
                   value={formData.password}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  className={`w-full px-4 py-2.5 pr-12 rounded text-white placeholder-white/25 focus:outline-none transition-colors text-sm tracking-wide ${validationErrors.password ? 'border border-red-500/50 bg-red-500/5' : 'border border-white/15 bg-white/5'}`}
+                  className={`w-full px-4 py-2.5 pr-12 rounded text-white placeholder-white/25 focus:outline-none transition-colors text-sm tracking-wide ${validationErrors.password ? 'border border-red-500/50 bg-red-500/5' : 'border border-white/10 bg-white/5'}`}
                   placeholder="secure password required"
                   disabled={loading}
                   aria-describedby={validationErrors.password ? 'password-error' : undefined}
@@ -421,7 +421,7 @@ function Register() {
                 value={formData.confirmPassword}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                className={`w-full px-4 py-2.5 rounded text-white placeholder-white/25 focus:outline-none transition-colors text-sm tracking-wide ${validationErrors.confirmPassword ? 'border border-red-500/50 bg-red-500/5' : 'border border-white/15 bg-white/5'}`}
+                className={`w-full px-4 py-2.5 rounded text-white placeholder-white/25 focus:outline-none transition-colors text-sm tracking-wide ${validationErrors.confirmPassword ? 'border border-red-500/50 bg-red-500/5' : 'border border-white/10 bg-white/5'}`}
                 placeholder="re-enter password"
                 disabled={loading}
                 aria-describedby={validationErrors.confirmPassword ? 'confirm-password-error' : undefined}
@@ -458,7 +458,7 @@ function Register() {
             <button
               type="submit"
               disabled={!isFormValid() || loading}
-              className="w-full py-2 bg-white/10 hover:bg-white/15 disabled:bg-white/5 disabled:cursor-not-allowed text-white font-medium rounded transition-colors text-[0.7rem] tracking-[0.15em] uppercase border border-white/15"
+              className="w-full py-2 bg-white/10 hover:bg-white/15 disabled:bg-white/5 disabled:cursor-not-allowed text-white font-medium rounded transition-colors text-[0.7rem] tracking-[0.15em] uppercase border border-white/10"
             >
               {loading ? (
                 <span className="flex items-center justify-center gap-2">
@@ -476,15 +476,15 @@ function Register() {
 
           {/* Divider */}
           <div className="flex items-center my-3">
-            <div className="flex-1 border-t border-white/10"></div>
+            <div className="flex-1 border-t border-white/5"></div>
             <span className={`px-3 text-[0.6rem] tracking-wider ${'text-white/30'}`}>or</span>
-            <div className="flex-1 border-t border-white/10"></div>
+            <div className="flex-1 border-t border-white/5"></div>
           </div>
 
           {/* Google Sign In */}
           <GoogleSignInButton text="Sign up with Google" action="register" />
 
-          <div className="mt-3 pt-3 border-t border-white/10 text-center">
+          <div className="mt-3 pt-3 border-t border-white/5 text-center">
             <p className={`text-[0.65rem] tracking-wide ${'text-white/40'}`}>
               Already have an account?{' '}
               <Link to="/login" className={`transition-colors uppercase tracking-wider ${'text-white/75 hover:text-white'}`}>
