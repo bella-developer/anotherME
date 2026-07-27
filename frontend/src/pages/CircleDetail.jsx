@@ -362,7 +362,7 @@ function CircleDetail() {
         >
           <div className="max-w-2xl mx-auto">
             <form onSubmit={handleSubmit}>
-              <div className="flex items-start gap-3 pb-1">
+              <div className="flex items-start gap-3">
                 <textarea
                   value={commentContent}
                   onChange={(e) => setCommentContent(e.target.value)}
@@ -393,7 +393,7 @@ function CircleDetail() {
                 </button>
               </div>
               {/* Character counter with progress indicator */}
-              <div className="flex items-center gap-2 px-1 mt-1">
+              <div className="flex items-center gap-2 px-1 mt-2">
                 <div className="flex-1 h-0.5 bg-white/5 rounded-full overflow-hidden">
                   <div
                     className="h-full transition-all duration-200"
@@ -593,7 +593,7 @@ function CommentItem({ comment, depth, circleId, accent }) {
         {/* Reply form */}
         {showReplyForm && (
           <div className="mt-3 pl-8">
-            <div className="flex items-center gap-2 border-b border-white/5 pb-1">
+            <div className="flex items-center gap-2 pb-1">
               <textarea
                 value={replyContent}
                 onChange={(e) => setReplyContent(e.target.value)}
@@ -620,7 +620,7 @@ function CommentItem({ comment, depth, circleId, accent }) {
               </button>
             </div>
             {/* Character counter with progress */}
-            <div className="flex items-center gap-2 mt-1">
+            <div className="flex items-center gap-2 mt-2">
               <div className="flex-1 h-0.5 bg-white/5 rounded-full overflow-hidden">
                 <div
                   className="h-full transition-all duration-200"
