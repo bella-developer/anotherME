@@ -91,8 +91,25 @@ function CircleDetail() {
     try {
       if (!silent) setLoadingComments(true);
       const data = await fetchCircleComments({ circleId: id, cursor: reset ? null : cursor, postId: activeTopicId });
-      // Sort chronologically: oldest first (like Discord, Slack)
-      setComments(data.comments.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt)));
+      
+      // Intelligent merge: keep existing comments, add only new ones
+      setComments(prevComments => {
+        const newComments = data.comments;
+        
+        // If it's a reset (initial load), just use new data
+        if (reset && !silent) {
+          return newComments.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+        }
+        
+        // For background updates, merge intelligently
+        const existingIds = new Set(prevComments.map(c => c.id));
+        const freshComments = newComments.filter(c => !existingIds.has(c.id));
+        
+        // Combine and sort chronologically
+        const merged = [...prevComments, ...freshComments];
+        return merged.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+      });
+      
       setCursor(data.cursor);
     } catch (err) {
       console.error('Failed to load comments:', err);
@@ -103,10 +120,10 @@ function CircleDetail() {
 
   useEffect(() => { if (id && activeTopicId) loadComments(true, false); }, [id, activeTopicId]);
 
-  // Poll for new comments every 3 seconds for real-time updates (silent background refresh)
+  // Poll for new comments every 2 seconds for real-time updates (silent background refresh)
   useEffect(() => {
     if (!id || !activeTopicId) return;
-    const interval = setInterval(() => loadComments(true, true), 3000);
+    const interval = setInterval(() => loadComments(true, true), 2000);
     return () => clearInterval(interval);
   }, [id, activeTopicId, loadComments]);
 
@@ -283,7 +300,7 @@ function CircleDetail() {
                 <CommentItem key={comment.id} comment={comment} depth={0} circleId={id} accent={accent} />
               ))
             )}
-            {loadingComments && <div className="flex justify-center py-6"><LoadingSpinner /></div>}
+            {/* Only show loading spinner on initial load, not background refresh */}
           </div>
 
         </div>
