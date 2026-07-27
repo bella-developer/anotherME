@@ -155,9 +155,8 @@ function Terms() {
             </div>
           </div>
         </div>
-      </div>
-    </PageTransition>
-  );
-}
-
-export default Terms;
+      </PageTransition>
+    );
+  }
+  
+  export default Terms;

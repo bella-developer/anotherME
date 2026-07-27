@@ -150,9 +150,8 @@ function Privacy() {
             </div>
           </div>
         </div>
-      </div>
-    </PageTransition>
-  );
-}
-
-export default Privacy;
+      </PageTransition>
+    );
+  }
+  
+  export default Privacy;
