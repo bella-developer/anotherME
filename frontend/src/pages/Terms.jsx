@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import EsoLogo from '../components/EsoLogo';
 import { usePageTitle } from '../hooks/usePageTitle';
-import Layout from '../components/Layout';
 import PageTransition from '../components/PageTransition';
 
 function Terms() {
@@ -36,19 +35,18 @@ function Terms() {
 
   return (
     <PageTransition>
-      <Layout leftSidebar={null} rightSidebar={null}>
-        <div className="min-h-screen relative" style={{ fontFamily: 'var(--font-body)' }}>
-          {/* Background atmospheric effect */}
-          <div 
-            className="fixed inset-0 pointer-events-none"
-            style={{
-              background: 'radial-gradient(ellipse at 50% 20%, rgba(167, 139, 250, 0.03) 0%, transparent 60%)',
-              zIndex: 1,
-            }}
-          />
+      <div className="min-h-screen bg-black text-white relative" style={{ fontFamily: 'var(--font-body)' }}>
+        {/* Background atmospheric effect */}
+        <div 
+          className="fixed inset-0 pointer-events-none"
+          style={{
+            background: 'radial-gradient(ellipse at 50% 20%, rgba(167, 139, 250, 0.03) 0%, transparent 60%)',
+            zIndex: 1,
+          }}
+        />
 
-          {/* Content */}
-          <div className="max-w-3xl mx-auto px-4 sm:px-6 py-8 relative z-10">
+        {/* Content */}
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-8 relative z-10">
             {/* Header - Compact */}
             <Link
               to="/"
@@ -157,7 +155,7 @@ function Terms() {
             </div>
           </div>
         </div>
-      </Layout>
+      </div>
     </PageTransition>
   );
 }

@@ -1,4 +1,4 @@
-import Layout from '../components/Layout';
+import { useNavigate } from 'react-router-dom';
 import PageTransition from '../components/PageTransition';
 import EsoLogo from '../components/EsoLogo';
 import { usePageTitle } from '../hooks/usePageTitle';
@@ -9,6 +9,7 @@ import { usePageTitle } from '../hooks/usePageTitle';
  */
 function AboutUs() {
   usePageTitle('About');
+  const navigate = useNavigate();
   const principles = [
     {
       title: "Silence is Sacred",
@@ -36,7 +37,39 @@ function AboutUs() {
 
   return (
     <PageTransition>
-      <Layout leftSidebar={null} rightSidebar={null}>
+      <div className="min-h-screen bg-black text-white relative">
+        {/* Background */}
+        <div 
+          className="fixed inset-0 pointer-events-none"
+          style={{
+            background: 'radial-gradient(ellipse at 50% 20%, rgba(167, 139, 250, 0.03) 0%, transparent 60%)',
+            zIndex: 1,
+          }}
+        />
+        
+        {/* Back Button - Compact */}
+        <button
+          onClick={() => navigate(-1)}
+          className="fixed top-6 left-6 z-50 text-xs uppercase tracking-wider transition-colors flex items-center gap-2 px-3 py-1.5 rounded"
+          style={{
+            color: 'rgba(255, 255, 255, 0.5)',
+            border: '1px solid rgba(255, 255, 255, 0.1)',
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.color = 'rgba(255, 255, 255, 0.9)';
+            e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.color = 'rgba(255, 255, 255, 0.5)';
+            e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+          }}
+        >
+          <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+          </svg>
+          Back
+        </button>
+
         <div className="min-h-screen flex items-center justify-center px-6 py-12 relative z-10">
           <div className="max-w-2xl w-full text-center space-y-10">
             
@@ -149,7 +182,7 @@ function AboutUs() {
 
           </div>
         </div>
-      </Layout>
+      </div>
     </PageTransition>
   );
 }
