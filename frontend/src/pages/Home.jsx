@@ -63,23 +63,25 @@ function Home() {
       <Layout leftSidebar={null} rightSidebar={null}>
         <div className="min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 md:px-8 py-6 md:py-10 lg:py-14 relative z-10">
 
-          {/* Opening quote - small and subtle */}
+          {/* Opening quote - small with background highlight */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 2, delay: 0.5 }}
-            className="text-center mb-2"
+            className="text-center mb-8 md:mb-10"
           >
-            <p 
-              className="text-[10px] md:text-xs tracking-[0.35em] uppercase"
+            <span 
+              className="text-[10px] md:text-xs tracking-[0.35em] uppercase inline-block px-3 py-1.5 rounded"
               style={{ 
                 fontFamily: 'var(--font-body)',
-                fontWeight: '300',
-                color: 'rgba(255, 255, 255, 0.4)',
+                fontWeight: '500',
+                color: '#ffffff',
+                background: 'rgba(59, 130, 246, 0.3)',
+                backdropFilter: 'blur(8px)',
               }}
             >
               {getGreeting()}
-            </p>
+            </span>
           </motion.div>
 
           {/* Header - refined, breathing */}
@@ -93,8 +95,8 @@ function Home() {
               className="text-[11px] md:text-sm tracking-[0.35em] uppercase mb-6 md:mb-8"
               style={{ 
                 fontFamily: 'var(--font-body)',
-                fontWeight: '400',
-                color: 'rgba(255, 255, 255, 0.5)',
+                fontWeight: '500',
+                color: 'rgba(255, 255, 255, 0.75)',
               }}
             >
               Choose Your Room
@@ -452,9 +454,9 @@ function Home() {
               <p
                 className="text-[10px] md:text-xs tracking-[0.25em] uppercase"
                 style={{ 
-                  color: 'rgba(255, 255, 255, 0.3)',
+                  color: 'rgba(255, 255, 255, 0.6)',
                   fontFamily: 'var(--font-body)',
-                  fontWeight: '300',
+                  fontWeight: '500',
                 }}
               >
                 This is your space. Take your time.
