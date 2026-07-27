@@ -105,6 +105,13 @@ function CircleDetail() {
         const existingIds = new Set(prevComments.map(c => c.id));
         const freshComments = newComments.filter(c => !existingIds.has(c.id));
         
+        // If no new comments, update existing ones (for reaction counts, reply counts)
+        if (freshComments.length === 0) {
+          // Update existing comments with latest data (reactions, replies, etc.)
+          const updatedMap = new Map(newComments.map(c => [c.id, c]));
+          return prevComments.map(c => updatedMap.get(c.id) || c);
+        }
+        
         // Combine and sort chronologically
         const merged = [...prevComments, ...freshComments];
         return merged.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
@@ -120,10 +127,10 @@ function CircleDetail() {
 
   useEffect(() => { if (id && activeTopicId) loadComments(true, false); }, [id, activeTopicId]);
 
-  // Poll for new comments every 2 seconds for real-time updates (silent background refresh)
+  // Poll for new comments every 1 second for real-time updates (silent background refresh)
   useEffect(() => {
     if (!id || !activeTopicId) return;
-    const interval = setInterval(() => loadComments(true, true), 2000);
+    const interval = setInterval(() => loadComments(true, true), 1000);
     return () => clearInterval(interval);
   }, [id, activeTopicId, loadComments]);
 
@@ -133,9 +140,18 @@ function CircleDetail() {
     try {
       setSubmitting(true);
       const newComment = await createCircleComment(id, commentContent, activeTopicId);
-      // Add new comment at the end (bottom) for chronological order
-      setComments(prev => [...prev, newComment]);
+      // Immediately add to UI - optimistic update
+      setComments(prev => {
+        // Check if comment already exists (shouldn't, but be safe)
+        const exists = prev.some(c => c.id === newComment.id);
+        if (exists) return prev;
+        // Add new comment at the end (chronological order)
+        return [...prev, newComment].sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+      });
       setCommentContent('');
+      
+      // Trigger immediate refresh to get server state
+      setTimeout(() => loadComments(true, true), 100);
     } catch (err) {
       console.error('Failed to create comment:', err);
     } finally {
@@ -428,11 +444,18 @@ function CommentItem({ comment, depth, circleId, accent }) {
     if (!replyContent.trim() || submitting) return;
     try {
       setSubmitting(true);
-      setReplyCount(p => p + 1);
       const { createCommentReply } = await import('../services/circleService');
       const newReply = await createCommentReply(comment.id, replyContent);
-      // Add new reply at the end (chronological order)
-      setReplies(p => [...p, { ...newReply, replies: [] }]);
+      
+      // Optimistically update UI immediately
+      setReplyCount(p => p + 1);
+      setReplies(p => {
+        const exists = p.some(r => r.id === newReply.id);
+        if (exists) return p;
+        // Add new reply at the end (chronological order)
+        return [...p, { ...newReply, replies: [] }];
+      });
+      
       setReplyContent('');
       setShowReplyForm(false);
     } catch (err) {
