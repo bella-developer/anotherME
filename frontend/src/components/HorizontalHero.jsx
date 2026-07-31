@@ -1,213 +1,524 @@
 import { useEffect, useRef, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, useAnimation } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import EsoLogo from './EsoLogo';
 
+// Typewriter component for cinematic text reveal
+function TypewriterText({ text, delay = 0, speed = 0.05, className, style, onComplete }) {
+  const [displayedText, setDisplayedText] = useState('');
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    setDisplayedText('');
+    setCurrentIndex(0);
+  }, [text]);
+
+  useEffect(() => {
+    if (currentIndex < text.length) {
+      const timeout = setTimeout(() => {
+        setDisplayedText(prev => prev + text[currentIndex]);
+        setCurrentIndex(prev => prev + 1);
+      }, speed * 1000);
+      return () => clearTimeout(timeout);
+    } else if (onComplete && currentIndex === text.length) {
+      onComplete();
+    }
+  }, [currentIndex, text, speed, onComplete]);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.3, delay }}
+      className={className}
+      style={style}
+    >
+      {displayedText}
+      {currentIndex < text.length && (
+        <motion.span
+          animate={{ opacity: [1, 0] }}
+          transition={{ duration: 0.5, repeat: Infinity, repeatType: 'reverse' }}
+          style={{
+            display: 'inline-block',
+            width: '3px',
+            height: '0.9em',
+            backgroundColor: 'rgba(255, 255, 255, 0.9)',
+            marginLeft: '4px',
+            verticalAlign: 'middle',
+          }}
+        />
+      )}
+    </motion.div>
+  );
+}
+
+// Horizontal Scrolling Hero with Video Backgrounds
 function HorizontalHero({ onRoomChange = () => {} }) {
   const navigate = useNavigate();
+  const containerRef = useRef(null);
   const [currentRoom, setCurrentRoom] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [canScrollAway, setCanScrollAway] = useState(false);
+  const [showSubtitle, setShowSubtitle] = useState(false);
+  const [showDescription, setShowDescription] = useState(false);
+  const [showButton, setShowButton] = useState(false);
+  const videoOffset = '68px';
   const videoRefs = useRef([]);
 
   const rooms = [
     {
       id: 'dark',
-      num: '01',
       title: 'Dark Room',
       subtitle: 'Solitude & Introspection',
       description: 'A sanctuary for your deepest thoughts',
       videoUrl: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1785500775/darkfineedit_fxticc.mp4',
-      accent: '#ef4444',
-      rgb: '239, 68, 68',
+      color: '#ef4444',
+      bgColor: 'rgba(239, 68, 68, 0.3)',
+      glowColor: '#d4af37', // Rich gold
+      glowRgb: '212, 175, 55', // For rgba usage
     },
     {
       id: 'fantasy',
-      num: '02',
       title: 'Fantasy Room',
       subtitle: 'Creativity & Imagination',
       description: 'Where imagination takes form',
       videoUrl: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1785499720/fansyedit_ozhjwj.mp4',
-      accent: '#f97316',
-      rgb: '249, 115, 22',
+      color: '#f97316',
+      bgColor: 'rgba(249, 115, 22, 0.3)',
+      glowColor: '#ff6b35', // Vibrant orange-red
+      glowRgb: '255, 107, 53',
     },
     {
       id: 'philo',
-      num: '03',
       title: 'Philo Room',
       subtitle: 'Philosophy & Deep Thought',
       description: 'Explore existential questions',
       videoUrl: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1785499721/philoedit_fwdmqu.mp4',
-      accent: '#a855f7',
-      rgb: '168, 85, 247',
+      color: '#a855f7',
+      bgColor: 'rgba(168, 85, 247, 0.3)',
+      glowColor: '#9d4edd', // Deep purple
+      glowRgb: '157, 78, 221',
     },
   ];
 
-  const current = rooms[currentRoom];
-
-  // Auto-play timer (6 seconds)
+  // Auto-play through rooms
   useEffect(() => {
-    if (isPaused) return;
-    const timer = setInterval(() => {
-      setCurrentRoom((prev) => (prev + 1) % rooms.length);
-    }, 6000);
-    return () => clearInterval(timer);
-  }, [isPaused, rooms.length]);
+    const autoPlayTimer = setInterval(() => {
+      if (currentRoom < rooms.length - 1) {
+        changeRoom(currentRoom + 1);
+      } else {
+        setCurrentRoom(0);
+        onRoomChange(rooms[0]);
+        if (videoRefs.current[0]) {
+          videoRefs.current[0].play().catch(err => console.log('Video play failed:', err));
+        }
+      }
+    }, 5000); // Change every 5 seconds
 
-  useEffect(() => {
-    onRoomChange(current);
-    if (videoRefs.current[currentRoom]) {
-      videoRefs.current[currentRoom].play().catch(() => {});
-    }
+    return () => clearInterval(autoPlayTimer);
   }, [currentRoom]);
+
+  useEffect(() => {
+    // Notify parent of initial room
+    onRoomChange(rooms[0]);
+    // Play first video
+    if (videoRefs.current[0]) {
+      videoRefs.current[0].play().catch(err => console.log('Video play failed:', err));
+    }
+  }, []);
+
+  useEffect(() => {
+    let touchStartX = 0;
+    let touchStartY = 0;
+
+    const handleWheel = (e) => {
+      const container = containerRef.current;
+      if (!container) return;
+
+      // If we're on the last room and scrolling down, allow normal scroll
+      if (currentRoom === rooms.length - 1 && e.deltaY > 0) {
+        setCanScrollAway(true);
+        return;
+      }
+
+      // If not on last room, prevent scroll and change rooms
+      if (currentRoom < rooms.length - 1 || e.deltaY < 0) {
+        e.preventDefault();
+        
+        if (isTransitioning) return;
+        
+        if (e.deltaY > 0 || e.deltaX > 0) {
+          // Scroll down/right - next room
+          if (currentRoom < rooms.length - 1) {
+            changeRoom(currentRoom + 1);
+          }
+        } else if (e.deltaY < 0 || e.deltaX < 0) {
+          // Scroll up/left - previous room
+          if (currentRoom > 0) {
+            setCanScrollAway(false);
+            changeRoom(currentRoom - 1);
+          }
+        }
+      }
+    };
+
+    const handleKeyDown = (e) => {
+      if (isTransitioning) return;
+      
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+        e.preventDefault();
+        if (currentRoom < rooms.length - 1) {
+          changeRoom(currentRoom + 1);
+        }
+      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        if (currentRoom > 0) {
+          changeRoom(currentRoom - 1);
+        }
+      }
+    };
+
+    const handleTouchStart = (e) => {
+      if (e.touches && e.touches.length > 0) {
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+      }
+    };
+
+    const handleTouchEnd = (e) => {
+      if (isTransitioning || !e.changedTouches || e.changedTouches.length === 0) return;
+      const touchEndX = e.changedTouches[0].clientX;
+      const touchEndY = e.changedTouches[0].clientY;
+      const diffX = touchStartX - touchEndX;
+      const diffY = touchStartY - touchEndY;
+
+      if (Math.abs(diffX) > 40 || Math.abs(diffY) > 40) {
+        if (Math.abs(diffX) > Math.abs(diffY)) {
+          if (diffX > 0 && currentRoom < rooms.length - 1) {
+            changeRoom(currentRoom + 1);
+          } else if (diffX < 0 && currentRoom > 0) {
+            changeRoom(currentRoom - 1);
+          }
+        } else {
+          if (diffY > 0 && currentRoom < rooms.length - 1) {
+            changeRoom(currentRoom + 1);
+          } else if (diffY < 0 && currentRoom > 0) {
+            changeRoom(currentRoom - 1);
+          }
+        }
+      }
+    };
+
+    const container = containerRef.current;
+    if (container) {
+      container.addEventListener('wheel', handleWheel, { passive: false });
+      container.addEventListener('touchstart', handleTouchStart, { passive: true });
+      container.addEventListener('touchend', handleTouchEnd, { passive: true });
+      window.addEventListener('keydown', handleKeyDown);
+    }
+
+    return () => {
+      if (container) {
+        container.removeEventListener('wheel', handleWheel);
+        container.removeEventListener('touchstart', handleTouchStart);
+        container.removeEventListener('touchend', handleTouchEnd);
+      }
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [currentRoom, isTransitioning]);
+
+  const changeRoom = (newRoom) => {
+    setIsTransitioning(true);
+    setCurrentRoom(newRoom);
+    onRoomChange(rooms[newRoom]);
+    
+    // Reset typewriter states
+    setShowSubtitle(false);
+    setShowDescription(false);
+    setShowButton(false);
+    
+    // Play video for current room
+    if (videoRefs.current[newRoom]) {
+      videoRefs.current[newRoom].play().catch(err => console.log('Video play failed:', err));
+    }
+    
+    setTimeout(() => {
+      setIsTransitioning(false);
+    }, 800);
+  };
+
+  const currentRoomData = rooms[currentRoom];
 
   return (
     <section 
-      className="relative h-screen w-full overflow-hidden bg-black flex items-center justify-center"
-      onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => setIsPaused(false)}
+      ref={containerRef}
+      className="relative h-screen w-full overflow-hidden"
+      style={{ background: '#000000' }}
     >
-      {/* Full Bleed Video Backgrounds with Ambient Glow */}
-      <div className="absolute inset-0 overflow-hidden">
-        {rooms.map((room, idx) => (
-          <motion.div
-            key={room.id}
-            initial={{ opacity: 0, scale: 1.08 }}
-            animate={{ 
-              opacity: currentRoom === idx ? 1 : 0,
-              scale: currentRoom === idx ? 1 : 1.05
-            }}
-            transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-            className="absolute inset-0"
-          >
-            <video
-              ref={(el) => (videoRefs.current[idx] = el)}
-              className="w-full h-full object-cover filter brightness-[0.78] contrast-[1.05]"
-              loop
-              muted
-              playsInline
-              preload="auto"
-              src={room.videoUrl}
-            />
-          </motion.div>
-        ))}
-      </div>
-
-      {/* Cinematic Gradient Overlays (Replaces Oval Clipping) */}
+      {/* Cinematic Letterbox Bars - Top */}
       <div 
-        className="absolute inset-0 pointer-events-none z-10"
+        className="absolute top-0 left-0 right-0 h-16 sm:h-20 z-40 pointer-events-none"
         style={{
-          background: `
-            linear-gradient(to bottom, rgba(0, 0, 0, 0.6) 0%, transparent 25%, transparent 70%, rgba(0, 0, 0, 0.85) 100%),
-            radial-gradient(circle at 50% 50%, rgba(${current.rgb}, 0.18) 0%, transparent 65%)
-          `
+          background: 'linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.1) 40%, transparent 100%)',
         }}
       />
 
-      {/* Subtle Filmic Noise Overlay */}
+
+      {/* Video Backgrounds - Full Width Scan Frame */}
       <div 
-        className="absolute inset-0 pointer-events-none z-10 opacity-15 mix-blend-overlay bg-repeat bg-[length:128px_128px]" 
-        style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` }}
-      />
-
-      {/* Editorial Center Stage Content */}
-      <div className="relative z-20 max-w-5xl mx-auto px-6 text-center pt-16">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={current.id}
-            initial={{ opacity: 0, y: 30, filter: 'blur(10px)' }}
-            animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-            exit={{ opacity: 0, y: -20, filter: 'blur(10px)' }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="flex flex-col items-center"
-          >
-            {/* Logo */}
-            <div className="mb-4">
-              <EsoLogo className="h-8 sm:h-12 w-auto mx-auto opacity-90 drop-shadow-lg" />
-            </div>
-
-            {/* Category Tagline */}
-            <div className="flex items-center gap-3 mb-4">
-              <span className="h-[1px] w-8 bg-white/30" />
-              <span className="text-xs uppercase tracking-[0.35em] text-white/70 font-mono font-medium">
-                {current.num} &mdash; {current.subtitle}
-              </span>
-              <span className="h-[1px] w-8 bg-white/30" />
-            </div>
-
-            {/* Room Title */}
-            <h1 
-              className="text-5xl sm:text-7xl md:text-8xl font-serif font-black text-white tracking-wider leading-none mb-4 drop-shadow-2xl"
-              style={{
-                textShadow: `0 0 40px rgba(${current.rgb}, 0.5), 0 10px 30px rgba(0,0,0,0.8)`
+        className="absolute inset-0 flex items-center justify-center" 
+        style={{ 
+          paddingTop: 'clamp(40px, 8vw, 60px)',
+          paddingBottom: 'clamp(40px, 8vw, 60px)',
+          paddingLeft: '1.5px',
+          paddingRight: '1.5px',
+        }}
+      >
+        <div 
+          className="relative w-full h-full"
+          style={{
+            border: '1px solid rgba(255, 255, 255, 0.008)',
+            borderRadius: 'var(--radius-sm)',
+            overflow: 'hidden',
+          }}
+        >
+          {/* Corner Frame Accents */}
+          <div className="absolute top-0 left-0 w-8 sm:w-12 h-8 sm:h-12 border-t-2 border-l-2 z-30 pointer-events-none" style={{ borderColor: 'rgba(255, 255, 255, 0.1)' }} />
+          <div className="absolute top-0 right-0 w-8 sm:w-12 h-8 sm:h-12 border-t-2 border-r-2 z-30 pointer-events-none" style={{ borderColor: 'rgba(255, 255, 255, 0.1)' }} />
+          <div className="absolute bottom-0 left-0 w-8 sm:w-12 h-8 sm:h-12 border-b-2 border-l-2 z-30 pointer-events-none" style={{ borderColor: 'rgba(255, 255, 255, 0.1)' }} />
+          <div className="absolute bottom-0 right-0 w-8 sm:w-12 h-8 sm:h-12 border-b-2 border-r-2 z-30 pointer-events-none" style={{ borderColor: 'rgba(255, 255, 255, 0.1)' }} />
+          
+          {/* Video Container */}
+          {rooms.map((room, index) => (
+            <motion.div
+              key={room.id}
+              className="absolute inset-0"
+              initial={{ opacity: 0 }}
+              animate={{ 
+                opacity: currentRoom === index ? 1 : 0,
+                scale: currentRoom === index ? 1 : 1.05,
               }}
+              transition={{ duration: 1, ease: 'easeInOut' }}
             >
-              {current.title}
-            </h1>
-
-            {/* Subtitle / Description */}
-            <p className="text-base sm:text-xl font-light text-white/80 max-w-xl mb-8 tracking-wide font-sans">
-              {current.description}
-            </p>
-
-            {/* Premium CTA Glass Button */}
-            <button
-              onClick={() => navigate('/login')}
-              className="group relative px-8 py-4 rounded-full text-xs uppercase tracking-[0.25em] font-semibold text-white overflow-hidden transition-all duration-500"
-              style={{
-                background: 'rgba(255, 255, 255, 0.08)',
-                backdropFilter: 'blur(16px)',
-                WebkitBackdropFilter: 'blur(16px)',
-                border: `1px solid rgba(${current.rgb}, 0.4)`,
-                boxShadow: `0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2)`
-              }}
-            >
-              <span className="relative z-10 flex items-center gap-3">
-                Step In
-                <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                </svg>
-              </span>
-              <div 
-                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                style={{ background: `radial-gradient(circle at center, rgba(${current.rgb}, 0.35) 0%, transparent 70%)` }}
-              />
-            </button>
-          </motion.div>
-        </AnimatePresence>
-      </div>
-
-      {/* Floating Glass Room Deck Navigation */}
-      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-30 w-full max-w-xl px-4">
-        <div className="flex items-center justify-between p-2 rounded-2xl bg-black/40 backdrop-blur-md border border-white/10 shadow-2xl">
-          {rooms.map((room, idx) => {
-            const isActive = currentRoom === idx;
-            return (
-              <button
-                key={room.id}
-                onClick={() => setCurrentRoom(idx)}
-                className={`relative flex-1 py-2 px-3 rounded-xl text-xs font-mono uppercase tracking-wider transition-all duration-300 flex flex-col items-center gap-1 ${
-                  isActive ? 'text-white font-bold' : 'text-white/40 hover:text-white/70'
-                }`}
+              <video
+                ref={(el) => (videoRefs.current[index] = el)}
+                className="absolute inset-0 w-full h-full object-cover"
+                loop
+                muted
+                playsInline
+                preload="auto"
+                autoPlay
               >
-                <span>{room.num} {room.id.toUpperCase()}</span>
-                {/* Active Progress Bar */}
-                <div className="w-full h-[2px] bg-white/10 rounded-full overflow-hidden">
-                  {isActive && (
-                    <motion.div
-                      key={`bar-${currentRoom}`}
-                      initial={{ width: '0%' }}
-                      animate={{ width: '100%' }}
-                      transition={{ duration: 6, ease: 'linear' }}
-                      className="h-full"
-                      style={{ backgroundColor: room.accent }}
-                    />
-                  )}
-                </div>
-              </button>
-            );
-          })}
+                <source src={room.videoUrl} type="video/mp4" />
+              </video>
+              
+            </motion.div>
+          ))}
         </div>
       </div>
+
+      {/* Content Overlay - Premium Restraint */}
+      <div className="relative z-10 h-full flex flex-col items-center justify-center px-4 sm:px-8">
+        <motion.div
+          key={currentRoom}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.3, ease: 'easeOut' }}
+          className="text-center max-w-3xl w-full"
+        >
+          {/* Logo - Cinematic Glow */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1.2, ease: 'easeOut' }}
+            className="mb-3 sm:mb-6"
+          >
+            <EsoLogo 
+              className="h-8 sm:h-12 md:h-14 w-auto mx-auto" 
+              style={{ 
+                filter: `drop-shadow(0 0 20px ${currentRoomData.glowColor}20) drop-shadow(0 4px 40px rgba(0, 0, 0, 0.9))`,
+                opacity: 0.9
+              }} 
+            />
+          </motion.div>
+
+          {/* Room Title - First! Dramatic Cinematic Typewriter */}
+          <div className="mb-2 sm:mb-3">
+            <TypewriterText
+              key={`title-${currentRoom}`}
+              text={currentRoomData.title}
+              delay={0.3}
+              speed={0.1}
+              className="text-4xl sm:text-7xl md:text-8xl"
+              style={{
+                color: '#FFFFFF',
+                letterSpacing: '0.05em',
+                lineHeight: '1.1',
+                fontFamily: "'Playfair Display', 'EB Garamond', 'Cormorant Garamond', Georgia, serif",
+                fontWeight: '900',
+                textShadow: `
+                  0 0 60px ${currentRoomData.glowColor}33,
+                  0 0 120px ${currentRoomData.glowColor}22,
+                  0 0 180px ${currentRoomData.glowColor}11,
+                  0 2px 10px rgba(0, 0, 0, 1),
+                  0 4px 30px rgba(0, 0, 0, 1),
+                  0 8px 60px rgba(0, 0, 0, 0.95),
+                  0 16px 100px rgba(0, 0, 0, 0.9)
+                `,
+                WebkitTextStroke: `1.5px rgba(${currentRoomData.glowRgb}, 0.08)`,
+                filter: `drop-shadow(0 0 40px ${currentRoomData.glowColor}1A) drop-shadow(0 0 80px ${currentRoomData.glowColor}0D)`,
+              }}
+              onComplete={() => setShowSubtitle(true)}
+            />
+          </div>
+
+          {/* Room Label - Second - Cinematic Typewriter */}
+          <div className="mb-2 sm:mb-3 min-h-[24px]">
+            {showSubtitle && (
+              <TypewriterText
+                key={`subtitle-${currentRoom}`}
+                text={currentRoomData.subtitle}
+                delay={0.2}
+                speed={0.05}
+                className="text-[10px] sm:text-sm tracking-[0.25em] sm:tracking-[0.35em] uppercase font-extrabold"
+                style={{
+                  color: '#FFFFFF',
+                  opacity: 0.95,
+                  textShadow: `
+                    0 0 40px ${currentRoomData.glowColor}2A,
+                    0 0 80px ${currentRoomData.glowColor}18,
+                    0 2px 20px rgba(0, 0, 0, 1),
+                    0 4px 40px rgba(0, 0, 0, 0.95),
+                    0 8px 60px rgba(0, 0, 0, 0.9)
+                  `,
+                  WebkitTextStroke: `0.5px rgba(${currentRoomData.glowRgb}, 0.1)`,
+                  filter: `drop-shadow(0 0 20px ${currentRoomData.glowColor}15)`,
+                }}
+                onComplete={() => setShowDescription(true)}
+              />
+            )}
+          </div>
+
+          {/* Description - Third - Elegant Typewriter */}
+          <div className="mb-4 sm:mb-5 max-w-2xl mx-auto px-2">
+            {showDescription && (
+              <TypewriterText
+                key={`desc-${currentRoom}`}
+                text={currentRoomData.description}
+                delay={0.1}
+                speed={0.04}
+                className="text-sm sm:text-lg md:text-xl font-light"
+                style={{
+                  color: '#FFFFFF',
+                  opacity: 0.98,
+                  lineHeight: '1.5',
+                  letterSpacing: '0.05em',
+                  textShadow: `
+                    0 0 30px ${currentRoomData.glowColor}22,
+                    0 0 60px ${currentRoomData.glowColor}11,
+                    0 2px 15px rgba(0, 0, 0, 1),
+                    0 4px 30px rgba(0, 0, 0, 0.95),
+                    0 8px 50px rgba(0, 0, 0, 0.9)
+                  `,
+                  fontWeight: '300',
+                  filter: `drop-shadow(0 0 20px ${currentRoomData.glowColor}12)`,
+                }}
+                onComplete={() => setShowButton(true)}
+              />
+            )}
+          </div>
+
+          {/* CTA Button - Last - Cinematic Reveal */}
+          {showButton && (
+            <motion.button
+              initial={{ opacity: 0, y: 20, scale: 0.9 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ duration: 0.6, ease: 'easeOut' }}
+              onClick={() => navigate('/login')}
+              className="px-6 sm:px-10 py-3 sm:py-4 text-xs sm:text-sm uppercase tracking-[0.2em] sm:tracking-[0.25em] transition-all group font-bold relative overflow-hidden"
+              style={{
+                backgroundColor: 'rgba(255, 255, 255, 0.15)',
+                color: '#FFFFFF',
+                border: `2px solid rgba(${currentRoomData.glowRgb}, 0.25)`,
+                borderRadius: '8px',
+                fontWeight: '700',
+                transitionDuration: '0.4s',
+                textShadow: `0 2px 10px rgba(0, 0, 0, 0.9), 0 0 20px ${currentRoomData.glowColor}20`,
+                backdropFilter: 'blur(12px)',
+                boxShadow: `
+                  0 4px 20px rgba(0, 0, 0, 0.5),
+                  0 8px 40px rgba(0, 0, 0, 0.3),
+                  0 0 40px ${currentRoomData.glowColor}0D,
+                  inset 0 1px 0 rgba(255, 255, 255, 0.3)
+                `,
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = `rgba(${currentRoomData.glowRgb}, 0.12)`;
+                e.currentTarget.style.borderColor = `rgba(${currentRoomData.glowRgb}, 0.4)`;
+                e.currentTarget.style.transform = 'translateY(-2px) scale(1.05)';
+                e.currentTarget.style.boxShadow = `
+                  0 6px 30px rgba(0, 0, 0, 0.6),
+                  0 12px 60px rgba(0, 0, 0, 0.4),
+                  0 0 60px ${currentRoomData.glowColor}18,
+                  0 0 100px ${currentRoomData.glowColor}0A,
+                  inset 0 1px 0 rgba(255, 255, 255, 0.4)
+                `;
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.15)';
+                e.currentTarget.style.borderColor = `rgba(${currentRoomData.glowRgb}, 0.25)`;
+                e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                e.currentTarget.style.boxShadow = `
+                  0 4px 20px rgba(0, 0, 0, 0.5),
+                  0 8px 40px rgba(0, 0, 0, 0.3),
+                  0 0 40px ${currentRoomData.glowColor}0D,
+                  inset 0 1px 0 rgba(255, 255, 255, 0.3)
+                `;
+              }}
+            >
+              Step In
+            </motion.button>
+          )}
+        </motion.div>
+      </div>
+
+      {/* Navigation Dots - Subtle */}
+      <div className="absolute bottom-16 sm:bottom-24 left-1/2 transform -translate-x-1/2 flex gap-3 z-20">
+        {rooms.map((room, index) => (
+          <button
+            key={room.id}
+            onClick={() => !isTransitioning && changeRoom(index)}
+            className="w-2 h-2 rounded-full transition-all"
+            style={{
+              backgroundColor: currentRoom === index ? 'rgba(255, 255, 255, 0.6)' : 'rgba(255, 255, 255, 0.15)',
+              transitionDuration: 'var(--duration-slow)',
+            }}
+            aria-label={`Go to ${room.title}`}
+          />
+        ))}
+      </div>
+
+      {/* Scroll Hint - Minimal */}
+      {currentRoom === 0 && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 2, delay: 2 }}
+          className="absolute bottom-24 sm:bottom-32 left-1/2 transform -translate-x-1/2 z-20 pointer-events-none hidden xs:block"
+        >
+          <svg 
+            className="w-5 h-8 sm:w-6 sm:h-10 animate-bounce" 
+            fill="none" 
+            stroke="currentColor" 
+            strokeWidth={1}
+            viewBox="0 0 24 24"
+            style={{ color: 'rgba(255, 255, 255, 0.2)' }}
+          >
+            <rect x="8" y="5" width="8" height="14" rx="4" />
+            <circle cx="12" cy="9" r="1" fill="currentColor" />
+          </svg>
+        </motion.div>
+      )}
     </section>
   );
 }
