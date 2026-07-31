@@ -275,7 +275,7 @@ function HorizontalHero({ onRoomChange = () => {} }) {
         }}
       >
         <div 
-          className="relative w-[80%] sm:w-[85%] lg:w-[90%] h-[70%] sm:h-[80%] lg:h-[90%] transition-all duration-500"
+          className="relative w-full h-full"
           style={{
             border: '1px solid rgba(255, 255, 255, 0.008)',
             borderRadius: 'var(--radius-sm)',
