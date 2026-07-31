@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import EsoLogo from '../components/EsoLogo';
 import { usePageTitle } from '../hooks/usePageTitle';
-import ArtisticHeroSuite from '../components/ArtisticHeroSuite';
+import HorizontalHero from '../components/HorizontalHero';
 
 // ESO Landing Page - Updated June 29, 2026
 function Landing() {
@@ -137,8 +137,8 @@ function Landing() {
         </nav>
       </motion.header>
 
-      {/* ARTISTIC MULTI-STAGE HERO SUITE */}
-      <ArtisticHeroSuite />
+      {/* HORIZONTAL HERO SECTION */}
+      <HorizontalHero />
 
       {/* SLIDING TEXT SECTION - Slowed Down, Editorial */}
       <section 
