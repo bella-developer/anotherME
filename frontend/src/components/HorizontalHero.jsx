@@ -71,7 +71,7 @@ function HorizontalHero({ onRoomChange = () => {} }) {
       title: 'Dark Room',
       subtitle: 'Solitude & Introspection',
       description: 'A sanctuary for your deepest thoughts',
-      videoUrl: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1785499720/darkedited_f3ccvr.mp4',
+      videoUrl: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1785500775/darkfineedit_fxticc.mp4',
       color: '#ef4444',
       bgColor: 'rgba(239, 68, 68, 0.3)',
       glowColor: '#d4af37', // Rich gold
@@ -128,6 +128,9 @@ function HorizontalHero({ onRoomChange = () => {} }) {
   }, []);
 
   useEffect(() => {
+    let touchStartX = 0;
+    let touchStartY = 0;
+
     const handleWheel = (e) => {
       const container = containerRef.current;
       if (!container) return;
@@ -175,15 +178,50 @@ function HorizontalHero({ onRoomChange = () => {} }) {
       }
     };
 
+    const handleTouchStart = (e) => {
+      if (e.touches && e.touches.length > 0) {
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+      }
+    };
+
+    const handleTouchEnd = (e) => {
+      if (isTransitioning || !e.changedTouches || e.changedTouches.length === 0) return;
+      const touchEndX = e.changedTouches[0].clientX;
+      const touchEndY = e.changedTouches[0].clientY;
+      const diffX = touchStartX - touchEndX;
+      const diffY = touchStartY - touchEndY;
+
+      if (Math.abs(diffX) > 40 || Math.abs(diffY) > 40) {
+        if (Math.abs(diffX) > Math.abs(diffY)) {
+          if (diffX > 0 && currentRoom < rooms.length - 1) {
+            changeRoom(currentRoom + 1);
+          } else if (diffX < 0 && currentRoom > 0) {
+            changeRoom(currentRoom - 1);
+          }
+        } else {
+          if (diffY > 0 && currentRoom < rooms.length - 1) {
+            changeRoom(currentRoom + 1);
+          } else if (diffY < 0 && currentRoom > 0) {
+            changeRoom(currentRoom - 1);
+          }
+        }
+      }
+    };
+
     const container = containerRef.current;
     if (container) {
       container.addEventListener('wheel', handleWheel, { passive: false });
+      container.addEventListener('touchstart', handleTouchStart, { passive: true });
+      container.addEventListener('touchend', handleTouchEnd, { passive: true });
       window.addEventListener('keydown', handleKeyDown);
     }
 
     return () => {
       if (container) {
         container.removeEventListener('wheel', handleWheel);
+        container.removeEventListener('touchstart', handleTouchStart);
+        container.removeEventListener('touchend', handleTouchEnd);
       }
       window.removeEventListener('keydown', handleKeyDown);
     };
@@ -219,7 +257,7 @@ function HorizontalHero({ onRoomChange = () => {} }) {
     >
       {/* Cinematic Letterbox Bars - Top */}
       <div 
-        className="absolute top-0 left-0 right-0 h-20 z-40 pointer-events-none"
+        className="absolute top-0 left-0 right-0 h-16 sm:h-20 z-40 pointer-events-none"
         style={{
           background: 'linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.1) 40%, transparent 100%)',
         }}
@@ -230,8 +268,8 @@ function HorizontalHero({ onRoomChange = () => {} }) {
       <div 
         className="absolute inset-0 flex items-center justify-center" 
         style={{ 
-          paddingTop: 'clamp(52px, 10vw, 60px)',
-          paddingBottom: 'clamp(52px, 10vw, 60px)',
+          paddingTop: 'clamp(40px, 8vw, 60px)',
+          paddingBottom: 'clamp(40px, 8vw, 60px)',
           paddingLeft: '1.5px',
           paddingRight: '1.5px',
         }}
@@ -245,10 +283,10 @@ function HorizontalHero({ onRoomChange = () => {} }) {
           }}
         >
           {/* Corner Frame Accents */}
-          <div className="absolute top-0 left-0 w-12 h-12 border-t-2 border-l-2 z-30 pointer-events-none" style={{ borderColor: 'rgba(255, 255, 255, 0.1)' }} />
-          <div className="absolute top-0 right-0 w-12 h-12 border-t-2 border-r-2 z-30 pointer-events-none" style={{ borderColor: 'rgba(255, 255, 255, 0.1)' }} />
-          <div className="absolute bottom-0 left-0 w-12 h-12 border-b-2 border-l-2 z-30 pointer-events-none" style={{ borderColor: 'rgba(255, 255, 255, 0.1)' }} />
-          <div className="absolute bottom-0 right-0 w-12 h-12 border-b-2 border-r-2 z-30 pointer-events-none" style={{ borderColor: 'rgba(255, 255, 255, 0.1)' }} />
+          <div className="absolute top-0 left-0 w-8 sm:w-12 h-8 sm:h-12 border-t-2 border-l-2 z-30 pointer-events-none" style={{ borderColor: 'rgba(255, 255, 255, 0.1)' }} />
+          <div className="absolute top-0 right-0 w-8 sm:w-12 h-8 sm:h-12 border-t-2 border-r-2 z-30 pointer-events-none" style={{ borderColor: 'rgba(255, 255, 255, 0.1)' }} />
+          <div className="absolute bottom-0 left-0 w-8 sm:w-12 h-8 sm:h-12 border-b-2 border-l-2 z-30 pointer-events-none" style={{ borderColor: 'rgba(255, 255, 255, 0.1)' }} />
+          <div className="absolute bottom-0 right-0 w-8 sm:w-12 h-8 sm:h-12 border-b-2 border-r-2 z-30 pointer-events-none" style={{ borderColor: 'rgba(255, 255, 255, 0.1)' }} />
           
           {/* Video Container */}
           {rooms.map((room, index) => (
@@ -274,34 +312,29 @@ function HorizontalHero({ onRoomChange = () => {} }) {
                 <source src={room.videoUrl} type="video/mp4" />
               </video>
               
-              
-              
-              
-              
-              
             </motion.div>
           ))}
         </div>
       </div>
 
       {/* Content Overlay - Premium Restraint */}
-      <div className="relative z-10 h-full flex flex-col items-center justify-center px-8">
+      <div className="relative z-10 h-full flex flex-col items-center justify-center px-4 sm:px-8">
         <motion.div
           key={currentRoom}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.3, ease: 'easeOut' }}
-          className="text-center max-w-3xl"
+          className="text-center max-w-3xl w-full"
         >
           {/* Logo - Cinematic Glow */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1.2, ease: 'easeOut' }}
-            className="mb-4 sm:mb-6"
+            className="mb-3 sm:mb-6"
           >
             <EsoLogo 
-              className="h-10 sm:h-12 md:h-14 w-auto mx-auto" 
+              className="h-8 sm:h-12 md:h-14 w-auto mx-auto" 
               style={{ 
                 filter: `drop-shadow(0 0 20px ${currentRoomData.glowColor}20) drop-shadow(0 4px 40px rgba(0, 0, 0, 0.9))`,
                 opacity: 0.9
@@ -316,7 +349,7 @@ function HorizontalHero({ onRoomChange = () => {} }) {
               text={currentRoomData.title}
               delay={0.3}
               speed={0.1}
-              className="text-5xl sm:text-7xl md:text-8xl"
+              className="text-4xl sm:text-7xl md:text-8xl"
               style={{
                 color: '#FFFFFF',
                 letterSpacing: '0.05em',
@@ -347,11 +380,10 @@ function HorizontalHero({ onRoomChange = () => {} }) {
                 text={currentRoomData.subtitle}
                 delay={0.2}
                 speed={0.05}
-                className="text-xs sm:text-sm tracking-[0.35em] uppercase font-extrabold"
+                className="text-[10px] sm:text-sm tracking-[0.25em] sm:tracking-[0.35em] uppercase font-extrabold"
                 style={{
                   color: '#FFFFFF',
                   opacity: 0.95,
-                  letterSpacing: '0.35em',
                   textShadow: `
                     0 0 40px ${currentRoomData.glowColor}2A,
                     0 0 80px ${currentRoomData.glowColor}18,
@@ -368,14 +400,14 @@ function HorizontalHero({ onRoomChange = () => {} }) {
           </div>
 
           {/* Description - Third - Elegant Typewriter */}
-          <div className="mb-4 sm:mb-5 max-w-2xl mx-auto">
+          <div className="mb-4 sm:mb-5 max-w-2xl mx-auto px-2">
             {showDescription && (
               <TypewriterText
                 key={`desc-${currentRoom}`}
                 text={currentRoomData.description}
                 delay={0.1}
                 speed={0.04}
-                className="text-base sm:text-lg md:text-xl font-light"
+                className="text-sm sm:text-lg md:text-xl font-light"
                 style={{
                   color: '#FFFFFF',
                   opacity: 0.98,
@@ -403,7 +435,7 @@ function HorizontalHero({ onRoomChange = () => {} }) {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               transition={{ duration: 0.6, ease: 'easeOut' }}
               onClick={() => navigate('/login')}
-              className="px-10 py-4 text-sm uppercase tracking-[0.25em] transition-all group font-bold relative overflow-hidden"
+              className="px-6 sm:px-10 py-3 sm:py-4 text-xs sm:text-sm uppercase tracking-[0.2em] sm:tracking-[0.25em] transition-all group font-bold relative overflow-hidden"
               style={{
                 backgroundColor: 'rgba(255, 255, 255, 0.15)',
                 color: '#FFFFFF',
@@ -451,7 +483,7 @@ function HorizontalHero({ onRoomChange = () => {} }) {
       </div>
 
       {/* Navigation Dots - Subtle */}
-      <div className="absolute bottom-24 left-1/2 transform -translate-x-1/2 flex gap-3 z-20">
+      <div className="absolute bottom-16 sm:bottom-24 left-1/2 transform -translate-x-1/2 flex gap-3 z-20">
         {rooms.map((room, index) => (
           <button
             key={room.id}
@@ -472,10 +504,10 @@ function HorizontalHero({ onRoomChange = () => {} }) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 2, delay: 2 }}
-          className="absolute bottom-32 left-1/2 transform -translate-x-1/2 z-20"
+          className="absolute bottom-24 sm:bottom-32 left-1/2 transform -translate-x-1/2 z-20 pointer-events-none hidden xs:block"
         >
           <svg 
-            className="w-6 h-10 animate-bounce" 
+            className="w-5 h-8 sm:w-6 sm:h-10 animate-bounce" 
             fill="none" 
             stroke="currentColor" 
             strokeWidth={1}
