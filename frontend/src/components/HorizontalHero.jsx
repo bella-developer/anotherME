@@ -298,10 +298,10 @@ function HorizontalHero({ onRoomChange = () => {} }) {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1.2, ease: 'easeOut' }}
-            className="mb-16"
+            className="mb-4 sm:mb-6"
           >
             <EsoLogo 
-              className="h-12 md:h-14 w-auto mx-auto" 
+              className="h-10 sm:h-12 md:h-14 w-auto mx-auto" 
               style={{ 
                 filter: `drop-shadow(0 0 20px ${currentRoomData.glowColor}20) drop-shadow(0 4px 40px rgba(0, 0, 0, 0.9))`,
                 opacity: 0.9
@@ -310,13 +310,13 @@ function HorizontalHero({ onRoomChange = () => {} }) {
           </motion.div>
 
           {/* Room Title - First! Dramatic Cinematic Typewriter */}
-          <div className="mb-6 min-h-[140px] md:min-h-[160px]">
+          <div className="mb-2 sm:mb-3">
             <TypewriterText
               key={`title-${currentRoom}`}
               text={currentRoomData.title}
               delay={0.3}
               speed={0.1}
-              className="text-6xl sm:text-7xl md:text-8xl"
+              className="text-5xl sm:text-7xl md:text-8xl"
               style={{
                 color: '#FFFFFF',
                 letterSpacing: '0.05em',
@@ -340,14 +340,14 @@ function HorizontalHero({ onRoomChange = () => {} }) {
           </div>
 
           {/* Room Label - Second - Cinematic Typewriter */}
-          <div className="mb-5 min-h-[28px]">
+          <div className="mb-2 sm:mb-3 min-h-[24px]">
             {showSubtitle && (
               <TypewriterText
                 key={`subtitle-${currentRoom}`}
                 text={currentRoomData.subtitle}
                 delay={0.2}
                 speed={0.05}
-                className="text-sm tracking-[0.35em] uppercase font-extrabold"
+                className="text-xs sm:text-sm tracking-[0.35em] uppercase font-extrabold"
                 style={{
                   color: '#FFFFFF',
                   opacity: 0.95,
@@ -368,18 +368,18 @@ function HorizontalHero({ onRoomChange = () => {} }) {
           </div>
 
           {/* Description - Third - Elegant Typewriter */}
-          <div className="mb-8 min-h-[60px] max-w-2xl mx-auto">
+          <div className="mb-4 sm:mb-5 max-w-2xl mx-auto">
             {showDescription && (
               <TypewriterText
                 key={`desc-${currentRoom}`}
                 text={currentRoomData.description}
                 delay={0.1}
                 speed={0.04}
-                className="text-lg md:text-xl font-light"
+                className="text-base sm:text-lg md:text-xl font-light"
                 style={{
                   color: '#FFFFFF',
                   opacity: 0.98,
-                  lineHeight: '1.7',
+                  lineHeight: '1.5',
                   letterSpacing: '0.05em',
                   textShadow: `
                     0 0 30px ${currentRoomData.glowColor}22,
