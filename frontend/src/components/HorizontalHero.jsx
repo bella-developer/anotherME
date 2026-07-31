@@ -71,7 +71,7 @@ function HorizontalHero({ onRoomChange = () => {} }) {
       title: 'Dark Room',
       subtitle: 'Solitude & Introspection',
       description: 'A sanctuary for your deepest thoughts',
-      videoUrl: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1785159408/darkroomvidbg_eccnlm.mp4',
+      videoUrl: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1785499720/darkedited_f3ccvr.mp4',
       color: '#ef4444',
       bgColor: 'rgba(239, 68, 68, 0.3)',
       glowColor: '#d4af37', // Rich gold
@@ -82,7 +82,7 @@ function HorizontalHero({ onRoomChange = () => {} }) {
       title: 'Fantasy Room',
       subtitle: 'Creativity & Imagination',
       description: 'Where imagination takes form',
-      videoUrl: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1784018105/fantasyyy_djqjgx.mp4',
+      videoUrl: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1785499720/fansyedit_ozhjwj.mp4',
       color: '#f97316',
       bgColor: 'rgba(249, 115, 22, 0.3)',
       glowColor: '#ff6b35', // Vibrant orange-red
@@ -93,7 +93,7 @@ function HorizontalHero({ onRoomChange = () => {} }) {
       title: 'Philo Room',
       subtitle: 'Philosophy & Deep Thought',
       description: 'Explore existential questions',
-      videoUrl: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1783942027/philoeffect_soso3y.mp4',
+      videoUrl: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1785499721/philoedit_fwdmqu.mp4',
       color: '#a855f7',
       bgColor: 'rgba(168, 85, 247, 0.3)',
       glowColor: '#9d4edd', // Deep purple
