@@ -107,6 +107,12 @@ function RoomReactions({ room, reactions, userReactions = [], onReact, disabled 
                   e.currentTarget.style.transform = 'translateY(-2px) scale(1.05)';
                   e.currentTarget.style.boxShadow = `0 4px 12px rgba(${colorRGB}, 0.15)`;
                 }
+                // Make label brighter on hover
+                const label = e.currentTarget.querySelector('span:last-child');
+                if (label) {
+                  label.style.color = color;
+                  label.style.textShadow = `0 0 6px rgba(${colorRGB}, 0.4)`;
+                }
               }}
               onMouseLeave={(e) => {
                 if (!hasReacted) {
@@ -114,6 +120,12 @@ function RoomReactions({ room, reactions, userReactions = [], onReact, disabled 
                   e.currentTarget.style.border = '1px solid rgba(255, 255, 255, 0.1)';
                   e.currentTarget.style.transform = 'translateY(0) scale(1)';
                   e.currentTarget.style.boxShadow = 'none';
+                }
+                // Reset label color when not hovered
+                const label = e.currentTarget.querySelector('span:last-child');
+                if (label && !hasReacted) {
+                  label.style.color = 'rgba(255, 255, 255, 0.7)';
+                  label.style.textShadow = 'none';
                 }
               }}
             >
@@ -144,12 +156,13 @@ function RoomReactions({ room, reactions, userReactions = [], onReact, disabled 
                 </span>
               )}
               
-              {/* Label on hover - hidden on small screens */}
+              {/* Label - always visible with better contrast, more prominent on hover */}
               <span
-                className="hidden sm:block text-[8px] tracking-wide uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap"
+                className="text-[9px] sm:text-[10px] tracking-wide uppercase whitespace-nowrap transition-all duration-300"
                 style={{
-                  color: document.body.classList.contains('light-mode') ? 'rgba(0, 0, 0, 0.55)' : 'rgba(255, 255, 255, 0.5)',
+                  color: hasReacted ? color : 'rgba(255, 255, 255, 0.7)',
                   letterSpacing: '0.1em',
+                  fontWeight: '500',
                 }}
               >
                 {label}
