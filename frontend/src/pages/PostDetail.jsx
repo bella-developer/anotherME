@@ -303,13 +303,14 @@ function PostDetail() {
               className={`flex items-center space-x-2 px-3 py-1.5 border transition-all rounded text-xs ${
                 post.userReactions?.includes('iRelate')
                   ? 'border-[#58a6ff] bg-[#58a6ff]/10 text-[#58a6ff]'
-                  : 'border-[#30363d] text-[#8b949e] hover:border-[#484f58]'
+                  : 'border-[#30363d] bg-[#30363d]/30 text-[#8b949e] hover:border-[#58a6ff] hover:bg-[#58a6ff]/10 hover:text-[#58a6ff]'
               }`}
             >
               <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
               </svg>
-              <span>{post.reactions?.iRelate || 0}</span>
+              <span>I relate</span>
+              <span className="font-semibold">{post.reactions?.iRelate || 0}</span>
             </button>
 
             {/* youreNotAlone */}
@@ -319,13 +320,14 @@ function PostDetail() {
               className={`flex items-center space-x-2 px-3 py-1.5 border transition-all rounded text-xs ${
                 post.userReactions?.includes('youreNotAlone')
                   ? 'border-[#8b949e] bg-[#8b949e]/10 text-[#8b949e]'
-                  : 'border-[#30363d] text-[#8b949e] hover:border-[#484f58]'
+                  : 'border-[#30363d] bg-[#30363d]/30 text-[#8b949e] hover:border-[#8b949e] hover:bg-[#8b949e]/10 hover:text-[#c9d1d9]'
               }`}
             >
               <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd" />
               </svg>
-              <span>{post.reactions?.youreNotAlone || 0}</span>
+              <span>You're not alone</span>
+              <span className="font-semibold">{post.reactions?.youreNotAlone || 0}</span>
             </button>
 
             {/* imListening */}
@@ -335,13 +337,14 @@ function PostDetail() {
               className={`flex items-center space-x-2 px-3 py-1.5 border transition-all rounded text-xs ${
                 post.userReactions?.includes('imListening')
                   ? 'border-[#ff6b35] bg-[#ff6b35]/10 text-[#ff6b35]'
-                  : 'border-[#30363d] text-[#8b949e] hover:border-[#484f58]'
+                  : 'border-[#30363d] bg-[#30363d]/30 text-[#8b949e] hover:border-[#ff6b35] hover:bg-[#ff6b35]/10 hover:text-[#ff6b35]'
               }`}
             >
               <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
               </svg>
-              <span>{post.reactions?.imListening || 0}</span>
+              <span>I'm listening</span>
+              <span className="font-semibold">{post.reactions?.imListening || 0}</span>
             </button>
 
             {/* theAbyss */}
@@ -351,13 +354,14 @@ function PostDetail() {
               className={`flex items-center space-x-2 px-3 py-1.5 border transition-all rounded text-xs ${
                 post.userReactions?.includes('theAbyss')
                   ? 'border-[#6e7681] bg-[#6e7681]/10 text-[#6e7681]'
-                  : 'border-[#30363d] text-[#8b949e] hover:border-[#484f58]'
+                  : 'border-[#30363d] bg-[#30363d]/30 text-[#8b949e] hover:border-[#6e7681] hover:bg-[#6e7681]/10 hover:text-[#c9d1d9]'
               }`}
             >
               <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM7 9a1 1 0 100-2 1 1 0 000 2zm7-1a1 1 0 11-2 0 1 1 0 012 0zm-7.536 5.879a1 1 0 001.415 0 3 3 0 014.242 0 1 1 0 001.415-1.415 5 5 0 00-7.072 0 1 1 0 000 1.415z" clipRule="evenodd" />
               </svg>
-              <span>{post.reactions?.theAbyss || 0}</span>
+              <span>The abyss</span>
+              <span className="font-semibold">{post.reactions?.theAbyss || 0}</span>
             </button>
           </div>
         </div>

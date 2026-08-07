@@ -34,11 +34,8 @@ const PostCard = ({ post, onPostClick }) => {
   // Get plain text content
   const plainContent = post.content ? stripHtml(post.content) : '';
 
-  // Truncate content if too long
-  const shouldTruncate = plainContent && plainContent.length > 400;
-  const displayContent = shouldTruncate && !isExpanded 
-    ? plainContent.substring(0, 400) + '...' 
-    : plainContent;
+  // Display full content without truncation
+  const displayContent = plainContent;
 
   // Split content into paragraphs
   const paragraphs = displayContent ? displayContent.split('\n').filter(p => p.trim()) : [];
@@ -136,8 +133,10 @@ const PostCard = ({ post, onPostClick }) => {
               e.stopPropagation();
               handleReactionToggle('iRelate');
             }}
-            className="flex items-center gap-1.5"
-            style={{ color: '#6e7681', fontSize: '11px', fontWeight: '300' }}
+            className="flex items-center gap-1.5 transition-colors"
+            style={{ color: '#8b949e', fontSize: '11px', fontWeight: '400' }}
+            onMouseEnter={(e) => e.currentTarget.style.color = '#e6edf3'}
+            onMouseLeave={(e) => e.currentTarget.style.color = '#8b949e'}
           >
             <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <circle cx="12" cy="12" r="10" strokeWidth={1.5} />
@@ -151,8 +150,10 @@ const PostCard = ({ post, onPostClick }) => {
               e.stopPropagation();
               handleReactionToggle('youreNotAlone');
             }}
-            className="flex items-center gap-1.5"
-            style={{ color: '#6e7681', fontSize: '11px', fontWeight: '300' }}
+            className="flex items-center gap-1.5 transition-colors"
+            style={{ color: '#8b949e', fontSize: '11px', fontWeight: '400' }}
+            onMouseEnter={(e) => e.currentTarget.style.color = '#e6edf3'}
+            onMouseLeave={(e) => e.currentTarget.style.color = '#8b949e'}
           >
             <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20 12H4" />
@@ -166,8 +167,10 @@ const PostCard = ({ post, onPostClick }) => {
               e.stopPropagation();
               handleReactionToggle('imListening');
             }}
-            className="flex items-center gap-1.5"
-            style={{ color: '#6e7681', fontSize: '11px', fontWeight: '300' }}
+            className="flex items-center gap-1.5 transition-colors"
+            style={{ color: '#8b949e', fontSize: '11px', fontWeight: '400' }}
+            onMouseEnter={(e) => e.currentTarget.style.color = '#e6edf3'}
+            onMouseLeave={(e) => e.currentTarget.style.color = '#8b949e'}
           >
             <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
