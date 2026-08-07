@@ -1,35 +1,36 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-// Lucide icons for dark artistic aesthetic
+// Lucide icons for humanistic, relatable reactions
 import { 
-  Heart, Flame, Wind, Droplet, // Dark Room - elemental emotions
-  Sparkles, Eye, Feather, // Philo Room - contemplation
-  Zap, Moon, Stars, Cloud // Fantasy Room - creative imagination
+  Heart, Waves, Users, Flame, // Dark Room - solidarity & support
+  Lightbulb, Sparkles, HelpCircle, Target, // Philo Room - thinking & wonder
+  Sparkle, PartyPopper, ThumbsUp, Palette // Fantasy Room - joy & creativity
 } from 'lucide-react';
 
 /**
  * RoomReactions Component
- * Displays room-specific reaction buttons with artistic dark aesthetic
+ * Displays room-specific reaction buttons with humanistic, daily-life language
  * Uses Lucide icons with room-themed colors and subtle glow effects
  */
 
 const ROOM_REACTIONS = {
   dark: [
-    { type: 'iFeelYou', label: 'I feel you', icon: Heart, color: '#2EE6FF', colorRGB: '46, 230, 255' },
-    { type: 'notGood', label: 'Heavy', icon: Droplet, color: '#2EE6FF', colorRGB: '46, 230, 255' },
-    { type: 'youreNotAlone', label: "You're not alone", icon: Wind, color: '#2EE6FF', colorRGB: '46, 230, 255' },
-    { type: 'sendingStrength', label: 'Sending strength', icon: Flame, color: '#2EE6FF', colorRGB: '46, 230, 255' }
+    { type: 'same', label: 'Same', icon: Heart, color: '#2EE6FF', colorRGB: '46, 230, 255' },
+    { type: 'thatsTough', label: "That's tough", icon: Waves, color: '#2EE6FF', colorRGB: '46, 230, 255' },
+    { type: 'notAlone', label: 'Not alone', icon: Users, color: '#2EE6FF', colorRGB: '46, 230, 255' },
+    { type: 'felt', label: 'Felt', icon: Flame, color: '#2EE6FF', colorRGB: '46, 230, 255' }
   ],
   philo: [
-    { type: 'lamp', label: 'Insight', icon: Sparkles, color: '#B56DFF', colorRGB: '181, 109, 255' },
-    { type: 'spark', label: 'Curiosity', icon: Eye, color: '#B56DFF', colorRGB: '181, 109, 255' },
-    { type: 'clap', label: 'Resonance', icon: Feather, color: '#B56DFF', colorRGB: '181, 109, 255' }
+    { type: 'deep', label: 'Deep', icon: Lightbulb, color: '#B56DFF', colorRGB: '181, 109, 255' },
+    { type: 'wow', label: 'Wow', icon: Sparkles, color: '#B56DFF', colorRGB: '181, 109, 255' },
+    { type: 'sameQuestion', label: 'Same question', icon: HelpCircle, color: '#B56DFF', colorRGB: '181, 109, 255' },
+    { type: 'this', label: 'This', icon: Target, color: '#B56DFF', colorRGB: '181, 109, 255' }
   ],
   fantasy: [
-    { type: 'vibe', label: 'Vibe', icon: Zap, color: '#FF9D1C', colorRGB: '255, 157, 28' },
-    { type: 'dream', label: 'Dream', icon: Moon, color: '#FF9D1C', colorRGB: '255, 157, 28' },
-    { type: 'inspire', label: 'Inspire', icon: Stars, color: '#FF9D1C', colorRGB: '255, 157, 28' },
-    { type: 'wild', label: 'Wild', icon: Cloud, color: '#FF9D1C', colorRGB: '255, 157, 28' }
+    { type: 'loveIt', label: 'Love it', icon: Sparkle, color: '#FF9D1C', colorRGB: '255, 157, 28' },
+    { type: 'cheers', label: 'Cheers', icon: PartyPopper, color: '#FF9D1C', colorRGB: '255, 157, 28' },
+    { type: 'yes', label: 'Yes', icon: ThumbsUp, color: '#FF9D1C', colorRGB: '255, 157, 28' },
+    { type: 'beautiful', label: 'Beautiful', icon: Palette, color: '#FF9D1C', colorRGB: '255, 157, 28' }
   ]
 };
 

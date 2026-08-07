@@ -104,16 +104,44 @@ function FantasyRoomCard({ post, onReaction, onEdit, onDelete }) {
           </div>
         )}
 
-        {/* Content Text - Show full text always */}
+        {/* Content Text - Artistic formatting with comfortable reading */}
         <div 
-          className="text-[11px] sm:text-xs md:text-sm leading-relaxed mb-2 sm:mb-3 typewriter-text-light"
+          className="text-[11px] sm:text-xs md:text-sm leading-relaxed mb-2 sm:mb-3"
           style={{
             fontFamily: 'var(--font-body)',
-            lineHeight: '1.6',
+            lineHeight: '1.7',
             color: '#E6EDF3',
           }}
-          dangerouslySetInnerHTML={{ __html: post.content }}
-        />
+        >
+          {/* Parse and format content with paragraph breaks */}
+          {post.content && (() => {
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = post.content;
+            const plainText = tempDiv.textContent || tempDiv.innerText || '';
+            
+            // Split by double line breaks for paragraphs, or single if no doubles exist
+            const paragraphs = plainText.includes('\n\n') 
+              ? plainText.split('\n\n').filter(p => p.trim())
+              : plainText.split('\n').filter(p => p.trim());
+            
+            return paragraphs.map((paragraph, index) => (
+              <p
+                key={index}
+                className="mb-4 last:mb-0"
+                style={{
+                  textIndent: '1.5em',
+                  fontSize: index === 0 ? '13px' : '12px',
+                  opacity: index === 0 ? 0.95 : 0.9,
+                  paddingLeft: '2px',
+                  borderLeft: index === 0 ? '2px solid rgba(255, 157, 28, 0.3)' : 'none',
+                  paddingLeft: index === 0 ? '12px' : '2px',
+                }}
+              >
+                {paragraph}
+              </p>
+            ));
+          })()}
+        </div>
         
         {/* Image and Circles Container - Always horizontal: 85% image, 15% circles */}
         {post.image?.url && (
