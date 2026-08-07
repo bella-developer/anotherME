@@ -1,22 +1,22 @@
 import { useState, useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import EsoLogo from './EsoLogo';
 
 /**
  * Premium Scroll-Based Hero - Complete App Tour
- * Three room sections with sequential frame animations
- * Tells the story of ESO as a sanctuary for introverts and deep thinkers
+ * Fixed layout with dynamic background frames
+ * Keyboard navigation support
  */
 function PremiumHero() {
   const navigate = useNavigate();
   const containerRef = useRef(null);
-  const [activeSection, setActiveSection] = useState(0);
-  const [scrollProgress, setScrollProgress] = useState(0);
-  const sectionRefs = useRef([]);
+  const [currentSection, setCurrentSection] = useState(0);
+  const [currentFrame, setCurrentFrame] = useState([0, 0, 0]);
   const canvasRefs = useRef([]);
   const imagesRefs = useRef([[], [], []]);
   const [imagesLoaded, setImagesLoaded] = useState([false, false, false]);
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
   // Three room configurations
   const rooms = [
@@ -82,6 +82,7 @@ function PremiumHero() {
     }
   ];
 
+
   // Preload images for all sections
   useEffect(() => {
     rooms.forEach((room, sectionIndex) => {
@@ -112,281 +113,329 @@ function PremiumHero() {
     });
   }, []);
 
-  // Handle scroll to determine active section and frame
-  useEffect(() => {
-    const handleScroll = () => {
-      if (!containerRef.current) return;
-
-      const scrolled = window.scrollY;
-      const windowHeight = window.innerHeight;
-      
-      // Determine which section is active
-      const sectionHeight = windowHeight * 4;
-      const currentSection = Math.min(
-        rooms.length - 1,
-        Math.floor(scrolled / sectionHeight)
-      );
-      setActiveSection(currentSection);
-
-      // Calculate progress within current section
-      const sectionStart = currentSection * sectionHeight;
-      const sectionScroll = scrolled - sectionStart;
-      const progress = Math.max(0, Math.min(1, sectionScroll / sectionHeight));
-      setScrollProgress(progress);
-
-      // Render current frame for active section
-      renderFrame(currentSection, progress);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    handleScroll();
-
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [imagesLoaded]);
-
-  // Render frame to canvas
-  const renderFrame = (sectionIndex, progress) => {
-    const canvas = canvasRefs.current[sectionIndex];
-    const images = imagesRefs.current[sectionIndex];
+  // Navigate to next/previous section
+  const goToSection = (direction) => {
+    if (isTransitioning) return;
     
-    if (!canvas || !images || images.length === 0 || !imagesLoaded[sectionIndex]) return;
-
-    const ctx = canvas.getContext('2d');
-    const frameIndex = Math.min(images.length - 1, Math.floor(progress * images.length));
-    const img = images[frameIndex];
-
-    if (!img) return;
-
-    const rect = canvas.getBoundingClientRect();
-    canvas.width = rect.width * window.devicePixelRatio;
-    canvas.height = rect.height * window.devicePixelRatio;
-    ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
-
-    const canvasAspect = rect.width / rect.height;
-    const imgAspect = img.width / img.height;
-
-    let drawWidth, drawHeight, offsetX, offsetY;
-
-    if (imgAspect > canvasAspect) {
-      drawHeight = rect.height;
-      drawWidth = drawHeight * imgAspect;
-      offsetX = (rect.width - drawWidth) / 2;
-      offsetY = 0;
-    } else {
-      drawWidth = rect.width;
-      drawHeight = drawWidth / imgAspect;
-      offsetX = 0;
-      offsetY = (rect.height - drawHeight) / 2;
+    const newSection = currentSection + direction;
+    if (newSection >= 0 && newSection < rooms.length) {
+      setIsTransitioning(true);
+      setCurrentSection(newSection);
+      setTimeout(() => setIsTransitioning(false), 800);
     }
-
-    ctx.clearRect(0, 0, rect.width, rect.height);
-    ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
   };
 
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'ArrowRight' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        goToSection(1); // Forward
+      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') {
+        e.preventDefault();
+        goToSection(-1); // Backward
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [currentSection, isTransitioning]);
+
+  // Scroll/wheel navigation
+  useEffect(() => {
+    let scrollTimeout;
+    
+    const handleWheel = (e) => {
+      if (isTransitioning) {
+        e.preventDefault();
+        return;
+      }
+
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => {
+        if (e.deltaY > 0) {
+          goToSection(1); // Scroll down = forward
+        } else if (e.deltaY < 0) {
+          goToSection(-1); // Scroll up = backward
+        }
+      }, 50);
+    };
+
+    const container = containerRef.current;
+    if (container) {
+      container.addEventListener('wheel', handleWheel, { passive: false });
+    }
+
+    return () => {
+      clearTimeout(scrollTimeout);
+      if (container) {
+        container.removeEventListener('wheel', handleWheel);
+      }
+    };
+  }, [currentSection, isTransitioning]);
+
+  // Animate frames within current section based on time or interaction
+  useEffect(() => {
+    const frameInterval = setInterval(() => {
+      setCurrentFrame(prev => {
+        const newFrames = [...prev];
+        const maxFrame = rooms[currentSection].frames.length - 1;
+        newFrames[currentSection] = (newFrames[currentSection] + 1) % (maxFrame + 1);
+        return newFrames;
+      });
+    }, 600); // Change frame every 600ms
+
+    return () => clearInterval(frameInterval);
+  }, [currentSection]);
+
+  // Render frame to canvas
+  useEffect(() => {
+    rooms.forEach((room, sectionIndex) => {
+      const canvas = canvasRefs.current[sectionIndex];
+      const images = imagesRefs.current[sectionIndex];
+      
+      if (!canvas || !images || images.length === 0 || !imagesLoaded[sectionIndex]) return;
+
+      const ctx = canvas.getContext('2d');
+      const frameIndex = currentFrame[sectionIndex];
+      const img = images[frameIndex];
+
+      if (!img) return;
+
+      const rect = canvas.getBoundingClientRect();
+      canvas.width = rect.width * window.devicePixelRatio;
+      canvas.height = rect.height * window.devicePixelRatio;
+      ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+
+      const canvasAspect = rect.width / rect.height;
+      const imgAspect = img.width / img.height;
+
+      let drawWidth, drawHeight, offsetX, offsetY;
+
+      if (imgAspect > canvasAspect) {
+        drawHeight = rect.height;
+        drawWidth = drawHeight * imgAspect;
+        offsetX = (rect.width - drawWidth) / 2;
+        offsetY = 0;
+      } else {
+        drawWidth = rect.width;
+        drawHeight = drawWidth / imgAspect;
+        offsetX = 0;
+        offsetY = (rect.height - drawHeight) / 2;
+      }
+
+      ctx.clearRect(0, 0, rect.width, rect.height);
+      ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
+    });
+  }, [currentFrame, imagesLoaded]);
+
+  const currentRoom = rooms[currentSection];
+
+
   return (
-    <div ref={containerRef} className="relative">
-      {/* Intro Section - App Identity */}
-      <section className="relative h-screen w-full flex items-center justify-center overflow-hidden" style={{ background: '#000000' }}>
-        <div className="relative z-10 text-center px-4 sm:px-8 max-w-4xl">
+    <div ref={containerRef} className="relative h-screen overflow-hidden" style={{ background: '#000000' }}>
+      {/* Background Canvases - All rooms layered */}
+      {rooms.map((room, index) => (
+        <canvas
+          key={room.id}
+          ref={el => canvasRefs.current[index] = el}
+          className="absolute inset-0 w-full h-full transition-opacity duration-700"
+          style={{ 
+            objectFit: 'cover',
+            opacity: currentSection === index ? 1 : 0,
+            zIndex: 1,
+          }}
+        />
+      ))}
+
+      {/* Gradient overlay for text readability */}
+      <div 
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background: 'linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.2) 40%, rgba(0,0,0,0.2) 60%, rgba(0,0,0,0.7) 100%)',
+          zIndex: 2,
+        }}
+      />
+
+      {/* Fixed Content Layout */}
+      <div className="relative z-10 h-full flex flex-col">
+        {/* Top: Logo & Intro */}
+        <div className="flex-shrink-0 pt-20 sm:pt-24 pb-8 px-4 sm:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1.2 }}
-            className="mb-8"
+            transition={{ duration: 1 }}
           >
             <EsoLogo 
-              className="h-16 sm:h-20 w-auto mx-auto mb-8" 
-              style={{ filter: 'drop-shadow(0 0 30px rgba(255, 255, 255, 0.2))' }} 
+              className="h-12 sm:h-16 w-auto mx-auto mb-6" 
+              style={{ filter: 'drop-shadow(0 0 20px rgba(255, 255, 255, 0.2))' }} 
             />
           </motion.div>
-
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.3 }}
-            className="text-4xl sm:text-6xl md:text-7xl font-extralight mb-6 tracking-tight"
-            style={{
-              color: '#ffffff',
-              textShadow: '0 4px 30px rgba(0, 0, 0, 0.8)',
-              lineHeight: '1.1',
-            }}
-          >
-            For the ones who think differently
-          </motion.h1>
 
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 0.6 }}
-            className="text-base sm:text-xl font-light mb-12 leading-relaxed"
+            transition={{ duration: 1, delay: 0.3 }}
+            className="text-sm sm:text-base font-light"
             style={{
-              color: 'rgba(255, 255, 255, 0.8)',
-              textShadow: '0 2px 15px rgba(0, 0, 0, 0.7)',
+              color: 'rgba(255, 255, 255, 0.7)',
+              textShadow: '0 2px 10px rgba(0, 0, 0, 0.7)',
             }}
           >
-            A sanctuary for introverts, philosophers, dreamers, and deep souls.<br />
-            Where your secrets are safe. Where your ideas matter.<br />
-            Where you belong.
+            A sanctuary for introverts, philosophers, dreamers, and deep souls
           </motion.p>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.9 }}
-            className="text-xs tracking-[0.35em] uppercase"
-            style={{ color: 'rgba(255, 255, 255, 0.5)' }}
-          >
-            Scroll to explore
-          </motion.div>
-
-          <motion.div
-            animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
-            className="mt-8"
-          >
-            <svg className="w-6 h-6 mx-auto" fill="none" stroke="rgba(255, 255, 255, 0.4)" strokeWidth="2" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-            </svg>
-          </motion.div>
         </div>
 
-        <div 
-          className="absolute inset-0 opacity-30"
-          style={{
-            background: 'radial-gradient(circle at 50% 50%, rgba(46, 230, 255, 0.1) 0%, transparent 50%)',
-          }}
-        />
-      </section>
-
-      {/* Three Room Sections */}
-      {rooms.map((room, index) => (
-        <section
-          key={room.id}
-          ref={el => sectionRefs.current[index] = el}
-          className="sticky top-0 h-screen w-full overflow-hidden"
-          style={{ 
-            background: '#000000',
-            zIndex: activeSection === index ? 20 : 10,
-          }}
-        >
-          <canvas
-            ref={el => canvasRefs.current[index] = el}
-            className="absolute inset-0 w-full h-full"
-            style={{ 
-              objectFit: 'cover',
-              opacity: activeSection === index ? 1 : 0,
-              transition: 'opacity 0.5s ease',
-            }}
-          />
-
-          <div 
-            className="absolute inset-0 pointer-events-none"
-            style={{
-              background: 'linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0) 30%, rgba(0,0,0,0) 70%, rgba(0,0,0,0.6) 100%)',
-            }}
-          />
-
-          <div className="relative z-10 h-full flex flex-col items-center justify-center px-4 sm:px-8 text-center max-w-4xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ 
-                opacity: activeSection === index ? 1 : 0,
-                y: activeSection === index ? 0 : 30,
-              }}
-              transition={{ duration: 0.8 }}
-            >
-              <div 
-                className="text-xs tracking-[0.4em] uppercase font-bold mb-4"
-                style={{
-                  color: room.color,
-                  textShadow: `0 0 20px ${room.color}40, 0 2px 10px rgba(0, 0, 0, 0.8)`,
-                }}
+        {/* Center: Dynamic Room Content */}
+        <div className="flex-1 flex items-center justify-center px-4 sm:px-8">
+          <div className="text-center max-w-4xl w-full">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentSection}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.6, ease: 'easeInOut' }}
               >
-                {room.name}
-              </div>
+                {/* Room Label */}
+                <div 
+                  className="text-xs sm:text-sm tracking-[0.4em] uppercase font-bold mb-4 sm:mb-6"
+                  style={{
+                    color: currentRoom.color,
+                    textShadow: `0 0 25px ${currentRoom.color}60, 0 2px 12px rgba(0, 0, 0, 0.9)`,
+                  }}
+                >
+                  {currentRoom.name}
+                </div>
 
-              <h2
-                className="text-4xl sm:text-6xl md:text-7xl font-extralight mb-4 tracking-tight"
-                style={{
-                  color: '#ffffff',
-                  textShadow: `0 0 40px ${room.color}20, 0 4px 30px rgba(0, 0, 0, 0.9)`,
-                  lineHeight: '1.1',
-                  fontFamily: "'Playfair Display', serif",
-                }}
-              >
-                {room.headline}
-              </h2>
+                {/* Headline */}
+                <h2
+                  className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-extralight mb-4 sm:mb-6 tracking-tight leading-none"
+                  style={{
+                    color: '#ffffff',
+                    textShadow: `0 0 50px ${currentRoom.color}25, 0 4px 35px rgba(0, 0, 0, 0.95)`,
+                    fontFamily: "'Playfair Display', serif",
+                  }}
+                >
+                  {currentRoom.headline}
+                </h2>
 
-              <p
-                className="text-lg sm:text-2xl font-light mb-6"
-                style={{
-                  color: 'rgba(255, 255, 255, 0.9)',
-                  textShadow: '0 2px 15px rgba(0, 0, 0, 0.8)',
-                }}
-              >
-                {room.subheadline}
-              </p>
+                {/* Subheadline */}
+                <p
+                  className="text-lg sm:text-2xl md:text-3xl font-light mb-4 sm:mb-6"
+                  style={{
+                    color: 'rgba(255, 255, 255, 0.95)',
+                    textShadow: '0 2px 18px rgba(0, 0, 0, 0.9)',
+                  }}
+                >
+                  {currentRoom.subheadline}
+                </p>
 
-              <p
-                className="text-sm sm:text-base font-light mb-10 max-w-2xl leading-relaxed"
-                style={{
-                  color: 'rgba(255, 255, 255, 0.8)',
-                  textShadow: '0 2px 10px rgba(0, 0, 0, 0.7)',
-                }}
-              >
-                {room.description}
-              </p>
+                {/* Description */}
+                <p
+                  className="text-sm sm:text-base md:text-lg font-light mb-8 sm:mb-10 max-w-2xl mx-auto leading-relaxed"
+                  style={{
+                    color: 'rgba(255, 255, 255, 0.85)',
+                    textShadow: '0 2px 12px rgba(0, 0, 0, 0.8)',
+                  }}
+                >
+                  {currentRoom.description}
+                </p>
 
+                {/* CTA Button */}
+                <button
+                  onClick={() => navigate(`/rooms/${currentRoom.id}`)}
+                  className="px-10 py-4 text-sm uppercase tracking-[0.25em] font-bold transition-all duration-300"
+                  style={{
+                    backgroundColor: 'rgba(255, 255, 255, 0.08)',
+                    color: '#ffffff',
+                    border: `2px solid rgba(${currentRoom.colorRgb}, 0.5)`,
+                    borderRadius: '8px',
+                    backdropFilter: 'blur(16px)',
+                    textShadow: '0 2px 12px rgba(0, 0, 0, 0.9)',
+                    boxShadow: `0 6px 25px rgba(0, 0, 0, 0.6), 0 0 50px rgba(${currentRoom.colorRgb}, 0.2)`,
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.backgroundColor = `rgba(${currentRoom.colorRgb}, 0.18)`;
+                    e.currentTarget.style.borderColor = `rgba(${currentRoom.colorRgb}, 0.8)`;
+                    e.currentTarget.style.transform = 'translateY(-3px) scale(1.05)';
+                    e.currentTarget.style.boxShadow = `0 8px 35px rgba(0, 0, 0, 0.7), 0 0 70px rgba(${currentRoom.colorRgb}, 0.35)`;
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.08)';
+                    e.currentTarget.style.borderColor = `rgba(${currentRoom.colorRgb}, 0.5)`;
+                    e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                    e.currentTarget.style.boxShadow = `0 6px 25px rgba(0, 0, 0, 0.6), 0 0 50px rgba(${currentRoom.colorRgb}, 0.2)`;
+                  }}
+                >
+                  {currentRoom.cta}
+                </button>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+        </div>
+
+        {/* Bottom: Navigation Indicators */}
+        <div className="flex-shrink-0 pb-12 sm:pb-16 px-4 sm:px-8">
+          <div className="flex justify-center items-center gap-6">
+            {/* Navigation dots */}
+            {rooms.map((room, index) => (
               <button
-                onClick={() => navigate(`/rooms/${room.id}`)}
-                className="px-10 py-4 text-sm uppercase tracking-[0.25em] font-bold transition-all"
+                key={room.id}
+                onClick={() => {
+                  if (!isTransitioning && index !== currentSection) {
+                    setIsTransitioning(true);
+                    setCurrentSection(index);
+                    setTimeout(() => setIsTransitioning(false), 800);
+                  }
+                }}
+                className="transition-all duration-300"
                 style={{
-                  backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                  color: '#ffffff',
-                  border: `2px solid rgba(${room.colorRgb}, 0.4)`,
-                  borderRadius: '6px',
-                  backdropFilter: 'blur(12px)',
-                  textShadow: '0 2px 10px rgba(0, 0, 0, 0.8)',
-                  boxShadow: `0 4px 20px rgba(0, 0, 0, 0.5), 0 0 40px rgba(${room.colorRgb}, 0.15)`,
+                  width: currentSection === index ? '40px' : '10px',
+                  height: '10px',
+                  borderRadius: '5px',
+                  backgroundColor: currentSection === index 
+                    ? room.color 
+                    : 'rgba(255, 255, 255, 0.25)',
+                  boxShadow: currentSection === index 
+                    ? `0 0 20px ${room.color}80`
+                    : 'none',
                 }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = `rgba(${room.colorRgb}, 0.15)`;
-                  e.currentTarget.style.borderColor = `rgba(${room.colorRgb}, 0.6)`;
-                  e.currentTarget.style.transform = 'translateY(-2px) scale(1.05)';
-                  e.currentTarget.style.boxShadow = `0 6px 30px rgba(0, 0, 0, 0.6), 0 0 60px rgba(${room.colorRgb}, 0.25)`;
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
-                  e.currentTarget.style.borderColor = `rgba(${room.colorRgb}, 0.4)`;
-                  e.currentTarget.style.transform = 'translateY(0) scale(1)';
-                  e.currentTarget.style.boxShadow = `0 4px 20px rgba(0, 0, 0, 0.5), 0 0 40px rgba(${room.colorRgb}, 0.15)`;
-                }}
-              >
-                {room.cta}
-              </button>
-            </motion.div>
+                aria-label={`Go to ${room.name}`}
+              />
+            ))}
           </div>
 
-          {!imagesLoaded[index] && activeSection === index && (
-            <div className="absolute inset-0 flex items-center justify-center bg-black z-50">
-              <div className="text-center">
-                <div
-                  className="w-12 h-12 border-4 border-t-transparent rounded-full animate-spin mb-4 mx-auto"
-                  style={{
-                    borderColor: room.color,
-                    borderTopColor: 'transparent',
-                  }}
-                />
-                <p className="text-xs tracking-wider" style={{ color: 'rgba(255, 255, 255, 0.6)' }}>
-                  Loading {room.name}...
-                </p>
-              </div>
-            </div>
-          )}
-        </section>
-      ))}
+          {/* Keyboard hint */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1, delay: 1.5 }}
+            className="text-center mt-6 text-xs tracking-widest uppercase"
+            style={{ color: 'rgba(255, 255, 255, 0.4)' }}
+          >
+            Use ← → or scroll to navigate
+          </motion.div>
+        </div>
+      </div>
 
-      <div style={{ height: `${rooms.length * 400}vh` }} />
+      {/* Loading states */}
+      {!imagesLoaded[currentSection] && (
+        <div className="absolute inset-0 flex items-center justify-center bg-black z-50">
+          <div className="text-center">
+            <div
+              className="w-14 h-14 border-4 border-t-transparent rounded-full animate-spin mb-4 mx-auto"
+              style={{
+                borderColor: currentRoom.color,
+                borderTopColor: 'transparent',
+              }}
+            />
+            <p className="text-sm tracking-wider" style={{ color: 'rgba(255, 255, 255, 0.7)' }}>
+              Loading {currentRoom.name}...
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
