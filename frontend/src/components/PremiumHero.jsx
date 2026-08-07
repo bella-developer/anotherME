@@ -560,7 +560,7 @@ function PremiumHero() {
                     onMouseEnter={(e) => {
                       e.currentTarget.style.backgroundColor = `rgba(${currentStepData.colorRgb}, 0.2)`;
                       e.currentTarget.style.borderColor = `rgba(${currentStepData.colorRgb}, 0.9)`;
-                      e.currentTarget.style.transform = 'translateY(-4px) scale(1.05)`;
+                      e.currentTarget.style.transform = 'translateY(-4px) scale(1.05)';
                       e.currentTarget.style.boxShadow = `0 12px 40px rgba(0, 0, 0, 0.8), 0 0 80px rgba(${currentStepData.colorRgb}, 0.4)`;
                     }}
                     onMouseLeave={(e) => {
