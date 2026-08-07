@@ -3,9 +3,9 @@ import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import EsoLogo from '../components/EsoLogo';
 import { usePageTitle } from '../hooks/usePageTitle';
-import HorizontalHero from '../components/HorizontalHero';
+import PremiumHero from '../components/PremiumHero';
 
-// ESO Landing Page - Updated June 29, 2026
+// ESO Landing Page - Updated with Premium Scroll Hero
 function Landing() {
   usePageTitle('');
   const navigate = useNavigate();
@@ -137,8 +137,8 @@ function Landing() {
         </nav>
       </motion.header>
 
-      {/* HORIZONTAL HERO SECTION */}
-      <HorizontalHero />
+      {/* PREMIUM SCROLL-BASED HERO SECTION */}
+      <PremiumHero />
 
       {/* SLIDING TEXT SECTION - Slowed Down, Editorial */}
       <section 
