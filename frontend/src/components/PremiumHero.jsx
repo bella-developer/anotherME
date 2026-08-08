@@ -450,10 +450,10 @@ function PremiumHero() {
   return (
     <div 
       ref={containerRef} 
-      className="relative h-screen overflow-hidden dagger-square-font" 
+      className="relative h-screen overflow-hidden" 
       style={{ 
-        background: '#000000',
-        fontFamily: "'Dagger Square', monospace",
+        background: 'linear-gradient(180deg, #000000 0%, #0a0a0f 100%)',
+        fontFamily: "'Rajdhani', sans-serif",
         fontWeight: 400,
       }}
     >
@@ -504,7 +504,7 @@ function PremiumHero() {
               >
                 {/* Main Title */}
                 <h2
-                  className={`text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-5 tracking-tight leading-none ${
+                  className={`text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-black mb-6 tracking-tighter leading-none cinematic-title glow-pulse ${
                     currentStepData.type === 'dark' ? 'speed-blur-dark' :
                     currentStepData.type === 'fantasy' ? 'speed-blur-fantasy' :
                     currentStepData.type === 'philo' ? 'speed-blur-philo' :
@@ -512,15 +512,10 @@ function PremiumHero() {
                   }`}
                   style={{
                     color: '#ffffff',
-                    fontFamily: "'Dagger Square', monospace",
-                    fontWeight: 700,
-                    background: currentStepData.color 
-                      ? `linear-gradient(135deg, #ffffff 0%, ${currentStepData.color}90 100%)`
-                      : 'linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%)',
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                    backgroundClip: 'text',
-                    filter: 'brightness(1.2) contrast(1.15)',
+                    fontFamily: "'Bebas Neue', 'Orbitron', sans-serif",
+                    fontWeight: 900,
+                    letterSpacing: '0.02em',
+                    textTransform: 'uppercase',
                   }}
                 >
                   {currentStepData.title}
@@ -528,12 +523,16 @@ function PremiumHero() {
 
                 {/* Subtitle */}
                 <p
-                  className="text-xl sm:text-2xl md:text-3xl font-normal mb-4 speed-blur-subtle"
+                  className="text-2xl sm:text-3xl md:text-4xl font-medium mb-5 neon-text cinematic-subtitle"
                   style={{
-                    color: currentStepData.color || 'rgba(255, 255, 255, 0.9)',
-                    fontFamily: "'Dagger Square', monospace",
-                    fontWeight: 400,
-                    filter: 'brightness(1.1) contrast(1.1)',
+                    color: currentStepData.color || 'rgba(255, 255, 255, 0.95)',
+                    fontFamily: "'Rajdhani', 'Teko', sans-serif",
+                    fontWeight: 600,
+                    letterSpacing: '0.08em',
+                    textTransform: 'lowercase',
+                    textShadow: currentStepData.color 
+                      ? `0 0 20px ${currentStepData.color}80, 0 0 40px ${currentStepData.color}40`
+                      : '0 0 20px rgba(255, 255, 255, 0.5)',
                   }}
                 >
                   {currentStepData.subtitle}
@@ -542,13 +541,13 @@ function PremiumHero() {
                 {/* Description - Only show if not empty */}
                 {currentStepData.description && (
                   <p
-                    className="text-base sm:text-lg md:text-xl font-light mb-10 leading-relaxed"
+                    className="text-lg sm:text-xl md:text-2xl font-normal mb-12 leading-relaxed cinematic-description"
                     style={{
-                      color: 'rgba(255, 255, 255, 0.8)',
-                      fontFamily: "'Dagger Square', monospace",
-                      fontWeight: 300,
-                      textShadow: '0 2px 15px rgba(0, 0, 0, 0.85), -4px 0 8px rgba(255, 255, 255, 0.15)',
-                      transform: 'skewX(-5deg)',
+                      color: 'rgba(255, 255, 255, 0.75)',
+                      fontFamily: "'Rajdhani', sans-serif",
+                      fontWeight: 400,
+                      letterSpacing: '0.05em',
+                      textShadow: '0 2px 20px rgba(0, 0, 0, 0.9)',
                     }}
                   >
                     {currentStepData.description}
@@ -560,50 +559,28 @@ function PremiumHero() {
                   <motion.button
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.4, delay: 0.3 }}
                     onClick={() => navigate('/login')}
-                    className="px-12 py-5 text-sm uppercase tracking-[0.3em] font-bold transition-all duration-300 mt-4"
+                    className="px-14 py-6 text-base uppercase tracking-[0.25em] font-bold transition-all duration-500 mt-6 cinematic-button"
                     style={{
-                      backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                      color: '#ffffff',
+                      backgroundColor: 'rgba(0, 0, 0, 0.6)',
+                      color: currentStepData.color || '#ffffff',
                       border: currentStepData.color 
-                        ? `2px solid rgba(${currentStepData.colorRgb}, 0.6)`
-                        : '2px solid rgba(255, 255, 255, 0.3)',
-                      borderRadius: '10px',
-                      backdropFilter: 'blur(20px)',
+                        ? `3px solid ${currentStepData.color}`
+                        : '3px solid rgba(255, 255, 255, 0.5)',
+                      borderRadius: '0',
+                      backdropFilter: 'blur(30px)',
                       boxShadow: currentStepData.color
-                        ? `0 8px 30px rgba(0, 0, 0, 0.7), 0 0 60px rgba(${currentStepData.colorRgb}, 0.25)`
-                        : '0 8px 30px rgba(0, 0, 0, 0.7)',
-                      fontFamily: "'Dagger Square', monospace",
+                        ? `0 0 40px ${currentStepData.color}40, inset 0 0 20px ${currentStepData.color}20`
+                        : '0 0 40px rgba(255, 255, 255, 0.2)',
+                      fontFamily: "'Bebas Neue', 'Orbitron', sans-serif",
                       fontWeight: 700,
+                      letterSpacing: '0.3em',
+                      fontSize: '1.1rem',
                       textShadow: currentStepData.color
-                        ? `-2px 0 4px rgba(${currentStepData.colorRgb}, 0.6), -4px 0 6px rgba(${currentStepData.colorRgb}, 0.4), -6px 0 8px rgba(${currentStepData.colorRgb}, 0.3), 0 0 10px rgba(${currentStepData.colorRgb}, 0.5)`
-                        : '-2px 0 4px rgba(255, 255, 255, 0.6), -4px 0 6px rgba(255, 255, 255, 0.4), -6px 0 8px rgba(255, 255, 255, 0.3)',
-                      transform: 'skewX(-8deg)',
+                        ? `0 0 10px ${currentStepData.color}`
+                        : '0 0 10px rgba(255, 255, 255, 0.8)',
                       filter: 'brightness(1.1) contrast(1.1)',
-                    }}
-                    onMouseEnter={(e) => {
-                      if (currentStepData.color) {
-                        e.currentTarget.style.backgroundColor = `rgba(${currentStepData.colorRgb}, 0.2)`;
-                        e.currentTarget.style.borderColor = `rgba(${currentStepData.colorRgb}, 0.9)`;
-                        e.currentTarget.style.boxShadow = `0 12px 40px rgba(0, 0, 0, 0.8), 0 0 80px rgba(${currentStepData.colorRgb}, 0.4)`;
-                      } else {
-                        e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.2)';
-                        e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.6)';
-                      }
-                      e.currentTarget.style.transform = 'translateY(-4px) scale(1.05) skewX(-8deg)';
-                      e.currentTarget.style.filter = 'brightness(1.3) contrast(1.2)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
-                      e.currentTarget.style.borderColor = currentStepData.color 
-                        ? `rgba(${currentStepData.colorRgb}, 0.6)`
-                        : 'rgba(255, 255, 255, 0.3)';
-                      e.currentTarget.style.transform = 'translateY(0) scale(1) skewX(-8deg)';
-                      e.currentTarget.style.boxShadow = currentStepData.color
-                        ? `0 8px 30px rgba(0, 0, 0, 0.7), 0 0 60px rgba(${currentStepData.colorRgb}, 0.25)`
-                        : '0 8px 30px rgba(0, 0, 0, 0.7)';
-                      e.currentTarget.style.filter = 'brightness(1.1) contrast(1.1)';
+                      cursor: 'pointer',
                     }}
                   >
                     STEP IN
@@ -620,12 +597,13 @@ function PremiumHero() {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 1 }}
-            className="text-center text-xs tracking-widest uppercase"
+            transition={{ duration: 1, delay: 1.5 }}
+            className="text-center text-xs tracking-[0.3em] uppercase"
             style={{ 
-              color: 'rgba(255, 255, 255, 0.35)',
-              fontFamily: "'Dagger Square', monospace",
-              fontWeight: 400,
+              color: 'rgba(255, 255, 255, 0.3)',
+              fontFamily: "'Rajdhani', sans-serif",
+              fontWeight: 500,
+              letterSpacing: '0.3em',
             }}
           >
             {currentStep === 0 ? 'scroll or use arrow keys to begin' : currentStep === tourSteps.length - 1 ? 'scroll down to continue' : 'navigate with ← → or scroll'}
@@ -636,20 +614,30 @@ function PremiumHero() {
       {/* Loading Overlay */}
       {!imagesLoaded && (
         <div className="absolute inset-0 flex flex-col items-center justify-center bg-black z-50">
-          <EsoLogo 
-            className="h-16 sm:h-20 w-auto mb-6" 
-            style={{ filter: 'drop-shadow(0 0 30px rgba(255, 255, 255, 0.3))' }} 
-          />
-          <p 
-            className="text-sm tracking-widest lowercase" 
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, ease: 'easeOut' }}
+          >
+            <EsoLogo 
+              className="h-20 sm:h-24 w-auto mb-8" 
+              style={{ filter: 'drop-shadow(0 0 40px rgba(255, 255, 255, 0.4))' }} 
+            />
+          </motion.div>
+          <motion.p 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: [0.4, 0.8, 0.4] }}
+            transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+            className="text-base tracking-[0.3em] uppercase" 
             style={{ 
               color: 'rgba(255, 255, 255, 0.6)',
-              fontFamily: "'Dagger Square', monospace",
-              fontWeight: 400,
+              fontFamily: "'Rajdhani', sans-serif",
+              fontWeight: 500,
+              letterSpacing: '0.3em',
             }}
           >
-            loading...
-          </p>
+            loading
+          </motion.p>
         </div>
       )}
     </div>

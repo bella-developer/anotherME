@@ -1,32 +1,7 @@
 /**
- * Dagger Square Font
- * Free for Commercial Use
- * Source: https://www.dafont.com/daggersquare.font
+ * Premium Cinematic Typography & Effects
+ * Minimal but Perfect Design
  */
-
-@font-face {
-  font-family: 'Dagger Square';
-  src: url('/fonts/DAGGERSQUARE.otf') format('opentype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Dagger Square';
-  src: url('/fonts/DAGGERSQUARE-OBLIQUE.otf') format('opentype');
-  font-weight: 400;
-  font-style: oblique;
-  font-display: swap;
-}
-
-/* Ensure font loads with higher specificity */
-.dagger-square-font,
-.dagger-square-font * {
-  font-family: 'Dagger Square', monospace !important;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
 
 /* High-Speed Motion Blur / Wind Streak Effect */
 .speed-blur-text {
@@ -161,4 +136,87 @@
     -28px 0 19px rgba(255, 255, 255, 0.05),
     0 0 8px rgba(255, 255, 255, 0.4),
     0 0 16px rgba(255, 255, 255, 0.2);
+}
+
+/* Cinematic Animations */
+@keyframes cinematic-entrance {
+  0% {
+    opacity: 0;
+    transform: scale(0.8) translateY(60px);
+    filter: blur(20px);
+  }
+  50% {
+    opacity: 0.5;
+    filter: blur(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes cinematic-scale-pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+}
+
+@keyframes neon-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes glow-breath {
+  0%, 100% {
+    filter: brightness(1) contrast(1);
+  }
+  50% {
+    filter: brightness(1.15) contrast(1.1);
+  }
+}
+
+/* Premium Typography Classes */
+.cinematic-title {
+  animation: cinematic-entrance 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  will-change: transform, opacity, filter;
+}
+
+.cinematic-subtitle {
+  animation: cinematic-entrance 1.4s cubic-bezier(0.22, 1, 0.36, 1) 0.2s forwards;
+  opacity: 0;
+  will-change: transform, opacity, filter;
+}
+
+.cinematic-description {
+  animation: cinematic-entrance 1.6s cubic-bezier(0.22, 1, 0.36, 1) 0.4s forwards;
+  opacity: 0;
+  will-change: transform, opacity, filter;
+}
+
+.cinematic-button {
+  animation: cinematic-entrance 1.8s cubic-bezier(0.22, 1, 0.36, 1) 0.6s forwards;
+  opacity: 0;
+  will-change: transform, opacity, filter;
+  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.cinematic-button:hover {
+  transform: scale(1.08) translateY(-8px) !important;
+  filter: brightness(1.4) contrast(1.2) !important;
+}
+
+.glow-pulse {
+  animation: glow-breath 3s ease-in-out infinite;
+}
+
+.neon-text {
+  animation: neon-pulse 2s ease-in-out infinite;
 }
