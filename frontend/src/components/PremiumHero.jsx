@@ -2,7 +2,6 @@ import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import EsoLogo from './EsoLogo';
-import '../styles/daggersquare.css';
 
 /**
  * Premium App Tour - UI Guide with Sequential Storytelling
@@ -449,7 +448,15 @@ function PremiumHero() {
   const currentStepData = tourSteps[currentStep];
 
   return (
-    <div ref={containerRef} className="relative h-screen overflow-hidden" style={{ background: '#000000', fontFamily: "'Dagger Square', serif" }}>
+    <div 
+      ref={containerRef} 
+      className="relative h-screen overflow-hidden dagger-square-font" 
+      style={{ 
+        background: '#000000',
+        fontFamily: "'Dagger Square', monospace",
+        fontWeight: 400,
+      }}
+    >
       {/* Background Canvas - Only shown after intro */}
       {currentStep > 0 && (
         <>
@@ -503,7 +510,8 @@ function PremiumHero() {
                     textShadow: currentStepData.color 
                       ? `0 0 60px ${currentStepData.color}30, 0 4px 40px rgba(0, 0, 0, 0.95)`
                       : '0 4px 40px rgba(0, 0, 0, 0.95)',
-                    fontFamily: "'Dagger Square', serif",
+                    fontFamily: "'Dagger Square', monospace",
+                    fontWeight: 700,
                     background: currentStepData.color 
                       ? `linear-gradient(135deg, #ffffff 0%, ${currentStepData.color}90 100%)`
                       : 'linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%)',
@@ -521,7 +529,8 @@ function PremiumHero() {
                   style={{
                     color: currentStepData.color || 'rgba(255, 255, 255, 0.9)',
                     textShadow: `0 2px 20px rgba(0, 0, 0, 0.9), 0 0 30px ${currentStepData.color || '#ffffff'}40`,
-                    fontFamily: "'Dagger Square', serif",
+                    fontFamily: "'Dagger Square', monospace",
+                    fontWeight: 400,
                   }}
                 >
                   {currentStepData.subtitle}
@@ -534,7 +543,8 @@ function PremiumHero() {
                     style={{
                       color: 'rgba(255, 255, 255, 0.8)',
                       textShadow: '0 2px 15px rgba(0, 0, 0, 0.85)',
-                      fontFamily: "'Dagger Square', serif",
+                      fontFamily: "'Dagger Square', monospace",
+                      fontWeight: 300,
                     }}
                   >
                     {currentStepData.description}
@@ -561,7 +571,8 @@ function PremiumHero() {
                       boxShadow: currentStepData.color
                         ? `0 8px 30px rgba(0, 0, 0, 0.7), 0 0 60px rgba(${currentStepData.colorRgb}, 0.25)`
                         : '0 8px 30px rgba(0, 0, 0, 0.7)',
-                      fontFamily: "'Dagger Square', serif",
+                      fontFamily: "'Dagger Square', monospace",
+                      fontWeight: 700,
                     }}
                     onMouseEnter={(e) => {
                       if (currentStepData.color) {
@@ -603,7 +614,8 @@ function PremiumHero() {
             className="text-center text-xs tracking-widest uppercase"
             style={{ 
               color: 'rgba(255, 255, 255, 0.35)',
-              fontFamily: "'Dagger Square', serif",
+              fontFamily: "'Dagger Square', monospace",
+              fontWeight: 400,
             }}
           >
             {currentStep === 0 ? 'scroll or use arrow keys to begin' : currentStep === tourSteps.length - 1 ? 'scroll down to continue' : 'navigate with ← → or scroll'}
@@ -622,7 +634,8 @@ function PremiumHero() {
             className="text-sm tracking-widest lowercase" 
             style={{ 
               color: 'rgba(255, 255, 255, 0.6)',
-              fontFamily: "'Dagger Square', serif",
+              fontFamily: "'Dagger Square', monospace",
+              fontWeight: 400,
             }}
           >
             loading...

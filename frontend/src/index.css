@@ -1,6 +1,9 @@
 /* Google Fonts - Nostalgic Artistic Monospace */
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&family=VT323&display=swap');
 
+/* Dagger Square Font - Local */
+@import './styles/daggersquare.css';
+
 @import './styles/tokens.css';
 @import './styles/utilities.css';
 

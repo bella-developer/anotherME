@@ -7,15 +7,23 @@
 @font-face {
   font-family: 'Dagger Square';
   src: url('/fonts/DAGGERSQUARE.otf') format('opentype');
-  font-weight: normal;
+  font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
   font-family: 'Dagger Square';
-  src: url('/fonts/DAGGERSQUARE OBLIQUE.otf') format('opentype');
-  font-weight: normal;
+  src: url('/fonts/DAGGERSQUARE-OBLIQUE.otf') format('opentype');
+  font-weight: 400;
   font-style: oblique;
   font-display: swap;
+}
+
+/* Ensure font loads with higher specificity */
+.dagger-square-font,
+.dagger-square-font * {
+  font-family: 'Dagger Square', monospace !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
