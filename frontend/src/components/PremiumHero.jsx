@@ -23,9 +23,9 @@ function PremiumHero() {
     // Step 0: Intro
     {
       type: 'intro',
-      title: 'Welcome',
-      subtitle: 'To your sanctuary',
-      description: 'A space for the quiet ones. The deep thinkers. The misunderstood.',
+      title: 'Welcome to your safe space',
+      subtitle: 'Unique peoples home • Introverts • Deep Thinkers • Philosophers',
+      description: '',
       image: null,
     },
     // Steps 1-8: Dark Room (8 frames)
@@ -372,11 +372,17 @@ function PremiumHero() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [currentStep, isTransitioning]);
 
-  // Scroll/wheel navigation
+  // Scroll/wheel navigation with scroll-through at end
   useEffect(() => {
     let scrollTimeout;
     
     const handleWheel = (e) => {
+      // If at last step and scrolling down, allow normal scroll
+      if (currentStep === tourSteps.length - 1 && e.deltaY > 0) {
+        return; // Let normal scroll happen
+      }
+      
+      // Otherwise handle tour navigation
       e.preventDefault();
       if (isTransitioning) return;
 
@@ -440,12 +446,9 @@ function PremiumHero() {
   }, [currentFrame, imagesLoaded, currentStep]);
 
   const currentStepData = tourSteps[currentStep];
-  const progress = ((currentStep + 1) / tourSteps.length) * 100;
-
-
 
   return (
-    <div ref={containerRef} className="relative h-screen overflow-hidden" style={{ background: '#000000' }}>
+    <div ref={containerRef} className="relative h-screen overflow-hidden" style={{ background: '#000000', fontFamily: "'Dagger Square', 'Playfair Display', serif" }}>
       {/* Background Canvas - Only shown after intro */}
       {currentStep > 0 && (
         <>
@@ -491,19 +494,6 @@ function PremiumHero() {
                 exit={{ opacity: 0, y: -30 }}
                 transition={{ duration: 0.5, ease: 'easeInOut' }}
               >
-                {/* Room Label (for room steps) */}
-                {currentStepData.room && (
-                  <div 
-                    className="text-xs sm:text-sm tracking-[0.4em] uppercase font-bold mb-4"
-                    style={{
-                      color: currentStepData.color,
-                      textShadow: `0 0 30px ${currentStepData.color}70, 0 2px 15px rgba(0, 0, 0, 0.9)`,
-                    }}
-                  >
-                    {currentStepData.room}
-                  </div>
-                )}
-
                 {/* Main Title */}
                 <h2
                   className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extralight mb-5 tracking-tight leading-none"
@@ -512,7 +502,13 @@ function PremiumHero() {
                     textShadow: currentStepData.color 
                       ? `0 0 60px ${currentStepData.color}30, 0 4px 40px rgba(0, 0, 0, 0.95)`
                       : '0 4px 40px rgba(0, 0, 0, 0.95)',
-                    fontFamily: "'Playfair Display', serif",
+                    fontFamily: "'Dagger Square', 'Playfair Display', serif",
+                    background: currentStepData.color 
+                      ? `linear-gradient(135deg, #ffffff 0%, ${currentStepData.color}90 100%)`
+                      : 'linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    backgroundClip: 'text',
                   }}
                 >
                   {currentStepData.title}
@@ -522,55 +518,73 @@ function PremiumHero() {
                 <p
                   className="text-xl sm:text-2xl md:text-3xl font-light mb-4"
                   style={{
-                    color: 'rgba(255, 255, 255, 0.9)',
-                    textShadow: '0 2px 20px rgba(0, 0, 0, 0.9)',
+                    color: currentStepData.color || 'rgba(255, 255, 255, 0.9)',
+                    textShadow: `0 2px 20px rgba(0, 0, 0, 0.9), 0 0 30px ${currentStepData.color || '#ffffff'}40`,
+                    fontFamily: "'Dagger Square', 'Playfair Display', serif",
                   }}
                 >
                   {currentStepData.subtitle}
                 </p>
 
-                {/* Description */}
-                <p
-                  className="text-base sm:text-lg md:text-xl font-light mb-10 leading-relaxed"
-                  style={{
-                    color: 'rgba(255, 255, 255, 0.8)',
-                    textShadow: '0 2px 15px rgba(0, 0, 0, 0.85)',
-                  }}
-                >
-                  {currentStepData.description}
-                </p>
+                {/* Description - Only show if not empty */}
+                {currentStepData.description && (
+                  <p
+                    className="text-base sm:text-lg md:text-xl font-light mb-10 leading-relaxed"
+                    style={{
+                      color: 'rgba(255, 255, 255, 0.8)',
+                      textShadow: '0 2px 15px rgba(0, 0, 0, 0.85)',
+                      fontFamily: "'Dagger Square', 'Playfair Display', serif",
+                    }}
+                  >
+                    {currentStepData.description}
+                  </p>
+                )}
 
-                {/* CTA Button (for final step of each room) */}
-                {currentStepData.cta && (
+                {/* Step In Button - Always visible for room steps */}
+                {currentStep > 0 && (
                   <motion.button
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.4, delay: 0.3 }}
-                    onClick={() => navigate(currentStepData.ctaPath)}
-                    className="px-12 py-5 text-sm uppercase tracking-[0.3em] font-bold transition-all duration-300"
+                    onClick={() => navigate('/login')}
+                    className="px-12 py-5 text-sm uppercase tracking-[0.3em] font-bold transition-all duration-300 mt-4"
                     style={{
                       backgroundColor: 'rgba(255, 255, 255, 0.1)',
                       color: '#ffffff',
-                      border: `2px solid rgba(${currentStepData.colorRgb}, 0.6)`,
+                      border: currentStepData.color 
+                        ? `2px solid rgba(${currentStepData.colorRgb}, 0.6)`
+                        : '2px solid rgba(255, 255, 255, 0.3)',
                       borderRadius: '10px',
                       backdropFilter: 'blur(20px)',
                       textShadow: '0 2px 15px rgba(0, 0, 0, 0.95)',
-                      boxShadow: `0 8px 30px rgba(0, 0, 0, 0.7), 0 0 60px rgba(${currentStepData.colorRgb}, 0.25)`,
+                      boxShadow: currentStepData.color
+                        ? `0 8px 30px rgba(0, 0, 0, 0.7), 0 0 60px rgba(${currentStepData.colorRgb}, 0.25)`
+                        : '0 8px 30px rgba(0, 0, 0, 0.7)',
+                      fontFamily: "'Dagger Square', 'Playfair Display', serif",
                     }}
                     onMouseEnter={(e) => {
-                      e.currentTarget.style.backgroundColor = `rgba(${currentStepData.colorRgb}, 0.2)`;
-                      e.currentTarget.style.borderColor = `rgba(${currentStepData.colorRgb}, 0.9)`;
+                      if (currentStepData.color) {
+                        e.currentTarget.style.backgroundColor = `rgba(${currentStepData.colorRgb}, 0.2)`;
+                        e.currentTarget.style.borderColor = `rgba(${currentStepData.colorRgb}, 0.9)`;
+                        e.currentTarget.style.boxShadow = `0 12px 40px rgba(0, 0, 0, 0.8), 0 0 80px rgba(${currentStepData.colorRgb}, 0.4)`;
+                      } else {
+                        e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.2)';
+                        e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.6)';
+                      }
                       e.currentTarget.style.transform = 'translateY(-4px) scale(1.05)';
-                      e.currentTarget.style.boxShadow = `0 12px 40px rgba(0, 0, 0, 0.8), 0 0 80px rgba(${currentStepData.colorRgb}, 0.4)`;
                     }}
                     onMouseLeave={(e) => {
                       e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
-                      e.currentTarget.style.borderColor = `rgba(${currentStepData.colorRgb}, 0.6)`;
+                      e.currentTarget.style.borderColor = currentStepData.color 
+                        ? `rgba(${currentStepData.colorRgb}, 0.6)`
+                        : 'rgba(255, 255, 255, 0.3)';
                       e.currentTarget.style.transform = 'translateY(0) scale(1)';
-                      e.currentTarget.style.boxShadow = `0 8px 30px rgba(0, 0, 0, 0.7), 0 0 60px rgba(${currentStepData.colorRgb}, 0.25)`;
+                      e.currentTarget.style.boxShadow = currentStepData.color
+                        ? `0 8px 30px rgba(0, 0, 0, 0.7), 0 0 60px rgba(${currentStepData.colorRgb}, 0.25)`
+                        : '0 8px 30px rgba(0, 0, 0, 0.7)';
                     }}
                   >
-                    {currentStepData.cta}
+                    Step In
                   </motion.button>
                 )}
               </motion.div>
@@ -578,51 +592,40 @@ function PremiumHero() {
           </div>
         </div>
 
-        {/* Bottom: Progress & Navigation */}
+        {/* Bottom: Navigation Hint Only */}
         <div className="flex-shrink-0 pb-10 sm:pb-14 px-4">
-          {/* Progress Bar */}
-          <div className="max-w-md mx-auto mb-6">
-            <div className="h-1 bg-white/10 rounded-full overflow-hidden">
-              <motion.div
-                className="h-full bg-white/40"
-                initial={{ width: 0 }}
-                animate={{ width: `${progress}%` }}
-                transition={{ duration: 0.5 }}
-              />
-            </div>
-            <div className="mt-3 text-center text-xs tracking-widest" style={{ color: 'rgba(255, 255, 255, 0.4)' }}>
-              {currentStep + 1} / {tourSteps.length}
-            </div>
-          </div>
-
           {/* Navigation Hint */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 1 }}
             className="text-center text-xs tracking-widest uppercase"
-            style={{ color: 'rgba(255, 255, 255, 0.35)' }}
+            style={{ 
+              color: 'rgba(255, 255, 255, 0.35)',
+              fontFamily: "'Dagger Square', 'Playfair Display', serif",
+            }}
           >
-            {currentStep === 0 ? 'Scroll or use arrow keys to begin' : 'Navigate with ← → or scroll'}
+            {currentStep === 0 ? 'Scroll or use arrow keys to begin' : currentStep === tourSteps.length - 1 ? 'Scroll down to continue' : 'Navigate with ← → or scroll'}
           </motion.div>
         </div>
       </div>
 
       {/* Loading Overlay */}
       {!imagesLoaded && (
-        <div className="absolute inset-0 flex items-center justify-center bg-black z-50">
-          <div className="text-center">
-            <div
-              className="w-16 h-16 border-4 border-t-transparent rounded-full animate-spin mb-4 mx-auto"
-              style={{
-                borderColor: '#2EE6FF',
-                borderTopColor: 'transparent',
-              }}
-            />
-            <p className="text-sm tracking-wider" style={{ color: 'rgba(255, 255, 255, 0.7)' }}>
-              Loading your sanctuary...
-            </p>
-          </div>
+        <div className="absolute inset-0 flex flex-col items-center justify-center bg-black z-50">
+          <EsoLogo 
+            className="h-16 sm:h-20 w-auto mb-6" 
+            style={{ filter: 'drop-shadow(0 0 30px rgba(255, 255, 255, 0.3))' }} 
+          />
+          <p 
+            className="text-sm tracking-widest uppercase" 
+            style={{ 
+              color: 'rgba(255, 255, 255, 0.6)',
+              fontFamily: "'Dagger Square', 'Playfair Display', serif",
+            }}
+          >
+            Loading...
+          </p>
         </div>
       )}
     </div>
