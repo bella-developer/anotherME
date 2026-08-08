@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import EsoLogo from './EsoLogo';
+import '../styles/daggersquare.css';
 
 /**
  * Premium App Tour - UI Guide with Sequential Storytelling
@@ -23,8 +24,8 @@ function PremiumHero() {
     // Step 0: Intro
     {
       type: 'intro',
-      title: 'Welcome to your safe space',
-      subtitle: 'Unique peoples home • Introverts • Deep Thinkers • Philosophers',
+      title: 'WELCOME TO YOUR SAFE SPACE',
+      subtitle: 'unique peoples home • introverts • deep thinkers • philosophers',
       description: '',
       image: null,
     },
@@ -34,9 +35,9 @@ function PremiumHero() {
       room: 'The Dark Room',
       color: '#2EE6FF',
       colorRgb: '46, 230, 255',
-      title: 'Confession',
-      subtitle: 'The weight you carry',
-      description: 'Alone at 3 AM, thoughts racing',
+      title: 'CONFESSION',
+      subtitle: 'the weight you carry',
+      description: 'alone at 3 am, thoughts racing',
       frame: 0,
     },
     {
@@ -44,9 +45,9 @@ function PremiumHero() {
       room: 'The Dark Room',
       color: '#2EE6FF',
       colorRgb: '46, 230, 255',
-      title: 'Understanding',
-      subtitle: 'Others feel it too',
-      description: 'You\'re not the only one',
+      title: 'UNDERSTANDING',
+      subtitle: 'others feel it too',
+      description: "you're not the only one",
       frame: 1,
     },
     {
@@ -54,9 +55,9 @@ function PremiumHero() {
       room: 'The Dark Room',
       color: '#2EE6FF',
       colorRgb: '46, 230, 255',
-      title: 'Release',
-      subtitle: 'Share your truth',
-      description: 'Without judgment',
+      title: 'RELEASE',
+      subtitle: 'share your truth',
+      description: 'without judgment',
       frame: 2,
     },
     {
@@ -64,9 +65,9 @@ function PremiumHero() {
       room: 'The Dark Room',
       color: '#2EE6FF',
       colorRgb: '46, 230, 255',
-      title: 'Connection',
-      subtitle: 'In the shadows',
-      description: 'Find those who understand',
+      title: 'CONNECTION',
+      subtitle: 'in the shadows',
+      description: 'find those who understand',
       frame: 3,
     },
     {
@@ -74,9 +75,9 @@ function PremiumHero() {
       room: 'The Dark Room',
       color: '#2EE6FF',
       colorRgb: '46, 230, 255',
-      title: 'Your story',
-      subtitle: 'Matters here',
-      description: 'Every regret, every mistake',
+      title: 'YOUR STORY',
+      subtitle: 'matters here',
+      description: 'every regret, every mistake',
       frame: 4,
     },
     {
@@ -84,9 +85,9 @@ function PremiumHero() {
       room: 'The Dark Room',
       color: '#2EE6FF',
       colorRgb: '46, 230, 255',
-      title: 'Healing',
-      subtitle: 'Through sharing',
-      description: 'The burden becomes lighter',
+      title: 'HEALING',
+      subtitle: 'through sharing',
+      description: 'the burden becomes lighter',
       frame: 5,
     },
     {
@@ -94,9 +95,9 @@ function PremiumHero() {
       room: 'The Dark Room',
       color: '#2EE6FF',
       colorRgb: '46, 230, 255',
-      title: 'Acceptance',
-      subtitle: 'Of your past',
-      description: 'This is your safe space',
+      title: 'ACCEPTANCE',
+      subtitle: 'of your past',
+      description: 'this is your safe space',
       frame: 6,
     },
     {
@@ -104,9 +105,9 @@ function PremiumHero() {
       room: 'The Dark Room',
       color: '#2EE6FF',
       colorRgb: '46, 230, 255',
-      title: 'Release what weighs on you',
-      subtitle: 'The Dark Room awaits',
-      description: 'Where shadows find light',
+      title: 'RELEASE WHAT WEIGHS ON YOU',
+      subtitle: 'the dark room awaits',
+      description: 'where shadows find light',
       frame: 7,
       cta: 'Enter the Dark Room',
       ctaPath: '/rooms/dark',
@@ -117,9 +118,9 @@ function PremiumHero() {
       room: 'The Fantasy Room',
       color: '#FF9D1C',
       colorRgb: '255, 157, 28',
-      title: 'Imagination',
-      subtitle: 'Your creative spark',
-      description: 'The idea that keeps you awake',
+      title: 'IMAGINATION',
+      subtitle: 'your creative spark',
+      description: 'the idea that keeps you awake',
       frame: 0,
     },
     {
@@ -127,9 +128,9 @@ function PremiumHero() {
       room: 'The Fantasy Room',
       color: '#FF9D1C',
       colorRgb: '255, 157, 28',
-      title: 'Daydreams',
-      subtitle: 'That fill your mind',
-      description: 'The worlds you create',
+      title: 'DAYDREAMS',
+      subtitle: 'that fill your mind',
+      description: 'the worlds you create',
       frame: 1,
     },
     {
@@ -137,9 +138,9 @@ function PremiumHero() {
       room: 'The Fantasy Room',
       color: '#FF9D1C',
       colorRgb: '255, 157, 28',
-      title: 'Expression',
-      subtitle: 'Through art and story',
-      description: 'Your unique voice',
+      title: 'EXPRESSION',
+      subtitle: 'through art and story',
+      description: 'your unique voice',
       frame: 2,
     },
     {
@@ -147,9 +148,9 @@ function PremiumHero() {
       room: 'The Fantasy Room',
       color: '#FF9D1C',
       colorRgb: '255, 157, 28',
-      title: 'Wonder',
-      subtitle: 'In the impossible',
-      description: 'Where creativity flows',
+      title: 'WONDER',
+      subtitle: 'in the impossible',
+      description: 'where creativity flows',
       frame: 3,
     },
     {
@@ -157,9 +158,9 @@ function PremiumHero() {
       room: 'The Fantasy Room',
       color: '#FF9D1C',
       colorRgb: '255, 157, 28',
-      title: 'Joy',
-      subtitle: 'In small things',
-      description: 'The beauty you notice',
+      title: 'JOY',
+      subtitle: 'in small things',
+      description: 'the beauty you notice',
       frame: 4,
     },
     {
@@ -167,9 +168,9 @@ function PremiumHero() {
       room: 'The Fantasy Room',
       color: '#FF9D1C',
       colorRgb: '255, 157, 28',
-      title: 'Inspiration',
-      subtitle: 'That strikes suddenly',
-      description: 'Share your vision',
+      title: 'INSPIRATION',
+      subtitle: 'that strikes suddenly',
+      description: 'share your vision',
       frame: 5,
     },
     {
@@ -177,9 +178,9 @@ function PremiumHero() {
       room: 'The Fantasy Room',
       color: '#FF9D1C',
       colorRgb: '255, 157, 28',
-      title: 'Creation',
-      subtitle: 'From imagination',
-      description: 'Your ideas take form',
+      title: 'CREATION',
+      subtitle: 'from imagination',
+      description: 'your ideas take form',
       frame: 6,
     },
     {
@@ -187,9 +188,9 @@ function PremiumHero() {
       room: 'The Fantasy Room',
       color: '#FF9D1C',
       colorRgb: '255, 157, 28',
-      title: 'Dream without limits',
-      subtitle: 'The Fantasy Room awaits',
-      description: 'Where imagination becomes reality',
+      title: 'DREAM WITHOUT LIMITS',
+      subtitle: 'the fantasy room awaits',
+      description: 'where imagination becomes reality',
       frame: 7,
       cta: 'Enter the Fantasy Room',
       ctaPath: '/rooms/fantasy',
@@ -200,9 +201,9 @@ function PremiumHero() {
       room: 'The Philo Room',
       color: '#B56DFF',
       colorRgb: '181, 109, 255',
-      title: 'Questions',
-      subtitle: 'That haunt you',
-      description: 'Why are we here?',
+      title: 'QUESTIONS',
+      subtitle: 'that haunt you',
+      description: 'why are we here?',
       frame: 0,
     },
     {
@@ -210,9 +211,9 @@ function PremiumHero() {
       room: 'The Philo Room',
       color: '#B56DFF',
       colorRgb: '181, 109, 255',
-      title: 'Wonder',
-      subtitle: 'At the cosmos',
-      description: 'The universe within',
+      title: 'WONDER',
+      subtitle: 'at the cosmos',
+      description: 'the universe within',
       frame: 1,
     },
     {
@@ -220,9 +221,9 @@ function PremiumHero() {
       room: 'The Philo Room',
       color: '#B56DFF',
       colorRgb: '181, 109, 255',
-      title: 'Seeking',
-      subtitle: 'Deeper meaning',
-      description: 'Beyond the surface',
+      title: 'SEEKING',
+      subtitle: 'deeper meaning',
+      description: 'beyond the surface',
       frame: 2,
     },
     {
@@ -230,9 +231,9 @@ function PremiumHero() {
       room: 'The Philo Room',
       color: '#B56DFF',
       colorRgb: '181, 109, 255',
-      title: 'Conspiracy',
-      subtitle: 'What if they\'re right?',
-      description: 'Question everything',
+      title: 'CONSPIRACY',
+      subtitle: "what if they're right?",
+      description: 'question everything',
       frame: 3,
     },
     {
@@ -240,9 +241,9 @@ function PremiumHero() {
       room: 'The Philo Room',
       color: '#B56DFF',
       colorRgb: '181, 109, 255',
-      title: 'Spirituality',
-      subtitle: 'Your own path',
-      description: 'Beyond religion',
+      title: 'SPIRITUALITY',
+      subtitle: 'your own path',
+      description: 'beyond religion',
       frame: 4,
     },
     {
@@ -250,9 +251,9 @@ function PremiumHero() {
       room: 'The Philo Room',
       color: '#B56DFF',
       colorRgb: '181, 109, 255',
-      title: 'Existence',
-      subtitle: 'The big questions',
-      description: 'For deep thinkers',
+      title: 'EXISTENCE',
+      subtitle: 'the big questions',
+      description: 'for deep thinkers',
       frame: 5,
     },
     {
@@ -260,9 +261,9 @@ function PremiumHero() {
       room: 'The Philo Room',
       color: '#B56DFF',
       colorRgb: '181, 109, 255',
-      title: 'Truth',
-      subtitle: 'Your perspective',
-      description: 'Unique and valid',
+      title: 'TRUTH',
+      subtitle: 'your perspective',
+      description: 'unique and valid',
       frame: 6,
     },
     {
@@ -270,9 +271,9 @@ function PremiumHero() {
       room: 'The Philo Room',
       color: '#B56DFF',
       colorRgb: '181, 109, 255',
-      title: 'Question everything',
-      subtitle: 'The Philo Room awaits',
-      description: 'Where minds expand',
+      title: 'QUESTION EVERYTHING',
+      subtitle: 'the philo room awaits',
+      description: 'where minds expand',
       frame: 7,
       cta: 'Enter the Philo Room',
       ctaPath: '/rooms/philo',
@@ -448,7 +449,7 @@ function PremiumHero() {
   const currentStepData = tourSteps[currentStep];
 
   return (
-    <div ref={containerRef} className="relative h-screen overflow-hidden" style={{ background: '#000000', fontFamily: "'Dagger Square', 'Playfair Display', serif" }}>
+    <div ref={containerRef} className="relative h-screen overflow-hidden" style={{ background: '#000000', fontFamily: "'Dagger Square', serif" }}>
       {/* Background Canvas - Only shown after intro */}
       {currentStep > 0 && (
         <>
@@ -496,13 +497,13 @@ function PremiumHero() {
               >
                 {/* Main Title */}
                 <h2
-                  className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extralight mb-5 tracking-tight leading-none"
+                  className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-5 tracking-tight leading-none"
                   style={{
                     color: '#ffffff',
                     textShadow: currentStepData.color 
                       ? `0 0 60px ${currentStepData.color}30, 0 4px 40px rgba(0, 0, 0, 0.95)`
                       : '0 4px 40px rgba(0, 0, 0, 0.95)',
-                    fontFamily: "'Dagger Square', 'Playfair Display', serif",
+                    fontFamily: "'Dagger Square', serif",
                     background: currentStepData.color 
                       ? `linear-gradient(135deg, #ffffff 0%, ${currentStepData.color}90 100%)`
                       : 'linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%)',
@@ -516,11 +517,11 @@ function PremiumHero() {
 
                 {/* Subtitle */}
                 <p
-                  className="text-xl sm:text-2xl md:text-3xl font-light mb-4"
+                  className="text-xl sm:text-2xl md:text-3xl font-normal mb-4"
                   style={{
                     color: currentStepData.color || 'rgba(255, 255, 255, 0.9)',
                     textShadow: `0 2px 20px rgba(0, 0, 0, 0.9), 0 0 30px ${currentStepData.color || '#ffffff'}40`,
-                    fontFamily: "'Dagger Square', 'Playfair Display', serif",
+                    fontFamily: "'Dagger Square', serif",
                   }}
                 >
                   {currentStepData.subtitle}
@@ -533,7 +534,7 @@ function PremiumHero() {
                     style={{
                       color: 'rgba(255, 255, 255, 0.8)',
                       textShadow: '0 2px 15px rgba(0, 0, 0, 0.85)',
-                      fontFamily: "'Dagger Square', 'Playfair Display', serif",
+                      fontFamily: "'Dagger Square', serif",
                     }}
                   >
                     {currentStepData.description}
@@ -560,7 +561,7 @@ function PremiumHero() {
                       boxShadow: currentStepData.color
                         ? `0 8px 30px rgba(0, 0, 0, 0.7), 0 0 60px rgba(${currentStepData.colorRgb}, 0.25)`
                         : '0 8px 30px rgba(0, 0, 0, 0.7)',
-                      fontFamily: "'Dagger Square', 'Playfair Display', serif",
+                      fontFamily: "'Dagger Square', serif",
                     }}
                     onMouseEnter={(e) => {
                       if (currentStepData.color) {
@@ -584,7 +585,7 @@ function PremiumHero() {
                         : '0 8px 30px rgba(0, 0, 0, 0.7)';
                     }}
                   >
-                    Step In
+                    STEP IN
                   </motion.button>
                 )}
               </motion.div>
@@ -602,10 +603,10 @@ function PremiumHero() {
             className="text-center text-xs tracking-widest uppercase"
             style={{ 
               color: 'rgba(255, 255, 255, 0.35)',
-              fontFamily: "'Dagger Square', 'Playfair Display', serif",
+              fontFamily: "'Dagger Square', serif",
             }}
           >
-            {currentStep === 0 ? 'Scroll or use arrow keys to begin' : currentStep === tourSteps.length - 1 ? 'Scroll down to continue' : 'Navigate with ← → or scroll'}
+            {currentStep === 0 ? 'scroll or use arrow keys to begin' : currentStep === tourSteps.length - 1 ? 'scroll down to continue' : 'navigate with ← → or scroll'}
           </motion.div>
         </div>
       </div>
@@ -618,13 +619,13 @@ function PremiumHero() {
             style={{ filter: 'drop-shadow(0 0 30px rgba(255, 255, 255, 0.3))' }} 
           />
           <p 
-            className="text-sm tracking-widest uppercase" 
+            className="text-sm tracking-widest lowercase" 
             style={{ 
               color: 'rgba(255, 255, 255, 0.6)',
-              fontFamily: "'Dagger Square', 'Playfair Display', serif",
+              fontFamily: "'Dagger Square', serif",
             }}
           >
-            Loading...
+            loading...
           </p>
         </div>
       )}

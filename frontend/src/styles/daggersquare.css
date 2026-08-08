@@ -1,0 +1,21 @@
+/**
+ * Dagger Square Font
+ * Free for Commercial Use
+ * Source: https://www.dafont.com/daggersquare.font
+ */
+
+@font-face {
+  font-family: 'Dagger Square';
+  src: url('/fonts/DAGGERSQUARE.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Dagger Square';
+  src: url('/fonts/DAGGERSQUARE OBLIQUE.otf') format('opentype');
+  font-weight: normal;
+  font-style: oblique;
+  font-display: swap;
+}
