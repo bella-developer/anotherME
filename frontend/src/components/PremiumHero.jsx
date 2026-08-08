@@ -504,12 +504,14 @@ function PremiumHero() {
               >
                 {/* Main Title */}
                 <h2
-                  className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-5 tracking-tight leading-none"
+                  className={`text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-5 tracking-tight leading-none ${
+                    currentStepData.type === 'dark' ? 'speed-blur-dark' :
+                    currentStepData.type === 'fantasy' ? 'speed-blur-fantasy' :
+                    currentStepData.type === 'philo' ? 'speed-blur-philo' :
+                    'speed-blur-text'
+                  }`}
                   style={{
                     color: '#ffffff',
-                    textShadow: currentStepData.color 
-                      ? `0 0 60px ${currentStepData.color}30, 0 4px 40px rgba(0, 0, 0, 0.95)`
-                      : '0 4px 40px rgba(0, 0, 0, 0.95)',
                     fontFamily: "'Dagger Square', monospace",
                     fontWeight: 700,
                     background: currentStepData.color 
@@ -518,6 +520,7 @@ function PremiumHero() {
                     WebkitBackgroundClip: 'text',
                     WebkitTextFillColor: 'transparent',
                     backgroundClip: 'text',
+                    filter: 'brightness(1.2) contrast(1.15)',
                   }}
                 >
                   {currentStepData.title}
@@ -525,12 +528,12 @@ function PremiumHero() {
 
                 {/* Subtitle */}
                 <p
-                  className="text-xl sm:text-2xl md:text-3xl font-normal mb-4"
+                  className="text-xl sm:text-2xl md:text-3xl font-normal mb-4 speed-blur-subtle"
                   style={{
                     color: currentStepData.color || 'rgba(255, 255, 255, 0.9)',
-                    textShadow: `0 2px 20px rgba(0, 0, 0, 0.9), 0 0 30px ${currentStepData.color || '#ffffff'}40`,
                     fontFamily: "'Dagger Square', monospace",
                     fontWeight: 400,
+                    filter: 'brightness(1.1) contrast(1.1)',
                   }}
                 >
                   {currentStepData.subtitle}
@@ -542,9 +545,10 @@ function PremiumHero() {
                     className="text-base sm:text-lg md:text-xl font-light mb-10 leading-relaxed"
                     style={{
                       color: 'rgba(255, 255, 255, 0.8)',
-                      textShadow: '0 2px 15px rgba(0, 0, 0, 0.85)',
                       fontFamily: "'Dagger Square', monospace",
                       fontWeight: 300,
+                      textShadow: '0 2px 15px rgba(0, 0, 0, 0.85), -4px 0 8px rgba(255, 255, 255, 0.15)',
+                      transform: 'skewX(-5deg)',
                     }}
                   >
                     {currentStepData.description}
@@ -567,12 +571,16 @@ function PremiumHero() {
                         : '2px solid rgba(255, 255, 255, 0.3)',
                       borderRadius: '10px',
                       backdropFilter: 'blur(20px)',
-                      textShadow: '0 2px 15px rgba(0, 0, 0, 0.95)',
                       boxShadow: currentStepData.color
                         ? `0 8px 30px rgba(0, 0, 0, 0.7), 0 0 60px rgba(${currentStepData.colorRgb}, 0.25)`
                         : '0 8px 30px rgba(0, 0, 0, 0.7)',
                       fontFamily: "'Dagger Square', monospace",
                       fontWeight: 700,
+                      textShadow: currentStepData.color
+                        ? `-2px 0 4px rgba(${currentStepData.colorRgb}, 0.6), -4px 0 6px rgba(${currentStepData.colorRgb}, 0.4), -6px 0 8px rgba(${currentStepData.colorRgb}, 0.3), 0 0 10px rgba(${currentStepData.colorRgb}, 0.5)`
+                        : '-2px 0 4px rgba(255, 255, 255, 0.6), -4px 0 6px rgba(255, 255, 255, 0.4), -6px 0 8px rgba(255, 255, 255, 0.3)',
+                      transform: 'skewX(-8deg)',
+                      filter: 'brightness(1.1) contrast(1.1)',
                     }}
                     onMouseEnter={(e) => {
                       if (currentStepData.color) {
@@ -583,17 +591,19 @@ function PremiumHero() {
                         e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.2)';
                         e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.6)';
                       }
-                      e.currentTarget.style.transform = 'translateY(-4px) scale(1.05)';
+                      e.currentTarget.style.transform = 'translateY(-4px) scale(1.05) skewX(-8deg)';
+                      e.currentTarget.style.filter = 'brightness(1.3) contrast(1.2)';
                     }}
                     onMouseLeave={(e) => {
                       e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
                       e.currentTarget.style.borderColor = currentStepData.color 
                         ? `rgba(${currentStepData.colorRgb}, 0.6)`
                         : 'rgba(255, 255, 255, 0.3)';
-                      e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                      e.currentTarget.style.transform = 'translateY(0) scale(1) skewX(-8deg)';
                       e.currentTarget.style.boxShadow = currentStepData.color
                         ? `0 8px 30px rgba(0, 0, 0, 0.7), 0 0 60px rgba(${currentStepData.colorRgb}, 0.25)`
                         : '0 8px 30px rgba(0, 0, 0, 0.7)';
+                      e.currentTarget.style.filter = 'brightness(1.1) contrast(1.1)';
                     }}
                   >
                     STEP IN

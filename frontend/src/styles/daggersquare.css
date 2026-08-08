@@ -27,3 +27,138 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+/* High-Speed Motion Blur / Wind Streak Effect */
+.speed-blur-text {
+  /* Forward speed angle */
+  transform: skewX(-12deg);
+  
+  /* Horizontal motion trails with layered shadows */
+  text-shadow:
+    /* Close trails - high opacity */
+    -2px 0 4px rgba(255, 255, 255, 0.8),
+    -4px 0 6px rgba(255, 255, 255, 0.7),
+    -6px 0 8px rgba(255, 255, 255, 0.6),
+    -8px 0 10px rgba(255, 255, 255, 0.5),
+    /* Medium trails - fading */
+    -12px 0 12px rgba(255, 255, 255, 0.4),
+    -16px 0 14px rgba(255, 255, 255, 0.35),
+    -20px 0 16px rgba(255, 255, 255, 0.3),
+    -24px 0 18px rgba(255, 255, 255, 0.25),
+    /* Far trails - very faint */
+    -28px 0 20px rgba(255, 255, 255, 0.2),
+    -32px 0 22px rgba(255, 255, 255, 0.15),
+    -36px 0 24px rgba(255, 255, 255, 0.1),
+    -40px 0 26px rgba(255, 255, 255, 0.08),
+    -44px 0 28px rgba(255, 255, 255, 0.06),
+    -48px 0 30px rgba(255, 255, 255, 0.04),
+    /* Extreme far trails */
+    -52px 0 32px rgba(255, 255, 255, 0.03),
+    -56px 0 34px rgba(255, 255, 255, 0.02),
+    -60px 0 36px rgba(255, 255, 255, 0.01),
+    /* Core glow for contrast */
+    0 0 10px rgba(255, 255, 255, 0.6),
+    0 0 20px rgba(255, 255, 255, 0.4),
+    0 0 30px rgba(255, 255, 255, 0.2);
+}
+
+/* Speed blur with room-specific color glow - Dark Room (Cyan) */
+.speed-blur-dark {
+  transform: skewX(-12deg);
+  text-shadow:
+    /* Motion trails */
+    -2px 0 4px rgba(46, 230, 255, 0.8),
+    -4px 0 6px rgba(46, 230, 255, 0.7),
+    -6px 0 8px rgba(46, 230, 255, 0.6),
+    -8px 0 10px rgba(46, 230, 255, 0.5),
+    -12px 0 12px rgba(46, 230, 255, 0.4),
+    -16px 0 14px rgba(46, 230, 255, 0.35),
+    -20px 0 16px rgba(46, 230, 255, 0.3),
+    -24px 0 18px rgba(46, 230, 255, 0.25),
+    -28px 0 20px rgba(46, 230, 255, 0.2),
+    -32px 0 22px rgba(46, 230, 255, 0.15),
+    -36px 0 24px rgba(46, 230, 255, 0.1),
+    -40px 0 26px rgba(46, 230, 255, 0.08),
+    -44px 0 28px rgba(46, 230, 255, 0.06),
+    -48px 0 30px rgba(46, 230, 255, 0.04),
+    -52px 0 32px rgba(46, 230, 255, 0.03),
+    -56px 0 34px rgba(46, 230, 255, 0.02),
+    /* Core glow */
+    0 0 10px rgba(46, 230, 255, 0.8),
+    0 0 20px rgba(46, 230, 255, 0.6),
+    0 0 30px rgba(46, 230, 255, 0.4),
+    0 0 40px rgba(46, 230, 255, 0.3);
+}
+
+/* Speed blur with room-specific color glow - Fantasy Room (Orange) */
+.speed-blur-fantasy {
+  transform: skewX(-12deg);
+  text-shadow:
+    /* Motion trails */
+    -2px 0 4px rgba(255, 157, 28, 0.8),
+    -4px 0 6px rgba(255, 157, 28, 0.7),
+    -6px 0 8px rgba(255, 157, 28, 0.6),
+    -8px 0 10px rgba(255, 157, 28, 0.5),
+    -12px 0 12px rgba(255, 157, 28, 0.4),
+    -16px 0 14px rgba(255, 157, 28, 0.35),
+    -20px 0 16px rgba(255, 157, 28, 0.3),
+    -24px 0 18px rgba(255, 157, 28, 0.25),
+    -28px 0 20px rgba(255, 157, 28, 0.2),
+    -32px 0 22px rgba(255, 157, 28, 0.15),
+    -36px 0 24px rgba(255, 157, 28, 0.1),
+    -40px 0 26px rgba(255, 157, 28, 0.08),
+    -44px 0 28px rgba(255, 157, 28, 0.06),
+    -48px 0 30px rgba(255, 157, 28, 0.04),
+    -52px 0 32px rgba(255, 157, 28, 0.03),
+    -56px 0 34px rgba(255, 157, 28, 0.02),
+    /* Core glow */
+    0 0 10px rgba(255, 157, 28, 0.8),
+    0 0 20px rgba(255, 157, 28, 0.6),
+    0 0 30px rgba(255, 157, 28, 0.4),
+    0 0 40px rgba(255, 157, 28, 0.3);
+}
+
+/* Speed blur with room-specific color glow - Philo Room (Purple) */
+.speed-blur-philo {
+  transform: skewX(-12deg);
+  text-shadow:
+    /* Motion trails */
+    -2px 0 4px rgba(181, 109, 255, 0.8),
+    -4px 0 6px rgba(181, 109, 255, 0.7),
+    -6px 0 8px rgba(181, 109, 255, 0.6),
+    -8px 0 10px rgba(181, 109, 255, 0.5),
+    -12px 0 12px rgba(181, 109, 255, 0.4),
+    -16px 0 14px rgba(181, 109, 255, 0.35),
+    -20px 0 16px rgba(181, 109, 255, 0.3),
+    -24px 0 18px rgba(181, 109, 255, 0.25),
+    -28px 0 20px rgba(181, 109, 255, 0.2),
+    -32px 0 22px rgba(181, 109, 255, 0.15),
+    -36px 0 24px rgba(181, 109, 255, 0.1),
+    -40px 0 26px rgba(181, 109, 255, 0.08),
+    -44px 0 28px rgba(181, 109, 255, 0.06),
+    -48px 0 30px rgba(181, 109, 255, 0.04),
+    -52px 0 32px rgba(181, 109, 255, 0.03),
+    -56px 0 34px rgba(181, 109, 255, 0.02),
+    /* Core glow */
+    0 0 10px rgba(181, 109, 255, 0.8),
+    0 0 20px rgba(181, 109, 255, 0.6),
+    0 0 30px rgba(181, 109, 255, 0.4),
+    0 0 40px rgba(181, 109, 255, 0.3);
+}
+
+/* Subtle motion blur for subtitles */
+.speed-blur-subtle {
+  transform: skewX(-8deg);
+  text-shadow:
+    -2px 0 3px rgba(255, 255, 255, 0.6),
+    -4px 0 5px rgba(255, 255, 255, 0.5),
+    -6px 0 7px rgba(255, 255, 255, 0.4),
+    -8px 0 9px rgba(255, 255, 255, 0.3),
+    -12px 0 11px rgba(255, 255, 255, 0.25),
+    -16px 0 13px rgba(255, 255, 255, 0.2),
+    -20px 0 15px rgba(255, 255, 255, 0.15),
+    -24px 0 17px rgba(255, 255, 255, 0.1),
+    -28px 0 19px rgba(255, 255, 255, 0.05),
+    0 0 8px rgba(255, 255, 255, 0.4),
+    0 0 16px rgba(255, 255, 255, 0.2);
+}
