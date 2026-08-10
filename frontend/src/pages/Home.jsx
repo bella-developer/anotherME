@@ -32,7 +32,7 @@ function Home() {
       tagline: 'Release. Witness. Discharge.',
       description: 'Where raw emotion finds its voice.',
       path: '/rooms/dark',
-      img: 'https://res.cloudinary.com/dbtm7etag/image/upload/v1782735009/darkroom_mf0vxg.png',
+      video: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1785500775/darkfineedit_fxticc.mp4',
       glowColor: '#2EE6FF', // Electric Cyan
       glowColorRGB: '46, 230, 255',
     },
@@ -42,7 +42,7 @@ function Home() {
       tagline: 'Create. Imagine. Inspire.',
       description: 'Where imagination roams free.',
       path: '/rooms/fantasy',
-      img: 'https://res.cloudinary.com/dbtm7etag/image/upload/v1783511770/fantasy_tsqwja.png',
+      video: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1785499720/fansyedit_ozhjwj.mp4',
       glowColor: '#FF9D1C', // Amber/Gold
       glowColorRGB: '255, 157, 28',
     },
@@ -52,7 +52,7 @@ function Home() {
       tagline: 'Understand. Reflect. Inquire.',
       description: 'The question that stays.',
       path: '/rooms/philo',
-      img: 'https://res.cloudinary.com/dbtm7etag/image/upload/v1782735026/philoroom_lazjzx.png',
+      video: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1785499721/philoedit_fwdmqu.mp4',
       glowColor: '#B56DFF', // Violet
       glowColorRGB: '181, 109, 255',
     },
@@ -327,7 +327,7 @@ function Home() {
                         }}
                       />
 
-                      {/* Inner circle container with static image */}
+                      {/* Inner circle container with video background */}
                       <div
                         className="rounded-full overflow-hidden"
                         style={{
@@ -346,10 +346,12 @@ function Home() {
                           transition: 'all 0.8s cubic-bezier(0.22, 1, 0.36, 1)',
                         }}
                       >
-                        {/* Static room image using img tag for better loading */}
-                        <img
-                          src={room.img}
-                          alt={room.name}
+                        {/* Video background */}
+                        <video
+                          autoPlay
+                          loop
+                          muted
+                          playsInline
                           style={{
                             position: 'absolute',
                             top: 0,
@@ -363,7 +365,9 @@ function Home() {
                               : 'brightness(0.95) contrast(1.05)',
                             transition: 'filter 0.8s ease',
                           }}
-                        />
+                        >
+                          <source src={room.video} type="video/mp4" />
+                        </video>
 
                         {/* Subtle dark overlay */}
                         <div

@@ -252,8 +252,8 @@ function PremiumHero() {
       ref={containerRef} 
       className="relative overflow-hidden" 
       style={{ 
-        height: 'calc(100vh + 60px)', // Offset for navbar (less negative)
-        marginTop: '-60px', // Navbar offset
+        height: '100vh',
+        paddingTop: '4rem', // Push content below navbar
         background: '#000000',
         fontFamily: 'var(--font-body)',
       }}
@@ -267,9 +267,15 @@ function PremiumHero() {
           loop
           muted
           playsInline
-          className={`absolute inset-0 w-full h-full object-cover transition-opacity ${
+          className={`absolute inset-0 w-full h-full transition-opacity ${
             isMobile ? 'duration-500' : 'duration-1000'
           } ${index === currentStep ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
+          style={{
+            objectFit: 'cover',
+            // Zoom in significantly on all screens to prevent cropping
+            transform: isMobile ? 'scale(1.5)' : 'scale(1.4)',
+            objectPosition: 'center center',
+          }}
         >
           <source src={step.video} type="video/mp4" />
         </video>
@@ -284,10 +290,10 @@ function PremiumHero() {
       />
 
       {/* Content Layer */}
-      <div className={`relative z-30 h-full flex flex-col ${getPositionClasses()}`}>
+      <div className="relative z-30 h-full flex flex-col items-end justify-end pr-4 sm:pr-8 md:pr-16 lg:pr-24">
         {/* Center: Content */}
-        <div className="flex-1 flex items-center w-full max-w-7xl px-4 sm:px-6">
-          <div className="w-full max-w-2xl text-right">
+        <div className="flex-1 flex items-center justify-end w-full px-4 sm:px-6">
+          <div className="w-full max-w-xl lg:max-w-2xl text-right">
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentStep}
@@ -300,8 +306,8 @@ function PremiumHero() {
                 <h1
                   className={`font-light tracking-wider leading-none mb-2 sm:mb-3 ${
                     isWelcome 
-                      ? 'text-5xl sm:text-6xl md:text-7xl lg:text-8xl' 
-                      : 'text-4xl sm:text-5xl md:text-6xl lg:text-7xl'
+                      ? 'text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl' 
+                      : 'text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl'
                   }`}
                   style={{
                     color: '#ffffff',
@@ -319,7 +325,7 @@ function PremiumHero() {
                 {/* Subtitle */}
                 <p
                   className={`font-normal tracking-[0.35em] uppercase mb-1 sm:mb-2 ${
-                    isWelcome ? 'text-xs sm:text-sm md:text-base' : 'text-[10px] sm:text-xs md:text-sm'
+                    isWelcome ? 'text-[10px] sm:text-xs md:text-sm lg:text-base' : 'text-[9px] sm:text-[10px] md:text-xs lg:text-sm'
                   }`}
                   style={{
                     color: currentStepData.color || 'rgba(255, 255, 255, 0.75)',
@@ -336,7 +342,7 @@ function PremiumHero() {
                 {/* Description */}
                 {currentStepData.description && (
                   <p
-                    className="text-[10px] sm:text-xs font-light tracking-wide leading-relaxed mb-6"
+                    className="text-[9px] sm:text-[10px] md:text-xs font-light tracking-wide leading-relaxed mb-4 sm:mb-6"
                     style={{
                       color: 'rgba(255, 255, 255, 0.5)',
                       fontFamily: 'var(--font-body)',
@@ -355,7 +361,7 @@ function PremiumHero() {
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.4, delay: 0.3 }}
                     onClick={() => navigate('/login')}
-                    className="px-5 py-1.5 text-[10px] uppercase tracking-[0.4em] font-medium transition-all duration-300 mt-3"
+                    className="px-4 sm:px-5 py-1.5 text-[9px] sm:text-[10px] uppercase tracking-[0.4em] font-medium transition-all duration-300 mt-2 sm:mt-3"
                     style={{
                       backgroundColor: 'rgba(0, 0, 0, 0.4)',
                       color: currentStepData.color || '#ffffff',
