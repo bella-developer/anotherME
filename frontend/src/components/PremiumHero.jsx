@@ -4,338 +4,119 @@ import { useNavigate } from 'react-router-dom';
 import EsoLogo from './EsoLogo';
 
 /**
- * Premium App Tour - UI Guide with Sequential Storytelling
- * Fixed layout with scroll/keyboard-driven frame transitions
- * Tells a cohesive story: Intro → Dark Room → Fantasy Room → Philo Room
+ * Premium Cinematic Hero - Video-Based UI Tour
+ * 7 Sequential video frames with scroll/keyboard navigation
+ * Welcome → Dark Room (2) → Fantasy Room (2) → Philo Room (2)
  */
 function PremiumHero() {
   const navigate = useNavigate();
   const containerRef = useRef(null);
   const [currentStep, setCurrentStep] = useState(0);
-  const [currentFrame, setCurrentFrame] = useState(0);
-  const canvasRef = useRef(null);
-  const imagesRef = useRef([]);
-  const [imagesLoaded, setImagesLoaded] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const videoRefs = useRef([]);
 
-  // Tour steps with narrative flow
+  // Tour steps with videos and minimal content
   const tourSteps = [
-    // Step 0: Intro with video
+    // Frame 1: Welcome
     {
-      type: 'intro',
+      id: 'welcome',
+      video: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1786352472/frame1vid_oububm.mp4',
       title: 'ESO',
       subtitle: 'your safe space to breathe',
       description: '',
-      image: null,
-      video: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1786195982/darker_qq0jsj.mp4',
+      showButton: false,
     },
-    // Steps 1-8: Dark Room (8 frames)
+    // Frame 2: Dark Room - Confession
     {
-      type: 'dark',
-      room: 'The Dark Room',
-      color: '#2EE6FF',
-      colorRgb: '46, 230, 255',
+      id: 'dark-confession',
+      video: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1786357230/frae2video_qmhpf7.mp4',
       title: 'CONFESSION',
-      subtitle: 'the weight you carry',
-      description: 'alone at 3 am, thoughts racing',
-      frame: 0,
-    },
-    {
-      type: 'dark',
-      room: 'The Dark Room',
+      subtitle: 'release what weighs on you',
+      description: 'dark stories • secrets • regrets',
       color: '#2EE6FF',
       colorRgb: '46, 230, 255',
+      showButton: false,
+    },
+    // Frame 3: Dark Room - Understanding
+    {
+      id: 'dark-understanding',
+      video: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1786358832/frame3vid_1_hjyi09.mp4',
       title: 'UNDERSTANDING',
-      subtitle: 'others feel it too',
-      description: "you're not the only one",
-      frame: 1,
-    },
-    {
-      type: 'dark',
-      room: 'The Dark Room',
+      subtitle: "you're not alone",
+      description: 'shared darkness • connection',
       color: '#2EE6FF',
       colorRgb: '46, 230, 255',
-      title: 'RELEASE',
-      subtitle: 'share your truth',
-      description: 'without judgment',
-      frame: 2,
+      showButton: true,
+      buttonText: 'ENTER THE DARK ROOM',
+      buttonPath: '/rooms/dark',
     },
+    // Frame 4: Fantasy Room - Daydreaming
     {
-      type: 'dark',
-      room: 'The Dark Room',
-      color: '#2EE6FF',
-      colorRgb: '46, 230, 255',
-      title: 'CONNECTION',
-      subtitle: 'in the shadows',
-      description: 'find those who understand',
-      frame: 3,
-    },
-    {
-      type: 'dark',
-      room: 'The Dark Room',
-      color: '#2EE6FF',
-      colorRgb: '46, 230, 255',
-      title: 'YOUR STORY',
-      subtitle: 'matters here',
-      description: 'every regret, every mistake',
-      frame: 4,
-    },
-    {
-      type: 'dark',
-      room: 'The Dark Room',
-      color: '#2EE6FF',
-      colorRgb: '46, 230, 255',
-      title: 'HEALING',
-      subtitle: 'through sharing',
-      description: 'the burden becomes lighter',
-      frame: 5,
-    },
-    {
-      type: 'dark',
-      room: 'The Dark Room',
-      color: '#2EE6FF',
-      colorRgb: '46, 230, 255',
-      title: 'ACCEPTANCE',
-      subtitle: 'of your past',
-      description: 'this is your safe space',
-      frame: 6,
-    },
-    {
-      type: 'dark',
-      room: 'The Dark Room',
-      color: '#2EE6FF',
-      colorRgb: '46, 230, 255',
-      title: 'RELEASE WHAT WEIGHS ON YOU',
-      subtitle: 'the dark room awaits',
-      description: 'where shadows find light',
-      frame: 7,
-      cta: 'Enter the Dark Room',
-      ctaPath: '/rooms/dark',
-    },
-    // Steps 9-16: Fantasy Room (8 frames - placeholders)
-    {
-      type: 'fantasy',
-      room: 'The Fantasy Room',
-      color: '#FF9D1C',
-      colorRgb: '255, 157, 28',
+      id: 'fantasy-daydream',
+      video: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1786361397/frame4videoo_hizhue.mp4',
       title: 'IMAGINATION',
-      subtitle: 'your creative spark',
-      description: 'the idea that keeps you awake',
-      frame: 0,
-    },
-    {
-      type: 'fantasy',
-      room: 'The Fantasy Room',
+      subtitle: 'where creativity flows',
+      description: 'daydreams • artistic ideas',
       color: '#FF9D1C',
       colorRgb: '255, 157, 28',
-      title: 'DAYDREAMS',
-      subtitle: 'that fill your mind',
-      description: 'the worlds you create',
-      frame: 1,
+      showButton: false,
     },
+    // Frame 5: Fantasy Room - Vibes
     {
-      type: 'fantasy',
-      room: 'The Fantasy Room',
+      id: 'fantasy-vibes',
+      video: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1786361396/frame5v_wtvs09.mp4',
+      title: 'VIBES',
+      subtitle: 'fun • jokes • fantasies',
+      description: 'creative energy • music',
       color: '#FF9D1C',
       colorRgb: '255, 157, 28',
-      title: 'EXPRESSION',
-      subtitle: 'through art and story',
-      description: 'your unique voice',
-      frame: 2,
+      showButton: true,
+      buttonText: 'ENTER THE FANTASY ROOM',
+      buttonPath: '/rooms/fantasy',
     },
+    // Frame 6: Philo Room - Questioning
     {
-      type: 'fantasy',
-      room: 'The Fantasy Room',
-      color: '#FF9D1C',
-      colorRgb: '255, 157, 28',
-      title: 'WONDER',
-      subtitle: 'in the impossible',
-      description: 'where creativity flows',
-      frame: 3,
-    },
-    {
-      type: 'fantasy',
-      room: 'The Fantasy Room',
-      color: '#FF9D1C',
-      colorRgb: '255, 157, 28',
-      title: 'JOY',
-      subtitle: 'in small things',
-      description: 'the beauty you notice',
-      frame: 4,
-    },
-    {
-      type: 'fantasy',
-      room: 'The Fantasy Room',
-      color: '#FF9D1C',
-      colorRgb: '255, 157, 28',
-      title: 'INSPIRATION',
-      subtitle: 'that strikes suddenly',
-      description: 'share your vision',
-      frame: 5,
-    },
-    {
-      type: 'fantasy',
-      room: 'The Fantasy Room',
-      color: '#FF9D1C',
-      colorRgb: '255, 157, 28',
-      title: 'CREATION',
-      subtitle: 'from imagination',
-      description: 'your ideas take form',
-      frame: 6,
-    },
-    {
-      type: 'fantasy',
-      room: 'The Fantasy Room',
-      color: '#FF9D1C',
-      colorRgb: '255, 157, 28',
-      title: 'DREAM WITHOUT LIMITS',
-      subtitle: 'the fantasy room awaits',
-      description: 'where imagination becomes reality',
-      frame: 7,
-      cta: 'Enter the Fantasy Room',
-      ctaPath: '/rooms/fantasy',
-    },
-    // Steps 17-24: Philo Room (8 frames - placeholders)
-    {
-      type: 'philo',
-      room: 'The Philo Room',
-      color: '#B56DFF',
-      colorRgb: '181, 109, 255',
-      title: 'QUESTIONS',
-      subtitle: 'that haunt you',
-      description: 'why are we here?',
-      frame: 0,
-    },
-    {
-      type: 'philo',
-      room: 'The Philo Room',
-      color: '#B56DFF',
-      colorRgb: '181, 109, 255',
-      title: 'WONDER',
-      subtitle: 'at the cosmos',
-      description: 'the universe within',
-      frame: 1,
-    },
-    {
-      type: 'philo',
-      room: 'The Philo Room',
-      color: '#B56DFF',
-      colorRgb: '181, 109, 255',
-      title: 'SEEKING',
-      subtitle: 'deeper meaning',
-      description: 'beyond the surface',
-      frame: 2,
-    },
-    {
-      type: 'philo',
-      room: 'The Philo Room',
-      color: '#B56DFF',
-      colorRgb: '181, 109, 255',
-      title: 'CONSPIRACY',
-      subtitle: "what if they're right?",
-      description: 'question everything',
-      frame: 3,
-    },
-    {
-      type: 'philo',
-      room: 'The Philo Room',
-      color: '#B56DFF',
-      colorRgb: '181, 109, 255',
-      title: 'SPIRITUALITY',
-      subtitle: 'your own path',
-      description: 'beyond religion',
-      frame: 4,
-    },
-    {
-      type: 'philo',
-      room: 'The Philo Room',
-      color: '#B56DFF',
-      colorRgb: '181, 109, 255',
-      title: 'EXISTENCE',
+      id: 'philo-questioning',
+      video: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1786361397/frame6v_ijhpzm.mp4',
+      title: 'QUESTIONING',
       subtitle: 'the big questions',
-      description: 'for deep thinkers',
-      frame: 5,
-    },
-    {
-      type: 'philo',
-      room: 'The Philo Room',
+      description: 'philosophy • spirituality',
       color: '#B56DFF',
       colorRgb: '181, 109, 255',
+      showButton: false,
+    },
+    // Frame 7: Philo Room - Truth
+    {
+      id: 'philo-truth',
+      video: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1786361701/frame7vide_yp9dc4.mp4',
       title: 'TRUTH',
-      subtitle: 'your perspective',
-      description: 'unique and valid',
-      frame: 6,
-    },
-    {
-      type: 'philo',
-      room: 'The Philo Room',
+      subtitle: 'conspiracy • unique ideas',
+      description: 'cosmic connection • mystery',
       color: '#B56DFF',
       colorRgb: '181, 109, 255',
-      title: 'QUESTION EVERYTHING',
-      subtitle: 'the philo room awaits',
-      description: 'where minds expand',
-      frame: 7,
-      cta: 'Enter the Philo Room',
-      ctaPath: '/rooms/philo',
+      showButton: true,
+      buttonText: 'ENTER THE PHILO ROOM',
+      buttonPath: '/rooms/philo',
     },
   ];
 
-  // All frame images
-  const allFrames = [
-    // Dark Room frames (8)
-    'https://res.cloudinary.com/dbtm7etag/image/upload/v1786104155/dark-frame-1_pin8tu.png',
-    'https://res.cloudinary.com/dbtm7etag/image/upload/v1786104156/dark-frame-2_tsxs4x.png',
-    'https://res.cloudinary.com/dbtm7etag/image/upload/v1786104156/dark-frame-3_i3cijk.png',
-    'https://res.cloudinary.com/dbtm7etag/image/upload/v1786104155/dark-frame-4_ufxpq6.png',
-    'https://res.cloudinary.com/dbtm7etag/image/upload/v1786104155/dark-frame-5_mwuovr.png',
-    'https://res.cloudinary.com/dbtm7etag/image/upload/v1786104155/dark-frame-6_zth05y.png',
-    'https://res.cloudinary.com/dbtm7etag/image/upload/v1786104155/dark-frame-7_sd42ty.png',
-    'https://res.cloudinary.com/dbtm7etag/image/upload/v1786104155/dark-frame-8_ofgw0r.png',
-    // Fantasy Room placeholders (8)
-    'https://res.cloudinary.com/dbtm7etag/image/upload/v1782735075/creativity_mpfrcx.png',
-    'https://res.cloudinary.com/dbtm7etag/image/upload/v1782735075/creativity_mpfrcx.png',
-    'https://res.cloudinary.com/dbtm7etag/image/upload/v1782735075/creativity_mpfrcx.png',
-    'https://res.cloudinary.com/dbtm7etag/image/upload/v1782735075/creativity_mpfrcx.png',
-    'https://res.cloudinary.com/dbtm7etag/image/upload/v1782735075/creativity_mpfrcx.png',
-    'https://res.cloudinary.com/dbtm7etag/image/upload/v1782735075/creativity_mpfrcx.png',
-    'https://res.cloudinary.com/dbtm7etag/image/upload/v1782735075/creativity_mpfrcx.png',
-    'https://res.cloudinary.com/dbtm7etag/image/upload/v1782735075/creativity_mpfrcx.png',
-    // Philo Room placeholders (8)
-    'https://res.cloudinary.com/dbtm7etag/image/upload/v1782735034/philosophy_rcrqzu.png',
-    'https://res.cloudinary.com/dbtm7etag/image/upload/v1782735034/philosophy_rcrqzu.png',
-    'https://res.cloudinary.com/dbtm7etag/image/upload/v1782735034/philosophy_rcrqzu.png',
-    'https://res.cloudinary.com/dbtm7etag/image/upload/v1782735034/philosophy_rcrqzu.png',
-    'https://res.cloudinary.com/dbtm7etag/image/upload/v1782735034/philosophy_rcrqzu.png',
-    'https://res.cloudinary.com/dbtm7etag/image/upload/v1782735034/philosophy_rcrqzu.png',
-    'https://res.cloudinary.com/dbtm7etag/image/upload/v1782735034/philosophy_rcrqzu.png',
-    'https://res.cloudinary.com/dbtm7etag/image/upload/v1782735034/philosophy_rcrqzu.png',
-  ];
-
-
-
-  // Preload all images
+  // Preload videos
   useEffect(() => {
-    const loadImages = async () => {
-      const imagePromises = allFrames.map((src) => {
-        return new Promise((resolve, reject) => {
-          const img = new Image();
-          img.src = src;
-          img.onload = () => resolve(img);
-          img.onerror = reject;
-        });
-      });
-
-      try {
-        const loadedImages = await Promise.all(imagePromises);
-        imagesRef.current = loadedImages;
-        setImagesLoaded(true);
-      } catch (error) {
-        console.error('Error loading tour images:', error);
-      }
-    };
-
-    loadImages();
+    tourSteps.forEach((step, index) => {
+      const video = document.createElement('video');
+      video.src = step.video;
+      video.preload = 'auto';
+      videoRefs.current[index] = video;
+    });
   }, []);
+
+  // Play current video
+  useEffect(() => {
+    const currentVideo = document.querySelector(`#video-${currentStep}`);
+    if (currentVideo) {
+      currentVideo.play().catch(err => console.log('Video play error:', err));
+    }
+  }, [currentStep]);
 
   // Navigate to next/previous step
   const goToStep = (direction) => {
@@ -345,15 +126,7 @@ function PremiumHero() {
     if (newStep >= 0 && newStep < tourSteps.length) {
       setIsTransitioning(true);
       setCurrentStep(newStep);
-      
-      // Update frame if step has one
-      const step = tourSteps[newStep];
-      if (step.type !== 'intro' && step.frame !== undefined) {
-        const frameOffset = step.type === 'dark' ? 0 : step.type === 'fantasy' ? 8 : 16;
-        setCurrentFrame(frameOffset + step.frame);
-      }
-      
-      setTimeout(() => setIsTransitioning(false), 600);
+      setTimeout(() => setIsTransitioning(false), 800);
     }
   };
 
@@ -373,17 +146,16 @@ function PremiumHero() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [currentStep, isTransitioning]);
 
-  // Scroll/wheel navigation with scroll-through at end
+  // Scroll navigation with scroll-through at end
   useEffect(() => {
     let scrollTimeout;
     
     const handleWheel = (e) => {
       // If at last step and scrolling down, allow normal scroll
       if (currentStep === tourSteps.length - 1 && e.deltaY > 0) {
-        return; // Let normal scroll happen
+        return;
       }
       
-      // Otherwise handle tour navigation
       e.preventDefault();
       if (isTransitioning) return;
 
@@ -394,7 +166,7 @@ function PremiumHero() {
         } else if (e.deltaY < 0) {
           goToStep(-1);
         }
-      }, 100);
+      }, 150);
     };
 
     const container = containerRef.current;
@@ -408,208 +180,157 @@ function PremiumHero() {
         container.removeEventListener('wheel', handleWheel);
       }
     };
-  }, [currentStep, isTransitioning]);
-
-  // Render current frame to canvas
-  useEffect(() => {
-    if (!canvasRef.current || !imagesLoaded || currentStep === 0) return;
-
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext('2d');
-    const img = imagesRef.current[currentFrame];
-
-    if (!img) return;
-
-    const rect = canvas.getBoundingClientRect();
-    canvas.width = rect.width * window.devicePixelRatio;
-    canvas.height = rect.height * window.devicePixelRatio;
-    ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
-
-    const canvasAspect = rect.width / rect.height;
-    const imgAspect = img.width / img.height;
-
-    let drawWidth, drawHeight, offsetX, offsetY;
-
-    if (imgAspect > canvasAspect) {
-      drawHeight = rect.height;
-      drawWidth = drawHeight * imgAspect;
-      offsetX = (rect.width - drawWidth) / 2;
-      offsetY = 0;
-    } else {
-      drawWidth = rect.width;
-      drawHeight = drawWidth / imgAspect;
-      offsetX = 0;
-      offsetY = (rect.height - drawHeight) / 2;
-    }
-
-    ctx.clearRect(0, 0, rect.width, rect.height);
-    ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
-  }, [currentFrame, imagesLoaded, currentStep]);
+  }, [currentStep, isTransitioning, tourSteps.length]);
 
   const currentStepData = tourSteps[currentStep];
+  const isWelcome = currentStep === 0;
 
   return (
     <div 
       ref={containerRef} 
       className="relative h-screen overflow-hidden" 
       style={{ 
-        background: 'linear-gradient(180deg, #000000 0%, #0a0a0f 100%)',
+        background: '#000000',
         fontFamily: 'var(--font-body)',
-        fontWeight: 400,
       }}
     >
-      {/* Video Background for Intro */}
-      {currentStep === 0 && tourSteps[0].video && (
+      {/* Video Backgrounds */}
+      {tourSteps.map((step, index) => (
         <video
-          autoPlay
+          key={step.id}
+          id={`video-${index}`}
+          autoPlay={index === 0}
           loop
           muted
           playsInline
-          className="absolute inset-0 w-full h-full object-cover"
-          style={{ zIndex: 1 }}
+          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
+            index === currentStep ? 'opacity-100 z-10' : 'opacity-0 z-0'
+          }`}
         >
-          <source src={tourSteps[0].video} type="video/mp4" />
+          <source src={step.video} type="video/mp4" />
         </video>
-      )}
-      {/* Background Canvas - Only shown after intro */}
-      {currentStep > 0 && (
-        <>
-          <canvas
-            ref={canvasRef}
-            className="absolute inset-0 w-full h-full"
-            style={{ objectFit: 'cover', zIndex: 1 }}
-          />
-          <div 
-            className="absolute inset-0 pointer-events-none"
-            style={{
-              background: 'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.4) 40%, rgba(0,0,0,0.4) 60%, rgba(0,0,0,0.8) 100%)',
-              zIndex: 2,
-            }}
-          />
-        </>
-      )}
+      ))}
 
-      {/* Dark overlay for intro video */}
-      {currentStep === 0 && (
-        <div 
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background: 'linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.7) 100%)',
-            zIndex: 2,
-          }}
-        />
-      )}
+      {/* Dark overlay for better text visibility */}
+      <div 
+        className="absolute inset-0 pointer-events-none z-20"
+        style={{
+          background: isWelcome
+            ? 'linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.6) 100%)'
+            : 'linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.7) 100%)',
+        }}
+      />
 
-      {/* Fixed Content Layout */}
-      <div className="relative z-10 h-full flex flex-col">
+      {/* Content Layer */}
+      <div className="relative z-30 h-full flex flex-col">
         {/* Top: Logo */}
-        <div className="flex-shrink-0 pt-20 sm:pt-24 pb-6 px-4 text-center">
+        <div className="flex-shrink-0 pt-16 sm:pt-20 pb-4 px-4 text-center">
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1 }}
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.5 }}
           >
             <EsoLogo 
-              className="h-10 sm:h-14 w-auto mx-auto" 
-              style={{ filter: 'drop-shadow(0 0 25px rgba(255, 255, 255, 0.25))' }} 
+              className="h-8 sm:h-12 w-auto mx-auto" 
+              style={{ filter: 'drop-shadow(0 0 20px rgba(255, 255, 255, 0.3))' }} 
             />
           </motion.div>
         </div>
 
-        {/* Center: Tour Content */}
+        {/* Center: Content */}
         <div className="flex-1 flex items-center justify-center px-4 sm:px-8">
-          <div className="text-center max-w-3xl w-full">
+          <div className="text-center max-w-4xl w-full">
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentStep}
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 40 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -30 }}
-                transition={{ duration: 0.5, ease: 'easeInOut' }}
+                exit={{ opacity: 0, y: -40 }}
+                transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
               >
-                {/* Main Title */}
-                <h2
-                  className={`text-7xl sm:text-8xl md:text-9xl font-light mb-4 tracking-tight leading-none cinematic-title glow-pulse ${
-                    currentStepData.type === 'dark' ? 'speed-blur-dark' :
-                    currentStepData.type === 'fantasy' ? 'speed-blur-fantasy' :
-                    currentStepData.type === 'philo' ? 'speed-blur-philo' :
-                    ''
+                {/* Title */}
+                <h1
+                  className={`font-light tracking-wide leading-none mb-3 ${
+                    isWelcome 
+                      ? 'text-8xl sm:text-9xl md:text-[10rem]' 
+                      : 'text-6xl sm:text-7xl md:text-8xl'
                   }`}
                   style={{
                     color: '#ffffff',
                     fontFamily: 'var(--font-heading)',
                     fontWeight: 300,
-                    letterSpacing: '0.15em',
-                    textTransform: 'uppercase',
+                    letterSpacing: isWelcome ? '0.15em' : '0.1em',
                     textShadow: currentStepData.color
-                      ? `0 0 10px ${currentStepData.color}40, 0 1px 4px rgba(0,0,0,0.6)`
-                      : '0 0 10px rgba(255,255,255,0.2), 0 1px 4px rgba(0,0,0,0.6)',
+                      ? `0 0 8px ${currentStepData.color}30, 0 1px 3px rgba(0,0,0,0.7)`
+                      : '0 0 8px rgba(255,255,255,0.15), 0 1px 3px rgba(0,0,0,0.7)',
                   }}
                 >
                   {currentStepData.title}
-                </h2>
+                </h1>
 
                 {/* Subtitle */}
                 <p
-                  className="text-sm sm:text-base md:text-lg font-normal tracking-[0.3em] uppercase neon-text cinematic-subtitle"
+                  className={`font-normal tracking-[0.3em] uppercase mb-2 ${
+                    isWelcome ? 'text-base sm:text-lg' : 'text-sm sm:text-base'
+                  }`}
                   style={{
-                    color: currentStepData.color || 'rgba(255, 255, 255, 0.75)',
+                    color: currentStepData.color || 'rgba(255, 255, 255, 0.7)',
                     fontFamily: 'var(--font-body)',
                     fontWeight: 400,
-                    letterSpacing: '0.3em',
                     textShadow: currentStepData.color 
-                      ? `0 0 6px ${currentStepData.color}30, 0 1px 3px rgba(0,0,0,0.5)`
-                      : '0 0 6px rgba(255, 255, 255, 0.15), 0 1px 3px rgba(0,0,0,0.5)',
+                      ? `0 0 6px ${currentStepData.color}25, 0 1px 2px rgba(0,0,0,0.6)`
+                      : '0 0 6px rgba(255, 255, 255, 0.12), 0 1px 2px rgba(0,0,0,0.6)',
                   }}
                 >
                   {currentStepData.subtitle}
                 </p>
 
-                {/* Description - Only show if not empty */}
+                {/* Description */}
                 {currentStepData.description && (
                   <p
-                    className="text-xs sm:text-sm md:text-base font-normal leading-relaxed cinematic-description mt-3"
+                    className="text-xs sm:text-sm font-light tracking-wider leading-relaxed mb-8"
                     style={{
-                      color: 'rgba(255, 255, 255, 0.6)',
+                      color: 'rgba(255, 255, 255, 0.5)',
                       fontFamily: 'var(--font-body)',
                       fontWeight: 300,
-                      letterSpacing: '0.05em',
-                      textShadow: '0 1px 3px rgba(0, 0, 0, 0.6)',
+                      textShadow: '0 1px 2px rgba(0, 0, 0, 0.6)',
                     }}
                   >
                     {currentStepData.description}
                   </p>
                 )}
 
-                {/* Step In Button - Always visible for room steps */}
-                {currentStep > 0 && (
+                {/* Button */}
+                {currentStepData.showButton && (
                   <motion.button
-                    initial={{ opacity: 0, scale: 0.9 }}
+                    initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    onClick={() => navigate('/login')}
-                    className="px-10 py-3 text-xs uppercase tracking-[0.4em] font-medium transition-all duration-500 mt-8 cinematic-button"
+                    transition={{ duration: 0.5, delay: 0.4 }}
+                    onClick={() => navigate(currentStepData.buttonPath)}
+                    className="px-8 py-2.5 text-xs uppercase tracking-[0.35em] font-medium transition-all duration-500 mt-4"
                     style={{
-                      backgroundColor: 'rgba(0, 0, 0, 0.4)',
+                      backgroundColor: 'rgba(0, 0, 0, 0.3)',
                       color: currentStepData.color || '#ffffff',
-                      border: currentStepData.color 
-                        ? `1px solid ${currentStepData.color}`
-                        : '1px solid rgba(255, 255, 255, 0.3)',
-                      borderRadius: '0',
-                      backdropFilter: 'blur(15px)',
-                      boxShadow: currentStepData.color
-                        ? `0 0 12px ${currentStepData.color}25, 0 2px 6px rgba(0,0,0,0.3)`
-                        : '0 0 12px rgba(255, 255, 255, 0.12), 0 2px 6px rgba(0,0,0,0.3)',
+                      border: `1px solid ${currentStepData.color || 'rgba(255, 255, 255, 0.25)'}`,
+                      backdropFilter: 'blur(10px)',
+                      boxShadow: `0 0 10px ${currentStepData.color}20, 0 2px 5px rgba(0,0,0,0.3)`,
                       fontFamily: 'var(--font-body)',
                       fontWeight: 500,
-                      letterSpacing: '0.4em',
-                      fontSize: '0.75rem',
-                      textShadow: currentStepData.color
-                        ? `0 0 6px ${currentStepData.color}30`
-                        : '0 0 6px rgba(255, 255, 255, 0.2)',
+                      textShadow: `0 0 6px ${currentStepData.color}30`,
                       cursor: 'pointer',
                     }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.backgroundColor = `rgba(${currentStepData.colorRgb}, 0.15)`;
+                      e.currentTarget.style.transform = 'translateY(-3px) scale(1.03)';
+                      e.currentTarget.style.boxShadow = `0 0 20px ${currentStepData.color}35, 0 4px 10px rgba(0,0,0,0.4)`;
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.backgroundColor = 'rgba(0, 0, 0, 0.3)';
+                      e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                      e.currentTarget.style.boxShadow = `0 0 10px ${currentStepData.color}20, 0 2px 5px rgba(0,0,0,0.3)`;
+                    }}
                   >
-                    STEP IN
+                    {currentStepData.buttonText}
                   </motion.button>
                 )}
               </motion.div>
@@ -617,10 +338,32 @@ function PremiumHero() {
           </div>
         </div>
 
-        {/* Bottom: Navigation Hint Only */}
-        <div className="flex-shrink-0 pb-10 sm:pb-14 px-4">
-          {/* Navigation Hint */}
-          <motion.div
+        {/* Bottom: Progress & Navigation */}
+        <div className="flex-shrink-0 pb-8 px-4">
+          {/* Progress dots */}
+          <div className="flex justify-center gap-2 mb-3">
+            {tourSteps.map((_, index) => (
+              <div
+                key={index}
+                className="transition-all duration-300 cursor-pointer"
+                onClick={() => !isTransitioning && setCurrentStep(index)}
+                style={{
+                  width: index === currentStep ? '24px' : '6px',
+                  height: '6px',
+                  borderRadius: '3px',
+                  backgroundColor: index === currentStep 
+                    ? (currentStepData.color || 'rgba(255, 255, 255, 0.8)')
+                    : 'rgba(255, 255, 255, 0.2)',
+                  boxShadow: index === currentStep && currentStepData.color
+                    ? `0 0 8px ${currentStepData.color}40`
+                    : 'none',
+                }}
+              />
+            ))}
+          </div>
+
+          {/* Navigation hint */}
+          <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 1.5 }}
@@ -629,44 +372,16 @@ function PremiumHero() {
               color: 'rgba(255, 255, 255, 0.2)',
               fontFamily: 'var(--font-body)',
               fontWeight: 400,
-              letterSpacing: '0.3em',
-              textShadow: 'none',
             }}
           >
-            {currentStep === 0 ? 'scroll or use arrow keys to begin' : currentStep === tourSteps.length - 1 ? 'scroll down to continue' : 'navigate with ← → or scroll'}
-          </motion.div>
-        </div>
-      </div>
-
-      {/* Loading Overlay */}
-      {!imagesLoaded && (
-        <div className="absolute inset-0 flex flex-col items-center justify-center bg-black z-50">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, ease: 'easeOut' }}
-          >
-            <EsoLogo 
-              className="h-20 sm:h-24 w-auto mb-8" 
-              style={{ filter: 'drop-shadow(0 0 20px rgba(255, 255, 255, 0.3))' }} 
-            />
-          </motion.div>
-          <motion.p 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: [0.3, 0.7, 0.3] }}
-            transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-            className="text-sm tracking-[0.3em] uppercase" 
-            style={{ 
-              color: 'rgba(255, 255, 255, 0.5)',
-              fontFamily: 'var(--font-body)',
-              fontWeight: 400,
-              letterSpacing: '0.3em',
-            }}
-          >
-            loading
+            {currentStep === 0 
+              ? 'scroll or use arrow keys to explore' 
+              : currentStep === tourSteps.length - 1 
+                ? 'scroll down to continue' 
+                : 'navigate with ← → or scroll'}
           </motion.p>
         </div>
-      )}
+      </div>
     </div>
   );
 }
