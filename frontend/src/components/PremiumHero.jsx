@@ -242,16 +242,9 @@ function PremiumHero() {
   const currentStepData = tourSteps[currentStep];
   const isWelcome = currentStep === 0;
 
-  // Get positioning classes
+  // Get positioning classes - always position text on right
   const getPositionClasses = () => {
-    const position = currentStepData.textPosition;
-    if (position === 'left') {
-      return 'items-start justify-start pl-8 md:pl-16 lg:pl-24';
-    }
-    if (position === 'right') {
-      return 'items-end justify-end pr-8 md:pr-16 lg:pr-24';
-    }
-    return 'items-center justify-center';
+    return 'items-end justify-end pr-8 md:pr-16 lg:pr-24';
   };
 
   return (
@@ -259,8 +252,8 @@ function PremiumHero() {
       ref={containerRef} 
       className="relative overflow-hidden" 
       style={{ 
-        height: 'calc(100vh - 4rem)', // Offset for navbar
-        marginTop: '4rem', // Navbar height
+        height: 'calc(100vh + 60px)', // Offset for navbar (less negative)
+        marginTop: '-60px', // Navbar offset
         background: '#000000',
         fontFamily: 'var(--font-body)',
       }}
@@ -294,21 +287,21 @@ function PremiumHero() {
       <div className={`relative z-30 h-full flex flex-col ${getPositionClasses()}`}>
         {/* Center: Content */}
         <div className="flex-1 flex items-center w-full max-w-7xl px-4 sm:px-6">
-          <div className={`w-full max-w-2xl text-${currentStepData.textAlign}`}>
+          <div className="w-full max-w-2xl text-right">
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentStep}
-                initial={{ opacity: 0, x: currentStepData.textPosition === 'left' ? -60 : currentStepData.textPosition === 'right' ? 60 : 0, y: 20 }}
+                initial={{ opacity: 0, x: 60, y: 20 }}
                 animate={{ opacity: 1, x: 0, y: 0 }}
-                exit={{ opacity: 0, x: currentStepData.textPosition === 'left' ? -60 : currentStepData.textPosition === 'right' ? 60 : 0, y: -20 }}
+                exit={{ opacity: 0, x: 60, y: -20 }}
                 transition={{ duration: isMobile ? 0.4 : 0.6, ease: [0.22, 1, 0.36, 1] }}
               >
                 {/* Title */}
                 <h1
                   className={`font-light tracking-wider leading-none mb-2 sm:mb-3 ${
                     isWelcome 
-                      ? 'text-7xl sm:text-8xl md:text-9xl lg:text-[10rem]' 
-                      : 'text-5xl sm:text-6xl md:text-7xl lg:text-8xl'
+                      ? 'text-5xl sm:text-6xl md:text-7xl lg:text-8xl' 
+                      : 'text-4xl sm:text-5xl md:text-6xl lg:text-7xl'
                   }`}
                   style={{
                     color: '#ffffff',
@@ -326,7 +319,7 @@ function PremiumHero() {
                 {/* Subtitle */}
                 <p
                   className={`font-normal tracking-[0.35em] uppercase mb-1 sm:mb-2 ${
-                    isWelcome ? 'text-sm sm:text-base md:text-lg' : 'text-xs sm:text-sm md:text-base'
+                    isWelcome ? 'text-xs sm:text-sm md:text-base' : 'text-[10px] sm:text-xs md:text-sm'
                   }`}
                   style={{
                     color: currentStepData.color || 'rgba(255, 255, 255, 0.75)',
@@ -343,7 +336,7 @@ function PremiumHero() {
                 {/* Description */}
                 {currentStepData.description && (
                   <p
-                    className="text-xs sm:text-sm font-light tracking-wide leading-relaxed mb-6"
+                    className="text-[10px] sm:text-xs font-light tracking-wide leading-relaxed mb-6"
                     style={{
                       color: 'rgba(255, 255, 255, 0.5)',
                       fontFamily: 'var(--font-body)',
@@ -362,7 +355,7 @@ function PremiumHero() {
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.4, delay: 0.3 }}
                     onClick={() => navigate('/login')}
-                    className="px-6 py-2 text-xs uppercase tracking-[0.4em] font-medium transition-all duration-300 mt-3"
+                    className="px-5 py-1.5 text-[10px] uppercase tracking-[0.4em] font-medium transition-all duration-300 mt-3"
                     style={{
                       backgroundColor: 'rgba(0, 0, 0, 0.4)',
                       color: currentStepData.color || '#ffffff',
