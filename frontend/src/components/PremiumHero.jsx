@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import EsoLogo from './EsoLogo';
+import { ChevronDown } from 'lucide-react';
 
 /**
  * Premium Cinematic Hero - Video-Based UI Tour
@@ -14,10 +14,19 @@ function PremiumHero() {
   const [currentStep, setCurrentStep] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const videoRefs = useRef([]);
+  const [isMobile, setIsMobile] = useState(false);
 
-  // Tour steps with videos and minimal content
+  // Detect mobile
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Tour steps with videos, minimal content, and positioning
   const tourSteps = [
-    // Frame 1: Welcome
+    // Frame 1: Welcome - text on right (character on left)
     {
       id: 'welcome',
       video: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1786352472/frame1vid_oububm.mp4',
@@ -25,8 +34,10 @@ function PremiumHero() {
       subtitle: 'your safe space to breathe',
       description: '',
       showButton: false,
+      textAlign: 'right',
+      textPosition: 'right',
     },
-    // Frame 2: Dark Room - Confession
+    // Frame 2: Dark - Confession - text on left (character on right)
     {
       id: 'dark-confession',
       video: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1786357230/frae2video_qmhpf7.mp4',
@@ -36,8 +47,10 @@ function PremiumHero() {
       color: '#2EE6FF',
       colorRgb: '46, 230, 255',
       showButton: false,
+      textAlign: 'left',
+      textPosition: 'left',
     },
-    // Frame 3: Dark Room - Understanding
+    // Frame 3: Dark - Understanding - text on center (characters scattered)
     {
       id: 'dark-understanding',
       video: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1786358832/frame3vid_1_hjyi09.mp4',
@@ -47,10 +60,11 @@ function PremiumHero() {
       color: '#2EE6FF',
       colorRgb: '46, 230, 255',
       showButton: true,
-      buttonText: 'ENTER THE DARK ROOM',
-      buttonPath: '/rooms/dark',
+      buttonText: 'step in',
+      textAlign: 'center',
+      textPosition: 'center',
     },
-    // Frame 4: Fantasy Room - Daydreaming
+    // Frame 4: Fantasy - Daydreaming - text on right (character on left)
     {
       id: 'fantasy-daydream',
       video: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1786361397/frame4videoo_hizhue.mp4',
@@ -60,8 +74,10 @@ function PremiumHero() {
       color: '#FF9D1C',
       colorRgb: '255, 157, 28',
       showButton: false,
+      textAlign: 'right',
+      textPosition: 'right',
     },
-    // Frame 5: Fantasy Room - Vibes
+    // Frame 5: Fantasy - Vibes - text on right (character on left-center)
     {
       id: 'fantasy-vibes',
       video: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1786361396/frame5v_wtvs09.mp4',
@@ -71,10 +87,11 @@ function PremiumHero() {
       color: '#FF9D1C',
       colorRgb: '255, 157, 28',
       showButton: true,
-      buttonText: 'ENTER THE FANTASY ROOM',
-      buttonPath: '/rooms/fantasy',
+      buttonText: 'step in',
+      textAlign: 'right',
+      textPosition: 'right',
     },
-    // Frame 6: Philo Room - Questioning
+    // Frame 6: Philo - Questioning - text on right (bookshelf on left)
     {
       id: 'philo-questioning',
       video: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1786361397/frame6v_ijhpzm.mp4',
@@ -84,8 +101,10 @@ function PremiumHero() {
       color: '#B56DFF',
       colorRgb: '181, 109, 255',
       showButton: false,
+      textAlign: 'right',
+      textPosition: 'right',
     },
-    // Frame 7: Philo Room - Truth
+    // Frame 7: Philo - Truth - text on center (character bottom-left)
     {
       id: 'philo-truth',
       video: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1786361701/frame7vide_yp9dc4.mp4',
@@ -95,8 +114,9 @@ function PremiumHero() {
       color: '#B56DFF',
       colorRgb: '181, 109, 255',
       showButton: true,
-      buttonText: 'ENTER THE PHILO ROOM',
-      buttonPath: '/rooms/philo',
+      buttonText: 'step in',
+      textAlign: 'center',
+      textPosition: 'center',
     },
   ];
 
@@ -126,7 +146,8 @@ function PremiumHero() {
     if (newStep >= 0 && newStep < tourSteps.length) {
       setIsTransitioning(true);
       setCurrentStep(newStep);
-      setTimeout(() => setIsTransitioning(false), 800);
+      // Faster transition on mobile
+      setTimeout(() => setIsTransitioning(false), isMobile ? 400 : 800);
     }
   };
 
@@ -166,7 +187,7 @@ function PremiumHero() {
         } else if (e.deltaY < 0) {
           goToStep(-1);
         }
-      }, 150);
+      }, isMobile ? 50 : 150); // Faster on mobile
     };
 
     const container = containerRef.current;
@@ -180,16 +201,66 @@ function PremiumHero() {
         container.removeEventListener('wheel', handleWheel);
       }
     };
-  }, [currentStep, isTransitioning, tourSteps.length]);
+  }, [currentStep, isTransitioning, tourSteps.length, isMobile]);
+
+  // Touch swipe for mobile
+  useEffect(() => {
+    let touchStartY = 0;
+    let touchEndY = 0;
+
+    const handleTouchStart = (e) => {
+      touchStartY = e.touches[0].clientY;
+    };
+
+    const handleTouchEnd = (e) => {
+      touchEndY = e.changedTouches[0].clientY;
+      const diff = touchStartY - touchEndY;
+
+      if (Math.abs(diff) > 50) { // Minimum swipe distance
+        if (diff > 0) {
+          goToStep(1); // Swipe up = next
+        } else {
+          goToStep(-1); // Swipe down = previous
+        }
+      }
+    };
+
+    const container = containerRef.current;
+    if (container && isMobile) {
+      container.addEventListener('touchstart', handleTouchStart);
+      container.addEventListener('touchend', handleTouchEnd);
+    }
+
+    return () => {
+      if (container) {
+        container.removeEventListener('touchstart', handleTouchStart);
+        container.removeEventListener('touchend', handleTouchEnd);
+      }
+    };
+  }, [currentStep, isTransitioning, isMobile]);
 
   const currentStepData = tourSteps[currentStep];
   const isWelcome = currentStep === 0;
 
+  // Get positioning classes
+  const getPositionClasses = () => {
+    const position = currentStepData.textPosition;
+    if (position === 'left') {
+      return 'items-start justify-start pl-8 md:pl-16 lg:pl-24';
+    }
+    if (position === 'right') {
+      return 'items-end justify-end pr-8 md:pr-16 lg:pr-24';
+    }
+    return 'items-center justify-center';
+  };
+
   return (
     <div 
       ref={containerRef} 
-      className="relative h-screen overflow-hidden" 
+      className="relative overflow-hidden" 
       style={{ 
+        height: 'calc(100vh - 4rem)', // Offset for navbar
+        marginTop: '4rem', // Navbar height
         background: '#000000',
         fontFamily: 'var(--font-body)',
       }}
@@ -203,66 +274,50 @@ function PremiumHero() {
           loop
           muted
           playsInline
-          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
-            index === currentStep ? 'opacity-100 z-10' : 'opacity-0 z-0'
-          }`}
+          className={`absolute inset-0 w-full h-full object-cover transition-opacity ${
+            isMobile ? 'duration-500' : 'duration-1000'
+          } ${index === currentStep ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
         >
           <source src={step.video} type="video/mp4" />
         </video>
       ))}
 
-      {/* Dark overlay for better text visibility */}
+      {/* Dark overlay */}
       <div 
         className="absolute inset-0 pointer-events-none z-20"
         style={{
-          background: isWelcome
-            ? 'linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.6) 100%)'
-            : 'linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.7) 100%)',
+          background: 'linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.6) 100%)',
         }}
       />
 
       {/* Content Layer */}
-      <div className="relative z-30 h-full flex flex-col">
-        {/* Top: Logo */}
-        <div className="flex-shrink-0 pt-16 sm:pt-20 pb-4 px-4 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.5 }}
-          >
-            <EsoLogo 
-              className="h-8 sm:h-12 w-auto mx-auto" 
-              style={{ filter: 'drop-shadow(0 0 20px rgba(255, 255, 255, 0.3))' }} 
-            />
-          </motion.div>
-        </div>
-
+      <div className={`relative z-30 h-full flex flex-col ${getPositionClasses()}`}>
         {/* Center: Content */}
-        <div className="flex-1 flex items-center justify-center px-4 sm:px-8">
-          <div className="text-center max-w-4xl w-full">
+        <div className="flex-1 flex items-center w-full max-w-7xl px-4 sm:px-6">
+          <div className={`w-full max-w-2xl text-${currentStepData.textAlign}`}>
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentStep}
-                initial={{ opacity: 0, y: 40 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -40 }}
-                transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+                initial={{ opacity: 0, x: currentStepData.textPosition === 'left' ? -60 : currentStepData.textPosition === 'right' ? 60 : 0, y: 20 }}
+                animate={{ opacity: 1, x: 0, y: 0 }}
+                exit={{ opacity: 0, x: currentStepData.textPosition === 'left' ? -60 : currentStepData.textPosition === 'right' ? 60 : 0, y: -20 }}
+                transition={{ duration: isMobile ? 0.4 : 0.6, ease: [0.22, 1, 0.36, 1] }}
               >
                 {/* Title */}
                 <h1
-                  className={`font-light tracking-wide leading-none mb-3 ${
+                  className={`font-light tracking-wider leading-none mb-2 sm:mb-3 ${
                     isWelcome 
-                      ? 'text-8xl sm:text-9xl md:text-[10rem]' 
-                      : 'text-6xl sm:text-7xl md:text-8xl'
+                      ? 'text-7xl sm:text-8xl md:text-9xl lg:text-[10rem]' 
+                      : 'text-5xl sm:text-6xl md:text-7xl lg:text-8xl'
                   }`}
                   style={{
                     color: '#ffffff',
                     fontFamily: 'var(--font-heading)',
                     fontWeight: 300,
-                    letterSpacing: isWelcome ? '0.15em' : '0.1em',
+                    letterSpacing: isWelcome ? '0.2em' : '0.15em',
                     textShadow: currentStepData.color
-                      ? `0 0 8px ${currentStepData.color}30, 0 1px 3px rgba(0,0,0,0.7)`
-                      : '0 0 8px rgba(255,255,255,0.15), 0 1px 3px rgba(0,0,0,0.7)',
+                      ? `0 0 12px ${currentStepData.color}40, 0 2px 6px rgba(0,0,0,0.8)`
+                      : '0 0 12px rgba(255,255,255,0.2), 0 2px 6px rgba(0,0,0,0.8)',
                   }}
                 >
                   {currentStepData.title}
@@ -270,16 +325,16 @@ function PremiumHero() {
 
                 {/* Subtitle */}
                 <p
-                  className={`font-normal tracking-[0.3em] uppercase mb-2 ${
-                    isWelcome ? 'text-base sm:text-lg' : 'text-sm sm:text-base'
+                  className={`font-normal tracking-[0.35em] uppercase mb-1 sm:mb-2 ${
+                    isWelcome ? 'text-sm sm:text-base md:text-lg' : 'text-xs sm:text-sm md:text-base'
                   }`}
                   style={{
-                    color: currentStepData.color || 'rgba(255, 255, 255, 0.7)',
+                    color: currentStepData.color || 'rgba(255, 255, 255, 0.75)',
                     fontFamily: 'var(--font-body)',
                     fontWeight: 400,
                     textShadow: currentStepData.color 
-                      ? `0 0 6px ${currentStepData.color}25, 0 1px 2px rgba(0,0,0,0.6)`
-                      : '0 0 6px rgba(255, 255, 255, 0.12), 0 1px 2px rgba(0,0,0,0.6)',
+                      ? `0 0 8px ${currentStepData.color}30, 0 1px 3px rgba(0,0,0,0.7)`
+                      : '0 0 8px rgba(255, 255, 255, 0.15), 0 1px 3px rgba(0,0,0,0.7)',
                   }}
                 >
                   {currentStepData.subtitle}
@@ -288,12 +343,12 @@ function PremiumHero() {
                 {/* Description */}
                 {currentStepData.description && (
                   <p
-                    className="text-xs sm:text-sm font-light tracking-wider leading-relaxed mb-8"
+                    className="text-xs sm:text-sm font-light tracking-wide leading-relaxed mb-6"
                     style={{
                       color: 'rgba(255, 255, 255, 0.5)',
                       fontFamily: 'var(--font-body)',
                       fontWeight: 300,
-                      textShadow: '0 1px 2px rgba(0, 0, 0, 0.6)',
+                      textShadow: '0 1px 3px rgba(0, 0, 0, 0.7)',
                     }}
                   >
                     {currentStepData.description}
@@ -303,31 +358,31 @@ function PremiumHero() {
                 {/* Button */}
                 {currentStepData.showButton && (
                   <motion.button
-                    initial={{ opacity: 0, scale: 0.95 }}
+                    initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.5, delay: 0.4 }}
-                    onClick={() => navigate(currentStepData.buttonPath)}
-                    className="px-8 py-2.5 text-xs uppercase tracking-[0.35em] font-medium transition-all duration-500 mt-4"
+                    transition={{ duration: 0.4, delay: 0.3 }}
+                    onClick={() => navigate('/login')}
+                    className="px-6 py-2 text-xs uppercase tracking-[0.4em] font-medium transition-all duration-300 mt-3"
                     style={{
-                      backgroundColor: 'rgba(0, 0, 0, 0.3)',
+                      backgroundColor: 'rgba(0, 0, 0, 0.4)',
                       color: currentStepData.color || '#ffffff',
-                      border: `1px solid ${currentStepData.color || 'rgba(255, 255, 255, 0.25)'}`,
-                      backdropFilter: 'blur(10px)',
-                      boxShadow: `0 0 10px ${currentStepData.color}20, 0 2px 5px rgba(0,0,0,0.3)`,
+                      border: `1px solid ${currentStepData.color || 'rgba(255, 255, 255, 0.3)'}`,
+                      backdropFilter: 'blur(12px)',
+                      boxShadow: `0 0 15px ${currentStepData.color}25, 0 2px 8px rgba(0,0,0,0.4)`,
                       fontFamily: 'var(--font-body)',
                       fontWeight: 500,
-                      textShadow: `0 0 6px ${currentStepData.color}30`,
+                      textShadow: `0 0 8px ${currentStepData.color}40`,
                       cursor: 'pointer',
                     }}
                     onMouseEnter={(e) => {
-                      e.currentTarget.style.backgroundColor = `rgba(${currentStepData.colorRgb}, 0.15)`;
-                      e.currentTarget.style.transform = 'translateY(-3px) scale(1.03)';
-                      e.currentTarget.style.boxShadow = `0 0 20px ${currentStepData.color}35, 0 4px 10px rgba(0,0,0,0.4)`;
+                      e.currentTarget.style.backgroundColor = `rgba(${currentStepData.colorRgb}, 0.2)`;
+                      e.currentTarget.style.transform = 'translateY(-2px) scale(1.02)';
+                      e.currentTarget.style.boxShadow = `0 0 25px ${currentStepData.color}40, 0 4px 12px rgba(0,0,0,0.5)`;
                     }}
                     onMouseLeave={(e) => {
-                      e.currentTarget.style.backgroundColor = 'rgba(0, 0, 0, 0.3)';
+                      e.currentTarget.style.backgroundColor = 'rgba(0, 0, 0, 0.4)';
                       e.currentTarget.style.transform = 'translateY(0) scale(1)';
-                      e.currentTarget.style.boxShadow = `0 0 10px ${currentStepData.color}20, 0 2px 5px rgba(0,0,0,0.3)`;
+                      e.currentTarget.style.boxShadow = `0 0 15px ${currentStepData.color}25, 0 2px 8px rgba(0,0,0,0.4)`;
                     }}
                   >
                     {currentStepData.buttonText}
@@ -338,48 +393,37 @@ function PremiumHero() {
           </div>
         </div>
 
-        {/* Bottom: Progress & Navigation */}
-        <div className="flex-shrink-0 pb-8 px-4">
-          {/* Progress dots */}
-          <div className="flex justify-center gap-2 mb-3">
-            {tourSteps.map((_, index) => (
-              <div
-                key={index}
-                className="transition-all duration-300 cursor-pointer"
-                onClick={() => !isTransitioning && setCurrentStep(index)}
-                style={{
-                  width: index === currentStep ? '24px' : '6px',
-                  height: '6px',
-                  borderRadius: '3px',
-                  backgroundColor: index === currentStep 
-                    ? (currentStepData.color || 'rgba(255, 255, 255, 0.8)')
-                    : 'rgba(255, 255, 255, 0.2)',
-                  boxShadow: index === currentStep && currentStepData.color
-                    ? `0 0 8px ${currentStepData.color}40`
-                    : 'none',
-                }}
-              />
-            ))}
-          </div>
-
-          {/* Navigation hint */}
-          <motion.p
+        {/* Bottom: Scroll indicator */}
+        <div className="flex-shrink-0 pb-6 sm:pb-8 px-4 flex justify-center">
+          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 1.5 }}
-            className="text-center text-xs tracking-[0.3em] uppercase"
-            style={{ 
-              color: 'rgba(255, 255, 255, 0.2)',
-              fontFamily: 'var(--font-body)',
-              fontWeight: 400,
-            }}
+            className="flex flex-col items-center gap-2"
           >
-            {currentStep === 0 
-              ? 'scroll or use arrow keys to explore' 
-              : currentStep === tourSteps.length - 1 
-                ? 'scroll down to continue' 
-                : 'navigate with ← → or scroll'}
-          </motion.p>
+            <p
+              className="text-xs tracking-[0.35em] uppercase"
+              style={{ 
+                color: 'rgba(255, 255, 255, 0.25)',
+                fontFamily: 'var(--font-body)',
+                fontWeight: 400,
+              }}
+            >
+              {currentStep === tourSteps.length - 1 ? 'continue' : 'scroll'}
+            </p>
+            <motion.div
+              animate={{ y: [0, 8, 0] }}
+              transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
+            >
+              <ChevronDown 
+                size={20} 
+                style={{ 
+                  color: 'rgba(255, 255, 255, 0.25)',
+                  filter: 'drop-shadow(0 0 4px rgba(255, 255, 255, 0.15))'
+                }} 
+              />
+            </motion.div>
+          </motion.div>
         </div>
       </div>
     </div>
