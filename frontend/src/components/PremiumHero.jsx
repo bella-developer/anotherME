@@ -271,9 +271,8 @@ function PremiumHero() {
             isMobile ? 'duration-500' : 'duration-1000'
           } ${index === currentStep ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
           style={{
-            objectFit: 'cover',
-            // Zoom in significantly on all screens to prevent cropping
-            transform: isMobile ? 'scale(1.5)' : 'scale(1.4)',
+            objectFit: 'contain', // Changed from 'cover' to 'contain' to show full video
+            transform: 'scale(0.95)', // Zoom out to ensure nothing is cropped
             objectPosition: 'center center',
           }}
         >
