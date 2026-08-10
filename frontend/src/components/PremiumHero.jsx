@@ -20,13 +20,14 @@ function PremiumHero() {
 
   // Tour steps with narrative flow
   const tourSteps = [
-    // Step 0: Intro
+    // Step 0: Intro with video
     {
       type: 'intro',
-      title: 'WELCOME TO YOUR SAFE SPACE',
-      subtitle: 'unique peoples home • introverts • deep thinkers • philosophers',
+      title: 'ESO',
+      subtitle: 'your safe space to breathe',
       description: '',
       image: null,
+      video: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1786195982/darker_qq0jsj.mp4',
     },
     // Steps 1-8: Dark Room (8 frames)
     {
@@ -453,10 +454,23 @@ function PremiumHero() {
       className="relative h-screen overflow-hidden" 
       style={{ 
         background: 'linear-gradient(180deg, #000000 0%, #0a0a0f 100%)',
-        fontFamily: "'Rajdhani', sans-serif",
+        fontFamily: 'var(--font-body)',
         fontWeight: 400,
       }}
     >
+      {/* Video Background for Intro */}
+      {currentStep === 0 && tourSteps[0].video && (
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover"
+          style={{ zIndex: 1 }}
+        >
+          <source src={tourSteps[0].video} type="video/mp4" />
+        </video>
+      )}
       {/* Background Canvas - Only shown after intro */}
       {currentStep > 0 && (
         <>
@@ -468,11 +482,22 @@ function PremiumHero() {
           <div 
             className="absolute inset-0 pointer-events-none"
             style={{
-              background: 'linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.3) 40%, rgba(0,0,0,0.3) 60%, rgba(0,0,0,0.75) 100%)',
+              background: 'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.4) 40%, rgba(0,0,0,0.4) 60%, rgba(0,0,0,0.8) 100%)',
               zIndex: 2,
             }}
           />
         </>
+      )}
+
+      {/* Dark overlay for intro video */}
+      {currentStep === 0 && (
+        <div 
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background: 'linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.7) 100%)',
+            zIndex: 2,
+          }}
+        />
       )}
 
       {/* Fixed Content Layout */}
@@ -504,18 +529,21 @@ function PremiumHero() {
               >
                 {/* Main Title */}
                 <h2
-                  className={`text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-black mb-6 tracking-tighter leading-none cinematic-title glow-pulse ${
+                  className={`text-7xl sm:text-8xl md:text-9xl font-light mb-4 tracking-tight leading-none cinematic-title glow-pulse ${
                     currentStepData.type === 'dark' ? 'speed-blur-dark' :
                     currentStepData.type === 'fantasy' ? 'speed-blur-fantasy' :
                     currentStepData.type === 'philo' ? 'speed-blur-philo' :
-                    'speed-blur-text'
+                    ''
                   }`}
                   style={{
                     color: '#ffffff',
-                    fontFamily: "'Bebas Neue', 'Orbitron', sans-serif",
-                    fontWeight: 900,
-                    letterSpacing: '0.02em',
+                    fontFamily: 'var(--font-heading)',
+                    fontWeight: 300,
+                    letterSpacing: '0.15em',
                     textTransform: 'uppercase',
+                    textShadow: currentStepData.color
+                      ? `0 0 10px ${currentStepData.color}40, 0 1px 4px rgba(0,0,0,0.6)`
+                      : '0 0 10px rgba(255,255,255,0.2), 0 1px 4px rgba(0,0,0,0.6)',
                   }}
                 >
                   {currentStepData.title}
@@ -523,16 +551,15 @@ function PremiumHero() {
 
                 {/* Subtitle */}
                 <p
-                  className="text-2xl sm:text-3xl md:text-4xl font-medium mb-5 neon-text cinematic-subtitle"
+                  className="text-sm sm:text-base md:text-lg font-normal tracking-[0.3em] uppercase neon-text cinematic-subtitle"
                   style={{
-                    color: currentStepData.color || 'rgba(255, 255, 255, 0.95)',
-                    fontFamily: "'Rajdhani', 'Teko', sans-serif",
-                    fontWeight: 600,
-                    letterSpacing: '0.08em',
-                    textTransform: 'lowercase',
+                    color: currentStepData.color || 'rgba(255, 255, 255, 0.75)',
+                    fontFamily: 'var(--font-body)',
+                    fontWeight: 400,
+                    letterSpacing: '0.3em',
                     textShadow: currentStepData.color 
-                      ? `0 0 20px ${currentStepData.color}80, 0 0 40px ${currentStepData.color}40`
-                      : '0 0 20px rgba(255, 255, 255, 0.5)',
+                      ? `0 0 6px ${currentStepData.color}30, 0 1px 3px rgba(0,0,0,0.5)`
+                      : '0 0 6px rgba(255, 255, 255, 0.15), 0 1px 3px rgba(0,0,0,0.5)',
                   }}
                 >
                   {currentStepData.subtitle}
@@ -541,13 +568,13 @@ function PremiumHero() {
                 {/* Description - Only show if not empty */}
                 {currentStepData.description && (
                   <p
-                    className="text-lg sm:text-xl md:text-2xl font-normal mb-12 leading-relaxed cinematic-description"
+                    className="text-xs sm:text-sm md:text-base font-normal leading-relaxed cinematic-description mt-3"
                     style={{
-                      color: 'rgba(255, 255, 255, 0.75)',
-                      fontFamily: "'Rajdhani', sans-serif",
-                      fontWeight: 400,
+                      color: 'rgba(255, 255, 255, 0.6)',
+                      fontFamily: 'var(--font-body)',
+                      fontWeight: 300,
                       letterSpacing: '0.05em',
-                      textShadow: '0 2px 20px rgba(0, 0, 0, 0.9)',
+                      textShadow: '0 1px 3px rgba(0, 0, 0, 0.6)',
                     }}
                   >
                     {currentStepData.description}
@@ -560,26 +587,25 @@ function PremiumHero() {
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
                     onClick={() => navigate('/login')}
-                    className="px-14 py-6 text-base uppercase tracking-[0.25em] font-bold transition-all duration-500 mt-6 cinematic-button"
+                    className="px-10 py-3 text-xs uppercase tracking-[0.4em] font-medium transition-all duration-500 mt-8 cinematic-button"
                     style={{
-                      backgroundColor: 'rgba(0, 0, 0, 0.6)',
+                      backgroundColor: 'rgba(0, 0, 0, 0.4)',
                       color: currentStepData.color || '#ffffff',
                       border: currentStepData.color 
-                        ? `3px solid ${currentStepData.color}`
-                        : '3px solid rgba(255, 255, 255, 0.5)',
+                        ? `1px solid ${currentStepData.color}`
+                        : '1px solid rgba(255, 255, 255, 0.3)',
                       borderRadius: '0',
-                      backdropFilter: 'blur(30px)',
+                      backdropFilter: 'blur(15px)',
                       boxShadow: currentStepData.color
-                        ? `0 0 40px ${currentStepData.color}40, inset 0 0 20px ${currentStepData.color}20`
-                        : '0 0 40px rgba(255, 255, 255, 0.2)',
-                      fontFamily: "'Bebas Neue', 'Orbitron', sans-serif",
-                      fontWeight: 700,
-                      letterSpacing: '0.3em',
-                      fontSize: '1.1rem',
+                        ? `0 0 12px ${currentStepData.color}25, 0 2px 6px rgba(0,0,0,0.3)`
+                        : '0 0 12px rgba(255, 255, 255, 0.12), 0 2px 6px rgba(0,0,0,0.3)',
+                      fontFamily: 'var(--font-body)',
+                      fontWeight: 500,
+                      letterSpacing: '0.4em',
+                      fontSize: '0.75rem',
                       textShadow: currentStepData.color
-                        ? `0 0 10px ${currentStepData.color}`
-                        : '0 0 10px rgba(255, 255, 255, 0.8)',
-                      filter: 'brightness(1.1) contrast(1.1)',
+                        ? `0 0 6px ${currentStepData.color}30`
+                        : '0 0 6px rgba(255, 255, 255, 0.2)',
                       cursor: 'pointer',
                     }}
                   >
@@ -600,10 +626,11 @@ function PremiumHero() {
             transition={{ duration: 1, delay: 1.5 }}
             className="text-center text-xs tracking-[0.3em] uppercase"
             style={{ 
-              color: 'rgba(255, 255, 255, 0.3)',
-              fontFamily: "'Rajdhani', sans-serif",
-              fontWeight: 500,
+              color: 'rgba(255, 255, 255, 0.2)',
+              fontFamily: 'var(--font-body)',
+              fontWeight: 400,
               letterSpacing: '0.3em',
+              textShadow: 'none',
             }}
           >
             {currentStep === 0 ? 'scroll or use arrow keys to begin' : currentStep === tourSteps.length - 1 ? 'scroll down to continue' : 'navigate with ← → or scroll'}
@@ -621,18 +648,18 @@ function PremiumHero() {
           >
             <EsoLogo 
               className="h-20 sm:h-24 w-auto mb-8" 
-              style={{ filter: 'drop-shadow(0 0 40px rgba(255, 255, 255, 0.4))' }} 
+              style={{ filter: 'drop-shadow(0 0 20px rgba(255, 255, 255, 0.3))' }} 
             />
           </motion.div>
           <motion.p 
             initial={{ opacity: 0 }}
-            animate={{ opacity: [0.4, 0.8, 0.4] }}
+            animate={{ opacity: [0.3, 0.7, 0.3] }}
             transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-            className="text-base tracking-[0.3em] uppercase" 
+            className="text-sm tracking-[0.3em] uppercase" 
             style={{ 
-              color: 'rgba(255, 255, 255, 0.6)',
-              fontFamily: "'Rajdhani', sans-serif",
-              fontWeight: 500,
+              color: 'rgba(255, 255, 255, 0.5)',
+              fontFamily: 'var(--font-body)',
+              fontWeight: 400,
               letterSpacing: '0.3em',
             }}
           >
