@@ -354,11 +354,12 @@ function Home() {
                           playsInline
                           style={{
                             position: 'absolute',
-                            top: 0,
-                            left: 0,
+                            top: '50%',
+                            left: '50%',
                             width: '100%',
                             height: '100%',
-                            objectFit: 'cover',
+                            objectFit: 'cover', // Fill the circle completely
+                            transform: 'translate(-50%, -50%)',
                             display: 'block',
                             filter: hovered === room.id 
                               ? 'brightness(1.1) contrast(1.1)' 

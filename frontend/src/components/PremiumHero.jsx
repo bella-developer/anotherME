@@ -252,8 +252,8 @@ function PremiumHero() {
       ref={containerRef} 
       className="relative overflow-hidden" 
       style={{ 
-        height: '100vh',
-        marginTop: '3rem', // Reduced from 4rem to match smaller navbar
+        height: 'calc(100vh - 3rem)', // Subtract navbar height for perfect alignment
+        marginTop: '3rem', // Match navbar height exactly
         background: '#000000',
         fontFamily: 'var(--font-body)',
       }}
@@ -291,7 +291,7 @@ function PremiumHero() {
       <div className="relative z-30 h-full flex flex-col items-center justify-center">
         {/* Center: Content */}
         <div className="flex-1 flex items-center justify-center w-full px-4 sm:px-6">
-          <div className="w-full max-w-3xl text-center sm:text-right sm:ml-auto lg:mr-6 xl:mr-12">
+          <div className="w-full max-w-3xl text-center lg:text-left lg:ml-6 xl:ml-12">
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentStep}
