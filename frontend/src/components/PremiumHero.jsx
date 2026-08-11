@@ -35,6 +35,8 @@ function PremiumHero() {
       subtitle: 'your safe space to breathe',
       description: '',
       showButton: false,
+      // Mobile focal point - human sits lower-center
+      mobileFocalPoint: 'center 55%',
     },
     // Frame 2: Dark - Confession
     {
@@ -46,6 +48,7 @@ function PremiumHero() {
       color: '#2EE6FF',
       colorRgb: '46, 230, 255',
       showButton: false,
+      mobileFocalPoint: 'center 50%',
     },
     // Frame 3: Dark - Understanding
     {
@@ -58,6 +61,7 @@ function PremiumHero() {
       colorRgb: '46, 230, 255',
       showButton: true,
       buttonText: 'step in',
+      mobileFocalPoint: 'center 45%',
     },
     // Frame 4: Fantasy - Daydreaming
     {
@@ -69,6 +73,7 @@ function PremiumHero() {
       color: '#FF9D1C',
       colorRgb: '255, 157, 28',
       showButton: false,
+      mobileFocalPoint: 'center 50%',
     },
     // Frame 5: Fantasy - Vibes
     {
@@ -81,6 +86,7 @@ function PremiumHero() {
       colorRgb: '255, 157, 28',
       showButton: true,
       buttonText: 'step in',
+      mobileFocalPoint: 'center 50%',
     },
     // Frame 6: Philo - Questioning
     {
@@ -92,6 +98,7 @@ function PremiumHero() {
       color: '#B56DFF',
       colorRgb: '181, 109, 255',
       showButton: false,
+      mobileFocalPoint: 'center 50%',
     },
     // Frame 7: Philo - Truth
     {
@@ -104,6 +111,7 @@ function PremiumHero() {
       colorRgb: '181, 109, 255',
       showButton: true,
       buttonText: 'step in',
+      mobileFocalPoint: 'center 60%',
     },
   ];
 
