@@ -235,19 +235,24 @@ function PremiumHero() {
       className="relative overflow-hidden" 
       style={{ 
         minHeight: '100vh',
-        paddingTop: '3.5rem', // Match navbar height
+        height: '100vh',
+        paddingTop: isMobile ? '56px' : '56px', // Navbar height - no extra space
         background: '#000000',
         fontFamily: 'var(--font-body)',
       }}
     >
-      {/* Video Backgrounds - Using contain to prevent cropping */}
+      {/* Video Backgrounds - Optimized for mobile and desktop */}
       {tourSteps.map((step, index) => (
         <div
           key={step.id}
-          className={`absolute inset-0 w-full h-full transition-opacity ${
+          className={`absolute transition-opacity ${
             isMobile ? 'duration-500' : 'duration-1000'
           } ${index === currentStep ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
           style={{
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
             backgroundColor: '#000000',
             display: 'flex',
             alignItems: 'center',
@@ -262,8 +267,8 @@ function PremiumHero() {
             playsInline
             className="w-full h-full"
             style={{
-              // Use contain on mobile to show full video, cover on desktop for immersion
-              objectFit: isMobile ? 'contain' : 'cover',
+              // Mobile: cover to fill viewport, Desktop: cover for immersion
+              objectFit: 'cover',
               objectPosition: 'center center',
               willChange: 'opacity',
             }}
@@ -281,11 +286,19 @@ function PremiumHero() {
         }}
       />
 
-      {/* Content Layer - CONSISTENT CENTER ALIGNMENT */}
-      <div className="relative z-30 min-h-screen flex flex-col items-center justify-center py-12 md:py-20 px-4 sm:px-6">
+      {/* Content Layer - Optimized positioning */}
+      <div className="relative z-30 h-full flex flex-col items-center justify-center px-4 sm:px-6">
         {/* Content */}
         <div className="flex-1 flex items-center justify-center w-full max-w-4xl mx-auto">
-          <div className="w-full text-center">
+          {/* Desktop: slight right offset, Mobile: center */}
+          <div 
+            className="w-full text-center"
+            style={{
+              // Subtle right shift on desktop for visual interest
+              marginLeft: isMobile ? '0' : '5%',
+              marginRight: isMobile ? '0' : '-5%',
+            }}
+          >
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentStep}
@@ -297,18 +310,22 @@ function PremiumHero() {
                 {/* Title - Logo for welcome, text for others */}
                 {isWelcome ? (
                   <motion.div 
-                    className="flex justify-center mb-4"
+                    className="flex justify-center mb-3 md:mb-4"
                     initial={{ scale: 0.9 }}
                     animate={{ scale: 1 }}
                     transition={{ duration: 0.8 }}
                   >
-                    <EsoLogo className="h-20 sm:h-24 md:h-28 lg:h-32 w-auto" style={{
+                    <EsoLogo className={`w-auto ${isMobile ? 'h-16' : 'h-20 sm:h-24 md:h-28 lg:h-32'}`} style={{
                       filter: 'drop-shadow(0 0 12px rgba(255,255,255,0.3))',
                     }} />
                   </motion.div>
                 ) : (
                   <h1
-                    className="font-light tracking-wider leading-none mb-3 text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl"
+                    className={`font-light tracking-wider leading-none mb-2 md:mb-3 ${
+                      isMobile 
+                        ? 'text-3xl' 
+                        : 'text-4xl sm:text-5xl md:text-6xl lg:text-7xl'
+                    }`}
                     style={{
                       color: '#ffffff',
                       fontFamily: 'var(--font-heading)',
@@ -325,8 +342,10 @@ function PremiumHero() {
 
                 {/* Subtitle */}
                 <p
-                  className={`font-normal tracking-[0.35em] uppercase mb-2 ${
-                    isWelcome ? 'text-sm sm:text-base md:text-lg' : 'text-xs sm:text-sm md:text-base'
+                  className={`font-normal tracking-[0.35em] uppercase mb-1 md:mb-2 ${
+                    isMobile
+                      ? isWelcome ? 'text-xs' : 'text-[10px]'
+                      : isWelcome ? 'text-sm sm:text-base md:text-lg' : 'text-xs sm:text-sm md:text-base'
                   }`}
                   style={{
                     color: currentStepData.color || 'rgba(255, 255, 255, 0.85)',
@@ -343,7 +362,11 @@ function PremiumHero() {
                 {/* Description */}
                 {currentStepData.description && (
                   <p
-                    className="text-sm sm:text-base md:text-lg font-light tracking-wide leading-relaxed mb-6"
+                    className={`font-light tracking-wide leading-relaxed ${
+                      isMobile 
+                        ? 'text-xs mb-4' 
+                        : 'text-sm sm:text-base md:text-lg mb-6'
+                    }`}
                     style={{
                       color: 'rgba(255, 255, 255, 0.6)',
                       fontFamily: 'var(--font-body)',
@@ -362,7 +385,11 @@ function PremiumHero() {
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.4, delay: 0.3 }}
                     onClick={() => navigate('/login')}
-                    className="px-8 py-3 text-xs sm:text-sm uppercase tracking-[0.3em] font-medium transition-all duration-300 mt-6 min-h-[44px] rounded-sm inline-flex items-center justify-center"
+                    className={`uppercase tracking-[0.3em] font-medium transition-all duration-300 rounded-sm inline-flex items-center justify-center ${
+                      isMobile 
+                        ? 'px-6 py-2.5 text-xs mt-4 min-h-[44px]' 
+                        : 'px-8 py-3 text-xs sm:text-sm mt-5 min-h-[44px]'
+                    }`}
                     style={{
                       backgroundColor: 'rgba(0, 0, 0, 0.7)',
                       color: currentStepData.color || '#ffffff',
@@ -375,14 +402,18 @@ function PremiumHero() {
                       cursor: 'pointer',
                     }}
                     onMouseEnter={(e) => {
-                      e.currentTarget.style.backgroundColor = `rgba(${currentStepData.colorRgb}, 0.3)`;
-                      e.currentTarget.style.transform = 'translateY(-2px) scale(1.02)';
-                      e.currentTarget.style.boxShadow = `0 0 30px ${currentStepData.color}50, 0 6px 16px rgba(0,0,0,0.9), inset 0 1px 0 rgba(255,255,255,0.2)`;
+                      if (!isMobile) {
+                        e.currentTarget.style.backgroundColor = `rgba(${currentStepData.colorRgb}, 0.3)`;
+                        e.currentTarget.style.transform = 'translateY(-2px) scale(1.02)';
+                        e.currentTarget.style.boxShadow = `0 0 30px ${currentStepData.color}50, 0 6px 16px rgba(0,0,0,0.9), inset 0 1px 0 rgba(255,255,255,0.2)`;
+                      }
                     }}
                     onMouseLeave={(e) => {
-                      e.currentTarget.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
-                      e.currentTarget.style.transform = 'translateY(0) scale(1)';
-                      e.currentTarget.style.boxShadow = `0 0 20px ${currentStepData.color}30, 0 4px 12px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.15)`;
+                      if (!isMobile) {
+                        e.currentTarget.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
+                        e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                        e.currentTarget.style.boxShadow = `0 0 20px ${currentStepData.color}30, 0 4px 12px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.15)`;
+                      }
                     }}
                   >
                     {currentStepData.buttonText}
@@ -393,18 +424,18 @@ function PremiumHero() {
           </div>
         </div>
 
-        {/* Bottom: Scroll indicator */}
-        <div className="flex-shrink-0 pb-8 px-4 flex justify-center">
+        {/* Bottom: Scroll indicator - Minimal spacing */}
+        <div className={`flex-shrink-0 flex justify-center ${isMobile ? 'pb-4' : 'pb-6'}`}>
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 1.5 }}
-            className="flex flex-col items-center gap-2"
+            className="flex flex-col items-center gap-1"
           >
             <p
-              className="text-xs tracking-[0.35em] uppercase"
+              className={`tracking-[0.35em] uppercase ${isMobile ? 'text-[10px]' : 'text-xs'}`}
               style={{ 
-                color: 'rgba(255, 255, 255, 0.4)',
+                color: 'rgba(255, 255, 255, 0.5)',
                 fontFamily: 'var(--font-body)',
                 fontWeight: 400,
                 textShadow: '0 1px 3px rgba(0, 0, 0, 0.8)',
@@ -413,13 +444,13 @@ function PremiumHero() {
               {currentStep === tourSteps.length - 1 ? 'continue' : 'scroll'}
             </p>
             <motion.div
-              animate={{ y: [0, 8, 0] }}
+              animate={{ y: [0, 6, 0] }}
               transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
             >
               <ChevronDown 
-                size={24} 
+                size={isMobile ? 20 : 24} 
                 style={{ 
-                  color: 'rgba(255, 255, 255, 0.4)',
+                  color: 'rgba(255, 255, 255, 0.5)',
                   filter: 'drop-shadow(0 0 6px rgba(255, 255, 255, 0.2))'
                 }} 
               />
