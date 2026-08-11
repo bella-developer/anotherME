@@ -241,7 +241,7 @@ function PremiumHero() {
         fontFamily: 'var(--font-body)',
       }}
     >
-      {/* Video Backgrounds - Optimized display */}
+      {/* Video Backgrounds - Professional safe zone technique */}
       {tourSteps.map((step, index) => (
         <div
           key={step.id}
@@ -254,9 +254,6 @@ function PremiumHero() {
             right: 0,
             bottom: 0,
             backgroundColor: '#000000',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
             overflow: 'hidden',
           }}
         >
@@ -267,13 +264,22 @@ function PremiumHero() {
             muted
             playsInline
             style={{
-              width: '100%',
-              height: '100%',
-              // Use cover to fill screen, but adjust positioning for better framing
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              // Mobile: Scale up less aggressively to show more content
+              // Desktop: Full coverage
+              minWidth: isMobile ? '100%' : '100%',
+              minHeight: isMobile ? '100%' : '100%',
+              width: isMobile ? '177.78vh' : 'auto', // 16:9 ratio calculation
+              height: isMobile ? 'auto' : 'auto',
+              maxWidth: isMobile ? 'none' : 'none',
               objectFit: 'cover',
-              // Mobile: show more of the middle content
-              objectPosition: isMobile ? 'center 45%' : 'center center',
+              objectPosition: 'center center',
               willChange: 'opacity',
+              // Slightly scale down on mobile to show more of the frame
+              scale: isMobile ? '0.95' : '1',
             }}
           >
             <source src={step.video} type="video/mp4" />
