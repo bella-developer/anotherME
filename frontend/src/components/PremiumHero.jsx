@@ -271,8 +271,7 @@ function PremiumHero() {
             isMobile ? 'duration-500' : 'duration-1000'
           } ${index === currentStep ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
           style={{
-            objectFit: 'contain', // Changed from 'cover' to 'contain' to show full video
-            transform: 'scale(0.95)', // Zoom out to ensure nothing is cropped
+            objectFit: 'contain', // Show full video without cropping
             objectPosition: 'center center',
           }}
         >
@@ -289,24 +288,24 @@ function PremiumHero() {
       />
 
       {/* Content Layer */}
-      <div className="relative z-30 h-full flex flex-col items-end justify-end pr-4 sm:pr-8 md:pr-16 lg:pr-24">
+      <div className="relative z-30 h-full flex flex-col items-center justify-center">
         {/* Center: Content */}
-        <div className="flex-1 flex items-center justify-end w-full px-4 sm:px-6">
-          <div className="w-full max-w-xl lg:max-w-2xl text-right">
+        <div className="flex-1 flex items-center justify-center w-full px-4 sm:px-6">
+          <div className="w-full max-w-3xl text-center">
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentStep}
-                initial={{ opacity: 0, x: 60, y: 20 }}
-                animate={{ opacity: 1, x: 0, y: 0 }}
-                exit={{ opacity: 0, x: 60, y: -20 }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: isMobile ? 0.4 : 0.6, ease: [0.22, 1, 0.36, 1] }}
               >
                 {/* Title */}
                 <h1
                   className={`font-light tracking-wider leading-none mb-2 sm:mb-3 ${
                     isWelcome 
-                      ? 'text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl' 
-                      : 'text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl'
+                      ? 'text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl' 
+                      : 'text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl'
                   }`}
                   style={{
                     color: '#ffffff',
@@ -324,7 +323,7 @@ function PremiumHero() {
                 {/* Subtitle */}
                 <p
                   className={`font-normal tracking-[0.35em] uppercase mb-1 sm:mb-2 ${
-                    isWelcome ? 'text-[10px] sm:text-xs md:text-sm lg:text-base' : 'text-[9px] sm:text-[10px] md:text-xs lg:text-sm'
+                    isWelcome ? 'text-xs sm:text-sm md:text-base lg:text-lg' : 'text-[10px] sm:text-xs md:text-sm lg:text-base'
                   }`}
                   style={{
                     color: currentStepData.color || 'rgba(255, 255, 255, 0.75)',
@@ -341,7 +340,7 @@ function PremiumHero() {
                 {/* Description */}
                 {currentStepData.description && (
                   <p
-                    className="text-[9px] sm:text-[10px] md:text-xs font-light tracking-wide leading-relaxed mb-4 sm:mb-6"
+                    className="text-xs sm:text-sm md:text-base font-light tracking-wide leading-relaxed mb-4 sm:mb-6"
                     style={{
                       color: 'rgba(255, 255, 255, 0.5)',
                       fontFamily: 'var(--font-body)',
@@ -360,7 +359,7 @@ function PremiumHero() {
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.4, delay: 0.3 }}
                     onClick={() => navigate('/login')}
-                    className="px-4 sm:px-5 py-1.5 text-[9px] sm:text-[10px] uppercase tracking-[0.4em] font-medium transition-all duration-300 mt-2 sm:mt-3"
+                    className="px-6 sm:px-8 py-2 text-xs sm:text-sm uppercase tracking-[0.4em] font-medium transition-all duration-300 mt-2 sm:mt-3"
                     style={{
                       backgroundColor: 'rgba(0, 0, 0, 0.4)',
                       color: currentStepData.color || '#ffffff',
