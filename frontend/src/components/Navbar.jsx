@@ -52,7 +52,7 @@ function Navbar() {
 
   return (
     <nav 
-      className="fixed top-0 left-0 right-0 z-50 h-16"
+      className="fixed top-0 left-0 right-0 z-50 h-12"
       style={{ 
         background: 'rgba(0, 0, 0, 0.85)', 
         backdropFilter: 'blur(20px)',
@@ -70,7 +70,7 @@ function Navbar() {
             className="flex items-center focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-black rounded p-1"
             aria-label="ESO home"
           >
-            <EsoLogo className="h-12 w-auto" />
+            <EsoLogo className="h-10 w-auto" />
           </Link>
 
           {/* Desktop Navigation Links */}

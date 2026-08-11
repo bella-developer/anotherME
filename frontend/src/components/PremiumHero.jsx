@@ -253,7 +253,7 @@ function PremiumHero() {
       className="relative overflow-hidden" 
       style={{ 
         height: '100vh',
-        marginTop: '4rem', // Push section below navbar
+        marginTop: '3rem', // Reduced from 4rem to match smaller navbar
         background: '#000000',
         fontFamily: 'var(--font-body)',
       }}
@@ -271,7 +271,7 @@ function PremiumHero() {
             isMobile ? 'duration-500' : 'duration-1000'
           } ${index === currentStep ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
           style={{
-            objectFit: 'cover', // Fill screen completely
+            objectFit: isMobile ? 'contain' : 'cover', // contain on mobile to prevent crop, cover on desktop
             objectPosition: 'center center',
           }}
         >
@@ -291,7 +291,7 @@ function PremiumHero() {
       <div className="relative z-30 h-full flex flex-col items-center justify-center">
         {/* Center: Content */}
         <div className="flex-1 flex items-center justify-center w-full px-4 sm:px-6">
-          <div className="w-full max-w-3xl text-center sm:text-right sm:ml-auto sm:mr-6 md:mr-12 lg:mr-20">
+          <div className="w-full max-w-3xl text-center sm:text-right sm:ml-auto lg:mr-6 xl:mr-12">
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentStep}
@@ -304,8 +304,8 @@ function PremiumHero() {
                 <h1
                   className={`font-light tracking-wider leading-none mb-2 sm:mb-3 ${
                     isWelcome 
-                      ? 'text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl' 
-                      : 'text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl'
+                      ? 'text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl' 
+                      : 'text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl'
                   }`}
                   style={{
                     color: '#ffffff',
