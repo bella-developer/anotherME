@@ -241,7 +241,7 @@ function PremiumHero() {
         fontFamily: 'var(--font-body)',
       }}
     >
-      {/* Video Backgrounds - Full display optimization */}
+      {/* Video Backgrounds - Optimized display */}
       {tourSteps.map((step, index) => (
         <div
           key={step.id}
@@ -267,11 +267,12 @@ function PremiumHero() {
             muted
             playsInline
             style={{
-              // Mobile: contain to show full video with letterbox, Desktop: cover for immersion
               width: '100%',
               height: '100%',
-              objectFit: isMobile ? 'contain' : 'cover',
-              objectPosition: 'center center',
+              // Use cover to fill screen, but adjust positioning for better framing
+              objectFit: 'cover',
+              // Mobile: show more of the middle content
+              objectPosition: isMobile ? 'center 45%' : 'center center',
               willChange: 'opacity',
             }}
           >
