@@ -336,7 +336,7 @@ function Home() {
                           left: '14px',
                           right: '14px',
                           bottom: '14px',
-                          backgroundColor: '#000000',
+                          backgroundColor: room.id === 'dark' ? '#8B0000' : room.id === 'fantasy' ? '#FF6B00' : '#6B0DAD', // blood-red, vibrant deep orange, deep purple
                           border: `1px solid rgba(${room.glowColorRGB}, ${hovered === room.id ? 0.4 : 0.2})`,
                           boxShadow: `
                             inset 0 0 40px rgba(${room.glowColorRGB}, 0.15),

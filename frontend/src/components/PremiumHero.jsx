@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { ChevronDown } from 'lucide-react';
+import EsoLogo from './EsoLogo';
 
 /**
  * Premium Cinematic Hero - Video-Based UI Tour
@@ -252,8 +253,8 @@ function PremiumHero() {
       ref={containerRef} 
       className="relative overflow-hidden" 
       style={{ 
-        height: 'calc(100vh - 3rem)', // Subtract navbar height for perfect alignment
-        marginTop: '3rem', // Match navbar height exactly
+        height: 'calc(100vh - 2.5rem)', // Match reduced navbar height
+        marginTop: '2.5rem', // Match navbar
         background: '#000000',
         fontFamily: 'var(--font-body)',
       }}
@@ -271,7 +272,7 @@ function PremiumHero() {
             isMobile ? 'duration-500' : 'duration-1000'
           } ${index === currentStep ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
           style={{
-            objectFit: isMobile ? 'contain' : 'cover', // contain on mobile to prevent crop, cover on desktop
+            objectFit: 'cover', // Fill screen on all devices
             objectPosition: 'center center',
           }}
         >
@@ -291,7 +292,7 @@ function PremiumHero() {
       <div className="relative z-30 h-full flex flex-col items-center justify-center">
         {/* Center: Content */}
         <div className="flex-1 flex items-center justify-center w-full px-4 sm:px-6">
-          <div className="w-full max-w-3xl text-center lg:text-left lg:ml-6 xl:ml-12">
+          <div className="w-full max-w-3xl text-center lg:text-left lg:ml-[45%]">
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentStep}
@@ -300,25 +301,29 @@ function PremiumHero() {
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: isMobile ? 0.4 : 0.6, ease: [0.22, 1, 0.36, 1] }}
               >
-                {/* Title */}
-                <h1
-                  className={`font-light tracking-wider leading-none mb-2 sm:mb-3 ${
-                    isWelcome 
-                      ? 'text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl' 
-                      : 'text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl'
-                  }`}
-                  style={{
-                    color: '#ffffff',
-                    fontFamily: 'var(--font-heading)',
-                    fontWeight: 300,
-                    letterSpacing: isWelcome ? '0.2em' : '0.15em',
-                    textShadow: currentStepData.color
-                      ? `0 0 12px ${currentStepData.color}40, 0 2px 6px rgba(0,0,0,0.8)`
-                      : '0 0 12px rgba(255,255,255,0.2), 0 2px 6px rgba(0,0,0,0.8)',
-                  }}
-                >
-                  {currentStepData.title}
-                </h1>
+                {/* Title - Logo for welcome, text for others */}
+                {isWelcome ? (
+                  <div className="flex justify-center lg:justify-start mb-3">
+                    <EsoLogo className="h-16 sm:h-20 md:h-24 lg:h-28 w-auto" style={{
+                      filter: 'drop-shadow(0 0 12px rgba(255,255,255,0.3))',
+                    }} />
+                  </div>
+                ) : (
+                  <h1
+                    className="font-light tracking-wider leading-none mb-2 sm:mb-3 text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl"
+                    style={{
+                      color: '#ffffff',
+                      fontFamily: 'var(--font-heading)',
+                      fontWeight: 300,
+                      letterSpacing: '0.15em',
+                      textShadow: currentStepData.color
+                        ? `0 0 12px ${currentStepData.color}40, 0 2px 6px rgba(0,0,0,0.8)`
+                        : '0 0 12px rgba(255,255,255,0.2), 0 2px 6px rgba(0,0,0,0.8)',
+                    }}
+                  >
+                    {currentStepData.title}
+                  </h1>
+                )}
 
                 {/* Subtitle */}
                 <p
