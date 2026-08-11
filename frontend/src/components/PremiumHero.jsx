@@ -25,9 +25,9 @@ function PremiumHero() {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  // Tour steps with videos, minimal content, and positioning
+  // Tour steps with videos - CONSISTENT CENTER ALIGNMENT
   const tourSteps = [
-    // Frame 1: Welcome - text on right (character on left)
+    // Frame 1: Welcome
     {
       id: 'welcome',
       video: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1786352472/frame1vid_oububm.mp4',
@@ -35,10 +35,8 @@ function PremiumHero() {
       subtitle: 'your safe space to breathe',
       description: '',
       showButton: false,
-      textAlign: 'right',
-      textPosition: 'right',
     },
-    // Frame 2: Dark - Confession - text on left (character on right)
+    // Frame 2: Dark - Confession
     {
       id: 'dark-confession',
       video: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1786357230/frae2video_qmhpf7.mp4',
@@ -48,10 +46,8 @@ function PremiumHero() {
       color: '#2EE6FF',
       colorRgb: '46, 230, 255',
       showButton: false,
-      textAlign: 'left',
-      textPosition: 'left',
     },
-    // Frame 3: Dark - Understanding - text on center (characters scattered)
+    // Frame 3: Dark - Understanding
     {
       id: 'dark-understanding',
       video: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1786358832/frame3vid_1_hjyi09.mp4',
@@ -62,10 +58,8 @@ function PremiumHero() {
       colorRgb: '46, 230, 255',
       showButton: true,
       buttonText: 'step in',
-      textAlign: 'center',
-      textPosition: 'center',
     },
-    // Frame 4: Fantasy - Daydreaming - text on right (character on left)
+    // Frame 4: Fantasy - Daydreaming
     {
       id: 'fantasy-daydream',
       video: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1786361397/frame4videoo_hizhue.mp4',
@@ -75,10 +69,8 @@ function PremiumHero() {
       color: '#FF9D1C',
       colorRgb: '255, 157, 28',
       showButton: false,
-      textAlign: 'right',
-      textPosition: 'right',
     },
-    // Frame 5: Fantasy - Vibes - text on right (character on left-center)
+    // Frame 5: Fantasy - Vibes
     {
       id: 'fantasy-vibes',
       video: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1786361396/frame5v_wtvs09.mp4',
@@ -89,10 +81,8 @@ function PremiumHero() {
       colorRgb: '255, 157, 28',
       showButton: true,
       buttonText: 'step in',
-      textAlign: 'right',
-      textPosition: 'right',
     },
-    // Frame 6: Philo - Questioning - text on right (bookshelf on left)
+    // Frame 6: Philo - Questioning
     {
       id: 'philo-questioning',
       video: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1786361397/frame6v_ijhpzm.mp4',
@@ -102,10 +92,8 @@ function PremiumHero() {
       color: '#B56DFF',
       colorRgb: '181, 109, 255',
       showButton: false,
-      textAlign: 'right',
-      textPosition: 'right',
     },
-    // Frame 7: Philo - Truth - text on center (character bottom-left)
+    // Frame 7: Philo - Truth
     {
       id: 'philo-truth',
       video: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1786361701/frame7vide_yp9dc4.mp4',
@@ -116,8 +104,6 @@ function PremiumHero() {
       colorRgb: '181, 109, 255',
       showButton: true,
       buttonText: 'step in',
-      textAlign: 'center',
-      textPosition: 'center',
     },
   ];
 
@@ -243,15 +229,6 @@ function PremiumHero() {
   const currentStepData = tourSteps[currentStep];
   const isWelcome = currentStep === 0;
 
-  // Get positioning classes based on step
-  const getPositionClasses = () => {
-    // Frame 3 (dark-understanding) needs special positioning to avoid overlapping human figure
-    if (currentStepData.id === 'dark-understanding') {
-      return 'items-center justify-center px-4';
-    }
-    return 'items-end justify-end pr-8 md:pr-16 lg:pr-24';
-  };
-
   return (
     <div 
       ref={containerRef} 
@@ -263,28 +240,37 @@ function PremiumHero() {
         fontFamily: 'var(--font-body)',
       }}
     >
-      {/* Video Backgrounds */}
+      {/* Video Backgrounds - Using contain to prevent cropping */}
       {tourSteps.map((step, index) => (
-        <video
+        <div
           key={step.id}
-          id={`video-${index}`}
-          autoPlay={index === 0}
-          loop
-          muted
-          playsInline
           className={`absolute inset-0 w-full h-full transition-opacity ${
             isMobile ? 'duration-500' : 'duration-1000'
           } ${index === currentStep ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
           style={{
-            objectFit: 'cover',
-            // Mobile: position to show human figures better
-            // Desktop: center position
-            objectPosition: isMobile ? 'center 40%' : 'center center',
-            willChange: 'opacity',
+            backgroundColor: '#000000',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
           }}
         >
-          <source src={step.video} type="video/mp4" />
-        </video>
+          <video
+            id={`video-${index}`}
+            autoPlay={index === 0}
+            loop
+            muted
+            playsInline
+            className="w-full h-full"
+            style={{
+              // Use contain on mobile to show full video, cover on desktop for immersion
+              objectFit: isMobile ? 'contain' : 'cover',
+              objectPosition: 'center center',
+              willChange: 'opacity',
+            }}
+          >
+            <source src={step.video} type="video/mp4" />
+          </video>
+        </div>
       ))}
 
       {/* Dark overlay */}
@@ -295,11 +281,11 @@ function PremiumHero() {
         }}
       />
 
-      {/* Content Layer */}
-      <div className="relative z-30 min-h-screen flex flex-col items-center justify-center py-12 md:py-20">
+      {/* Content Layer - CONSISTENT CENTER ALIGNMENT */}
+      <div className="relative z-30 min-h-screen flex flex-col items-center justify-center py-12 md:py-20 px-4 sm:px-6">
         {/* Content */}
-        <div className={`flex-1 flex ${getPositionClasses()} w-full max-w-7xl mx-auto`}>
-          <div className={`w-full ${currentStepData.textPosition === 'center' ? 'max-w-3xl text-center' : 'max-w-2xl'} ${currentStepData.textPosition === 'right' ? 'text-right' : currentStepData.textPosition === 'left' ? 'text-left' : 'text-center'}`}>
+        <div className="flex-1 flex items-center justify-center w-full max-w-4xl mx-auto">
+          <div className="w-full text-center">
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentStep}
@@ -322,17 +308,15 @@ function PremiumHero() {
                   </motion.div>
                 ) : (
                   <h1
-                    className="font-light tracking-wider leading-none mb-3 text-3xl sm:text-4xl md:text-5xl lg:text-6xl"
+                    className="font-light tracking-wider leading-none mb-3 text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl"
                     style={{
                       color: '#ffffff',
                       fontFamily: 'var(--font-heading)',
                       fontWeight: 300,
                       letterSpacing: '0.15em',
                       textShadow: currentStepData.color
-                        ? `0 0 15px ${currentStepData.color}50, 0 2px 8px rgba(0,0,0,0.8)`
-                        : '0 0 15px rgba(255,255,255,0.3), 0 2px 8px rgba(0,0,0,0.8)',
-                      // Add 6px right margin for dark-understanding to avoid overlap
-                      marginRight: currentStepData.id === 'dark-understanding' && !isMobile ? '6px' : '0',
+                        ? `0 0 20px ${currentStepData.color}60, 0 3px 12px rgba(0,0,0,0.9)`
+                        : '0 0 20px rgba(255,255,255,0.4), 0 3px 12px rgba(0,0,0,0.9)',
                     }}
                   >
                     {currentStepData.title}
@@ -378,28 +362,27 @@ function PremiumHero() {
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.4, delay: 0.3 }}
                     onClick={() => navigate('/login')}
-                    className={`${isMobile ? 'px-6 py-2.5 text-xs' : 'px-7 py-2.5 text-xs'} uppercase tracking-[0.28em] font-medium transition-all duration-300 mt-6 min-h-[44px] rounded-sm inline-flex items-center justify-center`}
+                    className="px-8 py-3 text-xs sm:text-sm uppercase tracking-[0.3em] font-medium transition-all duration-300 mt-6 min-h-[44px] rounded-sm inline-flex items-center justify-center"
                     style={{
-                      backgroundColor: 'rgba(0, 0, 0, 0.6)',
+                      backgroundColor: 'rgba(0, 0, 0, 0.7)',
                       color: currentStepData.color || '#ffffff',
-                      border: `1.5px solid ${currentStepData.color || 'rgba(255, 255, 255, 0.3)'}`,
-                      backdropFilter: 'blur(16px)',
-                      boxShadow: `0 0 16px ${currentStepData.color}25, 0 3px 8px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.1)`,
+                      border: `2px solid ${currentStepData.color || 'rgba(255, 255, 255, 0.3)'}`,
+                      backdropFilter: 'blur(20px)',
+                      boxShadow: `0 0 20px ${currentStepData.color}30, 0 4px 12px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.15)`,
                       fontFamily: 'var(--font-body)',
                       fontWeight: 500,
-                      textShadow: `0 0 8px ${currentStepData.color}40`,
+                      textShadow: `0 0 10px ${currentStepData.color}50, 0 1px 2px rgba(0,0,0,0.8)`,
                       cursor: 'pointer',
-                      letterSpacing: '0.28em',
                     }}
                     onMouseEnter={(e) => {
-                      e.currentTarget.style.backgroundColor = `rgba(${currentStepData.colorRgb}, 0.25)`;
-                      e.currentTarget.style.transform = 'translateY(-1px) scale(1.01)';
-                      e.currentTarget.style.boxShadow = `0 0 24px ${currentStepData.color}40, 0 5px 12px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.15)`;
+                      e.currentTarget.style.backgroundColor = `rgba(${currentStepData.colorRgb}, 0.3)`;
+                      e.currentTarget.style.transform = 'translateY(-2px) scale(1.02)';
+                      e.currentTarget.style.boxShadow = `0 0 30px ${currentStepData.color}50, 0 6px 16px rgba(0,0,0,0.9), inset 0 1px 0 rgba(255,255,255,0.2)`;
                     }}
                     onMouseLeave={(e) => {
-                      e.currentTarget.style.backgroundColor = 'rgba(0, 0, 0, 0.6)';
+                      e.currentTarget.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
                       e.currentTarget.style.transform = 'translateY(0) scale(1)';
-                      e.currentTarget.style.boxShadow = `0 0 16px ${currentStepData.color}25, 0 3px 8px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.1)`;
+                      e.currentTarget.style.boxShadow = `0 0 20px ${currentStepData.color}30, 0 4px 12px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.15)`;
                     }}
                   >
                     {currentStepData.buttonText}
