@@ -274,7 +274,11 @@ function PremiumHero() {
           style={{
             objectFit: 'cover',
             objectPosition: 'center center',
-            transform: isMobile ? 'scaleX(0.85)' : 'none', // Scale down horizontally on mobile
+            transform: isMobile ? 'scale(0.67) scaleX(0.85)' : 'scale(0.67)', // Zoom out 33% (67% scale) to match browser zoom effect
+            width: '150%', // Compensate for scale-down to maintain coverage
+            height: '150%',
+            left: '-25%', // Center the scaled video
+            top: '-25%',
           }}
         >
           <source src={step.video} type="video/mp4" />
