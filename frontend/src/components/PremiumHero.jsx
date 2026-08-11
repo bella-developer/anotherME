@@ -253,7 +253,7 @@ function PremiumHero() {
       className="relative overflow-hidden" 
       style={{ 
         height: '100vh',
-        paddingTop: '4rem', // Push content below navbar
+        marginTop: '4rem', // Push section below navbar
         background: '#000000',
         fontFamily: 'var(--font-body)',
       }}
@@ -291,7 +291,7 @@ function PremiumHero() {
       <div className="relative z-30 h-full flex flex-col items-center justify-center">
         {/* Center: Content */}
         <div className="flex-1 flex items-center justify-center w-full px-4 sm:px-6">
-          <div className="w-full max-w-3xl text-center sm:text-right sm:ml-auto sm:mr-8 md:mr-16 lg:mr-24">
+          <div className="w-full max-w-3xl text-center sm:text-right sm:ml-auto sm:mr-6 md:mr-12 lg:mr-20">
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentStep}
