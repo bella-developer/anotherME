@@ -253,8 +253,8 @@ function PremiumHero() {
       ref={containerRef} 
       className="relative overflow-hidden" 
       style={{ 
-        height: 'calc(100vh - 2rem)', // Match tiny navbar
-        marginTop: '2rem', // Match navbar
+        minHeight: '100vh',
+        paddingTop: '3.5rem', // Match navbar height
         background: '#000000',
         fontFamily: 'var(--font-body)',
       }}
@@ -274,11 +274,7 @@ function PremiumHero() {
           style={{
             objectFit: 'cover',
             objectPosition: 'center center',
-            transform: isMobile ? 'scale(0.67) scaleX(0.85)' : 'scale(0.67)', // Zoom out 33% (67% scale) to match browser zoom effect
-            width: '150%', // Compensate for scale-down to maintain coverage
-            height: '150%',
-            left: '-25%', // Center the scaled video
-            top: '-25%',
+            willChange: 'opacity',
           }}
         >
           <source src={step.video} type="video/mp4" />
@@ -294,10 +290,10 @@ function PremiumHero() {
       />
 
       {/* Content Layer */}
-      <div className="relative z-30 h-full flex flex-col items-center justify-center">
-        {/* Center: Content */}
-        <div className="flex-1 flex items-center justify-center w-full px-4 sm:px-6">
-          <div className="w-full max-w-3xl text-center lg:text-left lg:ml-[45%]">
+      <div className="relative z-30 min-h-screen flex flex-col items-center justify-center py-20">
+        {/* Content */}
+        <div className="flex-1 flex items-center justify-center w-full px-4 sm:px-6 max-w-7xl mx-auto">
+          <div className="w-full max-w-3xl text-center">
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentStep}
@@ -308,22 +304,27 @@ function PremiumHero() {
               >
                 {/* Title - Logo for welcome, text for others */}
                 {isWelcome ? (
-                  <div className="flex justify-center lg:justify-start mb-3">
-                    <EsoLogo className="h-16 sm:h-20 md:h-24 lg:h-28 w-auto" style={{
+                  <motion.div 
+                    className="flex justify-center mb-4"
+                    initial={{ scale: 0.9 }}
+                    animate={{ scale: 1 }}
+                    transition={{ duration: 0.8 }}
+                  >
+                    <EsoLogo className="h-20 sm:h-24 md:h-28 lg:h-32 w-auto" style={{
                       filter: 'drop-shadow(0 0 12px rgba(255,255,255,0.3))',
                     }} />
-                  </div>
+                  </motion.div>
                 ) : (
                   <h1
-                    className="font-light tracking-wider leading-none mb-2 sm:mb-3 text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl"
+                    className="font-light tracking-wider leading-none mb-3 text-4xl sm:text-5xl md:text-6xl lg:text-7xl"
                     style={{
                       color: '#ffffff',
                       fontFamily: 'var(--font-heading)',
                       fontWeight: 300,
                       letterSpacing: '0.15em',
                       textShadow: currentStepData.color
-                        ? `0 0 12px ${currentStepData.color}40, 0 2px 6px rgba(0,0,0,0.8)`
-                        : '0 0 12px rgba(255,255,255,0.2), 0 2px 6px rgba(0,0,0,0.8)',
+                        ? `0 0 15px ${currentStepData.color}50, 0 2px 8px rgba(0,0,0,0.8)`
+                        : '0 0 15px rgba(255,255,255,0.3), 0 2px 8px rgba(0,0,0,0.8)',
                     }}
                   >
                     {currentStepData.title}
@@ -332,17 +333,16 @@ function PremiumHero() {
 
                 {/* Subtitle */}
                 <p
-                  className={`font-normal tracking-[0.35em] uppercase mb-1 sm:mb-2 ${
-                    isWelcome ? 'text-xs sm:text-sm md:text-base lg:text-lg' : 'text-[10px] sm:text-xs md:text-sm lg:text-base'
+                  className={`font-normal tracking-[0.35em] uppercase mb-2 ${
+                    isWelcome ? 'text-sm sm:text-base md:text-lg' : 'text-xs sm:text-sm md:text-base'
                   }`}
                   style={{
-                    color: currentStepData.color || 'rgba(255, 255, 255, 0.75)',
+                    color: currentStepData.color || 'rgba(255, 255, 255, 0.85)',
                     fontFamily: 'var(--font-body)',
                     fontWeight: 400,
                     textShadow: currentStepData.color 
-                      ? `0 0 8px ${currentStepData.color}30, 0 1px 3px rgba(0,0,0,0.7)`
-                      : '0 0 8px rgba(255, 255, 255, 0.15), 0 1px 3px rgba(0,0,0,0.7)',
-                    marginLeft: !isWelcome ? '4px' : '0', // Push subtitle 4px to right
+                      ? `0 0 10px ${currentStepData.color}40, 0 1px 4px rgba(0,0,0,0.8)`
+                      : '0 0 10px rgba(255, 255, 255, 0.2), 0 1px 4px rgba(0,0,0,0.8)',
                   }}
                 >
                   {currentStepData.subtitle}
@@ -351,13 +351,12 @@ function PremiumHero() {
                 {/* Description */}
                 {currentStepData.description && (
                   <p
-                    className="text-xs sm:text-sm md:text-base font-light tracking-wide leading-relaxed mb-4 sm:mb-6"
+                    className="text-sm sm:text-base md:text-lg font-light tracking-wide leading-relaxed mb-6"
                     style={{
-                      color: 'rgba(255, 255, 255, 0.5)',
+                      color: 'rgba(255, 255, 255, 0.6)',
                       fontFamily: 'var(--font-body)',
                       fontWeight: 300,
-                      textShadow: '0 1px 3px rgba(0, 0, 0, 0.7)',
-                      marginLeft: '8px', // Push description 8px to right (4px more than subtitle)
+                      textShadow: '0 1px 4px rgba(0, 0, 0, 0.8)',
                     }}
                   >
                     {currentStepData.description}
@@ -371,27 +370,27 @@ function PremiumHero() {
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.4, delay: 0.3 }}
                     onClick={() => navigate('/login')}
-                    className="px-6 sm:px-8 py-2 text-xs sm:text-sm uppercase tracking-[0.4em] font-medium transition-all duration-300 mt-2 sm:mt-3"
+                    className="px-8 py-3 text-sm uppercase tracking-[0.3em] font-medium transition-all duration-300 mt-4 min-h-[44px]"
                     style={{
-                      backgroundColor: 'rgba(0, 0, 0, 0.4)',
+                      backgroundColor: 'rgba(0, 0, 0, 0.5)',
                       color: currentStepData.color || '#ffffff',
-                      border: `1px solid ${currentStepData.color || 'rgba(255, 255, 255, 0.3)'}`,
+                      border: `2px solid ${currentStepData.color || 'rgba(255, 255, 255, 0.3)'}`,
                       backdropFilter: 'blur(12px)',
-                      boxShadow: `0 0 15px ${currentStepData.color}25, 0 2px 8px rgba(0,0,0,0.4)`,
+                      boxShadow: `0 0 20px ${currentStepData.color}30, 0 4px 10px rgba(0,0,0,0.5)`,
                       fontFamily: 'var(--font-body)',
                       fontWeight: 500,
-                      textShadow: `0 0 8px ${currentStepData.color}40`,
+                      textShadow: `0 0 10px ${currentStepData.color}50`,
                       cursor: 'pointer',
                     }}
                     onMouseEnter={(e) => {
-                      e.currentTarget.style.backgroundColor = `rgba(${currentStepData.colorRgb}, 0.2)`;
+                      e.currentTarget.style.backgroundColor = `rgba(${currentStepData.colorRgb}, 0.3)`;
                       e.currentTarget.style.transform = 'translateY(-2px) scale(1.02)';
-                      e.currentTarget.style.boxShadow = `0 0 25px ${currentStepData.color}40, 0 4px 12px rgba(0,0,0,0.5)`;
+                      e.currentTarget.style.boxShadow = `0 0 30px ${currentStepData.color}50, 0 6px 15px rgba(0,0,0,0.6)`;
                     }}
                     onMouseLeave={(e) => {
-                      e.currentTarget.style.backgroundColor = 'rgba(0, 0, 0, 0.4)';
+                      e.currentTarget.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
                       e.currentTarget.style.transform = 'translateY(0) scale(1)';
-                      e.currentTarget.style.boxShadow = `0 0 15px ${currentStepData.color}25, 0 2px 8px rgba(0,0,0,0.4)`;
+                      e.currentTarget.style.boxShadow = `0 0 20px ${currentStepData.color}30, 0 4px 10px rgba(0,0,0,0.5)`;
                     }}
                   >
                     {currentStepData.buttonText}
@@ -403,7 +402,7 @@ function PremiumHero() {
         </div>
 
         {/* Bottom: Scroll indicator */}
-        <div className="flex-shrink-0 pb-6 sm:pb-8 px-4 flex justify-center">
+        <div className="flex-shrink-0 pb-8 px-4 flex justify-center">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -413,9 +412,10 @@ function PremiumHero() {
             <p
               className="text-xs tracking-[0.35em] uppercase"
               style={{ 
-                color: 'rgba(255, 255, 255, 0.25)',
+                color: 'rgba(255, 255, 255, 0.4)',
                 fontFamily: 'var(--font-body)',
                 fontWeight: 400,
+                textShadow: '0 1px 3px rgba(0, 0, 0, 0.8)',
               }}
             >
               {currentStep === tourSteps.length - 1 ? 'continue' : 'scroll'}
@@ -425,10 +425,10 @@ function PremiumHero() {
               transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
             >
               <ChevronDown 
-                size={20} 
+                size={24} 
                 style={{ 
-                  color: 'rgba(255, 255, 255, 0.25)',
-                  filter: 'drop-shadow(0 0 4px rgba(255, 255, 255, 0.15))'
+                  color: 'rgba(255, 255, 255, 0.4)',
+                  filter: 'drop-shadow(0 0 6px rgba(255, 255, 255, 0.2))'
                 }} 
               />
             </motion.div>
