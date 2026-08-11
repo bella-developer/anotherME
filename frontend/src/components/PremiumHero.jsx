@@ -236,12 +236,12 @@ function PremiumHero() {
       style={{ 
         minHeight: '100vh',
         height: '100vh',
-        paddingTop: isMobile ? '56px' : '56px', // Navbar height - no extra space
+        paddingTop: '56px', // Navbar height - no extra space
         background: '#000000',
         fontFamily: 'var(--font-body)',
       }}
     >
-      {/* Video Backgrounds - Optimized for mobile and desktop */}
+      {/* Video Backgrounds - Full display optimization */}
       {tourSteps.map((step, index) => (
         <div
           key={step.id}
@@ -257,6 +257,7 @@ function PremiumHero() {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
+            overflow: 'hidden',
           }}
         >
           <video
@@ -265,10 +266,11 @@ function PremiumHero() {
             loop
             muted
             playsInline
-            className="w-full h-full"
             style={{
-              // Mobile: cover to fill viewport, Desktop: cover for immersion
-              objectFit: 'cover',
+              // Mobile: contain to show full video with letterbox, Desktop: cover for immersion
+              width: '100%',
+              height: '100%',
+              objectFit: isMobile ? 'contain' : 'cover',
               objectPosition: 'center center',
               willChange: 'opacity',
             }}
@@ -286,17 +288,18 @@ function PremiumHero() {
         }}
       />
 
-      {/* Content Layer - Optimized positioning */}
+      {/* Content Layer - Artistic positioning */}
       <div className="relative z-30 h-full flex flex-col items-center justify-center px-4 sm:px-6">
         {/* Content */}
-        <div className="flex-1 flex items-center justify-center w-full max-w-4xl mx-auto">
-          {/* Desktop: slight right offset, Mobile: center */}
+        <div className="flex-1 flex items-center justify-center w-full max-w-5xl mx-auto">
+          {/* Desktop: editorial right offset for artistic compact feel, Mobile: center */}
           <div 
             className="w-full text-center"
             style={{
-              // Subtle right shift on desktop for visual interest
-              marginLeft: isMobile ? '0' : '5%',
-              marginRight: isMobile ? '0' : '-5%',
+              // Artistic right shift on desktop (editorial magazine style)
+              marginLeft: isMobile ? '0' : '8%',
+              marginRight: isMobile ? '0' : '-8%',
+              maxWidth: isMobile ? '100%' : '90%',
             }}
           >
             <AnimatePresence mode="wait">
