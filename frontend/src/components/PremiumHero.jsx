@@ -243,8 +243,12 @@ function PremiumHero() {
   const currentStepData = tourSteps[currentStep];
   const isWelcome = currentStep === 0;
 
-  // Get positioning classes - always position text on right
+  // Get positioning classes based on step
   const getPositionClasses = () => {
+    // Frame 3 (dark-understanding) needs special positioning to avoid overlapping human figure
+    if (currentStepData.id === 'dark-understanding') {
+      return 'items-center justify-center px-4';
+    }
     return 'items-end justify-end pr-8 md:pr-16 lg:pr-24';
   };
 
@@ -273,7 +277,9 @@ function PremiumHero() {
           } ${index === currentStep ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
           style={{
             objectFit: 'cover',
-            objectPosition: 'center center',
+            // Mobile: position to show human figures better
+            // Desktop: center position
+            objectPosition: isMobile ? 'center 40%' : 'center center',
             willChange: 'opacity',
           }}
         >
@@ -290,10 +296,10 @@ function PremiumHero() {
       />
 
       {/* Content Layer */}
-      <div className="relative z-30 min-h-screen flex flex-col items-center justify-center py-20">
+      <div className="relative z-30 min-h-screen flex flex-col items-center justify-center py-12 md:py-20">
         {/* Content */}
-        <div className="flex-1 flex items-center justify-center w-full px-4 sm:px-6 max-w-7xl mx-auto">
-          <div className="w-full max-w-3xl text-center">
+        <div className={`flex-1 flex ${getPositionClasses()} w-full max-w-7xl mx-auto`}>
+          <div className={`w-full ${currentStepData.textPosition === 'center' ? 'max-w-3xl text-center' : 'max-w-2xl'} ${currentStepData.textPosition === 'right' ? 'text-right' : currentStepData.textPosition === 'left' ? 'text-left' : 'text-center'}`}>
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentStep}
@@ -316,7 +322,7 @@ function PremiumHero() {
                   </motion.div>
                 ) : (
                   <h1
-                    className="font-light tracking-wider leading-none mb-3 text-4xl sm:text-5xl md:text-6xl lg:text-7xl"
+                    className="font-light tracking-wider leading-none mb-3 text-3xl sm:text-4xl md:text-5xl lg:text-6xl"
                     style={{
                       color: '#ffffff',
                       fontFamily: 'var(--font-heading)',
@@ -325,6 +331,8 @@ function PremiumHero() {
                       textShadow: currentStepData.color
                         ? `0 0 15px ${currentStepData.color}50, 0 2px 8px rgba(0,0,0,0.8)`
                         : '0 0 15px rgba(255,255,255,0.3), 0 2px 8px rgba(0,0,0,0.8)',
+                      // Add 6px right margin for dark-understanding to avoid overlap
+                      marginRight: currentStepData.id === 'dark-understanding' && !isMobile ? '6px' : '0',
                     }}
                   >
                     {currentStepData.title}
@@ -363,34 +371,35 @@ function PremiumHero() {
                   </p>
                 )}
 
-                {/* Button */}
+                {/* Button - Compact and visually appealing */}
                 {currentStepData.showButton && (
                   <motion.button
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.4, delay: 0.3 }}
                     onClick={() => navigate('/login')}
-                    className="px-8 py-3 text-sm uppercase tracking-[0.3em] font-medium transition-all duration-300 mt-4 min-h-[44px]"
+                    className={`${isMobile ? 'px-6 py-2.5 text-xs' : 'px-7 py-2.5 text-xs'} uppercase tracking-[0.28em] font-medium transition-all duration-300 mt-6 min-h-[44px] rounded-sm inline-flex items-center justify-center`}
                     style={{
-                      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                      backgroundColor: 'rgba(0, 0, 0, 0.6)',
                       color: currentStepData.color || '#ffffff',
-                      border: `2px solid ${currentStepData.color || 'rgba(255, 255, 255, 0.3)'}`,
-                      backdropFilter: 'blur(12px)',
-                      boxShadow: `0 0 20px ${currentStepData.color}30, 0 4px 10px rgba(0,0,0,0.5)`,
+                      border: `1.5px solid ${currentStepData.color || 'rgba(255, 255, 255, 0.3)'}`,
+                      backdropFilter: 'blur(16px)',
+                      boxShadow: `0 0 16px ${currentStepData.color}25, 0 3px 8px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.1)`,
                       fontFamily: 'var(--font-body)',
                       fontWeight: 500,
-                      textShadow: `0 0 10px ${currentStepData.color}50`,
+                      textShadow: `0 0 8px ${currentStepData.color}40`,
                       cursor: 'pointer',
+                      letterSpacing: '0.28em',
                     }}
                     onMouseEnter={(e) => {
-                      e.currentTarget.style.backgroundColor = `rgba(${currentStepData.colorRgb}, 0.3)`;
-                      e.currentTarget.style.transform = 'translateY(-2px) scale(1.02)';
-                      e.currentTarget.style.boxShadow = `0 0 30px ${currentStepData.color}50, 0 6px 15px rgba(0,0,0,0.6)`;
+                      e.currentTarget.style.backgroundColor = `rgba(${currentStepData.colorRgb}, 0.25)`;
+                      e.currentTarget.style.transform = 'translateY(-1px) scale(1.01)';
+                      e.currentTarget.style.boxShadow = `0 0 24px ${currentStepData.color}40, 0 5px 12px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.15)`;
                     }}
                     onMouseLeave={(e) => {
-                      e.currentTarget.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+                      e.currentTarget.style.backgroundColor = 'rgba(0, 0, 0, 0.6)';
                       e.currentTarget.style.transform = 'translateY(0) scale(1)';
-                      e.currentTarget.style.boxShadow = `0 0 20px ${currentStepData.color}30, 0 4px 10px rgba(0,0,0,0.5)`;
+                      e.currentTarget.style.boxShadow = `0 0 16px ${currentStepData.color}25, 0 3px 8px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.1)`;
                     }}
                   >
                     {currentStepData.buttonText}
