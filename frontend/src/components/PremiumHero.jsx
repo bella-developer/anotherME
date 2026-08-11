@@ -271,7 +271,7 @@ function PremiumHero() {
             isMobile ? 'duration-500' : 'duration-1000'
           } ${index === currentStep ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
           style={{
-            objectFit: 'contain', // Show full video without cropping
+            objectFit: 'cover', // Fill screen completely
             objectPosition: 'center center',
           }}
         >
@@ -291,7 +291,7 @@ function PremiumHero() {
       <div className="relative z-30 h-full flex flex-col items-center justify-center">
         {/* Center: Content */}
         <div className="flex-1 flex items-center justify-center w-full px-4 sm:px-6">
-          <div className="w-full max-w-3xl text-center">
+          <div className="w-full max-w-3xl text-center sm:text-right sm:ml-auto sm:mr-8 md:mr-16 lg:mr-24">
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentStep}
