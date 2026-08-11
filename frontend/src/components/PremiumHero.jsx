@@ -253,8 +253,8 @@ function PremiumHero() {
       ref={containerRef} 
       className="relative overflow-hidden" 
       style={{ 
-        height: 'calc(100vh - 2.5rem)', // Match reduced navbar height
-        marginTop: '2.5rem', // Match navbar
+        height: 'calc(100vh - 2rem)', // Match tiny navbar
+        marginTop: '2rem', // Match navbar
         background: '#000000',
         fontFamily: 'var(--font-body)',
       }}
@@ -272,8 +272,9 @@ function PremiumHero() {
             isMobile ? 'duration-500' : 'duration-1000'
           } ${index === currentStep ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
           style={{
-            objectFit: 'cover', // Fill screen on all devices
+            objectFit: 'cover',
             objectPosition: 'center center',
+            transform: isMobile ? 'scaleX(0.85)' : 'none', // Scale down horizontally on mobile
           }}
         >
           <source src={step.video} type="video/mp4" />
@@ -337,6 +338,7 @@ function PremiumHero() {
                     textShadow: currentStepData.color 
                       ? `0 0 8px ${currentStepData.color}30, 0 1px 3px rgba(0,0,0,0.7)`
                       : '0 0 8px rgba(255, 255, 255, 0.15), 0 1px 3px rgba(0,0,0,0.7)',
+                    marginLeft: !isWelcome ? '4px' : '0', // Push subtitle 4px to right
                   }}
                 >
                   {currentStepData.subtitle}
@@ -351,6 +353,7 @@ function PremiumHero() {
                       fontFamily: 'var(--font-body)',
                       fontWeight: 300,
                       textShadow: '0 1px 3px rgba(0, 0, 0, 0.7)',
+                      marginLeft: '8px', // Push description 8px to right (4px more than subtitle)
                     }}
                   >
                     {currentStepData.description}

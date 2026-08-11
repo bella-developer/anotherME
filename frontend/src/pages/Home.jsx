@@ -336,7 +336,7 @@ function Home() {
                           left: '14px',
                           right: '14px',
                           bottom: '14px',
-                          backgroundColor: room.id === 'dark' ? '#8B0000' : room.id === 'fantasy' ? '#FF6B00' : '#6B0DAD', // blood-red, vibrant deep orange, deep purple
+                          backgroundColor: '#000000',
                           border: `1px solid rgba(${room.glowColorRGB}, ${hovered === room.id ? 0.4 : 0.2})`,
                           boxShadow: `
                             inset 0 0 40px rgba(${room.glowColorRGB}, 0.15),
@@ -346,7 +346,7 @@ function Home() {
                           transition: 'all 0.8s cubic-bezier(0.22, 1, 0.36, 1)',
                         }}
                       >
-                        {/* Video background */}
+                        {/* Video background - scaled to fill circle */}
                         <video
                           autoPlay
                           loop
@@ -356,10 +356,13 @@ function Home() {
                             position: 'absolute',
                             top: '50%',
                             left: '50%',
-                            width: '100%',
-                            height: '100%',
-                            objectFit: 'cover', // Fill the circle completely
-                            transform: 'translate(-50%, -50%)',
+                            minWidth: '100%',
+                            minHeight: '100%',
+                            width: 'auto',
+                            height: 'auto',
+                            maxWidth: 'none',
+                            objectFit: 'cover',
+                            transform: 'translate(-50%, -50%) scale(1.2)', // Scale up to fill completely
                             display: 'block',
                             filter: hovered === room.id 
                               ? 'brightness(1.1) contrast(1.1)' 

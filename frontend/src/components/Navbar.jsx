@@ -52,9 +52,9 @@ function Navbar() {
 
   return (
     <nav 
-      className="fixed top-0 left-0 right-0 z-50 h-10"
+      className="fixed top-0 left-0 right-0 z-50 h-8"
       style={{ 
-        background: 'rgba(0, 0, 0, 0.9)', 
+        background: 'rgba(0, 0, 0, 0.95)', 
         backdropFilter: 'blur(20px)',
         WebkitBackdropFilter: 'blur(20px)',
         borderBottom: '1px solid rgba(255, 255, 255, 0.1)'
@@ -62,7 +62,7 @@ function Navbar() {
       role="navigation"
       aria-label="Main navigation"
     >
-      <div className="container mx-auto px-3 h-full">
+      <div className="container mx-auto px-2 h-full">
         <div className="flex items-center justify-between h-full">
           {/* Logo */}
           <Link 
@@ -70,7 +70,7 @@ function Navbar() {
             className="flex items-center focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-black rounded p-0.5"
             aria-label="ESO home"
           >
-            <EsoLogo className="h-7 w-auto" />
+            <EsoLogo className="h-6 w-auto" />
           </Link>
 
           {/* Desktop Navigation Links */}
