@@ -264,6 +264,9 @@ function PremiumHero() {
             bottom: 0,
             backgroundColor: '#000000',
             overflow: 'hidden',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
           }}
         >
           <video
@@ -273,14 +276,12 @@ function PremiumHero() {
             muted
             playsInline
             style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
               width: '100%',
               height: '100%',
-              objectFit: 'cover',
-              // Per-video custom focal points for optimal framing
-              objectPosition: isMobile ? (step.mobileFocalPoint || 'center 50%') : 'center center',
+              // CRITICAL: Use contain on mobile to show full video without cropping
+              // Use cover on desktop for immersive experience
+              objectFit: isMobile ? 'contain' : 'cover',
+              objectPosition: 'center center',
               willChange: 'opacity',
             }}
           >
