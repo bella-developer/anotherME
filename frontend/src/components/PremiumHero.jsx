@@ -34,7 +34,7 @@ function PremiumHero() {
       mobileVideo: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1786521557/frame1mobile_efrsvf.mp4',
       title: 'ESO',
       subtitle: 'your safe space to breathe',
-      description: '',
+      description: 'Home of introverts • deep thinkers • philosophers',
       showButton: false,
     },
     // Frame 2: Dark - Confession
@@ -306,7 +306,7 @@ function PremiumHero() {
       <div 
         className="relative z-30 px-4 sm:px-6" 
         style={{ 
-          paddingTop: isMobile ? 'calc(56px + 48vh - 20px)' : '56px',
+          paddingTop: isMobile ? 'calc(56px + 48vh - 26px)' : '56px',
           paddingBottom: isMobile ? '16px' : '64px',
           minHeight: isMobile ? 'auto' : '100vh',
           display: 'flex',
@@ -318,14 +318,14 @@ function PremiumHero() {
         <div 
           className="w-full max-w-5xl mx-auto"
         >
-          {/* Desktop: editorial right offset for artistic compact feel, Mobile: center overlay */}
+          {/* Desktop: centered with slight right offset, Mobile: center overlay */}
           <div 
             className="w-full text-center"
             style={{
-              // Artistic right shift on desktop (editorial magazine style)
-              marginLeft: isMobile ? '0' : '8%',
-              marginRight: isMobile ? '0' : '-8%',
-              maxWidth: isMobile ? '100%' : '90%',
+              // Desktop: centered with subtle right offset (3%) for artistic feel
+              marginLeft: isMobile ? '0' : '3%',
+              marginRight: isMobile ? '0' : '-3%',
+              maxWidth: isMobile ? '100%' : '80%',
             }}
           >
             <AnimatePresence mode="wait">

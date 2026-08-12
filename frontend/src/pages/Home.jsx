@@ -127,10 +127,10 @@ function Home() {
                 transition={{ duration: 1.2, delay: 1.2 + idx * 0.2 }}
                 className="flex flex-col items-center w-full"
               >
-                {/* Elliptical (egg-shaped) portal - wider, shorter */}
-                <div className="relative w-full mx-auto" style={{ maxWidth: '420px' }}>
-                  {/* Elliptical aspect ratio - 85% height (shorter) */}
-                  <div style={{ position: 'relative', width: '100%', paddingBottom: '85%' }}>
+                {/* Elliptical (egg-shaped) portal - wider, more artistic */}
+                <div className="relative w-full mx-auto" style={{ maxWidth: '480px' }}>
+                  {/* Wider elliptical aspect ratio - 75% height (much wider horizontally) */}
+                  <div style={{ position: 'relative', width: '100%', paddingBottom: '75%' }}>
                     <button
                       onClick={() => navigate(room.path)}
                       onMouseEnter={() => setHovered(room.id)}
@@ -150,7 +150,7 @@ function Home() {
                         className="rounded-full"
                         style={{
                           position: 'absolute',
-                          top: '4px',
+                          top: '0',
                           left: '4px',
                           right: '4px',
                           bottom: '4px',
@@ -168,7 +168,7 @@ function Home() {
                         className="rounded-full"
                         style={{
                           position: 'absolute',
-                          top: '4px',
+                          top: '0',
                           left: '4px',
                           right: '4px',
                           bottom: '4px',
@@ -237,7 +237,7 @@ function Home() {
                         className="rounded-full"
                         style={{
                           position: 'absolute',
-                          top: '4px',
+                          top: '0',
                           left: '4px',
                           right: '4px',
                           bottom: '4px',
@@ -270,7 +270,7 @@ function Home() {
                         className="rounded-full pointer-events-none"
                         style={{
                           position: 'absolute',
-                          top: '9px',
+                          top: '5px',
                           left: '9px',
                           right: '9px',
                           bottom: '9px',
@@ -332,7 +332,7 @@ function Home() {
                         className="rounded-full overflow-hidden"
                         style={{
                           position: 'absolute',
-                          top: '14px',
+                          top: '10px',
                           left: '14px',
                           right: '14px',
                           bottom: '14px',
