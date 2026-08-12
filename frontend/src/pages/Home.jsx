@@ -344,26 +344,26 @@ function Home() {
                           `,
                           transform: hovered === room.id ? 'scale(1.03)' : 'scale(1)',
                           transition: 'all 0.8s cubic-bezier(0.22, 1, 0.36, 1)',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
                         }}
                       >
-                        {/* Video background - scaled to fill circle */}
+                        {/* Video background - contain with scale to show full 1:1 video */}
                         <video
                           autoPlay
                           loop
                           muted
                           playsInline
                           style={{
-                            position: 'absolute',
-                            top: '50%',
-                            left: '50%',
-                            minWidth: '100%',
-                            minHeight: '100%',
-                            width: 'auto',
-                            height: 'auto',
-                            maxWidth: 'none',
-                            objectFit: 'cover',
-                            transform: 'translate(-50%, -50%) scale(1.2)', // Scale up to fill completely
+                            width: '100%',
+                            height: '100%',
+                            // Use contain to show full video without cropping
+                            objectFit: 'contain',
+                            objectPosition: 'center center',
                             display: 'block',
+                            // Scale down to 85% for breathing room inside circle
+                            transform: 'scale(0.85)',
                             filter: hovered === room.id 
                               ? 'brightness(1.1) contrast(1.1)' 
                               : 'brightness(0.95) contrast(1.05)',
@@ -383,6 +383,7 @@ function Home() {
                             bottom: 0,
                             background: `radial-gradient(circle, transparent 30%, rgba(0,0,0,${hovered === room.id ? 0.2 : 0.4}) 100%)`,
                             transition: 'background 0.8s ease',
+                            pointerEvents: 'none',
                           }}
                         />
                       </div>

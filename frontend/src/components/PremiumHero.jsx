@@ -268,7 +268,7 @@ function PremiumHero() {
               backgroundColor: '#000000',
               overflow: 'hidden',
               display: 'flex',
-              alignItems: 'center',
+              alignItems: 'flex-start', // Align to top for mobile videos (they have content at top 40%)
               justifyContent: 'center',
             }}
           >
@@ -281,10 +281,12 @@ function PremiumHero() {
               style={{
                 width: '100%',
                 height: '100%',
-                // Use cover for both - portrait videos on mobile will fill perfectly
-                objectFit: 'cover',
-                objectPosition: 'center center',
+                // Use contain to show full video without cropping
+                objectFit: 'contain',
+                objectPosition: 'top center', // Align video to top of container
                 willChange: 'opacity',
+                // Scale down slightly on mobile for breathing room
+                transform: isMobile ? 'scale(0.98)' : 'scale(1)',
               }}
             >
               <source src={videoSource} type="video/mp4" />
@@ -303,13 +305,13 @@ function PremiumHero() {
 
       {/* Content Layer - Premium mobile-first positioning */}
       <div className="relative z-30 h-full flex flex-col items-center justify-end px-4 sm:px-6" style={{ paddingTop: isMobile ? 0 : '56px' }}>
-        {/* Content - Position in bottom 60% on mobile (where black space is), center on desktop */}
+        {/* Content - Position in bottom black space on mobile (60% area), center on desktop */}
         <div 
           className="w-full max-w-5xl mx-auto"
           style={{
-            // Mobile: Position content in lower 60% black space
+            // Mobile: Position content in lower black space with proper spacing
             // Desktop: Center vertically with artistic right offset
-            paddingBottom: isMobile ? '10vh' : '0',
+            paddingBottom: isMobile ? '18vh' : '0', // More space above scroll indicator
             marginBottom: isMobile ? '0' : 'auto',
             marginTop: isMobile ? 'auto' : 'auto',
           }}
@@ -340,7 +342,7 @@ function PremiumHero() {
                     animate={{ scale: 1 }}
                     transition={{ duration: 0.8 }}
                   >
-                    <EsoLogo className={`w-auto ${isMobile ? 'h-16' : 'h-20 sm:h-24 md:h-28 lg:h-32'}`} style={{
+                    <EsoLogo className={`w-auto ${isMobile ? 'h-14' : 'h-20 sm:h-24 md:h-28 lg:h-32'}`} style={{
                       filter: 'drop-shadow(0 0 12px rgba(255,255,255,0.3))',
                     }} />
                   </motion.div>
@@ -348,7 +350,7 @@ function PremiumHero() {
                   <h1
                     className={`font-light tracking-wider leading-none mb-2 md:mb-3 ${
                       isMobile 
-                        ? 'text-3xl' 
+                        ? 'text-2xl' 
                         : 'text-4xl sm:text-5xl md:text-6xl lg:text-7xl'
                     }`}
                     style={{
@@ -369,7 +371,7 @@ function PremiumHero() {
                 <p
                   className={`font-normal tracking-[0.35em] uppercase mb-1 md:mb-2 ${
                     isMobile
-                      ? isWelcome ? 'text-xs' : 'text-[10px]'
+                      ? isWelcome ? 'text-[10px]' : 'text-[9px]'
                       : isWelcome ? 'text-sm sm:text-base md:text-lg' : 'text-xs sm:text-sm md:text-base'
                   }`}
                   style={{
@@ -389,7 +391,7 @@ function PremiumHero() {
                   <p
                     className={`font-light tracking-wide leading-relaxed ${
                       isMobile 
-                        ? 'text-xs mb-4' 
+                        ? 'text-[10px] mb-3' 
                         : 'text-sm sm:text-base md:text-lg mb-6'
                     }`}
                     style={{
@@ -450,7 +452,7 @@ function PremiumHero() {
         </div>
 
         {/* Bottom: Scroll indicator - Positioned above content on mobile */}
-        <div className={`absolute ${isMobile ? 'bottom-[15vh]' : 'bottom-6'} left-0 right-0 flex justify-center z-40`}>
+        <div className={`absolute ${isMobile ? 'bottom-8' : 'bottom-6'} left-0 right-0 flex justify-center z-40`}>
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -458,7 +460,7 @@ function PremiumHero() {
             className="flex flex-col items-center gap-1"
           >
             <p
-              className={`tracking-[0.35em] uppercase ${isMobile ? 'text-[10px]' : 'text-xs'}`}
+              className={`tracking-[0.35em] uppercase ${isMobile ? 'text-[9px]' : 'text-xs'}`}
               style={{ 
                 color: 'rgba(255, 255, 255, 0.5)',
                 fontFamily: 'var(--font-body)',
@@ -473,7 +475,7 @@ function PremiumHero() {
               transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
             >
               <ChevronDown 
-                size={isMobile ? 20 : 24} 
+                size={isMobile ? 18 : 24} 
                 style={{ 
                   color: 'rgba(255, 255, 255, 0.5)',
                   filter: 'drop-shadow(0 0 6px rgba(255, 255, 255, 0.2))'
