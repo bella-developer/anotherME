@@ -127,10 +127,10 @@ function Home() {
                 transition={{ duration: 1.2, delay: 1.2 + idx * 0.2 }}
                 className="flex flex-col items-center w-full"
               >
-                {/* Circular portal with stable border and rotating energy arcs */}
-                <div className="relative w-full mx-auto" style={{ maxWidth: '380px' }}>
-                  {/* Aspect ratio box using padding-bottom technique for better browser support */}
-                  <div style={{ position: 'relative', width: '100%', paddingBottom: '100%' }}>
+                {/* Elliptical (egg-shaped) portal - wider, shorter */}
+                <div className="relative w-full mx-auto" style={{ maxWidth: '420px' }}>
+                  {/* Elliptical aspect ratio - 85% height (shorter) */}
+                  <div style={{ position: 'relative', width: '100%', paddingBottom: '85%' }}>
                     <button
                       onClick={() => navigate(room.path)}
                       onMouseEnter={() => setHovered(room.id)}

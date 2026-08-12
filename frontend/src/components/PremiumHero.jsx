@@ -248,7 +248,7 @@ function PremiumHero() {
         fontFamily: 'var(--font-body)',
       }}
     >
-      {/* Video Backgrounds - Full-screen story format */}
+      {/* Video Backgrounds - Contained at top, content below */}
       {tourSteps.map((step, index) => {
         const videoSource = isMobile && step.mobileVideo ? step.mobileVideo : step.video;
         
@@ -262,9 +262,13 @@ function PremiumHero() {
               top: '56px',
               left: 0,
               right: 0,
-              bottom: 0,
+              // Mobile: Video takes top 45% of viewport
+              height: isMobile ? '45vh' : '100%',
               backgroundColor: '#000000',
               overflow: 'hidden',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
             }}
           >
             <video
@@ -276,8 +280,8 @@ function PremiumHero() {
               style={{
                 width: '100%',
                 height: '100%',
-                // Both use cover for full immersion
-                objectFit: 'cover',
+                // Mobile: contain to show full video, Desktop: cover for immersion
+                objectFit: isMobile ? 'contain' : 'cover',
                 objectPosition: 'center center',
                 willChange: 'opacity',
               }}
@@ -288,19 +292,15 @@ function PremiumHero() {
         );
       })}
 
-      {/* Dark gradient overlay for content readability - bottom 30% */}
-      <div 
-        className="absolute pointer-events-none z-20"
-        style={{
-          top: '56px',
-          left: 0,
-          right: 0,
-          bottom: 0,
-          background: isMobile 
-            ? 'linear-gradient(to bottom, transparent 0%, transparent 60%, rgba(0,0,0,0.7) 85%, rgba(0,0,0,0.9) 100%)'
-            : 'linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.6) 100%)',
-        }}
-      />
+      {/* Dark gradient overlay - desktop only */}
+      {!isMobile && (
+        <div 
+          className="absolute inset-0 pointer-events-none z-20"
+          style={{
+            background: 'linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.6) 100%)',
+          }}
+        />
+      )}
 
       {/* Content Layer - Full-screen story overlay */}
       <div className="relative z-30 h-full flex flex-col items-center justify-end px-4 sm:px-6 pb-16" style={{ paddingTop: isMobile ? 0 : '56px' }}>
@@ -447,8 +447,8 @@ function PremiumHero() {
           </div>
         </div>
 
-        {/* Bottom: Scroll indicator - Inside gradient overlay */}
-        <div className="w-full flex justify-center mt-6">
+        {/* Bottom: Scroll indicator - Compact spacing */}
+        <div className="w-full flex justify-center mt-4">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -456,7 +456,7 @@ function PremiumHero() {
             className="flex flex-col items-center gap-1"
           >
             <p
-              className={`tracking-[0.35em] uppercase ${isMobile ? 'text-[9px]' : 'text-xs'}`}
+              className="tracking-[0.35em] uppercase text-[9px]"
               style={{ 
                 color: 'rgba(255, 255, 255, 0.6)',
                 fontFamily: 'var(--font-body)',
@@ -471,7 +471,7 @@ function PremiumHero() {
               transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
             >
               <ChevronDown 
-                size={isMobile ? 18 : 24} 
+                size={18} 
                 style={{ 
                   color: 'rgba(255, 255, 255, 0.6)',
                   filter: 'drop-shadow(0 0 8px rgba(0, 0, 0, 0.8))'
