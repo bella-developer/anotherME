@@ -32,7 +32,7 @@ function Home() {
       tagline: 'Release. Witness. Discharge.',
       description: 'Where raw emotion finds its voice.',
       path: '/rooms/dark',
-      video: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1786521557/darkcirclevid_birr8g.mp4',
+      video: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1785500775/darkfineedit_fxticc.mp4',
       glowColor: '#2EE6FF', // Electric Cyan
       glowColorRGB: '46, 230, 255',
     },
@@ -42,7 +42,7 @@ function Home() {
       tagline: 'Create. Imagine. Inspire.',
       description: 'Where imagination roams free.',
       path: '/rooms/fantasy',
-      video: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1786521554/fantasycirclevid_gph2xj.mp4',
+      video: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1785499720/fansyedit_ozhjwj.mp4',
       glowColor: '#FF9D1C', // Amber/Gold
       glowColorRGB: '255, 157, 28',
     },
@@ -52,7 +52,7 @@ function Home() {
       tagline: 'Understand. Reflect. Inquire.',
       description: 'The question that stays.',
       path: '/rooms/philo',
-      video: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1786521554/philocirclevid_uahqad.mp4',
+      video: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1785499721/philoedit_fwdmqu.mp4',
       glowColor: '#B56DFF', // Violet
       glowColorRGB: '181, 109, 255',
     },

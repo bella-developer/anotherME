@@ -268,7 +268,7 @@ function PremiumHero() {
               backgroundColor: '#000000',
               overflow: 'hidden',
               display: 'flex',
-              alignItems: 'flex-start', // Align to top for mobile videos (they have content at top 40%)
+              alignItems: 'flex-start', // Align to top for mobile videos
               justifyContent: 'center',
             }}
           >
@@ -281,12 +281,12 @@ function PremiumHero() {
               style={{
                 width: '100%',
                 height: '100%',
-                // Use contain to show full video without cropping
-                objectFit: 'contain',
-                objectPosition: 'top center', // Align video to top of container
+                // Mobile: contain to show full video, Desktop: cover for immersive fill
+                objectFit: isMobile ? 'contain' : 'cover',
+                objectPosition: isMobile ? 'top center' : 'center center',
                 willChange: 'opacity',
-                // Scale down slightly on mobile for breathing room
-                transform: isMobile ? 'scale(0.98)' : 'scale(1)',
+                // No scaling - full size (scale 1)
+                transform: 'scale(1)',
               }}
             >
               <source src={videoSource} type="video/mp4" />
@@ -304,19 +304,20 @@ function PremiumHero() {
       />
 
       {/* Content Layer - Premium mobile-first positioning */}
-      <div className="relative z-30 h-full flex flex-col items-center justify-end px-4 sm:px-6" style={{ paddingTop: isMobile ? 0 : '56px' }}>
-        {/* Content - Position in bottom black space on mobile (60% area), center on desktop */}
+      <div className="relative z-30 h-full flex flex-col items-center justify-start px-4 sm:px-6" style={{ paddingTop: isMobile ? 0 : '56px' }}>
+        {/* Content - Position immediately after video on mobile (top 40% video, content starts at 40%), center on desktop */}
         <div 
           className="w-full max-w-5xl mx-auto"
           style={{
-            // Mobile: Position content in lower black space with proper spacing
+            // Mobile: Start content immediately after video (at 40% mark)
             // Desktop: Center vertically with artistic right offset
-            paddingBottom: isMobile ? '18vh' : '0', // More space above scroll indicator
+            paddingTop: isMobile ? '42vh' : '0',
+            paddingBottom: isMobile ? '8vh' : '0',
             marginBottom: isMobile ? '0' : 'auto',
-            marginTop: isMobile ? 'auto' : 'auto',
+            marginTop: isMobile ? '0' : 'auto',
           }}
         >
-          {/* Desktop: editorial right offset for artistic compact feel, Mobile: center in black space */}
+          {/* Desktop: editorial right offset for artistic compact feel, Mobile: center after video */}
           <div 
             className="w-full text-center"
             style={{
