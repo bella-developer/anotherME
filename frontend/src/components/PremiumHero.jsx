@@ -25,35 +25,35 @@ function PremiumHero() {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  // Tour steps with videos - CONSISTENT CENTER ALIGNMENT
+  // Tour steps with videos - Dual source support (desktop + mobile)
   const tourSteps = [
     // Frame 1: Welcome
     {
       id: 'welcome',
       video: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1786352472/frame1vid_oububm.mp4',
+      mobileVideo: null, // PLACEHOLDER: Add 9:16 portrait video URL here
       title: 'ESO',
       subtitle: 'your safe space to breathe',
       description: '',
       showButton: false,
-      // Mobile focal point - human sits lower-center
-      mobileFocalPoint: 'center 55%',
     },
     // Frame 2: Dark - Confession
     {
       id: 'dark-confession',
       video: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1786357230/frae2video_qmhpf7.mp4',
+      mobileVideo: null, // PLACEHOLDER: Add 9:16 portrait video URL here
       title: 'CONFESSION',
       subtitle: 'release what weighs on you',
       description: 'dark stories • secrets • regrets',
       color: '#2EE6FF',
       colorRgb: '46, 230, 255',
       showButton: false,
-      mobileFocalPoint: 'center 50%',
     },
     // Frame 3: Dark - Understanding
     {
       id: 'dark-understanding',
       video: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1786358832/frame3vid_1_hjyi09.mp4',
+      mobileVideo: null, // PLACEHOLDER: Add 9:16 portrait video URL here
       title: 'UNDERSTANDING',
       subtitle: "you're not alone",
       description: 'shared darkness • connection',
@@ -61,24 +61,24 @@ function PremiumHero() {
       colorRgb: '46, 230, 255',
       showButton: true,
       buttonText: 'step in',
-      mobileFocalPoint: 'center 45%',
     },
     // Frame 4: Fantasy - Daydreaming
     {
       id: 'fantasy-daydream',
       video: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1786361397/frame4videoo_hizhue.mp4',
+      mobileVideo: null, // PLACEHOLDER: Add 9:16 portrait video URL here
       title: 'IMAGINATION',
       subtitle: 'where creativity flows',
       description: 'daydreams • artistic ideas',
       color: '#FF9D1C',
       colorRgb: '255, 157, 28',
       showButton: false,
-      mobileFocalPoint: 'center 50%',
     },
     // Frame 5: Fantasy - Vibes
     {
       id: 'fantasy-vibes',
       video: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1786361396/frame5v_wtvs09.mp4',
+      mobileVideo: null, // PLACEHOLDER: Add 9:16 portrait video URL here
       title: 'VIBES',
       subtitle: 'fun • jokes • fantasies',
       description: 'creative energy • music',
@@ -86,24 +86,24 @@ function PremiumHero() {
       colorRgb: '255, 157, 28',
       showButton: true,
       buttonText: 'step in',
-      mobileFocalPoint: 'center 50%',
     },
     // Frame 6: Philo - Questioning
     {
       id: 'philo-questioning',
       video: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1786361397/frame6v_ijhpzm.mp4',
+      mobileVideo: null, // PLACEHOLDER: Add 9:16 portrait video URL here
       title: 'QUESTIONING',
       subtitle: 'the big questions',
       description: 'philosophy • spirituality',
       color: '#B56DFF',
       colorRgb: '181, 109, 255',
       showButton: false,
-      mobileFocalPoint: 'center 50%',
     },
     // Frame 7: Philo - Truth
     {
       id: 'philo-truth',
       video: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1786361701/frame7vide_yp9dc4.mp4',
+      mobileVideo: null, // PLACEHOLDER: Add 9:16 portrait video URL here
       title: 'TRUTH',
       subtitle: 'conspiracy • unique ideas',
       description: 'cosmic connection • mystery',
@@ -111,7 +111,6 @@ function PremiumHero() {
       colorRgb: '181, 109, 255',
       showButton: true,
       buttonText: 'step in',
-      mobileFocalPoint: 'center 60%',
     },
   ];
 
@@ -249,46 +248,50 @@ function PremiumHero() {
         fontFamily: 'var(--font-body)',
       }}
     >
-      {/* Video Backgrounds - Professional viewport calculation */}
-      {tourSteps.map((step, index) => (
-        <div
-          key={step.id}
-          className={`absolute transition-opacity ${
-            isMobile ? 'duration-500' : 'duration-1000'
-          } ${index === currentStep ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
-          style={{
-            // Start below navbar, fill rest of viewport
-            top: '56px',
-            left: 0,
-            right: 0,
-            bottom: 0,
-            backgroundColor: '#000000',
-            overflow: 'hidden',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <video
-            id={`video-${index}`}
-            autoPlay={index === 0}
-            loop
-            muted
-            playsInline
+      {/* Video Backgrounds - Responsive multi-source support */}
+      {tourSteps.map((step, index) => {
+        // Use mobile video (9:16 portrait) if available and on mobile, otherwise use desktop video (16:9 landscape)
+        const videoSource = isMobile && step.mobileVideo ? step.mobileVideo : step.video;
+        
+        return (
+          <div
+            key={step.id}
+            className={`absolute transition-opacity ${
+              isMobile ? 'duration-500' : 'duration-1000'
+            } ${index === currentStep ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
             style={{
-              width: '100%',
-              height: '100%',
-              // CRITICAL: Use contain on mobile to show full video without cropping
-              // Use cover on desktop for immersive experience
-              objectFit: isMobile ? 'contain' : 'cover',
-              objectPosition: 'center center',
-              willChange: 'opacity',
+              // Start below navbar, fill rest of viewport
+              top: '56px',
+              left: 0,
+              right: 0,
+              bottom: 0,
+              backgroundColor: '#000000',
+              overflow: 'hidden',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
             }}
           >
-            <source src={step.video} type="video/mp4" />
-          </video>
-        </div>
-      ))}
+            <video
+              id={`video-${index}`}
+              autoPlay={index === 0}
+              loop
+              muted
+              playsInline
+              style={{
+                width: '100%',
+                height: '100%',
+                // Use cover for both - portrait videos on mobile will fill perfectly
+                objectFit: 'cover',
+                objectPosition: 'center center',
+                willChange: 'opacity',
+              }}
+            >
+              <source src={videoSource} type="video/mp4" />
+            </video>
+          </div>
+        );
+      })}
 
       {/* Dark overlay */}
       <div 
