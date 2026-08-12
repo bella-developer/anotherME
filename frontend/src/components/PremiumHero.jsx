@@ -262,8 +262,8 @@ function PremiumHero() {
               top: '56px',
               left: 0,
               right: 0,
-              // Mobile: Video takes top 45% of viewport
-              height: isMobile ? '45vh' : '100%',
+              // Mobile: Video takes top 48vh (reduced from 45vh)
+              height: isMobile ? '48vh' : '100%',
               backgroundColor: '#000000',
               overflow: 'hidden',
               display: 'flex',
@@ -302,15 +302,21 @@ function PremiumHero() {
         />
       )}
 
-      {/* Content Layer - Full-screen story overlay */}
-      <div className="relative z-30 h-full flex flex-col items-center justify-end px-4 sm:px-6 pb-16" style={{ paddingTop: isMobile ? 0 : '56px' }}>
-        {/* Content overlays bottom 25% on mobile, center on desktop */}
+      {/* Content Layer - Positioned at video edge on mobile, center on desktop */}
+      <div 
+        className="relative z-30 px-4 sm:px-6" 
+        style={{ 
+          paddingTop: isMobile ? 'calc(56px + 48vh - 20px)' : '56px',
+          paddingBottom: isMobile ? '16px' : '64px',
+          minHeight: isMobile ? 'auto' : '100vh',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: isMobile ? 'flex-start' : 'center',
+        }}
+      >
+        {/* Content container */}
         <div 
           className="w-full max-w-5xl mx-auto"
-          style={{
-            marginTop: isMobile ? 'auto' : 'auto',
-            marginBottom: isMobile ? '0' : 'auto',
-          }}
         >
           {/* Desktop: editorial right offset for artistic compact feel, Mobile: center overlay */}
           <div 
@@ -333,20 +339,20 @@ function PremiumHero() {
                 {/* Title - Logo for welcome, text for others */}
                 {isWelcome ? (
                   <motion.div 
-                    className="flex justify-center mb-3 md:mb-4"
+                    className="flex justify-center mb-4 md:mb-4"
                     initial={{ scale: 0.9 }}
                     animate={{ scale: 1 }}
                     transition={{ duration: 0.8 }}
                   >
-                    <EsoLogo className={`w-auto ${isMobile ? 'h-14' : 'h-20 sm:h-24 md:h-28 lg:h-32'}`} style={{
+                    <EsoLogo className={`w-auto ${isMobile ? 'h-16' : 'h-20 sm:h-24 md:h-28 lg:h-32'}`} style={{
                       filter: 'drop-shadow(0 0 12px rgba(255,255,255,0.3))',
                     }} />
                   </motion.div>
                 ) : (
                   <h1
-                    className={`font-light tracking-wider leading-none mb-2 md:mb-3 ${
+                    className={`font-light tracking-wider leading-none mb-4 md:mb-3 ${
                       isMobile 
-                        ? 'text-2xl' 
+                        ? 'text-3xl' 
                         : 'text-4xl sm:text-5xl md:text-6xl lg:text-7xl'
                     }`}
                     style={{
@@ -365,9 +371,9 @@ function PremiumHero() {
 
                 {/* Subtitle */}
                 <p
-                  className={`font-normal tracking-[0.35em] uppercase mb-1 md:mb-2 ${
+                  className={`font-normal tracking-[0.35em] uppercase mb-3 md:mb-2 ${
                     isMobile
-                      ? isWelcome ? 'text-[10px]' : 'text-[9px]'
+                      ? isWelcome ? 'text-xs' : 'text-[11px]'
                       : isWelcome ? 'text-sm sm:text-base md:text-lg' : 'text-xs sm:text-sm md:text-base'
                   }`}
                   style={{
@@ -387,7 +393,7 @@ function PremiumHero() {
                   <p
                     className={`font-light tracking-wide leading-relaxed ${
                       isMobile 
-                        ? 'text-[10px] mb-3' 
+                        ? 'text-[11px] mb-4' 
                         : 'text-sm sm:text-base md:text-lg mb-6'
                     }`}
                     style={{
@@ -447,8 +453,8 @@ function PremiumHero() {
           </div>
         </div>
 
-        {/* Bottom: Scroll indicator - Compact spacing */}
-        <div className="w-full flex justify-center mt-4">
+        {/* Bottom: Scroll indicator - More spacing */}
+        <div className={`w-full flex justify-center ${isMobile ? 'mt-6' : 'mt-8'}`}>
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
