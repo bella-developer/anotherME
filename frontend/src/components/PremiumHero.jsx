@@ -322,9 +322,9 @@ function PremiumHero() {
           <div 
             className="w-full text-center"
             style={{
-              // Desktop: centered with subtle right offset (3%) for artistic feel
-              marginLeft: isMobile ? '0' : '3%',
-              marginRight: isMobile ? '0' : '-3%',
+              // Desktop: centered with gentle right offset (6%) for better text visibility
+              marginLeft: isMobile ? '0' : '6%',
+              marginRight: isMobile ? '0' : '-6%',
               maxWidth: isMobile ? '100%' : '80%',
             }}
           >
