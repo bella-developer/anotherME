@@ -248,9 +248,8 @@ function PremiumHero() {
         fontFamily: 'var(--font-body)',
       }}
     >
-      {/* Video Backgrounds - Responsive multi-source support */}
+      {/* Video Backgrounds - Full-screen story format */}
       {tourSteps.map((step, index) => {
-        // Use mobile video (9:16 portrait) if available and on mobile, otherwise use desktop video (16:9 landscape)
         const videoSource = isMobile && step.mobileVideo ? step.mobileVideo : step.video;
         
         return (
@@ -260,16 +259,12 @@ function PremiumHero() {
               isMobile ? 'duration-500' : 'duration-1000'
             } ${index === currentStep ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
             style={{
-              // Start below navbar, fill rest of viewport
               top: '56px',
               left: 0,
               right: 0,
               bottom: 0,
               backgroundColor: '#000000',
               overflow: 'hidden',
-              display: 'flex',
-              alignItems: 'flex-start', // Align to top for mobile videos
-              justifyContent: 'center',
             }}
           >
             <video
@@ -281,12 +276,10 @@ function PremiumHero() {
               style={{
                 width: '100%',
                 height: '100%',
-                // Mobile: contain to show full video, Desktop: cover for immersive fill
-                objectFit: isMobile ? 'contain' : 'cover',
-                objectPosition: isMobile ? 'top center' : 'center center',
+                // Both use cover for full immersion
+                objectFit: 'cover',
+                objectPosition: 'center center',
                 willChange: 'opacity',
-                // No scaling - full size (scale 1)
-                transform: 'scale(1)',
               }}
             >
               <source src={videoSource} type="video/mp4" />
@@ -295,29 +288,31 @@ function PremiumHero() {
         );
       })}
 
-      {/* Dark overlay */}
+      {/* Dark gradient overlay for content readability - bottom 30% */}
       <div 
-        className="absolute inset-0 pointer-events-none z-20"
+        className="absolute pointer-events-none z-20"
         style={{
-          background: 'linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.6) 100%)',
+          top: '56px',
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: isMobile 
+            ? 'linear-gradient(to bottom, transparent 0%, transparent 60%, rgba(0,0,0,0.7) 85%, rgba(0,0,0,0.9) 100%)'
+            : 'linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.6) 100%)',
         }}
       />
 
-      {/* Content Layer - Premium mobile-first positioning */}
-      <div className="relative z-30 h-full flex flex-col items-center justify-start px-4 sm:px-6" style={{ paddingTop: isMobile ? 0 : '56px' }}>
-        {/* Content - Position immediately after video on mobile (top 40% video, content starts at 40%), center on desktop */}
+      {/* Content Layer - Full-screen story overlay */}
+      <div className="relative z-30 h-full flex flex-col items-center justify-end px-4 sm:px-6 pb-16" style={{ paddingTop: isMobile ? 0 : '56px' }}>
+        {/* Content overlays bottom 25% on mobile, center on desktop */}
         <div 
           className="w-full max-w-5xl mx-auto"
           style={{
-            // Mobile: Start content immediately after video (at 40% mark)
-            // Desktop: Center vertically with artistic right offset
-            paddingTop: isMobile ? '42vh' : '0',
-            paddingBottom: isMobile ? '8vh' : '0',
+            marginTop: isMobile ? 'auto' : 'auto',
             marginBottom: isMobile ? '0' : 'auto',
-            marginTop: isMobile ? '0' : 'auto',
           }}
         >
-          {/* Desktop: editorial right offset for artistic compact feel, Mobile: center after video */}
+          {/* Desktop: editorial right offset for artistic compact feel, Mobile: center overlay */}
           <div 
             className="w-full text-center"
             style={{
@@ -452,8 +447,8 @@ function PremiumHero() {
           </div>
         </div>
 
-        {/* Bottom: Scroll indicator - Positioned above content on mobile */}
-        <div className={`absolute ${isMobile ? 'bottom-8' : 'bottom-6'} left-0 right-0 flex justify-center z-40`}>
+        {/* Bottom: Scroll indicator - Inside gradient overlay */}
+        <div className="w-full flex justify-center mt-6">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -463,10 +458,10 @@ function PremiumHero() {
             <p
               className={`tracking-[0.35em] uppercase ${isMobile ? 'text-[9px]' : 'text-xs'}`}
               style={{ 
-                color: 'rgba(255, 255, 255, 0.5)',
+                color: 'rgba(255, 255, 255, 0.6)',
                 fontFamily: 'var(--font-body)',
                 fontWeight: 400,
-                textShadow: '0 1px 3px rgba(0, 0, 0, 0.8)',
+                textShadow: '0 2px 4px rgba(0, 0, 0, 0.9)',
               }}
             >
               {currentStep === tourSteps.length - 1 ? 'continue' : 'scroll'}
@@ -478,8 +473,8 @@ function PremiumHero() {
               <ChevronDown 
                 size={isMobile ? 18 : 24} 
                 style={{ 
-                  color: 'rgba(255, 255, 255, 0.5)',
-                  filter: 'drop-shadow(0 0 6px rgba(255, 255, 255, 0.2))'
+                  color: 'rgba(255, 255, 255, 0.6)',
+                  filter: 'drop-shadow(0 0 8px rgba(0, 0, 0, 0.8))'
                 }} 
               />
             </motion.div>

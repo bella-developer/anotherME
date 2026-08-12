@@ -349,7 +349,7 @@ function Home() {
                           justifyContent: 'center',
                         }}
                       >
-                        {/* Video background - contain with scale to show full 1:1 video */}
+                        {/* Video background - cover with scale 1.2 to fill circle completely */}
                         <video
                           autoPlay
                           loop
@@ -358,12 +358,12 @@ function Home() {
                           style={{
                             width: '100%',
                             height: '100%',
-                            // Use contain to show full video without cropping
-                            objectFit: 'contain',
+                            // Use cover to fill circle completely
+                            objectFit: 'cover',
                             objectPosition: 'center center',
                             display: 'block',
-                            // Scale down to 85% for breathing room inside circle
-                            transform: 'scale(0.85)',
+                            // Scale up to 1.2x to ensure full coverage
+                            transform: 'scale(1.2)',
                             filter: hovered === room.id 
                               ? 'brightness(1.1) contrast(1.1)' 
                               : 'brightness(0.95) contrast(1.05)',
