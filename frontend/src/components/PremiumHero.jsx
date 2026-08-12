@@ -242,14 +242,14 @@ function PremiumHero() {
       ref={containerRef} 
       className="relative overflow-hidden" 
       style={{ 
-        minHeight: '100vh',
+        // Professional fix: Account for navbar in viewport calculation
         height: '100vh',
-        paddingTop: '56px', // Navbar height - no extra space
+        paddingTop: 0, // Remove padding, handle with inner positioning
         background: '#000000',
         fontFamily: 'var(--font-body)',
       }}
     >
-      {/* Video Backgrounds - Professional safe zone technique */}
+      {/* Video Backgrounds - Professional viewport calculation */}
       {tourSteps.map((step, index) => (
         <div
           key={step.id}
@@ -257,7 +257,8 @@ function PremiumHero() {
             isMobile ? 'duration-500' : 'duration-1000'
           } ${index === currentStep ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
           style={{
-            top: 0,
+            // Start below navbar, fill rest of viewport
+            top: '56px',
             left: 0,
             right: 0,
             bottom: 0,
@@ -273,21 +274,14 @@ function PremiumHero() {
             playsInline
             style={{
               position: 'absolute',
-              top: '50%',
-              left: '50%',
-              transform: 'translate(-50%, -50%)',
-              // Mobile: Scale up less aggressively to show more content
-              // Desktop: Full coverage
-              minWidth: isMobile ? '100%' : '100%',
-              minHeight: isMobile ? '100%' : '100%',
-              width: isMobile ? '177.78vh' : 'auto', // 16:9 ratio calculation
-              height: isMobile ? 'auto' : 'auto',
-              maxWidth: isMobile ? 'none' : 'none',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
               objectFit: 'cover',
-              objectPosition: 'center center',
+              // Per-video custom focal points for optimal framing
+              objectPosition: isMobile ? (step.mobileFocalPoint || 'center 50%') : 'center center',
               willChange: 'opacity',
-              // Slightly scale down on mobile to show more of the frame
-              scale: isMobile ? '0.95' : '1',
             }}
           >
             <source src={step.video} type="video/mp4" />
@@ -304,7 +298,7 @@ function PremiumHero() {
       />
 
       {/* Content Layer - Artistic positioning */}
-      <div className="relative z-30 h-full flex flex-col items-center justify-center px-4 sm:px-6">
+      <div className="relative z-30 h-full flex flex-col items-center justify-center px-4 sm:px-6" style={{ paddingTop: '56px' }}>
         {/* Content */}
         <div className="flex-1 flex items-center justify-center w-full max-w-5xl mx-auto">
           {/* Desktop: editorial right offset for artistic compact feel, Mobile: center */}
