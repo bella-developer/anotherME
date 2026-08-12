@@ -30,8 +30,8 @@ function PremiumHero() {
     // Frame 1: Welcome
     {
       id: 'welcome',
-      video: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1786352472/frame1vid_oububm.mp4',
-      mobileVideo: null, // PLACEHOLDER: Add 9:16 portrait video URL here
+      video: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1786521558/fram1desktop_emb84g.mp4',
+      mobileVideo: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1786521557/frame1mobile_efrsvf.mp4',
       title: 'ESO',
       subtitle: 'your safe space to breathe',
       description: '',
@@ -41,7 +41,7 @@ function PremiumHero() {
     {
       id: 'dark-confession',
       video: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1786357230/frae2video_qmhpf7.mp4',
-      mobileVideo: null, // PLACEHOLDER: Add 9:16 portrait video URL here
+      mobileVideo: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1786521557/frame2mob_pgzsnn.mp4',
       title: 'CONFESSION',
       subtitle: 'release what weighs on you',
       description: 'dark stories • secrets • regrets',
@@ -53,7 +53,7 @@ function PremiumHero() {
     {
       id: 'dark-understanding',
       video: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1786358832/frame3vid_1_hjyi09.mp4',
-      mobileVideo: null, // PLACEHOLDER: Add 9:16 portrait video URL here
+      mobileVideo: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1786521554/frame3mob_h9pzrp.mp4',
       title: 'UNDERSTANDING',
       subtitle: "you're not alone",
       description: 'shared darkness • connection',
@@ -66,7 +66,7 @@ function PremiumHero() {
     {
       id: 'fantasy-daydream',
       video: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1786361397/frame4videoo_hizhue.mp4',
-      mobileVideo: null, // PLACEHOLDER: Add 9:16 portrait video URL here
+      mobileVideo: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1786521551/frame4mob_ox4nlo.mp4',
       title: 'IMAGINATION',
       subtitle: 'where creativity flows',
       description: 'daydreams • artistic ideas',
@@ -78,7 +78,7 @@ function PremiumHero() {
     {
       id: 'fantasy-vibes',
       video: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1786361396/frame5v_wtvs09.mp4',
-      mobileVideo: null, // PLACEHOLDER: Add 9:16 portrait video URL here
+      mobileVideo: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1786521549/frame5mob_q1ynbk.mp4',
       title: 'VIBES',
       subtitle: 'fun • jokes • fantasies',
       description: 'creative energy • music',
@@ -91,7 +91,7 @@ function PremiumHero() {
     {
       id: 'philo-questioning',
       video: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1786361397/frame6v_ijhpzm.mp4',
-      mobileVideo: null, // PLACEHOLDER: Add 9:16 portrait video URL here
+      mobileVideo: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1786521551/frame6mob_xjoxtz.mp4',
       title: 'QUESTIONING',
       subtitle: 'the big questions',
       description: 'philosophy • spirituality',
@@ -103,7 +103,7 @@ function PremiumHero() {
     {
       id: 'philo-truth',
       video: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1786361701/frame7vide_yp9dc4.mp4',
-      mobileVideo: null, // PLACEHOLDER: Add 9:16 portrait video URL here
+      mobileVideo: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1786521556/frame7mob_ovz0to.mp4',
       title: 'TRUTH',
       subtitle: 'conspiracy • unique ideas',
       description: 'cosmic connection • mystery',
@@ -301,11 +301,20 @@ function PremiumHero() {
         }}
       />
 
-      {/* Content Layer - Artistic positioning */}
-      <div className="relative z-30 h-full flex flex-col items-center justify-center px-4 sm:px-6" style={{ paddingTop: '56px' }}>
-        {/* Content */}
-        <div className="flex-1 flex items-center justify-center w-full max-w-5xl mx-auto">
-          {/* Desktop: editorial right offset for artistic compact feel, Mobile: center */}
+      {/* Content Layer - Premium mobile-first positioning */}
+      <div className="relative z-30 h-full flex flex-col items-center justify-end px-4 sm:px-6" style={{ paddingTop: isMobile ? 0 : '56px' }}>
+        {/* Content - Position in bottom 60% on mobile (where black space is), center on desktop */}
+        <div 
+          className="w-full max-w-5xl mx-auto"
+          style={{
+            // Mobile: Position content in lower 60% black space
+            // Desktop: Center vertically with artistic right offset
+            paddingBottom: isMobile ? '10vh' : '0',
+            marginBottom: isMobile ? '0' : 'auto',
+            marginTop: isMobile ? 'auto' : 'auto',
+          }}
+        >
+          {/* Desktop: editorial right offset for artistic compact feel, Mobile: center in black space */}
           <div 
             className="w-full text-center"
             style={{
@@ -440,8 +449,8 @@ function PremiumHero() {
           </div>
         </div>
 
-        {/* Bottom: Scroll indicator - Minimal spacing */}
-        <div className={`flex-shrink-0 flex justify-center ${isMobile ? 'pb-4' : 'pb-6'}`}>
+        {/* Bottom: Scroll indicator - Positioned above content on mobile */}
+        <div className={`absolute ${isMobile ? 'bottom-[15vh]' : 'bottom-6'} left-0 right-0 flex justify-center z-40`}>
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
