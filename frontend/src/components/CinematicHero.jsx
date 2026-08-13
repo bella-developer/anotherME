@@ -130,70 +130,70 @@ function CinematicHero() {
   const currentStory = storyFrames[currentFrame];
   const isWelcome = currentFrame === 0;
 
-  // Calculate positions for circular carousel
+  // Calculate positions for circular carousel with hierarchical scaling
   const getFramePosition = (index) => {
     const total = storyFrames.length;
     const offset = index - currentFrame;
     
-    // Circular positions
+    // Circular positions with proper hierarchy
     if (offset === 0) {
-      // Active frame - center, large
+      // Active frame - CENTER, LARGE
       return {
         x: '50%',
         translateX: '-50%',
-        scale: isMobile ? 0.85 : 1,
+        scale: isMobile ? 0.75 : 1,
         opacity: 1,
         zIndex: 50,
         brightness: 1,
       };
     } else if (offset === 1 || offset === -(total - 1)) {
-      // Right neighbor
+      // Right neighbor - 50% of active
       return {
-        x: isMobile ? '85%' : '75%',
+        x: isMobile ? '80%' : '70%',
         translateX: '-50%',
-        scale: isMobile ? 0.4 : 0.5,
-        opacity: 0.3,
-        zIndex: 30,
-        brightness: 0.3,
+        scale: isMobile ? 0.35 : 0.5,
+        opacity: 0.2,
+        zIndex: 40,
+        brightness: 0.25,
       };
     } else if (offset === -1 || offset === (total - 1)) {
-      // Left neighbor
+      // Left neighbor - 50% of active
       return {
-        x: isMobile ? '15%' : '25%',
+        x: isMobile ? '20%' : '30%',
         translateX: '-50%',
-        scale: isMobile ? 0.4 : 0.5,
-        opacity: 0.3,
-        zIndex: 30,
-        brightness: 0.3,
+        scale: isMobile ? 0.35 : 0.5,
+        opacity: 0.2,
+        zIndex: 40,
+        brightness: 0.25,
       };
     } else if (offset === 2 || offset === -(total - 2)) {
-      // Far right
+      // Far right - 35% of active (decreasing hierarchy)
       return {
-        x: isMobile ? '100%' : '90%',
+        x: isMobile ? '95%' : '85%',
         translateX: '-50%',
-        scale: isMobile ? 0.25 : 0.35,
-        opacity: 0.15,
-        zIndex: 20,
-        brightness: 0.2,
+        scale: isMobile ? 0.2 : 0.35,
+        opacity: 0.1,
+        zIndex: 30,
+        brightness: 0.15,
       };
     } else if (offset === -2 || offset === (total - 2)) {
-      // Far left
+      // Far left - 35% of active (decreasing hierarchy)
       return {
-        x: isMobile ? '0%' : '10%',
+        x: isMobile ? '5%' : '15%',
         translateX: '-50%',
-        scale: isMobile ? 0.25 : 0.35,
-        opacity: 0.15,
-        zIndex: 20,
-        brightness: 0.2,
+        scale: isMobile ? 0.2 : 0.35,
+        opacity: 0.1,
+        zIndex: 30,
+        brightness: 0.15,
       };
     } else {
-      // Hidden
+      // Hidden - 25% (furthest hierarchy)
       return {
-        x: offset > 0 ? '110%' : '-10%',
+        x: offset > 0 ? '105%' : '-5%',
         translateX: '-50%',
-        scale: 0.2,
+        scale: isMobile ? 0.15 : 0.25,
         opacity: 0,
-        zIndex: 10,
+        zIndex: 20,
         brightness: 0.1,
       };
     }
@@ -234,47 +234,48 @@ function CinematicHero() {
         }}
       />
 
-      {/* Ceiling light - pulled down, fully visible */}
+      {/* Ceiling light - sleeker, right after navbar */}
       <motion.div
         className="absolute left-1/2 transform -translate-x-1/2 z-50 pointer-events-none"
         style={{
-          top: isMobile ? '100px' : '120px',
+          top: isMobile ? '70px' : '70px', // Right after navbar (56px + 14px)
         }}
-        initial={{ y: -100, opacity: 0 }}
+        initial={{ y: -50, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
       >
-        {/* Light fixture */}
+        {/* Sleeker light fixture */}
         <div
           className="relative"
           style={{
-            width: isMobile ? '100px' : '150px',
-            height: isMobile ? '50px' : '70px',
+            width: isMobile ? '70px' : '100px',
+            height: isMobile ? '35px' : '50px',
           }}
         >
-          {/* Light body - brighter */}
+          {/* Light body - sleeker, more attractive */}
           <div
             style={{
               width: '100%',
-              height: '80%',
-              background: 'linear-gradient(to bottom, #ffffff 0%, #f5f5f5 30%, #e0e0e0 70%, #d4a574 100%)',
+              height: '100%',
+              background: 'linear-gradient(to bottom, #ffffff 0%, #f8f8f8 20%, #e8e8e8 60%, #c9b897 100%)',
               borderRadius: '50%',
               boxShadow: `
-                0 0 60px rgba(255, 255, 255, 0.9),
-                0 0 120px rgba(255, 255, 255, 0.5),
-                0 15px 40px rgba(0, 0, 0, 0.6)
+                0 0 40px rgba(255, 255, 255, 0.95),
+                0 0 80px rgba(255, 255, 255, 0.6),
+                0 10px 30px rgba(0, 0, 0, 0.7),
+                inset 0 -5px 15px rgba(180, 160, 120, 0.4)
               `,
-              border: '2px solid rgba(200, 200, 200, 0.3)',
+              border: '1px solid rgba(200, 200, 200, 0.4)',
             }}
           />
-          {/* Strong light beam */}
+          {/* Focused light beam - narrower, more dramatic */}
           <div
             className="absolute top-full left-1/2 transform -translate-x-1/2"
             style={{
-              width: isMobile ? '300px' : '500px',
-              height: isMobile ? '400px' : '600px',
-              background: 'radial-gradient(ellipse 40% 60% at 50% 0%, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.1) 40%, transparent 70%)',
-              filter: 'blur(20px)',
+              width: isMobile ? '250px' : '400px',
+              height: isMobile ? '500px' : '700px',
+              background: 'radial-gradient(ellipse 30% 55% at 50% 0%, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0.12) 35%, transparent 65%)',
+              filter: 'blur(15px)',
               pointerEvents: 'none',
             }}
           />
@@ -286,8 +287,8 @@ function CinematicHero() {
         className="relative"
         style={{
           minHeight: '100vh',
-          paddingTop: isMobile ? '250px' : '320px',
-          paddingBottom: isMobile ? '150px' : '200px',
+          paddingTop: isMobile ? '200px' : '240px', // Adjusted for new lamp position
+          paddingBottom: isMobile ? '120px' : '150px',
         }}
       >
         {storyFrames.map((story, index) => {
@@ -301,7 +302,7 @@ function CinematicHero() {
               className="absolute"
               style={{
                 left: position.x,
-                top: isMobile ? '250px' : '320px',
+                top: isMobile ? '200px' : '240px', // Adjusted for new lamp position
                 transform: `translateX(${position.translateX})`,
               }}
               animate={{
@@ -315,31 +316,31 @@ function CinematicHero() {
                 ease: [0.22, 1, 0.36, 1],
               }}
             >
-              {/* Hanging string - VISIBLE */}
+              {/* Hanging string - THICKER, MORE VISIBLE */}
               <svg
                 className="absolute left-1/2 transform -translate-x-1/2"
                 style={{
                   top: `-${stringHeight}px`,
-                  width: '3px',
+                  width: '4px',
                   height: `${stringHeight}px`,
                   zIndex: position.zIndex + 5,
-                  opacity: isActive ? 1 : 0.4,
+                  opacity: isActive ? 1 : 0.6,
                 }}
               >
                 <defs>
                   <linearGradient id={`string-grad-${index}`} x1="0%" y1="0%" x2="0%" y2="100%">
-                    <stop offset="0%" stopColor={isActive ? '#cccccc' : '#666666'} stopOpacity="0.9" />
-                    <stop offset="100%" stopColor={isActive ? '#999999' : '#444444'} stopOpacity="0.5" />
+                    <stop offset="0%" stopColor={isActive ? '#d4d4d4' : '#888888'} stopOpacity="1" />
+                    <stop offset="100%" stopColor={isActive ? '#a0a0a0' : '#555555'} stopOpacity="0.7" />
                   </linearGradient>
                 </defs>
                 <line
-                  x1="1.5"
+                  x1="2"
                   y1="0"
-                  x2="1.5"
+                  x2="2"
                   y2={stringHeight}
                   stroke={`url(#string-grad-${index})`}
-                  strokeWidth="3"
-                  filter="drop-shadow(0 2px 4px rgba(0,0,0,0.8))"
+                  strokeWidth="4"
+                  filter="drop-shadow(0 2px 6px rgba(0,0,0,0.9))"
                 />
               </svg>
 
@@ -428,13 +429,66 @@ function CinematicHero() {
                       />
                     </video>
 
+                    {/* Text overlay at bottom - only for active frame */}
+                    {isActive && (
+                      <motion.div
+                        className="absolute bottom-0 left-0 right-0 text-center"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 20 }}
+                        transition={{ duration: 0.6 }}
+                        style={{
+                          background: 'linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.7) 50%, transparent 100%)',
+                          padding: isMobile ? '30px 20px 20px' : '50px 40px 30px',
+                        }}
+                      >
+                        {/* Title */}
+                        {isWelcome ? (
+                          <EsoLogo 
+                            className={`w-auto mx-auto mb-2 ${isMobile ? 'h-8' : 'h-12'}`}
+                            style={{
+                              filter: 'drop-shadow(0 0 25px rgba(255, 255, 255, 0.8))',
+                            }}
+                          />
+                        ) : (
+                          <h2
+                            className={`tracking-[0.2em] uppercase mb-2 ${
+                              isMobile ? 'text-lg' : 'text-3xl'
+                            }`}
+                            style={{
+                              fontFamily: 'var(--font-heading)',
+                              color: '#ffffff',
+                              textShadow: `0 0 30px ${story.color || 'rgba(255, 255, 255, 0.9)'}, 0 4px 20px rgba(0,0,0,1)`,
+                              fontWeight: 300,
+                            }}
+                          >
+                            {story.title}
+                          </h2>
+                        )}
+                        
+                        {/* Subtitle */}
+                        <p
+                          className={`tracking-[0.25em] uppercase ${
+                            isMobile ? 'text-[9px]' : 'text-xs'
+                          }`}
+                          style={{
+                            color: story.color || 'rgba(255, 255, 255, 0.8)',
+                            textShadow: '0 2px 10px rgba(0,0,0,1)',
+                            fontWeight: 400,
+                          }}
+                        >
+                          {story.subtitle}
+                        </p>
+                      </motion.div>
+                    )}
+
                     {/* Dramatic vignette - stronger on inactive */}
                     <div
                       className="absolute inset-0 pointer-events-none"
                       style={{
                         background: isActive
                           ? 'radial-gradient(circle at center, transparent 40%, rgba(0,0,0,0.5) 100%)'
-                          : 'radial-gradient(circle at center, transparent 20%, rgba(0,0,0,0.9) 100%)',
+                          : 'radial-gradient(circle at center, transparent 15%, rgba(0,0,0,0.95) 100%)',
                         transition: 'background 0.8s ease',
                       }}
                     />
@@ -467,97 +521,30 @@ function CinematicHero() {
                     />
                   ))}
                 </div>
-
-                {/* Info below frame - only for active */}
-                <AnimatePresence>
-                  {isActive && (
-                    <motion.div
-                      className="absolute -bottom-24 left-1/2 transform -translate-x-1/2 text-center"
-                      initial={{ opacity: 0, y: -20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -20 }}
-                      transition={{ duration: 0.6 }}
-                      style={{
-                        width: '120%',
-                      }}
-                    >
-                      {/* Chapter label */}
-                      <span
-                        className={`block tracking-[0.3em] uppercase mb-2 ${
-                          isMobile ? 'text-[10px]' : 'text-xs'
-                        }`}
-                        style={{
-                          fontFamily: 'var(--font-body)',
-                          color: story.color || 'rgba(255, 255, 255, 0.7)',
-                          textShadow: `0 0 20px ${story.color || 'rgba(255, 255, 255, 0.5)'}`,
-                          fontWeight: 300,
-                        }}
-                      >
-                        {story.memory}
-                      </span>
-                      
-                      {/* Title */}
-                      {isWelcome ? (
-                        <EsoLogo 
-                          className={`w-auto mx-auto ${isMobile ? 'h-10' : 'h-14'}`}
-                          style={{
-                            filter: 'drop-shadow(0 0 30px rgba(255, 255, 255, 0.6))',
-                          }}
-                        />
-                      ) : (
-                        <h2
-                          className={`tracking-[0.2em] uppercase mb-1 ${
-                            isMobile ? 'text-xl' : 'text-3xl'
-                          }`}
-                          style={{
-                            fontFamily: 'var(--font-heading)',
-                            color: '#ffffff',
-                            textShadow: `0 0 40px ${story.color || 'rgba(255, 255, 255, 0.8)'}, 0 4px 20px rgba(0,0,0,0.9)`,
-                            fontWeight: 300,
-                          }}
-                        >
-                          {story.title}
-                        </h2>
-                      )}
-                      
-                      {/* Subtitle */}
-                      <p
-                        className={`tracking-[0.25em] uppercase ${
-                          isMobile ? 'text-[9px]' : 'text-xs'
-                        }`}
-                        style={{
-                          color: story.color || 'rgba(255, 255, 255, 0.7)',
-                          textShadow: '0 2px 10px rgba(0,0,0,0.9)',
-                        }}
-                      >
-                        {story.subtitle}
-                      </p>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
               </motion.div>
             </motion.div>
           );
         })}
       </div>
 
-      {/* Navigation arrows */}
+      {/* Navigation arrows - LARGER */}
       <button
         onClick={() => goToFrame(-1)}
         className="fixed left-4 md:left-8 top-1/2 transform -translate-y-1/2 z-50 transition-all duration-300 hover:scale-110"
         style={{
-          background: 'rgba(0, 0, 0, 0.6)',
-          border: '1px solid rgba(255, 255, 255, 0.2)',
+          background: 'rgba(0, 0, 0, 0.7)',
+          border: '2px solid rgba(255, 255, 255, 0.3)',
           borderRadius: '50%',
-          width: isMobile ? '40px' : '50px',
-          height: isMobile ? '40px' : '50px',
+          width: isMobile ? '50px' : '60px',
+          height: isMobile ? '50px' : '60px',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           color: '#ffffff',
-          fontSize: isMobile ? '20px' : '24px',
+          fontSize: isMobile ? '28px' : '32px',
           cursor: 'pointer',
           backdropFilter: 'blur(10px)',
+          fontWeight: 300,
         }}
       >
         ‹
@@ -567,18 +554,19 @@ function CinematicHero() {
         onClick={() => goToFrame(1)}
         className="fixed right-4 md:right-8 top-1/2 transform -translate-y-1/2 z-50 transition-all duration-300 hover:scale-110"
         style={{
-          background: 'rgba(0, 0, 0, 0.6)',
-          border: '1px solid rgba(255, 255, 255, 0.2)',
+          background: 'rgba(0, 0, 0, 0.7)',
+          border: '2px solid rgba(255, 255, 255, 0.3)',
           borderRadius: '50%',
-          width: isMobile ? '40px' : '50px',
-          height: isMobile ? '40px' : '50px',
+          width: isMobile ? '50px' : '60px',
+          height: isMobile ? '50px' : '60px',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           color: '#ffffff',
-          fontSize: isMobile ? '20px' : '24px',
+          fontSize: isMobile ? '28px' : '32px',
           cursor: 'pointer',
           backdropFilter: 'blur(10px)',
+          fontWeight: 300,
         }}
       >
         ›
