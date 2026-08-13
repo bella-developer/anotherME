@@ -327,21 +327,21 @@ function PremiumHero() {
           display: 'flex',
           flexDirection: 'column',
           justifyContent: isMobile ? 'flex-start' : 'center',
-          // Desktop: Push content down slightly for better positioning
-          marginTop: isMobile ? '0' : '40px',
+          // Desktop: Push content down more for lower positioning
+          marginTop: isMobile ? '0' : '80px',
         }}
       >
         {/* Content container */}
         <div 
           className="w-full max-w-5xl mx-auto"
         >
-          {/* Desktop: more right offset and centered, Mobile: centered on video */}
+          {/* Desktop: stronger right offset, Mobile: centered on video */}
           <div 
             className="w-full text-center"
             style={{
-              // Desktop: more pronounced right offset (10%) with slight down positioning
-              marginLeft: isMobile ? '0' : '10%',
-              marginRight: isMobile ? '0' : '-10%',
+              // Desktop: stronger right offset (14%) - not at edge but noticeable
+              marginLeft: isMobile ? '0' : '14%',
+              marginRight: isMobile ? '0' : '-14%',
               maxWidth: isMobile ? '100%' : '80%',
             }}
           >
