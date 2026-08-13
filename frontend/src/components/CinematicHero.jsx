@@ -1,24 +1,17 @@
-import { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import EsoLogo from './EsoLogo';
 
 /**
- * Cinematic Storytelling Hero - "Suspended Story World"
- * Hanging memories with ceiling light, strings, and cinematic atmosphere
- * A living room of memories suspended in darkness
+ * Cinematic Museum Gallery Hero
+ * Dramatic spotlight on active frame, circular carousel with hanging strings
  */
 function CinematicHero() {
   const navigate = useNavigate();
-  const containerRef = useRef(null);
   const [currentFrame, setCurrentFrame] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-
-  // Scroll-based parallax
-  const { scrollY } = useScroll();
-  const lightY = useTransform(scrollY, [0, 500], [0, -50]);
-  const frameY = useTransform(scrollY, [0, 500], [0, 100]);
 
   // Detect mobile
   useEffect(() => {
@@ -28,7 +21,7 @@ function CinematicHero() {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  // Story frames - same video content, new presentation
+  // Story frames
   const storyFrames = [
     {
       id: 'welcome',
@@ -38,7 +31,6 @@ function CinematicHero() {
       subtitle: 'your safe space to breathe',
       description: 'Home of introverts • deep thinkers • philosophers',
       memory: 'Chapter I',
-      showButton: false,
     },
     {
       id: 'dark-confession',
@@ -49,7 +41,6 @@ function CinematicHero() {
       description: 'dark stories • secrets • regrets',
       memory: 'Chapter II',
       color: '#2EE6FF',
-      showButton: false,
     },
     {
       id: 'dark-understanding',
@@ -60,7 +51,6 @@ function CinematicHero() {
       description: 'shared darkness • connection',
       memory: 'Chapter III',
       color: '#2EE6FF',
-      showButton: true,
       buttonText: 'enter the dark',
     },
     {
@@ -72,7 +62,6 @@ function CinematicHero() {
       description: 'daydreams • artistic ideas',
       memory: 'Chapter IV',
       color: '#FF9D1C',
-      showButton: false,
     },
     {
       id: 'fantasy-vibes',
@@ -83,7 +72,6 @@ function CinematicHero() {
       description: 'creative energy • music',
       memory: 'Chapter V',
       color: '#FF9D1C',
-      showButton: true,
       buttonText: 'enter the fantasy',
     },
     {
@@ -95,7 +83,6 @@ function CinematicHero() {
       description: 'philosophy • spirituality',
       memory: 'Chapter VI',
       color: '#B56DFF',
-      showButton: false,
     },
     {
       id: 'philo-truth',
@@ -106,21 +93,22 @@ function CinematicHero() {
       description: 'cosmic connection • mystery',
       memory: 'Chapter VII',
       color: '#B56DFF',
-      showButton: true,
       buttonText: 'seek the truth',
     },
   ];
 
-  // Navigation between frames
+  // Navigate to next/previous
   const goToFrame = (direction) => {
     if (isTransitioning) return;
     
-    const newFrame = currentFrame + direction;
-    if (newFrame >= 0 && newFrame < storyFrames.length) {
-      setIsTransitioning(true);
-      setCurrentFrame(newFrame);
-      setTimeout(() => setIsTransitioning(false), 800);
-    }
+    let newFrame = currentFrame + direction;
+    // Circular navigation
+    if (newFrame < 0) newFrame = storyFrames.length - 1;
+    if (newFrame >= storyFrames.length) newFrame = 0;
+    
+    setIsTransitioning(true);
+    setCurrentFrame(newFrame);
+    setTimeout(() => setIsTransitioning(false), 800);
   };
 
   // Keyboard navigation
@@ -139,238 +127,286 @@ function CinematicHero() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [currentFrame, isTransitioning]);
 
-  // Scroll/swipe navigation - horizontal scroll
-  useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
-
-    const handleScroll = () => {
-      // Determine which frame is most visible based on scroll position
-      const scrollLeft = container.scrollLeft;
-      const frameWidth = isMobile ? 350 : 600;
-      const gap = 96; // 24 * 4 (gap-24 in rem)
-      const totalWidth = frameWidth + gap;
-      
-      const newFrame = Math.round(scrollLeft / totalWidth);
-      if (newFrame !== currentFrame && newFrame >= 0 && newFrame < storyFrames.length) {
-        setCurrentFrame(newFrame);
-      }
-    };
-
-    container.addEventListener('scroll', handleScroll);
-    return () => container.removeEventListener('scroll', handleScroll);
-  }, [currentFrame, storyFrames.length, isMobile]);
-
   const currentStory = storyFrames[currentFrame];
   const isWelcome = currentFrame === 0;
 
+  // Calculate positions for circular carousel
+  const getFramePosition = (index) => {
+    const total = storyFrames.length;
+    const offset = index - currentFrame;
+    
+    // Circular positions
+    if (offset === 0) {
+      // Active frame - center, large
+      return {
+        x: '50%',
+        translateX: '-50%',
+        scale: isMobile ? 0.85 : 1,
+        opacity: 1,
+        zIndex: 50,
+        brightness: 1,
+      };
+    } else if (offset === 1 || offset === -(total - 1)) {
+      // Right neighbor
+      return {
+        x: isMobile ? '85%' : '75%',
+        translateX: '-50%',
+        scale: isMobile ? 0.4 : 0.5,
+        opacity: 0.3,
+        zIndex: 30,
+        brightness: 0.3,
+      };
+    } else if (offset === -1 || offset === (total - 1)) {
+      // Left neighbor
+      return {
+        x: isMobile ? '15%' : '25%',
+        translateX: '-50%',
+        scale: isMobile ? 0.4 : 0.5,
+        opacity: 0.3,
+        zIndex: 30,
+        brightness: 0.3,
+      };
+    } else if (offset === 2 || offset === -(total - 2)) {
+      // Far right
+      return {
+        x: isMobile ? '100%' : '90%',
+        translateX: '-50%',
+        scale: isMobile ? 0.25 : 0.35,
+        opacity: 0.15,
+        zIndex: 20,
+        brightness: 0.2,
+      };
+    } else if (offset === -2 || offset === (total - 2)) {
+      // Far left
+      return {
+        x: isMobile ? '0%' : '10%',
+        translateX: '-50%',
+        scale: isMobile ? 0.25 : 0.35,
+        opacity: 0.15,
+        zIndex: 20,
+        brightness: 0.2,
+      };
+    } else {
+      // Hidden
+      return {
+        x: offset > 0 ? '110%' : '-10%',
+        translateX: '-50%',
+        scale: 0.2,
+        opacity: 0,
+        zIndex: 10,
+        brightness: 0.1,
+      };
+    }
+  };
+
   return (
     <div 
-      ref={containerRef}
-      className="relative"
+      className="relative overflow-hidden"
       style={{
         minHeight: '100vh',
-        background: '#0a0a0a',
+        background: '#000000',
         fontFamily: 'var(--font-body)',
-        overflowX: 'auto',
-        overflowY: 'hidden',
-        // Hide scrollbar
-        scrollbarWidth: 'none', // Firefox
-        msOverflowStyle: 'none', // IE/Edge
       }}
     >
-      {/* Hide Chrome scrollbar */}
+      {/* Global scrollbar hide */}
       <style>{`
-        div::-webkit-scrollbar {
+        * {
+          scrollbar-width: none;
+          -ms-overflow-style: none;
+        }
+        *::-webkit-scrollbar {
           display: none;
+        }
+        body {
+          overflow-x: hidden;
         }
       `}</style>
 
-      {/* Atmospheric dust particles */}
-      <div className="absolute inset-0 pointer-events-none z-10">
-        {[...Array(isMobile ? 15 : 30)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-1 h-1 bg-white rounded-full"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              opacity: Math.random() * 0.3,
-            }}
-            animate={{
-              y: [0, -20, 0],
-              opacity: [Math.random() * 0.3, Math.random() * 0.5, Math.random() * 0.3],
-            }}
-            transition={{
-              duration: 3 + Math.random() * 3,
-              repeat: Infinity,
-              ease: 'easeInOut',
-              delay: Math.random() * 2,
-            }}
-          />
-        ))}
-      </div>
-
-      {/* Ceiling light - spotlight source */}
-      <motion.div
-        className="fixed left-1/2 transform -translate-x-1/2 z-20 pointer-events-none"
+      {/* Dramatic spotlight - follows active frame */}
+      <div
+        className="absolute top-0 left-1/2 transform -translate-x-1/2 pointer-events-none"
         style={{
-          top: isMobile ? '80px' : '40px',
+          width: isMobile ? '200%' : '120%',
+          height: isMobile ? '80%' : '100%',
+          background: `radial-gradient(ellipse 35% 50% at 50% 30%, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.05) 30%, transparent 60%)`,
+          zIndex: 40,
+          transition: 'all 0.8s ease',
         }}
+      />
+
+      {/* Ceiling light - pulled down, fully visible */}
+      <motion.div
+        className="absolute left-1/2 transform -translate-x-1/2 z-50 pointer-events-none"
+        style={{
+          top: isMobile ? '100px' : '120px',
+        }}
+        initial={{ y: -100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
       >
         {/* Light fixture */}
         <div
           className="relative"
           style={{
-            width: isMobile ? '80px' : '120px',
-            height: isMobile ? '40px' : '60px',
+            width: isMobile ? '100px' : '150px',
+            height: isMobile ? '50px' : '70px',
           }}
         >
-          {/* Light body */}
+          {/* Light body - brighter */}
           <div
             style={{
               width: '100%',
-              height: '70%',
-              background: 'linear-gradient(to bottom, #d4a574 0%, #f5ddb8 50%, #d4a574 100%)',
+              height: '80%',
+              background: 'linear-gradient(to bottom, #ffffff 0%, #f5f5f5 30%, #e0e0e0 70%, #d4a574 100%)',
               borderRadius: '50%',
               boxShadow: `
-                0 0 40px rgba(212, 165, 116, 0.8),
-                0 0 80px rgba(212, 165, 116, 0.4),
-                0 10px 30px rgba(0, 0, 0, 0.5)
+                0 0 60px rgba(255, 255, 255, 0.9),
+                0 0 120px rgba(255, 255, 255, 0.5),
+                0 15px 40px rgba(0, 0, 0, 0.6)
               `,
+              border: '2px solid rgba(200, 200, 200, 0.3)',
             }}
           />
-          {/* Light glow */}
+          {/* Strong light beam */}
           <div
-            className="absolute top-1/2 left-1/2 transform -translate-x-1/2"
+            className="absolute top-full left-1/2 transform -translate-x-1/2"
             style={{
-              width: isMobile ? '200px' : '300px',
-              height: isMobile ? '200px' : '300px',
-              background: 'radial-gradient(circle, rgba(212, 165, 116, 0.4) 0%, transparent 70%)',
-              filter: 'blur(30px)',
+              width: isMobile ? '300px' : '500px',
+              height: isMobile ? '400px' : '600px',
+              background: 'radial-gradient(ellipse 40% 60% at 50% 0%, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.1) 40%, transparent 70%)',
+              filter: 'blur(20px)',
               pointerEvents: 'none',
             }}
           />
         </div>
       </motion.div>
 
-      {/* Horizontal gallery container */}
+      {/* Frames carousel - circular layout */}
       <div
-        className="flex items-center gap-24 px-24 py-32"
+        className="relative"
         style={{
           minHeight: '100vh',
-          paddingTop: '180px',
-          paddingBottom: '180px',
+          paddingTop: isMobile ? '250px' : '320px',
+          paddingBottom: isMobile ? '150px' : '200px',
         }}
       >
-        {/* All frames displayed consecutively */}
         {storyFrames.map((story, index) => {
+          const position = getFramePosition(index);
           const isActive = index === currentFrame;
-          const frameWidth = isActive ? (isMobile ? '90%' : '65%') : (isMobile ? '70%' : '45%');
+          const stringHeight = isMobile ? 100 : 150;
           
           return (
-            <div
+            <motion.div
               key={story.id}
-              className="flex-shrink-0 relative"
+              className="absolute"
               style={{
-                width: isMobile ? '350px' : '600px',
-                transition: 'all 0.8s cubic-bezier(0.22, 1, 0.36, 1)',
+                left: position.x,
+                top: isMobile ? '250px' : '320px',
+                transform: `translateX(${position.translateX})`,
+              }}
+              animate={{
+                left: position.x,
+                scale: position.scale,
+                opacity: position.opacity,
+                zIndex: position.zIndex,
+              }}
+              transition={{
+                duration: 0.8,
+                ease: [0.22, 1, 0.36, 1],
               }}
             >
-              {/* Hanging strings from ceiling to each frame */}
+              {/* Hanging string - VISIBLE */}
               <svg
-                className="absolute left-1/2 transform -translate-x-1/2 pointer-events-none"
+                className="absolute left-1/2 transform -translate-x-1/2"
                 style={{
-                  top: isMobile ? '-120px' : '-140px',
-                  width: '2px',
-                  height: isMobile ? '120px' : '140px',
-                  zIndex: 15,
+                  top: `-${stringHeight}px`,
+                  width: '3px',
+                  height: `${stringHeight}px`,
+                  zIndex: position.zIndex + 5,
+                  opacity: isActive ? 1 : 0.4,
                 }}
               >
                 <defs>
-                  <linearGradient id={`string-${index}`} x1="0%" y1="0%" x2="0%" y2="100%">
-                    <stop offset="0%" stopColor="#8b7355" stopOpacity="0.8" />
-                    <stop offset="100%" stopColor="#8b7355" stopOpacity="0.3" />
+                  <linearGradient id={`string-grad-${index}`} x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stopColor={isActive ? '#cccccc' : '#666666'} stopOpacity="0.9" />
+                    <stop offset="100%" stopColor={isActive ? '#999999' : '#444444'} stopOpacity="0.5" />
                   </linearGradient>
                 </defs>
                 <line
-                  x1="1"
+                  x1="1.5"
                   y1="0"
-                  x2="1"
-                  y2="100%"
-                  stroke={`url(#string-${index})`}
-                  strokeWidth="2"
+                  x2="1.5"
+                  y2={stringHeight}
+                  stroke={`url(#string-grad-${index})`}
+                  strokeWidth="3"
+                  filter="drop-shadow(0 2px 4px rgba(0,0,0,0.8))"
                 />
               </svg>
 
-              {/* Frame container with sway animation */}
+              {/* Frame with dramatic lighting */}
               <motion.div
-                className="relative"
-                animate={{
-                  rotateZ: isActive ? [0, 0.5, -0.5, 0] : [0, 0.3, -0.3, 0],
-                  scale: isActive ? 1.05 : 1,
-                }}
-                transition={{
-                  rotateZ: {
-                    duration: isActive ? 4 : 5,
-                    repeat: Infinity,
-                    ease: 'easeInOut',
-                  },
-                  scale: {
-                    duration: 0.6,
-                    ease: [0.22, 1, 0.36, 1],
-                  },
-                }}
                 onClick={() => {
-                  if (!isTransitioning) {
+                  if (!isTransitioning && !isActive) {
                     setIsTransitioning(true);
                     setCurrentFrame(index);
                     setTimeout(() => setIsTransitioning(false), 800);
                   }
                 }}
+                animate={{
+                  rotateZ: isActive ? [0, 0.8, -0.8, 0] : [0, 0.4, -0.4, 0],
+                }}
+                transition={{
+                  rotateZ: {
+                    duration: isActive ? 5 : 6,
+                    repeat: Infinity,
+                    ease: 'easeInOut',
+                  },
+                }}
                 style={{
-                  cursor: 'pointer',
+                  width: isMobile ? '280px' : '500px',
+                  cursor: isActive ? 'default' : 'pointer',
                 }}
               >
-                {/* Frame structure - old wooden frame */}
+                {/* Wooden frame */}
                 <div
                   className="relative"
                   style={{
                     aspectRatio: isMobile ? '9/16' : '16/9',
-                    padding: '12px',
-                    background: 'linear-gradient(135deg, #5a4a3a 0%, #3d3226 50%, #2d2419 100%)',
+                    padding: isMobile ? '10px' : '14px',
+                    background: isActive
+                      ? 'linear-gradient(135deg, #6b5a48 0%, #4a3a2a 50%, #3a2a1a 100%)'
+                      : 'linear-gradient(135deg, #3a2a1a 0%, #2a1a0a 50%, #1a0a00 100%)',
                     boxShadow: isActive
                       ? `
-                          inset 0 2px 10px rgba(0, 0, 0, 0.8),
-                          inset 0 -2px 10px rgba(0, 0, 0, 0.6),
-                          0 20px 60px rgba(0, 0, 0, 0.9),
-                          0 0 60px ${story.color ? story.color + '50' : 'rgba(212, 165, 116, 0.4)'}
+                          inset 0 3px 12px rgba(0, 0, 0, 0.9),
+                          inset 0 -3px 12px rgba(0, 0, 0, 0.7),
+                          0 25px 80px rgba(0, 0, 0, 0.95),
+                          0 0 80px ${story.color ? story.color + '60' : 'rgba(255, 255, 255, 0.4)'},
+                          0 0 40px ${story.color ? story.color + '80' : 'rgba(255, 255, 255, 0.3)'}
                         `
                       : `
-                          inset 0 2px 10px rgba(0, 0, 0, 0.8),
-                          inset 0 -2px 10px rgba(0, 0, 0, 0.6),
-                          0 15px 40px rgba(0, 0, 0, 0.8),
-                          0 0 30px ${story.color ? story.color + '20' : 'rgba(212, 165, 116, 0.15)'}
+                          inset 0 2px 8px rgba(0, 0, 0, 0.9),
+                          0 10px 30px rgba(0, 0, 0, 0.9)
                         `,
-                    border: '2px solid #4a3a2a',
-                    borderRadius: '4px',
-                    transition: 'all 0.6s ease',
+                    border: isActive ? '3px solid #5a4a38' : '2px solid #2a1a0a',
+                    borderRadius: '6px',
+                    transition: 'all 0.8s ease',
                   }}
                 >
-                  {/* Frame inner edge */}
+                  {/* Inner frame edge */}
                   <div
                     style={{
                       position: 'absolute',
-                      inset: '8px',
-                      border: '1px solid rgba(139, 115, 85, 0.4)',
-                      borderRadius: '2px',
+                      inset: '10px',
+                      border: `1px solid ${isActive ? 'rgba(139, 115, 85, 0.5)' : 'rgba(139, 115, 85, 0.2)'}`,
+                      borderRadius: '4px',
                       pointerEvents: 'none',
                     }}
                   />
 
-                  {/* Video content inside frame */}
+                  {/* Video content */}
                   <div
-                    className="relative w-full h-full overflow-hidden rounded-sm"
+                    className="relative w-full h-full overflow-hidden rounded"
                     style={{
                       background: '#000',
                     }}
@@ -382,8 +418,8 @@ function CinematicHero() {
                       playsInline
                       className="w-full h-full object-cover"
                       style={{
-                        opacity: isActive ? 1 : 0.7,
-                        transition: 'opacity 0.6s ease',
+                        filter: `brightness(${position.brightness}) contrast(${isActive ? 1.1 : 0.8})`,
+                        transition: 'filter 0.8s ease',
                       }}
                     >
                       <source 
@@ -392,131 +428,191 @@ function CinematicHero() {
                       />
                     </video>
 
-                    {/* Vignette overlay */}
+                    {/* Dramatic vignette - stronger on inactive */}
                     <div
                       className="absolute inset-0 pointer-events-none"
                       style={{
-                        background: 'radial-gradient(circle at center, transparent 30%, rgba(0,0,0,0.6) 100%)',
+                        background: isActive
+                          ? 'radial-gradient(circle at center, transparent 40%, rgba(0,0,0,0.5) 100%)'
+                          : 'radial-gradient(circle at center, transparent 20%, rgba(0,0,0,0.9) 100%)',
+                        transition: 'background 0.8s ease',
                       }}
                     />
                   </div>
 
-                  {/* Hanging clips/pins at corners */}
+                  {/* Corner clips */}
                   {[
-                    { top: '-8px', left: '-8px' },
-                    { top: '-8px', right: '-8px' },
-                    { bottom: '-8px', left: '-8px' },
-                    { bottom: '-8px', right: '-8px' },
+                    { top: '-10px', left: '-10px' },
+                    { top: '-10px', right: '-10px' },
+                    { bottom: '-10px', left: '-10px' },
+                    { bottom: '-10px', right: '-10px' },
                   ].map((pos, i) => (
                     <div
                       key={i}
                       className="absolute"
                       style={{
                         ...pos,
-                        width: '16px',
-                        height: '16px',
-                        background: 'radial-gradient(circle, #6b5744 0%, #3d2f23 100%)',
+                        width: isActive ? '20px' : '16px',
+                        height: isActive ? '20px' : '16px',
+                        background: isActive
+                          ? 'radial-gradient(circle, #7b6754 0%, #4d3f33 100%)'
+                          : 'radial-gradient(circle, #3d2f23 0%, #2d1f13 100%)',
                         borderRadius: '50%',
-                        boxShadow: '0 2px 8px rgba(0,0,0,0.8), inset 0 1px 2px rgba(255,255,255,0.2)',
-                        border: '1px solid #2d2419',
+                        boxShadow: isActive
+                          ? '0 3px 10px rgba(0,0,0,0.9), inset 0 1px 3px rgba(255,255,255,0.3)'
+                          : '0 2px 6px rgba(0,0,0,0.8)',
+                        border: '1px solid rgba(0,0,0,0.5)',
+                        transition: 'all 0.8s ease',
                       }}
                     />
                   ))}
                 </div>
 
-                {/* Memory label - vintage tag */}
-                <motion.div
-                  className="absolute -bottom-16 left-1/2 transform -translate-x-1/2"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: isActive ? 1 : 0.5 }}
-                  transition={{ duration: 0.6 }}
-                >
-                  <span
-                    className="text-xs tracking-[0.3em] uppercase block mb-1"
-                    style={{
-                      fontFamily: 'var(--font-body)',
-                      color: isActive ? (story.color || 'rgba(212, 165, 116, 0.9)') : 'rgba(212, 165, 116, 0.5)',
-                      textShadow: '0 2px 8px rgba(0,0,0,0.8)',
-                      fontWeight: 300,
-                      transition: 'all 0.6s ease',
-                    }}
-                  >
-                    {story.memory}
-                  </span>
-                  
-                  {/* Title when active */}
+                {/* Info below frame - only for active */}
+                <AnimatePresence>
                   {isActive && (
                     <motion.div
-                      initial={{ opacity: 0, y: -10 }}
+                      className="absolute -bottom-24 left-1/2 transform -translate-x-1/2 text-center"
+                      initial={{ opacity: 0, y: -20 }}
                       animate={{ opacity: 1, y: 0 }}
-                      className="text-center mt-2"
+                      exit={{ opacity: 0, y: -20 }}
+                      transition={{ duration: 0.6 }}
+                      style={{
+                        width: '120%',
+                      }}
                     >
-                      <h2
-                        className="text-lg tracking-[0.2em] uppercase mb-1"
+                      {/* Chapter label */}
+                      <span
+                        className={`block tracking-[0.3em] uppercase mb-2 ${
+                          isMobile ? 'text-[10px]' : 'text-xs'
+                        }`}
                         style={{
-                          fontFamily: 'var(--font-heading)',
-                          color: '#ffffff',
-                          textShadow: `0 0 20px ${story.color || 'rgba(212, 165, 116, 0.6)'}`,
+                          fontFamily: 'var(--font-body)',
+                          color: story.color || 'rgba(255, 255, 255, 0.7)',
+                          textShadow: `0 0 20px ${story.color || 'rgba(255, 255, 255, 0.5)'}`,
                           fontWeight: 300,
                         }}
                       >
-                        {story.title}
-                      </h2>
+                        {story.memory}
+                      </span>
+                      
+                      {/* Title */}
+                      {isWelcome ? (
+                        <EsoLogo 
+                          className={`w-auto mx-auto ${isMobile ? 'h-10' : 'h-14'}`}
+                          style={{
+                            filter: 'drop-shadow(0 0 30px rgba(255, 255, 255, 0.6))',
+                          }}
+                        />
+                      ) : (
+                        <h2
+                          className={`tracking-[0.2em] uppercase mb-1 ${
+                            isMobile ? 'text-xl' : 'text-3xl'
+                          }`}
+                          style={{
+                            fontFamily: 'var(--font-heading)',
+                            color: '#ffffff',
+                            textShadow: `0 0 40px ${story.color || 'rgba(255, 255, 255, 0.8)'}, 0 4px 20px rgba(0,0,0,0.9)`,
+                            fontWeight: 300,
+                          }}
+                        >
+                          {story.title}
+                        </h2>
+                      )}
+                      
+                      {/* Subtitle */}
                       <p
-                        className="text-[10px] tracking-[0.25em] uppercase"
+                        className={`tracking-[0.25em] uppercase ${
+                          isMobile ? 'text-[9px]' : 'text-xs'
+                        }`}
                         style={{
-                          color: story.color || 'rgba(212, 165, 116, 0.7)',
-                          textShadow: '0 2px 6px rgba(0,0,0,0.9)',
+                          color: story.color || 'rgba(255, 255, 255, 0.7)',
+                          textShadow: '0 2px 10px rgba(0,0,0,0.9)',
                         }}
                       >
                         {story.subtitle}
                       </p>
                     </motion.div>
                   )}
-                </motion.div>
+                </AnimatePresence>
               </motion.div>
-            </div>
+            </motion.div>
           );
         })}
       </div>
 
-      {/* Navigation hint - bottom center */}
-      <motion.div
-        className="fixed bottom-8 left-1/2 transform -translate-x-1/2 z-50"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 2, duration: 1 }}
+      {/* Navigation arrows */}
+      <button
+        onClick={() => goToFrame(-1)}
+        className="fixed left-4 md:left-8 top-1/2 transform -translate-y-1/2 z-50 transition-all duration-300 hover:scale-110"
+        style={{
+          background: 'rgba(0, 0, 0, 0.6)',
+          border: '1px solid rgba(255, 255, 255, 0.2)',
+          borderRadius: '50%',
+          width: isMobile ? '40px' : '50px',
+          height: isMobile ? '40px' : '50px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          color: '#ffffff',
+          fontSize: isMobile ? '20px' : '24px',
+          cursor: 'pointer',
+          backdropFilter: 'blur(10px)',
+        }}
       >
-        <p
-          className="text-[9px] tracking-[0.35em] uppercase mb-2 text-center"
-          style={{
-            color: 'rgba(212, 165, 116, 0.6)',
-            fontFamily: 'var(--font-body)',
-            textShadow: '0 2px 6px rgba(0,0,0,0.9)',
-          }}
-        >
-          scroll to explore
-        </p>
-        <div className="flex gap-2 justify-center">
-          {storyFrames.map((_, idx) => (
-            <div
-              key={idx}
-              className="transition-all duration-300"
-              style={{
-                width: currentFrame === idx ? '24px' : '8px',
-                height: '8px',
-                borderRadius: '4px',
-                background: currentFrame === idx 
-                  ? (storyFrames[currentFrame].color || 'rgba(212, 165, 116, 0.9)')
-                  : 'rgba(255, 255, 255, 0.3)',
-                boxShadow: currentFrame === idx 
-                  ? `0 0 15px ${storyFrames[currentFrame].color || 'rgba(212, 165, 116, 0.6)'}` 
-                  : 'none',
-              }}
-            />
-          ))}
-        </div>
-      </motion.div>
+        ‹
+      </button>
+
+      <button
+        onClick={() => goToFrame(1)}
+        className="fixed right-4 md:right-8 top-1/2 transform -translate-y-1/2 z-50 transition-all duration-300 hover:scale-110"
+        style={{
+          background: 'rgba(0, 0, 0, 0.6)',
+          border: '1px solid rgba(255, 255, 255, 0.2)',
+          borderRadius: '50%',
+          width: isMobile ? '40px' : '50px',
+          height: isMobile ? '40px' : '50px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          color: '#ffffff',
+          fontSize: isMobile ? '20px' : '24px',
+          cursor: 'pointer',
+          backdropFilter: 'blur(10px)',
+        }}
+      >
+        ›
+      </button>
+
+      {/* Navigation dots */}
+      <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 z-50 flex gap-2">
+        {storyFrames.map((_, idx) => (
+          <button
+            key={idx}
+            onClick={() => {
+              if (!isTransitioning) {
+                setIsTransitioning(true);
+                setCurrentFrame(idx);
+                setTimeout(() => setIsTransitioning(false), 800);
+              }
+            }}
+            className="transition-all duration-300"
+            style={{
+              width: currentFrame === idx ? '28px' : '10px',
+              height: '10px',
+              borderRadius: '5px',
+              background: currentFrame === idx 
+                ? (currentStory.color || 'rgba(255, 255, 255, 0.9)')
+                : 'rgba(255, 255, 255, 0.3)',
+              boxShadow: currentFrame === idx 
+                ? `0 0 20px ${currentStory.color || 'rgba(255, 255, 255, 0.8)'}` 
+                : 'none',
+              cursor: 'pointer',
+              border: 'none',
+            }}
+          />
+        ))}
+      </div>
     </div>
   );
 }

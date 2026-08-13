@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import EsoLogo from '../components/EsoLogo';
 import { usePageTitle } from '../hooks/usePageTitle';
-import HeroVariantToggle from '../components/HeroVariantToggle';
+import CinematicHero from '../components/CinematicHero';
 
 // ESO Landing Page - Updated with Premium Scroll Hero
 function Landing() {
@@ -137,8 +137,8 @@ function Landing() {
         </nav>
       </motion.header>
 
-      {/* HERO VARIANT TOGGLE - Switch between Premium and Cinematic */}
-      <HeroVariantToggle />
+      {/* CINEMATIC HERO - Museum Gallery */}
+      <CinematicHero />
 
       {/* SLIDING TEXT SECTION - Slowed Down, Editorial */}
       <section 
