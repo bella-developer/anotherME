@@ -302,29 +302,46 @@ function PremiumHero() {
         />
       )}
 
-      {/* Content Layer - Positioned at video edge on mobile, center on desktop */}
+      {/* Mobile: Dark overlay at bottom of video for text readability */}
+      {isMobile && (
+        <div 
+          className="absolute pointer-events-none z-20"
+          style={{
+            top: '56px',
+            left: 0,
+            right: 0,
+            height: '48vh',
+            background: 'linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 50%, rgba(0,0,0,0.85) 100%)',
+          }}
+        />
+      )}
+
+      {/* Content Layer - Mobile: overlay at video bottom edge, Desktop: centered with offset */}
       <div 
         className="relative z-30 px-4 sm:px-6" 
         style={{ 
-          paddingTop: isMobile ? 'calc(56px + 48vh - 26px)' : '56px',
+          // Mobile: Position at bottom of video (overlaying video edge)
+          paddingTop: isMobile ? 'calc(56px + 48vh - 120px)' : '56px',
           paddingBottom: isMobile ? '16px' : '64px',
           minHeight: isMobile ? 'auto' : '100vh',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: isMobile ? 'flex-start' : 'center',
+          // Desktop: Push content down slightly for better positioning
+          marginTop: isMobile ? '0' : '40px',
         }}
       >
         {/* Content container */}
         <div 
           className="w-full max-w-5xl mx-auto"
         >
-          {/* Desktop: centered with slight right offset, Mobile: center overlay */}
+          {/* Desktop: more right offset and centered, Mobile: centered on video */}
           <div 
             className="w-full text-center"
             style={{
-              // Desktop: centered with gentle right offset (6%) for better text visibility
-              marginLeft: isMobile ? '0' : '6%',
-              marginRight: isMobile ? '0' : '-6%',
+              // Desktop: more pronounced right offset (10%) with slight down positioning
+              marginLeft: isMobile ? '0' : '10%',
+              marginRight: isMobile ? '0' : '-10%',
               maxWidth: isMobile ? '100%' : '80%',
             }}
           >
