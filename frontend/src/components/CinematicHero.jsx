@@ -160,67 +160,141 @@ function CinematicHero() {
         overflow: 'hidden',
       }}
     >
-      {/* Main Content - Single Large Frame */}
-      <div className="absolute inset-0 flex items-center justify-center px-4 md:px-12" style={{ paddingTop: isMobile ? '100px' : '140px', paddingBottom: isMobile ? '120px' : '140px' }}>
-        <div className="relative w-full max-w-6xl mx-auto">
+      {/* Main Content - Three Column Layout */}
+      <div className="absolute inset-0 flex items-center justify-center px-4 md:px-8" style={{ paddingTop: isMobile ? '100px' : '120px', paddingBottom: isMobile ? '120px' : '140px' }}>
+        <div className="relative w-full max-w-7xl mx-auto flex items-center gap-6 md:gap-8">
           
-          {/* Ornate Finial Ornament - Hanging from frame top */}
-          <div
-            className="absolute left-1/2 transform -translate-x-1/2 z-50 pointer-events-none"
-            style={{
-              top: isMobile ? '-60px' : '-80px',
-            }}
-          >
-            <div
-              style={{
-                width: isMobile ? '24px' : '32px',
-                height: isMobile ? '24px' : '32px',
-                borderRadius: '50%',
-                background: 'radial-gradient(circle, #FFD700 0%, #D4AF37 40%, #C9A063 70%, #8B6F47 100%)',
-                margin: '0 auto 6px',
-                boxShadow: '0 0 25px rgba(255, 215, 0, 0.7), inset 0 3px 8px rgba(255,255,255,0.5)',
-                border: '2px solid rgba(212, 175, 55, 0.95)',
-              }}
-            />
-            <div
-              style={{
-                width: isMobile ? '4px' : '5px',
-                height: isMobile ? '40px' : '60px',
-                background: 'linear-gradient(180deg, #D4AF37 0%, #C9A063 50%, #8B6F47 100%)',
-                margin: '0 auto',
-                boxShadow: '0 0 10px rgba(201, 160, 99, 0.5), inset -1px 0 2px rgba(0,0,0,0.4), inset 1px 0 2px rgba(255,255,255,0.3)',
-              }}
-            />
-          </div>
+          {/* LEFT SIDEBAR - Vertical Numbered List */}
+          {!isMobile && (
+            <div className="flex flex-col gap-3" style={{ minWidth: '60px' }}>
+              {frames.map((_, index) => (
+                <motion.button
+                  key={index}
+                  onClick={() => goToFrame(index)}
+                  className="text-left transition-all duration-300 relative"
+                  style={{
+                    fontSize: '14px',
+                    letterSpacing: '0.1em',
+                    color: index === currentFrame ? '#D4AF37' : 'rgba(201, 160, 99, 0.4)',
+                    fontWeight: index === currentFrame ? 600 : 400,
+                    cursor: 'pointer',
+                    paddingLeft: index === currentFrame ? '20px' : '0',
+                  }}
+                  whileHover={{ color: '#D4AF37', paddingLeft: '20px' }}
+                >
+                  {index === currentFrame && (
+                    <motion.div
+                      layoutId="sidebarIndicator"
+                      style={{
+                        position: 'absolute',
+                        left: 0,
+                        top: '50%',
+                        transform: 'translateY(-50%)',
+                        width: '12px',
+                        height: '2px',
+                        background: '#D4AF37',
+                        boxShadow: '0 0 8px rgba(212, 175, 55, 0.8)',
+                      }}
+                      transition={{ duration: 0.3, ease: 'easeInOut' }}
+                    />
+                  )}
+                  {String(index + 1).padStart(2, '0')}
+                </motion.button>
+              ))}
+            </div>
+          )}
 
-          {/* Single Large Ornate Frame */}
-          <div
-            className="relative"
-            style={{
-              width: '100%',
-              maxWidth: isMobile ? '100%' : '1000px',
-              margin: '0 auto',
-            }}
-          >
-            {/* Frame aspect ratio container */}
-            <div
-              style={{
-                position: 'relative',
-                width: '100%',
-                paddingBottom: isMobile ? '130%' : '56.25%', // 16:9 for desktop, taller for mobile
-              }}
-            >
+          {/* CENTER - Frame with Side Previews */}
+          <div className="relative flex-1 flex items-center justify-center gap-4 md:gap-6">
+            
+            {/* Previous Frame Preview (left edge) */}
+            {!isMobile && (
+              <motion.div
+                key={`prev-${(currentFrame - 1 + frames.length) % frames.length}`}
+                className="relative cursor-pointer"
+                onClick={goToPrev}
+                style={{
+                  width: '160px',
+                  height: '300px',
+                  borderRadius: '12px',
+                  overflow: 'hidden',
+                  border: '2px solid rgba(201, 160, 99, 0.3)',
+                  opacity: 0.3,
+                }}
+                whileHover={{ opacity: 0.6, scale: 1.02 }}
+              >
+                <video
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                    filter: 'brightness(0.4)',
+                  }}
+                >
+                  <source src={
+                    isMobile && frames[(currentFrame - 1 + frames.length) % frames.length].mobileVideo 
+                      ? frames[(currentFrame - 1 + frames.length) % frames.length].mobileVideo 
+                      : frames[(currentFrame - 1 + frames.length) % frames.length].video
+                  } type="video/mp4" />
+                </video>
+              </motion.div>
+            )}
+
+            {/* Main Active Frame */}
+            <div className="relative">
+              
+              {/* Ornate Finial - Top Center */}
+              <div
+                className="absolute left-1/2 transform -translate-x-1/2 z-50 pointer-events-none"
+                style={{
+                  top: isMobile ? '-60px' : '-80px',
+                }}
+              >
+                <div
+                  style={{
+                    width: isMobile ? '24px' : '32px',
+                    height: isMobile ? '24px' : '32px',
+                    borderRadius: '50%',
+                    background: 'radial-gradient(circle, #FFD700 0%, #D4AF37 40%, #C9A063 70%, #8B6F47 100%)',
+                    margin: '0 auto 6px',
+                    boxShadow: '0 0 25px rgba(255, 215, 0, 0.7), inset 0 3px 8px rgba(255,255,255,0.5)',
+                    border: '2px solid rgba(212, 175, 55, 0.95)',
+                  }}
+                />
+                <div
+                  style={{
+                    width: isMobile ? '4px' : '5px',
+                    height: isMobile ? '40px' : '60px',
+                    background: 'linear-gradient(180deg, #D4AF37 0%, #C9A063 50%, #8B6F47 100%)',
+                    margin: '0 auto',
+                    boxShadow: '0 0 10px rgba(201, 160, 99, 0.5)',
+                  }}
+                />
+              </div>
+
+              {/* Frame Container */}
+              <div
+                style={{
+                  width: isMobile ? '85vw' : '700px',
+                  height: isMobile ? '65vh' : '450px',
+                  position: 'relative',
+                }}
+              >
               {/* Ornate Gold Frame Border */}
               <div
                 className="absolute inset-0 pointer-events-none z-20"
                 style={{
-                  border: isMobile ? '4px solid' : '6px solid',
+                  border: isMobile ? '4px solid' : '5px solid',
                   borderImage: 'linear-gradient(135deg, #FFD700 0%, #D4AF37 15%, #C9A063 35%, #8B6F47 50%, #C9A063 65%, #D4AF37 85%, #FFD700 100%) 1',
-                  borderRadius: '20px',
+                  borderRadius: '16px',
                   boxShadow: `
-                    0 0 30px rgba(255, 215, 0, 0.4),
-                    inset 0 0 40px rgba(0,0,0,0.6),
-                    inset 0 3px 6px rgba(255,255,255,0.15)
+                    0 0 25px rgba(255, 215, 0, 0.35),
+                    inset 0 0 35px rgba(0,0,0,0.6),
+                    inset 0 3px 6px rgba(255,255,255,0.12)
                   `,
                 }}
               />
@@ -229,8 +303,8 @@ function CinematicHero() {
               <div
                 className="absolute inset-0 pointer-events-none z-10"
                 style={{
-                  borderRadius: '20px',
-                  boxShadow: 'inset 0 0 50px rgba(0,0,0,0.8)',
+                  borderRadius: '16px',
+                  boxShadow: 'inset 0 0 40px rgba(0,0,0,0.8)',
                 }}
               />
 
@@ -238,7 +312,7 @@ function CinematicHero() {
               <div
                 className="absolute inset-0 overflow-hidden"
                 style={{
-                  borderRadius: '16px',
+                  borderRadius: '12px',
                 }}
               >
                 <AnimatePresence mode="wait">
@@ -251,7 +325,7 @@ function CinematicHero() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    transition={{ duration: 0.6 }}
+                    transition={{ duration: 0.5 }}
                     style={{
                       width: '100%',
                       height: '100%',
@@ -386,90 +460,95 @@ function CinematicHero() {
               </div>
             </div>
 
-            {/* Bottom UI Elements */}
-            <div className="relative mt-8 md:mt-12">
-              <div className="flex items-end justify-between">
-                
-                {/* Left: Numbered Counter */}
-                <div className="flex items-center gap-3 md:gap-4">
-                  {frames.map((_, index) => (
-                    <motion.button
-                      key={index}
-                      onClick={() => goToFrame(index)}
-                      className="transition-all duration-300 relative"
-                      style={{
-                        fontSize: isMobile ? '13px' : '15px',
-                        letterSpacing: '0.1em',
-                        color: index === currentFrame ? '#D4AF37' : 'rgba(201, 160, 99, 0.4)',
-                        fontWeight: index === currentFrame ? 600 : 400,
-                        cursor: 'pointer',
-                        padding: '6px 0',
-                      }}
-                      whileHover={{ color: '#D4AF37' }}
-                    >
-                      {index === currentFrame && (
-                        <motion.div
-                          layoutId="numberIndicator"
-                          style={{
-                            position: 'absolute',
-                            left: 0,
-                            right: 0,
-                            bottom: 0,
-                            height: '2px',
-                            background: '#D4AF37',
-                            boxShadow: '0 0 10px rgba(212, 175, 55, 0.8)',
-                          }}
-                          transition={{ duration: 0.3, ease: 'easeInOut' }}
-                        />
-                      )}
-                      {String(index + 1).padStart(2, '0')}
-                    </motion.button>
-                  ))}
-                </div>
-
-                {/* Center: Counter Pill */}
-                <div
-                  className="absolute left-1/2 transform -translate-x-1/2"
+            {/* Next Frame Preview (right edge) */}
+            {!isMobile && (
+              <motion.div
+                key={`next-${(currentFrame + 1) % frames.length}`}
+                className="relative cursor-pointer"
+                onClick={goToNext}
+                style={{
+                  width: '160px',
+                  height: '300px',
+                  borderRadius: '12px',
+                  overflow: 'hidden',
+                  border: '2px solid rgba(201, 160, 99, 0.3)',
+                  opacity: 0.3,
+                }}
+                whileHover={{ opacity: 0.6, scale: 1.02 }}
+              >
+                <video
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
                   style={{
-                    padding: isMobile ? '6px 16px' : '8px 22px',
-                    borderRadius: '24px',
-                    border: '1px solid rgba(212, 175, 55, 0.5)',
-                    background: 'rgba(0, 0, 0, 0.7)',
-                    backdropFilter: 'blur(12px)',
-                    fontSize: isMobile ? '10px' : '12px',
-                    letterSpacing: '0.25em',
-                    color: '#D4AF37',
-                    fontWeight: 500,
-                    boxShadow: '0 4px 20px rgba(0,0,0,0.6)',
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                    filter: 'brightness(0.4)',
                   }}
                 >
-                  {String(currentFrame + 1).padStart(2, '0')} / {String(frames.length).padStart(2, '0')}
-                </div>
-
-                {/* Right: Poetic Text */}
-                {!isMobile && (
-                  <div>
-                    <p
-                      style={{
-                        fontSize: '9px',
-                        letterSpacing: '0.25em',
-                        textTransform: 'uppercase',
-                        color: 'rgba(201, 160, 99, 0.6)',
-                        lineHeight: '1.9',
-                        fontWeight: 300,
-                        textAlign: 'right',
-                      }}
-                    >
-                      Every room<br />
-                      holds a story.<br />
-                      Every story,<br />
-                      a part of you.
-                    </p>
-                  </div>
-                )}
-              </div>
-            </div>
+                  <source src={
+                    isMobile && frames[(currentFrame + 1) % frames.length].mobileVideo 
+                      ? frames[(currentFrame + 1) % frames.length].mobileVideo 
+                      : frames[(currentFrame + 1) % frames.length].video
+                  } type="video/mp4" />
+                </video>
+              </motion.div>
+            )}
           </div>
+
+          {/* RIGHT SIDEBAR - Poetic Text */}
+          {!isMobile && (
+            <div className="flex flex-col justify-center" style={{ minWidth: '180px', maxWidth: '180px' }}>
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 1, delay: 0.5 }}
+              >
+                <p
+                  style={{
+                    fontSize: '11px',
+                    letterSpacing: '0.25em',
+                    textTransform: 'uppercase',
+                    color: 'rgba(201, 160, 99, 0.6)',
+                    lineHeight: '2',
+                    fontWeight: 300,
+                  }}
+                >
+                  Every room<br />
+                  holds a story.<br />
+                  Every story,<br />
+                  a part of you.
+                </p>
+              </motion.div>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Counter Pill - Bottom Center */}
+      <div
+        className="absolute left-1/2 transform -translate-x-1/2 z-40"
+        style={{
+          bottom: isMobile ? '80px' : '100px',
+        }}
+      >
+        <div
+          style={{
+            padding: isMobile ? '6px 18px' : '8px 24px',
+            borderRadius: '24px',
+            border: '1px solid rgba(212, 175, 55, 0.5)',
+            background: 'rgba(0, 0, 0, 0.7)',
+            backdropFilter: 'blur(12px)',
+            fontSize: isMobile ? '11px' : '12px',
+            letterSpacing: '0.25em',
+            color: '#D4AF37',
+            fontWeight: 500,
+            boxShadow: '0 4px 20px rgba(0,0,0,0.6)',
+          }}
+        >
+          {String(currentFrame + 1).padStart(2, '0')} / {String(frames.length).padStart(2, '0')}
         </div>
       </div>
 
