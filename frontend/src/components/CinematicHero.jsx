@@ -164,133 +164,14 @@ function CinematicHero() {
         overflow: 'hidden',
       }}
     >
-      {/* Artistic Light Source - Glowing Orb / Energy Source */}
-      <div
-        className="absolute left-1/2 z-40 pointer-events-none"
-        style={{
-          top: '70px',
-          transform: 'translateX(-50%)',
-        }}
-      >
-        {/* Ethereal glowing orb */}
-        <motion.div
-          animate={{
-            scale: [1, 1.08, 1],
-            opacity: [0.95, 1, 0.95],
-          }}
-          transition={{
-            duration: 3,
-            repeat: Infinity,
-            ease: 'easeInOut',
-          }}
-          style={{
-            position: 'relative',
-            width: isMobile ? '80px' : '120px',
-            height: isMobile ? '80px' : '120px',
-          }}
-        >
-          {/* Core light source */}
-          <div
-            style={{
-              position: 'absolute',
-              top: '50%',
-              left: '50%',
-              transform: 'translate(-50%, -50%)',
-              width: isMobile ? '50px' : '70px',
-              height: isMobile ? '50px' : '70px',
-              background: 'radial-gradient(circle, #fffbf0 0%, #ffe680 30%, #ffcc00 60%, rgba(255, 204, 0, 0.3) 100%)',
-              borderRadius: '50%',
-              boxShadow: `
-                0 0 30px rgba(255, 250, 200, 1),
-                0 0 60px rgba(255, 230, 128, 0.8),
-                0 0 100px rgba(255, 204, 0, 0.6),
-                0 0 140px rgba(255, 204, 0, 0.4),
-                inset 0 0 20px rgba(255, 255, 255, 0.8)
-              `,
-            }}
-          />
-          
-          {/* Outer glow rings */}
-          <div
-            style={{
-              position: 'absolute',
-              top: '50%',
-              left: '50%',
-              transform: 'translate(-50%, -50%)',
-              width: '100%',
-              height: '100%',
-              background: 'radial-gradient(circle, rgba(255, 230, 128, 0.3) 0%, rgba(255, 204, 0, 0.15) 50%, transparent 100%)',
-              borderRadius: '50%',
-            }}
-          />
-          
-          {/* Energy particles effect */}
-          <div
-            style={{
-              position: 'absolute',
-              top: '50%',
-              left: '50%',
-              transform: 'translate(-50%, -50%)',
-              width: isMobile ? '70px' : '100px',
-              height: isMobile ? '70px' : '100px',
-              background: 'radial-gradient(circle, transparent 40%, rgba(255, 240, 180, 0.2) 60%, transparent 100%)',
-              borderRadius: '50%',
-              filter: 'blur(8px)',
-            }}
-          />
-        </motion.div>
-      </div>
-
-      {/* Cinematic Light Beam - Wider, more artistic */}
-      <div
-        className="absolute left-1/2 pointer-events-none z-30"
-        style={{
-          top: '150px',
-          transform: 'translateX(-50%)',
-          width: isMobile ? '350px' : '700px',
-          height: isMobile ? '450px' : '650px',
-          background: `
-            radial-gradient(ellipse at top, 
-              rgba(255, 250, 220, 0.22) 0%, 
-              rgba(255, 246, 200, 0.15) 25%,
-              rgba(255, 240, 180, 0.08) 50%,
-              rgba(255, 230, 150, 0.03) 70%,
-              transparent 90%
-            )
-          `,
-          clipPath: 'polygon(46% 0%, 54% 0%, 100% 100%, 0% 100%)',
-          mixBlendMode: 'screen',
-        }}
-      />
-      
-      {/* Atmospheric glow halo */}
-      <div
-        className="absolute left-1/2 pointer-events-none z-29"
-        style={{
-          top: '150px',
-          transform: 'translateX(-50%)',
-          width: isMobile ? '400px' : '800px',
-          height: isMobile ? '500px' : '750px',
-          background: `
-            radial-gradient(ellipse at top, 
-              rgba(255, 250, 220, 0.12) 0%, 
-              rgba(255, 246, 200, 0.06) 30%,
-              transparent 65%
-            )
-          `,
-          clipPath: 'polygon(44% 0%, 56% 0%, 100% 100%, 0% 100%)',
-          mixBlendMode: 'screen',
-          filter: 'blur(30px)',
-        }}
-      />
-
       {/* Museum Gallery - Multiple Frames */}
       <div
         className="absolute inset-0 flex items-center justify-center"
         style={{
-          paddingLeft: '20px', // Increased from 6px for better containment
-          paddingRight: '20px',
-          paddingTop: isMobile ? '160px' : '200px',
+          paddingLeft: isMobile ? '8px' : '20px',
+          paddingRight: isMobile ? '8px' : '20px',
+          paddingTop: isMobile ? '80px' : '120px', // Reduced top padding (no light source)
+          paddingBottom: isMobile ? '60px' : '40px',
         }}
       >
         <div className="relative w-full h-full flex items-center justify-center">
@@ -299,14 +180,14 @@ function CinematicHero() {
               const isCenter = offset === 0;
               const videoSource = isMobile && frame.mobileVideo ? frame.mobileVideo : frame.video;
 
-              // CINEMATIC WIDESCREEN sizing (21:9 aspect ratio)
-              const centerWidth = isMobile ? 400 : 800;
-              const centerHeight = isMobile ? 230 : 340; // 21:9 ratio
-              const sideWidth = isMobile ? 180 : 400;
-              const sideHeight = isMobile ? 100 : 170; // 21:9 ratio
+              // CINEMATIC WIDESCREEN sizing (21:9 aspect ratio) - Increased height
+              const centerWidth = isMobile ? 340 : 800;
+              const centerHeight = isMobile ? 195 : 380; // Increased from 340
+              const sideWidth = isMobile ? 160 : 400;
+              const sideHeight = isMobile ? 92 : 190; // Proportionally increased
 
-              // Increased spacing for museum gallery feel
-              const spacing = isMobile ? 240 : 480;
+              // Spacing adjusted for mobile containment
+              const spacing = isMobile ? 220 : 480;
               const xOffset = offset * spacing;
 
               return (
@@ -334,14 +215,14 @@ function CinematicHero() {
                   onClick={() => !isCenter && setCurrentFrame(index)}
                   whileHover={!isCenter ? { scale: 1.05, transition: { duration: 0.3 } } : {}}
                 >
-                  {/* HUGE Hanging String - PROMINENT and VISIBLE */}
+                  {/* HUGE Hanging String - Adjusted for no light source */}
                   <div
                     className="absolute left-1/2 pointer-events-none"
                     style={{
-                      top: isMobile ? '-160px' : '-200px',
+                      top: isMobile ? '-80px' : '-120px',
                       transform: 'translateX(-50%)',
                       width: isCenter ? '10px' : '6px',
-                      height: isMobile ? '160px' : '200px',
+                      height: isMobile ? '80px' : '120px',
                       background: `linear-gradient(90deg, 
                         #3a3a3a 0%, 
                         #888 20%, 
@@ -363,11 +244,11 @@ function CinematicHero() {
                     }}
                   />
                   
-                  {/* String attachment point at top */}
+                  {/* String attachment point at ceiling */}
                   <div
                     className="absolute left-1/2 pointer-events-none"
                     style={{
-                      top: isMobile ? '-165px' : '-205px',
+                      top: isMobile ? '-85px' : '-125px',
                       transform: 'translateX(-50%)',
                       width: isCenter ? '16px' : '12px',
                       height: isCenter ? '16px' : '12px',
