@@ -92,7 +92,7 @@ function CinematicHero() {
     },
   ];
 
-  // Wheel scroll navigation
+  // Wheel scroll navigation - INFINITE LOOP
   useEffect(() => {
     let scrollTimeout;
 
@@ -102,11 +102,11 @@ function CinematicHero() {
 
       scrollTimeout = setTimeout(() => {
         if (e.deltaY > 0) {
-          // Scroll down = next
-          setCurrentFrame(prev => Math.min(prev + 1, frames.length - 1));
+          // Scroll down = next (wraps to 0 after last)
+          setCurrentFrame(prev => (prev + 1) % frames.length);
         } else if (e.deltaY < 0) {
-          // Scroll up = previous
-          setCurrentFrame(prev => Math.max(prev - 1, 0));
+          // Scroll up = previous (wraps to last from 0)
+          setCurrentFrame(prev => (prev - 1 + frames.length) % frames.length);
         }
       }, 50);
     };
@@ -124,15 +124,15 @@ function CinematicHero() {
     };
   }, [frames.length]);
 
-  // Keyboard navigation (arrow keys)
+  // Keyboard navigation (arrow keys) - INFINITE LOOP
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === 'ArrowRight' || e.key === 'ArrowUp') {
         e.preventDefault();
-        setCurrentFrame(prev => Math.min(prev + 1, frames.length - 1));
+        setCurrentFrame(prev => (prev + 1) % frames.length);
       } else if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') {
         e.preventDefault();
-        setCurrentFrame(prev => Math.max(prev - 1, 0));
+        setCurrentFrame(prev => (prev - 1 + frames.length) % frames.length);
       }
     };
 
@@ -140,14 +140,13 @@ function CinematicHero() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [frames.length]);
 
-  // Get visible frames (center + 2 on each side)
+  // Get visible frames (center + 2 on each side) with INFINITE LOOP
   const getVisibleFrames = () => {
     const visible = [];
     for (let i = -2; i <= 2; i++) {
-      const index = currentFrame + i;
-      if (index >= 0 && index < frames.length) {
-        visible.push({ frame: frames[index], index, offset: i });
-      }
+      // Circular/infinite loop logic
+      let index = (currentFrame + i + frames.length) % frames.length;
+      visible.push({ frame: frames[index], index, offset: i });
     }
     return visible;
   };
@@ -165,119 +164,123 @@ function CinematicHero() {
         overflow: 'hidden',
       }}
     >
-      {/* Cinema Spotlight Fixture */}
+      {/* Artistic Light Source - Glowing Orb / Energy Source */}
       <div
         className="absolute left-1/2 z-40 pointer-events-none"
         style={{
-          top: '90px', // More breathing room from navbar
+          top: '70px',
           transform: 'translateX(-50%)',
         }}
       >
-        {/* Theatrical spotlight housing */}
-        <div
-          className="relative"
+        {/* Ethereal glowing orb */}
+        <motion.div
+          animate={{
+            scale: [1, 1.08, 1],
+            opacity: [0.95, 1, 0.95],
+          }}
+          transition={{
+            duration: 3,
+            repeat: Infinity,
+            ease: 'easeInOut',
+          }}
           style={{
-            width: isMobile ? '70px' : '100px',
-            height: isMobile ? '60px' : '85px',
+            position: 'relative',
+            width: isMobile ? '80px' : '120px',
+            height: isMobile ? '80px' : '120px',
           }}
         >
-          {/* Spotlight body (theatrical design) */}
+          {/* Core light source */}
           <div
             style={{
               position: 'absolute',
-              top: 0,
+              top: '50%',
               left: '50%',
-              transform: 'translateX(-50%)',
-              width: isMobile ? '60px' : '85px',
-              height: isMobile ? '42px' : '58px',
-              background: 'linear-gradient(180deg, #2a2a2a 0%, #0d0d0d 100%)',
-              borderRadius: '10px 10px 16px 16px',
-              boxShadow: '0 6px 20px rgba(0,0,0,0.9), inset 0 3px 6px rgba(255,255,255,0.15), inset 0 -2px 4px rgba(0,0,0,0.6)',
-              border: '1px solid rgba(80, 80, 80, 0.3)',
-            }}
-          />
-          
-          {/* Glowing lens with dramatic bloom */}
-          <div
-            style={{
-              position: 'absolute',
-              bottom: 0,
-              left: '50%',
-              transform: 'translateX(-50%)',
+              transform: 'translate(-50%, -50%)',
               width: isMobile ? '50px' : '70px',
-              height: isMobile ? '32px' : '45px',
-              background: 'radial-gradient(circle, #fffbf0 0%, #ffe680 40%, #ffcc00 80%, #cc9900 100%)',
+              height: isMobile ? '50px' : '70px',
+              background: 'radial-gradient(circle, #fffbf0 0%, #ffe680 30%, #ffcc00 60%, rgba(255, 204, 0, 0.3) 100%)',
               borderRadius: '50%',
               boxShadow: `
-                0 0 20px rgba(255, 250, 200, 1),
-                0 0 40px rgba(255, 230, 128, 0.9),
-                0 0 60px rgba(255, 204, 0, 0.7),
-                0 0 100px rgba(255, 204, 0, 0.4),
-                0 4px 12px rgba(0,0,0,0.6),
-                inset 0 2px 8px rgba(255, 255, 255, 0.6)
+                0 0 30px rgba(255, 250, 200, 1),
+                0 0 60px rgba(255, 230, 128, 0.8),
+                0 0 100px rgba(255, 204, 0, 0.6),
+                0 0 140px rgba(255, 204, 0, 0.4),
+                inset 0 0 20px rgba(255, 255, 255, 0.8)
               `,
-              opacity: 1,
             }}
           />
           
-          {/* Lens reflection/glare */}
+          {/* Outer glow rings */}
           <div
             style={{
               position: 'absolute',
-              bottom: '8px',
+              top: '50%',
               left: '50%',
-              transform: 'translateX(-50%)',
-              width: isMobile ? '30px' : '42px',
-              height: isMobile ? '18px' : '25px',
-              background: 'radial-gradient(ellipse, rgba(255, 255, 255, 0.9) 0%, transparent 70%)',
+              transform: 'translate(-50%, -50%)',
+              width: '100%',
+              height: '100%',
+              background: 'radial-gradient(circle, rgba(255, 230, 128, 0.3) 0%, rgba(255, 204, 0, 0.15) 50%, transparent 100%)',
               borderRadius: '50%',
-              opacity: 0.6,
             }}
           />
-        </div>
+          
+          {/* Energy particles effect */}
+          <div
+            style={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              width: isMobile ? '70px' : '100px',
+              height: isMobile ? '70px' : '100px',
+              background: 'radial-gradient(circle, transparent 40%, rgba(255, 240, 180, 0.2) 60%, transparent 100%)',
+              borderRadius: '50%',
+              filter: 'blur(8px)',
+            }}
+          />
+        </motion.div>
       </div>
 
-      {/* Dramatic Spotlight Beam - Visible cone of light */}
+      {/* Cinematic Light Beam - Wider, more artistic */}
       <div
         className="absolute left-1/2 pointer-events-none z-30"
         style={{
-          top: '175px',
+          top: '150px',
           transform: 'translateX(-50%)',
-          width: isMobile ? '280px' : '500px',
-          height: isMobile ? '400px' : '600px',
+          width: isMobile ? '350px' : '700px',
+          height: isMobile ? '450px' : '650px',
           background: `
             radial-gradient(ellipse at top, 
-              rgba(255, 250, 220, 0.25) 0%, 
-              rgba(255, 246, 200, 0.18) 20%,
-              rgba(255, 246, 200, 0.12) 35%,
+              rgba(255, 250, 220, 0.22) 0%, 
+              rgba(255, 246, 200, 0.15) 25%,
               rgba(255, 240, 180, 0.08) 50%,
-              rgba(255, 230, 150, 0.04) 65%,
-              transparent 85%
+              rgba(255, 230, 150, 0.03) 70%,
+              transparent 90%
             )
           `,
-          clipPath: 'polygon(45% 0%, 55% 0%, 100% 100%, 0% 100%)',
+          clipPath: 'polygon(46% 0%, 54% 0%, 100% 100%, 0% 100%)',
           mixBlendMode: 'screen',
         }}
       />
       
-      {/* Additional spotlight glow/halo */}
+      {/* Atmospheric glow halo */}
       <div
         className="absolute left-1/2 pointer-events-none z-29"
         style={{
-          top: '175px',
+          top: '150px',
           transform: 'translateX(-50%)',
-          width: isMobile ? '320px' : '600px',
-          height: isMobile ? '450px' : '700px',
+          width: isMobile ? '400px' : '800px',
+          height: isMobile ? '500px' : '750px',
           background: `
             radial-gradient(ellipse at top, 
-              rgba(255, 250, 220, 0.15) 0%, 
-              rgba(255, 246, 200, 0.08) 25%,
-              transparent 60%
+              rgba(255, 250, 220, 0.12) 0%, 
+              rgba(255, 246, 200, 0.06) 30%,
+              transparent 65%
             )
           `,
-          clipPath: 'polygon(42% 0%, 58% 0%, 100% 100%, 0% 100%)',
+          clipPath: 'polygon(44% 0%, 56% 0%, 100% 100%, 0% 100%)',
           mixBlendMode: 'screen',
-          filter: 'blur(20px)',
+          filter: 'blur(30px)',
         }}
       />
 
@@ -296,11 +299,11 @@ function CinematicHero() {
               const isCenter = offset === 0;
               const videoSource = isMobile && frame.mobileVideo ? frame.mobileVideo : frame.video;
 
-              // Enhanced sizing hierarchy - center MUCH larger
-              const centerWidth = isMobile ? 380 : 650;
-              const centerHeight = isMobile ? 460 : 580;
-              const sideWidth = isMobile ? 160 : 280;
-              const sideHeight = isMobile ? 200 : 340;
+              // CINEMATIC WIDESCREEN sizing (21:9 aspect ratio)
+              const centerWidth = isMobile ? 400 : 800;
+              const centerHeight = isMobile ? 230 : 340; // 21:9 ratio
+              const sideWidth = isMobile ? 180 : 400;
+              const sideHeight = isMobile ? 100 : 170; // 21:9 ratio
 
               // Increased spacing for museum gallery feel
               const spacing = isMobile ? 240 : 480;
@@ -389,39 +392,103 @@ function CinematicHero() {
                     }}
                   />
 
-                  {/* Wooden Frame Border - Enhanced visibility */}
+                  {/* Blueprint Technical Frame - Cinematic Container */}
                   <div
                     className="relative w-full h-full overflow-hidden"
                     style={{
                       background: isCenter
-                        ? 'linear-gradient(135deg, #5d3a1a 0%, #3d2817 50%, #2a1810 100%)'
-                        : 'linear-gradient(135deg, #2a1810 0%, #1a0f0a 50%, #000000 100%)',
-                      padding: isCenter ? '16px' : '12px',
-                      borderRadius: '6px',
+                        ? 'linear-gradient(135deg, #1a2332 0%, #0d1520 50%, #050a12 100%)'
+                        : 'linear-gradient(135deg, #0d1520 0%, #050a12 50%, #000000 100%)',
+                      padding: isCenter ? '14px' : '10px',
+                      borderRadius: '3px',
                       boxShadow: isCenter
                         ? `
-                          0 0 0 3px rgba(139, 69, 19, 0.6),
-                          0 0 0 5px rgba(101, 67, 33, 0.3),
+                          0 0 0 2px rgba(70, 130, 180, 0.5),
+                          0 0 0 3px rgba(100, 160, 220, 0.3),
+                          0 0 20px rgba(70, 130, 180, 0.4),
                           0 8px 24px rgba(0,0,0,0.9),
-                          inset 0 2px 4px rgba(255,255,255,0.1),
-                          inset 0 -2px 4px rgba(0,0,0,0.5)
+                          inset 0 1px 2px rgba(100, 160, 220, 0.2)
                         `
                         : `
-                          0 0 0 2px rgba(80, 50, 20, 0.4),
+                          0 0 0 1px rgba(70, 130, 180, 0.3),
                           0 4px 16px rgba(0,0,0,0.95),
-                          inset 0 1px 2px rgba(255,255,255,0.05),
-                          inset 0 -1px 2px rgba(0,0,0,0.6)
+                          inset 0 1px 1px rgba(70, 130, 180, 0.1)
                         `,
                       border: isCenter 
-                        ? '2px solid rgba(139, 69, 19, 0.4)' 
-                        : '1px solid rgba(80, 50, 20, 0.3)',
+                        ? '1px solid rgba(70, 130, 180, 0.4)' 
+                        : '1px solid rgba(70, 130, 180, 0.2)',
                     }}
                   >
-                    {/* Video */}
+                    {/* Blueprint grid overlay on frame */}
+                    <div
+                      className="absolute inset-0 pointer-events-none"
+                      style={{
+                        backgroundImage: isCenter
+                          ? `
+                            linear-gradient(rgba(70, 130, 180, 0.08) 1px, transparent 1px),
+                            linear-gradient(90deg, rgba(70, 130, 180, 0.08) 1px, transparent 1px)
+                          `
+                          : 'none',
+                        backgroundSize: '20px 20px',
+                        opacity: 0.3,
+                      }}
+                    />
+                    
+                    {/* Technical corner markers */}
+                    {isCenter && (
+                      <>
+                        <div
+                          className="absolute"
+                          style={{
+                            top: '5px',
+                            left: '5px',
+                            width: '16px',
+                            height: '16px',
+                            borderTop: '2px solid rgba(70, 130, 180, 0.8)',
+                            borderLeft: '2px solid rgba(70, 130, 180, 0.8)',
+                          }}
+                        />
+                        <div
+                          className="absolute"
+                          style={{
+                            top: '5px',
+                            right: '5px',
+                            width: '16px',
+                            height: '16px',
+                            borderTop: '2px solid rgba(70, 130, 180, 0.8)',
+                            borderRight: '2px solid rgba(70, 130, 180, 0.8)',
+                          }}
+                        />
+                        <div
+                          className="absolute"
+                          style={{
+                            bottom: '5px',
+                            left: '5px',
+                            width: '16px',
+                            height: '16px',
+                            borderBottom: '2px solid rgba(70, 130, 180, 0.8)',
+                            borderLeft: '2px solid rgba(70, 130, 180, 0.8)',
+                          }}
+                        />
+                        <div
+                          className="absolute"
+                          style={{
+                            bottom: '5px',
+                            right: '5px',
+                            width: '16px',
+                            height: '16px',
+                            borderBottom: '2px solid rgba(70, 130, 180, 0.8)',
+                            borderRight: '2px solid rgba(70, 130, 180, 0.8)',
+                          }}
+                        />
+                      </>
+                    )}
+                    {/* Cinematic Video - Widescreen */}
                     <div
                       className="relative w-full h-full overflow-hidden"
                       style={{
-                        borderRadius: '3px',
+                        borderRadius: '2px',
+                        background: '#000',
                       }}
                     >
                       <video
@@ -433,9 +500,10 @@ function CinematicHero() {
                           width: '100%',
                           height: '100%',
                           objectFit: 'cover',
+                          objectPosition: 'center',
                           filter: isCenter
-                            ? 'brightness(1.05) contrast(1.05) saturate(1.1)'
-                            : 'brightness(0.12) contrast(0.9) saturate(0.8)',
+                            ? 'brightness(1.08) contrast(1.1) saturate(1.15)'
+                            : 'brightness(0.10) contrast(0.8) saturate(0.7)',
                         }}
                       >
                         <source src={videoSource} type="video/mp4" />
@@ -471,72 +539,73 @@ function CinematicHero() {
                         />
                       )}
 
-                      {/* Text overlay - only on center frame with enhanced readability */}
+                      {/* Cinematic Text Overlay - Widescreen positioning */}
                       {isCenter && (
                         <div
-                          className="absolute inset-0 flex items-end justify-center p-6 pointer-events-none"
+                          className="absolute inset-0 flex items-center justify-center pointer-events-none"
                           style={{
                             background:
-                              'linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.85) 25%, rgba(0,0,0,0.6) 45%, rgba(0,0,0,0.3) 65%, transparent 85%)',
+                              'linear-gradient(to right, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.3) 40%, rgba(0,0,0,0.3) 60%, rgba(0,0,0,0.8) 100%)',
                           }}
                         >
                           <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.5, delay: 0.2 }}
-                            className="text-center"
+                            initial={{ opacity: 0, scale: 0.95 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ duration: 0.6, delay: 0.2 }}
+                            className="text-center px-8"
                             style={{
-                              textShadow: '0 0 40px rgba(0,0,0,0.9)',
+                              maxWidth: '90%',
                             }}
                           >
                             {frame.id === 'welcome' ? (
                               <EsoLogo 
-                                className="h-14 md:h-16 w-auto mx-auto mb-3" 
+                                className="h-12 md:h-14 w-auto mx-auto mb-2" 
                                 style={{
-                                  filter: 'drop-shadow(0 0 20px rgba(0,0,0,0.9)) drop-shadow(0 4px 12px rgba(0,0,0,0.8))',
+                                  filter: 'drop-shadow(0 0 30px rgba(0,0,0,1)) drop-shadow(0 6px 20px rgba(0,0,0,0.9))',
                                 }}
                               />
                             ) : (
                               <h2
-                                className="text-3xl md:text-4xl font-light tracking-wider mb-3"
+                                className="text-2xl md:text-3xl font-light tracking-[0.15em] uppercase mb-2"
                                 style={{
                                   color: '#ffffff',
                                   textShadow: `
-                                    0 0 20px rgba(0,0,0,1),
-                                    0 0 40px rgba(0,0,0,0.9),
-                                    0 4px 12px rgba(0,0,0,0.95),
-                                    0 2px 4px rgba(0,0,0,1)
+                                    0 0 30px rgba(0,0,0,1),
+                                    0 0 50px rgba(0,0,0,0.9),
+                                    0 6px 20px rgba(0,0,0,1),
+                                    0 2px 6px rgba(0,0,0,1)
                                   `,
-                                  fontWeight: 300,
+                                  fontWeight: 200,
+                                  letterSpacing: '0.2em',
                                 }}
                               >
                                 {frame.title}
                               </h2>
                             )}
                             <p
-                              className="text-sm md:text-base tracking-wide mb-2"
+                              className="text-xs md:text-sm tracking-wide mb-1"
                               style={{
-                                color: 'rgba(255, 255, 255, 0.95)',
+                                color: 'rgba(255, 255, 255, 0.9)',
                                 textShadow: `
-                                  0 0 16px rgba(0,0,0,1),
-                                  0 0 32px rgba(0,0,0,0.9),
-                                  0 2px 8px rgba(0,0,0,0.95),
-                                  0 1px 3px rgba(0,0,0,1)
+                                  0 0 20px rgba(0,0,0,1),
+                                  0 0 40px rgba(0,0,0,0.95),
+                                  0 3px 12px rgba(0,0,0,1),
+                                  0 1px 4px rgba(0,0,0,1)
                                 `,
-                                fontWeight: 400,
+                                fontWeight: 300,
                               }}
                             >
                               {frame.subtitle}
                             </p>
                             <p
-                              className="text-xs md:text-sm tracking-wide"
+                              className="text-[10px] md:text-xs tracking-wider opacity-75"
                               style={{
-                                color: 'rgba(255, 255, 255, 0.75)',
+                                color: 'rgba(255, 255, 255, 0.7)',
                                 textShadow: `
-                                  0 0 12px rgba(0,0,0,1),
-                                  0 0 24px rgba(0,0,0,0.9),
-                                  0 2px 6px rgba(0,0,0,0.95),
-                                  0 1px 2px rgba(0,0,0,1)
+                                  0 0 16px rgba(0,0,0,1),
+                                  0 0 30px rgba(0,0,0,0.95),
+                                  0 2px 8px rgba(0,0,0,1),
+                                  0 1px 3px rgba(0,0,0,1)
                                 `,
                                 fontWeight: 300,
                               }}
@@ -548,59 +617,7 @@ function CinematicHero() {
                       )}
                     </div>
 
-                    {/* Frame corner clips (wooden frame detail) - Enhanced */}
-                    <div
-                      className="absolute"
-                      style={{
-                        top: '8px',
-                        left: '8px',
-                        width: isCenter ? '28px' : '20px',
-                        height: isCenter ? '28px' : '20px',
-                        borderTop: isCenter ? '4px solid #8B4513' : '3px solid #5d3a1a',
-                        borderLeft: isCenter ? '4px solid #8B4513' : '3px solid #5d3a1a',
-                        opacity: isCenter ? 0.6 : 0.4,
-                        boxShadow: 'inset 1px 1px 2px rgba(255,255,255,0.2)',
-                      }}
-                    />
-                    <div
-                      className="absolute"
-                      style={{
-                        top: '8px',
-                        right: '8px',
-                        width: isCenter ? '28px' : '20px',
-                        height: isCenter ? '28px' : '20px',
-                        borderTop: isCenter ? '4px solid #8B4513' : '3px solid #5d3a1a',
-                        borderRight: isCenter ? '4px solid #8B4513' : '3px solid #5d3a1a',
-                        opacity: isCenter ? 0.6 : 0.4,
-                        boxShadow: 'inset -1px 1px 2px rgba(255,255,255,0.2)',
-                      }}
-                    />
-                    <div
-                      className="absolute"
-                      style={{
-                        bottom: '8px',
-                        left: '8px',
-                        width: isCenter ? '28px' : '20px',
-                        height: isCenter ? '28px' : '20px',
-                        borderBottom: isCenter ? '4px solid #8B4513' : '3px solid #5d3a1a',
-                        borderLeft: isCenter ? '4px solid #8B4513' : '3px solid #5d3a1a',
-                        opacity: isCenter ? 0.6 : 0.4,
-                        boxShadow: 'inset 1px -1px 2px rgba(255,255,255,0.2)',
-                      }}
-                    />
-                    <div
-                      className="absolute"
-                      style={{
-                        bottom: '8px',
-                        right: '8px',
-                        width: isCenter ? '28px' : '20px',
-                        height: isCenter ? '28px' : '20px',
-                        borderBottom: isCenter ? '4px solid #8B4513' : '3px solid #5d3a1a',
-                        borderRight: isCenter ? '4px solid #8B4513' : '3px solid #5d3a1a',
-                        opacity: isCenter ? 0.6 : 0.4,
-                        boxShadow: 'inset -1px -1px 2px rgba(255,255,255,0.2)',
-                      }}
-                    />
+
                   </div>
                 </motion.div>
               );
