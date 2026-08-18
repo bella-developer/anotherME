@@ -165,33 +165,32 @@ function CinematicHero() {
         style={{
           perspective: '1600px',
           perspectiveOrigin: 'center center',
-          paddingTop: isMobile ? '100px' : '80px',
         }}
       >
         {/* Main Gallery Stage */}
         <div 
-          className="relative w-full h-full flex items-center justify-center"
+          className="relative w-full h-full"
           style={{
             transformStyle: 'preserve-3d',
           }}
         >
           
-          {/* Previous Card (Left Side) */}
+          {/* Previous Card (Left Side) - Intentionally clipped */}
           {!isMobile && (
             <motion.div
               key={`prev-${currentFrame}`}
               onClick={goToPrev}
               className="absolute cursor-pointer"
               initial={{ opacity: 0, x: -100 }}
-              animate={{ opacity: 0.6, x: 0 }}
+              animate={{ opacity: 0.65, x: 0 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
               style={{
-                left: '5%',
-                top: '50%',
-                transform: 'translateY(-50%) rotateY(8deg) scale(0.75) translateZ(-100px)',
+                left: '-10px',
+                top: '180px',
                 width: '170px',
                 height: '350px',
+                transform: 'rotateY(8deg) scale(0.75) translateZ(-100px)',
                 transformStyle: 'preserve-3d',
                 filter: 'brightness(0.6)',
               }}
@@ -244,14 +243,17 @@ function CinematicHero() {
           {/* Active Center Card */}
           <motion.div
             key={`active-${currentFrame}`}
-            className="relative"
+            className="absolute"
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
             style={{
-              width: isMobile ? 'clamp(320px, 92vw, 500px)' : 'clamp(600px, 70vw, 895px)',
+              left: '50%',
+              transform: 'translateX(-50%) translateZ(0)',
+              top: isMobile ? '120px' : '176px',
+              width: isMobile ? 'clamp(320px, 88vw, 500px)' : 'clamp(600px, 70vw, 895px)',
+              maxWidth: '895px',
               aspectRatio: '1.98',
-              transform: 'translateZ(0)',
               zIndex: 50,
             }}
           >
@@ -260,7 +262,7 @@ function CinematicHero() {
               <div 
                 className="absolute left-1/2 transform -translate-x-1/2 pointer-events-none"
                 style={{
-                  top: '-80px',
+                  top: '-100px',
                   zIndex: 40,
                 }}
               >
@@ -279,7 +281,7 @@ function CinematicHero() {
                 <div 
                   style={{
                     width: '2px',
-                    height: '76px',
+                    height: '100px',
                     background: `linear-gradient(180deg, ${colors.warmGold} 0%, ${colors.darkGold} 100%)`,
                     margin: '0 auto',
                     opacity: 0.7,
@@ -430,7 +432,7 @@ function CinematicHero() {
             </div>
           </motion.div>
 
-          {/* Next Card (Right Side) */}
+          {/* Next Card (Right Side) - Intentionally clipped */}
           {!isMobile && (
             <motion.div
               key={`next-${currentFrame}`}
@@ -441,11 +443,11 @@ function CinematicHero() {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
               style={{
-                right: '5%',
-                top: '50%',
-                transform: 'translateY(-50%) rotateY(-8deg) scale(0.75) translateZ(-100px)',
+                right: '-5px',
+                top: '180px',
                 width: '170px',
                 height: '350px',
+                transform: 'rotateY(-8deg) scale(0.75) translateZ(-100px)',
                 transformStyle: 'preserve-3d',
                 filter: 'brightness(0.5)',
               }}
@@ -495,7 +497,78 @@ function CinematicHero() {
             </motion.div>
           )}
 
-          {/* Carousel Arrows - REMOVED */}
+          {/* Carousel Arrows */}
+          {!isMobile && (
+            <>
+              {/* Left Arrow */}
+              <button
+                onClick={goToPrev}
+                className="absolute z-25 transition-all duration-300"
+                style={{
+                  left: '155px',
+                  top: '403px',
+                  width: '50px',
+                  height: '50px',
+                  borderRadius: '50%',
+                  border: `1px solid ${colors.mutedGold}`,
+                  background: 'transparent',
+                  color: colors.paleGold,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  cursor: 'pointer',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.borderColor = colors.warmGold;
+                  e.currentTarget.style.color = colors.editorialIvory;
+                  e.currentTarget.style.background = 'rgba(185, 135, 61, 0.05)';
+                  e.currentTarget.style.transform = 'scale(1.05)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.borderColor = colors.mutedGold;
+                  e.currentTarget.style.color = colors.paleGold;
+                  e.currentTarget.style.background = 'transparent';
+                  e.currentTarget.style.transform = 'scale(1)';
+                }}
+              >
+                <ChevronLeft size={20} strokeWidth={1.5} />
+              </button>
+
+              {/* Right Arrow */}
+              <button
+                onClick={goToNext}
+                className="absolute z-25 transition-all duration-300"
+                style={{
+                  right: '155px',
+                  top: '403px',
+                  width: '50px',
+                  height: '50px',
+                  borderRadius: '50%',
+                  border: `1px solid ${colors.mutedGold}`,
+                  background: 'transparent',
+                  color: colors.paleGold,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  cursor: 'pointer',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.borderColor = colors.warmGold;
+                  e.currentTarget.style.color = colors.editorialIvory;
+                  e.currentTarget.style.background = 'rgba(185, 135, 61, 0.05)';
+                  e.currentTarget.style.transform = 'scale(1.05)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.borderColor = colors.mutedGold;
+                  e.currentTarget.style.color = colors.paleGold;
+                  e.currentTarget.style.background = 'transparent';
+                  e.currentTarget.style.transform = 'scale(1)';
+                }}
+              >
+                <ChevronRight size={20} strokeWidth={1.5} />
+              </button>
+            </>
+          )}
         </div>
       </div>
 
@@ -505,9 +578,9 @@ function CinematicHero() {
           className="absolute"
           style={{
             left: '43px',
-            bottom: '180px',
+            top: '575px',
             width: '80px',
-            zIndex: 100,
+            zIndex: 15,
           }}
         >
           {/* Vertical Timeline */}
@@ -579,8 +652,12 @@ function CinematicHero() {
 
       {/* Bottom Center Counter */}
       <div 
-        className="absolute left-1/2 transform -translate-x-1/2 z-10"
-        style={{ top: isMobile ? 'auto' : '655px', bottom: isMobile ? '140px' : 'auto' }}
+        className="absolute left-1/2 transform -translate-x-1/2"
+        style={{ 
+          top: isMobile ? 'auto' : '655px', 
+          bottom: isMobile ? '140px' : 'auto',
+          zIndex: 10,
+        }}
       >
         <div 
           style={{
@@ -605,7 +682,11 @@ function CinematicHero() {
       {/* Scroll to Enter */}
       <motion.div
         className="absolute left-1/2 transform -translate-x-1/2 flex flex-col items-center pointer-events-none"
-        style={{ top: isMobile ? 'auto' : '710px', bottom: isMobile ? '60px' : 'auto' }}
+        style={{ 
+          top: isMobile ? 'auto' : '710px', 
+          bottom: isMobile ? '60px' : 'auto',
+          zIndex: 10,
+        }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1, delay: 1.5 }}
@@ -633,7 +714,7 @@ function CinematicHero() {
           }}
         />
         
-        {/* Circular arrow */}
+        {/* Circular arrow - positioned at y ≈ 778px */}
         <motion.div
           animate={{ y: [0, 8, 0] }}
           transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
@@ -658,10 +739,10 @@ function CinematicHero() {
         <div 
           className="absolute flex items-start gap-4"
           style={{
-            right: '60px',
-            bottom: '180px',
+            right: 'calc(50% - 640px)',
+            top: '675px',
             width: '190px',
-            zIndex: 100,
+            zIndex: 15,
           }}
         >
           {/* Vertical divider */}
