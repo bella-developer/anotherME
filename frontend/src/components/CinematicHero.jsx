@@ -256,9 +256,9 @@ function CinematicHero() {
               transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
               style={{
                 width: isMobile ? '90%' : '65%',
-                height: isMobile ? '50%' : '55%',
+                height: isMobile ? '50%' : '70%',
                 maxWidth: '900px',
-                maxHeight: '500px',
+                maxHeight: '600px',
                 zIndex: 50,
               }}
             >
@@ -724,21 +724,22 @@ function CinematicHero() {
         </motion.div>
       </motion.div>
 
-      {/* Right Editorial Statement */}
+      {/* Right Editorial Statement - Outside Frame */}
       {!isMobile && (
         <div 
           className="absolute flex items-start gap-3"
           style={{
-            right: '30px',
-            bottom: '120px',
-            width: '170px',
+            right: '20px',
+            top: '50%',
+            transform: 'translateY(-50%)',
+            width: '140px',
             zIndex: 70,
           }}
         >
           <div 
             style={{
               width: '1px',
-              height: '110px',
+              height: '90px',
               background: `linear-gradient(180deg, transparent 0%, ${colors.warmGold}80 20%, ${colors.warmGold}80 80%, transparent 100%)`,
             }}
           />
@@ -751,9 +752,9 @@ function CinematicHero() {
             <p 
               style={{
                 fontFamily: "'Cormorant Garamond', 'Playfair Display', serif",
-                fontSize: '11px',
-                lineHeight: '2',
-                letterSpacing: '0.22em',
+                fontSize: '9px',
+                lineHeight: '1.8',
+                letterSpacing: '0.2em',
                 textTransform: 'uppercase',
                 color: `${colors.editorialIvory}CC`,
                 fontWeight: 400,
