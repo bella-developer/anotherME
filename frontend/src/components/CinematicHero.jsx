@@ -5,13 +5,11 @@ import EsoLogo from './EsoLogo';
 
 /**
  * Cinematic Hero - Museum Gallery Exhibition Interface
- * Reference dimensions: 1280×853px
- * Center card: 895×452px (ratio 1.98:1)
- * Gallery metaphor: suspended artwork with surrounding UI
+ * Centered and responsive - all elements contained within viewport
  */
 function CinematicHero() {
   const containerRef = useRef(null);
-  const [currentFrame, setCurrentFrame] = useState(4); // Start at frame 5
+  const [currentFrame, setCurrentFrame] = useState(4);
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -128,7 +126,7 @@ function CinematicHero() {
   const prevVideoSource = isMobile && prevFrameData.mobileVideo ? prevFrameData.mobileVideo : prevFrameData.video;
   const nextVideoSource = isMobile && nextFrameData.mobileVideo ? nextFrameData.mobileVideo : nextFrameData.video;
 
-  // Color tokens - exact from spec
+  // Color tokens
   const colors = {
     pageBlack: '#050505',
     cardBlack: '#090806',
@@ -140,18 +138,12 @@ function CinematicHero() {
     darkGold: 'rgba(185, 135, 61, 0.35)',
   };
 
-  // Calculate responsive dimensions based on viewport
-  // Reference: 1280×853px, Center card: 895×452px (69.9% width, 53% height)
-  const centerCardWidth = isMobile ? 'min(88vw, 500px)' : 'min(69.9vw, 895px)';
-  const centerCardHeight = isMobile ? 'min(44.4vw, 252px)' : 'min(35.3vw, 452px)'; // height = width / 1.98
-
   return (
     <div 
       ref={containerRef} 
       className="relative w-full" 
       style={{ 
-        height: '100vh', 
-        minHeight: '820px',
+        height: '100vh',
         fontFamily: 'var(--font-body)', 
         overflow: 'hidden',
         background: colors.pageBlack,
@@ -161,429 +153,429 @@ function CinematicHero() {
       <div 
         className="absolute inset-0 pointer-events-none"
         style={{
-          zIndex: 0,
-          background: `radial-gradient(ellipse 800px 600px at 50% 65%, ${colors.deepBrown}12 0%, transparent 50%)`,
+          background: `radial-gradient(ellipse 60% 50% at 50% 60%, ${colors.deepBrown}12 0%, transparent 50%)`,
         }}
       />
 
-      {/* Gallery Stage - 3D Perspective Container */}
+      {/* Main Centered Container */}
       <div 
-        className="absolute inset-0"
+        className="absolute inset-0 flex items-center justify-center"
         style={{
-          zIndex: 10,
-          perspective: '1600px',
-          perspectiveOrigin: 'center center',
+          paddingTop: isMobile ? '80px' : '100px',
+          paddingBottom: isMobile ? '80px' : '100px',
+          paddingLeft: isMobile ? '20px' : '40px',
+          paddingRight: isMobile ? '20px' : '40px',
         }}
       >
+        {/* Gallery Stage with 3D Perspective */}
         <div 
-          className="relative w-full h-full"
+          className="relative w-full h-full max-w-[1400px] mx-auto"
           style={{
-            transformStyle: 'preserve-3d',
+            perspective: '1600px',
+            perspectiveOrigin: 'center center',
           }}
         >
-          
-          {/* LEFT SIDE CARD - Intentionally clipped by viewport */}
-          {!isMobile && (
-            <motion.div
-              key={`prev-${currentFrame}`}
-              onClick={goToPrev}
-              className="absolute cursor-pointer"
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 0.65, x: 0 }}
-              exit={{ opacity: 0, x: -50 }}
-              transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-              style={{
-                left: '-10px',
-                top: '180px',
-                width: '170px',
-                height: '350px',
-                transform: 'rotateY(8deg) scale(0.75) translateZ(-100px)',
-                transformStyle: 'preserve-3d',
-                filter: 'brightness(0.6)',
-                zIndex: 30,
-              }}
-            >
-              <div 
-                className="absolute inset-0"
-                style={{
-                  border: `1px solid ${colors.darkGold}`,
-                  borderRadius: '13px',
-                  padding: '12px',
-                  boxShadow: '0 20px 60px rgba(0, 0, 0, 0.5)',
-                }}
-              >
-                <div 
-                  className="absolute inset-3 overflow-hidden"
-                  style={{
-                    border: `1px solid rgba(185, 135, 61, 0.25)`,
-                    borderRadius: '5px',
-                    background: colors.cardBlack,
-                  }}
-                >
-                  <video 
-                    autoPlay 
-                    loop 
-                    muted 
-                    playsInline 
-                    style={{ 
-                      width: '100%', 
-                      height: '100%', 
-                      objectFit: 'cover',
-                      display: 'block',
-                    }}
-                  >
-                    <source src={prevVideoSource} type="video/mp4" />
-                  </video>
-                  <div 
-                    className="absolute inset-0"
-                    style={{
-                      background: 'rgba(0, 0, 0, 0.25)',
-                      mixBlendMode: 'multiply',
-                    }}
-                  />
-                </div>
-              </div>
-            </motion.div>
-          )}
-
-          {/* CENTER ACTIVE CARD - Dominant artwork */}
-          <motion.div
-            key={`active-${currentFrame}`}
-            className="absolute"
-            initial={{ opacity: 0, scale: 0.98 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+          <div 
+            className="relative w-full h-full flex items-center justify-center"
             style={{
-              left: '50%',
-              top: isMobile ? '100px' : '176px',
-              transform: 'translateX(-50%) translateZ(0)',
-              width: centerCardWidth,
-              height: centerCardHeight,
-              zIndex: 50,
+              transformStyle: 'preserve-3d',
             }}
           >
-            {/* Suspension Cable */}
+            
+            {/* Left Side Card */}
             {!isMobile && (
-              <div 
-                className="absolute left-1/2 transform -translate-x-1/2 pointer-events-none"
+              <motion.div
+                key={`prev-${currentFrame}`}
+                onClick={goToPrev}
+                className="absolute cursor-pointer"
+                initial={{ opacity: 0, x: -50 }}
+                animate={{ opacity: 0.6, x: 0 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
                 style={{
-                  top: '-100px',
-                  zIndex: 40,
+                  left: '2%',
+                  top: '50%',
+                  transform: 'translateY(-50%) rotateY(8deg) scale(0.7) translateZ(-100px)',
+                  width: '13vw',
+                  maxWidth: '180px',
+                  height: '40vh',
+                  maxHeight: '380px',
+                  transformStyle: 'preserve-3d',
+                  filter: 'brightness(0.6)',
+                  zIndex: 30,
                 }}
               >
                 <div 
+                  className="absolute inset-0"
                   style={{
-                    width: '15px',
-                    height: '15px',
-                    borderRadius: '50%',
-                    border: `1px solid ${colors.warmGold}`,
-                    background: 'transparent',
-                    margin: '0 auto 4px',
+                    border: `1px solid ${colors.darkGold}`,
+                    borderRadius: '12px',
+                    padding: '10px',
+                    boxShadow: '0 20px 60px rgba(0, 0, 0, 0.5)',
                   }}
-                />
-                <div 
-                  style={{
-                    width: '2px',
-                    height: '100px',
-                    background: `linear-gradient(180deg, ${colors.warmGold} 0%, ${colors.darkGold} 100%)`,
-                    margin: '0 auto',
-                    opacity: 0.7,
-                  }}
-                />
-              </div>
+                >
+                  <div 
+                    className="absolute inset-2 overflow-hidden"
+                    style={{
+                      border: `1px solid rgba(185, 135, 61, 0.25)`,
+                      borderRadius: '6px',
+                      background: colors.cardBlack,
+                    }}
+                  >
+                    <video 
+                      autoPlay 
+                      loop 
+                      muted 
+                      playsInline 
+                      style={{ 
+                        width: '100%', 
+                        height: '100%', 
+                        objectFit: 'cover',
+                      }}
+                    >
+                      <source src={prevVideoSource} type="video/mp4" />
+                    </video>
+                    <div 
+                      className="absolute inset-0"
+                      style={{
+                        background: 'rgba(0, 0, 0, 0.25)',
+                        mixBlendMode: 'multiply',
+                      }}
+                    />
+                  </div>
+                </div>
+              </motion.div>
             )}
 
-            {/* Outer Frame */}
-            <div 
-              className="absolute inset-0 pointer-events-none"
-              style={{
-                border: `1px solid ${colors.mutedGold}`,
-                borderRadius: '13px',
-                padding: '12px',
-                boxShadow: '0 40px 120px rgba(0, 0, 0, 0.7)',
-                zIndex: 20,
-              }}
-            >
-              {/* Inner Frame */}
-              <div 
-                className="absolute inset-3 overflow-hidden"
-                style={{
-                  border: `1px solid rgba(208, 164, 93, 0.45)`,
-                  borderRadius: '5px',
-                  background: colors.cardBlack,
-                }}
-              >
-                {/* Video */}
-                <AnimatePresence mode="wait">
-                  <motion.video
-                    key={currentFrame}
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.8 }}
-                    style={{ 
-                      width: '100%', 
-                      height: '100%', 
-                      objectFit: 'cover',
-                      objectPosition: 'center center',
-                      display: 'block',
-                    }}
-                  >
-                    <source src={videoSource} type="video/mp4" />
-                  </motion.video>
-                </AnimatePresence>
-
-                {/* Dark photographic grading */}
-                <div 
-                  className="absolute inset-0 pointer-events-none"
-                  style={{
-                    background: 'rgba(23, 16, 10, 0.12)',
-                    mixBlendMode: 'multiply',
-                  }}
-                />
-
-                {/* Content Overlay */}
-                <div 
-                  className="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none" 
-                  style={{ padding: isMobile ? '24px' : '48px' }}
-                >
-                  <AnimatePresence mode="wait">
-                    <motion.div 
-                      key={currentFrame}
-                      initial={{ opacity: 0, y: 20 }} 
-                      animate={{ opacity: 1, y: 0 }} 
-                      exit={{ opacity: 0, y: -20 }} 
-                      transition={{ duration: 0.9 }}
-                    >
-                      {currentFrame === 0 && (
-                        <EsoLogo 
-                          className="mb-6 w-auto" 
-                          style={{ 
-                            height: isMobile ? '28px' : '40px',
-                            filter: 'drop-shadow(0 0 40px rgba(0,0,0,0.95))',
-                            opacity: 0.88,
-                          }} 
-                        />
-                      )}
-                      
-                      <h1 
-                        style={{ 
-                          fontFamily: "'Cormorant Garamond', 'Playfair Display', serif",
-                          fontSize: isMobile ? '20px' : 'clamp(27px, 2.2vw, 30px)',
-                          fontWeight: 500,
-                          letterSpacing: '0.14em',
-                          textTransform: 'uppercase',
-                          color: colors.editorialIvory,
-                          marginBottom: '18px',
-                          textShadow: '0 4px 30px rgba(0,0,0,0.95)',
-                        }}
-                      >
-                        {currentFrameData.title}
-                      </h1>
-
-                      {/* Divider with dot */}
-                      <div 
-                        className="flex items-center justify-center"
-                        style={{ marginBottom: '18px', width: '120px', margin: '0 auto 18px' }}
-                      >
-                        <div style={{ flex: 1, height: '1px', background: `${colors.editorialIvory}30` }} />
-                        <div style={{ 
-                          width: '4px', 
-                          height: '4px', 
-                          borderRadius: '50%', 
-                          background: colors.warmGold,
-                          margin: '0 8px',
-                          boxShadow: `0 0 8px ${colors.warmGold}50`,
-                        }} />
-                        <div style={{ flex: 1, height: '1px', background: `${colors.editorialIvory}30` }} />
-                      </div>
-
-                      <p 
-                        style={{ 
-                          fontSize: isMobile ? '8px' : '10px',
-                          fontWeight: 400,
-                          letterSpacing: '0.25em',
-                          lineHeight: '1.9',
-                          textTransform: 'uppercase',
-                          color: `${colors.editorialIvory}DD`,
-                          textShadow: '0 3px 20px rgba(0,0,0,0.95)',
-                          marginBottom: '4px',
-                        }}
-                      >
-                        {currentFrameData.subtitle}
-                      </p>
-                      <p 
-                        style={{ 
-                          fontSize: isMobile ? '8px' : '10px',
-                          fontWeight: 400,
-                          letterSpacing: '0.25em',
-                          lineHeight: '1.9',
-                          textTransform: 'uppercase',
-                          color: `${colors.editorialIvory}DD`,
-                          textShadow: '0 3px 20px rgba(0,0,0,0.95)',
-                        }}
-                      >
-                        {currentFrameData.description}
-                      </p>
-                    </motion.div>
-                  </AnimatePresence>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* RIGHT SIDE CARD - Intentionally clipped by viewport */}
-          {!isMobile && (
+            {/* Center Active Card */}
             <motion.div
-              key={`next-${currentFrame}`}
-              onClick={goToNext}
-              className="absolute cursor-pointer"
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 0.55, x: 0 }}
-              exit={{ opacity: 0, x: 50 }}
+              key={`active-${currentFrame}`}
+              className="relative"
+              initial={{ opacity: 0, scale: 0.98 }}
+              animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
               style={{
-                right: '-5px',
-                top: '180px',
-                width: '170px',
-                height: '350px',
-                transform: 'rotateY(-8deg) scale(0.75) translateZ(-100px)',
-                transformStyle: 'preserve-3d',
-                filter: 'brightness(0.5)',
-                zIndex: 30,
+                width: isMobile ? '90%' : '65%',
+                height: isMobile ? '50%' : '55%',
+                maxWidth: '900px',
+                maxHeight: '500px',
+                zIndex: 50,
               }}
             >
-              <div 
-                className="absolute inset-0"
-                style={{
-                  border: `1px solid ${colors.darkGold}`,
-                  borderRadius: '13px',
-                  padding: '12px',
-                  boxShadow: '0 20px 60px rgba(0, 0, 0, 0.5)',
-                }}
-              >
+              {/* Suspension Cable */}
+              {!isMobile && (
                 <div 
-                  className="absolute inset-3 overflow-hidden"
+                  className="absolute left-1/2 transform -translate-x-1/2 pointer-events-none"
                   style={{
-                    border: `1px solid rgba(185, 135, 61, 0.25)`,
-                    borderRadius: '5px',
-                    background: colors.cardBlack,
+                    bottom: '100%',
+                    marginBottom: '0px',
+                    zIndex: 40,
                   }}
                 >
-                  <video 
-                    autoPlay 
-                    loop 
-                    muted 
-                    playsInline 
-                    style={{ 
-                      width: '100%', 
-                      height: '100%', 
-                      objectFit: 'cover',
-                      display: 'block',
-                    }}
-                  >
-                    <source src={nextVideoSource} type="video/mp4" />
-                  </video>
                   <div 
-                    className="absolute inset-0"
                     style={{
-                      background: 'rgba(0, 0, 0, 0.3)',
-                      mixBlendMode: 'multiply',
+                      width: '15px',
+                      height: '15px',
+                      borderRadius: '50%',
+                      border: `1px solid ${colors.warmGold}`,
+                      background: 'transparent',
+                      margin: '0 auto 4px',
+                    }}
+                  />
+                  <div 
+                    style={{
+                      width: '2px',
+                      height: '80px',
+                      background: `linear-gradient(180deg, ${colors.warmGold} 0%, ${colors.darkGold} 100%)`,
+                      margin: '0 auto',
+                      opacity: 0.7,
                     }}
                   />
                 </div>
+              )}
+
+              {/* Outer Frame */}
+              <div 
+                className="absolute inset-0"
+                style={{
+                  border: `1px solid ${colors.mutedGold}`,
+                  borderRadius: '12px',
+                  padding: '12px',
+                  boxShadow: '0 30px 100px rgba(0, 0, 0, 0.7)',
+                }}
+              >
+                {/* Inner Frame */}
+                <div 
+                  className="absolute inset-3 overflow-hidden"
+                  style={{
+                    border: `1px solid rgba(208, 164, 93, 0.45)`,
+                    borderRadius: '6px',
+                    background: colors.cardBlack,
+                  }}
+                >
+                  {/* Video */}
+                  <AnimatePresence mode="wait">
+                    <motion.video
+                      key={currentFrame}
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.8 }}
+                      style={{ 
+                        width: '100%', 
+                        height: '100%', 
+                        objectFit: 'cover',
+                        objectPosition: 'center center',
+                      }}
+                    >
+                      <source src={videoSource} type="video/mp4" />
+                    </motion.video>
+                  </AnimatePresence>
+
+                  {/* Dark overlay */}
+                  <div 
+                    className="absolute inset-0 pointer-events-none"
+                    style={{
+                      background: 'rgba(23, 16, 10, 0.12)',
+                      mixBlendMode: 'multiply',
+                    }}
+                  />
+
+                  {/* Content */}
+                  <div 
+                    className="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none" 
+                    style={{ padding: isMobile ? '20px' : '40px' }}
+                  >
+                    <AnimatePresence mode="wait">
+                      <motion.div 
+                        key={currentFrame}
+                        initial={{ opacity: 0, y: 20 }} 
+                        animate={{ opacity: 1, y: 0 }} 
+                        exit={{ opacity: 0, y: -20 }} 
+                        transition={{ duration: 0.9 }}
+                      >
+                        {currentFrame === 0 && (
+                          <EsoLogo 
+                            className="mb-4 w-auto" 
+                            style={{ 
+                              height: isMobile ? '24px' : '36px',
+                              filter: 'drop-shadow(0 0 30px rgba(0,0,0,0.95))',
+                              opacity: 0.88,
+                            }} 
+                          />
+                        )}
+                        
+                        <h1 
+                          style={{ 
+                            fontFamily: "'Cormorant Garamond', 'Playfair Display', serif",
+                            fontSize: isMobile ? '18px' : 'clamp(24px, 2.5vw, 32px)',
+                            fontWeight: 500,
+                            letterSpacing: '0.14em',
+                            textTransform: 'uppercase',
+                            color: colors.editorialIvory,
+                            marginBottom: '12px',
+                            textShadow: '0 4px 25px rgba(0,0,0,0.95)',
+                          }}
+                        >
+                          {currentFrameData.title}
+                        </h1>
+
+                        {/* Divider */}
+                        <div 
+                          className="flex items-center justify-center"
+                          style={{ marginBottom: '12px', width: '100px', margin: '0 auto 12px' }}
+                        >
+                          <div style={{ flex: 1, height: '1px', background: `${colors.editorialIvory}30` }} />
+                          <div style={{ 
+                            width: '3px', 
+                            height: '3px', 
+                            borderRadius: '50%', 
+                            background: colors.warmGold,
+                            margin: '0 6px',
+                            boxShadow: `0 0 6px ${colors.warmGold}50`,
+                          }} />
+                          <div style={{ flex: 1, height: '1px', background: `${colors.editorialIvory}30` }} />
+                        </div>
+
+                        <p 
+                          style={{ 
+                            fontSize: isMobile ? '8px' : '10px',
+                            letterSpacing: '0.25em',
+                            lineHeight: '1.9',
+                            textTransform: 'uppercase',
+                            color: `${colors.editorialIvory}DD`,
+                            textShadow: '0 2px 15px rgba(0,0,0,0.95)',
+                            marginBottom: '3px',
+                          }}
+                        >
+                          {currentFrameData.subtitle}
+                        </p>
+                        <p 
+                          style={{ 
+                            fontSize: isMobile ? '8px' : '10px',
+                            letterSpacing: '0.25em',
+                            lineHeight: '1.9',
+                            textTransform: 'uppercase',
+                            color: `${colors.editorialIvory}DD`,
+                            textShadow: '0 2px 15px rgba(0,0,0,0.95)',
+                          }}
+                        >
+                          {currentFrameData.description}
+                        </p>
+                      </motion.div>
+                    </AnimatePresence>
+                  </div>
+                </div>
               </div>
             </motion.div>
-          )}
 
-          {/* Carousel Arrows */}
-          {!isMobile && (
-            <>
-              <button
-                onClick={goToPrev}
-                className="absolute transition-all duration-300"
-                style={{
-                  left: '155px',
-                  top: '403px',
-                  width: '50px',
-                  height: '50px',
-                  borderRadius: '50%',
-                  border: `1px solid ${colors.mutedGold}`,
-                  background: 'transparent',
-                  color: colors.paleGold,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  cursor: 'pointer',
-                  zIndex: 25,
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.borderColor = colors.warmGold;
-                  e.currentTarget.style.color = colors.editorialIvory;
-                  e.currentTarget.style.background = 'rgba(185, 135, 61, 0.05)';
-                  e.currentTarget.style.transform = 'scale(1.05)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.borderColor = colors.mutedGold;
-                  e.currentTarget.style.color = colors.paleGold;
-                  e.currentTarget.style.background = 'transparent';
-                  e.currentTarget.style.transform = 'scale(1)';
-                }}
-              >
-                <ChevronLeft size={20} strokeWidth={1.5} />
-              </button>
-
-              <button
+            {/* Right Side Card */}
+            {!isMobile && (
+              <motion.div
+                key={`next-${currentFrame}`}
                 onClick={goToNext}
-                className="absolute transition-all duration-300"
+                className="absolute cursor-pointer"
+                initial={{ opacity: 0, x: 50 }}
+                animate={{ opacity: 0.55, x: 0 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
                 style={{
-                  right: '155px',
-                  top: '403px',
-                  width: '50px',
-                  height: '50px',
-                  borderRadius: '50%',
-                  border: `1px solid ${colors.mutedGold}`,
-                  background: 'transparent',
-                  color: colors.paleGold,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  cursor: 'pointer',
-                  zIndex: 25,
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.borderColor = colors.warmGold;
-                  e.currentTarget.style.color = colors.editorialIvory;
-                  e.currentTarget.style.background = 'rgba(185, 135, 61, 0.05)';
-                  e.currentTarget.style.transform = 'scale(1.05)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.borderColor = colors.mutedGold;
-                  e.currentTarget.style.color = colors.paleGold;
-                  e.currentTarget.style.background = 'transparent';
-                  e.currentTarget.style.transform = 'scale(1)';
+                  right: '2%',
+                  top: '50%',
+                  transform: 'translateY(-50%) rotateY(-8deg) scale(0.7) translateZ(-100px)',
+                  width: '13vw',
+                  maxWidth: '180px',
+                  height: '40vh',
+                  maxHeight: '380px',
+                  transformStyle: 'preserve-3d',
+                  filter: 'brightness(0.5)',
+                  zIndex: 30,
                 }}
               >
-                <ChevronRight size={20} strokeWidth={1.5} />
-              </button>
-            </>
-          )}
+                <div 
+                  className="absolute inset-0"
+                  style={{
+                    border: `1px solid ${colors.darkGold}`,
+                    borderRadius: '12px',
+                    padding: '10px',
+                    boxShadow: '0 20px 60px rgba(0, 0, 0, 0.5)',
+                  }}
+                >
+                  <div 
+                    className="absolute inset-2 overflow-hidden"
+                    style={{
+                      border: `1px solid rgba(185, 135, 61, 0.25)`,
+                      borderRadius: '6px',
+                      background: colors.cardBlack,
+                    }}
+                  >
+                    <video 
+                      autoPlay 
+                      loop 
+                      muted 
+                      playsInline 
+                      style={{ 
+                        width: '100%', 
+                        height: '100%', 
+                        objectFit: 'cover',
+                      }}
+                    >
+                      <source src={nextVideoSource} type="video/mp4" />
+                    </video>
+                    <div 
+                      className="absolute inset-0"
+                      style={{
+                        background: 'rgba(0, 0, 0, 0.3)',
+                        mixBlendMode: 'multiply',
+                      }}
+                    />
+                  </div>
+                </div>
+              </motion.div>
+            )}
+
+            {/* Navigation Arrows */}
+            {!isMobile && (
+              <>
+                <button
+                  onClick={goToPrev}
+                  className="absolute transition-all duration-300"
+                  style={{
+                    left: '10%',
+                    top: '50%',
+                    transform: 'translateY(-50%)',
+                    width: '46px',
+                    height: '46px',
+                    borderRadius: '50%',
+                    border: `1px solid ${colors.mutedGold}`,
+                    background: 'transparent',
+                    color: colors.paleGold,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    cursor: 'pointer',
+                    zIndex: 60,
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.borderColor = colors.warmGold;
+                    e.currentTarget.style.background = 'rgba(185, 135, 61, 0.05)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.borderColor = colors.mutedGold;
+                    e.currentTarget.style.background = 'transparent';
+                  }}
+                >
+                  <ChevronLeft size={18} strokeWidth={1.5} />
+                </button>
+
+                <button
+                  onClick={goToNext}
+                  className="absolute transition-all duration-300"
+                  style={{
+                    right: '10%',
+                    top: '50%',
+                    transform: 'translateY(-50%)',
+                    width: '46px',
+                    height: '46px',
+                    borderRadius: '50%',
+                    border: `1px solid ${colors.mutedGold}`,
+                    background: 'transparent',
+                    color: colors.paleGold,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    cursor: 'pointer',
+                    zIndex: 60,
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.borderColor = colors.warmGold;
+                    e.currentTarget.style.background = 'rgba(185, 135, 61, 0.05)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.borderColor = colors.mutedGold;
+                    e.currentTarget.style.background = 'transparent';
+                  }}
+                >
+                  <ChevronRight size={18} strokeWidth={1.5} />
+                </button>
+              </>
+            )}
+          </div>
         </div>
       </div>
 
-      {/* Left Vertical Gallery Index */}
+      {/* Left Gallery Index */}
       {!isMobile && (
         <div 
           className="absolute"
           style={{
-            left: '43px',
-            top: '575px',
-            width: '80px',
-            zIndex: 15,
+            left: '30px',
+            bottom: '120px',
+            zIndex: 70,
           }}
         >
           <div 
@@ -592,7 +584,7 @@ function CinematicHero() {
               left: '0',
               top: '0',
               width: '1px',
-              height: '230px',
+              height: '240px',
               background: `linear-gradient(180deg, ${colors.darkGold}00 0%, ${colors.darkGold} 20%, ${colors.darkGold} 80%, ${colors.darkGold}00 100%)`,
             }}
           />
@@ -604,13 +596,12 @@ function CinematicHero() {
                 onClick={() => goToFrame(index)}
                 className="relative flex items-center transition-all duration-300"
                 style={{
-                  fontSize: '11px',
-                  fontWeight: 400,
+                  fontSize: '10px',
                   letterSpacing: '0.16em',
-                  lineHeight: '34px',
+                  lineHeight: '32px',
                   color: index === currentFrame ? colors.paleGold : 'rgba(185, 135, 61, 0.4)',
                   cursor: 'pointer',
-                  paddingLeft: '20px',
+                  paddingLeft: '18px',
                 }}
               >
                 {index === currentFrame && (
@@ -622,7 +613,7 @@ function CinematicHero() {
                         left: '0',
                         top: '50%',
                         transform: 'translateY(-50%)',
-                        width: '44px',
+                        width: '38px',
                         height: '1px',
                         background: colors.warmGold,
                       }}
@@ -631,14 +622,14 @@ function CinematicHero() {
                     <div 
                       style={{
                         position: 'absolute',
-                        left: '-4px',
+                        left: '-3px',
                         top: '50%',
                         transform: 'translateY(-50%)',
-                        width: '7px',
-                        height: '7px',
+                        width: '6px',
+                        height: '6px',
                         borderRadius: '50%',
                         background: colors.warmGold,
-                        boxShadow: `0 0 8px ${colors.warmGold}60`,
+                        boxShadow: `0 0 6px ${colors.warmGold}60`,
                       }}
                     />
                   </>
@@ -650,26 +641,25 @@ function CinematicHero() {
         </div>
       )}
 
-      {/* Bottom Center Counter */}
+      {/* Bottom Counter */}
       <div 
         className="absolute left-1/2 transform -translate-x-1/2"
         style={{ 
-          top: isMobile ? 'auto' : '655px', 
-          bottom: isMobile ? '120px' : 'auto',
-          zIndex: 10,
+          bottom: isMobile ? '90px' : '30px',
+          zIndex: 70,
         }}
       >
         <div 
           style={{
-            width: '90px',
-            height: '35px',
+            width: '85px',
+            height: '32px',
             border: `1px solid ${colors.mutedGold}`,
-            borderRadius: '18px',
+            borderRadius: '16px',
             background: 'transparent',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            fontSize: '11px',
+            fontSize: '10px',
             letterSpacing: '0.15em',
             color: colors.warmGold,
             fontWeight: 500,
@@ -679,46 +669,48 @@ function CinematicHero() {
         </div>
       </div>
 
-      {/* Scroll to Enter */}
+      {/* Scroll Prompt */}
       <motion.div
         className="absolute left-1/2 transform -translate-x-1/2 flex flex-col items-center pointer-events-none"
         style={{ 
-          top: isMobile ? 'auto' : '710px', 
-          bottom: isMobile ? '40px' : 'auto',
-          zIndex: 10,
+          bottom: isMobile ? '30px' : '70px',
+          zIndex: 70,
         }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1, delay: 1.5 }}
       >
-        <p 
-          style={{
-            fontSize: '9px',
-            letterSpacing: '0.27em',
-            textTransform: 'uppercase',
-            color: colors.warmGold,
-            fontWeight: 400,
-            marginBottom: '15px',
-          }}
-        >
-          SCROLL TO ENTER
-        </p>
-        
-        <div 
-          style={{
-            width: '1px',
-            height: '27px',
-            background: colors.mutedGold,
-            marginBottom: '8px',
-          }}
-        />
+        {!isMobile && (
+          <>
+            <p 
+              style={{
+                fontSize: '8px',
+                letterSpacing: '0.25em',
+                textTransform: 'uppercase',
+                color: colors.warmGold,
+                marginBottom: '10px',
+              }}
+            >
+              SCROLL TO ENTER
+            </p>
+            
+            <div 
+              style={{
+                width: '1px',
+                height: '22px',
+                background: colors.mutedGold,
+                marginBottom: '6px',
+              }}
+            />
+          </>
+        )}
         
         <motion.div
-          animate={{ y: [0, 8, 0] }}
+          animate={{ y: [0, 6, 0] }}
           transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
           style={{
-            width: '39px',
-            height: '39px',
+            width: '34px',
+            height: '34px',
             borderRadius: '50%',
             border: `1px solid ${colors.warmGold}`,
             background: 'transparent',
@@ -728,25 +720,25 @@ function CinematicHero() {
             color: colors.paleGold,
           }}
         >
-          <ChevronDown size={16} strokeWidth={1.5} />
+          <ChevronDown size={14} strokeWidth={1.5} />
         </motion.div>
       </motion.div>
 
       {/* Right Editorial Statement */}
       {!isMobile && (
         <div 
-          className="absolute flex items-start gap-4"
+          className="absolute flex items-start gap-3"
           style={{
-            right: 'max(60px, calc(50vw - 580px))',
-            top: '675px',
-            width: '190px',
-            zIndex: 15,
+            right: '30px',
+            bottom: '120px',
+            width: '170px',
+            zIndex: 70,
           }}
         >
           <div 
             style={{
               width: '1px',
-              height: '120px',
+              height: '110px',
               background: `linear-gradient(180deg, transparent 0%, ${colors.warmGold}80 20%, ${colors.warmGold}80 80%, transparent 100%)`,
             }}
           />
@@ -759,9 +751,9 @@ function CinematicHero() {
             <p 
               style={{
                 fontFamily: "'Cormorant Garamond', 'Playfair Display', serif",
-                fontSize: '12px',
-                lineHeight: '2.1',
-                letterSpacing: '0.25em',
+                fontSize: '11px',
+                lineHeight: '2',
+                letterSpacing: '0.22em',
                 textTransform: 'uppercase',
                 color: `${colors.editorialIvory}CC`,
                 fontWeight: 400,
@@ -775,21 +767,6 @@ function CinematicHero() {
           </motion.div>
         </div>
       )}
-
-      {/* Subtle Floor Reflection */}
-      <div 
-        className="absolute left-1/2 transform -translate-x-1/2 pointer-events-none"
-        style={{
-          bottom: '150px',
-          width: isMobile ? '60vw' : 'min(48vw, 615px)',
-          height: '120px',
-          opacity: 0.08,
-          background: 'linear-gradient(180deg, rgba(185, 135, 61, 0.15) 0%, transparent 100%)',
-          filter: 'blur(40px)',
-          maskImage: 'linear-gradient(180deg, black 0%, transparent 100%)',
-          zIndex: 5,
-        }}
-      />
     </div>
   );
 }
