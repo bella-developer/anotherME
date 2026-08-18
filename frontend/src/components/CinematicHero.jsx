@@ -125,26 +125,31 @@ function CinematicHero() {
     <div ref={containerRef} className="relative w-full bg-black" style={{ height: '100vh', fontFamily: 'var(--font-body)', overflow: 'hidden' }}>
       
       {/* Three Column Layout */}
-      <div className="absolute inset-0 flex items-center justify-center px-4 md:px-8" style={{ paddingTop: isMobile ? '100px' : '120px', paddingBottom: isMobile ? '120px' : '140px' }}>
-        <div className="relative w-full max-w-7xl mx-auto flex items-center gap-6 md:gap-8">
+      <div className="absolute inset-0 flex items-center justify-center" style={{ 
+        paddingTop: isMobile ? '100px' : '80px', 
+        paddingBottom: isMobile ? '100px' : '80px',
+        paddingLeft: isMobile ? '16px' : '32px',
+        paddingRight: isMobile ? '16px' : '32px',
+      }}>
+        <div className="relative w-full max-w-[1400px] mx-auto flex items-center justify-center" style={{ gap: isMobile ? '0' : '48px' }}>
           
           {/* LEFT: Vertical Numbers */}
           {!isMobile && (
-            <div className="flex flex-col gap-3" style={{ minWidth: '60px' }}>
+            <div className="flex flex-col justify-center gap-4" style={{ minWidth: '80px' }}>
               {frames.map((_, index) => (
                 <motion.button
                   key={index}
                   onClick={() => goToFrame(index)}
-                  className="text-left transition-all duration-300 relative"
+                  className="text-left transition-all duration-300 relative flex items-center"
                   style={{
-                    fontSize: '14px',
-                    letterSpacing: '0.1em',
-                    color: index === currentFrame ? '#D4AF37' : 'rgba(201, 160, 99, 0.4)',
+                    fontSize: '15px',
+                    letterSpacing: '0.15em',
+                    color: index === currentFrame ? 'rgba(184, 134, 11, 0.95)' : 'rgba(184, 134, 11, 0.35)',
                     fontWeight: index === currentFrame ? 600 : 400,
                     cursor: 'pointer',
-                    paddingLeft: index === currentFrame ? '20px' : '0',
+                    paddingLeft: index === currentFrame ? '24px' : '0',
                   }}
-                  whileHover={{ color: '#D4AF37', paddingLeft: '20px' }}
+                  whileHover={{ color: 'rgba(184, 134, 11, 0.85)', paddingLeft: '24px' }}
                 >
                   {index === currentFrame && (
                     <motion.div
@@ -154,10 +159,10 @@ function CinematicHero() {
                         left: 0,
                         top: '50%',
                         transform: 'translateY(-50%)',
-                        width: '12px',
+                        width: '14px',
                         height: '2px',
-                        background: '#D4AF37',
-                        boxShadow: '0 0 8px rgba(212, 175, 55, 0.8)',
+                        background: 'rgba(184, 134, 11, 0.85)',
+                        boxShadow: '0 0 10px rgba(184, 134, 11, 0.6)',
                       }}
                       transition={{ duration: 0.3, ease: 'easeInOut' }}
                     />
@@ -169,68 +174,79 @@ function CinematicHero() {
           )}
 
           {/* CENTER: Main Frame + Side Previews */}
-          <div className="relative flex-1 flex items-center justify-center gap-4 md:gap-6">
+          <div className="relative flex items-center justify-center" style={{ gap: isMobile ? '0' : '24px', flex: 1 }}>
             
             {/* Prev Preview */}
             {!isMobile && (
               <motion.div
-                className="relative cursor-pointer"
+                className="relative cursor-pointer flex-shrink-0"
                 onClick={goToPrev}
                 style={{
-                  width: '160px',
-                  height: '300px',
-                  borderRadius: '12px',
+                  width: '120px',
+                  height: '220px',
+                  borderRadius: '8px',
                   overflow: 'hidden',
-                  border: '2px solid rgba(201, 160, 99, 0.3)',
-                  opacity: 0.3,
+                  border: '2px solid rgba(184, 134, 11, 0.25)',
+                  opacity: 0.4,
+                  background: 'rgba(0,0,0,0.5)',
                 }}
-                whileHover={{ opacity: 0.6, scale: 1.02 }}
+                whileHover={{ opacity: 0.7, scale: 1.03 }}
               >
-                <video autoPlay loop muted playsInline style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'brightness(0.4)' }}>
+                <video autoPlay loop muted playsInline style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'brightness(0.5)' }}>
                   <source src={isMobile && frames[(currentFrame - 1 + frames.length) % frames.length].mobileVideo ? frames[(currentFrame - 1 + frames.length) % frames.length].mobileVideo : frames[(currentFrame - 1 + frames.length) % frames.length].video} type="video/mp4" />
                 </video>
               </motion.div>
             )}
 
             {/* Main Frame */}
-            <div className="relative">
+            <div className="relative flex-shrink-0">
               
-              {/* Finial */}
-              <div className="absolute left-1/2 transform -translate-x-1/2 z-50 pointer-events-none" style={{ top: isMobile ? '-60px' : '-80px' }}>
+              {/* Ornate Finial */}
+              <div className="absolute left-1/2 transform -translate-x-1/2 z-50 pointer-events-none" style={{ top: isMobile ? '-50px' : '-70px' }}>
+                {/* Ornate top sphere */}
                 <div style={{
-                  width: isMobile ? '24px' : '32px',
-                  height: isMobile ? '24px' : '32px',
+                  width: isMobile ? '20px' : '28px',
+                  height: isMobile ? '20px' : '28px',
                   borderRadius: '50%',
-                  background: 'radial-gradient(circle, #FFD700 0%, #D4AF37 40%, #C9A063 70%, #8B6F47 100%)',
-                  margin: '0 auto 6px',
-                  boxShadow: '0 0 25px rgba(255, 215, 0, 0.7), inset 0 3px 8px rgba(255,255,255,0.5)',
-                  border: '2px solid rgba(212, 175, 55, 0.95)',
+                  background: 'radial-gradient(circle at 30% 30%, rgba(220, 180, 70, 0.9) 0%, rgba(184, 134, 11, 0.85) 50%, rgba(139, 111, 71, 0.8) 100%)',
+                  margin: '0 auto 4px',
+                  boxShadow: '0 0 20px rgba(184, 134, 11, 0.4), inset 0 2px 6px rgba(255,255,255,0.3)',
+                  border: '1.5px solid rgba(184, 134, 11, 0.7)',
                 }} />
+                {/* Connecting rod */}
                 <div style={{
-                  width: isMobile ? '4px' : '5px',
-                  height: isMobile ? '40px' : '60px',
-                  background: 'linear-gradient(180deg, #D4AF37 0%, #C9A063 50%, #8B6F47 100%)',
+                  width: isMobile ? '3px' : '4px',
+                  height: isMobile ? '30px' : '50px',
+                  background: 'linear-gradient(180deg, rgba(184, 134, 11, 0.85) 0%, rgba(139, 111, 71, 0.75) 100%)',
                   margin: '0 auto',
-                  boxShadow: '0 0 10px rgba(201, 160, 99, 0.5)',
+                  boxShadow: '0 0 8px rgba(184, 134, 11, 0.3)',
                 }} />
               </div>
 
-              {/* Frame Container */}
-              <div style={{ width: isMobile ? '85vw' : '700px', height: isMobile ? '65vh' : '450px', position: 'relative' }}>
+              {/* Frame Container - Landscape format */}
+              <div style={{ 
+                width: isMobile ? '90vw' : '800px', 
+                height: isMobile ? 'calc(90vw * 0.56)' : '480px',
+                maxWidth: isMobile ? '500px' : '800px',
+                position: 'relative',
+              }}>
                 
-                {/* Gold Border */}
+                {/* Subtle Gold Border */}
                 <div className="absolute inset-0 pointer-events-none z-20" style={{
-                  border: isMobile ? '4px solid' : '5px solid',
-                  borderImage: 'linear-gradient(135deg, #FFD700 0%, #D4AF37 15%, #C9A063 35%, #8B6F47 50%, #C9A063 65%, #D4AF37 85%, #FFD700 100%) 1',
-                  borderRadius: '16px',
-                  boxShadow: '0 0 25px rgba(255, 215, 0, 0.35), inset 0 0 35px rgba(0,0,0,0.6), inset 0 3px 6px rgba(255,255,255,0.12)',
+                  border: isMobile ? '3px solid' : '6px solid',
+                  borderImage: 'linear-gradient(135deg, rgba(220, 180, 70, 0.5) 0%, rgba(184, 134, 11, 0.55) 20%, rgba(139, 111, 71, 0.45) 40%, rgba(101, 84, 63, 0.4) 50%, rgba(139, 111, 71, 0.45) 60%, rgba(184, 134, 11, 0.55) 80%, rgba(220, 180, 70, 0.5) 100%) 1',
+                  borderRadius: '12px',
+                  boxShadow: '0 0 30px rgba(184, 134, 11, 0.2), inset 0 0 40px rgba(0,0,0,0.7), inset 0 2px 8px rgba(255,255,255,0.08)',
                 }} />
 
                 {/* Inner Shadow */}
-                <div className="absolute inset-0 pointer-events-none z-10" style={{ borderRadius: '16px', boxShadow: 'inset 0 0 40px rgba(0,0,0,0.8)' }} />
+                <div className="absolute inset-0 pointer-events-none z-10" style={{ 
+                  borderRadius: '8px', 
+                  boxShadow: 'inset 0 0 50px rgba(0,0,0,0.9)' 
+                }} />
 
                 {/* Video */}
-                <div className="absolute inset-0 overflow-hidden" style={{ borderRadius: '12px' }}>
+                <div className="absolute inset-0 overflow-hidden" style={{ borderRadius: '8px' }}>
                   <AnimatePresence mode="wait">
                     <motion.video
                       key={currentFrame}
@@ -241,35 +257,128 @@ function CinematicHero() {
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}
-                      transition={{ duration: 0.5 }}
+                      transition={{ duration: 0.6 }}
                       style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                     >
                       <source src={videoSource} type="video/mp4" />
                     </motion.video>
                   </AnimatePresence>
 
-                  {/* Gradient */}
-                  <div className="absolute inset-0 pointer-events-none" style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 30%, transparent 50%, rgba(0,0,0,0.4) 100%)' }} />
+                  {/* Gradient Overlay */}
+                  <div className="absolute inset-0 pointer-events-none" style={{ 
+                    background: 'linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 25%, transparent 45%, rgba(0,0,0,0.3) 100%)' 
+                  }} />
 
-                  {/* Text */}
-                  <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6 md:px-12 pointer-events-none">
+                  {/* Text Content */}
+                  <div className="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none" style={{ padding: isMobile ? '24px' : '48px' }}>
                     <AnimatePresence mode="wait">
-                      <motion.div key={currentFrame} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.7 }}>
-                        {currentFrame === 0 && <EsoLogo className="mb-6 h-10 md:h-12 w-auto" style={{ filter: 'drop-shadow(0 0 25px rgba(0,0,0,1))' }} />}
-                        <h1 className="text-2xl md:text-5xl font-light mb-4" style={{ color: '#ffffff', letterSpacing: '0.3em', textShadow: '0 0 35px rgba(0,0,0,1), 0 5px 25px rgba(0,0,0,0.95)', fontWeight: 200 }}>{currentFrameData.title}</h1>
-                        <div style={{ width: '4px', height: '4px', borderRadius: '50%', background: '#D4AF37', margin: '0 auto 16px', boxShadow: '0 0 12px rgba(212, 175, 55, 0.9)' }} />
-                        <p className="text-sm md:text-base mb-2" style={{ color: 'rgba(255, 255, 255, 0.9)', letterSpacing: '0.2em', textTransform: 'uppercase', textShadow: '0 0 25px rgba(0,0,0,1), 0 3px 15px rgba(0,0,0,0.95)', fontWeight: 300 }}>{currentFrameData.subtitle}</p>
-                        <p className="text-xs md:text-sm" style={{ color: 'rgba(255, 255, 255, 0.75)', letterSpacing: '0.2em', textTransform: 'uppercase', textShadow: '0 0 25px rgba(0,0,0,1), 0 3px 15px rgba(0,0,0,0.95)', fontWeight: 300 }}>{currentFrameData.description}</p>
+                      <motion.div 
+                        key={currentFrame} 
+                        initial={{ opacity: 0, y: 20 }} 
+                        animate={{ opacity: 1, y: 0 }} 
+                        exit={{ opacity: 0, y: -20 }} 
+                        transition={{ duration: 0.8 }}
+                      >
+                        {currentFrame === 0 && (
+                          <EsoLogo 
+                            className="mb-6 w-auto" 
+                            style={{ 
+                              height: isMobile ? '36px' : '48px',
+                              filter: 'drop-shadow(0 0 30px rgba(0,0,0,1))' 
+                            }} 
+                          />
+                        )}
+                        <h1 
+                          className="font-light mb-4" 
+                          style={{ 
+                            fontSize: isMobile ? '28px' : '52px',
+                            color: '#ffffff', 
+                            letterSpacing: '0.3em', 
+                            textShadow: '0 0 40px rgba(0,0,0,1), 0 6px 30px rgba(0,0,0,0.95)', 
+                            fontWeight: 200 
+                          }}
+                        >
+                          {currentFrameData.title}
+                        </h1>
+                        <div style={{ 
+                          width: '4px', 
+                          height: '4px', 
+                          borderRadius: '50%', 
+                          background: 'rgba(184, 134, 11, 0.8)', 
+                          margin: '0 auto 18px', 
+                          boxShadow: '0 0 14px rgba(184, 134, 11, 0.7)' 
+                        }} />
+                        <p 
+                          className="mb-2" 
+                          style={{ 
+                            fontSize: isMobile ? '13px' : '16px',
+                            color: 'rgba(255, 255, 255, 0.92)', 
+                            letterSpacing: '0.2em', 
+                            textTransform: 'uppercase', 
+                            textShadow: '0 0 30px rgba(0,0,0,1), 0 4px 20px rgba(0,0,0,0.95)', 
+                            fontWeight: 300 
+                          }}
+                        >
+                          {currentFrameData.subtitle}
+                        </p>
+                        <p 
+                          style={{ 
+                            fontSize: isMobile ? '12px' : '14px',
+                            color: 'rgba(255, 255, 255, 0.78)', 
+                            letterSpacing: '0.2em', 
+                            textTransform: 'uppercase', 
+                            textShadow: '0 0 30px rgba(0,0,0,1), 0 4px 20px rgba(0,0,0,0.95)', 
+                            fontWeight: 300 
+                          }}
+                        >
+                          {currentFrameData.description}
+                        </p>
                       </motion.div>
                     </AnimatePresence>
                   </div>
 
-                  {/* Arrows */}
-                  <button onClick={goToPrev} className="absolute left-4 md:left-6 top-1/2 transform -translate-y-1/2 z-30 transition-all duration-300 hover:scale-110" style={{ width: isMobile ? '40px' : '48px', height: isMobile ? '40px' : '48px', borderRadius: '50%', border: '2px solid rgba(212, 175, 55, 0.6)', background: 'rgba(0, 0, 0, 0.6)', backdropFilter: 'blur(10px)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: '#D4AF37', boxShadow: '0 0 15px rgba(0,0,0,0.8)' }}>
-                    <ChevronLeft size={isMobile ? 22 : 26} />
+                  {/* Navigation Arrows */}
+                  <button 
+                    onClick={goToPrev} 
+                    className="absolute top-1/2 transform -translate-y-1/2 z-30 transition-all duration-300 hover:scale-110" 
+                    style={{ 
+                      left: isMobile ? '12px' : '20px',
+                      width: isMobile ? '38px' : '50px', 
+                      height: isMobile ? '38px' : '50px', 
+                      borderRadius: '50%', 
+                      border: '2px solid rgba(184, 134, 11, 0.45)', 
+                      background: 'rgba(0, 0, 0, 0.65)', 
+                      backdropFilter: 'blur(10px)', 
+                      display: 'flex', 
+                      alignItems: 'center', 
+                      justifyContent: 'center', 
+                      cursor: 'pointer', 
+                      color: 'rgba(184, 134, 11, 0.9)', 
+                      boxShadow: '0 0 20px rgba(0,0,0,0.8)' 
+                    }}
+                  >
+                    <ChevronLeft size={isMobile ? 20 : 28} />
                   </button>
-                  <button onClick={goToNext} className="absolute right-4 md:right-6 top-1/2 transform -translate-y-1/2 z-30 transition-all duration-300 hover:scale-110" style={{ width: isMobile ? '40px' : '48px', height: isMobile ? '40px' : '48px', borderRadius: '50%', border: '2px solid rgba(212, 175, 55, 0.6)', background: 'rgba(0, 0, 0, 0.6)', backdropFilter: 'blur(10px)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: '#D4AF37', boxShadow: '0 0 15px rgba(0,0,0,0.8)' }}>
-                    <ChevronRight size={isMobile ? 22 : 26} />
+                  <button 
+                    onClick={goToNext} 
+                    className="absolute top-1/2 transform -translate-y-1/2 z-30 transition-all duration-300 hover:scale-110" 
+                    style={{ 
+                      right: isMobile ? '12px' : '20px',
+                      width: isMobile ? '38px' : '50px', 
+                      height: isMobile ? '38px' : '50px', 
+                      borderRadius: '50%', 
+                      border: '2px solid rgba(184, 134, 11, 0.45)', 
+                      background: 'rgba(0, 0, 0, 0.65)', 
+                      backdropFilter: 'blur(10px)', 
+                      display: 'flex', 
+                      alignItems: 'center', 
+                      justifyContent: 'center', 
+                      cursor: 'pointer', 
+                      color: 'rgba(184, 134, 11, 0.9)', 
+                      boxShadow: '0 0 20px rgba(0,0,0,0.8)' 
+                    }}
+                  >
+                    <ChevronRight size={isMobile ? 20 : 28} />
                   </button>
                 </div>
               </div>
@@ -278,19 +387,20 @@ function CinematicHero() {
             {/* Next Preview */}
             {!isMobile && (
               <motion.div
-                className="relative cursor-pointer"
+                className="relative cursor-pointer flex-shrink-0"
                 onClick={goToNext}
                 style={{
-                  width: '160px',
-                  height: '300px',
-                  borderRadius: '12px',
+                  width: '120px',
+                  height: '220px',
+                  borderRadius: '8px',
                   overflow: 'hidden',
-                  border: '2px solid rgba(201, 160, 99, 0.3)',
-                  opacity: 0.3,
+                  border: '2px solid rgba(184, 134, 11, 0.25)',
+                  opacity: 0.4,
+                  background: 'rgba(0,0,0,0.5)',
                 }}
-                whileHover={{ opacity: 0.6, scale: 1.02 }}
+                whileHover={{ opacity: 0.7, scale: 1.03 }}
               >
-                <video autoPlay loop muted playsInline style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'brightness(0.4)' }}>
+                <video autoPlay loop muted playsInline style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'brightness(0.5)' }}>
                   <source src={isMobile && frames[(currentFrame + 1) % frames.length].mobileVideo ? frames[(currentFrame + 1) % frames.length].mobileVideo : frames[(currentFrame + 1) % frames.length].video} type="video/mp4" />
                 </video>
               </motion.div>
@@ -299,9 +409,20 @@ function CinematicHero() {
 
           {/* RIGHT: Poetic Text */}
           {!isMobile && (
-            <div className="flex flex-col justify-center" style={{ minWidth: '180px', maxWidth: '180px' }}>
-              <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1, delay: 0.5 }}>
-                <p style={{ fontSize: '11px', letterSpacing: '0.25em', textTransform: 'uppercase', color: 'rgba(201, 160, 99, 0.6)', lineHeight: '2', fontWeight: 300 }}>
+            <div className="flex flex-col justify-center" style={{ minWidth: '200px', maxWidth: '200px' }}>
+              <motion.div 
+                initial={{ opacity: 0, x: 20 }} 
+                animate={{ opacity: 1, x: 0 }} 
+                transition={{ duration: 1, delay: 0.6 }}
+              >
+                <p style={{ 
+                  fontSize: '11px', 
+                  letterSpacing: '0.3em', 
+                  textTransform: 'uppercase', 
+                  color: 'rgba(184, 134, 11, 0.5)', 
+                  lineHeight: '2.2', 
+                  fontWeight: 300 
+                }}>
                   Every room<br />holds a story.<br />Every story,<br />a part of you.
                 </p>
               </motion.div>
@@ -311,17 +432,58 @@ function CinematicHero() {
       </div>
 
       {/* Counter Pill */}
-      <div className="absolute left-1/2 transform -translate-x-1/2 z-40" style={{ bottom: isMobile ? '80px' : '100px' }}>
-        <div style={{ padding: isMobile ? '6px 18px' : '8px 24px', borderRadius: '24px', border: '1px solid rgba(212, 175, 55, 0.5)', background: 'rgba(0, 0, 0, 0.7)', backdropFilter: 'blur(12px)', fontSize: isMobile ? '11px' : '12px', letterSpacing: '0.25em', color: '#D4AF37', fontWeight: 500, boxShadow: '0 4px 20px rgba(0,0,0,0.6)' }}>
+      <div 
+        className="absolute left-1/2 transform -translate-x-1/2 z-40" 
+        style={{ bottom: isMobile ? '60px' : '80px' }}
+      >
+        <div style={{ 
+          padding: isMobile ? '7px 20px' : '9px 26px', 
+          borderRadius: '28px', 
+          border: '1px solid rgba(184, 134, 11, 0.4)', 
+          background: 'rgba(0, 0, 0, 0.75)', 
+          backdropFilter: 'blur(14px)', 
+          fontSize: isMobile ? '11px' : '13px', 
+          letterSpacing: '0.28em', 
+          color: 'rgba(184, 134, 11, 0.9)', 
+          fontWeight: 500, 
+          boxShadow: '0 4px 24px rgba(0,0,0,0.7)' 
+        }}>
           {String(currentFrame + 1).padStart(2, '0')} / {String(frames.length).padStart(2, '0')}
         </div>
       </div>
 
       {/* Scroll Prompt */}
-      <motion.div className="absolute bottom-6 md:bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2 pointer-events-none" initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 1.5 }}>
-        <p style={{ fontSize: '9px', letterSpacing: '0.3em', textTransform: 'uppercase', color: 'rgba(201, 160, 99, 0.6)', fontWeight: 400 }}>Scroll to enter</p>
-        <motion.div animate={{ y: [0, 8, 0] }} transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}>
-          <div style={{ width: '34px', height: '34px', borderRadius: '50%', border: '1px solid rgba(212, 175, 55, 0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#D4AF37', background: 'rgba(0,0,0,0.3)' }}>
+      <motion.div 
+        className="absolute left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2 pointer-events-none" 
+        style={{ bottom: isMobile ? '20px' : '30px' }}
+        initial={{ opacity: 0, y: -10 }} 
+        animate={{ opacity: 1, y: 0 }} 
+        transition={{ duration: 1, delay: 1.5 }}
+      >
+        <p style={{ 
+          fontSize: '9px', 
+          letterSpacing: '0.35em', 
+          textTransform: 'uppercase', 
+          color: 'rgba(184, 134, 11, 0.5)', 
+          fontWeight: 400 
+        }}>
+          Scroll to enter
+        </p>
+        <motion.div 
+          animate={{ y: [0, 8, 0] }} 
+          transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
+        >
+          <div style={{ 
+            width: '36px', 
+            height: '36px', 
+            borderRadius: '50%', 
+            border: '1px solid rgba(184, 134, 11, 0.4)', 
+            display: 'flex', 
+            alignItems: 'center', 
+            justifyContent: 'center', 
+            color: 'rgba(184, 134, 11, 0.8)', 
+            background: 'rgba(0,0,0,0.4)' 
+          }}>
             <ChevronDown size={16} />
           </div>
         </motion.div>
