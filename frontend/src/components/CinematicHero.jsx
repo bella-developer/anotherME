@@ -165,7 +165,7 @@ function CinematicHero() {
         style={{
           perspective: '1600px',
           perspectiveOrigin: 'center center',
-          paddingTop: isMobile ? '100px' : '76px',
+          paddingTop: isMobile ? '100px' : '80px',
         }}
       >
         {/* Main Gallery Stage */}
@@ -187,11 +187,11 @@ function CinematicHero() {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
               style={{
-                left: '-10px',
-                top: '180px',
+                left: '5%',
+                top: '50%',
+                transform: 'translateY(-50%) rotateY(8deg) scale(0.75) translateZ(-100px)',
                 width: '170px',
                 height: '350px',
-                transform: 'rotateY(8deg) scale(0.75) translateZ(-100px)',
                 transformStyle: 'preserve-3d',
                 filter: 'brightness(0.6)',
               }}
@@ -260,7 +260,7 @@ function CinematicHero() {
               <div 
                 className="absolute left-1/2 transform -translate-x-1/2 pointer-events-none"
                 style={{
-                  top: '-100px',
+                  top: '-80px',
                   zIndex: 40,
                 }}
               >
@@ -279,7 +279,7 @@ function CinematicHero() {
                 <div 
                   style={{
                     width: '2px',
-                    height: '96px',
+                    height: '76px',
                     background: `linear-gradient(180deg, ${colors.warmGold} 0%, ${colors.darkGold} 100%)`,
                     margin: '0 auto',
                     opacity: 0.7,
@@ -441,11 +441,11 @@ function CinematicHero() {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
               style={{
-                right: '-5px',
-                top: '180px',
+                right: '5%',
+                top: '50%',
+                transform: 'translateY(-50%) rotateY(-8deg) scale(0.75) translateZ(-100px)',
                 width: '170px',
                 height: '350px',
-                transform: 'rotateY(-8deg) scale(0.75) translateZ(-100px)',
                 transformStyle: 'preserve-3d',
                 filter: 'brightness(0.5)',
               }}
@@ -495,77 +495,19 @@ function CinematicHero() {
             </motion.div>
           )}
 
-          {/* Carousel Arrows */}
-          <button
-            onClick={goToPrev}
-            className="absolute z-30 transition-all duration-300"
-            style={{
-              left: isMobile ? '20px' : '155px',
-              top: isMobile ? '50%' : '403px',
-              transform: isMobile ? 'translateY(-50%)' : 'none',
-              width: '50px',
-              height: '50px',
-              borderRadius: '50%',
-              border: `1px solid ${colors.mutedGold}`,
-              background: 'transparent',
-              color: colors.paleGold,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              cursor: 'pointer',
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.borderColor = colors.warmGold;
-              e.currentTarget.style.color = colors.editorialIvory;
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.borderColor = colors.mutedGold;
-              e.currentTarget.style.color = colors.paleGold;
-            }}
-          >
-            <ChevronLeft size={20} strokeWidth={1.5} />
-          </button>
-
-          <button
-            onClick={goToNext}
-            className="absolute z-30 transition-all duration-300"
-            style={{
-              right: isMobile ? '20px' : '155px',
-              top: isMobile ? '50%' : '403px',
-              transform: isMobile ? 'translateY(-50%)' : 'none',
-              width: '50px',
-              height: '50px',
-              borderRadius: '50%',
-              border: `1px solid ${colors.mutedGold}`,
-              background: 'transparent',
-              color: colors.paleGold,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              cursor: 'pointer',
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.borderColor = colors.warmGold;
-              e.currentTarget.style.color = colors.editorialIvory;
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.borderColor = colors.mutedGold;
-              e.currentTarget.style.color = colors.paleGold;
-            }}
-          >
-            <ChevronRight size={20} strokeWidth={1.5} />
-          </button>
+          {/* Carousel Arrows - REMOVED */}
         </div>
       </div>
 
       {/* Left Vertical Gallery Index */}
       {!isMobile && (
         <div 
-          className="absolute z-15"
+          className="absolute"
           style={{
             left: '43px',
-            top: '575px',
+            bottom: '180px',
             width: '80px',
+            zIndex: 100,
           }}
         >
           {/* Vertical Timeline */}
@@ -714,11 +656,12 @@ function CinematicHero() {
       {/* Right Editorial Statement */}
       {!isMobile && (
         <div 
-          className="absolute z-15 flex items-start gap-4"
+          className="absolute flex items-start gap-4"
           style={{
             right: '60px',
-            top: '675px',
+            bottom: '180px',
             width: '190px',
+            zIndex: 100,
           }}
         >
           {/* Vertical divider */}
