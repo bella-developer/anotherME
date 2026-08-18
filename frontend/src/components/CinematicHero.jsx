@@ -5,12 +5,13 @@ import EsoLogo from './EsoLogo';
 
 /**
  * Cinematic Hero - Museum Gallery Exhibition Interface
- * Deconstructed from reference design as a gallery/editorial interface
- * Key: UI built around suspended central artwork, museum exhibition frame
+ * Reference dimensions: 1280×853px
+ * Center card: 895×452px (ratio 1.98:1)
+ * Gallery metaphor: suspended artwork with surrounding UI
  */
 function CinematicHero() {
   const containerRef = useRef(null);
-  const [currentFrame, setCurrentFrame] = useState(4); // Start at frame 5 (index 4)
+  const [currentFrame, setCurrentFrame] = useState(4); // Start at frame 5
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -127,7 +128,7 @@ function CinematicHero() {
   const prevVideoSource = isMobile && prevFrameData.mobileVideo ? prevFrameData.mobileVideo : prevFrameData.video;
   const nextVideoSource = isMobile && nextFrameData.mobileVideo ? nextFrameData.mobileVideo : nextFrameData.video;
 
-  // Color tokens - dark luxury palette
+  // Color tokens - exact from spec
   const colors = {
     pageBlack: '#050505',
     cardBlack: '#090806',
@@ -139,13 +140,18 @@ function CinematicHero() {
     darkGold: 'rgba(185, 135, 61, 0.35)',
   };
 
+  // Calculate responsive dimensions based on viewport
+  // Reference: 1280×853px, Center card: 895×452px (69.9% width, 53% height)
+  const centerCardWidth = isMobile ? 'min(88vw, 500px)' : 'min(69.9vw, 895px)';
+  const centerCardHeight = isMobile ? 'min(44.4vw, 252px)' : 'min(35.3vw, 452px)'; // height = width / 1.98
+
   return (
     <div 
       ref={containerRef} 
-      className="relative w-full bg-black" 
+      className="relative w-full" 
       style={{ 
         height: '100vh', 
-        minHeight: isMobile ? '700px' : '820px',
+        minHeight: '820px',
         fontFamily: 'var(--font-body)', 
         overflow: 'hidden',
         background: colors.pageBlack,
@@ -153,21 +159,22 @@ function CinematicHero() {
     >
       {/* Atmospheric Background */}
       <div 
-        className="absolute inset-0 z-0 pointer-events-none"
+        className="absolute inset-0 pointer-events-none"
         style={{
-          background: `radial-gradient(ellipse 800px 600px at 50% 65%, ${colors.deepBrown}15 0%, transparent 50%)`,
+          zIndex: 0,
+          background: `radial-gradient(ellipse 800px 600px at 50% 65%, ${colors.deepBrown}12 0%, transparent 50%)`,
         }}
       />
 
-      {/* Gallery Stage Container - 3D Perspective */}
+      {/* Gallery Stage - 3D Perspective Container */}
       <div 
-        className="absolute inset-0 z-10"
+        className="absolute inset-0"
         style={{
+          zIndex: 10,
           perspective: '1600px',
           perspectiveOrigin: 'center center',
         }}
       >
-        {/* Main Gallery Stage */}
         <div 
           className="relative w-full h-full"
           style={{
@@ -175,15 +182,15 @@ function CinematicHero() {
           }}
         >
           
-          {/* Previous Card (Left Side) - Intentionally clipped */}
+          {/* LEFT SIDE CARD - Intentionally clipped by viewport */}
           {!isMobile && (
             <motion.div
               key={`prev-${currentFrame}`}
               onClick={goToPrev}
               className="absolute cursor-pointer"
-              initial={{ opacity: 0, x: -100 }}
+              initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 0.65, x: 0 }}
-              exit={{ opacity: 0 }}
+              exit={{ opacity: 0, x: -50 }}
               transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
               style={{
                 left: '-10px',
@@ -193,24 +200,24 @@ function CinematicHero() {
                 transform: 'rotateY(8deg) scale(0.75) translateZ(-100px)',
                 transformStyle: 'preserve-3d',
                 filter: 'brightness(0.6)',
+                zIndex: 30,
               }}
             >
-              {/* Outer Frame */}
               <div 
-                className="absolute inset-0 pointer-events-none"
+                className="absolute inset-0"
                 style={{
                   border: `1px solid ${colors.darkGold}`,
                   borderRadius: '13px',
                   padding: '12px',
-                  boxShadow: '0 20px 60px rgba(0, 0, 0, 0.6)',
+                  boxShadow: '0 20px 60px rgba(0, 0, 0, 0.5)',
                 }}
               >
-                {/* Inner Frame */}
                 <div 
                   className="absolute inset-3 overflow-hidden"
                   style={{
                     border: `1px solid rgba(185, 135, 61, 0.25)`,
                     borderRadius: '5px',
+                    background: colors.cardBlack,
                   }}
                 >
                   <video 
@@ -227,7 +234,6 @@ function CinematicHero() {
                   >
                     <source src={prevVideoSource} type="video/mp4" />
                   </video>
-                  {/* Dark overlay */}
                   <div 
                     className="absolute inset-0"
                     style={{
@@ -240,20 +246,19 @@ function CinematicHero() {
             </motion.div>
           )}
 
-          {/* Active Center Card */}
+          {/* CENTER ACTIVE CARD - Dominant artwork */}
           <motion.div
             key={`active-${currentFrame}`}
             className="absolute"
-            initial={{ opacity: 0, scale: 0.95 }}
+            initial={{ opacity: 0, scale: 0.98 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
             style={{
               left: '50%',
+              top: isMobile ? '100px' : '176px',
               transform: 'translateX(-50%) translateZ(0)',
-              top: isMobile ? '120px' : '176px',
-              width: isMobile ? 'clamp(320px, 88vw, 500px)' : 'clamp(600px, 70vw, 895px)',
-              maxWidth: '895px',
-              aspectRatio: '1.98',
+              width: centerCardWidth,
+              height: centerCardHeight,
               zIndex: 50,
             }}
           >
@@ -266,7 +271,6 @@ function CinematicHero() {
                   zIndex: 40,
                 }}
               >
-                {/* Top circular hook */}
                 <div 
                   style={{
                     width: '15px',
@@ -277,7 +281,6 @@ function CinematicHero() {
                     margin: '0 auto 4px',
                   }}
                 />
-                {/* Suspension cable */}
                 <div 
                   style={{
                     width: '2px',
@@ -292,12 +295,13 @@ function CinematicHero() {
 
             {/* Outer Frame */}
             <div 
-              className="absolute inset-0 pointer-events-none z-20"
+              className="absolute inset-0 pointer-events-none"
               style={{
                 border: `1px solid ${colors.mutedGold}`,
                 borderRadius: '13px',
                 padding: '12px',
                 boxShadow: '0 40px 120px rgba(0, 0, 0, 0.7)',
+                zIndex: 20,
               }}
             >
               {/* Inner Frame */}
@@ -343,7 +347,10 @@ function CinematicHero() {
                 />
 
                 {/* Content Overlay */}
-                <div className="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none" style={{ padding: isMobile ? '32px' : '48px' }}>
+                <div 
+                  className="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none" 
+                  style={{ padding: isMobile ? '24px' : '48px' }}
+                >
                   <AnimatePresence mode="wait">
                     <motion.div 
                       key={currentFrame}
@@ -352,23 +359,21 @@ function CinematicHero() {
                       exit={{ opacity: 0, y: -20 }} 
                       transition={{ duration: 0.9 }}
                     >
-                      {/* ESO Logo */}
                       {currentFrame === 0 && (
                         <EsoLogo 
                           className="mb-6 w-auto" 
                           style={{ 
-                            height: isMobile ? '32px' : '40px',
+                            height: isMobile ? '28px' : '40px',
                             filter: 'drop-shadow(0 0 40px rgba(0,0,0,0.95))',
                             opacity: 0.88,
                           }} 
                         />
                       )}
                       
-                      {/* Title - Editorial Serif */}
                       <h1 
                         style={{ 
                           fontFamily: "'Cormorant Garamond', 'Playfair Display', serif",
-                          fontSize: isMobile ? '24px' : 'clamp(27px, 2.2vw, 30px)',
+                          fontSize: isMobile ? '20px' : 'clamp(27px, 2.2vw, 30px)',
                           fontWeight: 500,
                           letterSpacing: '0.14em',
                           textTransform: 'uppercase',
@@ -380,7 +385,7 @@ function CinematicHero() {
                         {currentFrameData.title}
                       </h1>
 
-                      {/* Tiny Divider with Central Dot */}
+                      {/* Divider with dot */}
                       <div 
                         className="flex items-center justify-center"
                         style={{ marginBottom: '18px', width: '120px', margin: '0 auto 18px' }}
@@ -397,10 +402,9 @@ function CinematicHero() {
                         <div style={{ flex: 1, height: '1px', background: `${colors.editorialIvory}30` }} />
                       </div>
 
-                      {/* Subtitle */}
                       <p 
                         style={{ 
-                          fontSize: isMobile ? '9px' : '10px',
+                          fontSize: isMobile ? '8px' : '10px',
                           fontWeight: 400,
                           letterSpacing: '0.25em',
                           lineHeight: '1.9',
@@ -414,7 +418,7 @@ function CinematicHero() {
                       </p>
                       <p 
                         style={{ 
-                          fontSize: isMobile ? '9px' : '10px',
+                          fontSize: isMobile ? '8px' : '10px',
                           fontWeight: 400,
                           letterSpacing: '0.25em',
                           lineHeight: '1.9',
@@ -432,15 +436,15 @@ function CinematicHero() {
             </div>
           </motion.div>
 
-          {/* Next Card (Right Side) - Intentionally clipped */}
+          {/* RIGHT SIDE CARD - Intentionally clipped by viewport */}
           {!isMobile && (
             <motion.div
               key={`next-${currentFrame}`}
               onClick={goToNext}
               className="absolute cursor-pointer"
-              initial={{ opacity: 0, x: 100 }}
+              initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 0.55, x: 0 }}
-              exit={{ opacity: 0 }}
+              exit={{ opacity: 0, x: 50 }}
               transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
               style={{
                 right: '-5px',
@@ -450,24 +454,24 @@ function CinematicHero() {
                 transform: 'rotateY(-8deg) scale(0.75) translateZ(-100px)',
                 transformStyle: 'preserve-3d',
                 filter: 'brightness(0.5)',
+                zIndex: 30,
               }}
             >
-              {/* Outer Frame */}
               <div 
-                className="absolute inset-0 pointer-events-none"
+                className="absolute inset-0"
                 style={{
                   border: `1px solid ${colors.darkGold}`,
                   borderRadius: '13px',
                   padding: '12px',
-                  boxShadow: '0 20px 60px rgba(0, 0, 0, 0.6)',
+                  boxShadow: '0 20px 60px rgba(0, 0, 0, 0.5)',
                 }}
               >
-                {/* Inner Frame */}
                 <div 
                   className="absolute inset-3 overflow-hidden"
                   style={{
                     border: `1px solid rgba(185, 135, 61, 0.25)`,
                     borderRadius: '5px',
+                    background: colors.cardBlack,
                   }}
                 >
                   <video 
@@ -484,7 +488,6 @@ function CinematicHero() {
                   >
                     <source src={nextVideoSource} type="video/mp4" />
                   </video>
-                  {/* Dark overlay */}
                   <div 
                     className="absolute inset-0"
                     style={{
@@ -500,10 +503,9 @@ function CinematicHero() {
           {/* Carousel Arrows */}
           {!isMobile && (
             <>
-              {/* Left Arrow */}
               <button
                 onClick={goToPrev}
-                className="absolute z-25 transition-all duration-300"
+                className="absolute transition-all duration-300"
                 style={{
                   left: '155px',
                   top: '403px',
@@ -517,6 +519,7 @@ function CinematicHero() {
                   alignItems: 'center',
                   justifyContent: 'center',
                   cursor: 'pointer',
+                  zIndex: 25,
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.borderColor = colors.warmGold;
@@ -534,10 +537,9 @@ function CinematicHero() {
                 <ChevronLeft size={20} strokeWidth={1.5} />
               </button>
 
-              {/* Right Arrow */}
               <button
                 onClick={goToNext}
-                className="absolute z-25 transition-all duration-300"
+                className="absolute transition-all duration-300"
                 style={{
                   right: '155px',
                   top: '403px',
@@ -551,6 +553,7 @@ function CinematicHero() {
                   alignItems: 'center',
                   justifyContent: 'center',
                   cursor: 'pointer',
+                  zIndex: 25,
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.borderColor = colors.warmGold;
@@ -583,7 +586,6 @@ function CinematicHero() {
             zIndex: 15,
           }}
         >
-          {/* Vertical Timeline */}
           <div 
             style={{
               position: 'absolute',
@@ -595,7 +597,6 @@ function CinematicHero() {
             }}
           />
           
-          {/* Numbers */}
           <div className="flex flex-col">
             {frames.map((_, index) => (
               <motion.button
@@ -612,7 +613,6 @@ function CinematicHero() {
                   paddingLeft: '20px',
                 }}
               >
-                {/* Active indicator */}
                 {index === currentFrame && (
                   <>
                     <motion.div
@@ -655,7 +655,7 @@ function CinematicHero() {
         className="absolute left-1/2 transform -translate-x-1/2"
         style={{ 
           top: isMobile ? 'auto' : '655px', 
-          bottom: isMobile ? '140px' : 'auto',
+          bottom: isMobile ? '120px' : 'auto',
           zIndex: 10,
         }}
       >
@@ -684,7 +684,7 @@ function CinematicHero() {
         className="absolute left-1/2 transform -translate-x-1/2 flex flex-col items-center pointer-events-none"
         style={{ 
           top: isMobile ? 'auto' : '710px', 
-          bottom: isMobile ? '60px' : 'auto',
+          bottom: isMobile ? '40px' : 'auto',
           zIndex: 10,
         }}
         initial={{ opacity: 0 }}
@@ -704,7 +704,6 @@ function CinematicHero() {
           SCROLL TO ENTER
         </p>
         
-        {/* Vertical line */}
         <div 
           style={{
             width: '1px',
@@ -714,7 +713,6 @@ function CinematicHero() {
           }}
         />
         
-        {/* Circular arrow - positioned at y ≈ 778px */}
         <motion.div
           animate={{ y: [0, 8, 0] }}
           transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
@@ -739,13 +737,12 @@ function CinematicHero() {
         <div 
           className="absolute flex items-start gap-4"
           style={{
-            right: 'calc(50% - 640px)',
+            right: 'max(60px, calc(50vw - 580px))',
             top: '675px',
             width: '190px',
             zIndex: 15,
           }}
         >
-          {/* Vertical divider */}
           <div 
             style={{
               width: '1px',
@@ -754,7 +751,6 @@ function CinematicHero() {
             }}
           />
           
-          {/* Statement */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -784,14 +780,14 @@ function CinematicHero() {
       <div 
         className="absolute left-1/2 transform -translate-x-1/2 pointer-events-none"
         style={{
-          bottom: '200px',
-          width: isMobile ? '65vw' : '65vw',
-          maxWidth: '650px',
+          bottom: '150px',
+          width: isMobile ? '60vw' : 'min(48vw, 615px)',
           height: '120px',
           opacity: 0.08,
           background: 'linear-gradient(180deg, rgba(185, 135, 61, 0.15) 0%, transparent 100%)',
           filter: 'blur(40px)',
           maskImage: 'linear-gradient(180deg, black 0%, transparent 100%)',
+          zIndex: 5,
         }}
       />
     </div>
