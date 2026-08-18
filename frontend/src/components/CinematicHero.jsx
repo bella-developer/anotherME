@@ -4,12 +4,13 @@ import { ChevronLeft, ChevronRight, ChevronDown } from 'lucide-react';
 import EsoLogo from './EsoLogo';
 
 /**
- * Cinematic Hero - Memory Palace Style
- * Three-column layout with side previews, vertical counter, poetic text
+ * Cinematic Hero - Museum Gallery Exhibition Interface
+ * Deconstructed from reference design as a gallery/editorial interface
+ * Key: UI built around suspended central artwork, museum exhibition frame
  */
 function CinematicHero() {
   const containerRef = useRef(null);
-  const [currentFrame, setCurrentFrame] = useState(0);
+  const [currentFrame, setCurrentFrame] = useState(4); // Start at frame 5 (index 4)
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -119,375 +120,656 @@ function CinematicHero() {
   }, []);
 
   const currentFrameData = frames[currentFrame];
+  const prevFrameData = frames[(currentFrame - 1 + frames.length) % frames.length];
+  const nextFrameData = frames[(currentFrame + 1) % frames.length];
+  
   const videoSource = isMobile && currentFrameData.mobileVideo ? currentFrameData.mobileVideo : currentFrameData.video;
+  const prevVideoSource = isMobile && prevFrameData.mobileVideo ? prevFrameData.mobileVideo : prevFrameData.video;
+  const nextVideoSource = isMobile && nextFrameData.mobileVideo ? nextFrameData.mobileVideo : nextFrameData.video;
+
+  // Color tokens - dark luxury palette
+  const colors = {
+    pageBlack: '#050505',
+    cardBlack: '#090806',
+    deepBrown: '#17100A',
+    warmGold: '#B9873D',
+    paleGold: '#D0A45D',
+    editorialIvory: '#D8D0C0',
+    mutedGold: 'rgba(185, 135, 61, 0.65)',
+    darkGold: 'rgba(185, 135, 61, 0.35)',
+  };
 
   return (
-    <div ref={containerRef} className="relative w-full bg-black" style={{ height: '100vh', fontFamily: 'var(--font-body)', overflow: 'hidden' }}>
-      
-      {/* Three Column Layout */}
-      <div className="absolute inset-0 flex items-center justify-center" style={{ 
-        paddingTop: isMobile ? '100px' : '80px', 
-        paddingBottom: isMobile ? '100px' : '80px',
-        paddingLeft: isMobile ? '16px' : '32px',
-        paddingRight: isMobile ? '16px' : '32px',
-      }}>
-        <div className="relative w-full max-w-[1400px] mx-auto flex items-center justify-center" style={{ gap: isMobile ? '0' : '48px' }}>
+    <div 
+      ref={containerRef} 
+      className="relative w-full bg-black" 
+      style={{ 
+        height: '100vh', 
+        minHeight: isMobile ? '700px' : '820px',
+        fontFamily: 'var(--font-body)', 
+        overflow: 'hidden',
+        background: colors.pageBlack,
+      }}
+    >
+      {/* Atmospheric Background */}
+      <div 
+        className="absolute inset-0 z-0 pointer-events-none"
+        style={{
+          background: `radial-gradient(ellipse 800px 600px at 50% 65%, ${colors.deepBrown}15 0%, transparent 50%)`,
+        }}
+      />
+
+      {/* Gallery Stage Container - 3D Perspective */}
+      <div 
+        className="absolute inset-0 z-10"
+        style={{
+          perspective: '1600px',
+          perspectiveOrigin: 'center center',
+          paddingTop: isMobile ? '100px' : '76px',
+        }}
+      >
+        {/* Main Gallery Stage */}
+        <div 
+          className="relative w-full h-full flex items-center justify-center"
+          style={{
+            transformStyle: 'preserve-3d',
+          }}
+        >
           
-          {/* LEFT: Vertical Numbers */}
+          {/* Previous Card (Left Side) */}
           {!isMobile && (
-            <div className="flex flex-col justify-center gap-4" style={{ minWidth: '80px' }}>
-              {frames.map((_, index) => (
-                <motion.button
-                  key={index}
-                  onClick={() => goToFrame(index)}
-                  className="text-left transition-all duration-300 relative flex items-center"
+            <motion.div
+              key={`prev-${currentFrame}`}
+              onClick={goToPrev}
+              className="absolute cursor-pointer"
+              initial={{ opacity: 0, x: -100 }}
+              animate={{ opacity: 0.6, x: 0 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+              style={{
+                left: '-10px',
+                top: '180px',
+                width: '170px',
+                height: '350px',
+                transform: 'rotateY(8deg) scale(0.75) translateZ(-100px)',
+                transformStyle: 'preserve-3d',
+                filter: 'brightness(0.6)',
+              }}
+            >
+              {/* Outer Frame */}
+              <div 
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                  border: `1px solid ${colors.darkGold}`,
+                  borderRadius: '13px',
+                  padding: '12px',
+                  boxShadow: '0 20px 60px rgba(0, 0, 0, 0.6)',
+                }}
+              >
+                {/* Inner Frame */}
+                <div 
+                  className="absolute inset-3 overflow-hidden"
                   style={{
-                    fontSize: '15px',
-                    letterSpacing: '0.15em',
-                    color: index === currentFrame ? 'rgba(184, 134, 11, 0.95)' : 'rgba(184, 134, 11, 0.35)',
-                    fontWeight: index === currentFrame ? 600 : 400,
-                    cursor: 'pointer',
-                    paddingLeft: index === currentFrame ? '24px' : '0',
+                    border: `1px solid rgba(185, 135, 61, 0.25)`,
+                    borderRadius: '5px',
                   }}
-                  whileHover={{ color: 'rgba(184, 134, 11, 0.85)', paddingLeft: '24px' }}
                 >
-                  {index === currentFrame && (
-                    <motion.div
-                      layoutId="sidebarIndicator"
-                      style={{
-                        position: 'absolute',
-                        left: 0,
-                        top: '50%',
-                        transform: 'translateY(-50%)',
-                        width: '14px',
-                        height: '2px',
-                        background: 'rgba(184, 134, 11, 0.85)',
-                        boxShadow: '0 0 10px rgba(184, 134, 11, 0.6)',
-                      }}
-                      transition={{ duration: 0.3, ease: 'easeInOut' }}
-                    />
-                  )}
-                  {String(index + 1).padStart(2, '0')}
-                </motion.button>
-              ))}
-            </div>
+                  <video 
+                    autoPlay 
+                    loop 
+                    muted 
+                    playsInline 
+                    style={{ 
+                      width: '100%', 
+                      height: '100%', 
+                      objectFit: 'cover',
+                      display: 'block',
+                    }}
+                  >
+                    <source src={prevVideoSource} type="video/mp4" />
+                  </video>
+                  {/* Dark overlay */}
+                  <div 
+                    className="absolute inset-0"
+                    style={{
+                      background: 'rgba(0, 0, 0, 0.25)',
+                      mixBlendMode: 'multiply',
+                    }}
+                  />
+                </div>
+              </div>
+            </motion.div>
           )}
 
-          {/* CENTER: Main Frame + Side Previews */}
-          <div className="relative flex items-center justify-center" style={{ gap: isMobile ? '0' : '24px', flex: 1 }}>
-            
-            {/* Prev Preview */}
+          {/* Active Center Card */}
+          <motion.div
+            key={`active-${currentFrame}`}
+            className="relative"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+            style={{
+              width: isMobile ? 'clamp(320px, 92vw, 500px)' : 'clamp(600px, 70vw, 895px)',
+              aspectRatio: '1.98',
+              transform: 'translateZ(0)',
+              zIndex: 50,
+            }}
+          >
+            {/* Suspension Cable */}
             {!isMobile && (
-              <motion.div
-                className="relative cursor-pointer flex-shrink-0"
-                onClick={goToPrev}
+              <div 
+                className="absolute left-1/2 transform -translate-x-1/2 pointer-events-none"
                 style={{
-                  width: '120px',
-                  height: '220px',
-                  borderRadius: '8px',
-                  overflow: 'hidden',
-                  border: '2px solid rgba(184, 134, 11, 0.25)',
-                  opacity: 0.4,
-                  background: 'rgba(0,0,0,0.5)',
+                  top: '-100px',
+                  zIndex: 40,
                 }}
-                whileHover={{ opacity: 0.7, scale: 1.03 }}
               >
-                <video autoPlay loop muted playsInline style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'brightness(0.5)' }}>
-                  <source src={isMobile && frames[(currentFrame - 1 + frames.length) % frames.length].mobileVideo ? frames[(currentFrame - 1 + frames.length) % frames.length].mobileVideo : frames[(currentFrame - 1 + frames.length) % frames.length].video} type="video/mp4" />
-                </video>
-              </motion.div>
+                {/* Top circular hook */}
+                <div 
+                  style={{
+                    width: '15px',
+                    height: '15px',
+                    borderRadius: '50%',
+                    border: `1px solid ${colors.warmGold}`,
+                    background: 'transparent',
+                    margin: '0 auto 4px',
+                  }}
+                />
+                {/* Suspension cable */}
+                <div 
+                  style={{
+                    width: '2px',
+                    height: '96px',
+                    background: `linear-gradient(180deg, ${colors.warmGold} 0%, ${colors.darkGold} 100%)`,
+                    margin: '0 auto',
+                    opacity: 0.7,
+                  }}
+                />
+              </div>
             )}
 
-            {/* Main Frame */}
-            <div className="relative flex-shrink-0">
-              
-              {/* Ornate Finial */}
-              <div className="absolute left-1/2 transform -translate-x-1/2 z-50 pointer-events-none" style={{ top: isMobile ? '-50px' : '-70px' }}>
-                {/* Ornate top sphere */}
-                <div style={{
-                  width: isMobile ? '20px' : '28px',
-                  height: isMobile ? '20px' : '28px',
-                  borderRadius: '50%',
-                  background: 'radial-gradient(circle at 30% 30%, rgba(220, 180, 70, 0.9) 0%, rgba(184, 134, 11, 0.85) 50%, rgba(139, 111, 71, 0.8) 100%)',
-                  margin: '0 auto 4px',
-                  boxShadow: '0 0 20px rgba(184, 134, 11, 0.4), inset 0 2px 6px rgba(255,255,255,0.3)',
-                  border: '1.5px solid rgba(184, 134, 11, 0.7)',
-                }} />
-                {/* Connecting rod */}
-                <div style={{
-                  width: isMobile ? '3px' : '4px',
-                  height: isMobile ? '30px' : '50px',
-                  background: 'linear-gradient(180deg, rgba(184, 134, 11, 0.85) 0%, rgba(139, 111, 71, 0.75) 100%)',
-                  margin: '0 auto',
-                  boxShadow: '0 0 8px rgba(184, 134, 11, 0.3)',
-                }} />
-              </div>
-
-              {/* Frame Container - Landscape format */}
-              <div style={{ 
-                width: isMobile ? '90vw' : '800px', 
-                height: isMobile ? 'calc(90vw * 0.56)' : '480px',
-                maxWidth: isMobile ? '500px' : '800px',
-                position: 'relative',
-              }}>
-                
-                {/* Subtle Gold Border */}
-                <div className="absolute inset-0 pointer-events-none z-20" style={{
-                  border: isMobile ? '3px solid' : '6px solid',
-                  borderImage: 'linear-gradient(135deg, rgba(220, 180, 70, 0.5) 0%, rgba(184, 134, 11, 0.55) 20%, rgba(139, 111, 71, 0.45) 40%, rgba(101, 84, 63, 0.4) 50%, rgba(139, 111, 71, 0.45) 60%, rgba(184, 134, 11, 0.55) 80%, rgba(220, 180, 70, 0.5) 100%) 1',
-                  borderRadius: '12px',
-                  boxShadow: '0 0 30px rgba(184, 134, 11, 0.2), inset 0 0 40px rgba(0,0,0,0.7), inset 0 2px 8px rgba(255,255,255,0.08)',
-                }} />
-
-                {/* Inner Shadow */}
-                <div className="absolute inset-0 pointer-events-none z-10" style={{ 
-                  borderRadius: '8px', 
-                  boxShadow: 'inset 0 0 50px rgba(0,0,0,0.9)' 
-                }} />
-
+            {/* Outer Frame */}
+            <div 
+              className="absolute inset-0 pointer-events-none z-20"
+              style={{
+                border: `1px solid ${colors.mutedGold}`,
+                borderRadius: '13px',
+                padding: '12px',
+                boxShadow: '0 40px 120px rgba(0, 0, 0, 0.7)',
+              }}
+            >
+              {/* Inner Frame */}
+              <div 
+                className="absolute inset-3 overflow-hidden"
+                style={{
+                  border: `1px solid rgba(208, 164, 93, 0.45)`,
+                  borderRadius: '5px',
+                  background: colors.cardBlack,
+                }}
+              >
                 {/* Video */}
-                <div className="absolute inset-0 overflow-hidden" style={{ borderRadius: '8px' }}>
+                <AnimatePresence mode="wait">
+                  <motion.video
+                    key={currentFrame}
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.8 }}
+                    style={{ 
+                      width: '100%', 
+                      height: '100%', 
+                      objectFit: 'cover',
+                      objectPosition: 'center center',
+                      display: 'block',
+                    }}
+                  >
+                    <source src={videoSource} type="video/mp4" />
+                  </motion.video>
+                </AnimatePresence>
+
+                {/* Dark photographic grading */}
+                <div 
+                  className="absolute inset-0 pointer-events-none"
+                  style={{
+                    background: 'rgba(23, 16, 10, 0.12)',
+                    mixBlendMode: 'multiply',
+                  }}
+                />
+
+                {/* Content Overlay */}
+                <div className="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none" style={{ padding: isMobile ? '32px' : '48px' }}>
                   <AnimatePresence mode="wait">
-                    <motion.video
+                    <motion.div 
                       key={currentFrame}
-                      autoPlay
-                      loop
-                      muted
-                      playsInline
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 0.6 }}
-                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                      initial={{ opacity: 0, y: 20 }} 
+                      animate={{ opacity: 1, y: 0 }} 
+                      exit={{ opacity: 0, y: -20 }} 
+                      transition={{ duration: 0.9 }}
                     >
-                      <source src={videoSource} type="video/mp4" />
-                    </motion.video>
-                  </AnimatePresence>
-
-                  {/* Gradient Overlay */}
-                  <div className="absolute inset-0 pointer-events-none" style={{ 
-                    background: 'linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 25%, transparent 45%, rgba(0,0,0,0.3) 100%)' 
-                  }} />
-
-                  {/* Text Content */}
-                  <div className="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none" style={{ padding: isMobile ? '24px' : '48px' }}>
-                    <AnimatePresence mode="wait">
-                      <motion.div 
-                        key={currentFrame} 
-                        initial={{ opacity: 0, y: 20 }} 
-                        animate={{ opacity: 1, y: 0 }} 
-                        exit={{ opacity: 0, y: -20 }} 
-                        transition={{ duration: 0.8 }}
-                      >
-                        {currentFrame === 0 && (
-                          <EsoLogo 
-                            className="mb-6 w-auto" 
-                            style={{ 
-                              height: isMobile ? '36px' : '48px',
-                              filter: 'drop-shadow(0 0 30px rgba(0,0,0,1))' 
-                            }} 
-                          />
-                        )}
-                        <h1 
-                          className="font-light mb-4" 
+                      {/* ESO Logo */}
+                      {currentFrame === 0 && (
+                        <EsoLogo 
+                          className="mb-6 w-auto" 
                           style={{ 
-                            fontSize: isMobile ? '28px' : '52px',
-                            color: '#ffffff', 
-                            letterSpacing: '0.3em', 
-                            textShadow: '0 0 40px rgba(0,0,0,1), 0 6px 30px rgba(0,0,0,0.95)', 
-                            fontWeight: 200 
-                          }}
-                        >
-                          {currentFrameData.title}
-                        </h1>
+                            height: isMobile ? '32px' : '40px',
+                            filter: 'drop-shadow(0 0 40px rgba(0,0,0,0.95))',
+                            opacity: 0.88,
+                          }} 
+                        />
+                      )}
+                      
+                      {/* Title - Editorial Serif */}
+                      <h1 
+                        style={{ 
+                          fontFamily: "'Cormorant Garamond', 'Playfair Display', serif",
+                          fontSize: isMobile ? '24px' : 'clamp(27px, 2.2vw, 30px)',
+                          fontWeight: 500,
+                          letterSpacing: '0.14em',
+                          textTransform: 'uppercase',
+                          color: colors.editorialIvory,
+                          marginBottom: '18px',
+                          textShadow: '0 4px 30px rgba(0,0,0,0.95)',
+                        }}
+                      >
+                        {currentFrameData.title}
+                      </h1>
+
+                      {/* Tiny Divider with Central Dot */}
+                      <div 
+                        className="flex items-center justify-center"
+                        style={{ marginBottom: '18px', width: '120px', margin: '0 auto 18px' }}
+                      >
+                        <div style={{ flex: 1, height: '1px', background: `${colors.editorialIvory}30` }} />
                         <div style={{ 
                           width: '4px', 
                           height: '4px', 
                           borderRadius: '50%', 
-                          background: 'rgba(184, 134, 11, 0.8)', 
-                          margin: '0 auto 18px', 
-                          boxShadow: '0 0 14px rgba(184, 134, 11, 0.7)' 
+                          background: colors.warmGold,
+                          margin: '0 8px',
+                          boxShadow: `0 0 8px ${colors.warmGold}50`,
                         }} />
-                        <p 
-                          className="mb-2" 
-                          style={{ 
-                            fontSize: isMobile ? '13px' : '16px',
-                            color: 'rgba(255, 255, 255, 0.92)', 
-                            letterSpacing: '0.2em', 
-                            textTransform: 'uppercase', 
-                            textShadow: '0 0 30px rgba(0,0,0,1), 0 4px 20px rgba(0,0,0,0.95)', 
-                            fontWeight: 300 
-                          }}
-                        >
-                          {currentFrameData.subtitle}
-                        </p>
-                        <p 
-                          style={{ 
-                            fontSize: isMobile ? '12px' : '14px',
-                            color: 'rgba(255, 255, 255, 0.78)', 
-                            letterSpacing: '0.2em', 
-                            textTransform: 'uppercase', 
-                            textShadow: '0 0 30px rgba(0,0,0,1), 0 4px 20px rgba(0,0,0,0.95)', 
-                            fontWeight: 300 
-                          }}
-                        >
-                          {currentFrameData.description}
-                        </p>
-                      </motion.div>
-                    </AnimatePresence>
-                  </div>
+                        <div style={{ flex: 1, height: '1px', background: `${colors.editorialIvory}30` }} />
+                      </div>
 
-                  {/* Navigation Arrows */}
-                  <button 
-                    onClick={goToPrev} 
-                    className="absolute top-1/2 transform -translate-y-1/2 z-30 transition-all duration-300 hover:scale-110" 
-                    style={{ 
-                      left: isMobile ? '12px' : '20px',
-                      width: isMobile ? '38px' : '50px', 
-                      height: isMobile ? '38px' : '50px', 
-                      borderRadius: '50%', 
-                      border: '2px solid rgba(184, 134, 11, 0.45)', 
-                      background: 'rgba(0, 0, 0, 0.65)', 
-                      backdropFilter: 'blur(10px)', 
-                      display: 'flex', 
-                      alignItems: 'center', 
-                      justifyContent: 'center', 
-                      cursor: 'pointer', 
-                      color: 'rgba(184, 134, 11, 0.9)', 
-                      boxShadow: '0 0 20px rgba(0,0,0,0.8)' 
-                    }}
-                  >
-                    <ChevronLeft size={isMobile ? 20 : 28} />
-                  </button>
-                  <button 
-                    onClick={goToNext} 
-                    className="absolute top-1/2 transform -translate-y-1/2 z-30 transition-all duration-300 hover:scale-110" 
-                    style={{ 
-                      right: isMobile ? '12px' : '20px',
-                      width: isMobile ? '38px' : '50px', 
-                      height: isMobile ? '38px' : '50px', 
-                      borderRadius: '50%', 
-                      border: '2px solid rgba(184, 134, 11, 0.45)', 
-                      background: 'rgba(0, 0, 0, 0.65)', 
-                      backdropFilter: 'blur(10px)', 
-                      display: 'flex', 
-                      alignItems: 'center', 
-                      justifyContent: 'center', 
-                      cursor: 'pointer', 
-                      color: 'rgba(184, 134, 11, 0.9)', 
-                      boxShadow: '0 0 20px rgba(0,0,0,0.8)' 
-                    }}
-                  >
-                    <ChevronRight size={isMobile ? 20 : 28} />
-                  </button>
+                      {/* Subtitle */}
+                      <p 
+                        style={{ 
+                          fontSize: isMobile ? '9px' : '10px',
+                          fontWeight: 400,
+                          letterSpacing: '0.25em',
+                          lineHeight: '1.9',
+                          textTransform: 'uppercase',
+                          color: `${colors.editorialIvory}DD`,
+                          textShadow: '0 3px 20px rgba(0,0,0,0.95)',
+                          marginBottom: '4px',
+                        }}
+                      >
+                        {currentFrameData.subtitle}
+                      </p>
+                      <p 
+                        style={{ 
+                          fontSize: isMobile ? '9px' : '10px',
+                          fontWeight: 400,
+                          letterSpacing: '0.25em',
+                          lineHeight: '1.9',
+                          textTransform: 'uppercase',
+                          color: `${colors.editorialIvory}DD`,
+                          textShadow: '0 3px 20px rgba(0,0,0,0.95)',
+                        }}
+                      >
+                        {currentFrameData.description}
+                      </p>
+                    </motion.div>
+                  </AnimatePresence>
                 </div>
               </div>
             </div>
+          </motion.div>
 
-            {/* Next Preview */}
-            {!isMobile && (
-              <motion.div
-                className="relative cursor-pointer flex-shrink-0"
-                onClick={goToNext}
-                style={{
-                  width: '120px',
-                  height: '220px',
-                  borderRadius: '8px',
-                  overflow: 'hidden',
-                  border: '2px solid rgba(184, 134, 11, 0.25)',
-                  opacity: 0.4,
-                  background: 'rgba(0,0,0,0.5)',
-                }}
-                whileHover={{ opacity: 0.7, scale: 1.03 }}
-              >
-                <video autoPlay loop muted playsInline style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'brightness(0.5)' }}>
-                  <source src={isMobile && frames[(currentFrame + 1) % frames.length].mobileVideo ? frames[(currentFrame + 1) % frames.length].mobileVideo : frames[(currentFrame + 1) % frames.length].video} type="video/mp4" />
-                </video>
-              </motion.div>
-            )}
-          </div>
-
-          {/* RIGHT: Poetic Text */}
+          {/* Next Card (Right Side) */}
           {!isMobile && (
-            <div className="flex flex-col justify-center" style={{ minWidth: '200px', maxWidth: '200px' }}>
-              <motion.div 
-                initial={{ opacity: 0, x: 20 }} 
-                animate={{ opacity: 1, x: 0 }} 
-                transition={{ duration: 1, delay: 0.6 }}
+            <motion.div
+              key={`next-${currentFrame}`}
+              onClick={goToNext}
+              className="absolute cursor-pointer"
+              initial={{ opacity: 0, x: 100 }}
+              animate={{ opacity: 0.55, x: 0 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+              style={{
+                right: '-5px',
+                top: '180px',
+                width: '170px',
+                height: '350px',
+                transform: 'rotateY(-8deg) scale(0.75) translateZ(-100px)',
+                transformStyle: 'preserve-3d',
+                filter: 'brightness(0.5)',
+              }}
+            >
+              {/* Outer Frame */}
+              <div 
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                  border: `1px solid ${colors.darkGold}`,
+                  borderRadius: '13px',
+                  padding: '12px',
+                  boxShadow: '0 20px 60px rgba(0, 0, 0, 0.6)',
+                }}
               >
-                <p style={{ 
-                  fontSize: '11px', 
-                  letterSpacing: '0.3em', 
-                  textTransform: 'uppercase', 
-                  color: 'rgba(184, 134, 11, 0.5)', 
-                  lineHeight: '2.2', 
-                  fontWeight: 300 
-                }}>
-                  Every room<br />holds a story.<br />Every story,<br />a part of you.
-                </p>
-              </motion.div>
-            </div>
+                {/* Inner Frame */}
+                <div 
+                  className="absolute inset-3 overflow-hidden"
+                  style={{
+                    border: `1px solid rgba(185, 135, 61, 0.25)`,
+                    borderRadius: '5px',
+                  }}
+                >
+                  <video 
+                    autoPlay 
+                    loop 
+                    muted 
+                    playsInline 
+                    style={{ 
+                      width: '100%', 
+                      height: '100%', 
+                      objectFit: 'cover',
+                      display: 'block',
+                    }}
+                  >
+                    <source src={nextVideoSource} type="video/mp4" />
+                  </video>
+                  {/* Dark overlay */}
+                  <div 
+                    className="absolute inset-0"
+                    style={{
+                      background: 'rgba(0, 0, 0, 0.3)',
+                      mixBlendMode: 'multiply',
+                    }}
+                  />
+                </div>
+              </div>
+            </motion.div>
           )}
+
+          {/* Carousel Arrows */}
+          <button
+            onClick={goToPrev}
+            className="absolute z-30 transition-all duration-300"
+            style={{
+              left: isMobile ? '20px' : '155px',
+              top: isMobile ? '50%' : '403px',
+              transform: isMobile ? 'translateY(-50%)' : 'none',
+              width: '50px',
+              height: '50px',
+              borderRadius: '50%',
+              border: `1px solid ${colors.mutedGold}`,
+              background: 'transparent',
+              color: colors.paleGold,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              cursor: 'pointer',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.borderColor = colors.warmGold;
+              e.currentTarget.style.color = colors.editorialIvory;
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.borderColor = colors.mutedGold;
+              e.currentTarget.style.color = colors.paleGold;
+            }}
+          >
+            <ChevronLeft size={20} strokeWidth={1.5} />
+          </button>
+
+          <button
+            onClick={goToNext}
+            className="absolute z-30 transition-all duration-300"
+            style={{
+              right: isMobile ? '20px' : '155px',
+              top: isMobile ? '50%' : '403px',
+              transform: isMobile ? 'translateY(-50%)' : 'none',
+              width: '50px',
+              height: '50px',
+              borderRadius: '50%',
+              border: `1px solid ${colors.mutedGold}`,
+              background: 'transparent',
+              color: colors.paleGold,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              cursor: 'pointer',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.borderColor = colors.warmGold;
+              e.currentTarget.style.color = colors.editorialIvory;
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.borderColor = colors.mutedGold;
+              e.currentTarget.style.color = colors.paleGold;
+            }}
+          >
+            <ChevronRight size={20} strokeWidth={1.5} />
+          </button>
         </div>
       </div>
 
-      {/* Counter Pill */}
+      {/* Left Vertical Gallery Index */}
+      {!isMobile && (
+        <div 
+          className="absolute z-15"
+          style={{
+            left: '43px',
+            top: '575px',
+            width: '80px',
+          }}
+        >
+          {/* Vertical Timeline */}
+          <div 
+            style={{
+              position: 'absolute',
+              left: '0',
+              top: '0',
+              width: '1px',
+              height: '230px',
+              background: `linear-gradient(180deg, ${colors.darkGold}00 0%, ${colors.darkGold} 20%, ${colors.darkGold} 80%, ${colors.darkGold}00 100%)`,
+            }}
+          />
+          
+          {/* Numbers */}
+          <div className="flex flex-col">
+            {frames.map((_, index) => (
+              <motion.button
+                key={index}
+                onClick={() => goToFrame(index)}
+                className="relative flex items-center transition-all duration-300"
+                style={{
+                  fontSize: '11px',
+                  fontWeight: 400,
+                  letterSpacing: '0.16em',
+                  lineHeight: '34px',
+                  color: index === currentFrame ? colors.paleGold : 'rgba(185, 135, 61, 0.4)',
+                  cursor: 'pointer',
+                  paddingLeft: '20px',
+                }}
+              >
+                {/* Active indicator */}
+                {index === currentFrame && (
+                  <>
+                    <motion.div
+                      layoutId="activeIndicator"
+                      style={{
+                        position: 'absolute',
+                        left: '0',
+                        top: '50%',
+                        transform: 'translateY(-50%)',
+                        width: '44px',
+                        height: '1px',
+                        background: colors.warmGold,
+                      }}
+                      transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                    />
+                    <div 
+                      style={{
+                        position: 'absolute',
+                        left: '-4px',
+                        top: '50%',
+                        transform: 'translateY(-50%)',
+                        width: '7px',
+                        height: '7px',
+                        borderRadius: '50%',
+                        background: colors.warmGold,
+                        boxShadow: `0 0 8px ${colors.warmGold}60`,
+                      }}
+                    />
+                  </>
+                )}
+                {String(index + 1).padStart(2, '0')}
+              </motion.button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Bottom Center Counter */}
       <div 
-        className="absolute left-1/2 transform -translate-x-1/2 z-40" 
-        style={{ bottom: isMobile ? '60px' : '80px' }}
+        className="absolute left-1/2 transform -translate-x-1/2 z-10"
+        style={{ top: isMobile ? 'auto' : '655px', bottom: isMobile ? '140px' : 'auto' }}
       >
-        <div style={{ 
-          padding: isMobile ? '7px 20px' : '9px 26px', 
-          borderRadius: '28px', 
-          border: '1px solid rgba(184, 134, 11, 0.4)', 
-          background: 'rgba(0, 0, 0, 0.75)', 
-          backdropFilter: 'blur(14px)', 
-          fontSize: isMobile ? '11px' : '13px', 
-          letterSpacing: '0.28em', 
-          color: 'rgba(184, 134, 11, 0.9)', 
-          fontWeight: 500, 
-          boxShadow: '0 4px 24px rgba(0,0,0,0.7)' 
-        }}>
+        <div 
+          style={{
+            width: '90px',
+            height: '35px',
+            border: `1px solid ${colors.mutedGold}`,
+            borderRadius: '18px',
+            background: 'transparent',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: '11px',
+            letterSpacing: '0.15em',
+            color: colors.warmGold,
+            fontWeight: 500,
+          }}
+        >
           {String(currentFrame + 1).padStart(2, '0')} / {String(frames.length).padStart(2, '0')}
         </div>
       </div>
 
-      {/* Scroll Prompt */}
-      <motion.div 
-        className="absolute left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2 pointer-events-none" 
-        style={{ bottom: isMobile ? '20px' : '30px' }}
-        initial={{ opacity: 0, y: -10 }} 
-        animate={{ opacity: 1, y: 0 }} 
+      {/* Scroll to Enter */}
+      <motion.div
+        className="absolute left-1/2 transform -translate-x-1/2 flex flex-col items-center pointer-events-none"
+        style={{ top: isMobile ? 'auto' : '710px', bottom: isMobile ? '60px' : 'auto' }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
         transition={{ duration: 1, delay: 1.5 }}
       >
-        <p style={{ 
-          fontSize: '9px', 
-          letterSpacing: '0.35em', 
-          textTransform: 'uppercase', 
-          color: 'rgba(184, 134, 11, 0.5)', 
-          fontWeight: 400 
-        }}>
-          Scroll to enter
-        </p>
-        <motion.div 
-          animate={{ y: [0, 8, 0] }} 
-          transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
+        <p 
+          style={{
+            fontSize: '9px',
+            letterSpacing: '0.27em',
+            textTransform: 'uppercase',
+            color: colors.warmGold,
+            fontWeight: 400,
+            marginBottom: '15px',
+          }}
         >
-          <div style={{ 
-            width: '36px', 
-            height: '36px', 
-            borderRadius: '50%', 
-            border: '1px solid rgba(184, 134, 11, 0.4)', 
-            display: 'flex', 
-            alignItems: 'center', 
-            justifyContent: 'center', 
-            color: 'rgba(184, 134, 11, 0.8)', 
-            background: 'rgba(0,0,0,0.4)' 
-          }}>
-            <ChevronDown size={16} />
-          </div>
+          SCROLL TO ENTER
+        </p>
+        
+        {/* Vertical line */}
+        <div 
+          style={{
+            width: '1px',
+            height: '27px',
+            background: colors.mutedGold,
+            marginBottom: '8px',
+          }}
+        />
+        
+        {/* Circular arrow */}
+        <motion.div
+          animate={{ y: [0, 8, 0] }}
+          transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
+          style={{
+            width: '39px',
+            height: '39px',
+            borderRadius: '50%',
+            border: `1px solid ${colors.warmGold}`,
+            background: 'transparent',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: colors.paleGold,
+          }}
+        >
+          <ChevronDown size={16} strokeWidth={1.5} />
         </motion.div>
       </motion.div>
+
+      {/* Right Editorial Statement */}
+      {!isMobile && (
+        <div 
+          className="absolute z-15 flex items-start gap-4"
+          style={{
+            right: '60px',
+            top: '675px',
+            width: '190px',
+          }}
+        >
+          {/* Vertical divider */}
+          <div 
+            style={{
+              width: '1px',
+              height: '120px',
+              background: `linear-gradient(180deg, transparent 0%, ${colors.warmGold}80 20%, ${colors.warmGold}80 80%, transparent 100%)`,
+            }}
+          />
+          
+          {/* Statement */}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1, delay: 0.8 }}
+          >
+            <p 
+              style={{
+                fontFamily: "'Cormorant Garamond', 'Playfair Display', serif",
+                fontSize: '12px',
+                lineHeight: '2.1',
+                letterSpacing: '0.25em',
+                textTransform: 'uppercase',
+                color: `${colors.editorialIvory}CC`,
+                fontWeight: 400,
+              }}
+            >
+              EVERY ROOM<br />
+              HOLDS A STORY.<br />
+              EVERY STORY,<br />
+              A PART OF YOU.
+            </p>
+          </motion.div>
+        </div>
+      )}
+
+      {/* Subtle Floor Reflection */}
+      <div 
+        className="absolute left-1/2 transform -translate-x-1/2 pointer-events-none"
+        style={{
+          bottom: '200px',
+          width: isMobile ? '65vw' : '65vw',
+          maxWidth: '650px',
+          height: '120px',
+          opacity: 0.08,
+          background: 'linear-gradient(180deg, rgba(185, 135, 61, 0.15) 0%, transparent 100%)',
+          filter: 'blur(40px)',
+          maskImage: 'linear-gradient(180deg, black 0%, transparent 100%)',
+        }}
+      />
     </div>
   );
 }
