@@ -171,7 +171,7 @@ function CinematicHero() {
           <div 
             className="flex justify-center"
             style={{
-              height: '80px',
+              height: '60px',
               flexShrink: 0,
             }}
           >
@@ -192,7 +192,7 @@ function CinematicHero() {
               <div 
                 style={{
                   width: '2px',
-                  height: '80px',
+                  height: '60px',
                   background: `linear-gradient(180deg, ${colors.warmGold} 0%, ${colors.darkGold} 100%)`,
                   opacity: 0.7,
                 }}
@@ -222,9 +222,9 @@ function CinematicHero() {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
               style={{
-                width: '140px',
+                width: '120px',
                 height: '85%',
-                maxHeight: '420px',
+                maxHeight: '280px',
                 transform: 'rotateY(6deg) scale(0.85) translateZ(-80px)',
                 transformStyle: 'preserve-3d',
                 filter: 'brightness(0.6)',
@@ -268,35 +268,7 @@ function CinematicHero() {
             </motion.div>
           )}
 
-          {/* Left Arrow */}
-          {!isMobile && (
-            <button
-              onClick={goToPrev}
-              className="flex-shrink-0 transition-all duration-300"
-              style={{
-                width: '44px',
-                height: '44px',
-                borderRadius: '50%',
-                border: `1px solid ${colors.mutedGold}`,
-                background: 'transparent',
-                color: colors.paleGold,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                cursor: 'pointer',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = colors.warmGold;
-                e.currentTarget.style.background = 'rgba(185, 135, 61, 0.05)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = colors.mutedGold;
-                e.currentTarget.style.background = 'transparent';
-              }}
-            >
-              <ChevronLeft size={18} strokeWidth={1.5} />
-            </button>
-          )}
+          {/* Left Arrow - REMOVED */}
 
           {/* Center Active Card */}
           <motion.div
@@ -306,10 +278,10 @@ function CinematicHero() {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
             style={{
-              width: isMobile ? '100%' : '700px',
+              width: isMobile ? '100%' : '750px',
               height: '100%',
-              maxWidth: '900px',
-              maxHeight: '520px',
+              maxWidth: '950px',
+              maxHeight: '560px',
             }}
           >
             {/* Outer Frame */}
@@ -446,35 +418,7 @@ function CinematicHero() {
             </div>
           </motion.div>
 
-          {/* Right Arrow */}
-          {!isMobile && (
-            <button
-              onClick={goToNext}
-              className="flex-shrink-0 transition-all duration-300"
-              style={{
-                width: '44px',
-                height: '44px',
-                borderRadius: '50%',
-                border: `1px solid ${colors.mutedGold}`,
-                background: 'transparent',
-                color: colors.paleGold,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                cursor: 'pointer',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = colors.warmGold;
-                e.currentTarget.style.background = 'rgba(185, 135, 61, 0.05)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = colors.mutedGold;
-                e.currentTarget.style.background = 'transparent';
-              }}
-            >
-              <ChevronRight size={18} strokeWidth={1.5} />
-            </button>
-          )}
+          {/* Right Arrow - REMOVED */}
 
           {/* Right Side Card */}
           {!isMobile && (
@@ -487,9 +431,9 @@ function CinematicHero() {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
               style={{
-                width: '140px',
+                width: '120px',
                 height: '85%',
-                maxHeight: '420px',
+                maxHeight: '280px',
                 transform: 'rotateY(-6deg) scale(0.85) translateZ(-80px)',
                 transformStyle: 'preserve-3d',
                 filter: 'brightness(0.5)',
@@ -538,18 +482,18 @@ function CinematicHero() {
         <div 
           className="flex items-end justify-between"
           style={{
-            height: isMobile ? '120px' : '140px',
+            height: isMobile ? '100px' : '100px',
             flexShrink: 0,
             gap: '20px',
           }}
         >
           
-          {/* Left: Gallery Index */}
+          {/* Left: Gallery Index - Compact */}
           {!isMobile && (
             <div 
               className="flex items-end"
               style={{
-                width: '100px',
+                width: '70px',
                 height: '100%',
               }}
             >
@@ -560,7 +504,7 @@ function CinematicHero() {
                     left: '0',
                     bottom: '0',
                     width: '1px',
-                    height: '100%',
+                    height: '180px',
                     background: `linear-gradient(180deg, ${colors.darkGold}00 0%, ${colors.darkGold} 30%, ${colors.darkGold} 70%, ${colors.darkGold}00 100%)`,
                   }}
                 />
@@ -572,12 +516,12 @@ function CinematicHero() {
                       onClick={() => goToFrame(index)}
                       className="relative flex items-center transition-all duration-300"
                       style={{
-                        fontSize: '10px',
-                        letterSpacing: '0.16em',
-                        lineHeight: '28px',
+                        fontSize: '9px',
+                        letterSpacing: '0.14em',
+                        lineHeight: '24px',
                         color: index === currentFrame ? colors.paleGold : 'rgba(185, 135, 61, 0.4)',
                         cursor: 'pointer',
-                        paddingLeft: '16px',
+                        paddingLeft: '14px',
                       }}
                     >
                       {index === currentFrame && (
@@ -589,7 +533,7 @@ function CinematicHero() {
                               left: '0',
                               top: '50%',
                               transform: 'translateY(-50%)',
-                              width: '34px',
+                              width: '28px',
                               height: '1px',
                               background: colors.warmGold,
                             }}
@@ -618,36 +562,16 @@ function CinematicHero() {
             </div>
           )}
 
-          {/* Center: Counter & Scroll Prompt */}
+          {/* Center: Scroll Prompt Only - Compact */}
           <div 
-            className="flex flex-col items-center gap-3"
+            className="flex flex-col items-center gap-2"
             style={{
               flex: 1,
             }}
           >
-            {/* Counter */}
-            <div 
-              style={{
-                width: '80px',
-                height: '30px',
-                border: `1px solid ${colors.mutedGold}`,
-                borderRadius: '15px',
-                background: 'transparent',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: '10px',
-                letterSpacing: '0.15em',
-                color: colors.warmGold,
-                fontWeight: 500,
-              }}
-            >
-              {String(currentFrame + 1).padStart(2, '0')} / {String(frames.length).padStart(2, '0')}
-            </div>
-
             {/* Scroll Prompt */}
             <motion.div
-              className="flex flex-col items-center gap-2 pointer-events-none"
+              className="flex flex-col items-center gap-1 pointer-events-none"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 1, delay: 1.5 }}
@@ -656,19 +580,19 @@ function CinematicHero() {
                 <>
                   <p 
                     style={{
-                      fontSize: '8px',
-                      letterSpacing: '0.25em',
+                      fontSize: '7px',
+                      letterSpacing: '0.2em',
                       textTransform: 'uppercase',
                       color: colors.warmGold,
                     }}
                   >
-                    SCROLL TO ENTER
+                    SCROLL
                   </p>
                   
                   <div 
                     style={{
                       width: '1px',
-                      height: '18px',
+                      height: '14px',
                       background: colors.mutedGold,
                     }}
                   />
@@ -676,11 +600,11 @@ function CinematicHero() {
               )}
               
               <motion.div
-                animate={{ y: [0, 6, 0] }}
+                animate={{ y: [0, 5, 0] }}
                 transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
                 style={{
-                  width: '32px',
-                  height: '32px',
+                  width: '28px',
+                  height: '28px',
                   borderRadius: '50%',
                   border: `1px solid ${colors.warmGold}`,
                   background: 'transparent',
@@ -690,24 +614,24 @@ function CinematicHero() {
                   color: colors.paleGold,
                 }}
               >
-                <ChevronDown size={14} strokeWidth={1.5} />
+                <ChevronDown size={12} strokeWidth={1.5} />
               </motion.div>
             </motion.div>
           </div>
 
-          {/* Right: Editorial Statement */}
+          {/* Right: Editorial Statement - Pulled Left */}
           {!isMobile && (
             <div 
               className="flex items-end gap-2"
               style={{
-                width: '140px',
+                width: '120px',
                 height: '100%',
               }}
             >
               <div 
                 style={{
                   width: '1px',
-                  height: '70%',
+                  height: '60%',
                   background: `linear-gradient(180deg, transparent 0%, ${colors.warmGold}80 30%, ${colors.warmGold}80 70%, transparent 100%)`,
                 }}
               />
@@ -721,9 +645,9 @@ function CinematicHero() {
                 <p 
                   style={{
                     fontFamily: "'Cormorant Garamond', 'Playfair Display', serif",
-                    fontSize: '8px',
-                    lineHeight: '1.6',
-                    letterSpacing: '0.18em',
+                    fontSize: '7px',
+                    lineHeight: '1.5',
+                    letterSpacing: '0.16em',
                     textTransform: 'uppercase',
                     color: `${colors.editorialIvory}CC`,
                     fontWeight: 400,
