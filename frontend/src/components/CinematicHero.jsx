@@ -4,8 +4,8 @@ import { ChevronDown } from 'lucide-react';
 import EsoLogo from './EsoLogo';
 
 /**
- * Cinematic Hero - Premium Nostalgic Gallery
- * Vintage film projection aesthetic with elegant proportions
+ * Cinematic Hero - Premium Museum Gallery
+ * Clean, organized, elegant proportions with proper spacing
  */
 function CinematicHero() {
   const containerRef = useRef(null);
@@ -126,18 +126,6 @@ function CinematicHero() {
   const prevVideoSource = isMobile && prevFrameData.mobileVideo ? prevFrameData.mobileVideo : prevFrameData.video;
   const nextVideoSource = isMobile && nextFrameData.mobileVideo ? nextFrameData.mobileVideo : nextFrameData.video;
 
-  // Nostalgic vintage color palette
-  const colors = {
-    pageBlack: '#0A0908',
-    warmSepia: '#2B2118',
-    vintageGold: '#C9A063',
-    paleGold: '#E6C896',
-    antiqueBronze: '#8B6F47',
-    creamIvory: '#F2E8CF',
-    deepBrown: '#1C1410',
-    mutedGold: 'rgba(201, 160, 99, 0.7)',
-  };
-
   return (
     <div 
       ref={containerRef} 
@@ -146,130 +134,87 @@ function CinematicHero() {
         height: '100vh',
         fontFamily: 'var(--font-body)', 
         overflow: 'hidden',
-        background: `linear-gradient(180deg, ${colors.pageBlack} 0%, ${colors.deepBrown} 100%)`,
+        background: '#000000',
       }}
     >
-      {/* Vintage Film Grain Texture Overlay */}
-      <div 
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E")`,
-          opacity: 0.4,
-          mixBlendMode: 'overlay',
-        }}
-      />
 
-      {/* Warm Atmospheric Glow */}
+      {/* Main Gallery Container - Clean & Organized */}
       <div 
-        className="absolute inset-0 pointer-events-none"
+        className="absolute inset-0 flex flex-col"
         style={{
-          background: `radial-gradient(ellipse 50% 40% at 50% 50%, ${colors.warmSepia}20 0%, transparent 60%)`,
-        }}
-      />
-
-      {/* Main Gallery Container */}
-      <div 
-        className="absolute inset-0 flex flex-col items-center justify-center"
-        style={{
-          padding: isMobile ? '80px 16px 60px' : '90px 40px 70px',
-          gap: isMobile ? '12px' : '16px',
+          padding: isMobile ? '70px 20px 40px' : '80px 60px 50px',
         }}
       >
         
-        {/* Ornate Suspension Hook */}
+        {/* Elegant Suspension Cable */}
         {!isMobile && (
           <div 
             className="flex flex-col items-center"
             style={{
-              height: '50px',
-              flexShrink: 0,
+              height: '40px',
+              marginBottom: '20px',
             }}
           >
-            {/* Decorative ceiling mount */}
             <div 
               style={{
-                width: '18px',
-                height: '18px',
+                width: '12px',
+                height: '12px',
                 borderRadius: '50%',
-                border: `2px solid ${colors.vintageGold}`,
-                background: `radial-gradient(circle at 30% 30%, ${colors.paleGold}40, ${colors.antiqueBronze})`,
-                boxShadow: `0 0 15px ${colors.vintageGold}30, inset 0 2px 4px rgba(0,0,0,0.5)`,
-                marginBottom: '4px',
+                border: '2px solid rgba(255, 255, 255, 0.2)',
+                background: 'radial-gradient(circle at 30% 30%, rgba(255,255,255,0.15), rgba(255,255,255,0.05))',
+                marginBottom: '2px',
               }}
             />
-            {/* Elegant chain/cable */}
             <div 
               style={{
-                width: '2px',
-                height: '46px',
-                background: `linear-gradient(180deg, ${colors.vintageGold} 0%, ${colors.antiqueBronze} 100%)`,
-                boxShadow: `0 0 8px ${colors.vintageGold}20`,
-                opacity: 0.85,
+                width: '1px',
+                height: '38px',
+                background: 'linear-gradient(180deg, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0.08) 100%)',
               }}
             />
           </div>
         )}
 
-        {/* Gallery Stage with Perspective */}
+        {/* Gallery Stage - Perfectly Centered */}
         <div 
-          className="flex items-center justify-center w-full"
+          className="flex items-center justify-center flex-1"
           style={{
-            flex: 1,
+            gap: isMobile ? '0' : '40px',
             minHeight: 0,
-            perspective: '2000px',
-            perspectiveOrigin: 'center center',
-            gap: isMobile ? '0' : '20px',
           }}
         >
-          {/* Left Side Frame - Portrait Vintage Photo */}
+          {/* Left Preview Frame */}
           {!isMobile && (
             <motion.div
               key={`prev-${currentFrame}`}
               onClick={goToPrev}
               className="cursor-pointer flex-shrink-0"
-              initial={{ opacity: 0, rotateY: 15 }}
-              animate={{ opacity: 0.5, rotateY: 12 }}
-              transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 0.4, x: 0 }}
+              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
               style={{
-                width: '160px',
+                width: '140px',
                 height: '240px',
-                transform: 'rotateY(12deg) translateZ(-120px)',
-                transformStyle: 'preserve-3d',
-                filter: 'brightness(0.5) sepia(0.3)',
               }}
             >
-              {/* Vintage frame with worn edges */}
               <div 
                 style={{
                   width: '100%',
                   height: '100%',
-                  padding: '14px',
-                  background: `linear-gradient(135deg, ${colors.antiqueBronze} 0%, ${colors.warmSepia} 50%, ${colors.antiqueBronze} 100%)`,
-                  borderRadius: '3px',
-                  boxShadow: `
-                    0 8px 32px rgba(0, 0, 0, 0.6),
-                    inset 0 0 20px rgba(0, 0, 0, 0.4),
-                    inset 0 2px 4px rgba(255, 255, 255, 0.1)
-                  `,
-                  border: `1px solid ${colors.antiqueBronze}`,
+                  padding: '8px',
+                  background: 'linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.04) 100%)',
+                  borderRadius: '4px',
+                  border: '1px solid rgba(255,255,255,0.1)',
                 }}
               >
-                <div 
-                  className="w-full h-full overflow-hidden"
-                  style={{
-                    border: `3px solid ${colors.warmSepia}`,
-                    boxShadow: 'inset 0 0 20px rgba(0, 0, 0, 0.5)',
-                  }}
-                >
+                <div className="w-full h-full overflow-hidden" style={{ borderRadius: '2px' }}>
                   <video 
                     autoPlay 
                     loop 
                     muted 
                     playsInline 
                     className="w-full h-full object-cover"
-                    style={{
-                      filter: 'sepia(0.15) contrast(1.1)',
-                    }}
+                    style={{ filter: 'brightness(0.6)' }}
                   >
                     <source src={prevVideoSource} type="video/mp4" />
                   </video>
@@ -278,63 +223,40 @@ function CinematicHero() {
             </motion.div>
           )}
 
-          {/* Center Main Frame - Premium Responsive */}
+          {/* Main Frame - Premium & Spacious */}
           <motion.div
             key={`active-${currentFrame}`}
             className="relative flex-shrink-0"
-            initial={{ opacity: 0, scale: 0.96 }}
+            initial={{ opacity: 0, scale: 0.98 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
             style={{
-              width: isMobile ? '92%' : 'clamp(680px, 62vw, 880px)',
-              height: isMobile ? 'calc((92vw - 32px) * 0.48)' : 'clamp(340px, 30vw, 440px)',
-              maxWidth: '880px',
+              width: isMobile ? '100%' : 'min(65vw, 900px)',
+              height: isMobile ? 'auto' : 'min(52vh, 520px)',
+              aspectRatio: isMobile ? '16/9' : undefined,
             }}
           >
-            {/* Ornate vintage frame - museum quality */}
             <div 
               style={{
                 width: '100%',
                 height: '100%',
-                padding: isMobile ? '16px' : '20px',
-                background: `linear-gradient(135deg, 
-                  ${colors.antiqueBronze} 0%, 
-                  ${colors.warmSepia} 25%, 
-                  ${colors.antiqueBronze} 50%, 
-                  ${colors.warmSepia} 75%, 
-                  ${colors.antiqueBronze} 100%
-                )`,
-                borderRadius: '6px',
-                boxShadow: `
-                  0 20px 80px rgba(0, 0, 0, 0.8),
-                  0 0 0 1px ${colors.vintageGold}40,
-                  inset 0 0 40px rgba(0, 0, 0, 0.5),
-                  inset 0 3px 8px rgba(255, 255, 255, 0.1),
-                  inset 0 -3px 8px rgba(0, 0, 0, 0.5)
-                `,
-                border: `2px solid ${colors.antiqueBronze}`,
+                padding: isMobile ? '12px' : '16px',
+                background: 'linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.06) 100%)',
+                borderRadius: '8px',
+                border: '1px solid rgba(255,255,255,0.15)',
+                boxShadow: '0 20px 60px rgba(0,0,0,0.5)',
               }}
             >
-              {/* Inner mat/border */}
               <div 
                 style={{
                   width: '100%',
                   height: '100%',
-                  padding: isMobile ? '8px' : '12px',
-                  background: `linear-gradient(180deg, ${colors.deepBrown}CC 0%, ${colors.warmSepia}DD 100%)`,
-                  borderRadius: '2px',
-                  boxShadow: 'inset 0 0 30px rgba(0, 0, 0, 0.7)',
+                  padding: isMobile ? '6px' : '10px',
+                  background: 'rgba(0,0,0,0.3)',
+                  borderRadius: '4px',
                 }}
               >
-                {/* Film/photo area */}
-                <div 
-                  className="w-full h-full overflow-hidden relative"
-                  style={{
-                    border: `1px solid ${colors.antiqueBronze}60`,
-                    boxShadow: 'inset 0 0 20px rgba(0, 0, 0, 0.6)',
-                  }}
-                >
-                  {/* Video */}
+                <div className="w-full h-full overflow-hidden relative" style={{ borderRadius: '2px' }}>
                   <AnimatePresence mode="wait">
                     <motion.video
                       key={currentFrame}
@@ -345,110 +267,68 @@ function CinematicHero() {
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}
-                      transition={{ duration: 1 }}
+                      transition={{ duration: 0.8 }}
                       className="w-full h-full object-cover"
-                      style={{
-                        filter: 'sepia(0.08) contrast(1.05) brightness(0.95)',
-                      }}
                     >
                       <source src={videoSource} type="video/mp4" />
                     </motion.video>
                   </AnimatePresence>
 
-                  {/* Vintage film vignette */}
+                  {/* Content Overlay */}
                   <div 
-                    className="absolute inset-0 pointer-events-none"
-                    style={{
-                      background: 'radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.3) 100%)',
-                      mixBlendMode: 'multiply',
-                    }}
-                  />
-
-                  {/* Content overlay */}
-                  <div 
-                    className="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none"
-                    style={{ padding: isMobile ? '16px' : '32px' }}
+                    className="absolute inset-0 flex flex-col items-center justify-center text-center"
+                    style={{ padding: isMobile ? '20px' : '40px' }}
                   >
                     <AnimatePresence mode="wait">
                       <motion.div 
                         key={currentFrame}
-                        initial={{ opacity: 0, y: 15 }} 
+                        initial={{ opacity: 0, y: 20 }} 
                         animate={{ opacity: 1, y: 0 }} 
-                        exit={{ opacity: 0, y: -15 }} 
-                        transition={{ duration: 1 }}
+                        exit={{ opacity: 0, y: -20 }} 
+                        transition={{ duration: 0.8 }}
                       >
                         {currentFrame === 0 && (
                           <EsoLogo 
-                            className="mb-3 w-auto" 
+                            className="mb-4" 
                             style={{ 
-                              height: isMobile ? '24px' : '32px',
-                              filter: 'drop-shadow(0 0 20px rgba(0,0,0,0.9))',
-                              opacity: 0.9,
+                              height: isMobile ? '28px' : '36px',
+                              filter: 'drop-shadow(0 4px 20px rgba(0,0,0,0.8))',
                             }} 
                           />
                         )}
                         
                         <h1 
                           style={{ 
-                            fontFamily: "'Cormorant Garamond', 'Playfair Display', Georgia, serif",
-                            fontSize: isMobile ? '22px' : 'clamp(28px, 2.8vw, 38px)',
+                            fontFamily: "'Cormorant Garamond', Georgia, serif",
+                            fontSize: isMobile ? '26px' : 'clamp(32px, 3.5vw, 48px)',
                             fontWeight: 600,
-                            letterSpacing: '0.18em',
+                            letterSpacing: '0.2em',
                             textTransform: 'uppercase',
-                            color: colors.creamIvory,
-                            marginBottom: '12px',
-                            textShadow: `
-                              0 2px 4px rgba(0,0,0,0.8),
-                              0 4px 12px rgba(0,0,0,0.6),
-                              0 0 20px rgba(0,0,0,0.5)
-                            `,
+                            color: '#FFFFFF',
+                            marginBottom: '16px',
+                            textShadow: '0 4px 20px rgba(0,0,0,0.9)',
                           }}
                         >
                           {currentFrameData.title}
                         </h1>
 
-                        {/* Vintage ornamental divider */}
-                        <div 
-                          className="flex items-center justify-center mb-3"
-                          style={{ width: '100px', margin: '0 auto 10px' }}
-                        >
-                          <div style={{ flex: 1, height: '1px', background: `${colors.vintageGold}40` }} />
-                          <div style={{ 
-                            width: '4px', 
-                            height: '4px', 
-                            borderRadius: '50%', 
-                            background: colors.vintageGold,
-                            margin: '0 8px',
-                            boxShadow: `0 0 8px ${colors.vintageGold}60`,
-                          }} />
-                          <div style={{ flex: 1, height: '1px', background: `${colors.vintageGold}40` }} />
+                        <div className="flex items-center justify-center mb-4" style={{ gap: '12px' }}>
+                          <div style={{ width: '40px', height: '1px', background: 'rgba(255,255,255,0.3)' }} />
+                          <div style={{ width: '3px', height: '3px', borderRadius: '50%', background: 'rgba(255,255,255,0.6)' }} />
+                          <div style={{ width: '40px', height: '1px', background: 'rgba(255,255,255,0.3)' }} />
                         </div>
 
                         <p 
                           style={{ 
-                            fontSize: isMobile ? '10px' : 'clamp(10px, 1vw, 12px)',
-                            letterSpacing: '0.28em',
+                            fontSize: isMobile ? '11px' : 'clamp(11px, 1.1vw, 13px)',
+                            letterSpacing: '0.25em',
                             lineHeight: '1.8',
                             textTransform: 'uppercase',
-                            color: colors.creamIvory,
-                            textShadow: '0 2px 8px rgba(0,0,0,0.8)',
-                            marginBottom: '4px',
-                            fontWeight: 400,
+                            color: 'rgba(255,255,255,0.9)',
+                            textShadow: '0 2px 10px rgba(0,0,0,0.8)',
                           }}
                         >
-                          {currentFrameData.subtitle}
-                        </p>
-                        <p 
-                          style={{ 
-                            fontSize: isMobile ? '10px' : 'clamp(10px, 1vw, 12px)',
-                            letterSpacing: '0.28em',
-                            lineHeight: '1.8',
-                            textTransform: 'uppercase',
-                            color: `${colors.creamIvory}DD`,
-                            textShadow: '0 2px 8px rgba(0,0,0,0.8)',
-                            fontWeight: 400,
-                          }}
-                        >
+                          {currentFrameData.subtitle}<br />
                           {currentFrameData.description}
                         </p>
                       </motion.div>
@@ -459,54 +339,38 @@ function CinematicHero() {
             </div>
           </motion.div>
 
-          {/* Right Side Frame - Portrait Vintage Photo */}
+          {/* Right Preview Frame */}
           {!isMobile && (
             <motion.div
               key={`next-${currentFrame}`}
               onClick={goToNext}
               className="cursor-pointer flex-shrink-0"
-              initial={{ opacity: 0, rotateY: -15 }}
-              animate={{ opacity: 0.45, rotateY: -12 }}
-              transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 0.4, x: 0 }}
+              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
               style={{
-                width: '160px',
+                width: '140px',
                 height: '240px',
-                transform: 'rotateY(-12deg) translateZ(-120px)',
-                transformStyle: 'preserve-3d',
-                filter: 'brightness(0.45) sepia(0.35)',
               }}
             >
               <div 
                 style={{
                   width: '100%',
                   height: '100%',
-                  padding: '14px',
-                  background: `linear-gradient(135deg, ${colors.antiqueBronze} 0%, ${colors.warmSepia} 50%, ${colors.antiqueBronze} 100%)`,
-                  borderRadius: '3px',
-                  boxShadow: `
-                    0 8px 32px rgba(0, 0, 0, 0.6),
-                    inset 0 0 20px rgba(0, 0, 0, 0.4),
-                    inset 0 2px 4px rgba(255, 255, 255, 0.1)
-                  `,
-                  border: `1px solid ${colors.antiqueBronze}`,
+                  padding: '8px',
+                  background: 'linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.04) 100%)',
+                  borderRadius: '4px',
+                  border: '1px solid rgba(255,255,255,0.1)',
                 }}
               >
-                <div 
-                  className="w-full h-full overflow-hidden"
-                  style={{
-                    border: `3px solid ${colors.warmSepia}`,
-                    boxShadow: 'inset 0 0 20px rgba(0, 0, 0, 0.5)',
-                  }}
-                >
+                <div className="w-full h-full overflow-hidden" style={{ borderRadius: '2px' }}>
                   <video 
                     autoPlay 
                     loop 
                     muted 
                     playsInline 
                     className="w-full h-full object-cover"
-                    style={{
-                      filter: 'sepia(0.2) contrast(1.1)',
-                    }}
+                    style={{ filter: 'brightness(0.6)' }}
                   >
                     <source src={nextVideoSource} type="video/mp4" />
                   </video>
@@ -516,160 +380,120 @@ function CinematicHero() {
           )}
         </div>
 
-        {/* Bottom Navigation - Vintage Typography */}
+        {/* Bottom Navigation - Clean & Organized */}
         <div 
           className="flex items-end justify-between w-full"
           style={{
-            height: '80px',
-            flexShrink: 0,
-            maxWidth: '1200px',
-            gap: '20px',
+            height: '70px',
+            marginTop: '20px',
+            maxWidth: '1400px',
+            marginLeft: 'auto',
+            marginRight: 'auto',
           }}
         >
           {/* Left: Gallery Index */}
           {!isMobile && (
-            <div className="flex items-end" style={{ width: '60px' }}>
-              <div className="relative">
-                <div 
-                  style={{
-                    position: 'absolute',
-                    left: '0',
-                    bottom: '0',
-                    width: '1px',
-                    height: '160px',
-                    background: `linear-gradient(180deg, transparent 0%, ${colors.vintageGold}40 30%, ${colors.vintageGold}40 70%, transparent 100%)`,
-                  }}
-                />
-                
-                <div className="flex flex-col">
-                  {frames.map((_, index) => (
-                    <motion.button
-                      key={index}
-                      onClick={() => goToFrame(index)}
-                      className="relative flex items-center transition-all duration-300"
-                      style={{
-                        fontSize: '9px',
-                        fontWeight: index === currentFrame ? 600 : 400,
-                        letterSpacing: '0.12em',
-                        lineHeight: '22px',
-                        color: index === currentFrame ? colors.paleGold : `${colors.vintageGold}60`,
-                        cursor: 'pointer',
-                        paddingLeft: '14px',
-                      }}
-                    >
-                      {index === currentFrame && (
-                        <>
-                          <motion.div
-                            layoutId="indicator"
-                            style={{
-                              position: 'absolute',
-                              left: '0',
-                              top: '50%',
-                              transform: 'translateY(-50%)',
-                              width: '26px',
-                              height: '1px',
-                              background: colors.vintageGold,
-                              boxShadow: `0 0 6px ${colors.vintageGold}60`,
-                            }}
-                            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                          />
-                          <div 
-                            style={{
-                              position: 'absolute',
-                              left: '-3px',
-                              top: '50%',
-                              transform: 'translateY(-50%)',
-                              width: '5px',
-                              height: '5px',
-                              borderRadius: '50%',
-                              background: colors.vintageGold,
-                              boxShadow: `0 0 8px ${colors.vintageGold}80`,
-                            }}
-                          />
-                        </>
-                      )}
-                      {String(index + 1).padStart(2, '0')}
-                    </motion.button>
-                  ))}
-                </div>
+            <div className="flex items-end" style={{ width: '80px' }}>
+              <div className="flex flex-col gap-0.5">
+                {frames.map((_, index) => (
+                  <motion.button
+                    key={index}
+                    onClick={() => goToFrame(index)}
+                    className="relative flex items-center transition-all duration-300"
+                    style={{
+                      fontSize: '10px',
+                      fontWeight: index === currentFrame ? 600 : 400,
+                      letterSpacing: '0.15em',
+                      lineHeight: '26px',
+                      color: index === currentFrame ? '#FFFFFF' : 'rgba(255,255,255,0.35)',
+                      cursor: 'pointer',
+                      paddingLeft: '20px',
+                    }}
+                  >
+                    {index === currentFrame && (
+                      <motion.div
+                        layoutId="indicator"
+                        style={{
+                          position: 'absolute',
+                          left: '0',
+                          top: '50%',
+                          transform: 'translateY(-50%)',
+                          width: '14px',
+                          height: '1px',
+                          background: 'rgba(255,255,255,0.8)',
+                        }}
+                        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                      />
+                    )}
+                    {String(index + 1).padStart(2, '0')}
+                  </motion.button>
+                ))}
               </div>
             </div>
           )}
 
           {/* Center: Scroll Indicator */}
           <motion.div
-            className="flex flex-col items-center gap-1 pointer-events-none"
+            className="flex flex-col items-center gap-2"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1.5, delay: 2 }}
             style={{ flex: 1 }}
           >
-            {!isMobile && (
-              <>
-                <p 
-                  style={{
-                    fontSize: '7px',
-                    fontWeight: 500,
-                    letterSpacing: '0.22em',
-                    textTransform: 'uppercase',
-                    color: colors.vintageGold,
-                  }}
-                >
-                  SCROLL
-                </p>
-                <div 
-                  style={{
-                    width: '1px',
-                    height: '12px',
-                    background: `${colors.vintageGold}60`,
-                  }}
-                />
-              </>
-            )}
+            <p 
+              style={{
+                fontSize: '8px',
+                fontWeight: 500,
+                letterSpacing: '0.25em',
+                textTransform: 'uppercase',
+                color: 'rgba(255,255,255,0.4)',
+              }}
+            >
+              SCROLL
+            </p>
             <motion.div
-              animate={{ y: [0, 4, 0] }}
+              animate={{ y: [0, 6, 0] }}
               transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
               style={{
-                width: '26px',
-                height: '26px',
+                width: '32px',
+                height: '32px',
                 borderRadius: '50%',
-                border: `1px solid ${colors.vintageGold}`,
-                background: `${colors.antiqueBronze}20`,
+                border: '1px solid rgba(255,255,255,0.25)',
+                background: 'rgba(255,255,255,0.05)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                color: colors.paleGold,
-                boxShadow: `0 0 8px ${colors.vintageGold}30, inset 0 0 8px rgba(0,0,0,0.3)`,
+                color: 'rgba(255,255,255,0.5)',
               }}
             >
-              <ChevronDown size={12} strokeWidth={2} />
+              <ChevronDown size={14} strokeWidth={2} />
             </motion.div>
           </motion.div>
 
           {/* Right: Editorial Statement */}
           {!isMobile && (
-            <div className="flex items-end gap-2" style={{ width: '110px' }}>
+            <div className="flex items-end gap-3" style={{ width: '140px' }}>
               <div 
                 style={{
                   width: '1px',
-                  height: '50px',
-                  background: `linear-gradient(180deg, transparent 0%, ${colors.vintageGold}60 30%, ${colors.vintageGold}60 70%, transparent 100%)`,
+                  height: '40px',
+                  background: 'linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.2) 50%, transparent 100%)',
                 }}
               />
               <motion.div
-                initial={{ opacity: 0, x: 15 }}
+                initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 1.2, delay: 1 }}
               >
                 <p 
                   style={{
                     fontFamily: "'Cormorant Garamond', Georgia, serif",
-                    fontSize: '7px',
-                    lineHeight: '1.5',
-                    letterSpacing: '0.18em',
+                    fontSize: '8px',
+                    lineHeight: '1.6',
+                    letterSpacing: '0.2em',
                     textTransform: 'uppercase',
-                    color: `${colors.creamIvory}CC`,
-                    fontWeight: 500,
+                    color: 'rgba(255,255,255,0.5)',
+                    fontWeight: 400,
                   }}
                 >
                   EVERY ROOM<br />
