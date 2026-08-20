@@ -177,53 +177,77 @@ function CinematicHero() {
 
         {/* Gallery Stage - Perfectly Centered */}
         <div 
-          className="flex items-center justify-center flex-1"
+          className="flex items-start justify-center flex-1"
           style={{
             gap: isMobile ? '0' : '40px',
             minHeight: 0,
+            paddingTop: isMobile ? '0' : '20px',
           }}
         >
-          {/* Left Preview Frame */}
+          {/* Left Preview Frame with Index Below */}
           {!isMobile && (
-            <motion.div
-              key={`prev-${currentFrame}`}
-              onClick={goToPrev}
-              className="cursor-pointer flex-shrink-0"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 0.4, x: 0 }}
-              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-              style={{
-                width: '140px',
-                height: '240px',
-              }}
-            >
-              <div 
+            <div className="flex flex-col items-center gap-3">
+              <motion.div
+                key={`prev-${currentFrame}`}
+                onClick={goToPrev}
+                className="cursor-pointer flex-shrink-0"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 0.4, x: 0 }}
+                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
                 style={{
-                  width: '100%',
-                  height: '100%',
-                  padding: '8px',
-                  background: 'linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.04) 100%)',
-                  borderRadius: '4px',
-                  border: '1px solid rgba(255,255,255,0.1)',
+                  width: '140px',
+                  height: '240px',
                 }}
               >
-                <div className="w-full h-full overflow-hidden" style={{ borderRadius: '2px' }}>
-                  <video 
-                    autoPlay 
-                    loop 
-                    muted 
-                    playsInline 
-                    className="w-full h-full object-cover"
-                    style={{ filter: 'brightness(0.6)' }}
-                  >
-                    <source src={prevVideoSource} type="video/mp4" />
-                  </video>
+                <div 
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    padding: '8px',
+                    background: 'linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.04) 100%)',
+                    borderRadius: '4px',
+                    border: '1px solid rgba(255,255,255,0.1)',
+                  }}
+                >
+                  <div className="w-full h-full overflow-hidden" style={{ borderRadius: '2px' }}>
+                    <video 
+                      autoPlay 
+                      loop 
+                      muted 
+                      playsInline 
+                      className="w-full h-full object-cover"
+                      style={{ filter: 'brightness(0.6)' }}
+                    >
+                      <source src={prevVideoSource} type="video/mp4" />
+                    </video>
+                  </div>
                 </div>
+              </motion.div>
+
+              {/* Gallery Index - Compact Below Left Frame */}
+              <div className="flex flex-col items-center gap-0">
+                {frames.map((_, index) => (
+                  <motion.button
+                    key={index}
+                    onClick={() => goToFrame(index)}
+                    className="transition-all duration-300"
+                    style={{
+                      fontSize: '7px',
+                      fontWeight: index === currentFrame ? 600 : 400,
+                      letterSpacing: '0.1em',
+                      lineHeight: '16px',
+                      color: index === currentFrame ? '#FFFFFF' : 'rgba(255,255,255,0.25)',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    {String(index + 1).padStart(2, '0')}
+                  </motion.button>
+                ))}
               </div>
-            </motion.div>
+            </div>
           )}
 
-          {/* Main Frame - Premium & Spacious */}
+          {/* Main Frame - Premium & Spacious with More Height */}
           <motion.div
             key={`active-${currentFrame}`}
             className="relative flex-shrink-0"
@@ -232,7 +256,7 @@ function CinematicHero() {
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
             style={{
               width: isMobile ? '100%' : 'min(65vw, 900px)',
-              height: isMobile ? 'auto' : 'min(52vh, 520px)',
+              height: isMobile ? 'auto' : 'min(60vh, 580px)',
               aspectRatio: isMobile ? '16/9' : undefined,
             }}
           >
@@ -339,106 +363,89 @@ function CinematicHero() {
             </div>
           </motion.div>
 
-          {/* Right Preview Frame */}
+          {/* Right Preview Frame with Editorial Below */}
           {!isMobile && (
-            <motion.div
-              key={`next-${currentFrame}`}
-              onClick={goToNext}
-              className="cursor-pointer flex-shrink-0"
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 0.4, x: 0 }}
-              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-              style={{
-                width: '140px',
-                height: '240px',
-              }}
-            >
-              <div 
+            <div className="flex flex-col items-center gap-3">
+              <motion.div
+                key={`next-${currentFrame}`}
+                onClick={goToNext}
+                className="cursor-pointer flex-shrink-0"
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 0.4, x: 0 }}
+                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
                 style={{
-                  width: '100%',
-                  height: '100%',
-                  padding: '8px',
-                  background: 'linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.04) 100%)',
-                  borderRadius: '4px',
-                  border: '1px solid rgba(255,255,255,0.1)',
+                  width: '140px',
+                  height: '240px',
                 }}
               >
-                <div className="w-full h-full overflow-hidden" style={{ borderRadius: '2px' }}>
-                  <video 
-                    autoPlay 
-                    loop 
-                    muted 
-                    playsInline 
-                    className="w-full h-full object-cover"
-                    style={{ filter: 'brightness(0.6)' }}
-                  >
-                    <source src={nextVideoSource} type="video/mp4" />
-                  </video>
+                <div 
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    padding: '8px',
+                    background: 'linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.04) 100%)',
+                    borderRadius: '4px',
+                    border: '1px solid rgba(255,255,255,0.1)',
+                  }}
+                >
+                  <div className="w-full h-full overflow-hidden" style={{ borderRadius: '2px' }}>
+                    <video 
+                      autoPlay 
+                      loop 
+                      muted 
+                      playsInline 
+                      className="w-full h-full object-cover"
+                      style={{ filter: 'brightness(0.6)' }}
+                    >
+                      <source src={nextVideoSource} type="video/mp4" />
+                    </video>
+                  </div>
                 </div>
-              </div>
-            </motion.div>
+              </motion.div>
+
+              {/* Editorial Statement - Compact Below Right Frame */}
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1.2, delay: 1 }}
+                style={{
+                  width: '140px',
+                  textAlign: 'left',
+                }}
+              >
+                <p 
+                  style={{
+                    fontFamily: "'Cormorant Garamond', Georgia, serif",
+                    fontSize: '7px',
+                    lineHeight: '1.4',
+                    letterSpacing: '0.15em',
+                    textTransform: 'uppercase',
+                    color: 'rgba(255,255,255,0.4)',
+                    fontWeight: 400,
+                  }}
+                >
+                  EVERY ROOM HOLDS A STORY.<br />
+                  EVERY STORY, A PART OF YOU.
+                </p>
+              </motion.div>
+            </div>
           )}
         </div>
 
-        {/* Bottom Navigation - Clean & Organized */}
+        {/* Bottom Navigation - Centered Scroll Only */}
         <div 
-          className="flex items-end justify-between w-full"
+          className="flex items-center justify-center w-full"
           style={{
-            height: '70px',
+            height: '60px',
             marginTop: '20px',
-            maxWidth: '1400px',
-            marginLeft: 'auto',
-            marginRight: 'auto',
           }}
         >
-          {/* Left: Gallery Index */}
-          {!isMobile && (
-            <div className="flex items-end" style={{ width: '80px' }}>
-              <div className="flex flex-col gap-0.5">
-                {frames.map((_, index) => (
-                  <motion.button
-                    key={index}
-                    onClick={() => goToFrame(index)}
-                    className="relative flex items-center transition-all duration-300"
-                    style={{
-                      fontSize: '10px',
-                      fontWeight: index === currentFrame ? 600 : 400,
-                      letterSpacing: '0.15em',
-                      lineHeight: '26px',
-                      color: index === currentFrame ? '#FFFFFF' : 'rgba(255,255,255,0.35)',
-                      cursor: 'pointer',
-                      paddingLeft: '20px',
-                    }}
-                  >
-                    {index === currentFrame && (
-                      <motion.div
-                        layoutId="indicator"
-                        style={{
-                          position: 'absolute',
-                          left: '0',
-                          top: '50%',
-                          transform: 'translateY(-50%)',
-                          width: '14px',
-                          height: '1px',
-                          background: 'rgba(255,255,255,0.8)',
-                        }}
-                        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                      />
-                    )}
-                    {String(index + 1).padStart(2, '0')}
-                  </motion.button>
-                ))}
-              </div>
-            </div>
-          )}
-
           {/* Center: Scroll Indicator */}
           <motion.div
             className="flex flex-col items-center gap-2"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1.5, delay: 2 }}
-            style={{ flex: 1 }}
           >
             <p 
               style={{
@@ -469,41 +476,6 @@ function CinematicHero() {
               <ChevronDown size={14} strokeWidth={2} />
             </motion.div>
           </motion.div>
-
-          {/* Right: Editorial Statement */}
-          {!isMobile && (
-            <div className="flex items-end gap-3" style={{ width: '140px' }}>
-              <div 
-                style={{
-                  width: '1px',
-                  height: '40px',
-                  background: 'linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.2) 50%, transparent 100%)',
-                }}
-              />
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 1.2, delay: 1 }}
-              >
-                <p 
-                  style={{
-                    fontFamily: "'Cormorant Garamond', Georgia, serif",
-                    fontSize: '8px',
-                    lineHeight: '1.6',
-                    letterSpacing: '0.2em',
-                    textTransform: 'uppercase',
-                    color: 'rgba(255,255,255,0.5)',
-                    fontWeight: 400,
-                  }}
-                >
-                  EVERY ROOM<br />
-                  HOLDS A STORY.<br />
-                  EVERY STORY,<br />
-                  A PART OF YOU.
-                </p>
-              </motion.div>
-            </div>
-          )}
         </div>
       </div>
     </div>
