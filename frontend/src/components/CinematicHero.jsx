@@ -221,11 +221,15 @@ function CinematicHero() {
         }}
       />
 
-      {/* Main Gallery Container - Large margins for side frames */}
+      {/* Main Gallery Container - Responsive margins for all screen sizes */}
       <div 
         className="absolute inset-0 flex flex-col"
         style={{
-          padding: isMobile ? '70px 16px 15px' : isTablet ? '70px 80px 25px' : '70px 120px 25px',
+          padding: isMobile 
+            ? '70px 16px 15px' 
+            : isTablet 
+              ? '70px clamp(20px, 8vw, 80px) 25px' 
+              : '70px clamp(40px, 12vw, 120px) 25px',
         }}
       >
         
