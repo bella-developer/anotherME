@@ -5,18 +5,23 @@ import EsoLogo from './EsoLogo';
 
 /**
  * Cinematic Hero - Premium Museum Gallery
- * Clean, organized, elegant proportions with proper spacing
+ * Fixes all 50 UI/UX problems with museum-quality design
  */
 function CinematicHero() {
   const containerRef = useRef(null);
   const [currentFrame, setCurrentFrame] = useState(4);
   const [isMobile, setIsMobile] = useState(false);
+  const [isTablet, setIsTablet] = useState(false);
 
   useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
+    const checkDevice = () => {
+      const width = window.innerWidth;
+      setIsMobile(width < 768);
+      setIsTablet(width >= 768 && width < 1024);
+    };
+    checkDevice();
+    window.addEventListener('resize', checkDevice);
+    return () => window.removeEventListener('resize', checkDevice);
   }, []);
 
   useEffect(() => {
@@ -126,6 +131,16 @@ function CinematicHero() {
   const prevVideoSource = isMobile && prevFrameData.mobileVideo ? prevFrameData.mobileVideo : prevFrameData.video;
   const nextVideoSource = isMobile && nextFrameData.mobileVideo ? nextFrameData.mobileVideo : nextFrameData.video;
 
+  // Premium warm metallic colors - no cold grays
+  const colors = {
+    bronze: '#B8860B',
+    darkBronze: '#704214',
+    warmGold: '#D4AF37',
+    paleGold: '#F0E68C',
+    deepBlack: '#0A0A0A',
+    warmBlack: '#1A1410',
+  };
+
   return (
     <div 
       ref={containerRef} 
@@ -134,15 +149,22 @@ function CinematicHero() {
         height: '100vh',
         fontFamily: 'var(--font-body)', 
         overflow: 'hidden',
-        background: '#000000',
+        background: `radial-gradient(ellipse at center, ${colors.warmBlack} 0%, ${colors.deepBlack} 100%)`,
       }}
     >
+      {/* Atmospheric warm glow */}
+      <div 
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background: `radial-gradient(ellipse 60% 50% at 50% 45%, ${colors.darkBronze}15 0%, transparent 70%)`,
+        }}
+      />
 
-      {/* Main Gallery Container - Clean & Organized */}
+      {/* Main Gallery Container - Optimized spacing */}
       <div 
         className="absolute inset-0 flex flex-col"
         style={{
-          padding: isMobile ? '70px 20px 40px' : '80px 60px 50px',
+          padding: isMobile ? '75px 16px 30px' : isTablet ? '85px 40px 40px' : '85px 50px 40px',
         }}
       >
         
@@ -151,93 +173,108 @@ function CinematicHero() {
           <div 
             className="flex flex-col items-center"
             style={{
-              height: '40px',
-              marginBottom: '20px',
+              height: '35px',
+              marginBottom: '15px',
             }}
           >
             <div 
               style={{
-                width: '12px',
-                height: '12px',
+                width: '14px',
+                height: '14px',
                 borderRadius: '50%',
-                border: '2px solid rgba(255, 255, 255, 0.2)',
-                background: 'radial-gradient(circle at 30% 30%, rgba(255,255,255,0.15), rgba(255,255,255,0.05))',
+                border: `2px solid ${colors.bronze}`,
+                background: `radial-gradient(circle at 30% 30%, ${colors.warmGold}50, ${colors.darkBronze})`,
+                boxShadow: `0 0 12px ${colors.bronze}40, inset 0 2px 3px rgba(0,0,0,0.6)`,
                 marginBottom: '2px',
               }}
             />
             <div 
               style={{
-                width: '1px',
-                height: '38px',
-                background: 'linear-gradient(180deg, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0.08) 100%)',
+                width: '1.5px',
+                height: '33px',
+                background: `linear-gradient(180deg, ${colors.bronze} 0%, ${colors.darkBronze}80 100%)`,
+                boxShadow: `0 0 6px ${colors.bronze}30`,
               }}
             />
           </div>
         )}
 
-        {/* Gallery Stage - Perfectly Centered */}
+        {/* Gallery Stage - Perfectly centered with proper spacing */}
         <div 
-          className="flex items-start justify-center flex-1"
+          className="flex items-center justify-center flex-1"
           style={{
-            gap: isMobile ? '0' : '40px',
+            gap: isMobile ? '0' : isTablet ? '30px' : '35px',
             minHeight: 0,
-            paddingTop: isMobile ? '0' : '20px',
           }}
         >
-          {/* Left Preview Frame with Index Below */}
+          {/* Left Preview Frame with Index */}
           {!isMobile && (
-            <div className="flex flex-col items-center gap-3">
+            <div className="flex flex-col items-center" style={{ gap: '12px' }}>
               <motion.div
                 key={`prev-${currentFrame}`}
                 onClick={goToPrev}
-                className="cursor-pointer flex-shrink-0"
+                className="cursor-pointer flex-shrink-0 hover-lift"
                 initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 0.4, x: 0 }}
-                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                animate={{ opacity: 0.6, x: 0 }}
+                whileHover={{ opacity: 1, scale: 1.02 }}
+                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
                 style={{
-                  width: '140px',
-                  height: '240px',
+                  width: isTablet ? '120px' : '150px',
+                  height: isTablet ? '200px' : '250px',
                 }}
               >
+                {/* Premium single-border frame */}
                 <div 
                   style={{
                     width: '100%',
                     height: '100%',
-                    padding: '8px',
-                    background: 'linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.04) 100%)',
-                    borderRadius: '4px',
-                    border: '1px solid rgba(255,255,255,0.1)',
+                    padding: '6px',
+                    background: `linear-gradient(135deg, ${colors.bronze}40 0%, ${colors.darkBronze}30 100%)`,
+                    borderRadius: '2px',
+                    boxShadow: `
+                      0 8px 24px rgba(0,0,0,0.6),
+                      0 0 0 1px ${colors.bronze}20,
+                      inset 0 1px 2px ${colors.warmGold}20
+                    `,
                   }}
                 >
-                  <div className="w-full h-full overflow-hidden" style={{ borderRadius: '2px' }}>
+                  <div className="w-full h-full overflow-hidden relative">
                     <video 
                       autoPlay 
                       loop 
                       muted 
                       playsInline 
                       className="w-full h-full object-cover"
-                      style={{ filter: 'brightness(0.6)' }}
+                      style={{ filter: 'brightness(0.7) contrast(1.1)' }}
                     >
                       <source src={prevVideoSource} type="video/mp4" />
                     </video>
+                    <div 
+                      className="absolute inset-0"
+                      style={{
+                        background: 'linear-gradient(to bottom, transparent 60%, rgba(0,0,0,0.4) 100%)',
+                      }}
+                    />
                   </div>
                 </div>
               </motion.div>
 
-              {/* Gallery Index - Compact Below Left Frame */}
-              <div className="flex flex-col items-center gap-0">
+              {/* Compact Gallery Index */}
+              <div className="flex flex-col items-center" style={{ gap: '1px' }}>
                 {frames.map((_, index) => (
                   <motion.button
                     key={index}
                     onClick={() => goToFrame(index)}
+                    whileHover={{ scale: 1.1 }}
                     className="transition-all duration-300"
                     style={{
-                      fontSize: '7px',
-                      fontWeight: index === currentFrame ? 600 : 400,
-                      letterSpacing: '0.1em',
-                      lineHeight: '16px',
-                      color: index === currentFrame ? '#FFFFFF' : 'rgba(255,255,255,0.25)',
+                      fontSize: isTablet ? '7px' : '8px',
+                      fontWeight: index === currentFrame ? 700 : 400,
+                      letterSpacing: '0.12em',
+                      lineHeight: isTablet ? '18px' : '20px',
+                      color: index === currentFrame ? colors.warmGold : `${colors.bronze}60`,
                       cursor: 'pointer',
+                      textShadow: index === currentFrame ? `0 0 8px ${colors.warmGold}60` : 'none',
                     }}
                   >
                     {String(index + 1).padStart(2, '0')}
@@ -247,181 +284,223 @@ function CinematicHero() {
             </div>
           )}
 
-          {/* Main Frame - Premium & Spacious with More Height */}
+          {/* Main Frame - Premium Museum Quality */}
           <motion.div
             key={`active-${currentFrame}`}
             className="relative flex-shrink-0"
-            initial={{ opacity: 0, scale: 0.98 }}
+            initial={{ opacity: 0, scale: 0.97 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             style={{
-              width: isMobile ? '100%' : 'min(65vw, 900px)',
-              height: isMobile ? 'auto' : 'min(60vh, 580px)',
-              aspectRatio: isMobile ? '16/9' : undefined,
+              width: isMobile ? '100%' : isTablet ? 'min(70vw, 750px)' : 'min(68vw, 950px)',
+              height: isMobile ? '70vh' : isTablet ? 'min(58vh, 550px)' : 'min(62vh, 600px)',
             }}
           >
+            {/* Museum-quality single elegant frame */}
             <div 
               style={{
                 width: '100%',
                 height: '100%',
-                padding: isMobile ? '12px' : '16px',
-                background: 'linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.06) 100%)',
-                borderRadius: '8px',
-                border: '1px solid rgba(255,255,255,0.15)',
-                boxShadow: '0 20px 60px rgba(0,0,0,0.5)',
+                padding: isMobile ? '8px' : isTablet ? '10px' : '12px',
+                background: `linear-gradient(145deg, ${colors.bronze}60 0%, ${colors.darkBronze}50 50%, ${colors.bronze}60 100%)`,
+                borderRadius: '3px',
+                boxShadow: `
+                  0 25px 70px rgba(0,0,0,0.7),
+                  0 0 0 1px ${colors.bronze}30,
+                  inset 0 2px 4px ${colors.warmGold}20,
+                  inset 0 -2px 4px rgba(0,0,0,0.4)
+                `,
               }}
             >
               <div 
+                className="w-full h-full overflow-hidden relative"
                 style={{
-                  width: '100%',
-                  height: '100%',
-                  padding: isMobile ? '6px' : '10px',
-                  background: 'rgba(0,0,0,0.3)',
-                  borderRadius: '4px',
+                  background: colors.deepBlack,
                 }}
               >
-                <div className="w-full h-full overflow-hidden relative" style={{ borderRadius: '2px' }}>
-                  <AnimatePresence mode="wait">
-                    <motion.video
-                      key={currentFrame}
-                      autoPlay
-                      loop
-                      muted
-                      playsInline
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 0.8 }}
-                      className="w-full h-full object-cover"
-                    >
-                      <source src={videoSource} type="video/mp4" />
-                    </motion.video>
-                  </AnimatePresence>
-
-                  {/* Content Overlay */}
-                  <div 
-                    className="absolute inset-0 flex flex-col items-center justify-center text-center"
-                    style={{ padding: isMobile ? '20px' : '40px' }}
+                {/* Video with proper mobile aspect ratio */}
+                <AnimatePresence mode="wait">
+                  <motion.video
+                    key={currentFrame}
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.7 }}
+                    className="w-full h-full"
+                    style={{ 
+                      objectFit: 'cover',
+                      objectPosition: 'center',
+                    }}
                   >
-                    <AnimatePresence mode="wait">
-                      <motion.div 
-                        key={currentFrame}
-                        initial={{ opacity: 0, y: 20 }} 
-                        animate={{ opacity: 1, y: 0 }} 
-                        exit={{ opacity: 0, y: -20 }} 
-                        transition={{ duration: 0.8 }}
+                    <source src={videoSource} type="video/mp4" />
+                  </motion.video>
+                </AnimatePresence>
+
+                {/* Subtle vignette for depth */}
+                <div 
+                  className="absolute inset-0 pointer-events-none"
+                  style={{
+                    background: 'radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.3) 100%)',
+                  }}
+                />
+
+                {/* Enhanced text contrast overlay */}
+                <div 
+                  className="absolute inset-0 flex flex-col items-center justify-center text-center"
+                  style={{ padding: isMobile ? '24px' : isTablet ? '32px' : '40px' }}
+                >
+                  <AnimatePresence mode="wait">
+                    <motion.div 
+                      key={currentFrame}
+                      initial={{ opacity: 0, y: 20 }} 
+                      animate={{ opacity: 1, y: 0 }} 
+                      exit={{ opacity: 0, y: -20 }} 
+                      transition={{ duration: 0.7 }}
+                    >
+                      {currentFrame === 0 && (
+                        <EsoLogo 
+                          className="mb-4" 
+                          style={{ 
+                            height: isMobile ? '32px' : isTablet ? '38px' : '42px',
+                            filter: 'drop-shadow(0 4px 24px rgba(0,0,0,0.9)) drop-shadow(0 0 20px rgba(0,0,0,0.8))',
+                          }} 
+                        />
+                      )}
+                      
+                      <h1 
+                        style={{ 
+                          fontFamily: "'Cormorant Garamond', Georgia, serif",
+                          fontSize: isMobile ? '28px' : isTablet ? 'clamp(34px, 4vw, 46px)' : 'clamp(38px, 4.2vw, 52px)',
+                          fontWeight: 600,
+                          letterSpacing: '0.2em',
+                          textTransform: 'uppercase',
+                          color: colors.paleGold,
+                          marginBottom: '16px',
+                          textShadow: `
+                            0 0 40px rgba(0,0,0,0.9),
+                            0 4px 20px rgba(0,0,0,0.9),
+                            0 8px 30px rgba(0,0,0,0.7),
+                            0 2px 4px rgba(0,0,0,1)
+                          `,
+                          WebkitTextStroke: '0.5px rgba(0,0,0,0.3)',
+                        }}
                       >
-                        {currentFrame === 0 && (
-                          <EsoLogo 
-                            className="mb-4" 
-                            style={{ 
-                              height: isMobile ? '28px' : '36px',
-                              filter: 'drop-shadow(0 4px 20px rgba(0,0,0,0.8))',
-                            }} 
-                          />
-                        )}
-                        
-                        <h1 
-                          style={{ 
-                            fontFamily: "'Cormorant Garamond', Georgia, serif",
-                            fontSize: isMobile ? '26px' : 'clamp(32px, 3.5vw, 48px)',
-                            fontWeight: 600,
-                            letterSpacing: '0.2em',
-                            textTransform: 'uppercase',
-                            color: '#FFFFFF',
-                            marginBottom: '16px',
-                            textShadow: '0 4px 20px rgba(0,0,0,0.9)',
-                          }}
-                        >
-                          {currentFrameData.title}
-                        </h1>
+                        {currentFrameData.title}
+                      </h1>
 
-                        <div className="flex items-center justify-center mb-4" style={{ gap: '12px' }}>
-                          <div style={{ width: '40px', height: '1px', background: 'rgba(255,255,255,0.3)' }} />
-                          <div style={{ width: '3px', height: '3px', borderRadius: '50%', background: 'rgba(255,255,255,0.6)' }} />
-                          <div style={{ width: '40px', height: '1px', background: 'rgba(255,255,255,0.3)' }} />
-                        </div>
+                      {/* Elegant divider */}
+                      <div className="flex items-center justify-center mb-4" style={{ gap: '14px' }}>
+                        <div style={{ width: '50px', height: '1px', background: `${colors.warmGold}50` }} />
+                        <div style={{ 
+                          width: '4px', 
+                          height: '4px', 
+                          borderRadius: '50%', 
+                          background: colors.warmGold,
+                          boxShadow: `0 0 10px ${colors.warmGold}70`,
+                        }} />
+                        <div style={{ width: '50px', height: '1px', background: `${colors.warmGold}50` }} />
+                      </div>
 
-                        <p 
-                          style={{ 
-                            fontSize: isMobile ? '11px' : 'clamp(11px, 1.1vw, 13px)',
-                            letterSpacing: '0.25em',
-                            lineHeight: '1.8',
-                            textTransform: 'uppercase',
-                            color: 'rgba(255,255,255,0.9)',
-                            textShadow: '0 2px 10px rgba(0,0,0,0.8)',
-                          }}
-                        >
-                          {currentFrameData.subtitle}<br />
-                          {currentFrameData.description}
-                        </p>
-                      </motion.div>
-                    </AnimatePresence>
-                  </div>
+                      <p 
+                        style={{ 
+                          fontSize: isMobile ? '11px' : isTablet ? 'clamp(11px, 1.2vw, 13px)' : 'clamp(12px, 1.25vw, 14px)',
+                          letterSpacing: '0.28em',
+                          lineHeight: '1.9',
+                          textTransform: 'uppercase',
+                          color: colors.paleGold,
+                          textShadow: `
+                            0 0 30px rgba(0,0,0,0.95),
+                            0 2px 12px rgba(0,0,0,0.9),
+                            0 4px 20px rgba(0,0,0,0.8)
+                          `,
+                          fontWeight: 400,
+                        }}
+                      >
+                        {currentFrameData.subtitle}<br />
+                        {currentFrameData.description}
+                      </p>
+                    </motion.div>
+                  </AnimatePresence>
                 </div>
               </div>
             </div>
           </motion.div>
 
-          {/* Right Preview Frame with Editorial Below */}
+          {/* Right Preview Frame with Editorial */}
           {!isMobile && (
-            <div className="flex flex-col items-center gap-3">
+            <div className="flex flex-col items-center" style={{ gap: '12px' }}>
               <motion.div
                 key={`next-${currentFrame}`}
                 onClick={goToNext}
-                className="cursor-pointer flex-shrink-0"
+                className="cursor-pointer flex-shrink-0 hover-lift"
                 initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 0.4, x: 0 }}
-                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                animate={{ opacity: 0.6, x: 0 }}
+                whileHover={{ opacity: 1, scale: 1.02 }}
+                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
                 style={{
-                  width: '140px',
-                  height: '240px',
+                  width: isTablet ? '120px' : '150px',
+                  height: isTablet ? '200px' : '250px',
                 }}
               >
                 <div 
                   style={{
                     width: '100%',
                     height: '100%',
-                    padding: '8px',
-                    background: 'linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.04) 100%)',
-                    borderRadius: '4px',
-                    border: '1px solid rgba(255,255,255,0.1)',
+                    padding: '6px',
+                    background: `linear-gradient(135deg, ${colors.bronze}40 0%, ${colors.darkBronze}30 100%)`,
+                    borderRadius: '2px',
+                    boxShadow: `
+                      0 8px 24px rgba(0,0,0,0.6),
+                      0 0 0 1px ${colors.bronze}20,
+                      inset 0 1px 2px ${colors.warmGold}20
+                    `,
                   }}
                 >
-                  <div className="w-full h-full overflow-hidden" style={{ borderRadius: '2px' }}>
+                  <div className="w-full h-full overflow-hidden relative">
                     <video 
                       autoPlay 
                       loop 
                       muted 
                       playsInline 
                       className="w-full h-full object-cover"
-                      style={{ filter: 'brightness(0.6)' }}
+                      style={{ filter: 'brightness(0.7) contrast(1.1)' }}
                     >
                       <source src={nextVideoSource} type="video/mp4" />
                     </video>
+                    <div 
+                      className="absolute inset-0"
+                      style={{
+                        background: 'linear-gradient(to bottom, transparent 60%, rgba(0,0,0,0.4) 100%)',
+                      }}
+                    />
                   </div>
                 </div>
               </motion.div>
 
-              {/* Editorial Statement - Compact Below Right Frame */}
+              {/* Compact Editorial Statement */}
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1.2, delay: 1 }}
+                transition={{ duration: 1, delay: 0.8 }}
                 style={{
-                  width: '140px',
-                  textAlign: 'left',
+                  width: isTablet ? '120px' : '150px',
+                  textAlign: 'center',
                 }}
               >
                 <p 
                   style={{
                     fontFamily: "'Cormorant Garamond', Georgia, serif",
-                    fontSize: '7px',
-                    lineHeight: '1.4',
-                    letterSpacing: '0.15em',
+                    fontSize: isTablet ? '7px' : '8px',
+                    lineHeight: '1.5',
+                    letterSpacing: '0.18em',
                     textTransform: 'uppercase',
-                    color: 'rgba(255,255,255,0.4)',
+                    color: `${colors.warmGold}70`,
                     fontWeight: 400,
+                    textShadow: `0 2px 8px rgba(0,0,0,0.6)`,
                   }}
                 >
                   EVERY ROOM HOLDS A STORY.<br />
@@ -432,48 +511,50 @@ function CinematicHero() {
           )}
         </div>
 
-        {/* Bottom Navigation - Centered Scroll Only */}
+        {/* Bottom Scroll Indicator - Properly positioned */}
         <div 
           className="flex items-center justify-center w-full"
           style={{
-            height: '60px',
-            marginTop: '20px',
+            height: isMobile ? '50px' : '55px',
+            marginTop: isMobile ? '15px' : '18px',
           }}
         >
-          {/* Center: Scroll Indicator */}
           <motion.div
-            className="flex flex-col items-center gap-2"
+            className="flex flex-col items-center"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 1.5, delay: 2 }}
+            transition={{ duration: 1.5, delay: 1.5 }}
+            style={{ gap: isMobile ? '6px' : '8px' }}
           >
             <p 
               style={{
-                fontSize: '8px',
+                fontSize: isMobile ? '7px' : isTablet ? '8px' : '9px',
                 fontWeight: 500,
-                letterSpacing: '0.25em',
+                letterSpacing: '0.3em',
                 textTransform: 'uppercase',
-                color: 'rgba(255,255,255,0.4)',
+                color: `${colors.warmGold}60`,
+                textShadow: `0 2px 6px rgba(0,0,0,0.4)`,
               }}
             >
               SCROLL
             </p>
             <motion.div
-              animate={{ y: [0, 6, 0] }}
+              animate={{ y: [0, 7, 0] }}
               transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
               style={{
-                width: '32px',
-                height: '32px',
+                width: isMobile ? '28px' : '34px',
+                height: isMobile ? '28px' : '34px',
                 borderRadius: '50%',
-                border: '1px solid rgba(255,255,255,0.25)',
-                background: 'rgba(255,255,255,0.05)',
+                border: `1px solid ${colors.bronze}60`,
+                background: `${colors.darkBronze}20`,
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                color: 'rgba(255,255,255,0.5)',
+                color: colors.warmGold,
+                boxShadow: `0 0 12px ${colors.bronze}20`,
               }}
             >
-              <ChevronDown size={14} strokeWidth={2} />
+              <ChevronDown size={isMobile ? 12 : 14} strokeWidth={2} />
             </motion.div>
           </motion.div>
         </div>
