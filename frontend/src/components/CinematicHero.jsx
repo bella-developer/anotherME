@@ -144,13 +144,26 @@ function CinematicHero() {
     const deltaX = touchStartX.current - touchEndX.current;
     const deltaY = touchStartY.current - touchEndY.current;
     
-    // Detect horizontal swipe (ignore if vertical scroll is dominant)
-    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 50) {
+    // Detect swipe gestures (both horizontal and vertical)
+    const minSwipeDistance = 50;
+    
+    // Check if horizontal swipe is more dominant
+    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > minSwipeDistance) {
       if (deltaX > 0) {
         // Swipe left - go to next
         goToNext();
       } else {
         // Swipe right - go to previous
+        goToPrev();
+      }
+    }
+    // Check if vertical swipe is more dominant
+    else if (Math.abs(deltaY) > Math.abs(deltaX) && Math.abs(deltaY) > minSwipeDistance) {
+      if (deltaY > 0) {
+        // Swipe up - go to next
+        goToNext();
+      } else {
+        // Swipe down - go to previous
         goToPrev();
       }
     }
@@ -208,21 +221,22 @@ function CinematicHero() {
         }}
       />
 
-      {/* Main Gallery Container - With proper margins */}
+      {/* Main Gallery Container - Large margins for side frames */}
       <div 
         className="absolute inset-0 flex flex-col"
         style={{
-          padding: isMobile ? '70px 16px 15px' : isTablet ? '70px 60px 25px' : '70px 80px 25px',
+          padding: isMobile ? '70px 16px 15px' : isTablet ? '70px 80px 25px' : '70px 120px 25px',
         }}
       >
         
-        {/* Elegant Suspension Cable - Always connected to main frame */}
+        {/* Elegant Suspension Cable - Zero gap from navbar */}
         {!isMobile && (
           <div 
             className="flex flex-col items-center"
             style={{
-              height: '20px',
+              height: '18px',
               marginBottom: '0px',
+              marginTop: '0px',
             }}
           >
             <div 
@@ -233,13 +247,13 @@ function CinematicHero() {
                 border: `2px solid ${colors.bronze}`,
                 background: `radial-gradient(circle at 30% 30%, ${colors.warmGold}50, ${colors.darkBronze})`,
                 boxShadow: `0 0 10px ${colors.bronze}40, inset 0 2px 3px rgba(0,0,0,0.6)`,
-                marginBottom: '1px',
+                marginBottom: '0px',
               }}
             />
             <div 
               style={{
                 width: '1.5px',
-                height: '19px',
+                height: '18px',
                 background: `linear-gradient(180deg, ${colors.bronze} 0%, ${colors.darkBronze}80 100%)`,
                 boxShadow: `0 0 6px ${colors.bronze}30`,
               }}
@@ -332,7 +346,7 @@ function CinematicHero() {
             </div>
           )}
 
-          {/* Main Frame - Maximum Vertical Space with Extra Tiny Border */}
+          {/* Main Frame - Borderless on Mobile */}
           <motion.div
             key={`active-${currentFrame}`}
             onClick={() => navigate('/login')}
@@ -346,22 +360,9 @@ function CinematicHero() {
               height: isMobile ? '78vh' : isTablet ? 'min(70vh, 670px)' : 'min(73vh, 710px)',
             }}
           >
-            {/* Extra tiny elegant bronze frame */}
-            <div 
-              style={{
-                width: '100%',
-                height: '100%',
-                padding: isMobile ? '3px' : isTablet ? '4px' : '4px',
-                background: `linear-gradient(145deg, ${colors.bronze}60 0%, ${colors.darkBronze}50 50%, ${colors.bronze}60 100%)`,
-                borderRadius: '3px',
-                boxShadow: `
-                  0 25px 70px rgba(0,0,0,0.7),
-                  0 0 0 1px ${colors.bronze}30,
-                  inset 0 2px 4px ${colors.warmGold}20,
-                  inset 0 -2px 4px rgba(0,0,0,0.4)
-                `,
-              }}
-            >
+            {/* Borderless on mobile, tiny frame on desktop */}
+            {isMobile ? (
+              // Mobile: No border, direct video
               <div 
                 className="w-full h-full overflow-hidden relative"
                 style={{
@@ -413,9 +414,9 @@ function CinematicHero() {
                     >
                       {currentFrame === 0 && (
                         <EsoLogo 
-                          className="mb-4" 
+                          className="mb-3" 
                           style={{ 
-                            height: isMobile ? '32px' : isTablet ? '38px' : '42px',
+                            height: isMobile ? '28px' : isTablet ? '38px' : '42px',
                             filter: 'drop-shadow(0 4px 24px rgba(0,0,0,0.9)) drop-shadow(0 0 20px rgba(0,0,0,0.8))',
                           }} 
                         />
@@ -424,12 +425,12 @@ function CinematicHero() {
                       <h1 
                         style={{ 
                           fontFamily: "'Cormorant Garamond', Georgia, serif",
-                          fontSize: isMobile ? '28px' : isTablet ? 'clamp(34px, 4vw, 46px)' : 'clamp(38px, 4.2vw, 52px)',
+                          fontSize: isMobile ? '24px' : isTablet ? 'clamp(34px, 4vw, 46px)' : 'clamp(38px, 4.2vw, 52px)',
                           fontWeight: 600,
-                          letterSpacing: '0.2em',
+                          letterSpacing: currentFrame === 0 ? '0.15em' : '0.2em',
                           textTransform: 'uppercase',
                           color: colors.paleGold,
-                          marginBottom: '16px',
+                          marginBottom: currentFrame === 0 ? '10px' : '16px',
                           textShadow: `
                             0 0 40px rgba(0,0,0,0.9),
                             0 4px 20px rgba(0,0,0,0.9),
@@ -442,42 +443,88 @@ function CinematicHero() {
                         {currentFrameData.title}
                       </h1>
 
-                      {/* Elegant divider */}
-                      <div className="flex items-center justify-center mb-4" style={{ gap: '14px' }}>
-                        <div style={{ width: '50px', height: '1px', background: `${colors.warmGold}50` }} />
-                        <div style={{ 
-                          width: '4px', 
-                          height: '4px', 
-                          borderRadius: '50%', 
-                          background: colors.warmGold,
-                          boxShadow: `0 0 10px ${colors.warmGold}70`,
-                        }} />
-                        <div style={{ width: '50px', height: '1px', background: `${colors.warmGold}50` }} />
-                      </div>
+                      {currentFrame === 0 ? (
+                        // First frame: Minimized centered content
+                        <p 
+                          style={{ 
+                            fontSize: isMobile ? '10px' : isTablet ? 'clamp(10px, 1.1vw, 12px)' : 'clamp(11px, 1.15vw, 13px)',
+                            letterSpacing: '0.22em',
+                            lineHeight: '1.8',
+                            textTransform: 'uppercase',
+                            color: colors.paleGold,
+                            textShadow: `
+                              0 0 30px rgba(0,0,0,0.95),
+                              0 2px 12px rgba(0,0,0,0.9),
+                              0 4px 20px rgba(0,0,0,0.8)
+                            `,
+                            fontWeight: 400,
+                          }}
+                        >
+                          {currentFrameData.subtitle}<br />
+                          {currentFrameData.description}
+                        </p>
+                      ) : (
+                        <>
+                          {/* Other frames: Elegant divider and text */}
+                          <div className="flex items-center justify-center mb-4" style={{ gap: '14px' }}>
+                            <div style={{ width: '50px', height: '1px', background: `${colors.warmGold}50` }} />
+                            <div style={{ 
+                              width: '4px', 
+                              height: '4px', 
+                              borderRadius: '50%', 
+                              background: colors.warmGold,
+                              boxShadow: `0 0 10px ${colors.warmGold}70`,
+                            }} />
+                            <div style={{ width: '50px', height: '1px', background: `${colors.warmGold}50` }} />
+                          </div>
 
-                      <p 
-                        style={{ 
-                          fontSize: isMobile ? '11px' : isTablet ? 'clamp(11px, 1.2vw, 13px)' : 'clamp(12px, 1.25vw, 14px)',
-                          letterSpacing: '0.28em',
-                          lineHeight: '1.9',
-                          textTransform: 'uppercase',
-                          color: colors.paleGold,
-                          textShadow: `
-                            0 0 30px rgba(0,0,0,0.95),
-                            0 2px 12px rgba(0,0,0,0.9),
-                            0 4px 20px rgba(0,0,0,0.8)
-                          `,
-                          fontWeight: 400,
-                        }}
-                      >
-                        {currentFrameData.subtitle}<br />
-                        {currentFrameData.description}
-                      </p>
+                          <p 
+                            style={{ 
+                              fontSize: isMobile ? '11px' : isTablet ? 'clamp(11px, 1.2vw, 13px)' : 'clamp(12px, 1.25vw, 14px)',
+                              letterSpacing: '0.28em',
+                              lineHeight: '1.9',
+                              textTransform: 'uppercase',
+                              color: colors.paleGold,
+                              textShadow: `
+                                0 0 30px rgba(0,0,0,0.95),
+                                0 2px 12px rgba(0,0,0,0.9),
+                                0 4px 20px rgba(0,0,0,0.8)
+                              `,
+                              fontWeight: 400,
+                            }}
+                          >
+                            {currentFrameData.subtitle}<br />
+                            {currentFrameData.description}
+                          </p>
+                        </>
+                      )}
                     </motion.div>
                   </AnimatePresence>
                 </div>
               </div>
-            </div>
+            ) : (
+              // Desktop/Tablet: With bronze frame
+              <div 
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  padding: isTablet ? '4px' : '4px',
+                  background: `linear-gradient(145deg, ${colors.bronze}60 0%, ${colors.darkBronze}50 50%, ${colors.bronze}60 100%)`,
+                  borderRadius: '3px',
+                  boxShadow: `
+                    0 25px 70px rgba(0,0,0,0.7),
+                    0 0 0 1px ${colors.bronze}30,
+                    inset 0 2px 4px ${colors.warmGold}20,
+                    inset 0 -2px 4px rgba(0,0,0,0.4)
+                  `,
+                }}
+              >
+                <div 
+                  className="w-full h-full overflow-hidden relative"
+                  style={{
+                    background: colors.deepBlack,
+                  }}
+                >
           </motion.div>
 
           {/* Right Preview Frame with Editorial - Landscape */}
