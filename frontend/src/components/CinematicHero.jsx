@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import EsoLogo from './EsoLogo';
 
 /**
@@ -9,9 +10,14 @@ import EsoLogo from './EsoLogo';
  */
 function CinematicHero() {
   const containerRef = useRef(null);
+  const navigate = useNavigate();
   const [currentFrame, setCurrentFrame] = useState(4);
   const [isMobile, setIsMobile] = useState(false);
   const [isTablet, setIsTablet] = useState(false);
+  const touchStartX = useRef(0);
+  const touchEndX = useRef(0);
+  const touchStartY = useRef(0);
+  const touchEndY = useRef(0);
 
   useEffect(() => {
     const checkDevice = () => {
@@ -123,6 +129,48 @@ function CinematicHero() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
+  // Touch swipe handlers for mobile
+  const handleTouchStart = (e) => {
+    touchStartX.current = e.touches[0].clientX;
+    touchStartY.current = e.touches[0].clientY;
+  };
+
+  const handleTouchMove = (e) => {
+    touchEndX.current = e.touches[0].clientX;
+    touchEndY.current = e.touches[0].clientY;
+  };
+
+  const handleTouchEnd = () => {
+    const deltaX = touchStartX.current - touchEndX.current;
+    const deltaY = touchStartY.current - touchEndY.current;
+    
+    // Detect horizontal swipe (ignore if vertical scroll is dominant)
+    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 50) {
+      if (deltaX > 0) {
+        // Swipe left - go to next
+        goToNext();
+      } else {
+        // Swipe right - go to previous
+        goToPrev();
+      }
+    }
+  };
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (container && isMobile) {
+      container.addEventListener('touchstart', handleTouchStart, { passive: true });
+      container.addEventListener('touchmove', handleTouchMove, { passive: true });
+      container.addEventListener('touchend', handleTouchEnd, { passive: true });
+      
+      return () => {
+        container.removeEventListener('touchstart', handleTouchStart);
+        container.removeEventListener('touchmove', handleTouchMove);
+        container.removeEventListener('touchend', handleTouchEnd);
+      };
+    }
+  }, [isMobile]);
+
   const currentFrameData = frames[currentFrame];
   const prevFrameData = frames[(currentFrame - 1 + frames.length) % frames.length];
   const nextFrameData = frames[(currentFrame + 1) % frames.length];
@@ -160,27 +208,27 @@ function CinematicHero() {
         }}
       />
 
-      {/* Main Gallery Container - No gap from navbar */}
+      {/* Main Gallery Container - With proper margins */}
       <div 
         className="absolute inset-0 flex flex-col"
         style={{
-          padding: isMobile ? '70px 16px 20px' : isTablet ? '70px 40px 30px' : '70px 50px 30px',
+          padding: isMobile ? '70px 16px 15px' : isTablet ? '70px 60px 25px' : '70px 80px 25px',
         }}
       >
         
-        {/* Elegant Suspension Cable - Connected to navbar */}
+        {/* Elegant Suspension Cable - Always connected to main frame */}
         {!isMobile && (
           <div 
             className="flex flex-col items-center"
             style={{
-              height: '25px',
-              marginBottom: '10px',
+              height: '20px',
+              marginBottom: '0px',
             }}
           >
             <div 
               style={{
-                width: '12px',
-                height: '12px',
+                width: '10px',
+                height: '10px',
                 borderRadius: '50%',
                 border: `2px solid ${colors.bronze}`,
                 background: `radial-gradient(circle at 30% 30%, ${colors.warmGold}50, ${colors.darkBronze})`,
@@ -191,7 +239,7 @@ function CinematicHero() {
             <div 
               style={{
                 width: '1.5px',
-                height: '24px',
+                height: '19px',
                 background: `linear-gradient(180deg, ${colors.bronze} 0%, ${colors.darkBronze}80 100%)`,
                 boxShadow: `0 0 6px ${colors.bronze}30`,
               }}
@@ -199,11 +247,11 @@ function CinematicHero() {
           </div>
         )}
 
-        {/* Gallery Stage - Perfectly centered with proper spacing */}
+        {/* Gallery Stage - Tighter spacing */}
         <div 
           className="flex items-center justify-center flex-1"
           style={{
-            gap: isMobile ? '0' : isTablet ? '30px' : '35px',
+            gap: isMobile ? '0' : isTablet ? '18px' : '20px',
             minHeight: 0,
           }}
         >
@@ -223,12 +271,12 @@ function CinematicHero() {
                   height: isTablet ? '120px' : '140px',
                 }}
               >
-                {/* Tiny bronze frame */}
+                {/* Extra tiny bronze frame */}
                 <div 
                   style={{
                     width: '100%',
                     height: '100%',
-                    padding: '3px',
+                    padding: '2px',
                     background: `linear-gradient(135deg, ${colors.bronze}40 0%, ${colors.darkBronze}30 100%)`,
                     borderRadius: '2px',
                     boxShadow: `
@@ -284,24 +332,26 @@ function CinematicHero() {
             </div>
           )}
 
-          {/* Main Frame - Increased Height with Tiny Border */}
+          {/* Main Frame - Maximum Vertical Space with Extra Tiny Border */}
           <motion.div
             key={`active-${currentFrame}`}
-            className="relative flex-shrink-0"
+            onClick={() => navigate('/login')}
+            className="relative flex-shrink-0 cursor-pointer"
             initial={{ opacity: 0, scale: 0.97 }}
             animate={{ opacity: 1, scale: 1 }}
+            whileHover={{ scale: 1.005 }}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             style={{
               width: isMobile ? '100%' : isTablet ? 'min(70vw, 750px)' : 'min(68vw, 950px)',
-              height: isMobile ? '75vh' : isTablet ? 'min(65vh, 620px)' : 'min(68vh, 660px)',
+              height: isMobile ? '78vh' : isTablet ? 'min(70vh, 670px)' : 'min(73vh, 710px)',
             }}
           >
-            {/* Tiny elegant bronze frame */}
+            {/* Extra tiny elegant bronze frame */}
             <div 
               style={{
                 width: '100%',
                 height: '100%',
-                padding: isMobile ? '4px' : isTablet ? '5px' : '6px',
+                padding: isMobile ? '3px' : isTablet ? '4px' : '4px',
                 background: `linear-gradient(145deg, ${colors.bronze}60 0%, ${colors.darkBronze}50 50%, ${colors.bronze}60 100%)`,
                 borderRadius: '3px',
                 boxShadow: `
@@ -446,12 +496,12 @@ function CinematicHero() {
                   height: isTablet ? '120px' : '140px',
                 }}
               >
-                {/* Tiny bronze frame */}
+                {/* Extra tiny bronze frame */}
                 <div 
                   style={{
                     width: '100%',
                     height: '100%',
-                    padding: '3px',
+                    padding: '2px',
                     background: `linear-gradient(135deg, ${colors.bronze}40 0%, ${colors.darkBronze}30 100%)`,
                     borderRadius: '2px',
                     boxShadow: `
@@ -512,12 +562,12 @@ function CinematicHero() {
           )}
         </div>
 
-        {/* Bottom - Only ChevronDown Icon (no scroll text) */}
+        {/* Bottom - Smaller Chevron Icon Only */}
         <div 
           className="flex items-center justify-center w-full"
           style={{
-            height: isMobile ? '45px' : '50px',
-            marginTop: isMobile ? '12px' : '15px',
+            height: isMobile ? '35px' : '40px',
+            marginTop: isMobile ? '8px' : '10px',
           }}
         >
           <motion.div
@@ -526,11 +576,11 @@ function CinematicHero() {
             transition={{ duration: 1.5, delay: 1.5 }}
           >
             <motion.div
-              animate={{ y: [0, 7, 0] }}
+              animate={{ y: [0, 6, 0] }}
               transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
               style={{
-                width: isMobile ? '30px' : '36px',
-                height: isMobile ? '30px' : '36px',
+                width: isMobile ? '24px' : '28px',
+                height: isMobile ? '24px' : '28px',
                 borderRadius: '50%',
                 border: `1px solid ${colors.bronze}60`,
                 background: `${colors.darkBronze}20`,
@@ -538,10 +588,10 @@ function CinematicHero() {
                 alignItems: 'center',
                 justifyContent: 'center',
                 color: colors.warmGold,
-                boxShadow: `0 0 12px ${colors.bronze}20`,
+                boxShadow: `0 0 10px ${colors.bronze}20`,
               }}
             >
-              <ChevronDown size={isMobile ? 14 : 16} strokeWidth={2} />
+              <ChevronDown size={isMobile ? 12 : 13} strokeWidth={2} />
             </motion.div>
           </motion.div>
         </div>
