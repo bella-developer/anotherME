@@ -160,38 +160,38 @@ function CinematicHero() {
         }}
       />
 
-      {/* Main Gallery Container - Optimized spacing */}
+      {/* Main Gallery Container - No gap from navbar */}
       <div 
         className="absolute inset-0 flex flex-col"
         style={{
-          padding: isMobile ? '75px 16px 30px' : isTablet ? '85px 40px 40px' : '85px 50px 40px',
+          padding: isMobile ? '70px 16px 20px' : isTablet ? '70px 40px 30px' : '70px 50px 30px',
         }}
       >
         
-        {/* Elegant Suspension Cable */}
+        {/* Elegant Suspension Cable - Connected to navbar */}
         {!isMobile && (
           <div 
             className="flex flex-col items-center"
             style={{
-              height: '35px',
-              marginBottom: '15px',
+              height: '25px',
+              marginBottom: '10px',
             }}
           >
             <div 
               style={{
-                width: '14px',
-                height: '14px',
+                width: '12px',
+                height: '12px',
                 borderRadius: '50%',
                 border: `2px solid ${colors.bronze}`,
                 background: `radial-gradient(circle at 30% 30%, ${colors.warmGold}50, ${colors.darkBronze})`,
-                boxShadow: `0 0 12px ${colors.bronze}40, inset 0 2px 3px rgba(0,0,0,0.6)`,
-                marginBottom: '2px',
+                boxShadow: `0 0 10px ${colors.bronze}40, inset 0 2px 3px rgba(0,0,0,0.6)`,
+                marginBottom: '1px',
               }}
             />
             <div 
               style={{
                 width: '1.5px',
-                height: '33px',
+                height: '24px',
                 background: `linear-gradient(180deg, ${colors.bronze} 0%, ${colors.darkBronze}80 100%)`,
                 boxShadow: `0 0 6px ${colors.bronze}30`,
               }}
@@ -207,7 +207,7 @@ function CinematicHero() {
             minHeight: 0,
           }}
         >
-          {/* Left Preview Frame with Index */}
+          {/* Left Preview Frame with Index - Landscape */}
           {!isMobile && (
             <div className="flex flex-col items-center" style={{ gap: '12px' }}>
               <motion.div
@@ -219,16 +219,16 @@ function CinematicHero() {
                 whileHover={{ opacity: 1, scale: 1.02 }}
                 transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
                 style={{
-                  width: isTablet ? '120px' : '150px',
-                  height: isTablet ? '200px' : '250px',
+                  width: isTablet ? '180px' : '220px',
+                  height: isTablet ? '120px' : '140px',
                 }}
               >
-                {/* Premium single-border frame */}
+                {/* Tiny bronze frame */}
                 <div 
                   style={{
                     width: '100%',
                     height: '100%',
-                    padding: '6px',
+                    padding: '3px',
                     background: `linear-gradient(135deg, ${colors.bronze}40 0%, ${colors.darkBronze}30 100%)`,
                     borderRadius: '2px',
                     boxShadow: `
@@ -284,7 +284,7 @@ function CinematicHero() {
             </div>
           )}
 
-          {/* Main Frame - Premium Museum Quality */}
+          {/* Main Frame - Increased Height with Tiny Border */}
           <motion.div
             key={`active-${currentFrame}`}
             className="relative flex-shrink-0"
@@ -293,15 +293,15 @@ function CinematicHero() {
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             style={{
               width: isMobile ? '100%' : isTablet ? 'min(70vw, 750px)' : 'min(68vw, 950px)',
-              height: isMobile ? '70vh' : isTablet ? 'min(58vh, 550px)' : 'min(62vh, 600px)',
+              height: isMobile ? '75vh' : isTablet ? 'min(65vh, 620px)' : 'min(68vh, 660px)',
             }}
           >
-            {/* Museum-quality single elegant frame */}
+            {/* Tiny elegant bronze frame */}
             <div 
               style={{
                 width: '100%',
                 height: '100%',
-                padding: isMobile ? '8px' : isTablet ? '10px' : '12px',
+                padding: isMobile ? '4px' : isTablet ? '5px' : '6px',
                 background: `linear-gradient(145deg, ${colors.bronze}60 0%, ${colors.darkBronze}50 50%, ${colors.bronze}60 100%)`,
                 borderRadius: '3px',
                 boxShadow: `
@@ -430,7 +430,7 @@ function CinematicHero() {
             </div>
           </motion.div>
 
-          {/* Right Preview Frame with Editorial */}
+          {/* Right Preview Frame with Editorial - Landscape */}
           {!isMobile && (
             <div className="flex flex-col items-center" style={{ gap: '12px' }}>
               <motion.div
@@ -442,15 +442,16 @@ function CinematicHero() {
                 whileHover={{ opacity: 1, scale: 1.02 }}
                 transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
                 style={{
-                  width: isTablet ? '120px' : '150px',
-                  height: isTablet ? '200px' : '250px',
+                  width: isTablet ? '180px' : '220px',
+                  height: isTablet ? '120px' : '140px',
                 }}
               >
+                {/* Tiny bronze frame */}
                 <div 
                   style={{
                     width: '100%',
                     height: '100%',
-                    padding: '6px',
+                    padding: '3px',
                     background: `linear-gradient(135deg, ${colors.bronze}40 0%, ${colors.darkBronze}30 100%)`,
                     borderRadius: '2px',
                     boxShadow: `
@@ -487,7 +488,7 @@ function CinematicHero() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1, delay: 0.8 }}
                 style={{
-                  width: isTablet ? '120px' : '150px',
+                  width: isTablet ? '180px' : '220px',
                   textAlign: 'center',
                 }}
               >
@@ -511,39 +512,25 @@ function CinematicHero() {
           )}
         </div>
 
-        {/* Bottom Scroll Indicator - Properly positioned */}
+        {/* Bottom - Only ChevronDown Icon (no scroll text) */}
         <div 
           className="flex items-center justify-center w-full"
           style={{
-            height: isMobile ? '50px' : '55px',
-            marginTop: isMobile ? '15px' : '18px',
+            height: isMobile ? '45px' : '50px',
+            marginTop: isMobile ? '12px' : '15px',
           }}
         >
           <motion.div
-            className="flex flex-col items-center"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1.5, delay: 1.5 }}
-            style={{ gap: isMobile ? '6px' : '8px' }}
           >
-            <p 
-              style={{
-                fontSize: isMobile ? '7px' : isTablet ? '8px' : '9px',
-                fontWeight: 500,
-                letterSpacing: '0.3em',
-                textTransform: 'uppercase',
-                color: `${colors.warmGold}60`,
-                textShadow: `0 2px 6px rgba(0,0,0,0.4)`,
-              }}
-            >
-              SCROLL
-            </p>
             <motion.div
               animate={{ y: [0, 7, 0] }}
               transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
               style={{
-                width: isMobile ? '28px' : '34px',
-                height: isMobile ? '28px' : '34px',
+                width: isMobile ? '30px' : '36px',
+                height: isMobile ? '30px' : '36px',
                 borderRadius: '50%',
                 border: `1px solid ${colors.bronze}60`,
                 background: `${colors.darkBronze}20`,
@@ -554,7 +541,7 @@ function CinematicHero() {
                 boxShadow: `0 0 12px ${colors.bronze}20`,
               }}
             >
-              <ChevronDown size={isMobile ? 12 : 14} strokeWidth={2} />
+              <ChevronDown size={isMobile ? 14 : 16} strokeWidth={2} />
             </motion.div>
           </motion.div>
         </div>
