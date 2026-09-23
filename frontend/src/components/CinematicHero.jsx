@@ -111,6 +111,50 @@ function CinematicHero() {
     setActiveEntry(index);
   };
 
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKeyPress = (e) => {
+      if (e.key === 'ArrowLeft') {
+        setActiveEntry((prev) => (prev > 0 ? prev - 1 : frames.length - 1));
+      } else if (e.key === 'ArrowRight') {
+        setActiveEntry((prev) => (prev < frames.length - 1 ? prev + 1 : 0));
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyPress);
+    return () => window.removeEventListener('keydown', handleKeyPress);
+  }, [frames.length]);
+
+  // Scroll navigation
+  useEffect(() => {
+    const handleWheel = (e) => {
+      if (Math.abs(e.deltaY) > 30) {
+        e.preventDefault();
+        if (e.deltaY > 0) {
+          // Scroll down - next item
+          setActiveEntry((prev) => (prev < frames.length - 1 ? prev + 1 : 0));
+        } else {
+          // Scroll up - previous item
+          setActiveEntry((prev) => (prev > 0 ? prev - 1 : frames.length - 1));
+        }
+      }
+    };
+
+    const throttle = (func, delay) => {
+      let lastCall = 0;
+      return (...args) => {
+        const now = new Date().getTime();
+        if (now - lastCall < delay) return;
+        lastCall = now;
+        return func(...args);
+      };
+    };
+
+    const throttledWheel = throttle(handleWheel, 800);
+    window.addEventListener('wheel', throttledWheel, { passive: false });
+    return () => window.removeEventListener('wheel', throttledWheel);
+  }, [frames.length]);
+
   /**
    * ================================================================
    * REUSABLE VIDEO
@@ -170,21 +214,21 @@ function CinematicHero() {
           MAIN
           ============================================================ */}
       <section className="relative z-10 px-7 py-10 sm:px-10 lg:px-14">
-        <div className="mx-auto grid min-h-[calc(100vh-162px)] max-w-[1750px] grid-cols-1 gap-12 lg:grid-cols-[190px_minmax(250px,0.72fr)_minmax(560px,1.8fr)_78px] lg:gap-8 xl:grid-cols-[210px_minmax(280px,0.72fr)_minmax(620px,1.8fr)_90px]">
+        <div className="mx-auto grid min-h-[calc(100vh-162px)] max-w-[1750px] grid-cols-1 gap-12 lg:grid-cols-[190px_minmax(250px,0.72fr)_minmax(560px,1.8fr)_78px] lg:gap-5 xl:grid-cols-[210px_minmax(280px,0.72fr)_minmax(620px,1.8fr)_90px] xl:gap-6">
           {/* ========================================================
               COLUMN 01
               VAULT INDEX
               ======================================================== */}
           <aside className="hidden pt-20 lg:block">
             <div className="mb-8 flex items-center gap-3">
-              <span className="font-mono text-[9px] uppercase tracking-[0.28em] text-[#9b978e]">
+              <span className="font-mono text-[7px] uppercase tracking-[0.28em] text-[#9b978e]">
                 Vault
               </span>
 
               <span className="h-px w-8 bg-[#4d4a45]" />
             </div>
 
-            <div className="space-y-[18px]">
+            <div className="space-y-[14px]">
               {frames.map((frame, index) => {
                 const isActive = index === activeEntry;
 
@@ -206,7 +250,7 @@ function CinematicHero() {
 
                     {/* Number */}
                     <span
-                      className={`w-5 font-mono text-[9px] ${
+                      className={`w-5 font-mono text-[7px] ${
                         isActive
                           ? 'text-[#a72a30]'
                           : 'text-[#41403c] group-hover:text-[#68655f]'
@@ -217,7 +261,7 @@ function CinematicHero() {
 
                     {/* Title */}
                     <span
-                      className={`font-sans text-[10px] uppercase tracking-[0.17em] ${
+                      className={`font-sans text-[8px] uppercase tracking-[0.17em] ${
                         isActive
                           ? 'text-[#d5d1c8]'
                           : 'text-[#514f4a] group-hover:text-[#89857d]'
