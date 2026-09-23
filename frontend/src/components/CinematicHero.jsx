@@ -214,7 +214,7 @@ function CinematicHero() {
           MAIN
           ============================================================ */}
       <section className="relative z-10 px-7 py-10 sm:px-10 lg:px-14">
-        <div className="mx-auto grid min-h-[calc(100vh-162px)] max-w-[1750px] grid-cols-1 gap-12 lg:grid-cols-[190px_minmax(250px,0.72fr)_minmax(560px,1.8fr)_78px] lg:gap-5 xl:grid-cols-[210px_minmax(280px,0.72fr)_minmax(620px,1.8fr)_90px] xl:gap-6">
+        <div className="mx-auto grid min-h-[calc(100vh-162px)] max-w-[1750px] grid-cols-1 gap-12 lg:grid-cols-[190px_minmax(250px,0.72fr)_minmax(560px,1.8fr)_78px] lg:gap-2 xl:grid-cols-[210px_minmax(280px,0.72fr)_minmax(620px,1.8fr)_90px] xl:gap-3">
           {/* ========================================================
               COLUMN 01
               VAULT INDEX
@@ -279,9 +279,9 @@ function CinematicHero() {
               COLUMN 02
               EDITORIAL IDENTITY
               ======================================================== */}
-          <div className="relative flex flex-col justify-center pt-6 lg:pt-14">
+          <div className="relative flex flex-col justify-center pt-6 lg:pt-14 lg:-ml-4">
             {/* Small record marker */}
-            <div className="mb-8 flex items-center gap-3">
+            <div className="mb-6 flex items-center gap-3">
               <span className="font-mono text-[8px] uppercase tracking-[0.24em] text-[#55524d]">
                 {active.number}
               </span>
@@ -302,12 +302,12 @@ function CinematicHero() {
             </h1>
 
             {/* Minimal tagline */}
-            <p className="mt-7 max-w-[250px] font-sans text-[10px] uppercase leading-[1.9] tracking-[0.16em] text-[#85817a]">
+            <p className="mt-6 max-w-[250px] font-sans text-[10px] uppercase leading-[1.9] tracking-[0.16em] text-[#85817a]">
               {active.tagline}
             </p>
 
             {/* Minimal active marker */}
-            <div className="mt-12 flex items-center gap-3">
+            <div className="mt-10 flex items-center gap-3">
               <span className="h-[4px] w-[4px] rounded-full bg-[#a72a30]" />
 
               <span className="font-mono text-[7px] uppercase tracking-[0.22em] text-[#4f4c47]">
@@ -460,7 +460,7 @@ function CinematicHero() {
         {/* ==========================================================
             BOTTOM VAULT BAR
             ========================================================== */}
-        <div className="mx-auto -mt-8 flex max-w-[1750px] items-end justify-between">
+        <div className="mx-auto -mt-16 flex max-w-[1750px] items-end justify-between">
           {/* MINIMAL PAPER ARTIFACT */}
           <div className="relative hidden h-[100px] w-[165px] rotate-[-3deg] border border-[#d8d2c2]/10 bg-[#0b0b0a] p-4 shadow-[0_25px_60px_rgba(0,0,0,0.6)] md:block">
             <div className="pointer-events-none absolute inset-0 bg-[repeating-linear-gradient(0deg,transparent,transparent_5px,rgba(255,255,255,0.015)_6px)]" />
