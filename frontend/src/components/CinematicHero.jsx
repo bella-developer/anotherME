@@ -416,7 +416,7 @@ function CinematicHero() {
         {/* ==========================================================
             BOTTOM VAULT BAR
             ========================================================== */}
-        <div className="mx-auto mt-2 flex max-w-[1750px] items-end justify-between border-t border-white/[0.055] pt-7">
+        <div className="mx-auto -mt-8 flex max-w-[1750px] items-end justify-between">
           {/* MINIMAL PAPER ARTIFACT */}
           <div className="relative hidden h-[100px] w-[165px] rotate-[-3deg] border border-[#d8d2c2]/10 bg-[#0b0b0a] p-4 shadow-[0_25px_60px_rgba(0,0,0,0.6)] md:block">
             <div className="pointer-events-none absolute inset-0 bg-[repeating-linear-gradient(0deg,transparent,transparent_5px,rgba(255,255,255,0.015)_6px)]" />
