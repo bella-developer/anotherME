@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 /**
- * CinematicHero - ESO Black Archive
- * Refined cinematic archive interface
+ * CinematicHero - ESO Black Vault
+ * Refined cinematic vault interface
  * Minimal editorial content / maximum visual atmosphere
  */
 
@@ -13,7 +13,7 @@ function CinematicHero() {
 
   /**
    * ================================================================
-   * ESO — THE BLACK ARCHIVE
+   * ESO — THE BLACK VAULT
    * ================================================================
    *
    * Each record intentionally contains only:
@@ -173,18 +173,18 @@ function CinematicHero() {
         <div className="mx-auto grid min-h-[calc(100vh-162px)] max-w-[1750px] grid-cols-1 gap-12 lg:grid-cols-[190px_minmax(250px,0.72fr)_minmax(560px,1.8fr)_78px] lg:gap-8 xl:grid-cols-[210px_minmax(280px,0.72fr)_minmax(620px,1.8fr)_90px]">
           {/* ========================================================
               COLUMN 01
-              ARCHIVE INDEX
+              VAULT INDEX
               ======================================================== */}
           <aside className="hidden pt-20 lg:block">
             <div className="mb-8 flex items-center gap-3">
-              <span className="font-mono text-[8px] uppercase tracking-[0.28em] text-[#9b978e]">
-                Archive
+              <span className="font-mono text-[9px] uppercase tracking-[0.28em] text-[#9b978e]">
+                Vault
               </span>
 
               <span className="h-px w-8 bg-[#4d4a45]" />
             </div>
 
-            <div className="space-y-[14px]">
+            <div className="space-y-[18px]">
               {frames.map((frame, index) => {
                 const isActive = index === activeEntry;
 
@@ -206,7 +206,7 @@ function CinematicHero() {
 
                     {/* Number */}
                     <span
-                      className={`w-5 font-mono text-[8px] ${
+                      className={`w-5 font-mono text-[9px] ${
                         isActive
                           ? 'text-[#a72a30]'
                           : 'text-[#41403c] group-hover:text-[#68655f]'
@@ -217,7 +217,7 @@ function CinematicHero() {
 
                     {/* Title */}
                     <span
-                      className={`font-sans text-[9px] uppercase tracking-[0.17em] ${
+                      className={`font-sans text-[10px] uppercase tracking-[0.17em] ${
                         isActive
                           ? 'text-[#d5d1c8]'
                           : 'text-[#514f4a] group-hover:text-[#89857d]'
@@ -245,20 +245,20 @@ function CinematicHero() {
               <span className="h-px w-8 bg-[#34322f]" />
 
               <span className="font-mono text-[7px] uppercase tracking-[0.2em] text-[#3f3d39]">
-                Archive
+                Vault
               </span>
             </div>
 
             {/* Title */}
             <h1
               key={active.title}
-              className="font-serif text-[58px] font-normal leading-[0.88] tracking-[-0.055em] text-[#e8e5dc] sm:text-[68px] lg:text-[68px] xl:text-[80px]"
+              className="font-serif text-[54px] font-normal leading-[0.92] tracking-[-0.055em] text-[#e8e5dc] sm:text-[64px] lg:text-[64px] xl:text-[76px]"
             >
               {active.title}
             </h1>
 
             {/* Minimal tagline */}
-            <p className="mt-8 max-w-[250px] font-sans text-[10px] uppercase leading-[1.9] tracking-[0.16em] text-[#85817a]">
+            <p className="mt-7 max-w-[250px] font-sans text-[10px] uppercase leading-[1.9] tracking-[0.16em] text-[#85817a]">
               {active.tagline}
             </p>
 
@@ -414,9 +414,9 @@ function CinematicHero() {
         </div>
 
         {/* ==========================================================
-            BOTTOM ARCHIVE BAR
+            BOTTOM VAULT BAR
             ========================================================== */}
-        <div className="mx-auto mt-12 flex max-w-[1750px] items-end justify-between border-t border-white/[0.055] pt-7 lg:mt-0 lg:-translate-y-3">
+        <div className="mx-auto mt-2 flex max-w-[1750px] items-end justify-between border-t border-white/[0.055] pt-7">
           {/* MINIMAL PAPER ARTIFACT */}
           <div className="relative hidden h-[100px] w-[165px] rotate-[-3deg] border border-[#d8d2c2]/10 bg-[#0b0b0a] p-4 shadow-[0_25px_60px_rgba(0,0,0,0.6)] md:block">
             <div className="pointer-events-none absolute inset-0 bg-[repeating-linear-gradient(0deg,transparent,transparent_5px,rgba(255,255,255,0.015)_6px)]" />
@@ -448,7 +448,7 @@ function CinematicHero() {
             className="group mx-auto flex items-center gap-5 md:mx-0 lg:ml-[390px]"
           >
             <span className="font-mono text-[8px] uppercase tracking-[0.26em] text-[#716e67] transition-colors duration-500 group-hover:text-[#d8d4ca]">
-              Explore the Archive
+              Explore the Vault
             </span>
 
             <span className="relative flex w-16 items-center">
