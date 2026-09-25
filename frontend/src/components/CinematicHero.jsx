@@ -296,7 +296,7 @@ function CinematicHero() {
             {/* Title */}
             <h1
               key={active.title}
-              className="font-serif text-[34px] font-normal leading-[0.92] tracking-[-0.055em] text-[#e8e5dc] sm:text-[44px] lg:text-[44px] xl:text-[56px]"
+              className="font-serif text-[24px] font-normal leading-[0.92] tracking-[-0.055em] text-[#e8e5dc] sm:text-[34px] lg:text-[34px] xl:text-[46px]"
             >
               {active.title}
             </h1>
