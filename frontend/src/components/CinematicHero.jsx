@@ -355,7 +355,7 @@ function CinematicHero() {
 
           {/* ========================================================
               COLUMN 03
-              MAIN VIDEO
+              MAIN VIDEO - CLEAN MINIMAL
               ======================================================== */}
           <div className="relative flex min-h-[520px] items-center justify-center lg:min-h-0">
             <div className="group relative w-full overflow-hidden bg-[#090909]">
@@ -368,7 +368,7 @@ function CinematicHero() {
                 />
               </div>
 
-              {/* QUOTE OVERLAY - Always visible, simple and clean */}
+              {/* QUOTE OVERLAY ONLY - Nothing else */}
               <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center">
                 <p className="max-w-[75%] text-center font-serif text-[14px] leading-[1.5] tracking-wide text-white/90 sm:text-[16px] lg:text-[17px]">
                   {active.quote}
@@ -378,64 +378,17 @@ function CinematicHero() {
               {/* VIGNETTE */}
               <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_30%,rgba(0,0,0,0.55)_100%)]" />
 
-              {/* TOP GRADIENT */}
-              <div className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-black/60 to-transparent" />
-
-              {/* BOTTOM GRADIENT */}
-              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-black/75 to-transparent" />
-
               {/* ARCHIVAL EDGE */}
               <div className="pointer-events-none absolute inset-0 border border-white/[0.11]" />
 
-              {/* TOP LEFT — only essential identifier */}
-              <div className="absolute left-5 top-5 flex items-center gap-3">
-                <span className="font-mono text-[7px] uppercase tracking-[0.25em] text-white/40">
-                  ESO
-                </span>
-
-                <span className="h-px w-5 bg-white/20" />
-
-                <span className="font-mono text-[7px] tracking-[0.2em] text-white/60">
-                  {active.number}
-                </span>
-              </div>
-
-              {/* TOP RIGHT — single atmospheric marker */}
-              <div className="absolute right-5 top-5">
-                <span className="h-[4px] w-[4px] rounded-full bg-[#a72a30] shadow-[0_0_10px_rgba(167,42,48,0.35)]" />
-              </div>
-
-              {/* CENTER ENTER */}
+              {/* CLICKABLE OVERLAY - Full area clickable, invisible */}
               <button
                 onClick={() => navigate('/login')}
                 aria-label={`Enter ${active.title}`}
-                className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 items-center gap-4 opacity-50 transition-all duration-700 group-hover:opacity-100"
+                className="absolute inset-0 cursor-pointer"
               >
-                <span className="flex h-14 w-14 items-center justify-center border border-white/20 transition-all duration-700 group-hover:border-white/50">
-                  <svg
-                    viewBox="0 0 24 24"
-                    className="ml-1 h-3 w-3 fill-[#e8e5dc]"
-                    aria-hidden="true"
-                  >
-                    <path d="M8 5.14v13.72a1 1 0 0 0 1.53.85l10.2-6.86a1 1 0 0 0 0-1.7L9.53 4.29A1 1 0 0 0 8 5.14Z" />
-                  </svg>
-                </span>
-
-                <span className="hidden font-mono text-[7px] uppercase tracking-[0.26em] text-white/55 sm:block">
-                  Enter
-                </span>
+                <span className="sr-only">Enter {active.title}</span>
               </button>
-
-              {/* MINIMAL BOTTOM MEDIA LABEL */}
-              <div className="absolute bottom-0 left-0 p-5">
-                <div className="mb-2 font-mono text-[6px] uppercase tracking-[0.28em] text-white/30">
-                  ESO
-                </div>
-
-                <div className="font-serif text-[20px] tracking-[-0.02em] text-white/85">
-                  {active.shortTitle}
-                </div>
-              </div>
             </div>
           </div>
 
@@ -508,27 +461,27 @@ function CinematicHero() {
         {/* ==========================================================
             BOTTOM VAULT BAR
             ========================================================== */}
-        <div className="mx-auto -mt-16 flex max-w-[1750px] items-end justify-between">
-          {/* MINIMAL PAPER ARTIFACT */}
-          <div className="relative hidden h-[100px] w-[165px] rotate-[-3deg] border border-[#d8d2c2]/10 bg-[#0b0b0a] p-4 shadow-[0_25px_60px_rgba(0,0,0,0.6)] md:block">
+        <div className="mx-auto -mt-32 flex max-w-[1750px] items-end justify-between">
+          {/* CLASSIFIED CARD - Larger and higher */}
+          <div className="relative hidden h-[140px] w-[220px] rotate-[-3deg] border border-[#d8d2c2]/10 bg-[#0b0b0a] p-6 shadow-[0_35px_80px_rgba(0,0,0,0.75)] md:block">
             <div className="pointer-events-none absolute inset-0 bg-[repeating-linear-gradient(0deg,transparent,transparent_5px,rgba(255,255,255,0.015)_6px)]" />
 
             <div className="relative">
               <div className="flex items-center justify-between">
-                <span className="font-mono text-[7px] uppercase tracking-[0.22em] text-[#706c64]">
+                <span className="font-mono text-[9px] uppercase tracking-[0.22em] text-[#706c64]">
                   ESO
                 </span>
 
-                <span className="font-mono text-[7px] text-[#4d4a45]">
+                <span className="font-mono text-[9px] text-[#4d4a45]">
                   {active.number}
                 </span>
               </div>
 
-              <div className="mt-5 font-serif text-[15px] leading-[0.9] text-[#a39e94]">
+              <div className="mt-7 font-serif text-[22px] leading-[0.9] text-[#a39e94]">
                 {active.shortTitle}
               </div>
 
-              <div className="absolute bottom-[-3px] right-[-3px] rotate-[-8deg] border border-[#a72a30]/50 px-2 py-[3px] font-mono text-[6px] uppercase tracking-[0.14em] text-[#a72a30]/70">
+              <div className="absolute bottom-[-5px] right-[-5px] rotate-[-8deg] border border-[#a72a30]/50 px-3 py-[4px] font-mono text-[8px] uppercase tracking-[0.14em] text-[#a72a30]/70">
                 Classified
               </div>
             </div>
