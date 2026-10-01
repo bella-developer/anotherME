@@ -274,12 +274,10 @@ function CinematicHero() {
               VAULT INDEX
               ======================================================== */}
           <aside className="hidden pt-20 lg:block">
-            <div className="mb-8 flex items-center gap-3">
+            <div className="mb-8">
               <span className="font-mono text-[7px] uppercase tracking-[0.28em] text-[#9b978e]">
                 Vault
               </span>
-
-              <span className="h-px w-8 bg-[#4d4a45]" />
             </div>
 
             <div className="space-y-[14px]">
@@ -334,16 +332,10 @@ function CinematicHero() {
               EDITORIAL IDENTITY
               ======================================================== */}
           <div className="relative flex flex-col justify-center pt-6 lg:pt-14 lg:-ml-4">
-            {/* Small record marker */}
-            <div className="mb-6 flex items-center gap-3">
+            {/* Number */}
+            <div className="mb-6">
               <span className="font-mono text-[8px] uppercase tracking-[0.24em] text-[#55524d]">
                 {active.number}
-              </span>
-
-              <span className="h-px w-8 bg-[#34322f]" />
-
-              <span className="font-mono text-[7px] uppercase tracking-[0.2em] text-[#3f3d39]">
-                Vault
               </span>
             </div>
 
@@ -359,15 +351,6 @@ function CinematicHero() {
             <p className="mt-6 max-w-[250px] font-sans text-[10px] uppercase leading-[1.9] tracking-[0.16em] text-[#85817a]">
               {active.tagline}
             </p>
-
-            {/* Minimal active marker */}
-            <div className="mt-10 flex items-center gap-3">
-              <span className="h-[4px] w-[4px] rounded-full bg-[#a72a30]" />
-
-              <span className="font-mono text-[7px] uppercase tracking-[0.22em] text-[#4f4c47]">
-                Open
-              </span>
-            </div>
           </div>
 
           {/* ========================================================
