@@ -302,57 +302,96 @@ function CinematicHero() {
         <div className="mx-auto grid min-h-[calc(100vh-120px)] max-w-[1750px] grid-cols-1 gap-8 sm:min-h-[calc(100vh-140px)] sm:gap-10 md:min-h-[calc(100vh-162px)] lg:grid-cols-[190px_minmax(250px,0.72fr)_minmax(560px,1.8fr)_78px] lg:gap-2 xl:grid-cols-[210px_minmax(280px,0.72fr)_minmax(620px,1.8fr)_90px] xl:gap-3">
           {/* ========================================================
               COLUMN 01
-              VAULT INDEX - PREMIUM
+              STICKY NOTES - ARTISTIC DECORATIVE WALL
               ======================================================== */}
           <aside className="hidden pt-20 lg:block">
             <div className="mb-10">
               <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.28em] text-[#d5d1c8]">
-                SELECT VAULT
+                VAULT INDEX
               </span>
               <div className="mt-2 h-px w-16 bg-[#a72a30]/30" />
             </div>
 
-            <div className="space-y-[14px]">
+            <div className="space-y-3">
               {frames.map((frame, index) => {
                 const isActive = index === activeEntry;
+                
+                // Different colors for visual variety
+                const colors = [
+                  { dot: '#a72a30', border: 'rgba(167,42,48,0.2)' }, // Red
+                  { dot: '#d5d1c8', border: 'rgba(213,209,200,0.15)' }, // Beige
+                  { dot: '#85817a', border: 'rgba(133,129,122,0.2)' }, // Gray
+                  { dot: '#a72a30', border: 'rgba(167,42,48,0.25)' }, // Red
+                  { dot: '#c4bfb5', border: 'rgba(196,191,181,0.2)' }, // Light beige
+                  { dot: '#706c64', border: 'rgba(112,108,100,0.2)' }, // Muted
+                  { dot: '#a72a30', border: 'rgba(167,42,48,0.3)' }, // Red
+                ];
+
+                const color = colors[index];
+                const rotations = ['rotate-[-2deg]', 'rotate-[1deg]', 'rotate-[-1deg]', 'rotate-[2deg]', 'rotate-[-1.5deg]', 'rotate-[1.5deg]', 'rotate-[-2.5deg]'];
 
                 return (
                   <button
                     key={frame.id}
                     onClick={() => selectEntry(index)}
-                    aria-label={`View ${frame.title}`}
-                    className="group flex w-full items-center gap-3 text-left transition-all duration-300"
+                    className={`group relative block w-28 transition-all duration-500 ${rotations[index]} ${
+                      isActive ? 'scale-105' : 'hover:scale-102'
+                    }`}
                   >
-                    {/* Active line */}
-                    <span
-                      className={`h-px transition-all duration-500 ${
-                        isActive
-                          ? 'w-6 bg-[#a72a30]'
-                          : 'w-0 group-hover:w-3 group-hover:bg-[#55524d]'
+                    {/* Pin at top */}
+                    <div className="absolute -top-1 left-1/2 z-20 h-2 w-2 -translate-x-1/2 rounded-full bg-zinc-700/60 shadow-md" />
+                    
+                    {/* Sticky note card */}
+                    <div 
+                      className={`relative h-14 rounded-lg bg-zinc-900/80 backdrop-blur-md shadow-lg transition-all duration-500 ${
+                        isActive 
+                          ? 'shadow-xl ring-1 ring-white/20' 
+                          : 'shadow-md hover:shadow-xl'
                       }`}
-                    />
-
-                    {/* Number */}
-                    <span
-                      className={`w-5 font-mono text-[8px] font-medium ${
-                        isActive
-                          ? 'text-[#a72a30]'
-                          : 'text-[#41403c] group-hover:text-[#68655f]'
-                      }`}
+                      style={{
+                        borderWidth: '1px',
+                        borderStyle: 'solid',
+                        borderColor: isActive ? color.border : 'rgba(255,255,255,0.1)',
+                      }}
                     >
-                      {frame.number}
-                    </span>
+                      {/* Texture overlay */}
+                      <div className="pointer-events-none absolute inset-0 rounded-lg bg-[repeating-linear-gradient(0deg,transparent,transparent_3px,rgba(255,255,255,0.01)_4px)]" />
+                      
+                      {/* Content */}
+                      <div className="relative flex h-full flex-col justify-center px-3 py-2">
+                        {/* Number with colored dot */}
+                        <div className="mb-1 flex items-center gap-1.5">
+                          <span 
+                            className="h-1.5 w-1.5 rounded-full transition-all duration-300"
+                            style={{ backgroundColor: color.dot }}
+                          />
+                          <span 
+                            className={`font-mono text-[7px] font-medium transition-colors duration-300 ${
+                              isActive ? 'text-[#d5d1c8]' : 'text-[#55524d] group-hover:text-[#85817a]'
+                            }`}
+                          >
+                            {frame.number}
+                          </span>
+                        </div>
+                        
+                        {/* Title */}
+                        <span 
+                          className={`font-sans text-[8px] font-medium uppercase leading-tight tracking-[0.12em] transition-colors duration-300 ${
+                            isActive ? 'text-[#e8e5dc]' : 'text-[#6b6862] group-hover:text-[#a39e94]'
+                          }`}
+                        >
+                          {frame.shortTitle}
+                        </span>
+                      </div>
 
-                    {/* Title */}
-                    <span
-                      className={`font-sans text-[9px] uppercase tracking-[0.17em] ${
-                        isActive
-                          ? 'text-[#d5d1c8] font-medium'
-                          : 'text-[#514f4a] group-hover:text-[#89857d]'
-                      }`}
-                    >
-                      {frame.shortTitle}
-                    </span>
+                      {/* Active glow */}
+                      {isActive && (
+                        <div 
+                          className="absolute inset-0 rounded-lg opacity-20 blur-sm"
+                          style={{ backgroundColor: color.dot }}
+                        />
+                      )}
+                    </div>
                   </button>
                 );
               })}
@@ -364,56 +403,95 @@ function CinematicHero() {
               EDITORIAL IDENTITY - RESPONSIVE
               ======================================================== */}
           <div className="relative flex flex-col justify-center pt-4 sm:pt-6 lg:pt-14 lg:-ml-4">
-            {/* Mobile: Vault selector at top */}
+            {/* Mobile: Sticky notes at top */}
             <div className="mb-6 lg:hidden">
-              <div className="mb-3">
+              <div className="mb-4">
                 <span className="font-mono text-[9px] font-semibold uppercase tracking-[0.28em] text-[#d5d1c8]">
-                  SELECT VAULT
+                  VAULT INDEX
                 </span>
                 <div className="mt-2 h-px w-14 bg-[#a72a30]/30" />
               </div>
 
-              <div className="space-y-[10px]">
+              <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
                 {frames.map((frame, index) => {
                   const isActive = index === activeEntry;
+                  
+                  const colors = [
+                    { dot: '#a72a30', border: 'rgba(167,42,48,0.2)' },
+                    { dot: '#d5d1c8', border: 'rgba(213,209,200,0.15)' },
+                    { dot: '#85817a', border: 'rgba(133,129,122,0.2)' },
+                    { dot: '#a72a30', border: 'rgba(167,42,48,0.25)' },
+                    { dot: '#c4bfb5', border: 'rgba(196,191,181,0.2)' },
+                    { dot: '#706c64', border: 'rgba(112,108,100,0.2)' },
+                    { dot: '#a72a30', border: 'rgba(167,42,48,0.3)' },
+                  ];
+
+                  const color = colors[index];
+                  const rotations = ['rotate-[-1deg]', 'rotate-[1.5deg]', 'rotate-[-2deg]', 'rotate-[1deg]', 'rotate-[-1.5deg]', 'rotate-[2deg]', 'rotate-[-1deg]'];
 
                   return (
                     <button
                       key={frame.id}
                       onClick={() => selectEntry(index)}
                       aria-label={`View ${frame.title}`}
-                      className="group flex items-center gap-3 text-left transition-all duration-300"
+                      className={`group relative transition-all duration-500 ${rotations[index]} ${
+                        isActive ? 'scale-105' : 'hover:scale-102'
+                      }`}
                     >
-                      {/* Active line */}
-                      <span
-                        className={`h-px transition-all duration-500 ${
-                          isActive
-                            ? 'w-5 bg-[#a72a30]'
-                            : 'w-0 group-hover:w-3 group-hover:bg-[#55524d]'
+                      {/* Pin at top */}
+                      <div className="absolute -top-1 left-1/2 z-20 h-2 w-2 -translate-x-1/2 rounded-full bg-zinc-700/60 shadow-md" />
+                      
+                      {/* Sticky note card */}
+                      <div 
+                        className={`relative h-14 rounded-lg bg-zinc-900/80 backdrop-blur-md shadow-lg transition-all duration-500 ${
+                          isActive 
+                            ? 'shadow-xl ring-1 ring-white/20' 
+                            : 'shadow-md hover:shadow-xl'
                         }`}
-                      />
-
-                      {/* Number */}
-                      <span
-                        className={`w-5 font-mono text-[8px] font-medium ${
-                          isActive
-                            ? 'text-[#a72a30]'
-                            : 'text-[#41403c] group-hover:text-[#68655f]'
-                        }`}
+                        style={{
+                          borderWidth: '1px',
+                          borderStyle: 'solid',
+                          borderColor: isActive ? color.border : 'rgba(255,255,255,0.1)',
+                        }}
                       >
-                        {frame.number}
-                      </span>
+                        {/* Texture overlay */}
+                        <div className="pointer-events-none absolute inset-0 rounded-lg bg-[repeating-linear-gradient(0deg,transparent,transparent_3px,rgba(255,255,255,0.01)_4px)]" />
+                        
+                        {/* Content */}
+                        <div className="relative flex h-full flex-col justify-center px-3 py-2">
+                          {/* Number with colored dot */}
+                          <div className="mb-1 flex items-center gap-1.5">
+                            <span 
+                              className="h-1.5 w-1.5 rounded-full"
+                              style={{ backgroundColor: color.dot }}
+                            />
+                            <span 
+                              className={`font-mono text-[7px] font-medium ${
+                                isActive ? 'text-[#d5d1c8]' : 'text-[#55524d]'
+                              }`}
+                            >
+                              {frame.number}
+                            </span>
+                          </div>
+                          
+                          {/* Title */}
+                          <span 
+                            className={`font-sans text-[8px] font-medium uppercase leading-tight tracking-[0.12em] ${
+                              isActive ? 'text-[#e8e5dc]' : 'text-[#6b6862]'
+                            }`}
+                          >
+                            {frame.shortTitle}
+                          </span>
+                        </div>
 
-                      {/* Title */}
-                      <span
-                        className={`font-sans text-[9px] uppercase tracking-[0.17em] ${
-                          isActive
-                            ? 'text-[#d5d1c8] font-medium'
-                            : 'text-[#514f4a] group-hover:text-[#89857d]'
-                        }`}
-                      >
-                        {frame.shortTitle}
-                      </span>
+                        {/* Active glow */}
+                        {isActive && (
+                          <div 
+                            className="absolute inset-0 rounded-lg opacity-20 blur-sm"
+                            style={{ backgroundColor: color.dot }}
+                          />
+                        )}
+                      </div>
                     </button>
                   );
                 })}
