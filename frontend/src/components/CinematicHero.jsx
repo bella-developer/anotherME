@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 /**
@@ -119,11 +119,6 @@ function CinematicHero() {
     setActiveEntry(index);
   };
 
-  // Reset video loaded state when active entry changes
-  useEffect(() => {
-    setVideoLoaded((prev) => ({ ...prev, [active.id]: false }));
-  }, [active.id]);
-
   // Keyboard navigation
   useEffect(() => {
     const handleKeyPress = (e) => {
@@ -173,28 +168,49 @@ function CinematicHero() {
    * REUSABLE VIDEO
    * ================================================================
    */
-  const ArchiveVideo = ({ frame, className = '' }) => {
-    const handleVideoLoad = () => {
-      setVideoLoaded((prev) => ({ ...prev, [frame.id]: true }));
-    };
+  const ArchiveVideo = ({ frame, className = '', onVideoReady }) => {
+    const videoRef = useRef(null);
+
+    useEffect(() => {
+      const video = videoRef.current;
+      if (!video) return;
+
+      const handleCanPlay = () => {
+        if (onVideoReady) {
+          onVideoReady();
+        }
+      };
+
+      video.addEventListener('canplaythrough', handleCanPlay);
+      video.addEventListener('loadeddata', handleCanPlay);
+
+      // Check if already loaded
+      if (video.readyState >= 3) {
+        handleCanPlay();
+      }
+
+      return () => {
+        video.removeEventListener('canplaythrough', handleCanPlay);
+        video.removeEventListener('loadeddata', handleCanPlay);
+      };
+    }, [frame.id, onVideoReady]);
 
     return (
       <video
+        ref={videoRef}
+        key={frame.id}
         className={className}
         autoPlay
         muted
         loop
         playsInline
         preload="auto"
-        onLoadedData={handleVideoLoad}
-        onCanPlayThrough={handleVideoLoad}
       >
         <source
           src={frame.mobileVideo}
           type="video/mp4"
           media="(max-width: 767px)"
         />
-
         <source src={frame.video} type="video/mp4" />
       </video>
     );
@@ -432,6 +448,9 @@ function CinematicHero() {
               <div className="aspect-[16/10] w-full">
                 <ArchiveVideo
                   frame={active}
+                  onVideoReady={() => setVideoLoaded((prev) => ({ ...prev, [active.id]: true }))}
+                  className="h-full w-full object-cover grayscale-[8%] contrast-[1.08] brightness-[0.82] saturate-[0.78] transition-opacity duration-700 ease-out group-hover:brightness-[0.9]"
+                />
                   className={`h-full w-full object-cover grayscale-[8%] contrast-[1.08] brightness-[0.82] saturate-[0.78] transition-opacity duration-700 ease-out group-hover:brightness-[0.9] ${
                     !videoLoaded[active.id] ? 'opacity-0' : 'opacity-100'
                   }`}
