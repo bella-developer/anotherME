@@ -10,7 +10,6 @@ import { useNavigate } from 'react-router-dom';
 function CinematicHero() {
   const navigate = useNavigate();
   const [activeEntry, setActiveEntry] = useState(6);
-  const [videoLoaded, setVideoLoaded] = useState({});
 
   /**
    * ================================================================
@@ -165,35 +164,26 @@ function CinematicHero() {
 
   /**
    * ================================================================
-   * REUSABLE VIDEO
+   * REUSABLE VIDEO - OPTIMIZED FOR PERFORMANCE
    * ================================================================
    */
-  const ArchiveVideo = ({ frame, className = '', onVideoReady }) => {
+  const ArchiveVideo = ({ frame, className = '' }) => {
     const videoRef = useRef(null);
 
     useEffect(() => {
       const video = videoRef.current;
       if (!video) return;
 
-      const handleCanPlay = () => {
-        if (onVideoReady) {
-          onVideoReady();
-        }
-      };
-
-      video.addEventListener('canplaythrough', handleCanPlay);
-      video.addEventListener('loadeddata', handleCanPlay);
-
-      // Check if already loaded
-      if (video.readyState >= 3) {
-        handleCanPlay();
+      // Preload and auto-play optimization
+      video.load();
+      
+      const playPromise = video.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {
+          // Auto-play was prevented, will retry on user interaction
+        });
       }
-
-      return () => {
-        video.removeEventListener('canplaythrough', handleCanPlay);
-        video.removeEventListener('loadeddata', handleCanPlay);
-      };
-    }, [frame.id, onVideoReady]);
+    }, [frame.id]);
 
     return (
       <video
@@ -205,13 +195,10 @@ function CinematicHero() {
         loop
         playsInline
         preload="auto"
+        poster="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
       >
-        <source
-          src={frame.mobileVideo}
-          type="video/mp4"
-          media="(max-width: 767px)"
-        />
         <source src={frame.video} type="video/mp4" />
+        <source src={frame.mobileVideo} type="video/mp4" />
       </video>
     );
   };
@@ -356,101 +343,20 @@ function CinematicHero() {
               ======================================================== */}
           <div className="relative flex min-h-[520px] items-center justify-center lg:min-h-0">
             <div className="group relative w-full overflow-hidden bg-[#090909]">
-              {/* LOADING QUOTE - with glitch effect */}
-              {!videoLoaded[active.id] && (
-                <div className="absolute inset-0 z-20 flex items-center justify-center bg-[#090909]">
-                  <style>
-                    {`
-                      @keyframes glitch {
-                        0% {
-                          transform: translate(0);
-                          opacity: 1;
-                        }
-                        20% {
-                          transform: translate(-2px, 2px);
-                          opacity: 0.8;
-                        }
-                        40% {
-                          transform: translate(-2px, -2px);
-                          opacity: 0.9;
-                        }
-                        60% {
-                          transform: translate(2px, 2px);
-                          opacity: 0.85;
-                        }
-                        80% {
-                          transform: translate(2px, -2px);
-                          opacity: 0.95;
-                        }
-                        100% {
-                          transform: translate(0);
-                          opacity: 1;
-                        }
-                      }
-                      
-                      @keyframes swing {
-                        0%, 100% {
-                          transform: rotate(-0.5deg);
-                        }
-                        50% {
-                          transform: rotate(0.5deg);
-                        }
-                      }
-                      
-                      @keyframes flicker {
-                        0%, 100% {
-                          opacity: 1;
-                        }
-                        50% {
-                          opacity: 0.7;
-                        }
-                      }
-                      
-                      .loading-quote {
-                        animation: swing 3s ease-in-out infinite, flicker 4s ease-in-out infinite;
-                      }
-                      
-                      .loading-quote::before,
-                      .loading-quote::after {
-                        content: attr(data-text);
-                        position: absolute;
-                        left: 0;
-                        top: 0;
-                        width: 100%;
-                        height: 100%;
-                      }
-                      
-                      .loading-quote::before {
-                        animation: glitch 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
-                        color: #a72a30;
-                        z-index: -1;
-                        clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
-                      }
-                      
-                      .loading-quote::after {
-                        animation: glitch 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) reverse infinite;
-                        color: #d8d4ca;
-                        z-index: -2;
-                        clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
-                      }
-                    `}
-                  </style>
-                  <p
-                    className="loading-quote relative max-w-[80%] px-8 text-center font-serif text-[18px] leading-[1.6] tracking-[-0.02em] text-[#e8e5dc] sm:text-[22px] lg:text-[24px]"
-                    data-text={active.quote}
-                  >
-                    {active.quote}
-                  </p>
-                </div>
-              )}
-
               {/* VIDEO */}
               <div className="aspect-[16/10] w-full">
                 <ArchiveVideo
                   frame={active}
-                  onVideoReady={() => setVideoLoaded((prev) => ({ ...prev, [active.id]: true }))}
-                  className="h-full w-full object-cover grayscale-[8%] contrast-[1.08] brightness-[0.82] saturate-[0.78] transition-opacity duration-700 ease-out group-hover:brightness-[0.9]"
+                  className="h-full w-full object-cover grayscale-[8%] contrast-[1.08] brightness-[0.82] saturate-[0.78]"
                 />
+              </div>
+
+              {/* QUOTE OVERLAY - Always visible, simple and clean */}
+              <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center">
+                <p className="max-w-[75%] text-center font-serif text-[14px] leading-[1.5] tracking-wide text-white/90 sm:text-[16px] lg:text-[17px]">
+                  {active.quote}
+                </p>
+              </div>
                   className={`h-full w-full object-cover grayscale-[8%] contrast-[1.08] brightness-[0.82] saturate-[0.78] transition-opacity duration-700 ease-out group-hover:brightness-[0.9] ${
                     !videoLoaded[active.id] ? 'opacity-0' : 'opacity-100'
                   }`}
