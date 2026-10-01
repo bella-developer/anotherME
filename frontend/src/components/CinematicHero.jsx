@@ -37,6 +37,8 @@ function CinematicHero() {
       shortTitle: 'MEMORY',
       tagline: 'Rooms of memory.',
       quote: 'In the architecture of remembrance, we build who we become.',
+      highlightWords: ['architecture', 'become'],
+      description: 'A space for introspection and personal history',
     },
     {
       id: 'dark-confession',
@@ -49,6 +51,8 @@ function CinematicHero() {
       shortTitle: 'CONFESSION',
       tagline: 'Things left unsaid.',
       quote: 'The weight we carry is lighter when shared in whispers.',
+      highlightWords: ['weight', 'whispers'],
+      description: 'Release your burdens without judgment',
     },
     {
       id: 'dark-understanding',
@@ -61,6 +65,8 @@ function CinematicHero() {
       shortTitle: 'UNDERSTANDING',
       tagline: 'A shared darkness.',
       quote: 'To be understood is to find another who speaks the language of your silence.',
+      highlightWords: ['language', 'silence'],
+      description: 'Connect with those who truly understand',
     },
     {
       id: 'fantasy-daydream',
@@ -73,6 +79,8 @@ function CinematicHero() {
       shortTitle: 'IMAGINATION',
       tagline: 'Beyond imagination.',
       quote: 'Reality is merely the canvas; imagination paints what could be.',
+      highlightWords: ['canvas', 'paints'],
+      description: 'Explore worlds beyond the ordinary',
     },
     {
       id: 'fantasy-vibes',
@@ -85,6 +93,8 @@ function CinematicHero() {
       shortTitle: 'VIBES',
       tagline: 'A space for anything.',
       quote: 'Between structure and chaos lies the frequency of authentic being.',
+      highlightWords: ['frequency', 'authentic'],
+      description: 'Flow freely in unstructured expression',
     },
     {
       id: 'philo-questioning',
@@ -97,6 +107,8 @@ function CinematicHero() {
       shortTitle: 'QUESTIONING',
       tagline: 'Questions without answers.',
       quote: 'The mind that asks is forever more alive than one that accepts.',
+      highlightWords: ['alive', 'accepts'],
+      description: 'Challenge everything, seek deeper truth',
     },
     {
       id: 'philo-truth',
@@ -109,10 +121,29 @@ function CinematicHero() {
       shortTitle: 'TRUTH',
       tagline: 'Where mystery begins.',
       quote: 'Truth is not found in certainty, but in the courage to remain uncertain.',
+      highlightWords: ['courage', 'uncertain'],
+      description: 'Embrace the uncomfortable realities',
     },
   ];
 
   const active = frames[activeEntry];
+
+  // Helper function to render quote with highlighted words
+  const renderQuoteWithHighlights = (quote, highlightWords) => {
+    if (!highlightWords || highlightWords.length === 0) {
+      return quote;
+    }
+
+    const parts = [];
+    let remaining = quote;
+    
+    highlightWords.forEach(word => {
+      const regex = new RegExp(`(${word})`, 'gi');
+      remaining = remaining.replace(regex, `<mark>$1</mark>`);
+    });
+
+    return remaining;
+  };
 
   const selectEntry = useCallback((index) => {
     setActiveEntry(index);
@@ -267,17 +298,18 @@ function CinematicHero() {
       {/* ============================================================
           MAIN
           ============================================================ */}
-      <section className="relative z-10 px-7 py-10 sm:px-10 lg:px-14">
-        <div className="mx-auto grid min-h-[calc(100vh-162px)] max-w-[1750px] grid-cols-1 gap-12 lg:grid-cols-[190px_minmax(250px,0.72fr)_minmax(560px,1.8fr)_78px] lg:gap-2 xl:grid-cols-[210px_minmax(280px,0.72fr)_minmax(620px,1.8fr)_90px] xl:gap-3">
+      <section className="relative z-10 px-4 py-8 sm:px-7 sm:py-10 lg:px-14">
+        <div className="mx-auto grid min-h-[calc(100vh-120px)] max-w-[1750px] grid-cols-1 gap-8 sm:min-h-[calc(100vh-140px)] sm:gap-10 md:min-h-[calc(100vh-162px)] lg:grid-cols-[190px_minmax(250px,0.72fr)_minmax(560px,1.8fr)_78px] lg:gap-2 xl:grid-cols-[210px_minmax(280px,0.72fr)_minmax(620px,1.8fr)_90px] xl:gap-3">
           {/* ========================================================
               COLUMN 01
-              VAULT INDEX
+              VAULT INDEX - PREMIUM
               ======================================================== */}
           <aside className="hidden pt-20 lg:block">
-            <div className="mb-8">
-              <span className="font-mono text-[7px] uppercase tracking-[0.28em] text-[#9b978e]">
-                Vault
+            <div className="mb-10">
+              <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.28em] text-[#d5d1c8]">
+                SELECT VAULT
               </span>
+              <div className="mt-2 h-px w-16 bg-[#a72a30]/30" />
             </div>
 
             <div className="space-y-[14px]">
@@ -289,7 +321,7 @@ function CinematicHero() {
                     key={frame.id}
                     onClick={() => selectEntry(index)}
                     aria-label={`View ${frame.title}`}
-                    className="group flex w-full items-center gap-3 text-left"
+                    className="group flex w-full items-center gap-3 text-left transition-all duration-300"
                   >
                     {/* Active line */}
                     <span
@@ -302,7 +334,7 @@ function CinematicHero() {
 
                     {/* Number */}
                     <span
-                      className={`w-5 font-mono text-[7px] ${
+                      className={`w-5 font-mono text-[8px] font-medium ${
                         isActive
                           ? 'text-[#a72a30]'
                           : 'text-[#41403c] group-hover:text-[#68655f]'
@@ -313,9 +345,9 @@ function CinematicHero() {
 
                     {/* Title */}
                     <span
-                      className={`font-sans text-[8px] uppercase tracking-[0.17em] ${
+                      className={`font-sans text-[9px] uppercase tracking-[0.17em] ${
                         isActive
-                          ? 'text-[#d5d1c8]'
+                          ? 'text-[#d5d1c8] font-medium'
                           : 'text-[#514f4a] group-hover:text-[#89857d]'
                       }`}
                     >
@@ -329,35 +361,35 @@ function CinematicHero() {
 
           {/* ========================================================
               COLUMN 02
-              EDITORIAL IDENTITY
+              EDITORIAL IDENTITY - RESPONSIVE
               ======================================================== */}
-          <div className="relative flex flex-col justify-center pt-6 lg:pt-14 lg:-ml-4">
+          <div className="relative flex flex-col justify-center pt-4 sm:pt-6 lg:pt-14 lg:-ml-4">
             {/* Number */}
-            <div className="mb-6">
+            <div className="mb-4 sm:mb-6">
               <span className="font-mono text-[8px] uppercase tracking-[0.24em] text-[#55524d]">
                 {active.number}
               </span>
             </div>
 
-            {/* Title */}
+            {/* Title - Fully responsive */}
             <h1
               key={active.title}
-              className="font-serif text-[24px] font-normal leading-[0.92] tracking-[-0.055em] text-[#e8e5dc] sm:text-[34px] lg:text-[34px] xl:text-[46px]"
+              className="font-serif text-[28px] font-normal leading-[0.92] tracking-[-0.055em] text-[#e8e5dc] sm:text-[36px] md:text-[40px] lg:text-[34px] xl:text-[46px]"
             >
               {active.title}
             </h1>
 
             {/* Minimal tagline */}
-            <p className="mt-6 max-w-[250px] font-sans text-[10px] uppercase leading-[1.9] tracking-[0.16em] text-[#85817a]">
+            <p className="mt-4 max-w-[280px] font-sans text-[10px] uppercase leading-[1.9] tracking-[0.16em] text-[#85817a] sm:mt-6 sm:max-w-[250px]">
               {active.tagline}
             </p>
           </div>
 
           {/* ========================================================
               COLUMN 03
-              MAIN VIDEO - CLEAN MINIMAL
+              MAIN VIDEO - RESPONSIVE
               ======================================================== */}
-          <div className="relative flex min-h-[520px] items-center justify-center lg:min-h-0">
+          <div className="relative flex min-h-[380px] items-center justify-center sm:min-h-[460px] md:min-h-[520px] lg:min-h-0">
             <div className="group relative w-full overflow-hidden bg-[#090909]">
               {/* VIDEO */}
               <div className="aspect-[16/10] w-full">
@@ -368,11 +400,25 @@ function CinematicHero() {
                 />
               </div>
 
-              {/* QUOTE OVERLAY ONLY - Nothing else */}
-              <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center">
-                <p className="max-w-[75%] text-center font-serif text-[14px] leading-[1.5] tracking-wide text-white/90 sm:text-[16px] lg:text-[17px]">
-                  {active.quote}
-                </p>
+              {/* QUOTE OVERLAY - WITH ARTISTIC QUOTATION MARKS AND HIGHLIGHTS */}
+              <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center px-4 sm:px-6">
+                <div className="relative max-w-[85%] text-center sm:max-w-[80%]">
+                  {/* Opening quotation mark */}
+                  <span className="absolute -left-4 -top-3 font-serif text-4xl leading-none text-[#a72a30]/40 sm:-left-6 sm:-top-4 sm:text-5xl lg:-left-8 lg:-top-6 lg:text-6xl">"</span>
+                  
+                  {/* Quote with highlights */}
+                  <p 
+                    className="font-serif text-[13px] leading-[1.6] tracking-wide text-white/90 sm:text-[15px] md:text-[16px] lg:text-[18px]"
+                    dangerouslySetInnerHTML={{
+                      __html: renderQuoteWithHighlights(active.quote, active.highlightWords)
+                        .replace(/<mark>/g, '<span class="font-semibold text-[#a72a30]">')
+                        .replace(/<\/mark>/g, '</span>')
+                    }}
+                  />
+                  
+                  {/* Closing quotation mark */}
+                  <span className="absolute -bottom-3 -right-4 font-serif text-4xl leading-none text-[#a72a30]/40 sm:-bottom-4 sm:-right-6 sm:text-5xl lg:-bottom-6 lg:-right-8 lg:text-6xl">"</span>
+                </div>
               </div>
 
               {/* VIGNETTE */}
@@ -459,44 +505,60 @@ function CinematicHero() {
         </div>
 
         {/* ==========================================================
-            BOTTOM VAULT BAR
+            BOTTOM VAULT BAR - RESPONSIVE
             ========================================================== */}
-        <div className="mx-auto -mt-32 flex max-w-[1750px] items-end justify-between">
-          {/* CLASSIFIED CARD - Larger and higher */}
-          <div className="relative hidden h-[140px] w-[220px] rotate-[-3deg] border border-[#d8d2c2]/10 bg-[#0b0b0a] p-6 shadow-[0_35px_80px_rgba(0,0,0,0.75)] md:block">
-            <div className="pointer-events-none absolute inset-0 bg-[repeating-linear-gradient(0deg,transparent,transparent_5px,rgba(255,255,255,0.015)_6px)]" />
+        <div className="mx-auto mt-8 flex max-w-[1750px] flex-col items-center justify-between gap-8 sm:mt-12 md:-mt-24 md:flex-row md:items-end md:gap-4 lg:-mt-32">
+          {/* VAULT ACCESS CARD - Premium Design */}
+          <button
+            onClick={() => navigate('/login')}
+            className="group relative hidden h-[160px] w-[260px] rotate-[-2deg] overflow-hidden border border-[#d8d2c2]/15 bg-[#0d0d0c] p-7 shadow-[0_40px_90px_rgba(0,0,0,0.8)] transition-all duration-500 hover:rotate-0 hover:border-[#a72a30]/30 md:block"
+          >
+            {/* Texture overlay */}
+            <div className="pointer-events-none absolute inset-0 bg-[repeating-linear-gradient(0deg,transparent,transparent_5px,rgba(255,255,255,0.018)_6px)]" />
 
             <div className="relative">
+              {/* Header */}
               <div className="flex items-center justify-between">
-                <span className="font-mono text-[9px] uppercase tracking-[0.22em] text-[#706c64]">
-                  ESO
+                <span className="font-mono text-[9px] uppercase tracking-[0.24em] text-[#706c64]">
+                  ESO — VAULT
                 </span>
-
                 <span className="font-mono text-[9px] text-[#4d4a45]">
                   {active.number}
                 </span>
               </div>
 
-              <div className="mt-7 font-serif text-[22px] leading-[0.9] text-[#a39e94]">
+              {/* Title */}
+              <div className="mt-6 font-serif text-[26px] leading-[1] tracking-tight text-[#c4bfb5]">
                 {active.shortTitle}
               </div>
 
-              <div className="absolute bottom-[-5px] right-[-5px] rotate-[-8deg] border border-[#a72a30]/50 px-3 py-[4px] font-mono text-[8px] uppercase tracking-[0.14em] text-[#a72a30]/70">
-                Classified
+              {/* Description */}
+              <p className="mt-3 text-[9px] leading-[1.6] tracking-wide text-[#6b6862]">
+                {active.description}
+              </p>
+
+              {/* CTA */}
+              <div className="mt-5 inline-flex items-center gap-2 border-b border-[#a72a30]/40 pb-1 transition-all duration-300 group-hover:border-[#a72a30]">
+                <span className="font-mono text-[8px] uppercase tracking-[0.18em] text-[#a72a30]/80 transition-colors duration-300 group-hover:text-[#a72a30]">
+                  Enter Vault
+                </span>
+                <span className="text-[10px] text-[#a72a30]/80 transition-all duration-300 group-hover:translate-x-1 group-hover:text-[#a72a30]">
+                  →
+                </span>
               </div>
             </div>
-          </div>
+          </button>
 
           {/* EXPLORE */}
           <button
             onClick={() => navigate('/login')}
-            className="group mx-auto flex items-center gap-5 md:mx-0 lg:ml-[390px]"
+            className="group flex items-center gap-4 sm:gap-5 md:ml-auto lg:ml-[390px]"
           >
-            <span className="font-mono text-[8px] uppercase tracking-[0.26em] text-[#716e67] transition-colors duration-500 group-hover:text-[#d8d4ca]">
+            <span className="font-mono text-[9px] uppercase tracking-[0.26em] text-[#716e67] transition-colors duration-500 group-hover:text-[#d8d4ca] sm:text-[8px]">
               Explore the Vault
             </span>
 
-            <span className="relative flex w-16 items-center">
+            <span className="relative flex w-14 items-center sm:w-16">
               <span className="h-px w-full bg-[#4c4944] transition-all duration-700 group-hover:bg-[#a72a30]" />
 
               <span className="absolute right-0 font-mono text-[13px] text-[#716e67] transition-all duration-700 group-hover:translate-x-1 group-hover:text-[#e8e5dc]">
@@ -510,38 +572,68 @@ function CinematicHero() {
         </div>
 
         {/* ==========================================================
-            MOBILE NAVIGATION
+            MOBILE NAVIGATION - IMPROVED UX
             ========================================================== */}
-        <div className="mt-10 overflow-x-auto border-y border-white/[0.055] py-4 lg:hidden">
-          <div className="flex min-w-max gap-7">
-            {frames.map((frame, index) => {
-              const isActive = index === activeEntry;
-
-              return (
+        <div className="mt-8 border-y border-white/[0.055] py-5 sm:mt-10 lg:hidden">
+          <div className="relative">
+            {/* Visual indicator dots */}
+            <div className="mb-3 flex items-center justify-center gap-1.5">
+              {frames.map((_, index) => (
                 <button
-                  key={frame.id}
+                  key={index}
                   onClick={() => selectEntry(index)}
-                  aria-label={`Select ${frame.title}`}
-                  className="flex items-center gap-2"
+                  aria-label={`Go to vault ${index + 1}`}
+                  className="group"
                 >
                   <span
-                    className={`font-mono text-[8px] ${
-                      isActive ? 'text-[#a72a30]' : 'text-[#484540]'
+                    className={`block h-1.5 transition-all duration-300 ${
+                      index === activeEntry
+                        ? 'w-6 rounded-full bg-[#a72a30]'
+                        : 'w-1.5 rounded-full bg-[#484540] group-hover:bg-[#6b6862]'
                     }`}
-                  >
-                    {frame.number}
-                  </span>
-
-                  <span
-                    className={`font-mono text-[8px] uppercase tracking-[0.16em] ${
-                      isActive ? 'text-[#d8d4ca]' : 'text-[#55524e]'
-                    }`}
-                  >
-                    {frame.shortTitle}
-                  </span>
+                  />
                 </button>
-              );
-            })}
+              ))}
+            </div>
+
+            {/* Scrollable vault list */}
+            <div className="overflow-x-auto scrollbar-hide">
+              <div className="flex min-w-max justify-center gap-6 px-4 sm:gap-8">
+                {frames.map((frame, index) => {
+                  const isActive = index === activeEntry;
+
+                  return (
+                    <button
+                      key={frame.id}
+                      onClick={() => selectEntry(index)}
+                      aria-label={`Select ${frame.title}`}
+                      className="group flex min-w-[80px] flex-col items-center gap-2 py-2"
+                    >
+                      <span
+                        className={`font-mono text-[9px] transition-colors duration-300 ${
+                          isActive ? 'text-[#a72a30]' : 'text-[#484540] group-hover:text-[#6b6862]'
+                        }`}
+                      >
+                        {frame.number}
+                      </span>
+
+                      <span
+                        className={`text-center font-mono text-[9px] uppercase tracking-[0.16em] transition-colors duration-300 ${
+                          isActive ? 'text-[#d8d4ca] font-medium' : 'text-[#55524e] group-hover:text-[#85817a]'
+                        }`}
+                      >
+                        {frame.shortTitle}
+                      </span>
+
+                      {/* Active indicator */}
+                      {isActive && (
+                        <span className="h-px w-8 bg-[#a72a30]" />
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
           </div>
         </div>
       </section>
