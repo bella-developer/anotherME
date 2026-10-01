@@ -357,11 +357,6 @@ function CinematicHero() {
                   {active.quote}
                 </p>
               </div>
-                  className={`h-full w-full object-cover grayscale-[8%] contrast-[1.08] brightness-[0.82] saturate-[0.78] transition-opacity duration-700 ease-out group-hover:brightness-[0.9] ${
-                    !videoLoaded[active.id] ? 'opacity-0' : 'opacity-100'
-                  }`}
-                />
-              </div>
 
               {/* VIGNETTE */}
               <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_30%,rgba(0,0,0,0.55)_100%)]" />
