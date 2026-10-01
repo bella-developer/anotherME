@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, memo, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 /**
@@ -114,52 +114,55 @@ function CinematicHero() {
 
   const active = frames[activeEntry];
 
-  const selectEntry = (index) => {
+  const selectEntry = useCallback((index) => {
     setActiveEntry(index);
-  };
+  }, []);
 
-  // Keyboard navigation
+  // Keyboard navigation with debounce
   useEffect(() => {
+    let timeout;
     const handleKeyPress = (e) => {
+      if (timeout) return;
+      
       if (e.key === 'ArrowLeft') {
         setActiveEntry((prev) => (prev > 0 ? prev - 1 : frames.length - 1));
+        timeout = setTimeout(() => { timeout = null; }, 300);
       } else if (e.key === 'ArrowRight') {
         setActiveEntry((prev) => (prev < frames.length - 1 ? prev + 1 : 0));
+        timeout = setTimeout(() => { timeout = null; }, 300);
       }
     };
 
     window.addEventListener('keydown', handleKeyPress);
-    return () => window.removeEventListener('keydown', handleKeyPress);
+    return () => {
+      window.removeEventListener('keydown', handleKeyPress);
+      if (timeout) clearTimeout(timeout);
+    };
   }, [frames.length]);
 
-  // Scroll navigation
+  // Scroll navigation - optimized with throttle
   useEffect(() => {
+    let lastCall = 0;
+    const throttleDelay = 1000;
+    
     const handleWheel = (e) => {
+      const now = Date.now();
+      if (now - lastCall < throttleDelay) return;
+      
       if (Math.abs(e.deltaY) > 30) {
         e.preventDefault();
+        lastCall = now;
+        
         if (e.deltaY > 0) {
-          // Scroll down - next item
           setActiveEntry((prev) => (prev < frames.length - 1 ? prev + 1 : 0));
         } else {
-          // Scroll up - previous item
           setActiveEntry((prev) => (prev > 0 ? prev - 1 : frames.length - 1));
         }
       }
     };
 
-    const throttle = (func, delay) => {
-      let lastCall = 0;
-      return (...args) => {
-        const now = new Date().getTime();
-        if (now - lastCall < delay) return;
-        lastCall = now;
-        return func(...args);
-      };
-    };
-
-    const throttledWheel = throttle(handleWheel, 800);
-    window.addEventListener('wheel', throttledWheel, { passive: false });
-    return () => window.removeEventListener('wheel', throttledWheel);
+    window.addEventListener('wheel', handleWheel, { passive: false });
+    return () => window.removeEventListener('wheel', handleWheel);
   }, [frames.length]);
 
   /**
@@ -167,41 +170,71 @@ function CinematicHero() {
    * REUSABLE VIDEO - OPTIMIZED FOR PERFORMANCE
    * ================================================================
    */
-  const ArchiveVideo = ({ frame, className = '' }) => {
+  const ArchiveVideo = memo(({ frame, className = '', priority = false }) => {
     const videoRef = useRef(null);
+    const [isVisible, setIsVisible] = useState(priority);
 
+    // Intersection Observer for lazy loading
     useEffect(() => {
+      if (priority) return; // Skip for priority videos
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              setIsVisible(true);
+              observer.disconnect();
+            }
+          });
+        },
+        { rootMargin: '50px' }
+      );
+
+      if (videoRef.current) {
+        observer.observe(videoRef.current);
+      }
+
+      return () => observer.disconnect();
+    }, [priority]);
+
+    // Load and play video when visible
+    useEffect(() => {
+      if (!isVisible) return;
+      
       const video = videoRef.current;
       if (!video) return;
 
-      // Preload and auto-play optimization
       video.load();
       
       const playPromise = video.play();
       if (playPromise !== undefined) {
         playPromise.catch(() => {
-          // Auto-play was prevented, will retry on user interaction
+          // Auto-play was prevented
         });
       }
-    }, [frame.id]);
+    }, [isVisible, frame.id]);
 
     return (
       <video
         ref={videoRef}
         key={frame.id}
         className={className}
-        autoPlay
+        autoPlay={priority}
         muted
         loop
         playsInline
-        preload="auto"
+        preload={priority ? 'auto' : 'none'}
         poster="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
       >
-        <source src={frame.video} type="video/mp4" />
-        <source src={frame.mobileVideo} type="video/mp4" />
+        {isVisible && (
+          <>
+            <source src={frame.video} type="video/mp4" />
+            <source src={frame.mobileVideo} type="video/mp4" />
+          </>
+        )}
       </video>
     );
-  };
+  });
 
   return (
     <main className="relative min-h-screen w-full overflow-hidden bg-[#050505] text-[#e8e5dc] selection:bg-[#8f252b]/30">
@@ -347,6 +380,7 @@ function CinematicHero() {
               <div className="aspect-[16/10] w-full">
                 <ArchiveVideo
                   frame={active}
+                  priority={true}
                   className="h-full w-full object-cover grayscale-[8%] contrast-[1.08] brightness-[0.82] saturate-[0.78]"
                 />
               </div>
@@ -445,6 +479,7 @@ function CinematicHero() {
                       {/* VIDEO THUMBNAIL */}
                       <ArchiveVideo
                         frame={frame}
+                        priority={false}
                         className={`absolute inset-0 h-full w-full object-cover grayscale transition-all duration-700 ${
                           isActive
                             ? 'scale-100 opacity-80'
