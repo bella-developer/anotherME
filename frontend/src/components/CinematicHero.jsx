@@ -364,6 +364,62 @@ function CinematicHero() {
               EDITORIAL IDENTITY - RESPONSIVE
               ======================================================== */}
           <div className="relative flex flex-col justify-center pt-4 sm:pt-6 lg:pt-14 lg:-ml-4">
+            {/* Mobile: Vault selector at top */}
+            <div className="mb-6 lg:hidden">
+              <div className="mb-3">
+                <span className="font-mono text-[9px] font-semibold uppercase tracking-[0.28em] text-[#d5d1c8]">
+                  SELECT VAULT
+                </span>
+                <div className="mt-2 h-px w-14 bg-[#a72a30]/30" />
+              </div>
+
+              <div className="space-y-[10px]">
+                {frames.map((frame, index) => {
+                  const isActive = index === activeEntry;
+
+                  return (
+                    <button
+                      key={frame.id}
+                      onClick={() => selectEntry(index)}
+                      aria-label={`View ${frame.title}`}
+                      className="group flex items-center gap-3 text-left transition-all duration-300"
+                    >
+                      {/* Active line */}
+                      <span
+                        className={`h-px transition-all duration-500 ${
+                          isActive
+                            ? 'w-5 bg-[#a72a30]'
+                            : 'w-0 group-hover:w-3 group-hover:bg-[#55524d]'
+                        }`}
+                      />
+
+                      {/* Number */}
+                      <span
+                        className={`w-5 font-mono text-[8px] font-medium ${
+                          isActive
+                            ? 'text-[#a72a30]'
+                            : 'text-[#41403c] group-hover:text-[#68655f]'
+                        }`}
+                      >
+                        {frame.number}
+                      </span>
+
+                      {/* Title */}
+                      <span
+                        className={`font-sans text-[9px] uppercase tracking-[0.17em] ${
+                          isActive
+                            ? 'text-[#d5d1c8] font-medium'
+                            : 'text-[#514f4a] group-hover:text-[#89857d]'
+                        }`}
+                      >
+                        {frame.shortTitle}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
             {/* Number */}
             <div className="mb-4 sm:mb-6">
               <span className="font-mono text-[8px] uppercase tracking-[0.24em] text-[#55524d]">
@@ -371,10 +427,10 @@ function CinematicHero() {
               </span>
             </div>
 
-            {/* Title - Fully responsive */}
+            {/* Title - Fully responsive with right margin to prevent overlap */}
             <h1
               key={active.title}
-              className="font-serif text-[28px] font-normal leading-[0.92] tracking-[-0.055em] text-[#e8e5dc] sm:text-[36px] md:text-[40px] lg:text-[34px] xl:text-[46px]"
+              className="mr-6 font-serif text-[28px] font-normal leading-[0.92] tracking-[-0.055em] text-[#e8e5dc] sm:mr-8 sm:text-[36px] md:text-[40px] lg:mr-0 lg:text-[34px] xl:text-[46px]"
             >
               {active.title}
             </h1>
@@ -400,24 +456,27 @@ function CinematicHero() {
                 />
               </div>
 
-              {/* QUOTE OVERLAY - WITH ARTISTIC QUOTATION MARKS AND HIGHLIGHTS */}
+              {/* QUOTE OVERLAY - BOLD WITH PREMIUM SHADOW EFFECTS */}
               <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center px-4 sm:px-6">
                 <div className="relative max-w-[85%] text-center sm:max-w-[80%]">
                   {/* Opening quotation mark */}
-                  <span className="absolute -left-4 -top-3 font-serif text-4xl leading-none text-[#a72a30]/40 sm:-left-6 sm:-top-4 sm:text-5xl lg:-left-8 lg:-top-6 lg:text-6xl">"</span>
+                  <span className="absolute -left-4 -top-3 font-serif text-4xl leading-none text-[#a72a30]/60 drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] sm:-left-6 sm:-top-4 sm:text-5xl lg:-left-8 lg:-top-6 lg:text-6xl">"</span>
                   
-                  {/* Quote with highlights */}
+                  {/* Quote with highlights and strong shadows */}
                   <p 
-                    className="font-serif text-[13px] leading-[1.6] tracking-wide text-white/90 sm:text-[15px] md:text-[16px] lg:text-[18px]"
+                    className="font-serif text-[13px] font-bold leading-[1.7] tracking-wide text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.9)] sm:text-[15px] md:text-[17px] lg:text-[19px]"
+                    style={{
+                      textShadow: '0 0 20px rgba(0,0,0,0.8), 0 0 40px rgba(0,0,0,0.6), 0 2px 4px rgba(0,0,0,1)'
+                    }}
                     dangerouslySetInnerHTML={{
                       __html: renderQuoteWithHighlights(active.quote, active.highlightWords)
-                        .replace(/<mark>/g, '<span class="font-semibold text-[#a72a30]">')
+                        .replace(/<mark>/g, '<span class="font-extrabold text-[#a72a30]" style="text-shadow: 0 0 20px rgba(167,42,48,0.8), 0 0 30px rgba(0,0,0,0.9), 0 2px 6px rgba(0,0,0,1);">')
                         .replace(/<\/mark>/g, '</span>')
                     }}
                   />
                   
                   {/* Closing quotation mark */}
-                  <span className="absolute -bottom-3 -right-4 font-serif text-4xl leading-none text-[#a72a30]/40 sm:-bottom-4 sm:-right-6 sm:text-5xl lg:-bottom-6 lg:-right-8 lg:text-6xl">"</span>
+                  <span className="absolute -bottom-3 -right-4 font-serif text-4xl leading-none text-[#a72a30]/60 drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] sm:-bottom-4 sm:-right-6 sm:text-5xl lg:-bottom-6 lg:-right-8 lg:text-6xl">"</span>
                 </div>
               </div>
 
@@ -572,9 +631,9 @@ function CinematicHero() {
         </div>
 
         {/* ==========================================================
-            MOBILE NAVIGATION - IMPROVED UX
+            MOBILE NAVIGATION - TABLET ONLY (md screens)
             ========================================================== */}
-        <div className="mt-8 border-y border-white/[0.055] py-5 sm:mt-10 lg:hidden">
+        <div className="mt-8 hidden border-y border-white/[0.055] py-5 sm:mt-10 md:block lg:hidden">
           <div className="relative">
             {/* Visual indicator dots */}
             <div className="mb-3 flex items-center justify-center gap-1.5">
