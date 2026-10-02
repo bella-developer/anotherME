@@ -46,18 +46,18 @@ const noteColors = [
   },
 ];
 
-// Explicit layout coordinates for compact 2-3-2 composition
-// Container: 180px wide × 440px tall
+// Explicit layout coordinates for expanded 2-3-2 composition with breathing room
+// Container: 250px wide × 440px tall
 const noteLayout = [
-  { left: 0, top: 10, rotate: -2 },       // Memory (top-left)
-  { left: 90, top: 0, rotate: 2 },        // Confession (top-right)
+  { left: 10, top: 10, rotate: -2 },      // Memory (top-left)
+  { left: 135, top: 0, rotate: 2 },       // Confession (top-right)
   
-  { left: 10, top: 100, rotate: 1 },      // Understanding (mid-left)
-  { left: 75, top: 130, rotate: -2 },     // Imagination (mid-center)
-  { left: 5, top: 200, rotate: 2 },       // Vibes (mid-right, offset down)
+  { left: 20, top: 110, rotate: 1 },      // Understanding (mid-left)
+  { left: 110, top: 140, rotate: -2 },    // Imagination (mid-center)
+  { left: 15, top: 215, rotate: 2 },      // Vibes (mid-right, offset down)
   
-  { left: 0, top: 280, rotate: -1 },      // Questioning (bottom-left)
-  { left: 90, top: 310, rotate: 2 },      // Truth (bottom-right)
+  { left: 5, top: 300, rotate: -1 },      // Questioning (bottom-left)
+  { left: 130, top: 330, rotate: 2 },     // Truth (bottom-right)
 ];
 
 function CinematicHero() {
@@ -352,96 +352,12 @@ function CinematicHero() {
           MAIN
           ============================================================ */}
       <section className="relative z-10 px-4 py-8 sm:px-7 sm:py-10 lg:px-14">
-        <div className="mx-auto grid min-h-[calc(100vh-120px)] max-w-[1750px] grid-cols-1 gap-8 sm:min-h-[calc(100vh-140px)] sm:gap-10 md:min-h-[calc(100vh-162px)] lg:grid-cols-[190px_minmax(250px,0.72fr)_minmax(560px,1.8fr)_78px] lg:gap-2 xl:grid-cols-[210px_minmax(280px,0.72fr)_minmax(620px,1.8fr)_90px] xl:gap-3">
+        <div className="mx-auto grid min-h-[calc(100vh-120px)] max-w-[1750px] grid-cols-1 gap-8 sm:min-h-[calc(100vh-140px)] sm:gap-10 md:min-h-[calc(100vh-162px)] lg:grid-cols-[280px_minmax(600px,1.8fr)_90px] lg:gap-8 xl:grid-cols-[320px_minmax(680px,1.8fr)_110px] xl:gap-10">
           {/* ========================================================
               COLUMN 01
-              DIGITAL STICKY NOTES - CURATED WALL COMPOSITION
+              DIGITAL STICKY NOTES - EXPANDED WALL COMPOSITION
               ======================================================== */}
           <aside className="hidden pt-20 lg:block">
-            <div className="mb-10">
-              <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.28em] text-[#d5d1c8]">
-                VAULT INDEX
-              </span>
-              <div className="mt-2 h-px w-16 bg-[#a72a30]/30" />
-            </div>
-
-            {/* Fixed canvas for compact 2-3-2 composition */}
-            <div className="relative h-[440px] w-[200px]">
-              {frames.map((frame, index) => {
-                const isActive = index === activeEntry;
-                const color = noteColors[index];
-                const layout = noteLayout[index];
-
-                return (
-                  <button
-                    key={frame.id}
-                    onClick={() => selectEntry(index)}
-                    className={`absolute transition-all duration-500 ${
-                      isActive ? 'z-30' : 'z-10 hover:z-20'
-                    }`}
-                    style={{
-                      left: `${layout.left}px`,
-                      top: `${layout.top}px`,
-                      transform: `rotate(${layout.rotate}deg)`,
-                      boxShadow: isActive
-                        ? `0 0 25px ${color.glow}, 0 12px 30px rgba(0,0,0,0.45)`
-                        : '0 10px 25px rgba(0,0,0,0.35)',
-                    }}
-                  >
-                    {/* Glowing pin */}
-                    <span
-                      className="absolute -top-1 left-1/2 z-30 h-2 w-2 -translate-x-1/2 rounded-full"
-                      style={{
-                        backgroundColor: color.accent,
-                        boxShadow: `0 0 10px ${color.glow}`,
-                      }}
-                    />
-
-                    {/* Sticky note card */}
-                    <div
-                      className="relative h-[56px] w-[108px] overflow-hidden rounded-lg border bg-[#0b0c10]/90 backdrop-blur-xl shadow-[0_10px_30px_rgba(0,0,0,0.45)] transition-all duration-500"
-                      style={{
-                        borderColor: 'rgba(255,255,255,0.08)',
-                      }}
-                    >
-                      {/* Colored accent edge */}
-                      <div
-                        className="absolute left-0 top-0 h-full w-[2px]"
-                        style={{ backgroundColor: color.accent }}
-                      />
-
-                      {/* Content */}
-                      <div className="relative flex h-full flex-col justify-center px-3 py-2">
-                        {/* Number - technical */}
-                        <span className="mb-1 font-mono text-[7px] tracking-[0.18em] text-white/35">
-                          {frame.number}
-                        </span>
-
-                        {/* Title - artistic */}
-                        <span className={`font-serif italic text-[10px] tracking-wide ${color.text}`}>
-                          {frame.shortTitle}
-                        </span>
-                      </div>
-
-                      {/* Active glow overlay */}
-                      {isActive && (
-                        <div
-                          className="absolute inset-0 rounded-lg opacity-10"
-                          style={{ backgroundColor: color.accent }}
-                        />
-                      )}
-                    </div>
-                  </button>
-                );
-              })}
-            </div>
-          </aside>
-
-          {/* ========================================================
-              COLUMN 02
-              EDITORIAL IDENTITY - RESPONSIVE
-              ======================================================== */}
-          <div className="relative flex flex-col justify-center pt-4 sm:pt-6 lg:pt-14 lg:-ml-4">
             {/* Mobile: Digital sticky notes - horizontal scroll */}
             <div className="mb-6 lg:hidden">
               <div className="mb-4">
@@ -524,29 +440,87 @@ function CinematicHero() {
               </div>
             </div>
 
-            {/* Number */}
-            <div className="mb-4 sm:mb-6">
-              <span className="font-mono text-[8px] uppercase tracking-[0.24em] text-[#55524d]">
-                {active.number}
+            <div className="mb-10">
+              <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.28em] text-[#d5d1c8]">
+                VAULT INDEX
               </span>
+              <div className="mt-2 h-px w-16 bg-[#a72a30]/30" />
             </div>
 
-            {/* Title - Fully responsive with right margin to prevent overlap */}
-            <h1
-              key={active.title}
-              className="mr-6 font-serif text-[28px] font-normal leading-[0.92] tracking-[-0.055em] text-[#e8e5dc] sm:mr-8 sm:text-[36px] md:text-[40px] lg:mr-0 lg:text-[34px] xl:text-[46px]"
-            >
-              {active.title}
-            </h1>
+            {/* Expanded canvas with more breathing room */}
+            <div className="relative h-[440px] w-[250px]">
+              {frames.map((frame, index) => {
+                const isActive = index === activeEntry;
+                const color = noteColors[index];
+                const layout = noteLayout[index];
 
-            {/* Minimal tagline */}
-            <p className="mt-4 max-w-[280px] font-sans text-[10px] uppercase leading-[1.9] tracking-[0.16em] text-[#85817a] sm:mt-6 sm:max-w-[250px]">
-              {active.tagline}
-            </p>
-          </div>
+                return (
+                  <button
+                    key={frame.id}
+                    onClick={() => selectEntry(index)}
+                    className={`absolute transition-all duration-500 ${
+                      isActive ? 'z-30' : 'z-10 hover:z-20'
+                    }`}
+                    style={{
+                      left: `${layout.left}px`,
+                      top: `${layout.top}px`,
+                      transform: `rotate(${layout.rotate}deg)`,
+                      boxShadow: isActive
+                        ? `0 0 25px ${color.glow}, 0 12px 30px rgba(0,0,0,0.45)`
+                        : '0 10px 25px rgba(0,0,0,0.35)',
+                    }}
+                  >
+                    {/* Glowing pin */}
+                    <span
+                      className="absolute -top-1 left-1/2 z-30 h-2 w-2 -translate-x-1/2 rounded-full"
+                      style={{
+                        backgroundColor: color.accent,
+                        boxShadow: `0 0 10px ${color.glow}`,
+                      }}
+                    />
+
+                    {/* Sticky note card */}
+                    <div
+                      className="relative h-[56px] w-[108px] overflow-hidden rounded-lg border bg-[#0b0c10]/90 backdrop-blur-xl shadow-[0_10px_30px_rgba(0,0,0,0.45)] transition-all duration-500"
+                      style={{
+                        borderColor: 'rgba(255,255,255,0.08)',
+                      }}
+                    >
+                      {/* Colored accent edge */}
+                      <div
+                        className="absolute left-0 top-0 h-full w-[2px]"
+                        style={{ backgroundColor: color.accent }}
+                      />
+
+                      {/* Content */}
+                      <div className="relative flex h-full flex-col justify-center px-3 py-2">
+                        {/* Number - technical */}
+                        <span className="mb-1 font-mono text-[7px] tracking-[0.18em] text-white/35">
+                          {frame.number}
+                        </span>
+
+                        {/* Title - artistic */}
+                        <span className={`font-serif italic text-[10px] tracking-wide ${color.text}`}>
+                          {frame.shortTitle}
+                        </span>
+                      </div>
+
+                      {/* Active glow overlay */}
+                      {isActive && (
+                        <div
+                          className="absolute inset-0 rounded-lg opacity-10"
+                          style={{ backgroundColor: color.accent }}
+                        />
+                      )}
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          </aside>
 
           {/* ========================================================
-              COLUMN 03
+              COLUMN 02
               MAIN VIDEO - RESPONSIVE
               ======================================================== */}
           <div className="relative flex min-h-[380px] items-center justify-center sm:min-h-[460px] md:min-h-[520px] lg:min-h-0">
