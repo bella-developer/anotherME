@@ -46,18 +46,19 @@ const noteColors = [
   },
 ];
 
-// Explicit layout coordinates for expanded 2-3-2 composition with breathing room
-// Container: 250px wide × 440px tall
+// Horizontal landscape layout - spread across width, compact vertically
+// Container: 260px wide × 260px tall (compact vertical, wide horizontal)
 const noteLayout = [
-  { left: 10, top: 10, rotate: -2 },      // Memory (top-left)
-  { left: 135, top: 0, rotate: 2 },       // Confession (top-right)
+  { left: 0, top: 0, rotate: -2 },         // Memory (row 1, left)
+  { left: 140, top: 5, rotate: 2 },        // Confession (row 1, right)
   
-  { left: 20, top: 110, rotate: 1 },      // Understanding (mid-left)
-  { left: 110, top: 140, rotate: -2 },    // Imagination (mid-center)
-  { left: 15, top: 215, rotate: 2 },      // Vibes (mid-right, offset down)
+  { left: 30, top: 75, rotate: 1 },        // Understanding (row 2, left)
+  { left: 150, top: 80, rotate: -2 },      // Imagination (row 2, right)
   
-  { left: 5, top: 300, rotate: -1 },      // Questioning (bottom-left)
-  { left: 130, top: 330, rotate: 2 },     // Truth (bottom-right)
+  { left: 70, top: 150, rotate: -1 },      // Vibes (row 3, center-left)
+  { left: 190, top: 155, rotate: 2 },      // Questioning (row 3, right)
+  
+  { left: 10, top: 200, rotate: 1 },       // Truth (row 4, left)
 ];
 
 function CinematicHero() {
@@ -352,7 +353,7 @@ function CinematicHero() {
           MAIN
           ============================================================ */}
       <section className="relative z-10 px-4 py-8 sm:px-7 sm:py-10 lg:px-14">
-        <div className="mx-auto grid min-h-[calc(100vh-120px)] max-w-[1750px] grid-cols-1 gap-8 sm:min-h-[calc(100vh-140px)] sm:gap-10 md:min-h-[calc(100vh-162px)] lg:grid-cols-[280px_minmax(600px,1.8fr)_90px] lg:gap-8 xl:grid-cols-[320px_minmax(680px,1.8fr)_110px] xl:gap-10">
+        <div className="mx-auto grid min-h-[calc(100vh-120px)] max-w-[1750px] grid-cols-1 gap-8 sm:min-h-[calc(100vh-140px)] sm:gap-10 md:min-h-[calc(100vh-162px)] lg:grid-cols-[300px_minmax(620px,1.8fr)_90px] lg:gap-6 xl:grid-cols-[340px_minmax(700px,1.8fr)_110px] xl:gap-8">
           {/* ========================================================
               COLUMN 01
               DIGITAL STICKY NOTES - EXPANDED WALL COMPOSITION
@@ -447,8 +448,8 @@ function CinematicHero() {
               <div className="mt-2 h-px w-16 bg-[#a72a30]/30" />
             </div>
 
-            {/* Expanded canvas with more breathing room */}
-            <div className="relative h-[440px] w-[250px]">
+            {/* Horizontal landscape canvas - wide but vertically compact */}
+            <div className="relative h-[260px] w-full max-w-[280px]">
               {frames.map((frame, index) => {
                 const isActive = index === activeEntry;
                 const color = noteColors[index];
