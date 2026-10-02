@@ -46,19 +46,19 @@ const noteColors = [
   },
 ];
 
-// Horizontal landscape layout - spread across width, compact vertically
-// Container: 260px wide × 260px tall (compact vertical, wide horizontal)
+// Horizontal landscape layout - true 2-3-2 composition
+// Container: 280px wide × 240px tall
+// Row 1: 2 notes | Row 2: 3 notes | Row 3: 2 notes
 const noteLayout = [
   { left: 0, top: 0, rotate: -2 },         // Memory (row 1, left)
-  { left: 140, top: 5, rotate: 2 },        // Confession (row 1, right)
+  { left: 150, top: 5, rotate: 2 },        // Confession (row 1, right)
   
-  { left: 30, top: 75, rotate: 1 },        // Understanding (row 2, left)
-  { left: 150, top: 80, rotate: -2 },      // Imagination (row 2, right)
+  { left: 5, top: 75, rotate: 1 },         // Understanding (row 2, left)
+  { left: 100, top: 80, rotate: -2 },      // Imagination (row 2, center)
+  { left: 195, top: 75, rotate: 1 },       // Vibes (row 2, right - INLINE)
   
-  { left: 70, top: 150, rotate: -1 },      // Vibes (row 3, center-left)
-  { left: 190, top: 155, rotate: 2 },      // Questioning (row 3, right)
-  
-  { left: 10, top: 200, rotate: 1 },       // Truth (row 4, left)
+  { left: 10, top: 155, rotate: -1 },      // Questioning (row 3, left)
+  { left: 160, top: 160, rotate: 2 },      // Truth (row 3, right)
 ];
 
 function CinematicHero() {
@@ -363,7 +363,7 @@ function CinematicHero() {
             <div className="mb-6 lg:hidden">
               <div className="mb-4">
                 <span className="font-mono text-[9px] font-semibold uppercase tracking-[0.28em] text-[#d5d1c8]">
-                  VAULT INDEX
+                  Sacred Home of ...
                 </span>
                 <div className="mt-2 h-px w-14 bg-[#a72a30]/30" />
               </div>
@@ -443,13 +443,13 @@ function CinematicHero() {
 
             <div className="mb-10">
               <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.28em] text-[#d5d1c8]">
-                VAULT INDEX
+                Sacred Home of ...
               </span>
               <div className="mt-2 h-px w-16 bg-[#a72a30]/30" />
             </div>
 
-            {/* Horizontal landscape canvas - wide but vertically compact */}
-            <div className="relative h-[260px] w-full max-w-[280px]">
+            {/* Horizontal landscape canvas - true 2-3-2 layout */}
+            <div className="relative h-[230px] w-full max-w-[300px]">
               {frames.map((frame, index) => {
                 const isActive = index === activeEntry;
                 const color = noteColors[index];
