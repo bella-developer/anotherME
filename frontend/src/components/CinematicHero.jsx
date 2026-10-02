@@ -7,6 +7,75 @@ import { useNavigate } from 'react-router-dom';
  * Minimal editorial content / maximum visual atmosphere
  */
 
+// Define sticky note colors, rotations, and positions ONCE
+const noteColors = [
+  {
+    accent: '#ff4d6d',
+    text: 'text-rose-300',
+    glow: 'rgba(255,77,109,0.35)',
+  },
+  {
+    accent: '#38bdf8',
+    text: 'text-sky-300',
+    glow: 'rgba(56,189,248,0.35)',
+  },
+  {
+    accent: '#a78bfa',
+    text: 'text-violet-300',
+    glow: 'rgba(167,139,250,0.35)',
+  },
+  {
+    accent: '#34d399',
+    text: 'text-emerald-300',
+    glow: 'rgba(52,211,153,0.35)',
+  },
+  {
+    accent: '#fbbf24',
+    text: 'text-amber-300',
+    glow: 'rgba(251,191,36,0.35)',
+  },
+  {
+    accent: '#f472b6',
+    text: 'text-pink-300',
+    glow: 'rgba(244,114,182,0.35)',
+  },
+  {
+    accent: '#fb7185',
+    text: 'text-rose-300',
+    glow: 'rgba(251,113,133,0.35)',
+  },
+];
+
+const noteRotations = [
+  'rotate-[-2deg]',
+  'rotate-[1.5deg]',
+  'rotate-[-1deg]',
+  'rotate-[2deg]',
+  'rotate-[-1.5deg]',
+  'rotate-[1deg]',
+  'rotate-[-2deg]',
+];
+
+const notePositions = [
+  'left-0 top-0',
+  'left-3 top-[68px]',
+  'left-1 top-[138px]',
+  'left-5 top-[208px]',
+  'left-0 top-[278px]',
+  'left-4 top-[348px]',
+  'left-2 top-[418px]',
+];
+
+const noteOffsets = [
+  'translate-x-0',
+  'translate-x-3',
+  'translate-x-1',
+  'translate-x-5',
+  'translate-x-0',
+  'translate-x-4',
+  'translate-x-2',
+];
+
 function CinematicHero() {
   const navigate = useNavigate();
   const [activeEntry, setActiveEntry] = useState(6);
@@ -302,7 +371,7 @@ function CinematicHero() {
         <div className="mx-auto grid min-h-[calc(100vh-120px)] max-w-[1750px] grid-cols-1 gap-8 sm:min-h-[calc(100vh-140px)] sm:gap-10 md:min-h-[calc(100vh-162px)] lg:grid-cols-[190px_minmax(250px,0.72fr)_minmax(560px,1.8fr)_78px] lg:gap-2 xl:grid-cols-[210px_minmax(280px,0.72fr)_minmax(620px,1.8fr)_90px] xl:gap-3">
           {/* ========================================================
               COLUMN 01
-              STICKY NOTES - ARTISTIC DECORATIVE WALL
+              DIGITAL STICKY NOTES - PINNED TO VIRTUAL WALL
               ======================================================== */}
           <aside className="hidden pt-20 lg:block">
             <div className="mb-10">
@@ -312,83 +381,68 @@ function CinematicHero() {
               <div className="mt-2 h-px w-16 bg-[#a72a30]/30" />
             </div>
 
-            <div className="space-y-3">
+            {/* Virtual wall - positioned container */}
+            <div className="relative h-[500px] w-[140px]">
               {frames.map((frame, index) => {
                 const isActive = index === activeEntry;
-                
-                // Different colors for visual variety
-                const colors = [
-                  { dot: '#a72a30', border: 'rgba(167,42,48,0.2)' }, // Red
-                  { dot: '#d5d1c8', border: 'rgba(213,209,200,0.15)' }, // Beige
-                  { dot: '#85817a', border: 'rgba(133,129,122,0.2)' }, // Gray
-                  { dot: '#a72a30', border: 'rgba(167,42,48,0.25)' }, // Red
-                  { dot: '#c4bfb5', border: 'rgba(196,191,181,0.2)' }, // Light beige
-                  { dot: '#706c64', border: 'rgba(112,108,100,0.2)' }, // Muted
-                  { dot: '#a72a30', border: 'rgba(167,42,48,0.3)' }, // Red
-                ];
-
-                const color = colors[index];
-                const rotations = ['rotate-[-2deg]', 'rotate-[1deg]', 'rotate-[-1deg]', 'rotate-[2deg]', 'rotate-[-1.5deg]', 'rotate-[1.5deg]', 'rotate-[-2.5deg]'];
+                const color = noteColors[index];
+                const rotation = noteRotations[index];
+                const position = notePositions[index];
+                const offset = noteOffsets[index];
 
                 return (
                   <button
                     key={frame.id}
                     onClick={() => selectEntry(index)}
-                    className={`group relative block w-28 transition-all duration-500 ${rotations[index]} ${
-                      isActive ? 'scale-105' : 'hover:scale-102'
+                    className={`absolute transition-all duration-500 ${position} ${rotation} ${offset} ${
+                      isActive ? 'z-30' : 'z-10 hover:z-20'
                     }`}
+                    style={{
+                      boxShadow: isActive
+                        ? `0 0 25px ${color.glow}, 0 12px 30px rgba(0,0,0,0.45)`
+                        : '0 10px 25px rgba(0,0,0,0.35)',
+                    }}
                   >
-                    {/* Pin at top */}
-                    <div className="absolute -top-1 left-1/2 z-20 h-2 w-2 -translate-x-1/2 rounded-full bg-zinc-700/60 shadow-md" />
-                    
-                    {/* Sticky note card */}
-                    <div 
-                      className={`relative h-14 rounded-lg bg-zinc-900/80 backdrop-blur-md shadow-lg transition-all duration-500 ${
-                        isActive 
-                          ? 'shadow-xl ring-1 ring-white/20' 
-                          : 'shadow-md hover:shadow-xl'
-                      }`}
+                    {/* Glowing pin */}
+                    <span
+                      className="absolute -top-1 left-1/2 z-30 h-2 w-2 -translate-x-1/2 rounded-full"
                       style={{
-                        borderWidth: '1px',
-                        borderStyle: 'solid',
-                        borderColor: isActive ? color.border : 'rgba(255,255,255,0.1)',
+                        backgroundColor: color.accent,
+                        boxShadow: `0 0 10px ${color.glow}`,
+                      }}
+                    />
+
+                    {/* Sticky note card */}
+                    <div
+                      className="relative h-[56px] w-[108px] overflow-hidden rounded-lg border bg-[#0b0c10]/90 backdrop-blur-xl shadow-[0_10px_30px_rgba(0,0,0,0.45)] transition-all duration-500"
+                      style={{
+                        borderColor: 'rgba(255,255,255,0.08)',
                       }}
                     >
-                      {/* Texture overlay */}
-                      <div className="pointer-events-none absolute inset-0 rounded-lg bg-[repeating-linear-gradient(0deg,transparent,transparent_3px,rgba(255,255,255,0.01)_4px)]" />
-                      
+                      {/* Colored accent edge */}
+                      <div
+                        className="absolute left-0 top-0 h-full w-[2px]"
+                        style={{ backgroundColor: color.accent }}
+                      />
+
                       {/* Content */}
                       <div className="relative flex h-full flex-col justify-center px-3 py-2">
-                        {/* Number with colored dot */}
-                        <div className="mb-1 flex items-center gap-1.5">
-                          <span 
-                            className="h-1.5 w-1.5 rounded-full transition-all duration-300"
-                            style={{ backgroundColor: color.dot }}
-                          />
-                          <span 
-                            className={`font-mono text-[7px] font-medium transition-colors duration-300 ${
-                              isActive ? 'text-[#d5d1c8]' : 'text-[#55524d] group-hover:text-[#85817a]'
-                            }`}
-                          >
-                            {frame.number}
-                          </span>
-                        </div>
-                        
-                        {/* Title */}
-                        <span 
-                          className={`font-sans text-[8px] font-medium uppercase leading-tight tracking-[0.12em] transition-colors duration-300 ${
-                            isActive ? 'text-[#e8e5dc]' : 'text-[#6b6862] group-hover:text-[#a39e94]'
-                          }`}
-                        >
+                        {/* Number - technical */}
+                        <span className="mb-1 font-mono text-[7px] tracking-[0.18em] text-white/35">
+                          {frame.number}
+                        </span>
+
+                        {/* Title - artistic */}
+                        <span className={`font-serif italic text-[10px] tracking-wide ${color.text}`}>
                           {frame.shortTitle}
                         </span>
                       </div>
 
-                      {/* Active glow */}
+                      {/* Active glow overlay */}
                       {isActive && (
-                        <div 
-                          className="absolute inset-0 rounded-lg opacity-20 blur-sm"
-                          style={{ backgroundColor: color.dot }}
+                        <div
+                          className="absolute inset-0 rounded-lg opacity-10"
+                          style={{ backgroundColor: color.accent }}
                         />
                       )}
                     </div>
@@ -403,7 +457,7 @@ function CinematicHero() {
               EDITORIAL IDENTITY - RESPONSIVE
               ======================================================== */}
           <div className="relative flex flex-col justify-center pt-4 sm:pt-6 lg:pt-14 lg:-ml-4">
-            {/* Mobile: Sticky notes at top */}
+            {/* Mobile: Digital sticky notes wall */}
             <div className="mb-6 lg:hidden">
               <div className="mb-4">
                 <span className="font-mono text-[9px] font-semibold uppercase tracking-[0.28em] text-[#d5d1c8]">
@@ -412,89 +466,75 @@ function CinematicHero() {
                 <div className="mt-2 h-px w-14 bg-[#a72a30]/30" />
               </div>
 
-              <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-                {frames.map((frame, index) => {
-                  const isActive = index === activeEntry;
-                  
-                  const colors = [
-                    { dot: '#a72a30', border: 'rgba(167,42,48,0.2)' },
-                    { dot: '#d5d1c8', border: 'rgba(213,209,200,0.15)' },
-                    { dot: '#85817a', border: 'rgba(133,129,122,0.2)' },
-                    { dot: '#a72a30', border: 'rgba(167,42,48,0.25)' },
-                    { dot: '#c4bfb5', border: 'rgba(196,191,181,0.2)' },
-                    { dot: '#706c64', border: 'rgba(112,108,100,0.2)' },
-                    { dot: '#a72a30', border: 'rgba(167,42,48,0.3)' },
-                  ];
+              {/* Horizontally scrollable wall */}
+              <div className="overflow-x-auto scrollbar-hide">
+                <div className="flex min-w-max gap-4 pb-2">
+                  {frames.map((frame, index) => {
+                    const isActive = index === activeEntry;
+                    const color = noteColors[index];
+                    const rotation = noteRotations[index];
 
-                  const color = colors[index];
-                  const rotations = ['rotate-[-1deg]', 'rotate-[1.5deg]', 'rotate-[-2deg]', 'rotate-[1deg]', 'rotate-[-1.5deg]', 'rotate-[2deg]', 'rotate-[-1deg]'];
-
-                  return (
-                    <button
-                      key={frame.id}
-                      onClick={() => selectEntry(index)}
-                      aria-label={`View ${frame.title}`}
-                      className={`group relative transition-all duration-500 ${rotations[index]} ${
-                        isActive ? 'scale-105' : 'hover:scale-102'
-                      }`}
-                    >
-                      {/* Pin at top */}
-                      <div className="absolute -top-1 left-1/2 z-20 h-2 w-2 -translate-x-1/2 rounded-full bg-zinc-700/60 shadow-md" />
-                      
-                      {/* Sticky note card */}
-                      <div 
-                        className={`relative h-14 rounded-lg bg-zinc-900/80 backdrop-blur-md shadow-lg transition-all duration-500 ${
-                          isActive 
-                            ? 'shadow-xl ring-1 ring-white/20' 
-                            : 'shadow-md hover:shadow-xl'
+                    return (
+                      <button
+                        key={frame.id}
+                        onClick={() => selectEntry(index)}
+                        aria-label={`View ${frame.title}`}
+                        className={`relative transition-all duration-500 ${rotation} ${
+                          isActive ? 'z-30' : 'z-10'
                         }`}
                         style={{
-                          borderWidth: '1px',
-                          borderStyle: 'solid',
-                          borderColor: isActive ? color.border : 'rgba(255,255,255,0.1)',
+                          boxShadow: isActive
+                            ? `0 0 25px ${color.glow}, 0 12px 30px rgba(0,0,0,0.45)`
+                            : '0 10px 25px rgba(0,0,0,0.35)',
                         }}
                       >
-                        {/* Texture overlay */}
-                        <div className="pointer-events-none absolute inset-0 rounded-lg bg-[repeating-linear-gradient(0deg,transparent,transparent_3px,rgba(255,255,255,0.01)_4px)]" />
-                        
-                        {/* Content */}
-                        <div className="relative flex h-full flex-col justify-center px-3 py-2">
-                          {/* Number with colored dot */}
-                          <div className="mb-1 flex items-center gap-1.5">
-                            <span 
-                              className="h-1.5 w-1.5 rounded-full"
-                              style={{ backgroundColor: color.dot }}
-                            />
-                            <span 
-                              className={`font-mono text-[7px] font-medium ${
-                                isActive ? 'text-[#d5d1c8]' : 'text-[#55524d]'
-                              }`}
-                            >
+                        {/* Glowing pin */}
+                        <span
+                          className="absolute -top-1 left-1/2 z-30 h-2 w-2 -translate-x-1/2 rounded-full"
+                          style={{
+                            backgroundColor: color.accent,
+                            boxShadow: `0 0 10px ${color.glow}`,
+                          }}
+                        />
+
+                        {/* Sticky note card */}
+                        <div
+                          className="relative h-[56px] w-[108px] overflow-hidden rounded-lg border bg-[#0b0c10]/90 backdrop-blur-xl shadow-[0_10px_30px_rgba(0,0,0,0.45)]"
+                          style={{
+                            borderColor: 'rgba(255,255,255,0.08)',
+                          }}
+                        >
+                          {/* Colored accent edge */}
+                          <div
+                            className="absolute left-0 top-0 h-full w-[2px]"
+                            style={{ backgroundColor: color.accent }}
+                          />
+
+                          {/* Content */}
+                          <div className="relative flex h-full flex-col justify-center px-3 py-2">
+                            {/* Number - technical */}
+                            <span className="mb-1 font-mono text-[7px] tracking-[0.18em] text-white/35">
                               {frame.number}
                             </span>
-                          </div>
-                          
-                          {/* Title */}
-                          <span 
-                            className={`font-sans text-[8px] font-medium uppercase leading-tight tracking-[0.12em] ${
-                              isActive ? 'text-[#e8e5dc]' : 'text-[#6b6862]'
-                            }`}
-                          >
-                            {frame.shortTitle}
-                          </span>
-                        </div>
 
-                        {/* Active glow */}
-                        {isActive && (
-                          <div 
-                            className="absolute inset-0 rounded-lg opacity-20 blur-sm"
-                            style={{ backgroundColor: color.dot }}
-                          />
-                        )}
-                      </div>
-                    </button>
-                  );
-                })}
+                            {/* Title - artistic */}
+                            <span className={`font-serif italic text-[10px] tracking-wide ${color.text}`}>
+                              {frame.shortTitle}
+                            </span>
+                          </div>
+
+                          {/* Active glow overlay */}
+                          {isActive && (
+                            <div
+                              className="absolute inset-0 rounded-lg opacity-10"
+                              style={{ backgroundColor: color.accent }}
+                            />
+                          )}
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
             </div>
 
