@@ -46,17 +46,18 @@ const noteColors = [
   },
 ];
 
-// Explicit layout coordinates for 2-3-2 composition
+// Explicit layout coordinates for compact 2-3-2 composition
+// Container: 180px wide × 440px tall
 const noteLayout = [
-  { left: 0, top: 10, rotate: -2 },      // Memory (top-left)
-  { left: 150, top: 35, rotate: 3 },     // Confession (top-right)
+  { left: 0, top: 10, rotate: -2 },       // Memory (top-left)
+  { left: 90, top: 0, rotate: 2 },        // Confession (top-right)
   
-  { left: 35, top: 145, rotate: 2 },     // Understanding (mid-left)
-  { left: 175, top: 125, rotate: -3 },   // Imagination (mid-center)
-  { left: 255, top: 175, rotate: 1 },    // Vibes (mid-right)
+  { left: 10, top: 100, rotate: 1 },      // Understanding (mid-left)
+  { left: 75, top: 130, rotate: -2 },     // Imagination (mid-center)
+  { left: 5, top: 200, rotate: 2 },       // Vibes (mid-right, offset down)
   
-  { left: 5, top: 285, rotate: -3 },     // Questioning (bottom-left)
-  { left: 175, top: 320, rotate: 2 },    // Truth (bottom-right)
+  { left: 0, top: 280, rotate: -1 },      // Questioning (bottom-left)
+  { left: 90, top: 310, rotate: 2 },      // Truth (bottom-right)
 ];
 
 function CinematicHero() {
@@ -364,8 +365,8 @@ function CinematicHero() {
               <div className="mt-2 h-px w-16 bg-[#a72a30]/30" />
             </div>
 
-            {/* Fixed canvas for irregular 2-3-2 composition */}
-            <div className="relative h-[420px] w-[360px]">
+            {/* Fixed canvas for compact 2-3-2 composition */}
+            <div className="relative h-[440px] w-[200px]">
               {frames.map((frame, index) => {
                 const isActive = index === activeEntry;
                 const color = noteColors[index];
