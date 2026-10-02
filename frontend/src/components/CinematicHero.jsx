@@ -46,34 +46,17 @@ const noteColors = [
   },
 ];
 
-const noteRotations = [
-  'rotate-[-2deg]',
-  'rotate-[1.5deg]',
-  'rotate-[-1deg]',
-  'rotate-[2deg]',
-  'rotate-[-1.5deg]',
-  'rotate-[1deg]',
-  'rotate-[-2deg]',
-];
-
-const notePositions = [
-  'left-0 top-0',
-  'left-3 top-[68px]',
-  'left-1 top-[138px]',
-  'left-5 top-[208px]',
-  'left-0 top-[278px]',
-  'left-4 top-[348px]',
-  'left-2 top-[418px]',
-];
-
-const noteOffsets = [
-  'translate-x-0',
-  'translate-x-3',
-  'translate-x-1',
-  'translate-x-5',
-  'translate-x-0',
-  'translate-x-4',
-  'translate-x-2',
+// Explicit layout coordinates for 2-3-2 composition
+const noteLayout = [
+  { left: 0, top: 10, rotate: -2 },      // Memory (top-left)
+  { left: 150, top: 35, rotate: 3 },     // Confession (top-right)
+  
+  { left: 35, top: 145, rotate: 2 },     // Understanding (mid-left)
+  { left: 175, top: 125, rotate: -3 },   // Imagination (mid-center)
+  { left: 255, top: 175, rotate: 1 },    // Vibes (mid-right)
+  
+  { left: 5, top: 285, rotate: -3 },     // Questioning (bottom-left)
+  { left: 175, top: 320, rotate: 2 },    // Truth (bottom-right)
 ];
 
 function CinematicHero() {
@@ -371,7 +354,7 @@ function CinematicHero() {
         <div className="mx-auto grid min-h-[calc(100vh-120px)] max-w-[1750px] grid-cols-1 gap-8 sm:min-h-[calc(100vh-140px)] sm:gap-10 md:min-h-[calc(100vh-162px)] lg:grid-cols-[190px_minmax(250px,0.72fr)_minmax(560px,1.8fr)_78px] lg:gap-2 xl:grid-cols-[210px_minmax(280px,0.72fr)_minmax(620px,1.8fr)_90px] xl:gap-3">
           {/* ========================================================
               COLUMN 01
-              DIGITAL STICKY NOTES - PINNED TO VIRTUAL WALL
+              DIGITAL STICKY NOTES - CURATED WALL COMPOSITION
               ======================================================== */}
           <aside className="hidden pt-20 lg:block">
             <div className="mb-10">
@@ -381,23 +364,24 @@ function CinematicHero() {
               <div className="mt-2 h-px w-16 bg-[#a72a30]/30" />
             </div>
 
-            {/* Virtual wall - positioned container */}
-            <div className="relative h-[500px] w-[140px]">
+            {/* Fixed canvas for irregular 2-3-2 composition */}
+            <div className="relative h-[420px] w-[360px]">
               {frames.map((frame, index) => {
                 const isActive = index === activeEntry;
                 const color = noteColors[index];
-                const rotation = noteRotations[index];
-                const position = notePositions[index];
-                const offset = noteOffsets[index];
+                const layout = noteLayout[index];
 
                 return (
                   <button
                     key={frame.id}
                     onClick={() => selectEntry(index)}
-                    className={`absolute transition-all duration-500 ${position} ${rotation} ${offset} ${
+                    className={`absolute transition-all duration-500 ${
                       isActive ? 'z-30' : 'z-10 hover:z-20'
                     }`}
                     style={{
+                      left: `${layout.left}px`,
+                      top: `${layout.top}px`,
+                      transform: `rotate(${layout.rotate}deg)`,
                       boxShadow: isActive
                         ? `0 0 25px ${color.glow}, 0 12px 30px rgba(0,0,0,0.45)`
                         : '0 10px 25px rgba(0,0,0,0.35)',
@@ -457,7 +441,7 @@ function CinematicHero() {
               EDITORIAL IDENTITY - RESPONSIVE
               ======================================================== */}
           <div className="relative flex flex-col justify-center pt-4 sm:pt-6 lg:pt-14 lg:-ml-4">
-            {/* Mobile: Digital sticky notes wall */}
+            {/* Mobile: Digital sticky notes - horizontal scroll */}
             <div className="mb-6 lg:hidden">
               <div className="mb-4">
                 <span className="font-mono text-[9px] font-semibold uppercase tracking-[0.28em] text-[#d5d1c8]">
@@ -468,21 +452,22 @@ function CinematicHero() {
 
               {/* Horizontally scrollable wall */}
               <div className="overflow-x-auto scrollbar-hide">
-                <div className="flex min-w-max gap-4 pb-2">
+                <div className="flex min-w-max gap-6 pb-2">
                   {frames.map((frame, index) => {
                     const isActive = index === activeEntry;
                     const color = noteColors[index];
-                    const rotation = noteRotations[index];
+                    const layout = noteLayout[index];
 
                     return (
                       <button
                         key={frame.id}
                         onClick={() => selectEntry(index)}
                         aria-label={`View ${frame.title}`}
-                        className={`relative transition-all duration-500 ${rotation} ${
+                        className={`relative transition-all duration-500 ${
                           isActive ? 'z-30' : 'z-10'
                         }`}
                         style={{
+                          transform: `rotate(${layout.rotate}deg)`,
                           boxShadow: isActive
                             ? `0 0 25px ${color.glow}, 0 12px 30px rgba(0,0,0,0.45)`
                             : '0 10px 25px rgba(0,0,0,0.35)',
