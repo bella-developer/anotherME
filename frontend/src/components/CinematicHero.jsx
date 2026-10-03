@@ -1,1594 +1,1569 @@
-import { useState, useEffect, useRef, memo, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-/**
- * ================================================================
- * ESO — THE BLACK VAULT
- * CinematicHero
- *
- * Design:
- * - Editorial / cinematic / archival
- * - Dark atmospheric environment
- * - Organic 2 / 3 / 2 digital sticky-note wall
- * - Earth / parchment / coffee / chocolate palette
- * - Fully responsive
- * ================================================================
- */
+/* ============================================================
+   DATA
+   ============================================================ */
 
-/* ================================================================
-   VIDEO COMPONENT
-   ================================================================ */
+const FRAMES = [
+  {
+    id: "memory",
+    no: "01",
+    title: "Memory",
+    heading: "MEMORY",
+    tagline: "ROOMS OF MEMORY.",
+    quote:
+      "In the architecture of remembrance, we build who we become.",
+    video:
+      "https://res.cloudinary.com/dbtm7etag/video/upload/v1786521558/fram1desktop_emb84g.mp4",
+    mobile:
+      "https://res.cloudinary.com/dbtm7etag/video/upload/v1786521557/frame1mobile_efrsvf.mp4",
+    theme: "wine",
+    icon: "brain",
+  },
+  {
+    id: "confession",
+    no: "02",
+    title: "Confession",
+    heading: "CONFESSION",
+    tagline: "THINGS LEFT UNSAID.",
+    quote:
+      "The weight we carry is lighter when shared in whispers.",
+    video:
+      "https://res.cloudinary.com/dbtm7etag/video/upload/v1786357230/frae2video_qmhpf7.mp4",
+    mobile:
+      "https://res.cloudinary.com/dbtm7etag/video/upload/v1786521557/frame2mob_pgzsnn.mp4",
+    theme: "coffee",
+    icon: "eye",
+  },
+  {
+    id: "understanding",
+    no: "03",
+    title: "Understanding",
+    heading: "UNDERSTANDING",
+    tagline: "A SHARED DARKNESS.",
+    quote:
+      "To be understood is to find another who speaks the language of your silence.",
+    video:
+      "https://res.cloudinary.com/dbtm7etag/video/upload/v1786358832/frame3vid_1_hjyi09.mp4",
+    mobile:
+      "https://res.cloudinary.com/dbtm7etag/video/upload/v1786521554/frame3mob_h9pzrp.mp4",
+    theme: "violet",
+    icon: "diamond",
+  },
+  {
+    id: "imagination",
+    no: "04",
+    title: "Imagination",
+    heading: "IMAGINATION",
+    tagline: "BEYOND IMAGINATION.",
+    quote:
+      "Reality is merely the canvas; imagination paints what could be.",
+    video:
+      "https://res.cloudinary.com/dbtm7etag/video/upload/v1786361397/frame4videoo_hizhue.mp4",
+    mobile:
+      "https://res.cloudinary.com/dbtm7etag/video/upload/v1786521551/frame4mob_ox4nlo.mp4",
+    theme: "moss",
+    icon: "star",
+  },
+  {
+    id: "vibes",
+    no: "05",
+    title: "Vibes",
+    heading: "VIBES",
+    tagline: "A SPACE FOR ANYTHING.",
+    quote:
+      "Between structure and chaos lies the frequency of authentic being.",
+    video:
+      "https://res.cloudinary.com/dbtm7etag/video/upload/v1786361396/frame5v_wtvs09.mp4",
+    mobile:
+      "https://res.cloudinary.com/dbtm7etag/video/upload/v1786521549/frame5mob_q1ynbk.mp4",
+    theme: "ochre",
+    icon: "wave",
+  },
+  {
+    id: "questioning",
+    no: "06",
+    title: "Questioning",
+    heading: "QUESTIONING",
+    tagline: "QUESTIONS WITHOUT ANSWERS.",
+    quote:
+      "The mind that asks is forever more alive than one that accepts.",
+    video:
+      "https://res.cloudinary.com/dbtm7etag/video/upload/v1786361397/frame6v_ijhpzm.mp4",
+    mobile:
+      "https://res.cloudinary.com/dbtm7etag/video/upload/v1786521551/frame6mob_xjoxtz.mp4",
+    theme: "rose",
+    icon: "target",
+  },
+  {
+    id: "truth",
+    no: "07",
+    title: "Truth",
+    heading: "TRUTH",
+    tagline: "WHERE MYSTERY BEGINS.",
+    quote:
+      "Truth is not found in certainty, but in the courage to remain uncertain.",
+    video:
+      "https://res.cloudinary.com/dbtm7etag/video/upload/v1786361701/frame7vide_yp9dc4.mp4",
+    mobile:
+      "https://res.cloudinary.com/dbtm7etag/video/upload/v1786521556/frame7mob_ovz0to.mp4",
+    theme: "crimson",
+    icon: "compass",
+  },
+];
 
-const ArchiveVideo = memo(function ArchiveVideo({
-  frame,
-  className = '',
-  priority = false,
-}) {
-  const videoRef = useRef(null);
-  const [isVisible, setIsVisible] = useState(priority);
+/* ============================================================
+   DESIGN TOKENS
+   ============================================================ */
 
-  useEffect(() => {
-    if (priority) return;
+const THEMES = {
+  wine: {
+    bg: "#281617",
+    bg2: "#32191a",
+    border: "#783437",
+    accent: "#e35b66",
+    text: "#c9a19b",
+  },
 
-    const video = videoRef.current;
-    if (!video) return;
+  coffee: {
+    bg: "#2b2119",
+    bg2: "#35271d",
+    border: "#76553c",
+    accent: "#d8a25b",
+    text: "#c8ae91",
+  },
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.disconnect();
-        }
-      },
-      {
-        rootMargin: '100px',
-      }
-    );
+  violet: {
+    bg: "#211c2b",
+    bg2: "#292238",
+    border: "#5d4a78",
+    accent: "#9c79df",
+    text: "#b9a8d0",
+  },
 
-    observer.observe(video);
+  moss: {
+    bg: "#20271b",
+    bg2: "#29311e",
+    border: "#53663a",
+    accent: "#769b55",
+    text: "#b1bd92",
+  },
 
-    return () => observer.disconnect();
-  }, [priority]);
+  ochre: {
+    bg: "#2a2116",
+    bg2: "#332616",
+    border: "#79541e",
+    accent: "#d79b28",
+    text: "#c4a16a",
+  },
 
-  useEffect(() => {
-    if (!isVisible) return;
+  rose: {
+    bg: "#29201d",
+    bg2: "#342521",
+    border: "#79504b",
+    accent: "#df7b7b",
+    text: "#c8a29b",
+  },
 
-    const video = videoRef.current;
-    if (!video) return;
+  crimson: {
+    bg: "#2b1718",
+    bg2: "#361b1d",
+    border: "#84383d",
+    accent: "#e05259",
+    text: "#c99b98",
+  },
+};
 
-    video.load();
+/* ============================================================
+   NOTE GEOMETRY
+   ------------------------------------------------------------
+   This is intentionally NOT a grid.
 
-    const playPromise = video.play();
+   Desktop:
+   01             02
 
-    if (playPromise !== undefined) {
-      playPromise.catch(() => {
-        // Autoplay may be blocked by the browser.
-      });
-    }
-  }, [isVisible, frame.id]);
+       03    04       05
 
+          06       07
+
+   Each card owns its own x/y/rotation.
+   ============================================================ */
+
+const NOTE_POSITIONS = [
+  {
+    left: 0,
+    top: 34,
+    width: 153,
+    height: 91,
+    rotate: -4,
+  },
+  {
+    left: 151,
+    top: 81,
+    width: 151,
+    height: 91,
+    rotate: 3,
+  },
+  {
+    left: -24,
+    top: 173,
+    width: 150,
+    height: 90,
+    rotate: -3,
+  },
+  {
+    left: 109,
+    top: 201,
+    width: 145,
+    height: 88,
+    rotate: 4,
+  },
+  {
+    left: 235,
+    top: 174,
+    width: 122,
+    height: 76,
+    rotate: 2,
+  },
+  {
+    left: 8,
+    top: 314,
+    width: 151,
+    height: 89,
+    rotate: -5,
+  },
+  {
+    left: 193,
+    top: 333,
+    width: 151,
+    height: 89,
+    rotate: 3,
+  },
+];
+
+/* ============================================================
+   ICONS
+   ============================================================ */
+
+function NoteIcon({ type }) {
+  const common = {
+    width: 27,
+    height: 27,
+    viewBox: "0 0 32 32",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: 1.15,
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+  };
+
+  switch (type) {
+    case "brain":
+      return (
+        <svg {...common}>
+          <path d="M12 5.5a5 5 0 0 0-4.4 7.4A5 5 0 0 0 9 22.4a5 5 0 0 0 7 3.1V6.7a5 5 0 0 0-4-1.2Z" />
+          <path d="M20 5.5a5 5 0 0 1 4.4 7.4A5 5 0 0 1 23 22.4a5 5 0 0 1-7 3.1V6.7a5 5 0 0 1 4-1.2Z" />
+          <path d="M11 10.5h2M19 10.5h2M10 16h4M18 16h4M13 21h2M17 21h2" />
+        </svg>
+      );
+
+    case "eye":
+      return (
+        <svg {...common}>
+          <path d="M3.5 16s4.6-7 12.5-7 12.5 7 12.5 7-4.6 7-12.5 7S3.5 16 3.5 16Z" />
+          <circle cx="16" cy="16" r="3.2" />
+        </svg>
+      );
+
+    case "diamond":
+      return (
+        <svg {...common}>
+          <path d="m16 3 10 13-10 13L6 16 16 3Z" />
+          <path d="m16 8 5.5 8-5.5 8-5.5-8L16 8Z" />
+        </svg>
+      );
+
+    case "star":
+      return (
+        <svg {...common}>
+          <path d="m16 3 2.7 8.3H27l-6.7 5.1 2.5 8.4-6.8-5-6.8 5 2.5-8.4L5 11.3h8.3L16 3Z" />
+        </svg>
+      );
+
+    case "wave":
+      return (
+        <svg {...common}>
+          <path d="M3 16h4l2-7 4 14 3-16 3 11 2-6h8" />
+        </svg>
+      );
+
+    case "target":
+      return (
+        <svg {...common}>
+          <circle cx="16" cy="16" r="11" />
+          <circle cx="16" cy="16" r="6" />
+          <circle cx="16" cy="16" r="1.5" />
+        </svg>
+      );
+
+    case "compass":
+      return (
+        <svg {...common}>
+          <circle cx="16" cy="16" r="11" />
+          <path d="m21.5 10.5-3.2 7.8-7.8 3.2 3.2-7.8 7.8-3.2Z" />
+          <path d="M16 3v4M29 16h-4M16 29v-4M3 16h4" />
+        </svg>
+      );
+
+    default:
+      return null;
+  }
+}
+
+/* ============================================================
+   DIGITAL PIN
+   ============================================================ */
+
+function Pin({ color }) {
   return (
-    <video
-      ref={videoRef}
-      key={frame.id}
-      className={className}
-      autoPlay={priority}
-      muted
-      loop
-      playsInline
-      preload={priority ? 'auto' : 'none'}
-      poster="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-    >
-      {isVisible && (
-        <>
-          <source src={frame.video} type="video/mp4" />
-          <source src={frame.mobileVideo} type="video/mp4" />
-        </>
-      )}
-    </video>
+    <span
+      className="
+        absolute
+        -top-[6px]
+        left-1/2
+        z-30
+        h-[11px]
+        w-[11px]
+        -translate-x-1/2
+        rounded-full
+      "
+      style={{
+        background: `
+          radial-gradient(
+            circle at 35% 30%,
+            #fff7,
+            ${color} 34%,
+            ${color} 65%,
+            #000 100%
+          )
+        `,
+        boxShadow: `
+          0 2px 3px rgba(0,0,0,.75),
+          0 0 8px ${color}55
+        `,
+      }}
+    />
   );
-});
+}
 
-/* ================================================================
-   STICKY NOTE PALETTE
-   ================================================================ */
-
-const NOTE_STYLES = [
-  {
-    surface: '#211b16',
-    accent: '#b59a76',
-    text: '#d5c1a1',
-    border: 'rgba(181,154,118,0.28)',
-    shadow: 'rgba(181,154,118,0.10)',
-  },
-  {
-    surface: '#241b16',
-    accent: '#9b7355',
-    text: '#c7a68a',
-    border: 'rgba(155,115,85,0.30)',
-    shadow: 'rgba(155,115,85,0.10)',
-  },
-  {
-    surface: '#1d1b18',
-    accent: '#b2a18a',
-    text: '#d1c2aa',
-    border: 'rgba(178,161,138,0.26)',
-    shadow: 'rgba(178,161,138,0.08)',
-  },
-  {
-    surface: '#211815',
-    accent: '#a67c5b',
-    text: '#cdb096',
-    border: 'rgba(166,124,91,0.30)',
-    shadow: 'rgba(166,124,91,0.10)',
-  },
-  {
-    surface: '#211e19',
-    accent: '#8f806c',
-    text: '#c0ae94',
-    border: 'rgba(143,128,108,0.28)',
-    shadow: 'rgba(143,128,108,0.09)',
-  },
-  {
-    surface: '#201714',
-    accent: '#7f5d47',
-    text: '#b89579',
-    border: 'rgba(127,93,71,0.32)',
-    shadow: 'rgba(127,93,71,0.10)',
-  },
-  {
-    surface: '#211c17',
-    accent: '#aa9270',
-    text: '#d0bda0',
-    border: 'rgba(170,146,112,0.30)',
-    shadow: 'rgba(170,146,112,0.10)',
-  },
-];
-
-/* ================================================================
-   DESKTOP WALL POSITIONS
-   ================================================================
-
-   Intentionally NOT a grid.
-
-   Composition:
-
-       01              02
-
-          03      04          05
-
-       06                 07
-
-   Each note has independent x/y/rotation.
-   ================================================================ */
-
-const DESKTOP_NOTE_LAYOUT = [
-  {
-    left: '1%',
-    top: 4,
-    rotate: -2.5,
-  },
-  {
-    left: '51%',
-    top: 24,
-    rotate: 2.2,
-  },
-
-  {
-    left: '7%',
-    top: 116,
-    rotate: 1.7,
-  },
-  {
-    left: '40%',
-    top: 101,
-    rotate: -2.2,
-  },
-  {
-    left: '69%',
-    top: 137,
-    rotate: 2.8,
-  },
-
-  {
-    left: '2%',
-    top: 247,
-    rotate: -1.8,
-  },
-  {
-    left: '51%',
-    top: 272,
-    rotate: 2.1,
-  },
-];
-
-/* ================================================================
-   MOBILE WALL POSITIONS
-   ================================================================ */
-
-const MOBILE_NOTE_LAYOUT = [
-  {
-    left: '2%',
-    top: 4,
-    rotate: -2.2,
-  },
-  {
-    left: '52%',
-    top: 20,
-    rotate: 2,
-  },
-
-  {
-    left: '9%',
-    top: 91,
-    rotate: 1.5,
-  },
-  {
-    left: '40%',
-    top: 105,
-    rotate: -2,
-  },
-  {
-    left: '69%',
-    top: 88,
-    rotate: 2.4,
-  },
-
-  {
-    left: '3%',
-    top: 193,
-    rotate: -1.8,
-  },
-  {
-    left: '52%',
-    top: 215,
-    rotate: 2,
-  },
-];
-
-/* ================================================================
+/* ============================================================
    STICKY NOTE
-   ================================================================ */
+   ============================================================ */
 
 function VaultNote({
   frame,
   index,
   active,
-  layout,
   onSelect,
-  mobile = false,
 }) {
-  const style = NOTE_STYLES[index];
+  const theme = THEMES[frame.theme];
+  const pos = NOTE_POSITIONS[index];
 
   return (
     <button
       type="button"
       onClick={() => onSelect(index)}
-      aria-label={`View ${frame.title}`}
-      className={`
-        group absolute
-        z-10
-        w-[102px]
-        sm:w-[108px]
-        ${active ? 'z-40' : 'hover:z-30'}
-        focus:outline-none
-      `}
+      className="
+        absolute
+        block
+        cursor-pointer
+        text-left
+        outline-none
+        transition-[z-index]
+        duration-300
+      "
       style={{
-        left: layout.left,
-        top: `${layout.top}px`,
-        transform: `rotate(${layout.rotate}deg)`,
+        left: `${pos.left}px`,
+        top: `${pos.top}px`,
+        width: `${pos.width}px`,
+        height: `${pos.height}px`,
+        zIndex: active ? 50 : 10 + index,
       }}
     >
-      {/* ==========================================================
-          PIN
-          ========================================================== */}
-
-      <span
-        className="
-          absolute
-          -top-[5px]
-          left-1/2
-          z-30
-          h-[8px]
-          w-[8px]
-          -translate-x-1/2
-          rounded-full
-        "
-        style={{
-          backgroundColor: style.accent,
-          boxShadow: `
-            0 1px 3px rgba(0,0,0,.8),
-            0 0 0 1px rgba(0,0,0,.35)
-          `,
-        }}
-      />
-
-      {/* tiny shadow beneath pin */}
-      <span
-        className="
-          pointer-events-none
-          absolute
-          -top-[1px]
-          left-1/2
-          z-20
-          h-[7px]
-          w-[7px]
-          -translate-x-1/2
-          rounded-full
-          bg-black/50
-          blur-[2px]
-        "
-      />
-
-      {/* ==========================================================
-          NOTE BODY
-          ========================================================== */}
-
       <div
         className="
+          group
           relative
-          h-[55px]
+          h-full
           w-full
-          overflow-hidden
-          rounded-[7px]
+          overflow-visible
+          rounded-[3px]
           border
-          backdrop-blur-xl
           transition-all
           duration-500
           ease-out
-          group-hover:-translate-y-[2px]
+          hover:-translate-y-1
+          focus-visible:ring-1
         "
         style={{
-          backgroundColor: style.surface,
+          transform: `rotate(${pos.rotate}deg)`,
+          background: `
+            linear-gradient(
+              135deg,
+              ${theme.bg2},
+              ${theme.bg}
+            )
+          `,
           borderColor: active
-            ? style.accent
-            : style.border,
-
+            ? `${theme.accent}cc`
+            : `${theme.border}b8`,
           boxShadow: active
             ? `
-              0 12px 28px rgba(0,0,0,.58),
-              0 0 0 1px ${style.accent}22,
-              0 0 22px ${style.shadow}
+              0 16px 28px rgba(0,0,0,.60),
+              0 0 0 1px ${theme.accent}20,
+              0 0 25px ${theme.accent}16
             `
             : `
-              0 9px 22px rgba(0,0,0,.48),
+              0 10px 20px rgba(0,0,0,.52),
               0 2px 4px rgba(0,0,0,.55)
             `,
         }}
       >
-        {/* ========================================================
-            SOFT PAPER-LIKE DIGITAL LIGHT
-            ======================================================== */}
-
-        <div
-          className="pointer-events-none absolute inset-0 opacity-30"
+        {/* digital grain */}
+        <span
+          className="
+            pointer-events-none
+            absolute
+            inset-0
+            opacity-[0.10]
+          "
           style={{
-            background: `
+            backgroundImage: `
               radial-gradient(
-                circle at 82% 18%,
-                ${style.accent}12,
-                transparent 40%
+                circle at 20% 30%,
+                rgba(255,255,255,.25) 0 0.5px,
+                transparent 0.7px
               )
             `,
+            backgroundSize: "5px 5px",
           }}
         />
 
-        {/* ========================================================
-            TOP EDGE / AGED HIGHLIGHT
-            ======================================================== */}
-
-        <div
-          className="pointer-events-none absolute left-0 right-0 top-0 h-px opacity-50"
+        {/* upper light */}
+        <span
+          className="
+            pointer-events-none
+            absolute
+            left-0
+            right-0
+            top-0
+            h-px
+          "
           style={{
             background: `linear-gradient(
               90deg,
               transparent,
-              ${style.accent}55,
+              ${theme.accent}66,
               transparent
             )`,
           }}
         />
 
-        {/* ========================================================
-            LEFT ACCENT
-            ======================================================== */}
+        {/* pin */}
+        <Pin color={theme.accent} />
 
-        <div
-          className="absolute bottom-0 left-0 top-0 w-[2px]"
-          style={{
-            backgroundColor: style.accent,
-            opacity: active ? 0.9 : 0.65,
-          }}
-        />
-
-        {/* ========================================================
-            CONTENT
-            ======================================================== */}
-
-        <div className="relative flex h-full flex-col justify-center px-3">
-          <div className="mb-[3px] flex items-center gap-2">
+        {/* card content */}
+        <div className="relative h-full px-[14px] py-[12px]">
+          <div className="flex items-start justify-between">
             <span
               className="
                 font-mono
-                text-[7px]
-                font-medium
-                tracking-[0.16em]
+                text-[8px]
+                tracking-[0.24em]
               "
               style={{
-                color: active
-                  ? style.accent
-                  : `${style.accent}99`,
+                color: `${theme.text}b0`,
               }}
             >
-              {frame.number}
+              {frame.no}
             </span>
 
-            {/* tiny horizontal archival mark */}
             <span
-              className="h-px w-4 opacity-30"
+              className="
+                -mt-1
+                opacity-80
+              "
               style={{
-                backgroundColor: style.accent,
+                color: `${theme.text}aa`,
               }}
-            />
+            >
+              <NoteIcon type={frame.icon} />
+            </span>
           </div>
 
-          <span
+          <div
             className="
-              block
-              truncate
+              absolute
+              bottom-[16px]
+              left-[14px]
+              right-[9px]
               font-serif
-              text-[10px]
+              text-[18px]
               italic
               leading-none
-              tracking-[0.055em]
-              transition-colors
-              duration-300
+              tracking-[-0.015em]
             "
             style={{
-              color: active
-                ? style.text
-                : `${style.text}cc`,
+              color: active ? "#ddd2c2" : theme.text,
             }}
           >
-            {frame.shortTitle}
-          </span>
+            {frame.title}
+          </div>
+
+          {/* tiny artifact line */}
+          <span
+            className="
+              absolute
+              bottom-[8px]
+              right-[10px]
+              h-px
+              w-[17px]
+            "
+            style={{
+              backgroundColor: `${theme.accent}80`,
+            }}
+          />
         </div>
 
-        {/* ========================================================
-            ACTIVE WASH
-            ======================================================== */}
-
+        {/* active edge */}
         {active && (
-          <div
-            className="pointer-events-none absolute inset-0"
+          <span
+            className="
+              absolute
+              bottom-0
+              left-0
+              top-0
+              w-[2px]
+            "
             style={{
-              background: `
-                linear-gradient(
-                  135deg,
-                  ${style.accent}08,
-                  transparent 55%
-                )
-              `,
+              backgroundColor: theme.accent,
             }}
           />
         )}
-
-        {/* ========================================================
-            BOTTOM IMPERFECTION / ARTISTIC MARK
-            ======================================================== */}
-
-        <span
-          className="pointer-events-none absolute bottom-[5px] right-[7px] h-px w-3 opacity-20"
-          style={{
-            backgroundColor: style.accent,
-          }}
-        />
       </div>
     </button>
   );
 }
 
-/* ================================================================
-   STICKY NOTE WALL
-   ================================================================ */
+/* ============================================================
+   NOTE WALL
+   ============================================================ */
 
-function VaultNoteWall({
-  frames,
-  activeEntry,
-  selectEntry,
-  mobile = false,
+function VaultIndex({
+  activeIndex,
+  onSelect,
 }) {
-  const layout = mobile
-    ? MOBILE_NOTE_LAYOUT
-    : DESKTOP_NOTE_LAYOUT;
-
   return (
-    <div
-      className={`
-        relative
-        ${mobile
-          ? 'h-[280px] w-full max-w-[330px] mx-auto'
-          : 'h-[350px] w-[315px]'
-        }
-      `}
-    >
-      {/* ==========================================================
-          VERY SUBTLE WALL GUIDE
-          ========================================================== */}
+    <div className="relative h-[450px] w-[355px]">
+      {/* wall guide / atmospheric traces */}
 
-      <div
+      <span
         className="
           pointer-events-none
           absolute
-          left-[4%]
-          top-[6px]
-          h-[320px]
+          left-[8px]
+          top-[35px]
+          h-[365px]
           w-px
           bg-white/[0.025]
         "
       />
 
-      {/* tiny archival marks */}
-      <div className="pointer-events-none absolute left-0 top-0 h-px w-8 bg-white/[0.07]" />
+      <span
+        className="
+          pointer-events-none
+          absolute
+          left-[1px]
+          top-0
+          h-px
+          w-[78px]
+          bg-[#9b6951]/60
+        "
+      />
 
-      <div className="pointer-events-none absolute bottom-0 right-0 h-px w-8 bg-white/[0.05]" />
-
-      {/* ==========================================================
-          NOTES
-          ========================================================== */}
-
-      {frames.map((frame, index) => (
+      {FRAMES.map((frame, index) => (
         <VaultNote
           key={frame.id}
           frame={frame}
           index={index}
-          active={index === activeEntry}
-          layout={layout[index]}
-          onSelect={selectEntry}
-          mobile={mobile}
+          active={index === activeIndex}
+          onSelect={onSelect}
         />
       ))}
     </div>
   );
 }
 
-/* ================================================================
-   MAIN COMPONENT
-   ================================================================ */
+/* ============================================================
+   VIDEO
+   ============================================================ */
 
-function CinematicHero() {
-  const navigate = useNavigate();
+function CinematicVideo({ frame }) {
+  return (
+    <div
+      className="
+        relative
+        h-full
+        w-full
+        overflow-hidden
+        bg-black
+      "
+    >
+      <video
+        key={frame.id}
+        autoPlay
+        muted
+        loop
+        playsInline
+        className="
+          absolute
+          inset-0
+          h-full
+          w-full
+          object-cover
+          contrast-[1.08]
+          brightness-[0.72]
+          saturate-[0.78]
+        "
+      >
+        <source
+          src={frame.video}
+          type="video/mp4"
+        />
+      </video>
 
-  const [activeEntry, setActiveEntry] = useState(6);
+      {/* cinematic vignette */}
+      <div
+        className="
+          pointer-events-none
+          absolute
+          inset-0
+          bg-[radial-gradient(ellipse_at_center,transparent_25%,rgba(0,0,0,.58)_100%)]
+        "
+      />
 
-  /* ================================================================
-     FRAME DATA
-     ================================================================ */
+      {/* left darkness */}
+      <div
+        className="
+          pointer-events-none
+          absolute
+          inset-y-0
+          left-0
+          w-[30%]
+          bg-gradient-to-r
+          from-black/40
+          to-transparent
+        "
+      />
 
-  const frames = [
-    {
-      id: 'welcome',
-      number: '01',
-      video:
-        'https://res.cloudinary.com/dbtm7etag/video/upload/v1786521558/fram1desktop_emb84g.mp4',
-      mobileVideo:
-        'https://res.cloudinary.com/dbtm7etag/video/upload/v1786521557/frame1mobile_efrsvf.mp4',
-      title: 'THE MEMORY PALACE',
-      shortTitle: 'MEMORY',
-      tagline: 'Rooms of memory.',
-      quote:
-        'In the architecture of remembrance, we build who we become.',
-      highlightWords: ['architecture', 'become'],
-      description:
-        'A space for introspection and personal history',
-    },
-    {
-      id: 'dark-confession',
-      number: '02',
-      video:
-        'https://res.cloudinary.com/dbtm7etag/video/upload/v1786357230/frae2video_qmhpf7.mp4',
-      mobileVideo:
-        'https://res.cloudinary.com/dbtm7etag/video/upload/v1786521557/frame2mob_pgzsnn.mp4',
-      title: 'CONFESSION',
-      shortTitle: 'CONFESSION',
-      tagline: 'Things left unsaid.',
-      quote:
-        'The weight we carry is lighter when shared in whispers.',
-      highlightWords: ['weight', 'whispers'],
-      description:
-        'Release your burdens without judgment',
-    },
-    {
-      id: 'dark-understanding',
-      number: '03',
-      video:
-        'https://res.cloudinary.com/dbtm7etag/video/upload/v1786358832/frame3vid_1_hjyi09.mp4',
-      mobileVideo:
-        'https://res.cloudinary.com/dbtm7etag/video/upload/v1786521554/frame3mob_h9pzrp.mp4',
-      title: 'UNDERSTANDING',
-      shortTitle: 'UNDERSTANDING',
-      tagline: 'A shared darkness.',
-      quote:
-        'To be understood is to find another who speaks the language of your silence.',
-      highlightWords: ['language', 'silence'],
-      description:
-        'Connect with those who truly understand',
-    },
-    {
-      id: 'fantasy-daydream',
-      number: '04',
-      video:
-        'https://res.cloudinary.com/dbtm7etag/video/upload/v1786361397/frame4videoo_hizhue.mp4',
-      mobileVideo:
-        'https://res.cloudinary.com/dbtm7etag/video/upload/v1786521551/frame4mob_ox4nlo.mp4',
-      title: 'IMAGINATION',
-      shortTitle: 'IMAGINATION',
-      tagline: 'Beyond imagination.',
-      quote:
-        'Reality is merely the canvas; imagination paints what could be.',
-      highlightWords: ['canvas', 'paints'],
-      description:
-        'Explore worlds beyond the ordinary',
-    },
-    {
-      id: 'fantasy-vibes',
-      number: '05',
-      video:
-        'https://res.cloudinary.com/dbtm7etag/video/upload/v1786361396/frame5v_wtvs09.mp4',
-      mobileVideo:
-        'https://res.cloudinary.com/dbtm7etag/video/upload/v1786521549/frame5mob_q1ynbk.mp4',
-      title: 'VIBES',
-      shortTitle: 'VIBES',
-      tagline: 'A space for anything.',
-      quote:
-        'Between structure and chaos lies the frequency of authentic being.',
-      highlightWords: ['frequency', 'authentic'],
-      description:
-        'Flow freely in unstructured expression',
-    },
-    {
-      id: 'philo-questioning',
-      number: '06',
-      video:
-        'https://res.cloudinary.com/dbtm7etag/video/upload/v1786361397/frame6v_ijhpzm.mp4',
-      mobileVideo:
-        'https://res.cloudinary.com/dbtm7etag/video/upload/v1786521551/frame6mob_xjoxtz.mp4',
-      title: 'QUESTIONING',
-      shortTitle: 'QUESTIONING',
-      tagline: 'Questions without answers.',
-      quote:
-        'The mind that asks is forever more alive than one that accepts.',
-      highlightWords: ['alive', 'accepts'],
-      description:
-        'Challenge everything, seek deeper truth',
-    },
-    {
-      id: 'philo-truth',
-      number: '07',
-      video:
-        'https://res.cloudinary.com/dbtm7etag/video/upload/v1786361701/frame7vide_yp9dc4.mp4',
-      mobileVideo:
-        'https://res.cloudinary.com/dbtm7etag/video/upload/v1786521556/frame7mob_ovz0to.mp4',
-      title: 'TRUTH',
-      shortTitle: 'TRUTH',
-      tagline: 'Where mystery begins.',
-      quote:
-        'Truth is not found in certainty, but in the courage to remain uncertain.',
-      highlightWords: ['courage', 'uncertain'],
-      description:
-        'Embrace the uncomfortable realities',
-    },
+      {/* subtle top darkness */}
+      <div
+        className="
+          pointer-events-none
+          absolute
+          inset-x-0
+          top-0
+          h-[22%]
+          bg-gradient-to-b
+          from-black/40
+          to-transparent
+        "
+      />
+
+      {/* quote */}
+      <div
+        className="
+          absolute
+          inset-0
+          z-10
+          flex
+          items-center
+          justify-center
+          px-10
+          sm:px-16
+        "
+      >
+        <p
+          className="
+            max-w-[760px]
+            text-center
+            font-serif
+            text-[15px]
+            font-bold
+            leading-[1.8]
+            tracking-[0.075em]
+            text-white
+            drop-shadow-[0_3px_12px_rgba(0,0,0,.95)]
+            sm:text-[18px]
+            lg:text-[19px]
+          "
+        >
+          {renderQuote(frame.quote)}
+        </p>
+      </div>
+
+      {/* border */}
+      <div className="absolute inset-0 border border-white/[0.11]" />
+    </div>
+  );
+}
+
+/* ============================================================
+   QUOTE
+   ============================================================ */
+
+function renderQuote(quote) {
+  const words = [
+    "weight",
+    "whispers",
+    "architecture",
+    "become",
+    "language",
+    "silence",
+    "canvas",
+    "paints",
+    "frequency",
+    "authentic",
+    "alive",
+    "accepts",
+    "courage",
+    "uncertain",
   ];
 
-  const active = frames[activeEntry];
+  const pattern = new RegExp(
+    `(${words.join("|")})`,
+    "gi"
+  );
 
-  /* ================================================================
-     NAVIGATION
-     ================================================================ */
+  return quote.split(pattern).map((part, i) => {
+    const highlighted = words.some(
+      (word) => word.toLowerCase() === part.toLowerCase()
+    );
 
-  const selectEntry = useCallback((index) => {
-    setActiveEntry(index);
-  }, []);
+    return highlighted ? (
+      <span
+        key={i}
+        className="text-[#bd3b40]"
+      >
+        {part}
+      </span>
+    ) : (
+      <React.Fragment key={i}>
+        {part}
+      </React.Fragment>
+    );
+  });
+}
 
-  /* ================================================================
-     KEYBOARD NAVIGATION
-     ================================================================ */
+/* ============================================================
+   FILM STRIP
+   ============================================================ */
 
-  useEffect(() => {
-    let timeout = null;
+function FilmStrip({
+  activeIndex,
+  onSelect,
+}) {
+  return (
+    <div
+      className="
+        relative
+        flex
+        h-[548px]
+        w-[91px]
+        flex-col
+        gap-[7px]
+        border-l
+        border-white/[0.09]
+        pl-[12px]
+      "
+    >
+      {FRAMES.map((frame, index) => {
+        const active = index === activeIndex;
 
-    const handleKeyPress = (event) => {
-      if (timeout) return;
-
-      if (event.key === 'ArrowLeft') {
-        setActiveEntry((previous) =>
-          previous > 0 ? previous - 1 : frames.length - 1
-        );
-
-        timeout = setTimeout(() => {
-          timeout = null;
-        }, 300);
-      }
-
-      if (event.key === 'ArrowRight') {
-        setActiveEntry((previous) =>
-          previous < frames.length - 1 ? previous + 1 : 0
-        );
-
-        timeout = setTimeout(() => {
-          timeout = null;
-        }, 300);
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyPress);
-
-    return () => {
-      window.removeEventListener('keydown', handleKeyPress);
-
-      if (timeout) {
-        clearTimeout(timeout);
-      }
-    };
-  }, [frames.length]);
-
-  /* ================================================================
-     WHEEL NAVIGATION
-     ================================================================ */
-
-  useEffect(() => {
-    let lastCall = 0;
-    const throttleDelay = 900;
-
-    const handleWheel = (event) => {
-      const now = Date.now();
-
-      if (now - lastCall < throttleDelay) {
-        return;
-      }
-
-      if (Math.abs(event.deltaY) <= 30) {
-        return;
-      }
-
-      event.preventDefault();
-
-      lastCall = now;
-
-      if (event.deltaY > 0) {
-        setActiveEntry((previous) =>
-          previous < frames.length - 1 ? previous + 1 : 0
-        );
-      } else {
-        setActiveEntry((previous) =>
-          previous > 0 ? previous - 1 : frames.length - 1
-        );
-      }
-    };
-
-    window.addEventListener('wheel', handleWheel, {
-      passive: false,
-    });
-
-    return () => {
-      window.removeEventListener('wheel', handleWheel);
-    };
-  }, [frames.length]);
-
-  /* ================================================================
-     QUOTE HIGHLIGHT
-     ================================================================ */
-
-  const renderQuote = (quote, highlightWords) => {
-    if (!highlightWords?.length) {
-      return quote;
-    }
-
-    const escapedWords = highlightWords
-      .map((word) =>
-        word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
-      )
-      .join('|');
-
-    const regex = new RegExp(`(${escapedWords})`, 'gi');
-
-    const parts = quote.split(regex);
-
-    return parts.map((part, index) => {
-      const isHighlighted = highlightWords.some(
-        (word) => word.toLowerCase() === part.toLowerCase()
-      );
-
-      if (isHighlighted) {
         return (
-          <span
-            key={index}
+          <button
+            key={frame.id}
+            type="button"
+            onClick={() => onSelect(index)}
             className="
-              font-semibold
-              text-[#a9896c]
-              drop-shadow-[0_0_10px_rgba(169,137,108,0.18)]
+              group
+              relative
+              min-h-0
+              flex-1
+              overflow-hidden
+              border
+              text-left
+              outline-none
+              transition-all
+              duration-500
+            "
+            style={{
+              borderColor: active
+                ? "#a42c31"
+                : "rgba(255,255,255,.035)",
+            }}
+          >
+            <video
+              src={frame.video}
+              muted
+              loop
+              autoPlay
+              playsInline
+              className={`
+                absolute
+                inset-0
+                h-full
+                w-full
+                object-cover
+                grayscale
+                transition-all
+                duration-700
+                ${
+                  active
+                    ? "scale-100 opacity-75"
+                    : "scale-[1.12] opacity-[0.22] group-hover:opacity-50"
+                }
+              `}
+            />
+
+            <div className="absolute inset-0 bg-black/35" />
+
+            {/* frame number */}
+            <span
+              className="
+                absolute
+                right-[7px]
+                top-[7px]
+                z-10
+                font-mono
+                text-[7px]
+              "
+              style={{
+                color: active
+                  ? "#ddd4c8"
+                  : "rgba(255,255,255,.35)",
+              }}
+            >
+              {frame.no}
+            </span>
+
+            {/* sprocket holes */}
+            <div
+              className="
+                absolute
+                bottom-[5px]
+                left-[5px]
+                top-[5px]
+                z-10
+                flex
+                flex-col
+                justify-between
+              "
+            >
+              {Array.from({ length: 5 }).map((_, i) => (
+                <span
+                  key={i}
+                  className="
+                    h-[4px]
+                    w-[4px]
+                    rounded-full
+                    bg-white/30
+                  "
+                />
+              ))}
+            </div>
+
+            {active && (
+              <span
+                className="
+                  absolute
+                  bottom-[8px]
+                  left-[12px]
+                  z-20
+                  h-[2px]
+                  w-[20px]
+                  bg-[#b7373c]
+                "
+              />
+            )}
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
+/* ============================================================
+   VAULT CARD
+   ============================================================ */
+
+function VaultCard({
+  frame,
+  onEnter,
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onEnter}
+      className="
+        group
+        relative
+        h-[128px]
+        w-[265px]
+        rotate-[-2deg]
+        overflow-hidden
+        border
+        border-white/[0.10]
+        bg-[#090909]
+        p-[27px]
+        text-left
+        transition-all
+        duration-500
+        hover:rotate-0
+        hover:border-white/[0.18]
+      "
+    >
+      {/* paper lines */}
+      <div
+        className="
+          pointer-events-none
+          absolute
+          inset-0
+          opacity-20
+        "
+        style={{
+          backgroundImage:
+            "repeating-linear-gradient(0deg,transparent,transparent 6px,rgba(255,255,255,.018) 7px)",
+        }}
+      />
+
+      <div className="relative">
+        <div className="flex items-center justify-between">
+          <span
+            className="
+              font-mono
+              text-[8px]
+              tracking-[0.22em]
+              text-[#756d64]
             "
           >
-            {part}
+            ESO — VAULT
           </span>
+
+          <span className="font-mono text-[8px] text-[#4d4741]">
+            {frame.no}
+          </span>
+        </div>
+
+        <div
+          className="
+            mt-[17px]
+            font-serif
+            text-[23px]
+            leading-none
+            text-[#c9c3b9]
+          "
+        >
+          {frame.heading}
+        </div>
+
+        <div
+          className="
+            mt-[10px]
+            font-mono
+            text-[7px]
+            uppercase
+            tracking-[0.16em]
+            text-[#625b54]
+          "
+        >
+          {frame.tagline}
+        </div>
+      </div>
+    </button>
+  );
+}
+
+/* ============================================================
+   MAIN
+   ============================================================ */
+
+export default function CinematicVault() {
+  const navigate = useNavigate();
+
+  const [activeIndex, setActiveIndex] = useState(1);
+
+  const activeFrame = useMemo(
+    () => FRAMES[activeIndex],
+    [activeIndex]
+  );
+
+  /* ------------------------------------------------------------
+     keyboard
+     ------------------------------------------------------------ */
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === "ArrowRight") {
+        setActiveIndex((current) =>
+          current === FRAMES.length - 1
+            ? 0
+            : current + 1
         );
       }
 
-      return <span key={index}>{part}</span>;
-    });
-  };
+      if (event.key === "ArrowLeft") {
+        setActiveIndex((current) =>
+          current === 0
+            ? FRAMES.length - 1
+            : current - 1
+        );
+      }
+    };
 
-  /* ================================================================
-     RENDER
-     ================================================================ */
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener(
+        "keydown",
+        handleKeyDown
+      );
+    };
+  }, []);
 
   return (
     <main
       className="
-        relative
         min-h-screen
-        w-full
         overflow-hidden
-        bg-[#050505]
-        text-[#e8e5dc]
-        selection:bg-[#8f252b]/30
+        bg-[#030303]
+        text-[#e6e2da]
       "
     >
-      {/* ============================================================
-          ATMOSPHERE
-          ============================================================ */}
+      {/* ==========================================================
+          GLOBAL WALL
+          ========================================================== */}
 
-      <div className="pointer-events-none fixed inset-0 z-0">
-        <div className="absolute inset-0 bg-[#050505]" />
+      <div className="fixed inset-0 -z-10 bg-[#030303]" />
 
-        <div
-          className="
-            absolute
-            inset-0
-            bg-[radial-gradient(circle_at_65%_45%,rgba(120,85,55,0.045),transparent_38%)]
-          "
-        />
-
-        <div
-          className="
-            absolute
-            inset-0
-            bg-[radial-gradient(circle_at_12%_72%,rgba(155,120,80,0.025),transparent_30%)]
-          "
-        />
-
-        {/* grain */}
-        <div
-          className="absolute inset-0 opacity-[0.035]"
-          style={{
-            backgroundImage:
-              "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='.8'/%3E%3C/svg%3E\")",
-          }}
-        />
-
-        {/* scanlines */}
-        <div
-          className="
-            absolute
-            inset-0
-            bg-[linear-gradient(to_bottom,transparent_0%,rgba(255,255,255,0.01)_50%,transparent_51%)]
-            bg-[length:100%_8px]
-            opacity-25
-          "
-        />
-      </div>
-
-      {/* ============================================================
-          MAIN
-          ============================================================ */}
-
-      <section
+      <div
         className="
-          relative
-          z-10
-          px-4
-          py-8
-          sm:px-7
-          sm:py-10
-          lg:px-12
-          xl:px-14
+          pointer-events-none
+          fixed
+          inset-0
+          -z-10
+          opacity-[0.035]
+        "
+        style={{
+          backgroundImage:
+            "radial-gradient(rgba(255,255,255,.55) .45px, transparent .55px)",
+          backgroundSize: "4px 4px",
+        }}
+      />
+
+      <div
+        className="
+          pointer-events-none
+          fixed
+          inset-0
+          -z-10
+          bg-[radial-gradient(circle_at_42%_48%,rgba(115,68,42,.075),transparent_34%)]
+        "
+      />
+
+      {/* ==========================================================
+          HEADER
+          ========================================================== */}
+
+      <header
+        className="
+          h-[69px]
+          border-b
+          border-white/[0.09]
+          bg-[#030303]/95
         "
       >
         <div
           className="
             mx-auto
-            max-w-[1750px]
-
-            /* MOBILE */
             flex
-            flex-col
-
-            /* DESKTOP */
-            lg:grid
-            lg:min-h-[calc(100vh-120px)]
-            lg:grid-cols-[330px_minmax(240px,0.72fr)_minmax(540px,1.8fr)_78px]
-            lg:gap-3
-
-            xl:grid-cols-[350px_minmax(270px,0.72fr)_minmax(620px,1.8fr)_88px]
-            xl:gap-4
+            h-full
+            max-w-[1740px]
+            items-center
+            justify-between
+            px-6
+            lg:px-0
           "
         >
-          {/* ========================================================
-              MOBILE NOTE WALL
-              ======================================================== */}
+          {/* logo */}
+          <button
+            type="button"
+            onClick={() => navigate("/")}
+            className="
+              font-sans
+              text-[20px]
+              font-light
+              tracking-[-0.12em]
+              text-white
+            "
+          >
+            e<span className="text-[#c42c30]">s</span>o
+          </button>
 
-          <div className="mb-7 lg:hidden">
-            <div className="mb-5">
+          {/* navigation */}
+          <nav
+            className="
+              absolute
+              left-1/2
+              hidden
+              -translate-x-1/2
+              items-center
+              gap-[64px]
+              md:flex
+            "
+          >
+            <button
+              className="
+                relative
+                py-7
+                font-mono
+                text-[11px]
+                uppercase
+                tracking-[0.22em]
+                text-white
+              "
+            >
+              Explore
+
               <span
                 className="
-                  font-mono
-                  text-[9px]
-                  font-semibold
-                  uppercase
-                  tracking-[0.28em]
-                  text-[#c2b6a4]
+                  absolute
+                  bottom-0
+                  left-0
+                  right-0
+                  mx-auto
+                  h-[2px]
+                  w-[80px]
+                  bg-[#d7353a]
                 "
-              >
-                VAULT INDEX
-              </span>
-
-              <div className="mt-2 h-px w-14 bg-[#9a795e]/35" />
-            </div>
-
-            <VaultNoteWall
-              frames={frames}
-              activeEntry={activeEntry}
-              selectEntry={selectEntry}
-              mobile
-            />
-          </div>
-
-          {/* ========================================================
-              COLUMN 01 — DESKTOP NOTE WALL
-              ======================================================== */}
-
-          <aside className="hidden lg:block">
-            <div className="pt-16 xl:pt-20">
-              <div className="mb-5">
-                <span
-                  className="
-                    font-mono
-                    text-[9px]
-                    font-semibold
-                    uppercase
-                    tracking-[0.28em]
-                    text-[#c2b6a4]
-                  "
-                >
-                  VAULT INDEX
-                </span>
-
-                <div className="mt-2 h-px w-16 bg-[#9a795e]/35" />
-              </div>
-
-              <VaultNoteWall
-                frames={frames}
-                activeEntry={activeEntry}
-                selectEntry={selectEntry}
               />
-            </div>
-          </aside>
+            </button>
 
-          {/* ========================================================
-              COLUMN 02 — EDITORIAL IDENTITY
-              ======================================================== */}
+            <button
+              className="
+                py-7
+                font-mono
+                text-[11px]
+                uppercase
+                tracking-[0.22em]
+                text-[#76716c]
+                transition-colors
+                hover:text-white
+              "
+            >
+              Community
+            </button>
+          </nav>
+
+          {/* right */}
+          <div className="flex items-center gap-8">
+            <button
+              onClick={() => navigate("/login")}
+              className="
+                hidden
+                font-mono
+                text-[10px]
+                uppercase
+                tracking-[0.25em]
+                text-[#aaa49c]
+                sm:block
+              "
+            >
+              Sign In
+            </button>
+
+            <button
+              onClick={() => navigate("/register")}
+              className="
+                h-[38px]
+                w-[105px]
+                bg-[#f2f1ee]
+                font-mono
+                text-[10px]
+                uppercase
+                tracking-[0.24em]
+                text-[#171615]
+                transition-all
+                hover:bg-white
+              "
+            >
+              Join
+            </button>
+          </div>
+        </div>
+      </header>
+
+      {/* ==========================================================
+          DESKTOP STAGE
+          ========================================================== */}
+
+      <section
+        className="
+          mx-auto
+          hidden
+          min-h-[calc(100vh-69px)]
+          max-w-[1740px]
+          grid-cols-[355px_300px_minmax(650px,1fr)_91px]
+          gap-0
+          px-0
+          lg:grid
+        "
+      >
+        {/* ========================================================
+            LEFT — NOTE WALL
+            ======================================================== */}
+
+        <aside className="relative pt-[63px]">
+          <div
+            className="
+              mb-[17px]
+              font-mono
+              text-[10px]
+              font-semibold
+              uppercase
+              tracking-[0.26em]
+              text-[#d3cec5]
+            "
+          >
+            VAULT INDEX
+          </div>
 
           <div
             className="
-              relative
-              flex
-              flex-col
-              justify-center
-              pt-2
-              sm:pt-5
-              lg:pt-14
+              mb-[-1px]
+              h-px
+              w-[78px]
+              bg-[#9a403e]/60
             "
-          >
-            <div className="mb-4 sm:mb-6">
-              <span
-                className="
-                  font-mono
-                  text-[8px]
-                  uppercase
-                  tracking-[0.24em]
-                  text-[#655f58]
-                "
-              >
-                {active.number}
-              </span>
-            </div>
+          />
 
-            <h1
-              key={active.title}
+          <VaultIndex
+            activeIndex={activeIndex}
+            onSelect={setActiveIndex}
+          />
+        </aside>
+
+        {/* ========================================================
+            CENTER — TITLE
+            ======================================================== */}
+
+        <section
+          className="
+            relative
+            flex
+            items-center
+            pb-[50px]
+          "
+        >
+          <div className="w-full pr-[20px]">
+            <span
               className="
-                max-w-[400px]
-                font-serif
-                text-[30px]
-                font-normal
-                leading-[0.92]
-                tracking-[-0.055em]
-                text-[#e8e5dc]
-
-                sm:text-[38px]
-
-                md:text-[42px]
-
-                lg:text-[35px]
-
-                xl:text-[47px]
+                mb-[27px]
+                block
+                font-mono
+                text-[8px]
+                tracking-[0.20em]
+                text-[#625d56]
               "
             >
-              {active.title}
+              {activeFrame.no}
+            </span>
+
+            <h1
+              key={activeFrame.id}
+              className="
+                max-w-[295px]
+                whitespace-nowrap
+                font-serif
+                text-[45px]
+                font-normal
+                leading-none
+                tracking-[-0.045em]
+                text-[#e8e5df]
+              "
+            >
+              {activeFrame.heading}
             </h1>
+
+            <div
+              className="
+                mt-[19px]
+                h-px
+                w-[61px]
+                bg-[#a92d32]
+              "
+            />
 
             <p
               className="
-                mt-4
-                max-w-[280px]
-                font-sans
+                mt-[17px]
+                font-mono
                 text-[9px]
                 uppercase
-                leading-[1.9]
-                tracking-[0.16em]
-                text-[#81786e]
-
-                sm:mt-6
+                tracking-[0.22em]
+                text-[#7b746d]
               "
             >
-              {active.tagline}
+              {activeFrame.tagline}
             </p>
           </div>
+        </section>
 
-          {/* ========================================================
-              COLUMN 03 — VIDEO
-              ======================================================== */}
+        {/* ========================================================
+            RIGHT — CINEMA
+            ======================================================== */}
 
+        <section className="relative flex items-center">
           <div
             className="
-              relative
-              mt-8
-              flex
-              min-h-[320px]
-              items-center
-              justify-center
-
-              sm:mt-10
-              sm:min-h-[430px]
-
-              md:min-h-[500px]
-
-              lg:mt-0
-              lg:min-h-0
-            "
-          >
-            <div className="group relative w-full overflow-hidden bg-[#090909]">
-              {/* VIDEO */}
-
-              <div className="aspect-[16/10] w-full">
-                <ArchiveVideo
-                  frame={active}
-                  priority
-                  className="
-                    h-full
-                    w-full
-                    object-cover
-                    grayscale-[8%]
-                    contrast-[1.08]
-                    brightness-[0.82]
-                    saturate-[0.78]
-                  "
-                />
-              </div>
-
-              {/* ====================================================
-                  QUOTE
-                  ==================================================== */}
-
-              <div
-                className="
-                  pointer-events-none
-                  absolute
-                  inset-0
-                  z-10
-                  flex
-                  items-center
-                  justify-center
-                  px-4
-
-                  sm:px-8
-                "
-              >
-                <div
-                  className="
-                    relative
-                    max-w-[88%]
-                    text-center
-
-                    sm:max-w-[82%]
-                  "
-                >
-                  {/* opening quote */}
-                  <span
-                    className="
-                      absolute
-                      -left-4
-                      -top-3
-                      font-serif
-                      text-4xl
-                      leading-none
-                      text-[#9d7658]/65
-                      drop-shadow-[0_2px_8px_rgba(0,0,0,.8)]
-
-                      sm:-left-6
-                      sm:-top-4
-                      sm:text-5xl
-
-                      lg:-left-8
-                      lg:-top-6
-                      lg:text-6xl
-                    "
-                  >
-                    "
-                  </span>
-
-                  <p
-                    className="
-                      font-serif
-                      text-[13px]
-                      font-bold
-                      leading-[1.7]
-                      tracking-wide
-                      text-white
-                      drop-shadow-[0_2px_12px_rgba(0,0,0,.9)]
-
-                      sm:text-[15px]
-
-                      md:text-[17px]
-
-                      lg:text-[19px]
-                    "
-                    style={{
-                      textShadow:
-                        '0 0 20px rgba(0,0,0,.8), 0 0 40px rgba(0,0,0,.6), 0 2px 4px rgba(0,0,0,1)',
-                    }}
-                  >
-                    {renderQuote(
-                      active.quote,
-                      active.highlightWords
-                    )}
-                  </p>
-
-                  {/* closing quote */}
-                  <span
-                    className="
-                      absolute
-                      -bottom-3
-                      -right-4
-                      font-serif
-                      text-4xl
-                      leading-none
-                      text-[#9d7658]/65
-                      drop-shadow-[0_2px_8px_rgba(0,0,0,.8)]
-
-                      sm:-bottom-4
-                      sm:-right-6
-                      sm:text-5xl
-
-                      lg:-bottom-6
-                      lg:-right-8
-                      lg:text-6xl
-                    "
-                  >
-                    "
-                  </span>
-                </div>
-              </div>
-
-              {/* VIGNETTE */}
-
-              <div
-                className="
-                  pointer-events-none
-                  absolute
-                  inset-0
-                  bg-[radial-gradient(ellipse_at_center,transparent_30%,rgba(0,0,0,.55)_100%)]
-                "
-              />
-
-              {/* ARCHIVAL EDGE */}
-
-              <div
-                className="
-                  pointer-events-none
-                  absolute
-                  inset-0
-                  border
-                  border-white/[0.11]
-                "
-              />
-
-              {/* ENTER */}
-
-              <button
-                type="button"
-                onClick={() => navigate('/login')}
-                aria-label={`Enter ${active.title}`}
-                className="
-                  absolute
-                  inset-0
-                  z-20
-                  cursor-pointer
-                "
-              >
-                <span className="sr-only">
-                  Enter {active.title}
-                </span>
-              </button>
-            </div>
-          </div>
-
-          {/* ========================================================
-              COLUMN 04 — FILM STRIP
-              ======================================================== */}
-
-          <aside className="hidden lg:flex">
-            <div
-              className="
-                relative
-                flex
-                h-[500px]
-                w-full
-                flex-col
-                overflow-hidden
-              "
-            >
-              <div
-                className="
-                  absolute
-                  left-0
-                  top-0
-                  h-full
-                  w-px
-                  bg-white/[0.07]
-                "
-              />
-
-              <div className="flex h-full flex-col gap-[5px] pl-3">
-                {frames.map((frame, index) => {
-                  const isActive = index === activeEntry;
-
-                  return (
-                    <button
-                      key={frame.id}
-                      type="button"
-                      onClick={() => selectEntry(index)}
-                      aria-label={`Select ${frame.title}`}
-                      className="
-                        group
-                        relative
-                        min-h-0
-                        flex-1
-                        overflow-hidden
-                        text-left
-                      "
-                    >
-                      <ArchiveVideo
-                        frame={frame}
-                        className={`
-                          absolute
-                          inset-0
-                          h-full
-                          w-full
-                          object-cover
-                          grayscale
-                          transition-all
-                          duration-700
-                          ${
-                            isActive
-                              ? 'scale-100 opacity-80'
-                              : 'scale-[1.08] opacity-20 group-hover:scale-100 group-hover:opacity-55'
-                          }
-                        `}
-                      />
-
-                      <div
-                        className="
-                          absolute
-                          inset-0
-                          bg-black/40
-                          transition-opacity
-                          duration-500
-                          group-hover:bg-black/20
-                        "
-                      />
-
-                      <span
-                        className={`
-                          relative
-                          z-10
-                          float-right
-                          mr-2
-                          mt-2
-                          font-mono
-                          text-[7px]
-                          ${
-                            isActive
-                              ? 'text-white/80'
-                              : 'text-white/30 group-hover:text-white/70'
-                          }
-                        `}
-                      >
-                        {frame.number}
-                      </span>
-
-                      {isActive && (
-                        <span
-                          className="
-                            absolute
-                            bottom-2
-                            left-3
-                            z-10
-                            h-[2px]
-                            w-5
-                            bg-[#9d7658]
-                          "
-                        />
-                      )}
-
-                      <div
-                        className="
-                          pointer-events-none
-                          absolute
-                          left-0
-                          top-0
-                          flex
-                          h-full
-                          flex-col
-                          justify-around
-                          py-1
-                        "
-                      >
-                        {[1, 2, 3, 4, 5].map((dot) => (
-                          <span
-                            key={dot}
-                            className="
-                              h-1
-                              w-1
-                              rounded-full
-                              bg-white/20
-                            "
-                          />
-                        ))}
-                      </div>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-          </aside>
-        </div>
-
-        {/* ==========================================================
-            BOTTOM AREA
-            ========================================================== */}
-
-        <div
-          className="
-            mx-auto
-            mt-8
-            flex
-            max-w-[1750px]
-            flex-col
-            items-center
-            justify-between
-            gap-8
-
-            sm:mt-12
-
-            md:flex-row
-            md:items-end
-
-            lg:-mt-28
-          "
-        >
-          {/* ========================================================
-              VAULT ACCESS CARD
-              ======================================================== */}
-
-          <button
-            type="button"
-            onClick={() => navigate('/login')}
-            className="
-              group
-              relative
-              hidden
-              h-[160px]
-              w-[260px]
-              rotate-[-2deg]
+              h-[547px]
+              w-full
               overflow-hidden
               border
-              border-[#d8d2c2]/15
-              bg-[#0d0c0b]
-              p-7
-              shadow-[0_40px_90px_rgba(0,0,0,.8)]
-              transition-all
-              duration-500
-
-              hover:rotate-0
-              hover:border-[#9d7658]/30
-
-              md:block
+              border-white/[0.10]
             "
           >
-            <div
-              className="
-                pointer-events-none
-                absolute
-                inset-0
-                bg-[repeating-linear-gradient(0deg,transparent,transparent_5px,rgba(255,255,255,.018)_6px)]
-              "
-            />
+            <CinematicVideo frame={activeFrame} />
+          </div>
 
-            <div className="relative">
-              <div className="flex items-center justify-between">
-                <span
-                  className="
-                    font-mono
-                    text-[9px]
-                    uppercase
-                    tracking-[0.24em]
-                    text-[#70675e]
-                  "
-                >
-                  ESO — VAULT
-                </span>
-
-                <span className="font-mono text-[9px] text-[#4d4742]">
-                  {active.number}
-                </span>
-              </div>
-
-              <div
-                className="
-                  mt-6
-                  font-serif
-                  text-[26px]
-                  leading-none
-                  tracking-tight
-                  text-[#c4bfb5]
-                "
-              >
-                {active.shortTitle}
-              </div>
-
-              <p
-                className="
-                  mt-3
-                  text-[9px]
-                  leading-[1.6]
-                  tracking-wide
-                  text-[#6b625b]
-                "
-              >
-                {active.description}
-              </p>
-
-              <div
-                className="
-                  mt-5
-                  inline-flex
-                  items-center
-                  gap-2
-                  border-b
-                  border-[#9d7658]/40
-                  pb-1
-                  transition-all
-                  duration-300
-                  group-hover:border-[#9d7658]
-                "
-              >
-                <span
-                  className="
-                    font-mono
-                    text-[8px]
-                    uppercase
-                    tracking-[0.18em]
-                    text-[#9d7658]/80
-                  "
-                >
-                  Enter Vault
-                </span>
-
-                <span
-                  className="
-                    text-[10px]
-                    text-[#9d7658]/80
-                    transition-all
-                    duration-300
-                    group-hover:translate-x-1
-                  "
-                >
-                  →
-                </span>
-              </div>
-            </div>
-          </button>
-
-          {/* ========================================================
-              EXPLORE
-              ======================================================== */}
-
+          {/* explore */}
           <button
-            type="button"
-            onClick={() => navigate('/login')}
+            onClick={() => navigate("/login")}
             className="
-              group
+              absolute
+              bottom-[3px]
+              left-1/2
               flex
+              -translate-x-1/2
+              translate-y-full
               items-center
-              gap-4
-
-              sm:gap-5
-
-              md:ml-auto
-
-              lg:ml-[340px]
+              gap-[22px]
+              whitespace-nowrap
             "
           >
             <span
               className="
                 font-mono
-                text-[9px]
+                text-[8px]
                 uppercase
-                tracking-[0.26em]
-                text-[#716961]
-                transition-colors
-                duration-500
-                group-hover:text-[#d8d4ca]
+                tracking-[0.30em]
+                text-[#777069]
               "
             >
               Explore the Vault
             </span>
 
-            <span className="relative flex w-14 items-center sm:w-16">
-              <span
-                className="
-                  h-px
-                  w-full
-                  bg-[#4c4944]
-                  transition-all
-                  duration-700
-                  group-hover:bg-[#9d7658]
-                "
-              />
-
+            <span
+              className="
+                relative
+                block
+                h-px
+                w-[76px]
+                bg-[#69625b]
+              "
+            >
               <span
                 className="
                   absolute
                   right-0
-                  font-mono
+                  top-1/2
+                  -translate-y-1/2
+                  translate-x-[1px]
                   text-[13px]
-                  text-[#716961]
-                  transition-all
-                  duration-700
-                  group-hover:translate-x-1
-                  group-hover:text-[#e8e5dc]
+                  text-[#8b837b]
                 "
               >
                 →
               </span>
             </span>
           </button>
+        </section>
 
-          <div className="hidden w-[185px] lg:block" />
+        {/* ========================================================
+            FILM STRIP
+            ======================================================== */}
+
+        <aside className="flex items-center pl-[17px]">
+          <FilmStrip
+            activeIndex={activeIndex}
+            onSelect={setActiveIndex}
+          />
+        </aside>
+
+        {/* ========================================================
+            VAULT CARD
+            ======================================================== */}
+
+        <div
+          className="
+            absolute
+            bottom-[23px]
+            left-[53px]
+          "
+        >
+          <VaultCard
+            frame={activeFrame}
+            onEnter={() => navigate("/login")}
+          />
         </div>
+      </section>
+
+      {/* ==========================================================
+          MOBILE / TABLET
+          ========================================================== */}
+
+      <section
+        className="
+          block
+          px-5
+          pb-10
+          pt-10
+          lg:hidden
+        "
+      >
+        {/* mobile index */}
+
+        <div className="mb-8">
+          <div
+            className="
+              mb-3
+              font-mono
+              text-[9px]
+              uppercase
+              tracking-[0.25em]
+              text-[#bbb4aa]
+            "
+          >
+            VAULT INDEX
+          </div>
+
+          <div className="h-px w-[65px] bg-[#9a403e]/70" />
+        </div>
+
+        <div className="mx-auto h-[415px] max-w-[355px]">
+          <VaultIndex
+            activeIndex={activeIndex}
+            onSelect={setActiveIndex}
+          />
+        </div>
+
+        {/* title */}
+
+        <div className="mb-8 mt-5">
+          <span className="font-mono text-[8px] tracking-[.2em] text-[#625d56]">
+            {activeFrame.no}
+          </span>
+
+          <h1 className="mt-3 font-serif text-[38px] leading-none tracking-[-.04em]">
+            {activeFrame.heading}
+          </h1>
+
+          <div className="mt-4 h-px w-[55px] bg-[#a92d32]" />
+
+          <p className="mt-4 font-mono text-[8px] uppercase tracking-[.2em] text-[#746e67]">
+            {activeFrame.tagline}
+          </p>
+        </div>
+
+        {/* video */}
+
+        <div className="aspect-[16/10] overflow-hidden border border-white/10">
+          <CinematicVideo frame={activeFrame} />
+        </div>
+
+        {/* mobile film strip */}
+
+        <div className="mt-5 flex gap-2 overflow-x-auto pb-2">
+          {FRAMES.map((frame, index) => (
+            <button
+              key={frame.id}
+              onClick={() => setActiveIndex(index)}
+              className={`
+                relative
+                h-[70px]
+                min-w-[62px]
+                overflow-hidden
+                border
+                ${
+                  activeIndex === index
+                    ? "border-[#a42c31]"
+                    : "border-white/[0.07]"
+                }
+              `}
+            >
+              <video
+                src={frame.mobile}
+                muted
+                loop
+                autoPlay
+                playsInline
+                className={`
+                  h-full
+                  w-full
+                  object-cover
+                  grayscale
+                  ${
+                    activeIndex === index
+                      ? "opacity-70"
+                      : "opacity-30"
+                  }
+                `}
+              />
+
+              <span className="absolute right-1 top-1 font-mono text-[6px] text-white/60">
+                {frame.no}
+              </span>
+            </button>
+          ))}
+        </div>
+
+        <div className="mt-8">
+          <VaultCard
+            frame={activeFrame}
+            onEnter={() => navigate("/login")}
+          />
+        </div>
+
+        <button
+          onClick={() => navigate("/login")}
+          className="
+            mt-10
+            flex
+            items-center
+            gap-5
+            font-mono
+            text-[8px]
+            uppercase
+            tracking-[0.28em]
+            text-[#777069]
+          "
+        >
+          Explore the Vault
+
+          <span className="h-px w-[55px] bg-[#69625b]" />
+        </button>
       </section>
     </main>
   );
 }
-
-export default CinematicHero;
