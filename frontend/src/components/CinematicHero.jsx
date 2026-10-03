@@ -46,16 +46,16 @@ const noteColors = [
   },
 ];
 
-// Horizontal landscape layout - true 2-3-2 composition
-// Container: 280px wide × 240px tall
-// Row 1: 2 notes | Row 2: 3 notes | Row 3: 2 notes
+// Horizontal landscape layout - true 2-3-2 composition with proper spacing
+// Container: 300px wide × 230px tall
+// Row 1: 2 notes | Row 2: 3 notes with gaps | Row 3: 2 notes
 const noteLayout = [
   { left: 0, top: 0, rotate: -2 },         // Memory (row 1, left)
   { left: 150, top: 5, rotate: 2 },        // Confession (row 1, right)
   
-  { left: 5, top: 75, rotate: 1 },         // Understanding (row 2, left)
-  { left: 100, top: 80, rotate: -2 },      // Imagination (row 2, center)
-  { left: 195, top: 75, rotate: 1 },       // Vibes (row 2, right - INLINE)
+  { left: 0, top: 75, rotate: 1 },         // Understanding (row 2, left)
+  { left: 100, top: 80, rotate: -2 },      // Imagination (row 2, center) - more spacing
+  { left: 200, top: 75, rotate: 1 },       // Vibes (row 2, right) - more spacing
   
   { left: 10, top: 155, rotate: -1 },      // Questioning (row 3, left)
   { left: 160, top: 160, rotate: 2 },      // Truth (row 3, right)
