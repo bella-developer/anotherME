@@ -1,24 +1,19 @@
-import {
+
+
+import React, {
   memo,
   useCallback,
   useEffect,
+  useMemo,
   useRef,
   useState,
-} from 'react';
-import { useNavigate } from 'react-router-dom';
+} from "react";
+import { useNavigate } from "react-router-dom";
 
 /* ============================================================================
-   ESO — BLACK VAULT
-   Premium cinematic landing interface
-   ============================================================================ */
-
-/* ----------------------------------------------------------------------------
-   01. SOURCE DATA
-   Keep this structure stable.
-   Cloudinary is the source of truth for all cinematic media.
-   -------------------------------------------------------------------------- */
-
-const FRAMES = [
+   DATA
+   ========================================================================== */
+const frames = [
   {
     id: 'welcome',
     number: '01',
@@ -132,1132 +127,846 @@ const FRAMES = [
   },
 ];
 
-/* ----------------------------------------------------------------------------
-   02. STICKY NOTE ART DIRECTION
+/*
+ * Important:
+ *
+ * Replace only the Cloudinary URLs above.
+ *
+ * The architecture intentionally keeps:
+ *
+ * frame.video
+ * frame.mobileVideo
+ *
+ * so the desktop and mobile cinematic compositions can use different
+ * Cloudinary assets.
+ */
 
-   IMPORTANT:
-   These positions are percentages INSIDE the bounded wall.
-   They are NOT viewport coordinates.
 
-   Composition:
-       01       02
+/* ============================================================================
+   ICONS
+   ========================================================================== */
 
-       03   04   05
-
-          06     07
-   -------------------------------------------------------------------------- */
-
-const NOTE_LAYOUT = [
-  {
-    x: 4,
-    y: 7,
-    rotate: -4,
-    tone: 'wine',
-    icon: 'brain',
-  },
-  {
-    x: 45,
-    y: 12,
-    rotate: 2.5,
-    tone: 'coffee',
-    icon: 'eye',
-  },
-  {
-    x: 1,
-    y: 38,
-    rotate: -2.5,
-    tone: 'violet',
-    icon: 'diamond',
-  },
-  {
-    x: 35,
-    y: 43,
-    rotate: 2,
-    tone: 'olive',
-    icon: 'star',
-  },
-  {
-    x: 64,
-    y: 39,
-    rotate: -1.5,
-    tone: 'ochre',
-    icon: 'wave',
-  },
-  {
-    x: 11,
-    y: 72,
-    rotate: -3,
-    tone: 'clay',
-    icon: 'target',
-  },
-  {
-    x: 53,
-    y: 76,
-    rotate: 2.5,
-    tone: 'burgundy',
-    icon: 'compass',
-  },
-];
-
-/* ----------------------------------------------------------------------------
-   03. EARTH-TONE NOTE SYSTEM
-   -------------------------------------------------------------------------- */
-
-const NOTE_TONES = {
-  wine: {
-    background:
-      'linear-gradient(145deg, rgba(61,35,35,.92), rgba(31,23,23,.97))',
-    border: 'rgba(153,72,74,.55)',
-    accent: '#c85a63',
-    text: '#cfa7a0',
-  },
-
-  coffee: {
-    background:
-      'linear-gradient(145deg, rgba(61,45,32,.94), rgba(29,25,22,.98))',
-    border: 'rgba(151,112,72,.52)',
-    accent: '#c99552',
-    text: '#cdb18a',
-  },
-
-  violet: {
-    background:
-      'linear-gradient(145deg, rgba(47,39,61,.94), rgba(25,23,29,.98))',
-    border: 'rgba(130,107,165,.52)',
-    accent: '#a991d2',
-    text: '#b8a8cb',
-  },
-
-  olive: {
-    background:
-      'linear-gradient(145deg, rgba(48,53,36,.94), rgba(25,27,22,.98))',
-    border: 'rgba(110,123,71,.52)',
-    accent: '#91a05f',
-    text: '#aeb594',
-  },
-
-  ochre: {
-    background:
-      'linear-gradient(145deg, rgba(62,48,27,.95), rgba(29,25,20,.98))',
-    border: 'rgba(166,122,46,.56)',
-    accent: '#d09a39',
-    text: '#cdb47f',
-  },
-
-  clay: {
-    background:
-      'linear-gradient(145deg, rgba(61,43,37,.94), rgba(28,24,22,.98))',
-    border: 'rgba(151,105,85,.52)',
-    accent: '#c17e6c',
-    text: '#c8a89d',
-  },
-
-  burgundy: {
-    background:
-      'linear-gradient(145deg, rgba(61,32,35,.94), rgba(29,22,24,.98))',
-    border: 'rgba(148,62,68,.58)',
-    accent: '#c65b63',
-    text: '#cda09d',
-  },
-};
-
-/* ----------------------------------------------------------------------------
-   04. SMALL ABSTRACT ICONS
-   -------------------------------------------------------------------------- */
-
-function NoteIcon({ type, color }) {
+const Icon = memo(function Icon({ type }) {
   const common = {
-    fill: 'none',
-    stroke: color,
+    width: 18,
+    height: 18,
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: "currentColor",
     strokeWidth: 1.25,
-    strokeLinecap: 'round',
-    strokeLinejoin: 'round',
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
   };
 
-  if (type === 'brain') {
-    return (
-      <svg viewBox="0 0 24 24" className="h-5 w-5 opacity-70">
-        <path
-          {...common}
-          d="M9.2 5.2A3.2 3.2 0 0 0 6 8.4c0 .4.1.8.2 1.1A3.5 3.5 0 0 0 5 16.2c.7.8 1.7 1.3 2.8 1.4"
-        />
-        <path
-          {...common}
-          d="M14.8 5.2A3.2 3.2 0 0 1 18 8.4c0 .4-.1.8-.2 1.1a3.5 3.5 0 0 1 1.2 6.7c-.7.8-1.7 1.3-2.8 1.4"
-        />
-        <path {...common} d="M12 5v14M8.5 9.5c1 .1 1.8.6 2.2 1.5M15.5 9.5c-1 .1-1.8.6-2.2 1.5M8.5 14.5c1-.1 1.8-.6 2.2-1.5M15.5 14.5c-1-.1-1.8-.6-2.2-1.5" />
-      </svg>
-    );
+  switch (type) {
+    case "brain":
+      return (
+        <svg {...common}>
+          <path d="M9.5 4.5A3.5 3.5 0 0 0 6 8v.5a3 3 0 0 0-2 2.8A3.2 3.2 0 0 0 7.2 14H8v1.5A3.5 3.5 0 0 0 11.5 19H12V6.5a2 2 0 0 0-2-2Z" />
+          <path d="M14.5 4.5A3.5 3.5 0 0 1 18 8v.5a3 3 0 0 1 2 2.8 3.2 3.2 0 0 1-3.2 2.7H16v1.5a3.5 3.5 0 0 1-3.5 3.5H12V6.5a2 2 0 0 1 2-2Z" />
+          <path d="M8 9h2M14 9h2M8.5 13h1.5M14 13h1.5" />
+        </svg>
+      );
+
+    case "eye":
+      return (
+        <svg {...common}>
+          <path d="M2.5 12s3.5-5 9.5-5 9.5 5 9.5 5-3.5 5-9.5 5-9.5-5-9.5-5Z" />
+          <circle cx="12" cy="12" r="2.5" />
+        </svg>
+      );
+
+    case "diamond":
+      return (
+        <svg {...common}>
+          <path d="m12 3 7 9-7 9-7-9 7-9Z" />
+          <path d="m12 7 3.5 5-3.5 5-3.5-5L12 7Z" />
+        </svg>
+      );
+
+    case "star":
+      return (
+        <svg {...common}>
+          <path d="m12 3 1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3Z" />
+          <path d="M19 16v5M16.5 18.5h5" />
+        </svg>
+      );
+
+    case "wave":
+      return (
+        <svg {...common}>
+          <path d="M3 12c2.3 0 2.3-5 4.7-5s2.3 10 4.6 10S14.7 7 17 7s2.3 5 4 5" />
+        </svg>
+      );
+
+    case "target":
+      return (
+        <svg {...common}>
+          <circle cx="12" cy="12" r="7.5" />
+          <circle cx="12" cy="12" r="3.5" />
+          <path d="M12 2v3M12 19v3M2 12h3M19 12h3" />
+        </svg>
+      );
+
+    case "compass":
+      return (
+        <svg {...common}>
+          <circle cx="12" cy="12" r="8.5" />
+          <path d="m15.5 8.5-2.3 4.7-4.7 2.3 2.3-4.7 4.7-2.3Z" />
+        </svg>
+      );
+
+    default:
+      return null;
   }
+});
 
-  if (type === 'eye') {
-    return (
-      <svg viewBox="0 0 24 24" className="h-5 w-5 opacity-70">
-        <path {...common} d="M3 12s3.5-5 9-5 9 5 9 5-3.5 5-9 5-9-5-9-5Z" />
-        <circle {...common} cx="12" cy="12" r="2.2" />
-      </svg>
-    );
-  }
 
-  if (type === 'diamond') {
-    return (
-      <svg viewBox="0 0 24 24" className="h-5 w-5 opacity-70">
-        <path {...common} d="m12 3 7 9-7 9-7-9 7-9Z" />
-        <path {...common} d="m12 7 3.5 5-3.5 5-3.5-5L12 7Z" />
-      </svg>
-    );
-  }
+/* ============================================================================
+   ARCHIVE VIDEO
+   ========================================================================== */
 
-  if (type === 'star') {
-    return (
-      <svg viewBox="0 0 24 24" className="h-5 w-5 opacity-70">
-        <path {...common} d="m12 3 2.1 6.4H21l-5.6 4 2.1 6.4-5.5-4-5.5 4 2.1-6.4-5.6-4h6.9L12 3Z" />
-      </svg>
-    );
-  }
-
-  if (type === 'wave') {
-    return (
-      <svg viewBox="0 0 24 24" className="h-5 w-5 opacity-70">
-        <path {...common} d="M2 12c2.5 0 2.5-5 5-5s2.5 10 5 10 2.5-10 5-10 2.5 5 5 5" />
-      </svg>
-    );
-  }
-
-  if (type === 'target') {
-    return (
-      <svg viewBox="0 0 24 24" className="h-5 w-5 opacity-70">
-        <circle {...common} cx="12" cy="12" r="8" />
-        <circle {...common} cx="12" cy="12" r="4" />
-        <circle {...common} cx="12" cy="12" r="1" />
-      </svg>
-    );
-  }
-
-  return (
-    <svg viewBox="0 0 24 24" className="h-5 w-5 opacity-70">
-      <circle {...common} cx="12" cy="12" r="8" />
-      <path {...common} d="M12 4v16M4 12h16M15 9l-6 6M15 15 9 9" />
-    </svg>
-  );
-}
-
-/* ----------------------------------------------------------------------------
-   05. CLOUDINARY VIDEO COMPONENT
-
-   Important:
-   - actual <video>
-   - Cloudinary source URLs
-   - desktop/mobile source selection
-   - IntersectionObserver lazy loading
-   - priority support for cinematic hero
-   -------------------------------------------------------------------------- */
-
+/**
+ * ArchiveVideo
+ *
+ * Responsibilities:
+ * - Cloudinary video playback
+ * - visibility-based loading/playback
+ * - muted autoplay
+ * - mobile/desktop source selection
+ * - no unnecessary playback when the element is outside viewport
+ */
 const ArchiveVideo = memo(function ArchiveVideo({
-  frame,
-  className = '',
+  src,
+  mobileSrc,
+  poster,
+  active = false,
+  className = "",
+  objectPosition = "center",
   priority = false,
 }) {
   const videoRef = useRef(null);
+  const wrapperRef = useRef(null);
+
   const [visible, setVisible] = useState(priority);
+  const [loaded, setLoaded] = useState(false);
 
+  /*
+   * IntersectionObserver controls playback.
+   */
   useEffect(() => {
-    if (priority) return;
+    const element = wrapperRef.current;
 
-    const node = videoRef.current;
-
-    if (!node) return;
+    if (!element || priority) return;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true);
-          observer.disconnect();
+        setVisible(entry.isIntersecting);
+
+        if (!entry.isIntersecting && videoRef.current) {
+          videoRef.current.pause();
         }
       },
       {
-        rootMargin: '180px',
-        threshold: 0.01,
+        threshold: 0.12,
+        rootMargin: "120px 0px",
       }
     );
 
-    observer.observe(node);
+    observer.observe(element);
 
     return () => observer.disconnect();
   }, [priority]);
 
+  /*
+   * Play/pause according to visibility + active state.
+   */
   useEffect(() => {
-    if (!visible) return;
-
     const video = videoRef.current;
 
     if (!video) return;
 
-    const play = () => {
-      video.play().catch(() => {});
-    };
+    if (visible && active) {
+      const promise = video.play();
 
-    if (video.readyState >= 2) {
-      play();
+      if (promise?.catch) {
+        promise.catch(() => {});
+      }
     } else {
-      video.addEventListener('loadeddata', play, {
-        once: true,
-      });
+      video.pause();
     }
-
-    return () => {
-      video.removeEventListener('loadeddata', play);
-    };
-  }, [visible, frame.id]);
+  }, [visible, active]);
 
   return (
-    <video
-      ref={videoRef}
-      className={className}
-      muted
-      loop
-      playsInline
-      autoPlay
-      preload={priority ? 'auto' : 'none'}
-      aria-hidden="true"
+    <div
+      ref={wrapperRef}
+      className={`relative overflow-hidden bg-black ${className}`}
     >
+      {/* Very subtle loading surface */}
+      <div
+        className={`absolute inset-0 bg-[#090909] transition-opacity duration-700 ${
+          loaded ? "opacity-0" : "opacity-100"
+        }`}
+      />
+
       {visible && (
-        <>
-          <source
-            src={frame.mobileVideo}
-            type="video/mp4"
-            media="(max-width: 767px)"
-          />
-
-          <source
-            src={frame.video}
-            type="video/mp4"
-            media="(min-width: 768px)"
-          />
-
-          {/* Safe fallback */}
-          <source src={frame.video} type="video/mp4" />
-        </>
+        <video
+          ref={videoRef}
+          className="absolute inset-0 h-full w-full object-cover"
+          style={{
+            objectPosition,
+          }}
+          src={src}
+          poster={poster}
+          muted
+          loop
+          playsInline
+          autoPlay={priority}
+          preload={priority ? "metadata" : "none"}
+          onLoadedData={() => setLoaded(true)}
+          aria-hidden="true"
+        >
+          {mobileSrc && (
+            <source
+              media="(max-width: 767px)"
+              src={mobileSrc}
+              type="video/mp4"
+            />
+          )}
+        </video>
       )}
-    </video>
+
+      {/* Cinematic dark treatment */}
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,.52)_0%,rgba(0,0,0,.08)_55%,rgba(0,0,0,.4)_100%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(0deg,rgba(0,0,0,.48)_0%,transparent_42%,rgba(0,0,0,.2)_100%)]" />
+    </div>
   );
 });
 
-/* ----------------------------------------------------------------------------
-   06. QUOTE RENDERER
-   -------------------------------------------------------------------------- */
 
-function Quote({ frame }) {
-  const parts = [];
-  let text = frame.quote;
+/* ============================================================================
+   STICKY NOTE
+   ========================================================================== */
 
-  frame.highlightWords.forEach((word) => {
-    const regex = new RegExp(`(${word})`, 'i');
-    const match = text.match(regex);
-
-    if (!match) return;
-
-    const index = match.index;
-
-    parts.push(text.slice(0, index));
-
-    parts.push(
-      <span
-        key={`${frame.id}-${word}-${index}`}
-        className="text-[#b9363f]"
-        style={{
-          textShadow:
-            '0 0 18px rgba(185,54,63,.38)',
-        }}
-      >
-        {match[0]}
-      </span>
-    );
-
-    text = text.slice(index + match[0].length);
-  });
-
-  parts.push(text);
-
-  return <>{parts}</>;
-}
-
-/* ----------------------------------------------------------------------------
-   07. STICKY NOTE
-   -------------------------------------------------------------------------- */
-
-function StickyNote({
+const StickyNote = memo(function StickyNote({
   frame,
-  index,
   active,
   onSelect,
+  position,
 }) {
-  const layout = NOTE_LAYOUT[index];
-  const tone = NOTE_TONES[layout.tone];
+  const handleClick = useCallback(() => {
+    onSelect(frame);
+  }, [frame, onSelect]);
 
   return (
     <button
       type="button"
-      onClick={() => onSelect(index)}
+      onClick={handleClick}
+      aria-current={active ? "page" : undefined}
       aria-label={`Open ${frame.title}`}
       className={[
-        'absolute',
-        'z-10',
-        'w-[142px]',
-        'h-[92px]',
-        'text-left',
-        'transition-[transform,filter,opacity]',
-        'duration-500',
-        'ease-out',
-        'focus:outline-none',
-        'focus-visible:ring-1',
-        'focus-visible:ring-[#c78a55]',
+        "group absolute block",
+        "h-[88px] w-[142px]",
+        "origin-center",
+        "rounded-[3px]",
+        "text-left",
+        "transition-[transform,filter,opacity]",
+        "duration-300 ease-out",
+        "focus:outline-none",
+        "focus-visible:ring-1 focus-visible:ring-white/60",
         active
-          ? 'z-30 scale-[1.055] brightness-[1.08]'
-          : 'hover:z-20 hover:scale-[1.035]',
-      ].join(' ')}
+          ? "z-30 scale-[1.025] brightness-[1.12]"
+          : "z-10 opacity-[0.86] hover:z-30 hover:scale-[1.025] hover:opacity-100",
+      ].join(" ")}
       style={{
-        left: `${layout.x}%`,
-        top: `${layout.y}%`,
-        transform: `rotate(${layout.rotate}deg)`,
+        left: position.left,
+        top: position.top,
+        transform: `rotate(${position.rotate})`,
+        "--note-accent": frame.accent,
+        "--note-border": frame.border,
+        "--note-surface": frame.surface,
       }}
     >
-      {/* Pin */}
+      {/* Paper */}
       <span
-        className="absolute left-1/2 top-[-7px] z-30 h-[10px] w-[10px] -translate-x-1/2 rounded-full"
+        className="absolute inset-0 overflow-hidden rounded-[3px] border shadow-[0_12px_35px_rgba(0,0,0,.35)]"
         style={{
-          background: tone.accent,
-          boxShadow: `0 2px 7px ${tone.accent}55`,
+          background: `
+            linear-gradient(
+              135deg,
+              rgba(255,255,255,.045),
+              transparent 35%
+            ),
+            var(--note-surface)
+          `,
+          borderColor: "var(--note-border)",
+          boxShadow: active
+            ? `0 0 0 1px ${frame.accent}22, 0 15px 38px rgba(0,0,0,.46)`
+            : "0 12px 35px rgba(0,0,0,.35)",
         }}
       />
 
-      {/* Pin shadow */}
-      <span className="absolute left-1/2 top-[1px] z-20 h-[7px] w-[18px] -translate-x-1/2 rounded-full bg-black/50 blur-[4px]" />
-
-      {/* Note body */}
+      {/* Fine technical grid */}
       <span
-        className="absolute inset-0 overflow-hidden rounded-[4px] border"
+        className="pointer-events-none absolute inset-[1px] rounded-[2px] opacity-[0.17]"
         style={{
-          background: tone.background,
-          borderColor: active
-            ? tone.accent
-            : tone.border,
-          boxShadow: active
-            ? `0 15px 34px rgba(0,0,0,.55), 0 0 18px ${tone.accent}20`
-            : '0 12px 28px rgba(0,0,0,.42)',
+          backgroundImage: `
+            linear-gradient(rgba(255,255,255,.12) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,.12) 1px, transparent 1px)
+          `,
+          backgroundSize: "7px 7px",
+        }}
+      />
+
+      {/* Pin */}
+      <span
+        className="absolute left-1/2 top-[-6px] h-[10px] w-[10px] -translate-x-1/2 rounded-full border border-black/30 shadow-[0_2px_5px_rgba(0,0,0,.5)]"
+        style={{
+          background: frame.pin,
+          boxShadow: `0 0 12px ${frame.pin}55`,
+        }}
+      />
+
+      {/* Number */}
+      <span
+        className="absolute left-[14px] top-[11px] font-mono text-[7px] tracking-[0.22em]"
+        style={{
+          color: `${frame.accent}aa`,
         }}
       >
-        {/* Micro grid */}
-        <span
-          className="absolute inset-0 opacity-[.13]"
-          style={{
-            backgroundImage: `
-              linear-gradient(rgba(255,255,255,.14) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(255,255,255,.14) 1px, transparent 1px)
-            `,
-            backgroundSize: '8px 8px',
-          }}
-        />
-
-        {/* Paper/digital texture */}
-        <span
-          className="absolute inset-0 opacity-[.12]"
-          style={{
-            background:
-              'radial-gradient(circle at 30% 20%, rgba(255,255,255,.18), transparent 28%), radial-gradient(circle at 80% 80%, rgba(0,0,0,.5), transparent 35%)',
-          }}
-        />
-
-        {/* Top metadata */}
-        <span className="absolute left-3 top-3 flex items-center gap-2">
-          <span
-            className="font-mono text-[7px] tracking-[.22em]"
-            style={{ color: `${tone.text}88` }}
-          >
-            {frame.number}
-          </span>
-
-          <span
-            className="h-px w-4"
-            style={{ background: `${tone.accent}66` }}
-          />
-        </span>
-
-        {/* Icon */}
-        <span className="absolute right-3 top-3">
-          <NoteIcon
-            type={layout.icon}
-            color={tone.text}
-          />
-        </span>
-
-        {/* Title */}
-        <span
-          className="absolute bottom-[22px] left-3 right-3 block truncate font-serif text-[16px] italic leading-none"
-          style={{
-            color: active ? '#e1d7c9' : tone.text,
-          }}
-        >
-          {frame.shortTitle}
-        </span>
-
-        {/* Bottom mark */}
-        <span
-          className="absolute bottom-3 right-3 h-px w-5"
-          style={{
-            background: tone.accent,
-            opacity: active ? 0.8 : 0.4,
-          }}
-        />
-
-        {/* Active edge */}
-        {active && (
-          <span
-            className="absolute bottom-0 left-0 h-[2px] w-full"
-            style={{
-              background: tone.accent,
-              boxShadow: `0 0 12px ${tone.accent}`,
-            }}
-          />
-        )}
+        {frame.index}
       </span>
+
+      {/* Decorative line */}
+      <span
+        className="absolute left-[42px] top-[14px] h-px w-[18px] opacity-50"
+        style={{
+          background: frame.accent,
+        }}
+      />
+
+      {/* Icon */}
+      <span
+        className="absolute right-[12px] top-[10px] opacity-60"
+        style={{
+          color: frame.accent,
+        }}
+      >
+        <Icon type={frame.icon} />
+      </span>
+
+      {/* Main title */}
+      <span
+        className="absolute bottom-[22px] left-[14px] right-[12px] overflow-hidden font-serif text-[17px] italic leading-none tracking-[-0.02em] whitespace-nowrap"
+        style={{
+          color: "#ddd2c3",
+          textOverflow: "ellipsis",
+        }}
+      >
+        {frame.title}
+      </span>
+
+      {/* Bottom detail */}
+      <span
+        className="absolute bottom-[10px] right-[12px] h-px w-[18px]"
+        style={{
+          background: frame.accent,
+          opacity: active ? 0.9 : 0.42,
+        }}
+      />
+
+      {/* Active edge */}
+      <span
+        className={`absolute left-0 top-0 bottom-0 w-[1px] transition-opacity duration-300 ${
+          active ? "opacity-100" : "opacity-0 group-hover:opacity-70"
+        }`}
+        style={{
+          background: frame.accent,
+          boxShadow: `0 0 10px ${frame.accent}`,
+        }}
+      />
     </button>
   );
-}
+});
 
-/* ----------------------------------------------------------------------------
-   08. MAIN COMPONENT
-   -------------------------------------------------------------------------- */
+
+/* ============================================================================
+   FILMSTRIP ITEM
+   ========================================================================== */
+
+const FilmStripItem = memo(function FilmStripItem({
+  frame,
+  active,
+  onSelect,
+}) {
+  const handleClick = useCallback(() => {
+    onSelect(frame);
+  }, [frame, onSelect]);
+
+  return (
+    <button
+      type="button"
+      onClick={handleClick}
+      aria-label={`Preview ${frame.title}`}
+      aria-current={active ? "true" : undefined}
+      className={[
+        "group relative block aspect-[0.72] w-full overflow-hidden",
+        "border bg-black",
+        "transition-all duration-300",
+        active
+          ? "scale-[1.025] opacity-100"
+          : "border-white/[0.06] opacity-35 hover:opacity-75",
+      ].join(" ")}
+      style={{
+        borderColor: active ? frame.accent : undefined,
+      }}
+    >
+      <ArchiveVideo
+        src={frame.video}
+        mobileSrc={frame.mobileVideo}
+        active={active}
+        className="absolute inset-0"
+      />
+
+      {/* Number */}
+      <span className="absolute right-[5px] top-[5px] z-10 font-mono text-[6px] tracking-[.15em] text-white/65">
+        {frame.index}
+      </span>
+
+      {/* Active indicator */}
+      {active && (
+        <span
+          className="absolute bottom-[4px] left-[5px] right-[5px] z-10 h-[1px]"
+          style={{
+            background: frame.accent,
+            boxShadow: `0 0 8px ${frame.accent}`,
+          }}
+        />
+      )}
+    </button>
+  );
+});
+
+
+/* ============================================================================
+   STICKY POSITIONS
+   ========================================================================== */
+
+const stickyPositions = [
+  {
+    left: "2%",
+    top: "7%",
+    rotate: "-3.5deg",
+  },
+  {
+    left: "39%",
+    top: "12%",
+    rotate: "2.5deg",
+  },
+  {
+    left: "0%",
+    top: "38%",
+    rotate: "-1.8deg",
+  },
+  {
+    left: "31%",
+    top: "44%",
+    rotate: "2.2deg",
+  },
+  {
+    left: "64%",
+    top: "39%",
+    rotate: "-1.2deg",
+  },
+  {
+    left: "9%",
+    top: "71%",
+    rotate: "-3deg",
+  },
+  {
+    left: "50%",
+    top: "75%",
+    rotate: "2.8deg",
+  },
+];
+
+
+/* ============================================================================
+   MAIN COMPONENT
+   ========================================================================== */
 
 export default function CinematicHero() {
   const navigate = useNavigate();
 
-  const [activeEntry, setActiveEntry] = useState(1);
+  const [activeId, setActiveId] = useState("understanding");
 
-  const active = FRAMES[activeEntry];
+  const activeFrame = useMemo(
+    () => frames.find((frame) => frame.id === activeId) || frames[0],
+    [activeId]
+  );
 
-  const selectEntry = useCallback((index) => {
-    setActiveEntry(index);
+  /*
+   * Selecting a note updates the cinematic scene.
+   *
+   * Navigation itself is deliberately separated from selection.
+   * This allows clicking a note to change the cinematic content without
+   * immediately leaving the landing page.
+   */
+  const handleSelect = useCallback((frame) => {
+    setActiveId(frame.id);
   }, []);
 
-  const next = useCallback(() => {
-    setActiveEntry((current) =>
-      current === FRAMES.length - 1 ? 0 : current + 1
-    );
-  }, []);
-
-  const previous = useCallback(() => {
-    setActiveEntry((current) =>
-      current === 0 ? FRAMES.length - 1 : current - 1
-    );
-  }, []);
-
-  /* --------------------------------------------------------------------------
-     Keyboard navigation
-     ------------------------------------------------------------------------ */
-
-  useEffect(() => {
-    let locked = false;
-
-    const onKeyDown = (event) => {
-      if (locked) return;
-
-      if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
-        locked = true;
-        next();
-      }
-
-      if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
-        locked = true;
-        previous();
-      }
-
-      if (locked) {
-        window.setTimeout(() => {
-          locked = false;
-        }, 280);
-      }
-    };
-
-    window.addEventListener('keydown', onKeyDown);
-
-    return () => {
-      window.removeEventListener('keydown', onKeyDown);
-    };
-  }, [next, previous]);
-
-  /* --------------------------------------------------------------------------
-     Wheel navigation
-     ------------------------------------------------------------------------ */
-
-  useEffect(() => {
-    let lastWheel = 0;
-
-    const onWheel = (event) => {
-      const now = Date.now();
-
-      if (now - lastWheel < 700) return;
-
-      if (Math.abs(event.deltaY) < 25) return;
-
-      lastWheel = now;
-
-      if (event.deltaY > 0) {
-        next();
-      } else {
-        previous();
-      }
-    };
-
-    window.addEventListener('wheel', onWheel, {
-      passive: true,
-    });
-
-    return () => {
-      window.removeEventListener('wheel', onWheel);
-    };
-  }, [next, previous]);
+  const handleEnterVault = useCallback(() => {
+    navigate(activeFrame.route);
+  }, [navigate, activeFrame.route]);
 
   return (
-    <main className="relative min-h-screen overflow-hidden bg-[#050505] text-[#e7e0d4]">
-      {/* ======================================================================
-          ATMOSPHERE
-          ==================================================================== */}
+    <main className="relative min-h-screen overflow-x-hidden bg-[#050505] text-[#d8d0c5] selection:bg-[#9c302e] selection:text-white">
+      {/* ====================================================================
+          ATMOSPHERIC BACKGROUND
+          ================================================================== */}
 
-      <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
-        {/* Black base */}
-        <div className="absolute inset-0 bg-[#050505]" />
+      <div className="pointer-events-none fixed inset-0 z-0">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_48%_45%,rgba(95,42,32,.075),transparent_32%),radial-gradient(circle_at_16%_55%,rgba(95,75,50,.045),transparent_25%)]" />
 
-        {/* Warm central haze */}
         <div
-          className="absolute inset-0"
+          className="absolute inset-0 opacity-[0.08]"
           style={{
-            background:
-              'radial-gradient(circle at 56% 48%, rgba(93,58,35,.08), transparent 32%), radial-gradient(circle at 12% 65%, rgba(101,75,49,.035), transparent 27%)',
+            backgroundImage: `
+              radial-gradient(rgba(255,255,255,.7) .5px, transparent .5px)
+            `,
+            backgroundSize: "37px 37px",
           }}
         />
 
-        {/* Very subtle vignette */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              'radial-gradient(circle at center, transparent 35%, rgba(0,0,0,.65) 100%)',
-          }}
-        />
-
-        {/* Fine grain */}
-        <div
-          className="absolute inset-0 opacity-[.035]"
-          style={{
-            backgroundImage:
-              "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.75'/%3E%3C/svg%3E\")",
-          }}
-        />
-
-        {/* Fine horizontal scan lines */}
-        <div
-          className="absolute inset-0 opacity-[.025]"
-          style={{
-            backgroundImage:
-              'repeating-linear-gradient(to bottom, transparent 0, transparent 4px, rgba(255,255,255,.25) 5px)',
-          }}
-        />
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,.2),transparent_40%,rgba(0,0,0,.18))]" />
       </div>
 
-      {/* ======================================================================
-          CONTENT
-          ==================================================================== */}
 
-      <section className="relative z-10 mx-auto flex min-h-screen w-full max-w-[1600px] items-center px-6 py-16 sm:px-8 lg:px-10 xl:px-12">
+      {/* ====================================================================
+          HEADER
+          ================================================================== */}
+
+      <header className="relative z-50 h-[64px] border-b border-white/[0.08] bg-black/85 backdrop-blur-md">
+        <div className="mx-auto flex h-full w-[min(1480px,calc(100%-48px))] items-center justify-between">
+
+          {/* Logo */}
+          <button
+            type="button"
+            onClick={() => navigate("/")}
+            className="group flex items-center"
+            aria-label="ESO home"
+          >
+            <span className="font-sans text-[14px] font-medium tracking-[-0.08em] text-white">
+              e<span className="text-[#c73630]">s</span>o
+            </span>
+          </button>
+
+          {/* Center navigation */}
+          <nav className="absolute left-1/2 top-0 flex h-full -translate-x-1/2 items-center gap-10">
+            <button
+              type="button"
+              className="relative h-full px-1 font-mono text-[10px] uppercase tracking-[0.32em] text-white"
+            >
+              Explore
+              <span className="absolute bottom-[-1px] left-0 right-0 mx-auto h-[1px] w-[80%] bg-[#c83d39]" />
+            </button>
+
+            <button
+              type="button"
+              onClick={() => navigate("/community")}
+              className="font-mono text-[10px] uppercase tracking-[0.32em] text-white/45 transition-colors hover:text-white"
+            >
+              Community
+            </button>
+          </nav>
+
+          {/* Actions */}
+          <div className="flex items-center gap-7">
+            <button
+              type="button"
+              onClick={() => navigate("/sign-in")}
+              className="hidden font-mono text-[10px] uppercase tracking-[0.3em] text-white/55 transition-colors hover:text-white sm:block"
+            >
+              Sign in
+            </button>
+
+            <button
+              type="button"
+              onClick={() => navigate("/join")}
+              className="h-[34px] min-w-[91px] border border-white/80 bg-[#e7e3dd] px-5 font-mono text-[9px] uppercase tracking-[0.3em] text-black transition-all duration-200 hover:bg-white"
+            >
+              Join
+            </button>
+          </div>
+        </div>
+      </header>
+
+
+      {/* ====================================================================
+          HERO
+          ================================================================== */}
+
+      <section className="relative z-10 mx-auto flex min-h-[calc(100vh-64px)] w-[min(1480px,calc(100%-48px))] items-center py-8 lg:py-10">
+
         <div
           className="
-            grid
-            w-full
-            items-center
-            gap-x-6
-            lg:grid-cols-[340px_minmax(220px,290px)_minmax(520px,1fr)_72px]
-            xl:grid-cols-[350px_minmax(240px,310px)_minmax(600px,1fr)_82px]
+            grid w-full items-center
+            gap-x-7 gap-y-10
+            lg:grid-cols-[minmax(350px,420px)_minmax(190px,250px)_minmax(0,1fr)_68px]
+            xl:gap-x-9
           "
         >
+
           {/* ==================================================================
-              COLUMN 01 — STICKY WALL
+              LEFT — STICKY WALL
               ================================================================== */}
 
-          <aside className="hidden lg:block">
-            <div className="relative">
-              {/* Section heading */}
-              <div className="mb-5 pl-1">
-                <div className="font-mono text-[10px] font-medium uppercase tracking-[.3em] text-[#c9c1b5]">
-                  VAULT INDEX
-                </div>
-
-                <div className="mt-3 h-px w-20 bg-[#9b343a]/60" />
+          <section className="relative flex min-h-[520px] flex-col justify-center">
+            <div className="mb-5 pl-1">
+              <div className="font-mono text-[9px] uppercase tracking-[0.34em] text-[#d8d0c5]">
+                Vault Index
               </div>
 
-              {/* BOUNDED WALL */}
-              <div className="relative h-[430px] w-full overflow-visible">
-                {/* Decorative wall shadow */}
-                <div
-                  className="pointer-events-none absolute inset-[4%_3%]"
-                  style={{
-                    background:
-                      'radial-gradient(ellipse, rgba(109,74,48,.08), transparent 68%)',
-                    filter: 'blur(18px)',
-                  }}
+              <div className="mt-3 h-px w-[78px] bg-[#8d302d]" />
+            </div>
+
+            {/* Bounded canvas */}
+            <div className="relative mx-auto h-[460px] w-full max-w-[420px]">
+              {frames.map((frame, index) => (
+                <StickyNote
+                  key={frame.id}
+                  frame={frame}
+                  active={frame.id === activeId}
+                  onSelect={handleSelect}
+                  position={stickyPositions[index]}
                 />
-
-                {FRAMES.map((frame, index) => (
-                  <StickyNote
-                    key={frame.id}
-                    frame={frame}
-                    index={index}
-                    active={index === activeEntry}
-                    onSelect={selectEntry}
-                  />
-                ))}
-              </div>
+              ))}
             </div>
-          </aside>
-
-          {/* ==================================================================
-              COLUMN 02 — EDITORIAL
-              ================================================================== */}
-
-          <section className="relative z-20 flex min-w-0 flex-col justify-center lg:pt-12">
-            {/* Current index */}
-            <div className="mb-5 flex items-center gap-3">
-              <span className="font-mono text-[8px] tracking-[.28em] text-[#686158]">
-                {active.number}
-              </span>
-
-              <span className="h-px w-7 bg-[#9b343a]/45" />
-            </div>
-
-            {/* Title */}
-            <h1
-              key={active.id}
-              className="
-                max-w-full
-                overflow-hidden
-                font-serif
-                text-[38px]
-                font-normal
-                leading-[.9]
-                tracking-[-.055em]
-                text-[#e4ded2]
-                transition-opacity
-                duration-500
-                sm:text-[46px]
-                lg:text-[43px]
-                xl:text-[52px]
-              "
-            >
-              {active.shortTitle}
-            </h1>
-
-            {/* Rule */}
-            <div className="mt-5 h-px w-12 bg-[#9b343a]/70" />
-
-            {/* Tagline */}
-            <p className="mt-5 max-w-[190px] font-mono text-[9px] uppercase leading-[1.9] tracking-[.19em] text-[#756f66]">
-              {active.tagline}
-            </p>
           </section>
 
+
           {/* ==================================================================
-              COLUMN 03 — CINEMATIC VIDEO
+              CENTER — EDITORIAL IDENTITY
+              ================================================================== */}
+
+          <section className="relative flex min-h-[460px] items-center">
+            <div className="w-full max-w-[255px]">
+
+              <div className="mb-3 flex items-center gap-3">
+                <span
+                  className="font-mono text-[7px] tracking-[0.25em]"
+                  style={{ color: activeFrame.accent }}
+                >
+                  {activeFrame.index}
+                </span>
+
+                <span
+                  className="h-px w-7"
+                  style={{
+                    background: activeFrame.accent,
+                  }}
+                />
+              </div>
+
+              {/* Quote mark */}
+              <div
+                className="mb-[-4px] font-serif text-[36px] leading-none"
+                style={{
+                  color: activeFrame.accent,
+                  opacity: 0.8,
+                }}
+              >
+                “
+              </div>
+
+              <h1
+                key={activeFrame.id}
+                className="
+                  max-w-full
+                  overflow-hidden
+                  font-serif
+                  text-[clamp(2.3rem,3.25vw,4.1rem)]
+                  font-normal
+                  leading-[.87]
+                  tracking-[-.055em]
+                  text-[#e1dbd1]
+                  transition-opacity
+                  duration-300
+                "
+              >
+                {activeFrame.title}
+              </h1>
+
+              <div
+                className="mt-5 h-px w-12"
+                style={{
+                  background: activeFrame.accent,
+                }}
+              />
+
+              <p
+                key={`${activeFrame.id}-subtitle`}
+                className="mt-4 max-w-[210px] font-mono text-[8px] uppercase leading-[1.8] tracking-[0.25em] text-white/40"
+              >
+                {activeFrame.subtitle}
+              </p>
+            </div>
+          </section>
+
+
+          {/* ==================================================================
+              RIGHT — CINEMATIC VIDEO
               ================================================================== */}
 
           <section className="relative min-w-0">
-            <div
-              className="
-                relative
-                overflow-hidden
-                border
-                border-white/[.12]
-                bg-[#090909]
-                shadow-[0_35px_100px_rgba(0,0,0,.55)]
-              "
-            >
-              {/* Video frame */}
-              <div className="relative aspect-[1.62/1] w-full overflow-hidden">
+            <div className="relative w-full overflow-hidden border border-white/[0.12] bg-black shadow-[0_25px_80px_rgba(0,0,0,.42)]">
+
+              {/* Aspect-ratio container */}
+              <div className="relative aspect-[16/9]">
                 <ArchiveVideo
-                  key={active.id}
-                  frame={active}
+                  key={activeFrame.id}
+                  src={activeFrame.video}
+                  mobileSrc={activeFrame.mobileVideo}
+                  active
                   priority
-                  className="
-                    absolute
-                    inset-0
-                    h-full
-                    w-full
-                    object-cover
-                    brightness-[.74]
-                    contrast-[1.08]
-                    saturate-[.76]
-                    transition-opacity
-                    duration-700
-                  "
+                  className="absolute inset-0 h-full w-full"
+                  objectPosition="center"
                 />
 
-                {/* Cinematic color wash */}
-                <div
-                  className="pointer-events-none absolute inset-0"
-                  style={{
-                    background:
-                      'linear-gradient(90deg, rgba(0,0,0,.28), transparent 40%, rgba(0,0,0,.15)), linear-gradient(0deg, rgba(0,0,0,.28), transparent 35%, rgba(0,0,0,.2))',
-                  }}
-                />
-
-                {/* Center vignette */}
-                <div
-                  className="pointer-events-none absolute inset-0"
-                  style={{
-                    background:
-                      'radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,.58) 100%)',
-                  }}
-                />
-
-                {/* Quote */}
-                <div className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center px-8 sm:px-12">
-                  <div className="relative max-w-[88%] text-center">
-                    {/* Opening quote */}
-                    <span className="absolute -left-6 -top-7 font-serif text-[48px] leading-none text-[#a9363d]/75">
-                      “
-                    </span>
-
-                    <p
-                      className="
-                        font-serif
-                        text-[14px]
-                        font-semibold
-                        leading-[1.75]
-                        tracking-[.045em]
-                        text-[#f0ece4]
-                        sm:text-[16px]
-                        lg:text-[17px]
-                        xl:text-[18px]
-                      "
-                      style={{
-                        textShadow:
-                          '0 2px 10px rgba(0,0,0,.95), 0 0 24px rgba(0,0,0,.75)',
-                      }}
-                    >
-                      <Quote frame={active} />
-                    </p>
-
-                    {/* Closing quote */}
-                    <span className="absolute -bottom-8 -right-6 font-serif text-[48px] leading-none text-[#a9363d]/75">
-                      ”
-                    </span>
-                  </div>
-                </div>
-
-                {/* Frame edge */}
-                <div className="pointer-events-none absolute inset-0 border border-white/[.07]" />
-
-                {/* Enter interaction */}
-                <button
-                  type="button"
-                  onClick={() => navigate('/login')}
-                  aria-label={`Enter ${active.title}`}
-                  className="absolute inset-0 z-30 cursor-pointer"
-                >
-                  <span className="sr-only">
-                    Enter {active.title}
-                  </span>
-                </button>
-              </div>
-            </div>
-
-            {/* Explore line */}
-            <div className="mt-6 flex justify-end">
-              <button
-                type="button"
-                onClick={() => navigate('/login')}
-                className="group flex items-center gap-4"
-              >
-                <span className="font-mono text-[8px] uppercase tracking-[.28em] text-[#706a62] transition-colors group-hover:text-[#b7afa3]">
-                  Explore the Vault
-                </span>
-
-                <span className="relative block w-16">
-                  <span className="block h-px w-full bg-[#4e4942] transition-colors group-hover:bg-[#a9363d]" />
-
-                  <span className="absolute right-0 top-1/2 -translate-y-1/2 font-mono text-[12px] text-[#777068] transition-transform group-hover:translate-x-1">
-                    →
-                  </span>
-                </span>
-              </button>
-            </div>
-          </section>
-
-          {/* ==================================================================
-              COLUMN 04 — FILM STRIP
-              ================================================================== */}
-
-          <aside className="hidden h-[545px] lg:block">
-            <div className="relative h-full w-full">
-              {/* Spine */}
-              <div className="absolute left-0 top-0 h-full w-px bg-white/[.09]" />
-
-              <div className="flex h-full flex-col gap-[5px] pl-3">
-                {FRAMES.map((frame, index) => {
-                  const selected = index === activeEntry;
-
-                  return (
-                    <button
-                      key={frame.id}
-                      type="button"
-                      onClick={() => selectEntry(index)}
-                      aria-label={`Select ${frame.title}`}
-                      className="group relative min-h-0 flex-1 overflow-hidden text-left"
-                    >
-                      {/* Video */}
-                      <ArchiveVideo
-                        frame={frame}
-                        priority={selected}
-                        className={[
-                          'absolute inset-0 h-full w-full object-cover',
-                          'transition-all duration-700',
-                          selected
-                            ? 'scale-100 opacity-80 grayscale-[.15]'
-                            : 'scale-[1.08] opacity-[.22] grayscale',
-                          'group-hover:scale-100 group-hover:opacity-[.62]',
-                        ].join(' ')}
-                      />
-
-                      {/* Dark film treatment */}
-                      <span className="absolute inset-0 bg-black/40 transition-colors group-hover:bg-black/20" />
-
-                      {/* Number */}
-                      <span
-                        className={[
-                          'absolute right-2 top-2 z-10',
-                          'font-mono text-[7px]',
-                          selected
-                            ? 'text-[#e7dfd2]'
-                            : 'text-white/35 group-hover:text-white/70',
-                        ].join(' ')}
-                      >
-                        {frame.number}
-                      </span>
-
-                      {/* Film perforations */}
-                      <span className="absolute bottom-1 left-1 top-1 flex flex-col justify-around">
-                        {Array.from({ length: 5 }).map((_, hole) => (
-                          <span
-                            key={hole}
-                            className="h-[3px] w-[3px] rounded-full bg-white/20"
-                          />
-                        ))}
-                      </span>
-
-                      {/* Active marker */}
-                      {selected && (
-                        <span className="absolute bottom-2 left-3 h-[2px] w-5 bg-[#b9363f] shadow-[0_0_10px_rgba(185,54,63,.65)]" />
-                      )}
-
-                      {/* Border */}
-                      <span
-                        className={[
-                          'pointer-events-none absolute inset-0 border',
-                          selected
-                            ? 'border-[#a9363d]/80'
-                            : 'border-white/[.04]',
-                        ].join(' ')}
-                      />
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-          </aside>
-        </div>
-
-        {/* ====================================================================
-            DESKTOP LOWER CARD
-            ================================================================== */}
-
-        <div className="mt-8 hidden lg:flex">
-          <button
-            type="button"
-            onClick={() => navigate('/login')}
-            className="
-              group
-              relative
-              ml-0
-              h-[128px]
-              w-[260px]
-              -rotate-[1.8deg]
-              overflow-hidden
-              border
-              border-[#9b8066]/20
-              bg-[#0b0a09]
-              px-6
-              py-5
-              text-left
-              shadow-[0_25px_65px_rgba(0,0,0,.55)]
-              transition-all
-              duration-500
-              hover:rotate-0
-              hover:border-[#a9363d]/35
-            "
-          >
-            <span
-              className="absolute inset-0 opacity-[.1]"
-              style={{
-                backgroundImage:
-                  'linear-gradient(rgba(255,255,255,.15) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.15) 1px, transparent 1px)',
-                backgroundSize: '10px 10px',
-              }}
-            />
-
-            <div className="relative">
-              <div className="flex items-center justify-between">
-                <span className="font-mono text-[7px] uppercase tracking-[.28em] text-[#70685f]">
-                  ESO — VAULT
-                </span>
-
-                <span className="font-mono text-[7px] text-[#4f4943]">
-                  {active.number}
-                </span>
-              </div>
-
-              <div className="mt-4 font-serif text-[22px] italic text-[#c9c0b4]">
-                {active.shortTitle}
-              </div>
-
-              <div className="mt-2 font-mono text-[7px] uppercase tracking-[.16em] text-[#5d5750]">
-                {active.tagline}
-              </div>
-
-              <div className="mt-3 flex items-center gap-2">
-                <span className="font-mono text-[7px] uppercase tracking-[.18em] text-[#a9363d]">
-                  Enter Vault
-                </span>
-
-                <span className="text-[10px] text-[#a9363d] transition-transform group-hover:translate-x-1">
-                  →
-                </span>
-              </div>
-            </div>
-          </button>
-        </div>
-
-        {/* ====================================================================
-            MOBILE / TABLET NAVIGATION
-            ================================================================== */}
-
-        <div className="mt-8 lg:hidden">
-          {/* Mobile notes */}
-          <div className="mb-8">
-            <div className="mb-5 font-mono text-[9px] uppercase tracking-[.28em] text-[#aaa096]">
-              VAULT INDEX
-            </div>
-
-            <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-              {FRAMES.map((frame, index) => {
-                const tone = NOTE_TONES[NOTE_LAYOUT[index].tone];
-
-                return (
-                  <button
-                    key={frame.id}
-                    type="button"
-                    onClick={() => selectEntry(index)}
-                    className="relative h-[72px] overflow-hidden rounded-[3px] border p-3 text-left"
+                {/* Cinematic quote */}
+                <div className="absolute inset-x-[7%] top-1/2 z-10 -translate-y-1/2 text-center">
+                  <span
+                    className="block font-serif text-[34px] leading-none"
                     style={{
-                      background: tone.background,
-                      borderColor:
-                        index === activeEntry
-                          ? tone.accent
-                          : tone.border,
+                      color: activeFrame.accent,
+                      opacity: 0.85,
                     }}
                   >
-                    <span
-                      className="font-mono text-[7px] tracking-[.2em]"
-                      style={{ color: `${tone.text}90` }}
-                    >
-                      {frame.number}
-                    </span>
+                    “
+                  </span>
 
-                    <span
-                      className="mt-2 block truncate font-serif text-[13px] italic"
-                      style={{ color: tone.text }}
-                    >
-                      {frame.shortTitle}
-                    </span>
+                  <p className="mx-auto max-w-[690px] font-serif text-[clamp(14px,1.25vw,20px)] font-semibold leading-[1.55] tracking-[0.04em] text-[#eee8df] drop-shadow-[0_2px_10px_rgba(0,0,0,.8)]">
+                    {activeFrame.id === "understanding" &&
+                      "To be understood is to find another who speaks the language of your silence."}
 
-                    {index === activeEntry && (
-                      <span
-                        className="absolute bottom-0 left-0 h-[2px] w-full"
-                        style={{
-                          background: tone.accent,
-                        }}
-                      />
-                    )}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
+                    {activeFrame.id === "confession" &&
+                      "The weight we carry is lighter when shared in whispers."}
 
-          {/* Mobile title */}
-          <div className="mb-7">
-            <div className="mb-3 font-mono text-[8px] tracking-[.25em] text-[#625d56]">
-              {active.number}
-            </div>
+                    {activeFrame.id === "memory" &&
+                      "Some things disappear from sight, but never leave us."}
 
-            <h1 className="font-serif text-[38px] leading-[.9] tracking-[-.055em] text-[#e5ded2]">
-              {active.shortTitle}
-            </h1>
+                    {activeFrame.id === "imagination" &&
+                      "Every impossible world begins with the courage to imagine it."}
 
-            <div className="mt-4 h-px w-10 bg-[#a9363d]" />
+                    {activeFrame.id === "vibes" &&
+                      "Some truths are felt long before they are understood."}
 
-            <p className="mt-4 max-w-[240px] font-mono text-[8px] uppercase leading-[1.8] tracking-[.18em] text-[#746d65]">
-              {active.tagline}
-            </p>
-          </div>
+                    {activeFrame.id === "questioning" &&
+                      "The questions we fear are often the ones worth asking."}
 
-          {/* Mobile cinematic */}
-          <div className="overflow-hidden border border-white/[.1]">
-            <div className="relative aspect-[16/10]">
-              <ArchiveVideo
-                key={active.id}
-                frame={active}
-                priority
-                className="absolute inset-0 h-full w-full object-cover brightness-[.72] contrast-[1.08] saturate-[.76]"
-              />
+                    {activeFrame.id === "truth" &&
+                      "Truth is not found in certainty, but in the courage to remain uncertain."}
+                  </p>
 
-              <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_25%,rgba(0,0,0,.62)_100%)]" />
+                  <span
+                    className="mt-1 block rotate-180 font-serif text-[34px] leading-none"
+                    style={{
+                      color: activeFrame.accent,
+                      opacity: 0.85,
+                    }}
+                  >
+                    “
+                  </span>
+                </div>
 
-              <div className="absolute inset-0 flex items-center justify-center px-7 text-center">
-                <p className="max-w-[90%] font-serif text-[13px] font-semibold leading-[1.7] tracking-wide text-white [text-shadow:0_2px_12px_rgba(0,0,0,.95)]">
-                  <Quote frame={active} />
-                </p>
+                {/* subtle frame grain */}
+                <div className="pointer-events-none absolute inset-0 opacity-[0.12] mix-blend-screen [background-image:radial-gradient(rgba(255,255,255,.8)_0.45px,transparent_0.45px)] [background-size:4px_4px]" />
               </div>
             </div>
-          </div>
 
-          {/* Mobile selector */}
-          <div className="mt-5 flex items-center justify-center gap-2">
-            {FRAMES.map((frame, index) => (
-              <button
-                key={frame.id}
-                type="button"
-                onClick={() => selectEntry(index)}
-                aria-label={`Go to ${frame.title}`}
-                className={[
-                  'h-[3px] transition-all duration-300',
-                  index === activeEntry
-                    ? 'w-7 bg-[#a9363d]'
-                    : 'w-2 bg-[#48433d]',
-                ].join(' ')}
-              />
-            ))}
-          </div>
+            {/* Explore label */}
+            <button
+              type="button"
+              onClick={handleEnterVault}
+              className="group mt-5 flex items-center justify-end gap-4 font-mono text-[8px] uppercase tracking-[0.3em] text-white/40 transition-colors hover:text-white/80"
+            >
+              <span>Explore the vault</span>
+
+              <span className="relative block h-px w-[65px] bg-white/30">
+                <span className="absolute right-0 top-1/2 h-[5px] w-[5px] -translate-y-1/2 rotate-45 border-r border-t border-white/50 transition-transform duration-200 group-hover:translate-x-1" />
+              </span>
+            </button>
+          </section>
+
+
+          {/* ==================================================================
+              FAR RIGHT — FILMSTRIP
+              ================================================================== */}
+
+          <aside className="relative hidden h-full min-h-[500px] border-l border-white/[0.09] pl-3 lg:block">
+            <div className="flex h-full flex-col justify-center gap-[7px]">
+              {frames.map((frame) => (
+                <FilmStripItem
+                  key={frame.id}
+                  frame={frame}
+                  active={frame.id === activeId}
+                  onSelect={handleSelect}
+                />
+              ))}
+            </div>
+          </aside>
+
         </div>
       </section>
+
+
+      {/* ====================================================================
+          MOBILE FILMSTRIP
+          ================================================================== */}
+
+      <section className="relative z-20 border-t border-white/[0.08] px-6 pb-8 pt-5 lg:hidden">
+        <div className="mb-3 flex items-center justify-between">
+          <span className="font-mono text-[8px] uppercase tracking-[0.3em] text-white/40">
+            Archive
+          </span>
+
+          <span className="font-mono text-[7px] tracking-[0.2em] text-white/25">
+            {activeFrame.index} / 07
+          </span>
+        </div>
+
+        <div className="grid grid-cols-7 gap-1.5">
+          {frames.map((frame) => (
+            <FilmStripItem
+              key={frame.id}
+              frame={frame}
+              active={frame.id === activeId}
+              onSelect={handleSelect}
+            />
+          ))}
+        </div>
+      </section>
+
+
+      {/* ====================================================================
+          MOBILE EDITORIAL CONTENT
+          ================================================================== */}
+
+      <div className="relative z-10 px-6 pb-10 lg:hidden">
+        <button
+          type="button"
+          onClick={handleEnterVault}
+          className="group mt-2 flex items-center gap-4 font-mono text-[8px] uppercase tracking-[0.3em] text-white/40"
+        >
+          Explore the vault
+          <span className="h-px w-12 bg-white/30 transition-all group-hover:w-16" />
+        </button>
+      </div>
+
+
+      {/* Bottom atmospheric line */}
+      <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#71322d]/40 to-transparent" />
     </main>
   );
 }
