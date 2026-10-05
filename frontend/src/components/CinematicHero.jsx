@@ -775,9 +775,9 @@ export default function CinematicHero() {
             grid
             w-full
             items-center
-            gap-x-8
-            lg:grid-cols-[380px_minmax(240px,300px)_minmax(540px,1fr)_100px]
-            xl:grid-cols-[400px_minmax(260px,320px)_minmax(620px,1fr)_110px]
+            gap-x-10
+            lg:grid-cols-[400px_minmax(580px,1fr)_120px]
+            xl:grid-cols-[420px_minmax(660px,1fr)_130px]
           "
         >
           {/* ==================================================================
@@ -821,52 +821,7 @@ export default function CinematicHero() {
           </aside>
 
           {/* ==================================================================
-              COLUMN 02 — EDITORIAL (Desktop Only - Title Section)
-              ================================================================== */}
-
-          <section className="relative z-20 hidden min-w-0 flex-col justify-center lg:flex lg:pt-12">
-            {/* Current index */}
-            <div className="mb-5 flex items-center gap-3">
-              <span className="font-mono text-[8px] tracking-[.28em] text-[#686158]">
-                {active.number}
-              </span>
-
-              <span className="h-px w-7 bg-[#9b343a]/45" />
-            </div>
-
-            {/* Title */}
-            <h1
-              key={active.id}
-              className="
-                max-w-full
-                overflow-hidden
-                font-serif
-                text-[38px]
-                font-normal
-                leading-[.9]
-                tracking-[-.055em]
-                text-[#e4ded2]
-                transition-opacity
-                duration-500
-                sm:text-[46px]
-                lg:text-[43px]
-                xl:text-[52px]
-              "
-            >
-              {active.shortTitle}
-            </h1>
-
-            {/* Rule */}
-            <div className="mt-5 h-px w-12 bg-[#9b343a]/70" />
-
-            {/* Tagline */}
-            <p className="mt-5 max-w-[190px] font-mono text-[9px] uppercase leading-[1.9] tracking-[.19em] text-[#756f66]">
-              {active.tagline}
-            </p>
-          </section>
-
-          {/* ==================================================================
-              COLUMN 03 — CINEMATIC VIDEO
+              COLUMN 02 — CINEMATIC VIDEO
               ================================================================== */}
 
           <section className="relative min-w-0">
@@ -993,7 +948,7 @@ export default function CinematicHero() {
           </section>
 
           {/* ==================================================================
-              COLUMN 04 — FILM STRIP
+              COLUMN 03 — FILM STRIP
               ================================================================== */}
 
           <aside className="hidden h-[545px] lg:block">
