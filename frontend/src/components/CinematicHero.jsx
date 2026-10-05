@@ -149,50 +149,50 @@ const FRAMES = [
 
 const NOTE_LAYOUT = [
   {
-    x: 5,
-    y: 2,
+    x: 10,
+    y: 5,
     rotate: -1.5,
     tone: 'wine',
     icon: 'brain',
   },
   {
-    x: 52,
-    y: 4,
+    x: 56,
+    y: 8,
     rotate: 1.5,
     tone: 'coffee',
     icon: 'eye',
   },
   {
-    x: 3,
-    y: 32,
+    x: 8,
+    y: 38,
     rotate: 0.8,
     tone: 'violet',
     icon: 'diamond',
   },
   {
-    x: 38,
-    y: 34,
+    x: 42,
+    y: 42,
     rotate: -1,
     tone: 'olive',
     icon: 'star',
   },
   {
-    x: 72,
-    y: 32,
+    x: 76,
+    y: 38,
     rotate: 1.2,
     tone: 'ochre',
     icon: 'wave',
   },
   {
-    x: 8,
-    y: 62,
+    x: 12,
+    y: 72,
     rotate: -1.5,
     tone: 'clay',
     icon: 'target',
   },
   {
-    x: 55,
-    y: 64,
+    x: 58,
+    y: 75,
     rotate: 1.8,
     tone: 'burgundy',
     icon: 'compass',
@@ -503,8 +503,8 @@ function StickyNote({
       className={[
         'absolute',
         'z-10',
-        'w-[120px]',
-        'h-[80px]',
+        'w-[115px]',
+        'h-[78px]',
         'text-left',
         'transition-[transform,filter,opacity]',
         'duration-500',
@@ -524,7 +524,7 @@ function StickyNote({
     >
       {/* Pin - minimal */}
       <span
-        className="absolute left-1/2 top-[-6px] z-30 h-[8px] w-[8px] -translate-x-1/2 rounded-full"
+        className="absolute left-1/2 top-[-6px] z-30 h-[7px] w-[7px] -translate-x-1/2 rounded-full"
         style={{
           background: tone.accent,
           boxShadow: `0 1px 4px ${tone.accent}40`,
@@ -554,7 +554,7 @@ function StickyNote({
         />
 
         {/* Number - smaller, cleaner */}
-        <span className="absolute left-3 top-2.5">
+        <span className="absolute left-2.5 top-2.5">
           <span
             className="font-mono text-[6px] tracking-[.24em] opacity-60"
             style={{ color: tone.text }}
@@ -565,7 +565,7 @@ function StickyNote({
 
         {/* Title - reduced size, cleaner */}
         <span
-          className="absolute bottom-[16px] left-3 right-3 block truncate font-serif text-[11px] italic leading-none"
+          className="absolute bottom-[15px] left-2.5 right-2.5 block truncate font-serif text-[11px] italic leading-none"
           style={{
             color: active ? '#d4c8b8' : tone.text,
           }}
@@ -748,9 +748,9 @@ export default function CinematicHero() {
               ================================================================== */}
 
           <aside className="hidden lg:block">
-            <div className="relative">
+            <div className="relative mx-auto w-full max-w-[380px]">
               {/* Section heading */}
-              <div className="mb-6 mt-8 pl-1">
+              <div className="mb-5 mt-6 pl-1">
                 <div className="font-mono text-[9px] font-medium uppercase tracking-[.32em] text-[#b5a99a]">
                   Sacred Home of ...
                 </div>
@@ -758,8 +758,8 @@ export default function CinematicHero() {
                 <div className="mt-3 h-px w-20 bg-[#9b343a]/60" />
               </div>
 
-              {/* BOUNDED WALL - Compact height for centered upper layout */}
-              <div className="relative h-[330px] w-full max-w-[360px] overflow-visible">
+              {/* BOUNDED WALL - Properly sized for compact centered layout */}
+              <div className="relative h-[360px] w-full overflow-visible">
                 {/* Decorative wall shadow */}
                 <div
                   className="pointer-events-none absolute inset-[4%_3%]"
@@ -781,17 +781,19 @@ export default function CinematicHero() {
                 ))}
               </div>
 
-              {/* VAULT ACCESS CARD - Landscape flat design below notes */}
-              <div className="mt-6">
+              {/* VAULT ACCESS CARD - Landscape flat design, properly sized */}
+              <div className="mt-5 w-full">
                 <button
                   type="button"
                   onClick={() => navigate('/login')}
                   className="
                     group
                     relative
-                    h-[100px]
-                    w-[320px]
-                    -rotate-[1.2deg]
+                    mx-auto
+                    h-[95px]
+                    w-full
+                    max-w-[340px]
+                    -rotate-[0.8deg]
                     overflow-hidden
                     border
                     border-[#9b8066]/20
@@ -826,7 +828,7 @@ export default function CinematicHero() {
                       </span>
                     </div>
 
-                    <div className="mt-3 font-serif text-[20px] italic leading-tight text-[#c9c0b4]">
+                    <div className="mt-3 font-serif text-[19px] italic leading-tight text-[#c9c0b4]">
                       {active.shortTitle}
                     </div>
 
