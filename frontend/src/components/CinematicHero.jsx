@@ -149,50 +149,50 @@ const FRAMES = [
 
 const NOTE_LAYOUT = [
   {
-    x: 0,
+    x: 5,
     y: 2,
     rotate: -1.5,
     tone: 'wine',
     icon: 'brain',
   },
   {
-    x: 54,
-    y: 6,
+    x: 52,
+    y: 4,
     rotate: 1.5,
     tone: 'coffee',
     icon: 'eye',
   },
   {
-    x: 0,
-    y: 36,
+    x: 3,
+    y: 32,
     rotate: 0.8,
     tone: 'violet',
     icon: 'diamond',
   },
   {
-    x: 40,
-    y: 40,
+    x: 38,
+    y: 34,
     rotate: -1,
     tone: 'olive',
     icon: 'star',
   },
   {
-    x: 78,
-    y: 36,
+    x: 72,
+    y: 32,
     rotate: 1.2,
     tone: 'ochre',
     icon: 'wave',
   },
   {
-    x: 4,
-    y: 74,
+    x: 8,
+    y: 62,
     rotate: -1.5,
     tone: 'clay',
     icon: 'target',
   },
   {
-    x: 58,
-    y: 78,
+    x: 55,
+    y: 64,
     rotate: 1.8,
     tone: 'burgundy',
     icon: 'compass',
@@ -503,8 +503,8 @@ function StickyNote({
       className={[
         'absolute',
         'z-10',
-        'w-[142px]',
-        'h-[92px]',
+        'w-[120px]',
+        'h-[80px]',
         'text-left',
         'transition-[transform,filter,opacity]',
         'duration-500',
@@ -554,7 +554,7 @@ function StickyNote({
         />
 
         {/* Number - smaller, cleaner */}
-        <span className="absolute left-3 top-3">
+        <span className="absolute left-3 top-2.5">
           <span
             className="font-mono text-[6px] tracking-[.24em] opacity-60"
             style={{ color: tone.text }}
@@ -565,7 +565,7 @@ function StickyNote({
 
         {/* Title - reduced size, cleaner */}
         <span
-          className="absolute bottom-[18px] left-3 right-3 block truncate font-serif text-[13px] italic leading-none"
+          className="absolute bottom-[16px] left-3 right-3 block truncate font-serif text-[11px] italic leading-none"
           style={{
             color: active ? '#d4c8b8' : tone.text,
           }}
@@ -758,8 +758,8 @@ export default function CinematicHero() {
                 <div className="mt-3 h-px w-20 bg-[#9b343a]/60" />
               </div>
 
-              {/* BOUNDED WALL - Wider for proper spacing */}
-              <div className="relative h-[450px] w-full max-w-[360px] overflow-visible">
+              {/* BOUNDED WALL - Compact height for centered upper layout */}
+              <div className="relative h-[330px] w-full max-w-[360px] overflow-visible">
                 {/* Decorative wall shadow */}
                 <div
                   className="pointer-events-none absolute inset-[4%_3%]"
@@ -781,25 +781,25 @@ export default function CinematicHero() {
                 ))}
               </div>
 
-              {/* VAULT ACCESS CARD - Below sticky notes */}
-              <div className="mt-10">
+              {/* VAULT ACCESS CARD - Landscape flat design below notes */}
+              <div className="mt-6">
                 <button
                   type="button"
                   onClick={() => navigate('/login')}
                   className="
                     group
                     relative
-                    h-[128px]
-                    w-[260px]
-                    -rotate-[1.8deg]
+                    h-[100px]
+                    w-[320px]
+                    -rotate-[1.2deg]
                     overflow-hidden
                     border
                     border-[#9b8066]/20
                     bg-[#0b0a09]
                     px-6
-                    py-5
+                    py-4
                     text-left
-                    shadow-[0_25px_65px_rgba(0,0,0,.55)]
+                    shadow-[0_20px_55px_rgba(0,0,0,.50)]
                     transition-all
                     duration-500
                     hover:rotate-0
@@ -826,7 +826,7 @@ export default function CinematicHero() {
                       </span>
                     </div>
 
-                    <div className="mt-4 font-serif text-[22px] italic text-[#c9c0b4]">
+                    <div className="mt-3 font-serif text-[20px] italic leading-tight text-[#c9c0b4]">
                       {active.shortTitle}
                     </div>
 
@@ -834,7 +834,7 @@ export default function CinematicHero() {
                       {active.tagline}
                     </div>
 
-                    <div className="mt-3 flex items-center gap-2">
+                    <div className="mt-2 flex items-center gap-2">
                       <span className="font-mono text-[7px] uppercase tracking-[.18em] text-[#a9363d]">
                         Enter Vault
                       </span>
