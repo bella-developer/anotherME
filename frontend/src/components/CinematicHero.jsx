@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 
 /* ============================================================================
    ESO — BLACK VAULT
-   Premium cinematic landing interface
+   Premium cinematic landing interfacejust modifiy
    ============================================================================ */
 
 /* ----------------------------------------------------------------------------
@@ -149,51 +149,51 @@ const FRAMES = [
 
 const NOTE_LAYOUT = [
   {
-    x: 4,
-    y: 7,
-    rotate: -4,
+    x: 2,
+    y: 4,
+    rotate: -2,
     tone: 'wine',
     icon: 'brain',
   },
   {
-    x: 45,
-    y: 12,
-    rotate: 2.5,
+    x: 52,
+    y: 8,
+    rotate: 2,
     tone: 'coffee',
     icon: 'eye',
   },
   {
-    x: 1,
+    x: 0,
     y: 38,
-    rotate: -2.5,
+    rotate: 1,
     tone: 'violet',
     icon: 'diamond',
   },
   {
-    x: 35,
-    y: 43,
-    rotate: 2,
+    x: 38,
+    y: 42,
+    rotate: -1.5,
     tone: 'olive',
     icon: 'star',
   },
   {
-    x: 64,
-    y: 39,
-    rotate: -1.5,
+    x: 75,
+    y: 38,
+    rotate: 1.5,
     tone: 'ochre',
     icon: 'wave',
   },
   {
-    x: 11,
-    y: 72,
-    rotate: -3,
+    x: 8,
+    y: 76,
+    rotate: -2,
     tone: 'clay',
     icon: 'target',
   },
   {
-    x: 53,
-    y: 76,
-    rotate: 2.5,
+    x: 58,
+    y: 80,
+    rotate: 2,
     tone: 'burgundy',
     icon: 'compass',
   },
@@ -775,9 +775,9 @@ export default function CinematicHero() {
             grid
             w-full
             items-center
-            gap-x-6
-            lg:grid-cols-[340px_minmax(220px,290px)_minmax(520px,1fr)_72px]
-            xl:grid-cols-[350px_minmax(240px,310px)_minmax(600px,1fr)_82px]
+            gap-x-8
+            lg:grid-cols-[380px_minmax(240px,300px)_minmax(540px,1fr)_100px]
+            xl:grid-cols-[400px_minmax(260px,320px)_minmax(620px,1fr)_110px]
           "
         >
           {/* ==================================================================
