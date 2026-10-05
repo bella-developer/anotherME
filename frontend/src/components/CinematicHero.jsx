@@ -206,58 +206,58 @@ const NOTE_LAYOUT = [
 const NOTE_TONES = {
   wine: {
     background:
-      'linear-gradient(145deg, rgba(61,35,35,.92), rgba(31,23,23,.97))',
-    border: 'rgba(153,72,74,.55)',
-    accent: '#c85a63',
-    text: '#cfa7a0',
+      'linear-gradient(145deg, rgba(68,58,52,.90), rgba(38,32,28,.96))',
+    border: 'rgba(120,100,85,.40)',
+    accent: '#a8856d',
+    text: '#c9b5a3',
   },
 
   coffee: {
     background:
-      'linear-gradient(145deg, rgba(61,45,32,.94), rgba(29,25,22,.98))',
-    border: 'rgba(151,112,72,.52)',
-    accent: '#c99552',
-    text: '#cdb18a',
+      'linear-gradient(145deg, rgba(62,52,42,.92), rgba(35,30,25,.97))',
+    border: 'rgba(130,108,85,.38)',
+    accent: '#b89968',
+    text: '#d4bfa8',
   },
 
   violet: {
     background:
-      'linear-gradient(145deg, rgba(47,39,61,.94), rgba(25,23,29,.98))',
-    border: 'rgba(130,107,165,.52)',
-    accent: '#a991d2',
-    text: '#b8a8cb',
+      'linear-gradient(145deg, rgba(58,52,48,.91), rgba(32,28,26,.96))',
+    border: 'rgba(115,100,90,.36)',
+    accent: '#a08a7a',
+    text: '#c2b3a5',
   },
 
   olive: {
     background:
-      'linear-gradient(145deg, rgba(48,53,36,.94), rgba(25,27,22,.98))',
-    border: 'rgba(110,123,71,.52)',
-    accent: '#91a05f',
-    text: '#aeb594',
+      'linear-gradient(145deg, rgba(60,58,48,.92), rgba(34,32,28,.97))',
+    border: 'rgba(120,115,95,.37)',
+    accent: '#a39a7e',
+    text: '#c5bda8',
   },
 
   ochre: {
     background:
-      'linear-gradient(145deg, rgba(62,48,27,.95), rgba(29,25,20,.98))',
-    border: 'rgba(166,122,46,.56)',
-    accent: '#d09a39',
-    text: '#cdb47f',
+      'linear-gradient(145deg, rgba(65,55,42,.93), rgba(36,30,24,.97))',
+    border: 'rgba(135,115,85,.40)',
+    accent: '#b5956f',
+    text: '#d1bbaa',
   },
 
   clay: {
     background:
-      'linear-gradient(145deg, rgba(61,43,37,.94), rgba(28,24,22,.98))',
-    border: 'rgba(151,105,85,.52)',
-    accent: '#c17e6c',
-    text: '#c8a89d',
+      'linear-gradient(145deg, rgba(62,54,48,.91), rgba(35,30,27,.96))',
+    border: 'rgba(125,108,95,.38)',
+    accent: '#a89080',
+    text: '#c8b8aa',
   },
 
   burgundy: {
     background:
-      'linear-gradient(145deg, rgba(61,32,35,.94), rgba(29,22,24,.98))',
-    border: 'rgba(148,62,68,.58)',
-    accent: '#c65b63',
-    text: '#cda09d',
+      'linear-gradient(145deg, rgba(64,54,50,.92), rgba(36,30,28,.96))',
+    border: 'rgba(118,98,88,.39)',
+    accent: '#a88a7a',
+    text: '#c7b5a8',
   },
 };
 
@@ -511,10 +511,10 @@ function StickyNote({
         'ease-out',
         'focus:outline-none',
         'focus-visible:ring-1',
-        'focus-visible:ring-[#c78a55]',
+        'focus-visible:ring-[#a89070]',
         active
-          ? 'z-30 scale-[1.055] brightness-[1.08]'
-          : 'hover:z-20 hover:scale-[1.035]',
+          ? 'z-30 scale-[1.04] brightness-[1.05]'
+          : 'hover:z-20 hover:scale-[1.02]',
       ].join(' ')}
       style={{
         left: `${layout.x}%`,
@@ -522,101 +522,64 @@ function StickyNote({
         transform: `rotate(${layout.rotate}deg)`,
       }}
     >
-      {/* Pin */}
+      {/* Pin - minimal */}
       <span
-        className="absolute left-1/2 top-[-7px] z-30 h-[10px] w-[10px] -translate-x-1/2 rounded-full"
+        className="absolute left-1/2 top-[-6px] z-30 h-[8px] w-[8px] -translate-x-1/2 rounded-full"
         style={{
           background: tone.accent,
-          boxShadow: `0 2px 7px ${tone.accent}55`,
+          boxShadow: `0 1px 4px ${tone.accent}40`,
         }}
       />
 
-      {/* Pin shadow */}
-      <span className="absolute left-1/2 top-[1px] z-20 h-[7px] w-[18px] -translate-x-1/2 rounded-full bg-black/50 blur-[4px]" />
-
-      {/* Note body */}
+      {/* Note body - clean minimal */}
       <span
-        className="absolute inset-0 overflow-hidden rounded-[4px] border"
+        className="absolute inset-0 overflow-hidden rounded-[3px] border"
         style={{
           background: tone.background,
           borderColor: active
             ? tone.accent
             : tone.border,
           boxShadow: active
-            ? `0 15px 34px rgba(0,0,0,.55), 0 0 18px ${tone.accent}20`
-            : '0 12px 28px rgba(0,0,0,.42)',
+            ? `0 12px 28px rgba(0,0,0,.50), 0 0 12px ${tone.accent}15`
+            : '0 10px 24px rgba(0,0,0,.38)',
         }}
       >
-        {/* Micro grid */}
+        {/* Subtle paper texture - minimal */}
         <span
-          className="absolute inset-0 opacity-[.13]"
-          style={{
-            backgroundImage: `
-              linear-gradient(rgba(255,255,255,.14) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(255,255,255,.14) 1px, transparent 1px)
-            `,
-            backgroundSize: '8px 8px',
-          }}
-        />
-
-        {/* Paper/digital texture */}
-        <span
-          className="absolute inset-0 opacity-[.12]"
+          className="absolute inset-0 opacity-[.06]"
           style={{
             background:
-              'radial-gradient(circle at 30% 20%, rgba(255,255,255,.18), transparent 28%), radial-gradient(circle at 80% 80%, rgba(0,0,0,.5), transparent 35%)',
+              'radial-gradient(circle at 25% 25%, rgba(255,255,255,.12), transparent 40%)',
           }}
         />
 
-        {/* Top metadata */}
-        <span className="absolute left-3 top-3 flex items-center gap-2">
+        {/* Number - smaller, cleaner */}
+        <span className="absolute left-3 top-3">
           <span
-            className="font-mono text-[7px] tracking-[.22em]"
-            style={{ color: `${tone.text}88` }}
+            className="font-mono text-[6px] tracking-[.24em] opacity-60"
+            style={{ color: tone.text }}
           >
             {frame.number}
           </span>
-
-          <span
-            className="h-px w-4"
-            style={{ background: `${tone.accent}66` }}
-          />
         </span>
 
-        {/* Icon */}
-        <span className="absolute right-3 top-3">
-          <NoteIcon
-            type={layout.icon}
-            color={tone.text}
-          />
-        </span>
-
-        {/* Title */}
+        {/* Title - reduced size, cleaner */}
         <span
-          className="absolute bottom-[22px] left-3 right-3 block truncate font-serif text-[16px] italic leading-none"
+          className="absolute bottom-[18px] left-3 right-3 block truncate font-serif text-[13px] italic leading-none"
           style={{
-            color: active ? '#e1d7c9' : tone.text,
+            color: active ? '#d4c8b8' : tone.text,
           }}
         >
           {frame.shortTitle}
         </span>
 
-        {/* Bottom mark */}
-        <span
-          className="absolute bottom-3 right-3 h-px w-5"
-          style={{
-            background: tone.accent,
-            opacity: active ? 0.8 : 0.4,
-          }}
-        />
-
-        {/* Active edge */}
+        {/* Active indicator - subtle */}
         {active && (
           <span
-            className="absolute bottom-0 left-0 h-[2px] w-full"
+            className="absolute bottom-0 left-0 h-[1.5px] w-full"
             style={{
               background: tone.accent,
-              boxShadow: `0 0 12px ${tone.accent}`,
+              boxShadow: `0 0 8px ${tone.accent}60`,
             }}
           />
         )}
@@ -787,9 +750,9 @@ export default function CinematicHero() {
           <aside className="hidden lg:block">
             <div className="relative">
               {/* Section heading */}
-              <div className="mb-5 pl-1">
-                <div className="font-mono text-[10px] font-medium uppercase tracking-[.3em] text-[#c9c1b5]">
-                  VAULT INDEX
+              <div className="mb-6 mt-8 pl-1">
+                <div className="font-mono text-[9px] font-medium uppercase tracking-[.32em] text-[#b5a99a]">
+                  Sacred Home of ...
                 </div>
 
                 <div className="mt-3 h-px w-20 bg-[#9b343a]/60" />
@@ -1103,8 +1066,8 @@ export default function CinematicHero() {
         <div className="mt-8 lg:hidden">
           {/* Mobile notes */}
           <div className="mb-8">
-            <div className="mb-5 font-mono text-[9px] uppercase tracking-[.28em] text-[#aaa096]">
-              VAULT INDEX
+            <div className="mb-5 font-mono text-[8px] uppercase tracking-[.3em] text-[#9a8d7e]">
+              Sacred Home of ...
             </div>
 
             <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
