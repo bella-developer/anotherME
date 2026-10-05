@@ -817,6 +817,72 @@ export default function CinematicHero() {
                   />
                 ))}
               </div>
+
+              {/* VAULT ACCESS CARD - Below sticky notes */}
+              <div className="mt-10">
+                <button
+                  type="button"
+                  onClick={() => navigate('/login')}
+                  className="
+                    group
+                    relative
+                    h-[128px]
+                    w-[260px]
+                    -rotate-[1.8deg]
+                    overflow-hidden
+                    border
+                    border-[#9b8066]/20
+                    bg-[#0b0a09]
+                    px-6
+                    py-5
+                    text-left
+                    shadow-[0_25px_65px_rgba(0,0,0,.55)]
+                    transition-all
+                    duration-500
+                    hover:rotate-0
+                    hover:border-[#a9363d]/35
+                  "
+                >
+                  <span
+                    className="absolute inset-0 opacity-[.1]"
+                    style={{
+                      backgroundImage:
+                        'linear-gradient(rgba(255,255,255,.15) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.15) 1px, transparent 1px)',
+                      backgroundSize: '10px 10px',
+                    }}
+                  />
+
+                  <div className="relative">
+                    <div className="flex items-center justify-between">
+                      <span className="font-mono text-[7px] uppercase tracking-[.28em] text-[#70685f]">
+                        ESO — VAULT
+                      </span>
+
+                      <span className="font-mono text-[7px] text-[#4f4943]">
+                        {active.number}
+                      </span>
+                    </div>
+
+                    <div className="mt-4 font-serif text-[22px] italic text-[#c9c0b4]">
+                      {active.shortTitle}
+                    </div>
+
+                    <div className="mt-2 font-mono text-[7px] uppercase tracking-[.16em] text-[#5d5750]">
+                      {active.tagline}
+                    </div>
+
+                    <div className="mt-3 flex items-center gap-2">
+                      <span className="font-mono text-[7px] uppercase tracking-[.18em] text-[#a9363d]">
+                        Enter Vault
+                      </span>
+
+                      <span className="text-[10px] text-[#a9363d] transition-transform group-hover:translate-x-1">
+                        →
+                      </span>
+                    </div>
+                  </div>
+                </button>
+              </div>
             </div>
           </aside>
 
@@ -1028,76 +1094,6 @@ export default function CinematicHero() {
               </div>
             </div>
           </aside>
-        </div>
-
-        {/* ====================================================================
-            DESKTOP LOWER CARD
-            ================================================================== */}
-
-        <div className="mt-8 hidden lg:flex">
-          <button
-            type="button"
-            onClick={() => navigate('/login')}
-            className="
-              group
-              relative
-              ml-0
-              h-[128px]
-              w-[260px]
-              -rotate-[1.8deg]
-              overflow-hidden
-              border
-              border-[#9b8066]/20
-              bg-[#0b0a09]
-              px-6
-              py-5
-              text-left
-              shadow-[0_25px_65px_rgba(0,0,0,.55)]
-              transition-all
-              duration-500
-              hover:rotate-0
-              hover:border-[#a9363d]/35
-            "
-          >
-            <span
-              className="absolute inset-0 opacity-[.1]"
-              style={{
-                backgroundImage:
-                  'linear-gradient(rgba(255,255,255,.15) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.15) 1px, transparent 1px)',
-                backgroundSize: '10px 10px',
-              }}
-            />
-
-            <div className="relative">
-              <div className="flex items-center justify-between">
-                <span className="font-mono text-[7px] uppercase tracking-[.28em] text-[#70685f]">
-                  ESO — VAULT
-                </span>
-
-                <span className="font-mono text-[7px] text-[#4f4943]">
-                  {active.number}
-                </span>
-              </div>
-
-              <div className="mt-4 font-serif text-[22px] italic text-[#c9c0b4]">
-                {active.shortTitle}
-              </div>
-
-              <div className="mt-2 font-mono text-[7px] uppercase tracking-[.16em] text-[#5d5750]">
-                {active.tagline}
-              </div>
-
-              <div className="mt-3 flex items-center gap-2">
-                <span className="font-mono text-[7px] uppercase tracking-[.18em] text-[#a9363d]">
-                  Enter Vault
-                </span>
-
-                <span className="text-[10px] text-[#a9363d] transition-transform group-hover:translate-x-1">
-                  →
-                </span>
-              </div>
-            </div>
-          </button>
         </div>
 
         {/* ====================================================================
