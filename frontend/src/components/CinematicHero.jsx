@@ -149,51 +149,51 @@ const FRAMES = [
 
 const NOTE_LAYOUT = [
   {
-    x: 2,
-    y: 4,
-    rotate: -2,
+    x: 0,
+    y: 2,
+    rotate: -1.5,
     tone: 'wine',
     icon: 'brain',
   },
   {
-    x: 52,
-    y: 8,
-    rotate: 2,
+    x: 54,
+    y: 6,
+    rotate: 1.5,
     tone: 'coffee',
     icon: 'eye',
   },
   {
     x: 0,
-    y: 38,
-    rotate: 1,
+    y: 36,
+    rotate: 0.8,
     tone: 'violet',
     icon: 'diamond',
   },
   {
-    x: 38,
-    y: 42,
-    rotate: -1.5,
+    x: 40,
+    y: 40,
+    rotate: -1,
     tone: 'olive',
     icon: 'star',
   },
   {
-    x: 75,
-    y: 38,
-    rotate: 1.5,
+    x: 78,
+    y: 36,
+    rotate: 1.2,
     tone: 'ochre',
     icon: 'wave',
   },
   {
-    x: 8,
-    y: 76,
-    rotate: -2,
+    x: 4,
+    y: 74,
+    rotate: -1.5,
     tone: 'clay',
     icon: 'target',
   },
   {
     x: 58,
-    y: 80,
-    rotate: 2,
+    y: 78,
+    rotate: 1.8,
     tone: 'burgundy',
     icon: 'compass',
   },
@@ -795,8 +795,8 @@ export default function CinematicHero() {
                 <div className="mt-3 h-px w-20 bg-[#9b343a]/60" />
               </div>
 
-              {/* BOUNDED WALL */}
-              <div className="relative h-[430px] w-full overflow-visible">
+              {/* BOUNDED WALL - Wider for proper spacing */}
+              <div className="relative h-[450px] w-full max-w-[360px] overflow-visible">
                 {/* Decorative wall shadow */}
                 <div
                   className="pointer-events-none absolute inset-[4%_3%]"
@@ -821,10 +821,10 @@ export default function CinematicHero() {
           </aside>
 
           {/* ==================================================================
-              COLUMN 02 — EDITORIAL
+              COLUMN 02 — EDITORIAL (Desktop Only - Title Section)
               ================================================================== */}
 
-          <section className="relative z-20 flex min-w-0 flex-col justify-center lg:pt-12">
+          <section className="relative z-20 hidden min-w-0 flex-col justify-center lg:flex lg:pt-12">
             {/* Current index */}
             <div className="mb-5 flex items-center gap-3">
               <span className="font-mono text-[8px] tracking-[.28em] text-[#686158]">
