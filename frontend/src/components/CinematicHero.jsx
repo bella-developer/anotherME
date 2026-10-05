@@ -1,1405 +1,1263 @@
-import { useState, useEffect, useRef, memo, useCallback } from 'react';
-
+import {
+  memo,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { useNavigate } from 'react-router-dom';
 
-/**
+/* ============================================================================
+   ESO — BLACK VAULT
+   Premium cinematic landing interface
+   ============================================================================ */
 
-* CinematicHero - ESO Black Vault
+/* ----------------------------------------------------------------------------
+   01. SOURCE DATA
+   Keep this structure stable.
+   Cloudinary is the source of truth for all cinematic media.
+   -------------------------------------------------------------------------- */
 
-* Refined cinematic vault interface
+const FRAMES = [
+  {
+    id: 'welcome',
+    number: '01',
+    video:
+      'https://res.cloudinary.com/dbtm7etag/video/upload/v1786521558/fram1desktop_emb84g.mp4',
+    mobileVideo:
+      'https://res.cloudinary.com/dbtm7etag/video/upload/v1786521557/frame1mobile_efrsvf.mp4',
+    title: 'THE MEMORY PALACE',
+    shortTitle: 'MEMORY',
+    tagline: 'Rooms of memory.',
+    quote:
+      'In the architecture of remembrance, we build who we become.',
+    highlightWords: ['architecture', 'become'],
+    description: 'A space for introspection and personal history',
+  },
 
-* Minimal editorial content / maximum visual atmosphere
+  {
+    id: 'dark-confession',
+    number: '02',
+    video:
+      'https://res.cloudinary.com/dbtm7etag/video/upload/v1786357230/frae2video_qmhpf7.mp4',
+    mobileVideo:
+      'https://res.cloudinary.com/dbtm7etag/video/upload/v1786521557/frame2mob_pgzsnn.mp4',
+    title: 'CONFESSION',
+    shortTitle: 'CONFESSION',
+    tagline: 'Things left unsaid.',
+    quote:
+      'The weight we carry is lighter when shared in whispers.',
+    highlightWords: ['weight', 'whispers'],
+    description: 'Release your burdens without judgment',
+  },
 
-*/
+  {
+    id: 'dark-understanding',
+    number: '03',
+    video:
+      'https://res.cloudinary.com/dbtm7etag/video/upload/v1786358832/frame3vid_1_hjyi09.mp4',
+    mobileVideo:
+      'https://res.cloudinary.com/dbtm7etag/video/upload/v1786521554/frame3mob_h9pzrp.mp4',
+    title: 'UNDERSTANDING',
+    shortTitle: 'UNDERSTANDING',
+    tagline: 'A shared darkness.',
+    quote:
+      'To be understood is to find another who speaks the language of your silence.',
+    highlightWords: ['language', 'silence'],
+    description: 'Connect with those who truly understand',
+  },
 
-// Define sticky note colors, rotations, and positions ONCE
+  {
+    id: 'fantasy-daydream',
+    number: '04',
+    video:
+      'https://res.cloudinary.com/dbtm7etag/video/upload/v1786361397/frame4videoo_hizhue.mp4',
+    mobileVideo:
+      'https://res.cloudinary.com/dbtm7etag/video/upload/v1786521551/frame4mob_ox4nlo.mp4',
+    title: 'IMAGINATION',
+    shortTitle: 'IMAGINATION',
+    tagline: 'Beyond imagination.',
+    quote:
+      'Reality is merely the canvas; imagination paints what could be.',
+    highlightWords: ['canvas', 'paints'],
+    description: 'Explore worlds beyond the ordinary',
+  },
 
-const noteColors = [
+  {
+    id: 'fantasy-vibes',
+    number: '05',
+    video:
+      'https://res.cloudinary.com/dbtm7etag/video/upload/v1786361396/frame5v_wtvs09.mp4',
+    mobileVideo:
+      'https://res.cloudinary.com/dbtm7etag/video/upload/v1786521549/frame5mob_q1ynbk.mp4',
+    title: 'VIBES',
+    shortTitle: 'VIBES',
+    tagline: 'A space for anything.',
+    quote:
+      'Between structure and chaos lies the frequency of authentic being.',
+    highlightWords: ['frequency', 'authentic'],
+    description: 'Flow freely in unstructured expression',
+  },
 
-{
+  {
+    id: 'philo-questioning',
+    number: '06',
+    video:
+      'https://res.cloudinary.com/dbtm7etag/video/upload/v1786361397/frame6v_ijhpzm.mp4',
+    mobileVideo:
+      'https://res.cloudinary.com/dbtm7etag/video/upload/v1786521551/frame6mob_xjoxtz.mp4',
+    title: 'QUESTIONING',
+    shortTitle: 'QUESTIONING',
+    tagline: 'Questions without answers.',
+    quote:
+      'The mind that asks is forever more alive than one that accepts.',
+    highlightWords: ['alive', 'accepts'],
+    description: 'Challenge everything, seek deeper truth',
+  },
 
-accent: '#ff4d6d',
-
-text: 'text-rose-300',
-
-glow: 'rgba(255,77,109,0.35)',
-
-},
-
-{
-
-accent: '#38bdf8',
-
-text: 'text-sky-300',
-
-glow: 'rgba(56,189,248,0.35)',
-
-},
-
-{
-
-accent: '#a78bfa',
-
-text: 'text-violet-300',
-
-glow: 'rgba(167,139,250,0.35)',
-
-},
-
-{
-
-accent: '#34d399',
-
-text: 'text-emerald-300',
-
-glow: 'rgba(52,211,153,0.35)',
-
-},
-
-{
-
-accent: '#fbbf24',
-
-text: 'text-amber-300',
-
-glow: 'rgba(251,191,36,0.35)',
-
-},
-
-{
-
-accent: '#f472b6',
-
-text: 'text-pink-300',
-
-glow: 'rgba(244,114,182,0.35)',
-
-},
-
-{
-
-accent: '#fb7185',
-
-text: 'text-rose-300',
-
-glow: 'rgba(251,113,133,0.35)',
-
-},
-
+  {
+    id: 'philo-truth',
+    number: '07',
+    video:
+      'https://res.cloudinary.com/dbtm7etag/video/upload/v1786361701/frame7vide_yp9dc4.mp4',
+    mobileVideo:
+      'https://res.cloudinary.com/dbtm7etag/video/upload/v1786521556/frame7mob_ovz0to.mp4',
+    title: 'TRUTH',
+    shortTitle: 'TRUTH',
+    tagline: 'Where mystery begins.',
+    quote:
+      'Truth is not found in certainty, but in the courage to remain uncertain.',
+    highlightWords: ['courage', 'uncertain'],
+    description: 'Embrace the uncomfortable realities',
+  },
 ];
 
-// Horizontal landscape layout - true 2-3-2 composition with proper spacing
+/* ----------------------------------------------------------------------------
+   02. STICKY NOTE ART DIRECTION
 
-// Container: 300px wide × 230px tall
+   IMPORTANT:
+   These positions are percentages INSIDE the bounded wall.
+   They are NOT viewport coordinates.
 
-// Row 1: 2 notes | Row 2: 3 notes with gaps | Row 3: 2 notes
+   Composition:
+       01       02
 
-const noteLayout = [
+       03   04   05
 
-{ left: 0, top: 0, rotate: -2 },         // Memory (row 1, left)
+          06     07
+   -------------------------------------------------------------------------- */
 
-{ left: 150, top: 5, rotate: 2 },        // Confession (row 1, right)
-
-{ left: 0, top: 75, rotate: 1 },         // Understanding (row 2, left)
-
-{ left: 100, top: 80, rotate: -2 },      // Imagination (row 2, center) - more spacing
-
-{ left: 200, top: 75, rotate: 1 },       // Vibes (row 2, right) - more spacing
-
-{ left: 10, top: 155, rotate: -1 },      // Questioning (row 3, left)
-
-{ left: 160, top: 160, rotate: 2 },      // Truth (row 3, right)
-
+const NOTE_LAYOUT = [
+  {
+    x: 4,
+    y: 7,
+    rotate: -4,
+    tone: 'wine',
+    icon: 'brain',
+  },
+  {
+    x: 45,
+    y: 12,
+    rotate: 2.5,
+    tone: 'coffee',
+    icon: 'eye',
+  },
+  {
+    x: 1,
+    y: 38,
+    rotate: -2.5,
+    tone: 'violet',
+    icon: 'diamond',
+  },
+  {
+    x: 35,
+    y: 43,
+    rotate: 2,
+    tone: 'olive',
+    icon: 'star',
+  },
+  {
+    x: 64,
+    y: 39,
+    rotate: -1.5,
+    tone: 'ochre',
+    icon: 'wave',
+  },
+  {
+    x: 11,
+    y: 72,
+    rotate: -3,
+    tone: 'clay',
+    icon: 'target',
+  },
+  {
+    x: 53,
+    y: 76,
+    rotate: 2.5,
+    tone: 'burgundy',
+    icon: 'compass',
+  },
 ];
 
-function CinematicHero() {
-
-const navigate = useNavigate();
-
-const [activeEntry, setActiveEntry] = useState(6);
-
-/**
-
-* ================================================================
-
-* ESO — THE BLACK VAULT
-
-* ================================================================
-
-*
-
-* Each record intentionally contains only:
-
-* - number
-
-* - title
-
-* - shortTitle
-
-* - tagline
-
-* - video sources
-
-*
-
-* The interface provides the rest of the context visually.
-
-*/
-
-const frames = [
-
-{
-
-  id: 'welcome',
-
-  number: '01',
-
-  video:
-
-    'https\://res.cloudinary.com/dbtm7etag/video/upload/v1786521558/fram1desktop_emb84g.mp4',
-
-  mobileVideo:
-
-    'https\://res.cloudinary.com/dbtm7etag/video/upload/v1786521557/frame1mobile_efrsvf.mp4',
-
-  title: 'THE MEMORY PALACE',
-
-  shortTitle: 'MEMORY',
-
-  tagline: 'Rooms of memory.',
-
-  quote: 'In the architecture of remembrance, we build who we become.',
-
-  highlightWords: ['architecture', 'become'],
-
-  description: 'A space for introspection and personal history',
-
-},
-
-{
-
-  id: 'dark-confession',
-
-  number: '02',
-
-  video:
-
-    'https\://res.cloudinary.com/dbtm7etag/video/upload/v1786357230/frae2video_qmhpf7.mp4',
-
-  mobileVideo:
-
-    'https\://res.cloudinary.com/dbtm7etag/video/upload/v1786521557/frame2mob_pgzsnn.mp4',
-
-  title: 'CONFESSION',
-
-  shortTitle: 'CONFESSION',
-
-  tagline: 'Things left unsaid.',
-
-  quote: 'The weight we carry is lighter when shared in whispers.',
-
-  highlightWords: ['weight', 'whispers'],
-
-  description: 'Release your burdens without judgment',
-
-},
-
-{
-
-  id: 'dark-understanding',
-
-  number: '03',
-
-  video:
-
-    'https\://res.cloudinary.com/dbtm7etag/video/upload/v1786358832/frame3vid_1_hjyi09.mp4',
-
-  mobileVideo:
-
-    'https\://res.cloudinary.com/dbtm7etag/video/upload/v1786521554/frame3mob_h9pzrp.mp4',
-
-  title: 'UNDERSTANDING',
-
-  shortTitle: 'UNDERSTANDING',
-
-  tagline: 'A shared darkness.',
-
-  quote: 'To be understood is to find another who speaks the language of your silence.',
-
-  highlightWords: ['language', 'silence'],
-
-  description: 'Connect with those who truly understand',
-
-},
-
-{
-
-  id: 'fantasy-daydream',
-
-  number: '04',
-
-  video:
-
-    'https\://res.cloudinary.com/dbtm7etag/video/upload/v1786361397/frame4videoo_hizhue.mp4',
-
-  mobileVideo:
-
-    'https\://res.cloudinary.com/dbtm7etag/video/upload/v1786521551/frame4mob_ox4nlo.mp4',
-
-  title: 'IMAGINATION',
-
-  shortTitle: 'IMAGINATION',
-
-  tagline: 'Beyond imagination.',
-
-  quote: 'Reality is merely the canvas; imagination paints what could be.',
-
-  highlightWords: ['canvas', 'paints'],
-
-  description: 'Explore worlds beyond the ordinary',
-
-},
-
-{
-
-  id: 'fantasy-vibes',
-
-  number: '05',
-
-  video:
-
-    'https\://res.cloudinary.com/dbtm7etag/video/upload/v1786361396/frame5v_wtvs09.mp4',
-
-  mobileVideo:
-
-    'https\://res.cloudinary.com/dbtm7etag/video/upload/v1786521549/frame5mob_q1ynbk.mp4',
-
-  title: 'VIBES',
-
-  shortTitle: 'VIBES',
-
-  tagline: 'A space for anything.',
-
-  quote: 'Between structure and chaos lies the frequency of authentic being.',
-
-  highlightWords: ['frequency', 'authentic'],
-
-  description: 'Flow freely in unstructured expression',
-
-},
-
-{
-
-  id: 'philo-questioning',
-
-  number: '06',
-
-  video:
-
-    'https\://res.cloudinary.com/dbtm7etag/video/upload/v1786361397/frame6v_ijhpzm.mp4',
-
-  mobileVideo:
-
-    'https\://res.cloudinary.com/dbtm7etag/video/upload/v1786521551/frame6mob_xjoxtz.mp4',
-
-  title: 'QUESTIONING',
-
-  shortTitle: 'QUESTIONING',
-
-  tagline: 'Questions without answers.',
-
-  quote: 'The mind that asks is forever more alive than one that accepts.',
-
-  highlightWords: ['alive', 'accepts'],
-
-  description: 'Challenge everything, seek deeper truth',
-
-},
-
-{
-
-  id: 'philo-truth',
-
-  number: '07',
-
-  video:
-
-    'https\://res.cloudinary.com/dbtm7etag/video/upload/v1786361701/frame7vide_yp9dc4.mp4',
-
-  mobileVideo:
-
-    'https\://res.cloudinary.com/dbtm7etag/video/upload/v1786521556/frame7mob_ovz0to.mp4',
-
-  title: 'TRUTH',
-
-  shortTitle: 'TRUTH',
-
-  tagline: 'Where mystery begins.',
-
-  quote: 'Truth is not found in certainty, but in the courage to remain uncertain.',
-
-  highlightWords: ['courage', 'uncertain'],
-
-  description: 'Embrace the uncomfortable realities',
-
-},
-
-];
-
-const active = frames[activeEntry];
-
-// Helper function to render quote with highlighted words
-
-const renderQuoteWithHighlights = (quote, highlightWords) => {
-
-if (!highlightWords || highlightWords.length === 0) {
-
-  return quote;
-
-}
-
-const parts = [];
-
-let remaining = quote;
-
-highlightWords.forEach(word => {
-
-  const regex = new RegExp(\`(${word})\`, 'gi');
-
-  remaining = remaining.replace(regex, \`\<mark>$1\</mark>\`);
-
-});
-
-return remaining;
-
+/* ----------------------------------------------------------------------------
+   03. EARTH-TONE NOTE SYSTEM
+   -------------------------------------------------------------------------- */
+
+const NOTE_TONES = {
+  wine: {
+    background:
+      'linear-gradient(145deg, rgba(61,35,35,.92), rgba(31,23,23,.97))',
+    border: 'rgba(153,72,74,.55)',
+    accent: '#c85a63',
+    text: '#cfa7a0',
+  },
+
+  coffee: {
+    background:
+      'linear-gradient(145deg, rgba(61,45,32,.94), rgba(29,25,22,.98))',
+    border: 'rgba(151,112,72,.52)',
+    accent: '#c99552',
+    text: '#cdb18a',
+  },
+
+  violet: {
+    background:
+      'linear-gradient(145deg, rgba(47,39,61,.94), rgba(25,23,29,.98))',
+    border: 'rgba(130,107,165,.52)',
+    accent: '#a991d2',
+    text: '#b8a8cb',
+  },
+
+  olive: {
+    background:
+      'linear-gradient(145deg, rgba(48,53,36,.94), rgba(25,27,22,.98))',
+    border: 'rgba(110,123,71,.52)',
+    accent: '#91a05f',
+    text: '#aeb594',
+  },
+
+  ochre: {
+    background:
+      'linear-gradient(145deg, rgba(62,48,27,.95), rgba(29,25,20,.98))',
+    border: 'rgba(166,122,46,.56)',
+    accent: '#d09a39',
+    text: '#cdb47f',
+  },
+
+  clay: {
+    background:
+      'linear-gradient(145deg, rgba(61,43,37,.94), rgba(28,24,22,.98))',
+    border: 'rgba(151,105,85,.52)',
+    accent: '#c17e6c',
+    text: '#c8a89d',
+  },
+
+  burgundy: {
+    background:
+      'linear-gradient(145deg, rgba(61,32,35,.94), rgba(29,22,24,.98))',
+    border: 'rgba(148,62,68,.58)',
+    accent: '#c65b63',
+    text: '#cda09d',
+  },
 };
 
-const selectEntry = useCallback((index) => {
+/* ----------------------------------------------------------------------------
+   04. SMALL ABSTRACT ICONS
+   -------------------------------------------------------------------------- */
 
-setActiveEntry(index);
+function NoteIcon({ type, color }) {
+  const common = {
+    fill: 'none',
+    stroke: color,
+    strokeWidth: 1.25,
+    strokeLinecap: 'round',
+    strokeLinejoin: 'round',
+  };
 
-}, []);
-
-// Keyboard navigation with debounce
-
-useEffect(() => {
-
-let timeout;
-
-const handleKeyPress = (e) => {
-
-  if (timeout) return;
-
-  if (e.key === 'ArrowLeft') {
-
-    setActiveEntry((prev) => (prev > 0 ? prev - 1 : frames.length - 1));
-
-    timeout = setTimeout(() => { timeout = null; }, 300);
-
-  } else if (e.key === 'ArrowRight') {
-
-    setActiveEntry((prev) => (prev < frames.length - 1 ? prev + 1 : 0));
-
-    timeout = setTimeout(() => { timeout = null; }, 300);
-
+  if (type === 'brain') {
+    return (
+      <svg viewBox="0 0 24 24" className="h-5 w-5 opacity-70">
+        <path
+          {...common}
+          d="M9.2 5.2A3.2 3.2 0 0 0 6 8.4c0 .4.1.8.2 1.1A3.5 3.5 0 0 0 5 16.2c.7.8 1.7 1.3 2.8 1.4"
+        />
+        <path
+          {...common}
+          d="M14.8 5.2A3.2 3.2 0 0 1 18 8.4c0 .4-.1.8-.2 1.1a3.5 3.5 0 0 1 1.2 6.7c-.7.8-1.7 1.3-2.8 1.4"
+        />
+        <path {...common} d="M12 5v14M8.5 9.5c1 .1 1.8.6 2.2 1.5M15.5 9.5c-1 .1-1.8.6-2.2 1.5M8.5 14.5c1-.1 1.8-.6 2.2-1.5M15.5 14.5c-1-.1-1.8-.6-2.2-1.5" />
+      </svg>
+    );
   }
 
-};
+  if (type === 'eye') {
+    return (
+      <svg viewBox="0 0 24 24" className="h-5 w-5 opacity-70">
+        <path {...common} d="M3 12s3.5-5 9-5 9 5 9 5-3.5 5-9 5-9-5-9-5Z" />
+        <circle {...common} cx="12" cy="12" r="2.2" />
+      </svg>
+    );
+  }
 
-window\.addEventListener('keydown', handleKeyPress);
+  if (type === 'diamond') {
+    return (
+      <svg viewBox="0 0 24 24" className="h-5 w-5 opacity-70">
+        <path {...common} d="m12 3 7 9-7 9-7-9 7-9Z" />
+        <path {...common} d="m12 7 3.5 5-3.5 5-3.5-5L12 7Z" />
+      </svg>
+    );
+  }
 
-return () => {
+  if (type === 'star') {
+    return (
+      <svg viewBox="0 0 24 24" className="h-5 w-5 opacity-70">
+        <path {...common} d="m12 3 2.1 6.4H21l-5.6 4 2.1 6.4-5.5-4-5.5 4 2.1-6.4-5.6-4h6.9L12 3Z" />
+      </svg>
+    );
+  }
 
-  window\.removeEventListener('keydown', handleKeyPress);
+  if (type === 'wave') {
+    return (
+      <svg viewBox="0 0 24 24" className="h-5 w-5 opacity-70">
+        <path {...common} d="M2 12c2.5 0 2.5-5 5-5s2.5 10 5 10 2.5-10 5-10 2.5 5 5 5" />
+      </svg>
+    );
+  }
 
-  if (timeout) clearTimeout(timeout);
+  if (type === 'target') {
+    return (
+      <svg viewBox="0 0 24 24" className="h-5 w-5 opacity-70">
+        <circle {...common} cx="12" cy="12" r="8" />
+        <circle {...common} cx="12" cy="12" r="4" />
+        <circle {...common} cx="12" cy="12" r="1" />
+      </svg>
+    );
+  }
 
-};
+  return (
+    <svg viewBox="0 0 24 24" className="h-5 w-5 opacity-70">
+      <circle {...common} cx="12" cy="12" r="8" />
+      <path {...common} d="M12 4v16M4 12h16M15 9l-6 6M15 15 9 9" />
+    </svg>
+  );
+}
 
-}, [frames.length]);
+/* ----------------------------------------------------------------------------
+   05. CLOUDINARY VIDEO COMPONENT
 
-// Scroll navigation - optimized with throttle
+   Important:
+   - actual <video>
+   - Cloudinary source URLs
+   - desktop/mobile source selection
+   - IntersectionObserver lazy loading
+   - priority support for cinematic hero
+   -------------------------------------------------------------------------- */
 
-useEffect(() => {
+const ArchiveVideo = memo(function ArchiveVideo({
+  frame,
+  className = '',
+  priority = false,
+}) {
+  const videoRef = useRef(null);
+  const [visible, setVisible] = useState(priority);
 
-let lastCall = 0;
+  useEffect(() => {
+    if (priority) return;
 
-const throttleDelay = 1000;
+    const node = videoRef.current;
 
-const handleWheel = (e) => {
+    if (!node) return;
 
-  const now = Date.now();
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          observer.disconnect();
+        }
+      },
+      {
+        rootMargin: '180px',
+        threshold: 0.01,
+      }
+    );
 
-  if (now - lastCall < throttleDelay) return;
+    observer.observe(node);
 
-  if (Math.abs(e.deltaY) > 30) {
+    return () => observer.disconnect();
+  }, [priority]);
 
-    e.preventDefault();
+  useEffect(() => {
+    if (!visible) return;
 
-    lastCall = now;
+    const video = videoRef.current;
 
-    if (e.deltaY > 0) {
+    if (!video) return;
 
-      setActiveEntry((prev) => (prev < frames.length - 1 ? prev + 1 : 0));
+    const play = () => {
+      video.play().catch(() => {});
+    };
 
+    if (video.readyState >= 2) {
+      play();
     } else {
-
-      setActiveEntry((prev) => (prev > 0 ? prev - 1 : frames.length - 1));
-
+      video.addEventListener('loadeddata', play, {
+        once: true,
+      });
     }
 
-  }
+    return () => {
+      video.removeEventListener('loadeddata', play);
+    };
+  }, [visible, frame.id]);
 
-};
+  return (
+    <video
+      ref={videoRef}
+      className={className}
+      muted
+      loop
+      playsInline
+      autoPlay
+      preload={priority ? 'auto' : 'none'}
+      aria-hidden="true"
+    >
+      {visible && (
+        <>
+          <source
+            src={frame.mobileVideo}
+            type="video/mp4"
+            media="(max-width: 767px)"
+          />
 
-window\.addEventListener('wheel', handleWheel, { passive: false });
+          <source
+            src={frame.video}
+            type="video/mp4"
+            media="(min-width: 768px)"
+          />
 
-return () => window\.removeEventListener('wheel', handleWheel);
-
-}, [frames.length]);
-
-/**
-
-* ================================================================
-
-* REUSABLE VIDEO - OPTIMIZED FOR PERFORMANCE
-
-* ================================================================
-
-*/
-
-const ArchiveVideo = memo(({ frame, className = '', priority = false }) => {
-
-const videoRef = useRef(null);
-
-const [isVisible, setIsVisible] = useState(priority);
-
-// Intersection Observer for lazy loading
-
-useEffect(() => {
-
-  if (priority) return; *// Skip for priority videos*
-
-  const observer = new IntersectionObserver(
-
-    (entries) => {
-
-      entries.forEach((entry) => {
-
-        if (entry.isIntersecting) {
-
-          setIsVisible(true);
-
-          observer.disconnect();
-
-        }
-
-      });
-
-    },
-
-    { rootMargin: '50px' }
-
+          {/* Safe fallback */}
+          <source src={frame.video} type="video/mp4" />
+        </>
+      )}
+    </video>
   );
-
-  if (videoRef.current) {
-
-    observer.observe(videoRef.current);
-
-  }
-
-  return () => observer.disconnect();
-
-}, [priority]);
-
-// Load and play video when visible
-
-useEffect(() => {
-
-  if (!isVisible) return;
-
-  const video = videoRef.current;
-
-  if (!video) return;
-
-  video.load();
-
-  const playPromise = video.play();
-
-  if (playPromise !== undefined) {
-
-    playPromise.catch(() => {
-
-// Auto-play was prevented
-
-    });
-
-  }
-
-}, [isVisible, frame.id]);
-
-return (
-
-  \<video
-
-    ref={videoRef}
-
-    key={frame.id}
-
-    className={className}
-
-    autoPlay={priority}
-
-    muted
-
-    loop
-
-    playsInline
-
-    preload={priority ? 'auto' : 'none'}
-
-    poster="data\:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-
-  \>
-
-    {isVisible && (
-
-      <>
-
-        \<source src={frame.video} type="video/mp4" />
-
-        \<source src={frame.mobileVideo} type="video/mp4" />
-
-      \</>
-
-    )}
-
-  \</video>
-
-);
-
 });
 
-return (
-
-\<main className="relative min-h-screen w-full overflow-hidden bg-[#050505] text-[#e8e5dc] selection\:bg-[#8f252b]/30">
-
-  {/\* ============================================================
-
-      ATMOSPHERE
-
-      \============================================================ \*/}
-
-  \<div className="pointer-events-none fixed inset-0 z-0">
-
-    {/\* Base black \*/}
-
-    \<div className="absolute inset-0 bg-[#050505]" />
-
-    {/\* Warm atmospheric light \*/}
-
-    \<div className="absolute inset-0 bg-[radial-gradient(circle_at_65%\_45%,rgba(120,85,55,0.035),transparent_38%)]" />
-
-    {/\* Secondary light \*/}
-
-    \<div className="absolute inset-0 bg-[radial-gradient(circle_at_15%\_75%,rgba(255,255,255,0.018),transparent_30%)]" />
-
-    {/\* Film grain \*/}
-
-    \<div
-
-      className="absolute inset-0 opacity-[0.035]"
-
-      style={{
-
-        backgroundImage:
-
-          "url(\\"data\:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http\://www\.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='.8'/%3E%3C/svg%3E\\")",
-
-      }}
-
-    />
-
-    {/\* Analog scan texture \*/}
-
-    \<div className="absolute inset-0 bg-[linear-gradient(to_bottom,transparent_0%,rgba(255,255,255,0.01)\_50%,transparent_51%)] bg-[length:100%\_8px] opacity-25" />
-
-  \</div>
-
-  {/\* ============================================================
-
-      MAIN
-
-      \============================================================ \*/}
-
-  \<section className="relative z-10 px-4 py-8 sm\:px-7 sm\:py-10 lg\:px-14">
-
-    \<div className="mx-auto grid min-h-[calc(100vh-120px)] max-w-[1750px] grid-cols-1 gap-8 sm\:min-h-[calc(100vh-140px)] sm\:gap-10 md\:min-h-[calc(100vh-162px)] lg\:grid-cols-[300px_minmax(620px,1.8fr)\_90px] lg\:gap-6 xl\:grid-cols-[340px_minmax(700px,1.8fr)\_110px] xl\:gap-8">
-
-      {/\* ========================================================
-
-          COLUMN 01
-
-          DIGITAL STICKY NOTES - EXPANDED WALL COMPOSITION
-
-          \======================================================== \*/}
-
-      \<aside className="hidden pt-20 lg\:block">
-
-        {/\* Mobile: Digital sticky notes - horizontal scroll \*/}
-
-        \<div className="mb-6 lg\:hidden">
-
-          \<div className="mb-4">
-
-            \<span className="font-mono text-[9px] font-semibold uppercase tracking-[0.28em] text-[#d5d1c8]">
-
-              Sacred Home of ...
-
-            \</span>
-
-            \<div className="mt-2 h-px w-14 bg-[#a72a30]/30" />
-
-          \</div>
-
-          {/\* Horizontally scrollable wall \*/}
-
-          \<div className="overflow-x-auto scrollbar-hide">
-
-            \<div className="flex min-w-max gap-6 pb-2">
-
-              {frames.map((frame, index) => {
-
-                const isActive = index === activeEntry;
-
-                const color = noteColors[index];
-
-                const layout = noteLayout[index];
-
-                return (
-
-                  \<button
-
-                    key={frame.id}
-
-                    onClick={() => selectEntry(index)}
-
-                    aria-label={\`View ${frame.title}\`}
-
-                    className={\`relative transition-all duration-500 ${
-
-                      isActive ? 'z-30' : 'z-10'
-
-                    }\`}
-
-                    style={{
-
-                      transform: \`rotate(${layout.rotate}deg)\`,
-
-                      boxShadow: isActive
-
-                        ? \`0 0 25px ${color.glow}, 0 12px 30px rgba(0,0,0,0.45)\`
-
-                        : '0 10px 25px rgba(0,0,0,0.35)',
-
-                    }}
-
-                  \>
-
-                    {/\* Glowing pin \*/}
-
-                    \<span
-
-                      className="absolute -top-1 left-1/2 z-30 h-2 w-2 -translate-x-1/2 rounded-full"
-
-                      style={{
-
-                        backgroundColor: color.accent,
-
-                        boxShadow: \`0 0 10px ${color.glow}\`,
-
-                      }}
-
-                    />
-
-                    {/\* Sticky note card \*/}
-
-                    \<div
-
-                      className="relative h-[56px] w-[108px] overflow-hidden rounded-lg border bg-[#0b0c10]/90 backdrop-blur-xl shadow-[0_10px_30px_rgba(0,0,0,0.45)]"
-
-                      style={{
-
-                        borderColor: 'rgba(255,255,255,0.08)',
-
-                      }}
-
-                    \>
-
-                      {/\* Colored accent edge \*/}
-
-                      \<div
-
-                        className="absolute left-0 top-0 h-full w-[2px]"
-
-                        style={{ backgroundColor: color.accent }}
-
-                      />
-
-                      {/\* Content \*/}
-
-                      \<div className="relative flex h-full flex-col justify-center px-3 py-2">
-
-                        {/\* Number - technical \*/}
-
-                        \<span className="mb-1 font-mono text-[7px] tracking-[0.18em] text-white/35">
-
-                          {frame.number}
-
-                        \</span>
-
-                        {/\* Title - artistic \*/}
-
-                        \<span className={\`font-serif italic text-[10px] tracking-wide ${color.text}\`}>
-
-                          {frame.shortTitle}
-
-                        \</span>
-
-                      \</div>
-
-                      {/\* Active glow overlay \*/}
-
-                      {isActive && (
-
-                        \<div
-
-                          className="absolute inset-0 rounded-lg opacity-10"
-
-                          style={{ backgroundColor: color.accent }}
-
-                        />
-
-                      )}
-
-                    \</div>
-
-                  \</button>
-
-                );
-
-              })}
-
-            \</div>
-
-          \</div>
-
-        \</div>
-
-        \<div className="mb-10">
-
-          \<span className="font-mono text-[10px] font-semibold uppercase tracking-[0.28em] text-[#d5d1c8]">
-
-            Sacred Home of ...
-
-          \</span>
-
-          \<div className="mt-2 h-px w-16 bg-[#a72a30]/30" />
-
-        \</div>
-
-        {/\* Horizontal landscape canvas - true 2-3-2 layout \*/}
-
-        \<div className="relative h-[230px] w-full max-w-[300px]">
-
-          {frames.map((frame, index) => {
-
-            const isActive = index === activeEntry;
-
-            const color = noteColors[index];
-
-            const layout = noteLayout[index];
-
-            return (
-
-              \<button
-
-                key={frame.id}
-
-                onClick={() => selectEntry(index)}
-
-                className={\`absolute transition-all duration-500 ${
-
-                  isActive ? 'z-30' : 'z-10 hover\:z-20'
-
-                }\`}
-
-                style={{
-
-                  left: \`${layout.left}px\`,
-
-                  top: \`${layout.top}px\`,
-
-                  transform: \`rotate(${layout.rotate}deg)\`,
-
-                  boxShadow: isActive
-
-                    ? \`0 0 25px ${color.glow}, 0 12px 30px rgba(0,0,0,0.45)\`
-
-                    : '0 10px 25px rgba(0,0,0,0.35)',
-
-                }}
-
-              \>
-
-                {/\* Glowing pin \*/}
-
-                \<span
-
-                  className="absolute -top-1 left-1/2 z-30 h-2 w-2 -translate-x-1/2 rounded-full"
-
-                  style={{
-
-                    backgroundColor: color.accent,
-
-                    boxShadow: \`0 0 10px ${color.glow}\`,
-
-                  }}
-
-                />
-
-                {/\* Sticky note card \*/}
-
-                \<div
-
-                  className="relative h-[56px] w-[108px] overflow-hidden rounded-lg border bg-[#0b0c10]/90 backdrop-blur-xl shadow-[0_10px_30px_rgba(0,0,0,0.45)] transition-all duration-500"
-
-                  style={{
-
-                    borderColor: 'rgba(255,255,255,0.08)',
-
-                  }}
-
-                \>
-
-                  {/\* Colored accent edge \*/}
-
-                  \<div
-
-                    className="absolute left-0 top-0 h-full w-[2px]"
-
-                    style={{ backgroundColor: color.accent }}
-
-                  />
-
-                  {/\* Content \*/}
-
-                  \<div className="relative flex h-full flex-col justify-center px-3 py-2">
-
-                    {/\* Number - technical \*/}
-
-                    \<span className="mb-1 font-mono text-[7px] tracking-[0.18em] text-white/35">
-
-                      {frame.number}
-
-                    \</span>
-
-                    {/\* Title - artistic \*/}
-
-                    \<span className={\`font-serif italic text-[10px] tracking-wide ${color.text}\`}>
-
-                      {frame.shortTitle}
-
-                    \</span>
-
-                  \</div>
-
-                  {/\* Active glow overlay \*/}
-
-                  {isActive && (
-
-                    \<div
-
-                      className="absolute inset-0 rounded-lg opacity-10"
-
-                      style={{ backgroundColor: color.accent }}
-
-                    />
-
-                  )}
-
-                \</div>
-
-              \</button>
-
-            );
-
-          })}
-
-        \</div>
-
-      \</aside>
-
-      {/\* ========================================================
-
-          COLUMN 02
-
-          MAIN VIDEO - RESPONSIVE
-
-          \======================================================== \*/}
-
-      \<div className="relative flex min-h-[380px] items-center justify-center sm\:min-h-[460px] md\:min-h-[520px] lg\:min-h-0">
-
-        \<div className="group relative w-full overflow-hidden bg-[#090909]">
-
-          {/\* VIDEO \*/}
-
-          \<div className="aspect-[16/10] w-full">
-
-            \<ArchiveVideo
-
-              frame={active}
-
-              priority={true}
-
-              className="h-full w-full object-cover grayscale-[8%] contrast-[1.08] brightness-[0.82] saturate-[0.78]"
-
-            />
-
-          \</div>
-
-          {/\* QUOTE OVERLAY - BOLD WITH PREMIUM SHADOW EFFECTS \*/}
-
-          \<div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center px-4 sm\:px-6">
-
-            \<div className="relative max-w-[85%] text-center sm\:max-w-[80%]">
-
-              {/\* Opening quotation mark \*/}
-
-              \<span className="absolute -left-4 -top-3 font-serif text-4xl leading-none text-[#a72a30]/60 drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] sm:-left-6 sm:-top-4 sm\:text-5xl lg:-left-8 lg:-top-6 lg\:text-6xl">"\</span>
-
-              {/\* Quote with highlights and strong shadows \*/}
-
-              \<p 
-
-                className="font-serif text-[13px] font-bold leading-[1.7] tracking-wide text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.9)] sm\:text-[15px] md\:text-[17px] lg\:text-[19px]"
-
-                style={{
-
-                  textShadow: '0 0 20px rgba(0,0,0,0.8), 0 0 40px rgba(0,0,0,0.6), 0 2px 4px rgba(0,0,0,1)'
-
-                }}
-
-                dangerouslySetInnerHTML={{
-
-                  \_\_html: renderQuoteWithHighlights(active.quote, active.highlightWords)
-
-                    .replace(/\<mark>/g, '\<span class="font-extrabold text-[#a72a30]" style="text-shadow: 0 0 20px rgba(167,42,48,0.8), 0 0 30px rgba(0,0,0,0.9), 0 2px 6px rgba(0,0,0,1);">')
-
-                    .replace(/<\\/mark>/g, '\</span>')
-
-                }}
-
-              />
-
-              {/\* Closing quotation mark \*/}
-
-              \<span className="absolute -bottom-3 -right-4 font-serif text-4xl leading-none text-[#a72a30]/60 drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] sm:-bottom-4 sm:-right-6 sm\:text-5xl lg:-bottom-6 lg:-right-8 lg\:text-6xl">"\</span>
-
-            \</div>
-
-          \</div>
-
-          {/\* VIGNETTE \*/}
-
-          \<div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_30%,rgba(0,0,0,0.55)\_100%)]" />
-
-          {/\* ARCHIVAL EDGE \*/}
-
-          \<div className="pointer-events-none absolute inset-0 border border-white/[0.11]" />
-
-          {/\* CLICKABLE OVERLAY - Full area clickable, invisible \*/}
-
-          \<button
-
-            onClick={() => navigate('/login')}
-
-            aria-label={\`Enter ${active.title}\`}
-
-            className="absolute inset-0 cursor-pointer"
-
-          \>
-
-            \<span className="sr-only">Enter {active.title}\</span>
-
-          \</button>
-
-        \</div>
-
-      \</div>
-
-      {/\* ========================================================
-
-          COLUMN 04
-
-          VERTICAL FILM STRIP
-
-          \======================================================== \*/}
-
-      \<aside className="hidden lg\:flex">
-
-        \<div className="relative flex h-[500px] w-full flex-col overflow-hidden">
-
-          {/\* Vertical archive spine \*/}
-
-          \<div className="absolute left-0 top-0 h-full w-px bg-white/[0.07]" />
-
-          \<div className="flex h-full flex-col gap-[5px] pl-3">
-
-            {frames.map((frame, index) => {
-
-              const isActive = index === activeEntry;
-
-              return (
-
-                \<button
-
-                  key={frame.id}
-
-                  onClick={() => selectEntry(index)}
-
-                  aria-label={\`Select ${frame.title}\`}
-
-                  className="group relative min-h-0 flex-1 overflow-hidden text-left"
-
-                \>
-
-                  {/\* VIDEO THUMBNAIL \*/}
-
-                  \<ArchiveVideo
-
-                    frame={frame}
-
-                    priority={false}
-
-                    className={\`absolute inset-0 h-full w-full object-cover grayscale transition-all duration-700 ${
-
-                      isActive
-
-                        ? 'scale-100 opacity-80'
-
-                        : 'scale-[1.08] opacity-20 group-hover\:scale-100 group-hover\:opacity-55'
-
-                    }\`}
-
-                  />
-
-                  {/\* DARK FILM LAYER \*/}
-
-                  \<div className="absolute inset-0 bg-black/40 transition-opacity duration-500 group-hover\:bg-black/20" />
-
-                  {/\* NUMBER \*/}
-
-                  \<span
-
-                    className={\`relative z-10 float-right mr-2 mt-2 font-mono text-[7px] ${
-
-                      isActive
-
-                        ? 'text-white/80'
-
-                        : 'text-white/30 group-hover\:text-white/70'
-
-                    }\`}
-
-                  \>
-
-                    {frame.number}
-
-                  \</span>
-
-                  {/\* ACTIVE RED MARKER \*/}
-
-                  {isActive && (
-
-                    \<span className="absolute bottom-2 left-3 z-10 h-[2px] w-5 bg-[#a72a30]" />
-
-                  )}
-
-                  {/\* FILM PERFORATION \*/}
-
-                  \<div className="pointer-events-none absolute left-0 top-0 flex h-full flex-col justify-around py-1">
-
-                    \<span className="h-1 w-1 rounded-full bg-white/20" />
-
-                    \<span className="h-1 w-1 rounded-full bg-white/20" />
-
-                    \<span className="h-1 w-1 rounded-full bg-white/20" />
-
-                    \<span className="h-1 w-1 rounded-full bg-white/20" />
-
-                    \<span className="h-1 w-1 rounded-full bg-white/20" />
-
-                  \</div>
-
-                \</button>
-
-              );
-
-            })}
-
-          \</div>
-
-        \</div>
-
-      \</aside>
-
-    \</div>
-
-    {/\* ==========================================================
-
-        BOTTOM VAULT BAR - RESPONSIVE
-
-        \========================================================== \*/}
-
-    \<div className="mx-auto mt-8 flex max-w-[1750px] flex-col items-center justify-between gap-8 sm\:mt-12 md:-mt-24 md\:flex-row md\:items-end md\:gap-4 lg:-mt-32">
-
-      {/\* VAULT ACCESS CARD - Premium Design \*/}
-
-      \<button
-
-        onClick={() => navigate('/login')}
-
-        className="group relative hidden h-[160px] w-[260px] rotate-[-2deg] overflow-hidden border border-[#d8d2c2]/15 bg-[#0d0d0c] p-7 shadow-[0_40px_90px_rgba(0,0,0,0.8)] transition-all duration-500 hover\:rotate-0 hover\:border-[#a72a30]/30 md\:block"
-
-      \>
-
-        {/\* Texture overlay \*/}
-
-        \<div className="pointer-events-none absolute inset-0 bg-[repeating-linear-gradient(0deg,transparent,transparent_5px,rgba(255,255,255,0.018)\_6px)]" />
-
-        \<div className="relative">
-
-          {/\* Header \*/}
-
-          \<div className="flex items-center justify-between">
-
-            \<span className="font-mono text-[9px] uppercase tracking-[0.24em] text-[#706c64]">
-
-              ESO — VAULT
-
-            \</span>
-
-            \<span className="font-mono text-[9px] text-[#4d4a45]">
-
-              {active.number}
-
-            \</span>
-
-          \</div>
-
-          {/\* Title \*/}
-
-          \<div className="mt-6 font-serif text-[26px] leading-[1] tracking-tight text-[#c4bfb5]">
-
-            {active.shortTitle}
-
-          \</div>
-
-          {/\* Description \*/}
-
-          \<p className="mt-3 text-[9px] leading-[1.6] tracking-wide text-[#6b6862]">
-
-            {active.description}
-
-          \</p>
-
-          {/\* CTA \*/}
-
-          \<div className="mt-5 inline-flex items-center gap-2 border-b border-[#a72a30]/40 pb-1 transition-all duration-300 group-hover\:border-[#a72a30]">
-
-            \<span className="font-mono text-[8px] uppercase tracking-[0.18em] text-[#a72a30]/80 transition-colors duration-300 group-hover\:text-[#a72a30]">
-
-              Enter Vault
-
-            \</span>
-
-            \<span className="text-[10px] text-[#a72a30]/80 transition-all duration-300 group-hover\:translate-x-1 group-hover\:text-[#a72a30]">
-
-              →
-
-            \</span>
-
-          \</div>
-
-        \</div>
-
-      \</button>
-
-      {/\* EXPLORE \*/}
-
-      \<button
-
-        onClick={() => navigate('/login')}
-
-        className="group flex items-center gap-4 sm\:gap-5 md\:ml-auto lg\:ml-[390px]"
-
-      \>
-
-        \<span className="font-mono text-[9px] uppercase tracking-[0.26em] text-[#716e67] transition-colors duration-500 group-hover\:text-[#d8d4ca] sm\:text-[8px]">
-
-          Explore the Vault
-
-        \</span>
-
-        \<span className="relative flex w-14 items-center sm\:w-16">
-
-          \<span className="h-px w-full bg-[#4c4944] transition-all duration-700 group-hover\:bg-[#a72a30]" />
-
-          \<span className="absolute right-0 font-mono text-[13px] text-[#716e67] transition-all duration-700 group-hover\:translate-x-1 group-hover\:text-[#e8e5dc]">
-
-            →
-
-          \</span>
-
-        \</span>
-
-      \</button>
-
-      {/\* INTENTIONALLY EMPTY RIGHT SPACE \*/}
-
-      \<div className="hidden w-[185px] lg\:block" />
-
-    \</div>
-
-    {/\* ==========================================================
-
-        MOBILE NAVIGATION - TABLET ONLY (md screens)
-
-        \========================================================== \*/}
-
-    \<div className="mt-8 hidden border-y border-white/[0.055] py-5 sm\:mt-10 md\:block lg\:hidden">
-
-      \<div className="relative">
-
-        {/\* Visual indicator dots \*/}
-
-        \<div className="mb-3 flex items-center justify-center gap-1.5">
-
-          {frames.map((\_, index) => (
-
-            \<button
-
-              key={index}
-
-              onClick={() => selectEntry(index)}
-
-              aria-label={\`Go to vault ${index + 1}\`}
-
-              className="group"
-
-            \>
-
-              \<span
-
-                className={\`block h-1.5 transition-all duration-300 ${
-
-                  index === activeEntry
-
-                    ? 'w-6 rounded-full bg-[#a72a30]'
-
-                    : 'w-1.5 rounded-full bg-[#484540] group-hover\:bg-[#6b6862]'
-
-                }\`}
-
-              />
-
-            \</button>
-
-          ))}
-
-        \</div>
-
-        {/\* Scrollable vault list \*/}
-
-        \<div className="overflow-x-auto scrollbar-hide">
-
-          \<div className="flex min-w-max justify-center gap-6 px-4 sm\:gap-8">
-
-            {frames.map((frame, index) => {
-
-              const isActive = index === activeEntry;
-
-              return (
-
-                \<button
-
-                  key={frame.id}
-
-                  onClick={() => selectEntry(index)}
-
-                  aria-label={\`Select ${frame.title}\`}
-
-                  className="group flex min-w-[80px] flex-col items-center gap-2 py-2"
-
-                \>
-
-                  \<span
-
-                    className={\`font-mono text-[9px] transition-colors duration-300 ${
-
-                      isActive ? 'text-[#a72a30]' : 'text-[#484540] group-hover\:text-[#6b6862]'
-
-                    }\`}
-
-                  \>
-
-                    {frame.number}
-
-                  \</span>
-
-                  \<span
-
-                    className={\`text-center font-mono text-[9px] uppercase tracking-[0.16em] transition-colors duration-300 ${
-
-                      isActive ? 'text-[#d8d4ca] font-medium' : 'text-[#55524e] group-hover\:text-[#85817a]'
-
-                    }\`}
-
-                  \>
-
-                    {frame.shortTitle}
-
-                  \</span>
-
-                  {/\* Active indicator \*/}
-
-                  {isActive && (
-
-                    \<span className="h-px w-8 bg-[#a72a30]" />
-
-                  )}
-
-                \</button>
-
-              );
-
-            })}
-
-          \</div>
-
-        \</div>
-
-      \</div>
-
-    \</div>
-
-  \</section>
-
-\</main>
-
-);
-
+/* ----------------------------------------------------------------------------
+   06. QUOTE RENDERER
+   -------------------------------------------------------------------------- */
+
+function Quote({ frame }) {
+  const parts = [];
+  let text = frame.quote;
+
+  frame.highlightWords.forEach((word) => {
+    const regex = new RegExp(`(${word})`, 'i');
+    const match = text.match(regex);
+
+    if (!match) return;
+
+    const index = match.index;
+
+    parts.push(text.slice(0, index));
+
+    parts.push(
+      <span
+        key={`${frame.id}-${word}-${index}`}
+        className="text-[#b9363f]"
+        style={{
+          textShadow:
+            '0 0 18px rgba(185,54,63,.38)',
+        }}
+      >
+        {match[0]}
+      </span>
+    );
+
+    text = text.slice(index + match[0].length);
+  });
+
+  parts.push(text);
+
+  return <>{parts}</>;
 }
 
-export default CinematicHero;
+/* ----------------------------------------------------------------------------
+   07. STICKY NOTE
+   -------------------------------------------------------------------------- */
+
+function StickyNote({
+  frame,
+  index,
+  active,
+  onSelect,
+}) {
+  const layout = NOTE_LAYOUT[index];
+  const tone = NOTE_TONES[layout.tone];
+
+  return (
+    <button
+      type="button"
+      onClick={() => onSelect(index)}
+      aria-label={`Open ${frame.title}`}
+      className={[
+        'absolute',
+        'z-10',
+        'w-[142px]',
+        'h-[92px]',
+        'text-left',
+        'transition-[transform,filter,opacity]',
+        'duration-500',
+        'ease-out',
+        'focus:outline-none',
+        'focus-visible:ring-1',
+        'focus-visible:ring-[#c78a55]',
+        active
+          ? 'z-30 scale-[1.055] brightness-[1.08]'
+          : 'hover:z-20 hover:scale-[1.035]',
+      ].join(' ')}
+      style={{
+        left: `${layout.x}%`,
+        top: `${layout.y}%`,
+        transform: `rotate(${layout.rotate}deg)`,
+      }}
+    >
+      {/* Pin */}
+      <span
+        className="absolute left-1/2 top-[-7px] z-30 h-[10px] w-[10px] -translate-x-1/2 rounded-full"
+        style={{
+          background: tone.accent,
+          boxShadow: `0 2px 7px ${tone.accent}55`,
+        }}
+      />
+
+      {/* Pin shadow */}
+      <span className="absolute left-1/2 top-[1px] z-20 h-[7px] w-[18px] -translate-x-1/2 rounded-full bg-black/50 blur-[4px]" />
+
+      {/* Note body */}
+      <span
+        className="absolute inset-0 overflow-hidden rounded-[4px] border"
+        style={{
+          background: tone.background,
+          borderColor: active
+            ? tone.accent
+            : tone.border,
+          boxShadow: active
+            ? `0 15px 34px rgba(0,0,0,.55), 0 0 18px ${tone.accent}20`
+            : '0 12px 28px rgba(0,0,0,.42)',
+        }}
+      >
+        {/* Micro grid */}
+        <span
+          className="absolute inset-0 opacity-[.13]"
+          style={{
+            backgroundImage: `
+              linear-gradient(rgba(255,255,255,.14) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(255,255,255,.14) 1px, transparent 1px)
+            `,
+            backgroundSize: '8px 8px',
+          }}
+        />
+
+        {/* Paper/digital texture */}
+        <span
+          className="absolute inset-0 opacity-[.12]"
+          style={{
+            background:
+              'radial-gradient(circle at 30% 20%, rgba(255,255,255,.18), transparent 28%), radial-gradient(circle at 80% 80%, rgba(0,0,0,.5), transparent 35%)',
+          }}
+        />
+
+        {/* Top metadata */}
+        <span className="absolute left-3 top-3 flex items-center gap-2">
+          <span
+            className="font-mono text-[7px] tracking-[.22em]"
+            style={{ color: `${tone.text}88` }}
+          >
+            {frame.number}
+          </span>
+
+          <span
+            className="h-px w-4"
+            style={{ background: `${tone.accent}66` }}
+          />
+        </span>
+
+        {/* Icon */}
+        <span className="absolute right-3 top-3">
+          <NoteIcon
+            type={layout.icon}
+            color={tone.text}
+          />
+        </span>
+
+        {/* Title */}
+        <span
+          className="absolute bottom-[22px] left-3 right-3 block truncate font-serif text-[16px] italic leading-none"
+          style={{
+            color: active ? '#e1d7c9' : tone.text,
+          }}
+        >
+          {frame.shortTitle}
+        </span>
+
+        {/* Bottom mark */}
+        <span
+          className="absolute bottom-3 right-3 h-px w-5"
+          style={{
+            background: tone.accent,
+            opacity: active ? 0.8 : 0.4,
+          }}
+        />
+
+        {/* Active edge */}
+        {active && (
+          <span
+            className="absolute bottom-0 left-0 h-[2px] w-full"
+            style={{
+              background: tone.accent,
+              boxShadow: `0 0 12px ${tone.accent}`,
+            }}
+          />
+        )}
+      </span>
+    </button>
+  );
+}
+
+/* ----------------------------------------------------------------------------
+   08. MAIN COMPONENT
+   -------------------------------------------------------------------------- */
+
+export default function CinematicHero() {
+  const navigate = useNavigate();
+
+  const [activeEntry, setActiveEntry] = useState(1);
+
+  const active = FRAMES[activeEntry];
+
+  const selectEntry = useCallback((index) => {
+    setActiveEntry(index);
+  }, []);
+
+  const next = useCallback(() => {
+    setActiveEntry((current) =>
+      current === FRAMES.length - 1 ? 0 : current + 1
+    );
+  }, []);
+
+  const previous = useCallback(() => {
+    setActiveEntry((current) =>
+      current === 0 ? FRAMES.length - 1 : current - 1
+    );
+  }, []);
+
+  /* --------------------------------------------------------------------------
+     Keyboard navigation
+     ------------------------------------------------------------------------ */
+
+  useEffect(() => {
+    let locked = false;
+
+    const onKeyDown = (event) => {
+      if (locked) return;
+
+      if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
+        locked = true;
+        next();
+      }
+
+      if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
+        locked = true;
+        previous();
+      }
+
+      if (locked) {
+        window.setTimeout(() => {
+          locked = false;
+        }, 280);
+      }
+    };
+
+    window.addEventListener('keydown', onKeyDown);
+
+    return () => {
+      window.removeEventListener('keydown', onKeyDown);
+    };
+  }, [next, previous]);
+
+  /* --------------------------------------------------------------------------
+     Wheel navigation
+     ------------------------------------------------------------------------ */
+
+  useEffect(() => {
+    let lastWheel = 0;
+
+    const onWheel = (event) => {
+      const now = Date.now();
+
+      if (now - lastWheel < 700) return;
+
+      if (Math.abs(event.deltaY) < 25) return;
+
+      lastWheel = now;
+
+      if (event.deltaY > 0) {
+        next();
+      } else {
+        previous();
+      }
+    };
+
+    window.addEventListener('wheel', onWheel, {
+      passive: true,
+    });
+
+    return () => {
+      window.removeEventListener('wheel', onWheel);
+    };
+  }, [next, previous]);
+
+  return (
+    <main className="relative min-h-screen overflow-hidden bg-[#050505] text-[#e7e0d4]">
+      {/* ======================================================================
+          ATMOSPHERE
+          ==================================================================== */}
+
+      <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
+        {/* Black base */}
+        <div className="absolute inset-0 bg-[#050505]" />
+
+        {/* Warm central haze */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              'radial-gradient(circle at 56% 48%, rgba(93,58,35,.08), transparent 32%), radial-gradient(circle at 12% 65%, rgba(101,75,49,.035), transparent 27%)',
+          }}
+        />
+
+        {/* Very subtle vignette */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              'radial-gradient(circle at center, transparent 35%, rgba(0,0,0,.65) 100%)',
+          }}
+        />
+
+        {/* Fine grain */}
+        <div
+          className="absolute inset-0 opacity-[.035]"
+          style={{
+            backgroundImage:
+              "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.75'/%3E%3C/svg%3E\")",
+          }}
+        />
+
+        {/* Fine horizontal scan lines */}
+        <div
+          className="absolute inset-0 opacity-[.025]"
+          style={{
+            backgroundImage:
+              'repeating-linear-gradient(to bottom, transparent 0, transparent 4px, rgba(255,255,255,.25) 5px)',
+          }}
+        />
+      </div>
+
+      {/* ======================================================================
+          CONTENT
+          ==================================================================== */}
+
+      <section className="relative z-10 mx-auto flex min-h-screen w-full max-w-[1600px] items-center px-6 py-16 sm:px-8 lg:px-10 xl:px-12">
+        <div
+          className="
+            grid
+            w-full
+            items-center
+            gap-x-6
+            lg:grid-cols-[340px_minmax(220px,290px)_minmax(520px,1fr)_72px]
+            xl:grid-cols-[350px_minmax(240px,310px)_minmax(600px,1fr)_82px]
+          "
+        >
+          {/* ==================================================================
+              COLUMN 01 — STICKY WALL
+              ================================================================== */}
+
+          <aside className="hidden lg:block">
+            <div className="relative">
+              {/* Section heading */}
+              <div className="mb-5 pl-1">
+                <div className="font-mono text-[10px] font-medium uppercase tracking-[.3em] text-[#c9c1b5]">
+                  VAULT INDEX
+                </div>
+
+                <div className="mt-3 h-px w-20 bg-[#9b343a]/60" />
+              </div>
+
+              {/* BOUNDED WALL */}
+              <div className="relative h-[430px] w-full overflow-visible">
+                {/* Decorative wall shadow */}
+                <div
+                  className="pointer-events-none absolute inset-[4%_3%]"
+                  style={{
+                    background:
+                      'radial-gradient(ellipse, rgba(109,74,48,.08), transparent 68%)',
+                    filter: 'blur(18px)',
+                  }}
+                />
+
+                {FRAMES.map((frame, index) => (
+                  <StickyNote
+                    key={frame.id}
+                    frame={frame}
+                    index={index}
+                    active={index === activeEntry}
+                    onSelect={selectEntry}
+                  />
+                ))}
+              </div>
+            </div>
+          </aside>
+
+          {/* ==================================================================
+              COLUMN 02 — EDITORIAL
+              ================================================================== */}
+
+          <section className="relative z-20 flex min-w-0 flex-col justify-center lg:pt-12">
+            {/* Current index */}
+            <div className="mb-5 flex items-center gap-3">
+              <span className="font-mono text-[8px] tracking-[.28em] text-[#686158]">
+                {active.number}
+              </span>
+
+              <span className="h-px w-7 bg-[#9b343a]/45" />
+            </div>
+
+            {/* Title */}
+            <h1
+              key={active.id}
+              className="
+                max-w-full
+                overflow-hidden
+                font-serif
+                text-[38px]
+                font-normal
+                leading-[.9]
+                tracking-[-.055em]
+                text-[#e4ded2]
+                transition-opacity
+                duration-500
+                sm:text-[46px]
+                lg:text-[43px]
+                xl:text-[52px]
+              "
+            >
+              {active.shortTitle}
+            </h1>
+
+            {/* Rule */}
+            <div className="mt-5 h-px w-12 bg-[#9b343a]/70" />
+
+            {/* Tagline */}
+            <p className="mt-5 max-w-[190px] font-mono text-[9px] uppercase leading-[1.9] tracking-[.19em] text-[#756f66]">
+              {active.tagline}
+            </p>
+          </section>
+
+          {/* ==================================================================
+              COLUMN 03 — CINEMATIC VIDEO
+              ================================================================== */}
+
+          <section className="relative min-w-0">
+            <div
+              className="
+                relative
+                overflow-hidden
+                border
+                border-white/[.12]
+                bg-[#090909]
+                shadow-[0_35px_100px_rgba(0,0,0,.55)]
+              "
+            >
+              {/* Video frame */}
+              <div className="relative aspect-[1.62/1] w-full overflow-hidden">
+                <ArchiveVideo
+                  key={active.id}
+                  frame={active}
+                  priority
+                  className="
+                    absolute
+                    inset-0
+                    h-full
+                    w-full
+                    object-cover
+                    brightness-[.74]
+                    contrast-[1.08]
+                    saturate-[.76]
+                    transition-opacity
+                    duration-700
+                  "
+                />
+
+                {/* Cinematic color wash */}
+                <div
+                  className="pointer-events-none absolute inset-0"
+                  style={{
+                    background:
+                      'linear-gradient(90deg, rgba(0,0,0,.28), transparent 40%, rgba(0,0,0,.15)), linear-gradient(0deg, rgba(0,0,0,.28), transparent 35%, rgba(0,0,0,.2))',
+                  }}
+                />
+
+                {/* Center vignette */}
+                <div
+                  className="pointer-events-none absolute inset-0"
+                  style={{
+                    background:
+                      'radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,.58) 100%)',
+                  }}
+                />
+
+                {/* Quote */}
+                <div className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center px-8 sm:px-12">
+                  <div className="relative max-w-[88%] text-center">
+                    {/* Opening quote */}
+                    <span className="absolute -left-6 -top-7 font-serif text-[48px] leading-none text-[#a9363d]/75">
+                      “
+                    </span>
+
+                    <p
+                      className="
+                        font-serif
+                        text-[14px]
+                        font-semibold
+                        leading-[1.75]
+                        tracking-[.045em]
+                        text-[#f0ece4]
+                        sm:text-[16px]
+                        lg:text-[17px]
+                        xl:text-[18px]
+                      "
+                      style={{
+                        textShadow:
+                          '0 2px 10px rgba(0,0,0,.95), 0 0 24px rgba(0,0,0,.75)',
+                      }}
+                    >
+                      <Quote frame={active} />
+                    </p>
+
+                    {/* Closing quote */}
+                    <span className="absolute -bottom-8 -right-6 font-serif text-[48px] leading-none text-[#a9363d]/75">
+                      ”
+                    </span>
+                  </div>
+                </div>
+
+                {/* Frame edge */}
+                <div className="pointer-events-none absolute inset-0 border border-white/[.07]" />
+
+                {/* Enter interaction */}
+                <button
+                  type="button"
+                  onClick={() => navigate('/login')}
+                  aria-label={`Enter ${active.title}`}
+                  className="absolute inset-0 z-30 cursor-pointer"
+                >
+                  <span className="sr-only">
+                    Enter {active.title}
+                  </span>
+                </button>
+              </div>
+            </div>
+
+            {/* Explore line */}
+            <div className="mt-6 flex justify-end">
+              <button
+                type="button"
+                onClick={() => navigate('/login')}
+                className="group flex items-center gap-4"
+              >
+                <span className="font-mono text-[8px] uppercase tracking-[.28em] text-[#706a62] transition-colors group-hover:text-[#b7afa3]">
+                  Explore the Vault
+                </span>
+
+                <span className="relative block w-16">
+                  <span className="block h-px w-full bg-[#4e4942] transition-colors group-hover:bg-[#a9363d]" />
+
+                  <span className="absolute right-0 top-1/2 -translate-y-1/2 font-mono text-[12px] text-[#777068] transition-transform group-hover:translate-x-1">
+                    →
+                  </span>
+                </span>
+              </button>
+            </div>
+          </section>
+
+          {/* ==================================================================
+              COLUMN 04 — FILM STRIP
+              ================================================================== */}
+
+          <aside className="hidden h-[545px] lg:block">
+            <div className="relative h-full w-full">
+              {/* Spine */}
+              <div className="absolute left-0 top-0 h-full w-px bg-white/[.09]" />
+
+              <div className="flex h-full flex-col gap-[5px] pl-3">
+                {FRAMES.map((frame, index) => {
+                  const selected = index === activeEntry;
+
+                  return (
+                    <button
+                      key={frame.id}
+                      type="button"
+                      onClick={() => selectEntry(index)}
+                      aria-label={`Select ${frame.title}`}
+                      className="group relative min-h-0 flex-1 overflow-hidden text-left"
+                    >
+                      {/* Video */}
+                      <ArchiveVideo
+                        frame={frame}
+                        priority={selected}
+                        className={[
+                          'absolute inset-0 h-full w-full object-cover',
+                          'transition-all duration-700',
+                          selected
+                            ? 'scale-100 opacity-80 grayscale-[.15]'
+                            : 'scale-[1.08] opacity-[.22] grayscale',
+                          'group-hover:scale-100 group-hover:opacity-[.62]',
+                        ].join(' ')}
+                      />
+
+                      {/* Dark film treatment */}
+                      <span className="absolute inset-0 bg-black/40 transition-colors group-hover:bg-black/20" />
+
+                      {/* Number */}
+                      <span
+                        className={[
+                          'absolute right-2 top-2 z-10',
+                          'font-mono text-[7px]',
+                          selected
+                            ? 'text-[#e7dfd2]'
+                            : 'text-white/35 group-hover:text-white/70',
+                        ].join(' ')}
+                      >
+                        {frame.number}
+                      </span>
+
+                      {/* Film perforations */}
+                      <span className="absolute bottom-1 left-1 top-1 flex flex-col justify-around">
+                        {Array.from({ length: 5 }).map((_, hole) => (
+                          <span
+                            key={hole}
+                            className="h-[3px] w-[3px] rounded-full bg-white/20"
+                          />
+                        ))}
+                      </span>
+
+                      {/* Active marker */}
+                      {selected && (
+                        <span className="absolute bottom-2 left-3 h-[2px] w-5 bg-[#b9363f] shadow-[0_0_10px_rgba(185,54,63,.65)]" />
+                      )}
+
+                      {/* Border */}
+                      <span
+                        className={[
+                          'pointer-events-none absolute inset-0 border',
+                          selected
+                            ? 'border-[#a9363d]/80'
+                            : 'border-white/[.04]',
+                        ].join(' ')}
+                      />
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          </aside>
+        </div>
+
+        {/* ====================================================================
+            DESKTOP LOWER CARD
+            ================================================================== */}
+
+        <div className="mt-8 hidden lg:flex">
+          <button
+            type="button"
+            onClick={() => navigate('/login')}
+            className="
+              group
+              relative
+              ml-0
+              h-[128px]
+              w-[260px]
+              -rotate-[1.8deg]
+              overflow-hidden
+              border
+              border-[#9b8066]/20
+              bg-[#0b0a09]
+              px-6
+              py-5
+              text-left
+              shadow-[0_25px_65px_rgba(0,0,0,.55)]
+              transition-all
+              duration-500
+              hover:rotate-0
+              hover:border-[#a9363d]/35
+            "
+          >
+            <span
+              className="absolute inset-0 opacity-[.1]"
+              style={{
+                backgroundImage:
+                  'linear-gradient(rgba(255,255,255,.15) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.15) 1px, transparent 1px)',
+                backgroundSize: '10px 10px',
+              }}
+            />
+
+            <div className="relative">
+              <div className="flex items-center justify-between">
+                <span className="font-mono text-[7px] uppercase tracking-[.28em] text-[#70685f]">
+                  ESO — VAULT
+                </span>
+
+                <span className="font-mono text-[7px] text-[#4f4943]">
+                  {active.number}
+                </span>
+              </div>
+
+              <div className="mt-4 font-serif text-[22px] italic text-[#c9c0b4]">
+                {active.shortTitle}
+              </div>
+
+              <div className="mt-2 font-mono text-[7px] uppercase tracking-[.16em] text-[#5d5750]">
+                {active.tagline}
+              </div>
+
+              <div className="mt-3 flex items-center gap-2">
+                <span className="font-mono text-[7px] uppercase tracking-[.18em] text-[#a9363d]">
+                  Enter Vault
+                </span>
+
+                <span className="text-[10px] text-[#a9363d] transition-transform group-hover:translate-x-1">
+                  →
+                </span>
+              </div>
+            </div>
+          </button>
+        </div>
+
+        {/* ====================================================================
+            MOBILE / TABLET NAVIGATION
+            ================================================================== */}
+
+        <div className="mt-8 lg:hidden">
+          {/* Mobile notes */}
+          <div className="mb-8">
+            <div className="mb-5 font-mono text-[9px] uppercase tracking-[.28em] text-[#aaa096]">
+              VAULT INDEX
+            </div>
+
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+              {FRAMES.map((frame, index) => {
+                const tone = NOTE_TONES[NOTE_LAYOUT[index].tone];
+
+                return (
+                  <button
+                    key={frame.id}
+                    type="button"
+                    onClick={() => selectEntry(index)}
+                    className="relative h-[72px] overflow-hidden rounded-[3px] border p-3 text-left"
+                    style={{
+                      background: tone.background,
+                      borderColor:
+                        index === activeEntry
+                          ? tone.accent
+                          : tone.border,
+                    }}
+                  >
+                    <span
+                      className="font-mono text-[7px] tracking-[.2em]"
+                      style={{ color: `${tone.text}90` }}
+                    >
+                      {frame.number}
+                    </span>
+
+                    <span
+                      className="mt-2 block truncate font-serif text-[13px] italic"
+                      style={{ color: tone.text }}
+                    >
+                      {frame.shortTitle}
+                    </span>
+
+                    {index === activeEntry && (
+                      <span
+                        className="absolute bottom-0 left-0 h-[2px] w-full"
+                        style={{
+                          background: tone.accent,
+                        }}
+                      />
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Mobile title */}
+          <div className="mb-7">
+            <div className="mb-3 font-mono text-[8px] tracking-[.25em] text-[#625d56]">
+              {active.number}
+            </div>
+
+            <h1 className="font-serif text-[38px] leading-[.9] tracking-[-.055em] text-[#e5ded2]">
+              {active.shortTitle}
+            </h1>
+
+            <div className="mt-4 h-px w-10 bg-[#a9363d]" />
+
+            <p className="mt-4 max-w-[240px] font-mono text-[8px] uppercase leading-[1.8] tracking-[.18em] text-[#746d65]">
+              {active.tagline}
+            </p>
+          </div>
+
+          {/* Mobile cinematic */}
+          <div className="overflow-hidden border border-white/[.1]">
+            <div className="relative aspect-[16/10]">
+              <ArchiveVideo
+                key={active.id}
+                frame={active}
+                priority
+                className="absolute inset-0 h-full w-full object-cover brightness-[.72] contrast-[1.08] saturate-[.76]"
+              />
+
+              <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_25%,rgba(0,0,0,.62)_100%)]" />
+
+              <div className="absolute inset-0 flex items-center justify-center px-7 text-center">
+                <p className="max-w-[90%] font-serif text-[13px] font-semibold leading-[1.7] tracking-wide text-white [text-shadow:0_2px_12px_rgba(0,0,0,.95)]">
+                  <Quote frame={active} />
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Mobile selector */}
+          <div className="mt-5 flex items-center justify-center gap-2">
+            {FRAMES.map((frame, index) => (
+              <button
+                key={frame.id}
+                type="button"
+                onClick={() => selectEntry(index)}
+                aria-label={`Go to ${frame.title}`}
+                className={[
+                  'h-[3px] transition-all duration-300',
+                  index === activeEntry
+                    ? 'w-7 bg-[#a9363d]'
+                    : 'w-2 bg-[#48433d]',
+                ].join(' ')}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+    </main>
+  );
+}
