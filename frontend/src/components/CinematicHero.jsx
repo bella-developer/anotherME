@@ -732,15 +732,15 @@ export default function CinematicHero() {
           CONTENT
           ==================================================================== */}
 
-      <section className="relative z-10 mx-auto flex min-h-[calc(100vh-60px)] w-full max-w-[1520px] items-center px-12 py-12 sm:px-14 lg:px-16 xl:px-20">
+      <section className="relative z-10 mx-auto flex min-h-[calc(100vh-60px)] w-full max-w-[1460px] items-center px-12 py-12 sm:px-14 lg:px-16 xl:px-18">
         <div
           className="
             grid
             w-full
             items-center
-            gap-x-12
-            lg:grid-cols-[400px_minmax(580px,1fr)_120px]
-            xl:grid-cols-[420px_minmax(660px,1fr)_130px]
+            gap-x-8
+            lg:grid-cols-[380px_minmax(560px,1fr)_110px]
+            xl:grid-cols-[400px_minmax(620px,1fr)_115px]
           "
         >
           {/* ==================================================================
