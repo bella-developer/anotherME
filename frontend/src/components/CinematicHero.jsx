@@ -1144,11 +1144,11 @@ export default function CinematicHero() {
 
         <div className="md:hidden">
           {/* Section heading - Sacred Home of... */}
-          <div className="mb-5 text-center">
-            <div className="font-mono text-[9px] font-medium uppercase tracking-[.32em] text-[#b5a99a]">
+          <div className="mb-6 text-center">
+            <div className="font-mono text-[8px] font-medium uppercase tracking-[.32em] text-[#b5a99a]">
               Sacred Home of ...
             </div>
-            <div className="mx-auto mt-3 h-px w-20 bg-[#9b343a]/60" />
+            <div className="mx-auto mt-2.5 h-px w-16 bg-[#9b343a]/70" />
           </div>
 
           {/* Compact sticky notes - 2-3-2 grid pattern (tiny) */}
@@ -1346,10 +1346,10 @@ export default function CinematicHero() {
             </div>
           </div>
 
-          {/* Video section - Cinematic full-width with minimal padding */}
-          <div className="mb-6 px-3">
+          {/* Video section - Cinematic large landscape */}
+          <div className="mb-6 px-2">
             <div className="overflow-hidden border border-white/[.12] shadow-[0_20px_60px_rgba(0,0,0,.65)]">
-              <div className="relative aspect-[16/10]">
+              <div className="relative aspect-[1.85/1]">
                 <ArchiveVideo
                   key={active.id}
                   frame={active}
