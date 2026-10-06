@@ -1346,10 +1346,10 @@ export default function CinematicHero() {
             </div>
           </div>
 
-          {/* Video section - Cinematic large landscape */}
-          <div className="mb-6 px-2">
+          {/* Video section - Ultra-wide cinematic landscape */}
+          <div className="mb-6" style={{ paddingLeft: '3px', paddingRight: '3px' }}>
             <div className="overflow-hidden border border-white/[.12] shadow-[0_20px_60px_rgba(0,0,0,.65)]">
-              <div className="relative aspect-[1.85/1]">
+              <div className="relative aspect-[2.2/1]">
                 <ArchiveVideo
                   key={active.id}
                   frame={active}
@@ -1360,7 +1360,7 @@ export default function CinematicHero() {
                 <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_25%,rgba(0,0,0,.62)_100%)]" />
 
                 <div className="absolute inset-0 flex items-center justify-center px-5 text-center">
-                  <p className="max-w-[90%] font-serif text-[12px] font-semibold leading-[1.65] tracking-wide text-white [text-shadow:0_2px_12px_rgba(0,0,0,.95)]">
+                  <p className="max-w-[90%] font-serif text-[11px] font-semibold leading-[1.6] tracking-wide text-white [text-shadow:0_2px_12px_rgba(0,0,0,.95)]">
                     <Quote frame={active} />
                   </p>
                 </div>
