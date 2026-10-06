@@ -826,7 +826,7 @@ export default function CinematicHero() {
                       </span>
                     </div>
 
-                    <div className="mt-3 font-serif text-[19px] italic leading-tight text-[#c9c0b4]">
+                    <div className="mt-3 font-display text-[19px] uppercase tracking-[.05em] leading-tight text-[#c9c0b4]">
                       {active.shortTitle}
                     </div>
 
@@ -853,7 +853,7 @@ export default function CinematicHero() {
               COLUMN 02 — CINEMATIC VIDEO
               ================================================================== */}
 
-          <section className="relative min-w-0">
+          <section className="relative hidden min-w-0 lg:block">
             <div
               className="
                 relative
@@ -954,26 +954,6 @@ export default function CinematicHero() {
               </div>
             </div>
 
-            {/* Explore line */}
-            <div className="mt-6 flex justify-end">
-              <button
-                type="button"
-                onClick={() => navigate('/login')}
-                className="group flex items-center gap-4"
-              >
-                <span className="font-mono text-[8px] uppercase tracking-[.28em] text-[#706a62] transition-colors group-hover:text-[#b7afa3]">
-                  Explore the Vault
-                </span>
-
-                <span className="relative block w-16">
-                  <span className="block h-px w-full bg-[#4e4942] transition-colors group-hover:bg-[#a9363d]" />
-
-                  <span className="absolute right-0 top-1/2 -translate-y-1/2 font-mono text-[12px] text-[#777068] transition-transform group-hover:translate-x-1">
-                    →
-                  </span>
-                </span>
-              </button>
-            </div>
           </section>
 
           {/* ==================================================================
@@ -1310,7 +1290,7 @@ export default function CinematicHero() {
                   </span>
                 </div>
 
-                <div className="mt-2 font-serif text-[16px] italic leading-tight text-[#c9c0b4]">
+                <div className="mt-2 font-display text-[16px] uppercase tracking-[.04em] leading-tight text-[#c9c0b4]">
                   {active.shortTitle}
                 </div>
 
