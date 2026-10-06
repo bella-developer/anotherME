@@ -206,57 +206,57 @@ const NOTE_LAYOUT = [
 const NOTE_TONES = {
   wine: {
     background:
-      'linear-gradient(145deg, rgba(68,58,52,.90), rgba(38,32,28,.96))',
-    border: 'rgba(120,100,85,.40)',
-    accent: '#a8856d',
+      'linear-gradient(145deg, rgba(45,32,32,.95), rgba(28,20,20,.98))',
+    border: 'rgba(80,45,45,.50)',
+    accent: '#8b2e2e',
     text: '#c9b5a3',
   },
 
   coffee: {
     background:
-      'linear-gradient(145deg, rgba(62,52,42,.92), rgba(35,30,25,.97))',
-    border: 'rgba(130,108,85,.38)',
-    accent: '#b89968',
+      'linear-gradient(145deg, rgba(42,35,28,.96), rgba(26,22,18,.98))',
+    border: 'rgba(85,65,45,.48)',
+    accent: '#7a3e2e',
     text: '#d4bfa8',
   },
 
   violet: {
     background:
-      'linear-gradient(145deg, rgba(58,52,48,.91), rgba(32,28,26,.96))',
-    border: 'rgba(115,100,90,.36)',
-    accent: '#a08a7a',
+      'linear-gradient(145deg, rgba(38,32,42,.95), rgba(24,20,28,.98))',
+    border: 'rgba(75,60,85,.46)',
+    accent: '#6b2e5e',
     text: '#c2b3a5',
   },
 
   olive: {
     background:
-      'linear-gradient(145deg, rgba(60,58,48,.92), rgba(34,32,28,.97))',
-    border: 'rgba(120,115,95,.37)',
-    accent: '#a39a7e',
+      'linear-gradient(145deg, rgba(40,38,30,.96), rgba(26,24,20,.98))',
+    border: 'rgba(80,75,55,.47)',
+    accent: '#5e4e2e',
     text: '#c5bda8',
   },
 
   ochre: {
     background:
-      'linear-gradient(145deg, rgba(65,55,42,.93), rgba(36,30,24,.97))',
-    border: 'rgba(135,115,85,.40)',
-    accent: '#b5956f',
+      'linear-gradient(145deg, rgba(48,38,28,.96), rgba(30,24,18,.98))',
+    border: 'rgba(95,70,45,.49)',
+    accent: '#8b5a2e',
     text: '#d1bbaa',
   },
 
   clay: {
     background:
-      'linear-gradient(145deg, rgba(62,54,48,.91), rgba(35,30,27,.96))',
-    border: 'rgba(125,108,95,.38)',
-    accent: '#a89080',
+      'linear-gradient(145deg, rgba(42,35,32,.95), rgba(28,23,21,.98))',
+    border: 'rgba(85,68,60,.48)',
+    accent: '#7a4e3e',
     text: '#c8b8aa',
   },
 
   burgundy: {
     background:
-      'linear-gradient(145deg, rgba(64,54,50,.92), rgba(36,30,28,.96))',
-    border: 'rgba(118,98,88,.39)',
-    accent: '#a88a7a',
+      'linear-gradient(145deg, rgba(45,30,32,.96), rgba(28,20,22,.98))',
+    border: 'rgba(80,50,55,.49)',
+    accent: '#8b2e3e',
     text: '#c7b5a8',
   },
 };
@@ -511,10 +511,10 @@ function StickyNote({
         'ease-out',
         'focus:outline-none',
         'focus-visible:ring-1',
-        'focus-visible:ring-[#a89070]',
+        'focus-visible:ring-[#8b2e2e]',
         active
-          ? 'z-30 scale-[1.04] brightness-[1.05]'
-          : 'hover:z-20 hover:scale-[1.02]',
+          ? 'z-30 scale-[1.04] brightness-[1.08]'
+          : 'hover:z-20 hover:scale-[1.02] hover:brightness-[1.04]',
       ].join(' ')}
       style={{
         left: `${layout.x}%`,
@@ -522,16 +522,23 @@ function StickyNote({
         transform: `rotate(${layout.rotate}deg)`,
       }}
     >
-      {/* Pin - minimal */}
+      {/* Pin - blood-red, plugged into center */}
       <span
-        className="absolute left-1/2 top-[-6px] z-30 h-[7px] w-[7px] -translate-x-1/2 rounded-full"
+        className="absolute left-1/2 top-[38%] z-30 -translate-x-1/2 -translate-y-1/2"
         style={{
-          background: tone.accent,
-          boxShadow: `0 1px 4px ${tone.accent}40`,
+          filter: 'drop-shadow(0 2px 6px rgba(139,46,46,.75))',
         }}
-      />
+      >
+        <span
+          className="block h-[9px] w-[9px] rounded-full"
+          style={{
+            background: 'linear-gradient(145deg, #a83838, #6b1f1f)',
+            boxShadow: '0 0 8px rgba(168,56,56,.85), inset 0 1px 2px rgba(255,255,255,.15)',
+          }}
+        />
+      </span>
 
-      {/* Note body - clean minimal */}
+      {/* Note body - dark aesthetic */}
       <span
         className="absolute inset-0 overflow-hidden rounded-[3px] border"
         style={{
@@ -540,46 +547,37 @@ function StickyNote({
             ? tone.accent
             : tone.border,
           boxShadow: active
-            ? `0 12px 28px rgba(0,0,0,.50), 0 0 12px ${tone.accent}15`
-            : '0 10px 24px rgba(0,0,0,.38)',
+            ? `0 12px 32px rgba(0,0,0,.70), 0 0 16px ${tone.accent}25`
+            : '0 10px 28px rgba(0,0,0,.60)',
         }}
       >
-        {/* Subtle paper texture - minimal */}
+        {/* Darker paper texture */}
         <span
-          className="absolute inset-0 opacity-[.06]"
+          className="absolute inset-0 opacity-[.08]"
           style={{
             background:
-              'radial-gradient(circle at 25% 25%, rgba(255,255,255,.12), transparent 40%)',
+              'radial-gradient(circle at 30% 30%, rgba(255,255,255,.08), transparent 45%)',
           }}
         />
 
-        {/* Number - smaller, cleaner */}
-        <span className="absolute left-2.5 top-2.5">
-          <span
-            className="font-mono text-[6px] tracking-[.24em] opacity-60"
-            style={{ color: tone.text }}
-          >
-            {frame.number}
-          </span>
-        </span>
-
-        {/* Title - reduced size, cleaner */}
+        {/* Title - centered, no number */}
         <span
-          className="absolute bottom-[15px] left-2.5 right-2.5 block truncate font-serif text-[11px] italic leading-none"
+          className="absolute inset-x-2.5 top-1/2 flex -translate-y-1/2 items-center justify-center text-center font-serif text-[11px] italic leading-tight"
           style={{
-            color: active ? '#d4c8b8' : tone.text,
+            color: active ? '#e5d8c8' : tone.text,
+            textShadow: '0 1px 3px rgba(0,0,0,.50)',
           }}
         >
           {frame.shortTitle}
         </span>
 
-        {/* Active indicator - subtle */}
+        {/* Active indicator - blood-red glow */}
         {active && (
           <span
-            className="absolute bottom-0 left-0 h-[1.5px] w-full"
+            className="absolute bottom-0 left-0 h-[2px] w-full"
             style={{
-              background: tone.accent,
-              boxShadow: `0 0 8px ${tone.accent}60`,
+              background: 'linear-gradient(90deg, transparent, #a83838, transparent)',
+              boxShadow: '0 0 12px rgba(168,56,56,.85)',
             }}
           />
         )}
