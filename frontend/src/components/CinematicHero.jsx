@@ -1144,7 +1144,7 @@ export default function CinematicHero() {
 
         <div className="md:hidden">
           {/* Section heading - Sacred Home of... */}
-          <div className="mb-6 text-center">
+          <div className="mb-6 mt-[3px] text-center">
             <div className="font-mono text-[8px] font-medium uppercase tracking-[.32em] text-[#b5a99a]">
               Sacred Home of ...
             </div>
@@ -1346,23 +1346,25 @@ export default function CinematicHero() {
             </div>
           </div>
 
-          {/* Video section - Ultra-wide cinematic breaking out of container */}
-          <div className="mb-6 -mx-12" style={{ paddingLeft: '3px', paddingRight: '3px' }}>
-            <div className="overflow-hidden border border-white/[.12] shadow-[0_20px_60px_rgba(0,0,0,.65)]">
-              <div className="relative aspect-[2.2/1]">
-                <ArchiveVideo
-                  key={active.id}
-                  frame={active}
-                  priority
-                  className="absolute inset-0 h-full w-full object-cover brightness-[.72] contrast-[1.08] saturate-[.76]"
-                />
+          {/* Video section - Ultra-wide cinematic with equal spacing */}
+          <div className="mb-6">
+            <div className="-mx-12 px-[3px]">
+              <div className="overflow-hidden border border-white/[.12] shadow-[0_20px_60px_rgba(0,0,0,.65)]">
+                <div className="relative aspect-[2.2/1]">
+                  <ArchiveVideo
+                    key={active.id}
+                    frame={active}
+                    priority
+                    className="absolute inset-0 h-full w-full object-cover brightness-[.72] contrast-[1.08] saturate-[.76]"
+                  />
 
-                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_25%,rgba(0,0,0,.62)_100%)]" />
+                  <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_25%,rgba(0,0,0,.62)_100%)]" />
 
-                <div className="absolute inset-0 flex items-center justify-center px-5 text-center">
-                  <p className="max-w-[90%] font-serif text-[11px] font-semibold leading-[1.6] tracking-wide text-white [text-shadow:0_2px_12px_rgba(0,0,0,.95)]">
-                    <Quote frame={active} />
-                  </p>
+                  <div className="absolute inset-0 flex items-center justify-center px-5 text-center">
+                    <p className="max-w-[90%] font-serif text-[11px] font-semibold leading-[1.6] tracking-wide text-white [text-shadow:0_2px_12px_rgba(0,0,0,.95)]">
+                      <Quote frame={active} />
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
