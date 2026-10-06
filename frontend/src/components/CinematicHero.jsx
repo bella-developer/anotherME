@@ -562,7 +562,7 @@ function StickyNote({
 
         {/* Title - centered, no number */}
         <span
-          className="absolute inset-x-2.5 top-1/2 flex -translate-y-1/2 items-center justify-center text-center font-serif text-[11px] italic leading-tight"
+          className="absolute inset-x-2.5 top-1/2 flex -translate-y-1/2 items-center justify-center text-center font-display text-[11px] uppercase tracking-[.08em] leading-tight"
           style={{
             color: active ? '#e5d8c8' : tone.text,
             textShadow: '0 1px 3px rgba(0,0,0,.50)',
@@ -1064,16 +1064,16 @@ export default function CinematicHero() {
             ================================================================== */}
 
         <div className="lg:hidden">
-          {/* Compact sticky notes - 2-3-2 grid pattern */}
-          <div className="mb-8">
-            <div className="mb-4 text-center font-mono text-[7px] uppercase tracking-[.3em] text-[#9a8d7e]">
+          {/* Compact sticky notes - 2-3-2 grid pattern (tiny) */}
+          <div className="mb-6">
+            <div className="mb-3 text-center font-mono text-[7px] uppercase tracking-[.3em] text-[#9a8d7e]">
               Sacred Home of ...
             </div>
 
             {/* Notes grid - artistic 2-3-2 layout */}
-            <div className="mx-auto max-w-[340px] space-y-3">
+            <div className="mx-auto max-w-[300px] space-y-2">
               {/* Row 1: 2 notes */}
-              <div className="flex justify-center gap-3">
+              <div className="flex justify-center gap-2">
                 {[0, 1].map((index) => {
                   const frame = FRAMES[index];
                   const layout = NOTE_LAYOUT[index];
@@ -1085,35 +1085,35 @@ export default function CinematicHero() {
                       key={frame.id}
                       type="button"
                       onClick={() => selectEntry(index)}
-                      className="relative h-[65px] w-[100px] overflow-hidden rounded-[3px] border transition-all duration-300"
+                      className="relative h-[50px] w-[75px] overflow-hidden rounded-[2px] border transition-all duration-300"
                       style={{
                         background: tone.background,
                         borderColor: isActive ? tone.accent : tone.border,
-                        transform: `rotate(${layout.rotate * 0.5}deg)`,
+                        transform: `rotate(${layout.rotate * 0.4}deg)`,
                         boxShadow: isActive
-                          ? `0 8px 20px rgba(0,0,0,.65), 0 0 12px ${tone.accent}30`
-                          : '0 6px 16px rgba(0,0,0,.55)',
+                          ? `0 6px 16px rgba(0,0,0,.65), 0 0 10px ${tone.accent}30`
+                          : '0 4px 12px rgba(0,0,0,.55)',
                       }}
                     >
                       {/* Pin - blood-red */}
                       <span
                         className="absolute left-1/2 top-[35%] z-10 -translate-x-1/2 -translate-y-1/2"
                         style={{
-                          filter: 'drop-shadow(0 1px 4px rgba(139,46,46,.7))',
+                          filter: 'drop-shadow(0 1px 3px rgba(139,46,46,.7))',
                         }}
                       >
                         <span
-                          className="block h-[7px] w-[7px] rounded-full"
+                          className="block h-[5px] w-[5px] rounded-full"
                           style={{
                             background: 'linear-gradient(145deg, #a83838, #6b1f1f)',
-                            boxShadow: '0 0 6px rgba(168,56,56,.8)',
+                            boxShadow: '0 0 5px rgba(168,56,56,.8)',
                           }}
                         />
                       </span>
 
                       {/* Title */}
                       <span
-                        className="absolute inset-x-2 top-1/2 flex -translate-y-1/2 items-center justify-center text-center font-serif text-[10px] italic leading-tight"
+                        className="absolute inset-x-1.5 top-1/2 flex -translate-y-1/2 items-center justify-center text-center font-display text-[8px] uppercase tracking-[.06em] leading-tight"
                         style={{
                           color: isActive ? '#e5d8c8' : tone.text,
                           textShadow: '0 1px 2px rgba(0,0,0,.5)',
@@ -1124,10 +1124,10 @@ export default function CinematicHero() {
 
                       {isActive && (
                         <span
-                          className="absolute bottom-0 left-0 h-[2px] w-full"
+                          className="absolute bottom-0 left-0 h-[1.5px] w-full"
                           style={{
                             background: 'linear-gradient(90deg, transparent, #a83838, transparent)',
-                            boxShadow: '0 0 8px rgba(168,56,56,.8)',
+                            boxShadow: '0 0 6px rgba(168,56,56,.8)',
                           }}
                         />
                       )}
@@ -1137,7 +1137,7 @@ export default function CinematicHero() {
               </div>
 
               {/* Row 2: 3 notes */}
-              <div className="flex justify-center gap-3">
+              <div className="flex justify-center gap-2">
                 {[2, 3, 4].map((index) => {
                   const frame = FRAMES[index];
                   const layout = NOTE_LAYOUT[index];
@@ -1149,33 +1149,33 @@ export default function CinematicHero() {
                       key={frame.id}
                       type="button"
                       onClick={() => selectEntry(index)}
-                      className="relative h-[65px] w-[100px] overflow-hidden rounded-[3px] border transition-all duration-300"
+                      className="relative h-[50px] w-[75px] overflow-hidden rounded-[2px] border transition-all duration-300"
                       style={{
                         background: tone.background,
                         borderColor: isActive ? tone.accent : tone.border,
-                        transform: `rotate(${layout.rotate * 0.5}deg)`,
+                        transform: `rotate(${layout.rotate * 0.4}deg)`,
                         boxShadow: isActive
-                          ? `0 8px 20px rgba(0,0,0,.65), 0 0 12px ${tone.accent}30`
-                          : '0 6px 16px rgba(0,0,0,.55)',
+                          ? `0 6px 16px rgba(0,0,0,.65), 0 0 10px ${tone.accent}30`
+                          : '0 4px 12px rgba(0,0,0,.55)',
                       }}
                     >
                       <span
                         className="absolute left-1/2 top-[35%] z-10 -translate-x-1/2 -translate-y-1/2"
                         style={{
-                          filter: 'drop-shadow(0 1px 4px rgba(139,46,46,.7))',
+                          filter: 'drop-shadow(0 1px 3px rgba(139,46,46,.7))',
                         }}
                       >
                         <span
-                          className="block h-[7px] w-[7px] rounded-full"
+                          className="block h-[5px] w-[5px] rounded-full"
                           style={{
                             background: 'linear-gradient(145deg, #a83838, #6b1f1f)',
-                            boxShadow: '0 0 6px rgba(168,56,56,.8)',
+                            boxShadow: '0 0 5px rgba(168,56,56,.8)',
                           }}
                         />
                       </span>
 
                       <span
-                        className="absolute inset-x-2 top-1/2 flex -translate-y-1/2 items-center justify-center text-center font-serif text-[10px] italic leading-tight"
+                        className="absolute inset-x-1.5 top-1/2 flex -translate-y-1/2 items-center justify-center text-center font-display text-[8px] uppercase tracking-[.06em] leading-tight"
                         style={{
                           color: isActive ? '#e5d8c8' : tone.text,
                           textShadow: '0 1px 2px rgba(0,0,0,.5)',
@@ -1186,10 +1186,10 @@ export default function CinematicHero() {
 
                       {isActive && (
                         <span
-                          className="absolute bottom-0 left-0 h-[2px] w-full"
+                          className="absolute bottom-0 left-0 h-[1.5px] w-full"
                           style={{
                             background: 'linear-gradient(90deg, transparent, #a83838, transparent)',
-                            boxShadow: '0 0 8px rgba(168,56,56,.8)',
+                            boxShadow: '0 0 6px rgba(168,56,56,.8)',
                           }}
                         />
                       )}
@@ -1199,7 +1199,7 @@ export default function CinematicHero() {
               </div>
 
               {/* Row 3: 2 notes */}
-              <div className="flex justify-center gap-3">
+              <div className="flex justify-center gap-2">
                 {[5, 6].map((index) => {
                   const frame = FRAMES[index];
                   const layout = NOTE_LAYOUT[index];
@@ -1211,33 +1211,33 @@ export default function CinematicHero() {
                       key={frame.id}
                       type="button"
                       onClick={() => selectEntry(index)}
-                      className="relative h-[65px] w-[100px] overflow-hidden rounded-[3px] border transition-all duration-300"
+                      className="relative h-[50px] w-[75px] overflow-hidden rounded-[2px] border transition-all duration-300"
                       style={{
                         background: tone.background,
                         borderColor: isActive ? tone.accent : tone.border,
-                        transform: `rotate(${layout.rotate * 0.5}deg)`,
+                        transform: `rotate(${layout.rotate * 0.4}deg)`,
                         boxShadow: isActive
-                          ? `0 8px 20px rgba(0,0,0,.65), 0 0 12px ${tone.accent}30`
-                          : '0 6px 16px rgba(0,0,0,.55)',
+                          ? `0 6px 16px rgba(0,0,0,.65), 0 0 10px ${tone.accent}30`
+                          : '0 4px 12px rgba(0,0,0,.55)',
                       }}
                     >
                       <span
                         className="absolute left-1/2 top-[35%] z-10 -translate-x-1/2 -translate-y-1/2"
                         style={{
-                          filter: 'drop-shadow(0 1px 4px rgba(139,46,46,.7))',
+                          filter: 'drop-shadow(0 1px 3px rgba(139,46,46,.7))',
                         }}
                       >
                         <span
-                          className="block h-[7px] w-[7px] rounded-full"
+                          className="block h-[5px] w-[5px] rounded-full"
                           style={{
                             background: 'linear-gradient(145deg, #a83838, #6b1f1f)',
-                            boxShadow: '0 0 6px rgba(168,56,56,.8)',
+                            boxShadow: '0 0 5px rgba(168,56,56,.8)',
                           }}
                         />
                       </span>
 
                       <span
-                        className="absolute inset-x-2 top-1/2 flex -translate-y-1/2 items-center justify-center text-center font-serif text-[10px] italic leading-tight"
+                        className="absolute inset-x-1.5 top-1/2 flex -translate-y-1/2 items-center justify-center text-center font-display text-[8px] uppercase tracking-[.06em] leading-tight"
                         style={{
                           color: isActive ? '#e5d8c8' : tone.text,
                           textShadow: '0 1px 2px rgba(0,0,0,.5)',
@@ -1248,10 +1248,10 @@ export default function CinematicHero() {
 
                       {isActive && (
                         <span
-                          className="absolute bottom-0 left-0 h-[2px] w-full"
+                          className="absolute bottom-0 left-0 h-[1.5px] w-full"
                           style={{
                             background: 'linear-gradient(90deg, transparent, #a83838, transparent)',
-                            boxShadow: '0 0 8px rgba(168,56,56,.8)',
+                            boxShadow: '0 0 6px rgba(168,56,56,.8)',
                           }}
                         />
                       )}
@@ -1262,9 +1262,8 @@ export default function CinematicHero() {
             </div>
           </div>
 
-          {/* Video + Film Strip - 2 column layout */}
-          <div className="mb-6 grid grid-cols-[1fr_80px] gap-4">
-            {/* Video section */}
+          {/* Video section - Full width landscape with fair padding */}
+          <div className="mb-6 px-6">
             <div className="overflow-hidden border border-white/[.12]">
               <div className="relative aspect-[16/10]">
                 <ArchiveVideo
@@ -1283,52 +1282,10 @@ export default function CinematicHero() {
                 </div>
               </div>
             </div>
-
-            {/* Film strip */}
-            <div className="h-[calc(100vw*0.625*0.72)]">
-              <div className="flex h-full flex-col gap-[3px]">
-                {FRAMES.map((frame, index) => {
-                  const selected = index === activeEntry;
-
-                  return (
-                    <button
-                      key={frame.id}
-                      type="button"
-                      onClick={() => selectEntry(index)}
-                      className="group relative min-h-0 flex-1 overflow-hidden"
-                    >
-                      <ArchiveVideo
-                        frame={frame}
-                        priority={selected}
-                        className={[
-                          'absolute inset-0 h-full w-full object-cover transition-all duration-500',
-                          selected
-                            ? 'scale-100 opacity-70 grayscale-[.15]'
-                            : 'scale-[1.08] opacity-[.22] grayscale',
-                        ].join(' ')}
-                      />
-
-                      <span className="absolute inset-0 bg-black/40" />
-
-                      {selected && (
-                        <span className="absolute bottom-1 left-1 h-[2px] w-4 bg-[#b9363f] shadow-[0_0_8px_rgba(185,54,63,.7)]" />
-                      )}
-
-                      <span
-                        className={[
-                          'pointer-events-none absolute inset-0 border',
-                          selected ? 'border-[#a9363d]/70' : 'border-white/[.04]',
-                        ].join(' ')}
-                      />
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
           </div>
 
           {/* ESO Vault Card - Landscape tiny at edge */}
-          <div className="mx-auto max-w-[340px]">
+          <div className="mx-auto max-w-[340px] px-6">
             <button
               type="button"
               onClick={() => navigate('/login')}
