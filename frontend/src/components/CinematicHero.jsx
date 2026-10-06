@@ -1040,15 +1040,119 @@ export default function CinematicHero() {
         </div>
 
         {/* ====================================================================
-            MOBILE / TABLET - PREMIUM COMPACT LAYOUT
+            TABLET - 2 COLUMN LAYOUT (md to lg)
             ================================================================== */}
 
-        <div className="lg:hidden">
-          {/* Compact sticky notes - 2-3-2 grid pattern (tiny) */}
-          <div className="mb-6">
-            <div className="mb-3 text-center font-mono text-[7px] uppercase tracking-[.3em] text-[#9a8d7e]">
+        <div className="hidden md:block lg:hidden">
+          <div className="grid grid-cols-[300px_1fr] gap-x-8">
+            {/* Left Column - Sticky Notes */}
+            <div>
+              {/* Section heading */}
+              <div className="mb-5 pl-1">
+                <div className="font-mono text-[9px] font-medium uppercase tracking-[.32em] text-[#b5a99a]">
+                  Sacred Home of ...
+                </div>
+                <div className="mt-3 h-px w-20 bg-[#9b343a]/60" />
+              </div>
+
+              {/* Sticky notes wall - compact for tablet */}
+              <div className="relative h-[400px] w-full">
+                {FRAMES.map((frame, index) => (
+                  <StickyNote
+                    key={frame.id}
+                    frame={frame}
+                    index={index}
+                    active={index === activeEntry}
+                    onSelect={selectEntry}
+                  />
+                ))}
+              </div>
+            </div>
+
+            {/* Right Column - Video + Vault Card */}
+            <div>
+              {/* Video section */}
+              <div className="mb-5">
+                <div className="overflow-hidden border border-white/[.12] shadow-[0_20px_60px_rgba(0,0,0,.65)]">
+                  <div className="relative aspect-[16/10]">
+                    <ArchiveVideo
+                      key={active.id}
+                      frame={active}
+                      priority
+                      className="absolute inset-0 h-full w-full object-cover brightness-[.72] contrast-[1.08] saturate-[.76]"
+                    />
+
+                    <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_25%,rgba(0,0,0,.62)_100%)]" />
+
+                    <div className="absolute inset-0 flex items-center justify-center px-6 text-center">
+                      <p className="max-w-[85%] font-serif text-[13px] font-semibold leading-[1.65] tracking-wide text-white [text-shadow:0_2px_12px_rgba(0,0,0,.95)]">
+                        <Quote frame={active} />
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* ESO Vault Card - Tiny landscape */}
+              <div className="max-w-[380px]">
+                <button
+                  type="button"
+                  onClick={() => navigate('/login')}
+                  className="group relative h-[90px] w-full -rotate-[0.8deg] overflow-hidden border border-[#9b8066]/20 bg-[#0b0a09] px-5 py-4 text-left shadow-[0_15px_45px_rgba(0,0,0,.55)] transition-all duration-500 hover:rotate-0 hover:border-[#a9363d]/35"
+                >
+                  <span
+                    className="absolute inset-0 opacity-[.08]"
+                    style={{
+                      backgroundImage:
+                        'linear-gradient(rgba(255,255,255,.15) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.15) 1px, transparent 1px)',
+                      backgroundSize: '8px 8px',
+                    }}
+                  />
+
+                  <div className="relative">
+                    <div className="flex items-center justify-between">
+                      <span className="font-mono text-[7px] uppercase tracking-[.28em] text-[#70685f]">
+                        ESO — VAULT
+                      </span>
+                      <span className="font-mono text-[7px] text-[#4f4943]">
+                        {active.number}
+                      </span>
+                    </div>
+
+                    <div className="mt-2 font-display text-[18px] uppercase tracking-[.04em] leading-tight text-[#c9c0b4]">
+                      {active.shortTitle}
+                    </div>
+
+                    <div className="mt-2 flex items-center gap-2">
+                      <span className="font-mono text-[7px] uppercase tracking-[.18em] text-[#a9363d]">
+                        Enter Vault
+                      </span>
+                      <span className="text-[10px] text-[#a9363d] transition-transform group-hover:translate-x-1">
+                        →
+                      </span>
+                    </div>
+                  </div>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* ====================================================================
+            MOBILE - COMPACT LAYOUT
+            ================================================================== */}
+
+        <div className="md:hidden">
+          {/* Section heading - Sacred Home of... */}
+          <div className="mb-5 text-center">
+            <div className="font-mono text-[9px] font-medium uppercase tracking-[.32em] text-[#b5a99a]">
               Sacred Home of ...
             </div>
+            <div className="mx-auto mt-3 h-px w-20 bg-[#9b343a]/60" />
+          </div>
+
+          {/* Compact sticky notes - 2-3-2 grid pattern (tiny) */}
+          <div className="mb-6">
 
             {/* Notes grid - artistic 2-3-2 layout */}
             <div className="mx-auto max-w-[300px] space-y-2">
@@ -1242,9 +1346,9 @@ export default function CinematicHero() {
             </div>
           </div>
 
-          {/* Video section - Full width landscape with fair padding */}
-          <div className="mb-6 px-6">
-            <div className="overflow-hidden border border-white/[.12]">
+          {/* Video section - Cinematic full-width with minimal padding */}
+          <div className="mb-6 px-3">
+            <div className="overflow-hidden border border-white/[.12] shadow-[0_20px_60px_rgba(0,0,0,.65)]">
               <div className="relative aspect-[16/10]">
                 <ArchiveVideo
                   key={active.id}
