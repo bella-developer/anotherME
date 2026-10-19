@@ -1301,9 +1301,9 @@ export default function CinematicHero() {
             </div>
           </div>
 
-          {/* Video section - Ultra-wide cinematic with equal spacing */}
+          {/* Video section - Equal 8px spacing on both sides */}
           <div className="mb-6">
-            <div className="-mx-12 px-[3px]">
+            <div className="-mx-12 px-2">
               <div className="overflow-hidden border border-white/[.12] shadow-[0_20px_60px_rgba(0,0,0,.65)]">
                 <div className="relative aspect-[2.2/1]">
                   <ArchiveVideo
