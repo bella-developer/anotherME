@@ -23,9 +23,9 @@ const FRAMES = [
     id: 'welcome',
     number: '01',
     video:
-      'https://res.cloudinary.com/dbtm7etag/video/upload/v1786521558/fram1desktop_emb84g.mp4',
+      'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410933/frame1_gnpv3w.gif',
     mobileVideo:
-      'https://res.cloudinary.com/dbtm7etag/video/upload/v1786521557/frame1mobile_efrsvf.mp4',
+      'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410933/frame1_gnpv3w.gif',
     title: 'THE MEMORY PALACE',
     shortTitle: 'MEMORY',
     tagline: 'Rooms of memory.',
@@ -39,9 +39,9 @@ const FRAMES = [
     id: 'dark-confession',
     number: '02',
     video:
-      'https://res.cloudinary.com/dbtm7etag/video/upload/v1786357230/frae2video_qmhpf7.mp4',
+      'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410932/frame2_lia8kg.gif',
     mobileVideo:
-      'https://res.cloudinary.com/dbtm7etag/video/upload/v1786521557/frame2mob_pgzsnn.mp4',
+      'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410932/frame2_lia8kg.gif',
     title: 'CONFESSION',
     shortTitle: 'CONFESSION',
     tagline: 'Things left unsaid.',
@@ -55,9 +55,9 @@ const FRAMES = [
     id: 'dark-understanding',
     number: '03',
     video:
-      'https://res.cloudinary.com/dbtm7etag/video/upload/v1786358832/frame3vid_1_hjyi09.mp4',
+      'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410933/frame3_yrjfiw.gif',
     mobileVideo:
-      'https://res.cloudinary.com/dbtm7etag/video/upload/v1786521554/frame3mob_h9pzrp.mp4',
+      'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410933/frame3_yrjfiw.gif',
     title: 'UNDERSTANDING',
     shortTitle: 'UNDERSTANDING',
     tagline: 'A shared darkness.',
@@ -71,9 +71,9 @@ const FRAMES = [
     id: 'fantasy-daydream',
     number: '04',
     video:
-      'https://res.cloudinary.com/dbtm7etag/video/upload/v1786361397/frame4videoo_hizhue.mp4',
+      'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410935/frame4_lfwlgn.gif',
     mobileVideo:
-      'https://res.cloudinary.com/dbtm7etag/video/upload/v1786521551/frame4mob_ox4nlo.mp4',
+      'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410935/frame4_lfwlgn.gif',
     title: 'IMAGINATION',
     shortTitle: 'IMAGINATION',
     tagline: 'Beyond imagination.',
@@ -87,9 +87,9 @@ const FRAMES = [
     id: 'fantasy-vibes',
     number: '05',
     video:
-      'https://res.cloudinary.com/dbtm7etag/video/upload/v1786361396/frame5v_wtvs09.mp4',
+      'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410934/frame5_lwtld5.gif',
     mobileVideo:
-      'https://res.cloudinary.com/dbtm7etag/video/upload/v1786521549/frame5mob_q1ynbk.mp4',
+      'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410934/frame5_lwtld5.gif',
     title: 'VIBES',
     shortTitle: 'VIBES',
     tagline: 'A space for anything.',
@@ -103,9 +103,9 @@ const FRAMES = [
     id: 'philo-questioning',
     number: '06',
     video:
-      'https://res.cloudinary.com/dbtm7etag/video/upload/v1786361397/frame6v_ijhpzm.mp4',
+      'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410942/frame6_fbhc4b.gif',
     mobileVideo:
-      'https://res.cloudinary.com/dbtm7etag/video/upload/v1786521551/frame6mob_xjoxtz.mp4',
+      'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410942/frame6_fbhc4b.gif',
     title: 'QUESTIONING',
     shortTitle: 'QUESTIONING',
     tagline: 'Questions without answers.',
@@ -119,9 +119,9 @@ const FRAMES = [
     id: 'philo-truth',
     number: '07',
     video:
-      'https://res.cloudinary.com/dbtm7etag/video/upload/v1786361701/frame7vide_yp9dc4.mp4',
+      'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410949/frame7_dnusjj.gif',
     mobileVideo:
-      'https://res.cloudinary.com/dbtm7etag/video/upload/v1786521556/frame7mob_ovz0to.mp4',
+      'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410949/frame7_dnusjj.gif',
     title: 'TRUTH',
     shortTitle: 'TRUTH',
     tagline: 'Where mystery begins.',
@@ -358,13 +358,13 @@ const ArchiveVideo = memo(function ArchiveVideo({
   className = '',
   priority = false,
 }) {
-  const videoRef = useRef(null);
+  const imgRef = useRef(null);
   const [visible, setVisible] = useState(priority);
 
   useEffect(() => {
     if (priority) return;
 
-    const node = videoRef.current;
+    const node = imgRef.current;
 
     if (!node) return;
 
@@ -386,60 +386,15 @@ const ArchiveVideo = memo(function ArchiveVideo({
     return () => observer.disconnect();
   }, [priority]);
 
-  useEffect(() => {
-    if (!visible) return;
-
-    const video = videoRef.current;
-
-    if (!video) return;
-
-    const play = () => {
-      video.play().catch(() => {});
-    };
-
-    if (video.readyState >= 2) {
-      play();
-    } else {
-      video.addEventListener('loadeddata', play, {
-        once: true,
-      });
-    }
-
-    return () => {
-      video.removeEventListener('loadeddata', play);
-    };
-  }, [visible, frame.id]);
-
   return (
-    <video
-      ref={videoRef}
+    <img
+      ref={imgRef}
+      src={visible ? frame.video : ''}
+      alt={frame.title}
       className={className}
-      muted
-      loop
-      playsInline
-      autoPlay
-      preload={priority ? 'auto' : 'none'}
+      loading={priority ? 'eager' : 'lazy'}
       aria-hidden="true"
-    >
-      {visible && (
-        <>
-          <source
-            src={frame.mobileVideo}
-            type="video/mp4"
-            media="(max-width: 767px)"
-          />
-
-          <source
-            src={frame.video}
-            type="video/mp4"
-            media="(min-width: 768px)"
-          />
-
-          {/* Safe fallback */}
-          <source src={frame.video} type="video/mp4" />
-        </>
-      )}
-    </video>
+    />
   );
 });
 
