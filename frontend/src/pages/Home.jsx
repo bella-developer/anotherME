@@ -14,8 +14,8 @@ const rooms = [
     tagline: 'Release. Witness. Discharge.',
     description: 'Where raw emotion finds its voice.',
     path: '/rooms/dark',
-    video:
-      'https://res.cloudinary.com/dbtm7etag/video/upload/v1790862087/d-room_p0skvw.mp4',
+    gif:
+      'https://res.cloudinary.com/dbtm7etag/image/upload/v1792502428/converted_twbyo4.gif',
     glowColor: '#397982',
     glowRGB: '57, 121, 130',
     number: '01',
@@ -26,8 +26,8 @@ const rooms = [
     tagline: 'Create. Imagine. Inspire.',
     description: 'Where imagination roams free.',
     path: '/rooms/fantasy',
-    video:
-      'https://res.cloudinary.com/dbtm7etag/video/upload/v1790862085/f-room_njbnpx.mp4',
+    gif:
+      'https://res.cloudinary.com/dbtm7etag/image/upload/v1792502433/converted_1_ik5xbs.gif',
     glowColor: '#947044',
     glowRGB: '148, 112, 68',
     number: '02',
@@ -38,8 +38,8 @@ const rooms = [
     tagline: 'Understand. Reflect. Inquire.',
     description: 'The question that stays.',
     path: '/rooms/philo',
-    video:
-      'https://res.cloudinary.com/dbtm7etag/video/upload/v1790862085/p-room_rj0tfq.mp4',
+    gif:
+      'https://res.cloudinary.com/dbtm7etag/image/upload/v1792502429/converted_2_neetec.gif',
     glowColor: '#76517F',
     glowRGB: '118, 81, 127',
     number: '03',
@@ -155,17 +155,15 @@ function Home() {
                   <span className="eso-room__inner-frame" aria-hidden="true" />
 
                   <span className="eso-room__scene">
-                    <video
+                    <img
+                      src={room.gif}
+                      alt={room.name}
                       className="eso-room__video"
-                      autoPlay
-                      loop
-                      muted
-                      playsInline
-                      preload="metadata"
+                      loading="lazy"
+                      decoding="async"
+                      fetchpriority={idx === 0 ? 'high' : 'auto'}
                       aria-hidden="true"
-                    >
-                      <source src={room.video} type="video/mp4" />
-                    </video>
+                    />
                     <span className="eso-room__scene-shade" aria-hidden="true" />
                     <span className="eso-room__scanline" aria-hidden="true" />
                     <span className="eso-room__corner eso-room__corner--tl" aria-hidden="true" />
