@@ -32,7 +32,7 @@ function Home() {
       tagline: 'Release. Witness. Discharge.',
       description: 'Where raw emotion finds its voice.',
       path: '/rooms/dark',
-      video: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1785500775/darkfineedit_fxticc.mp4',
+      video: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1790862087/d-room_p0skvw.mp4',
       glowColor: '#2EE6FF', // Electric Cyan
       glowColorRGB: '46, 230, 255',
     },
@@ -42,7 +42,7 @@ function Home() {
       tagline: 'Create. Imagine. Inspire.',
       description: 'Where imagination roams free.',
       path: '/rooms/fantasy',
-      video: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1785499720/fansyedit_ozhjwj.mp4',
+      video: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1790862085/f-room_njbnpx.mp4',
       glowColor: '#FF9D1C', // Amber/Gold
       glowColorRGB: '255, 157, 28',
     },
@@ -52,7 +52,7 @@ function Home() {
       tagline: 'Understand. Reflect. Inquire.',
       description: 'The question that stays.',
       path: '/rooms/philo',
-      video: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1785499721/philoedit_fwdmqu.mp4',
+      video: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1790862085/p-room_rj0tfq.mp4',
       glowColor: '#B56DFF', // Violet
       glowColorRGB: '181, 109, 255',
     },
@@ -128,9 +128,9 @@ function Home() {
                 className="flex flex-col items-center w-full"
               >
                 {/* Elliptical (egg-shaped) portal - wider, more artistic */}
-                <div className="relative w-full mx-auto" style={{ maxWidth: '480px' }}>
-                  {/* Wider elliptical aspect ratio - 75% height (much wider horizontally) */}
-                  <div style={{ position: 'relative', width: '100%', paddingBottom: '75%' }}>
+                <div className="relative w-full mx-auto" style={{ maxWidth: '520px' }}>
+                  {/* Wider elliptical aspect ratio - 110% height (larger ellipse) */}
+                  <div style={{ position: 'relative', width: '100%', paddingBottom: '110%' }}>
                     <button
                       onClick={() => navigate(room.path)}
                       onMouseEnter={() => setHovered(room.id)}

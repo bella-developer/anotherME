@@ -996,275 +996,216 @@ export default function CinematicHero() {
 
         {/* ====================================================================
             TABLET - 2 COLUMN LAYOUT (md to lg)
+            Same structure as laptop but more compact
             ================================================================== */}
 
         <div className="hidden md:block lg:hidden">
-          <div className="grid grid-cols-[320px_1fr] gap-x-6">
-            {/* Left Column - Sticky Notes Grid */}
-            <div>
-              {/* Section heading */}
-              <div className="mb-4 pl-1">
-                <div className="font-mono text-[8px] font-medium uppercase tracking-[.32em] text-[#b5a99a]">
-                  Sacred Home of ...
-                </div>
-                <div className="mt-2.5 h-px w-16 bg-[#9b343a]/70" />
-              </div>
+          <div className="space-y-5">
+            {/* 2 Column Grid: Sticky Notes + Video */}
+            <div className="grid grid-cols-[300px_1fr] gap-x-8 items-start">
+              {/* Left Column - Sticky Notes (Centered) */}
+              <aside className="flex flex-col items-center">
+                <div className="w-full max-w-[300px]">
+                  {/* Section heading */}
+                  <div className="mb-5 mt-6 pl-1">
+                    <div className="font-mono text-[8px] font-medium uppercase tracking-[.32em] text-[#b5a99a]">
+                      Sacred Home of ...
+                    </div>
 
-              {/* Sticky notes - simple grid layout */}
-              <div className="space-y-3">
-                {/* Row 1: 2 notes */}
-                <div className="grid grid-cols-2 gap-3">
-                  {[0, 1].map((index) => {
-                    const frame = FRAMES[index];
-                    const layout = NOTE_LAYOUT[index];
-                    const tone = NOTE_TONES[layout.tone];
-                    const isActive = index === activeEntry;
+                    <div className="mt-3 h-px w-20 bg-[#9b343a]/60" />
+                  </div>
 
-                    return (
-                      <button
+                  {/* BOUNDED WALL - Same as desktop but scaled down */}
+                  <div className="relative h-[300px] w-full overflow-visible">
+                    {/* Decorative wall shadow */}
+                    <div
+                      className="pointer-events-none absolute inset-[4%_3%]"
+                      style={{
+                        background:
+                          'radial-gradient(ellipse, rgba(109,74,48,.08), transparent 68%)',
+                        filter: 'blur(18px)',
+                      }}
+                    />
+
+                    {FRAMES.map((frame, index) => (
+                      <StickyNote
                         key={frame.id}
-                        type="button"
-                        onClick={() => selectEntry(index)}
-                        className="relative h-[70px] overflow-hidden rounded-[2px] border transition-all duration-300"
-                        style={{
-                          background: tone.background,
-                          borderColor: isActive ? tone.accent : tone.border,
-                          transform: `rotate(${layout.rotate * 0.3}deg)`,
-                          boxShadow: isActive
-                            ? `0 8px 20px rgba(0,0,0,.65), 0 0 12px ${tone.accent}30`
-                            : '0 6px 16px rgba(0,0,0,.55)',
-                        }}
-                      >
-                        <span
-                          className="absolute left-1/2 top-[35%] z-10 -translate-x-1/2 -translate-y-1/2"
-                          style={{
-                            filter: 'drop-shadow(0 1px 4px rgba(139,46,46,.7))',
-                          }}
-                        >
-                          <span
-                            className="block h-[6px] w-[6px] rounded-full"
-                            style={{
-                              background: 'linear-gradient(145deg, #a83838, #6b1f1f)',
-                              boxShadow: '0 0 6px rgba(168,56,56,.8)',
-                            }}
-                          />
-                        </span>
-
-                        <span
-                          className="absolute inset-x-2 top-1/2 flex -translate-y-1/2 items-center justify-center text-center font-display text-[9px] uppercase tracking-[.06em] leading-tight"
-                          style={{
-                            color: isActive ? '#e5d8c8' : tone.text,
-                            textShadow: '0 1px 2px rgba(0,0,0,.5)',
-                          }}
-                        >
-                          {frame.shortTitle}
-                        </span>
-
-                        {isActive && (
-                          <span
-                            className="absolute bottom-0 left-0 h-[2px] w-full"
-                            style={{
-                              background: 'linear-gradient(90deg, transparent, #a83838, transparent)',
-                              boxShadow: '0 0 8px rgba(168,56,56,.8)',
-                            }}
-                          />
-                        )}
-                      </button>
-                    );
-                  })}
+                        frame={frame}
+                        index={index}
+                        active={index === activeEntry}
+                        onSelect={selectEntry}
+                      />
+                    ))}
+                  </div>
                 </div>
+              </aside>
 
-                {/* Row 2: 3 notes */}
-                <div className="grid grid-cols-3 gap-2">
-                  {[2, 3, 4].map((index) => {
-                    const frame = FRAMES[index];
-                    const layout = NOTE_LAYOUT[index];
-                    const tone = NOTE_TONES[layout.tone];
-                    const isActive = index === activeEntry;
-
-                    return (
-                      <button
-                        key={frame.id}
-                        type="button"
-                        onClick={() => selectEntry(index)}
-                        className="relative h-[70px] overflow-hidden rounded-[2px] border transition-all duration-300"
-                        style={{
-                          background: tone.background,
-                          borderColor: isActive ? tone.accent : tone.border,
-                          transform: `rotate(${layout.rotate * 0.3}deg)`,
-                          boxShadow: isActive
-                            ? `0 8px 20px rgba(0,0,0,.65), 0 0 12px ${tone.accent}30`
-                            : '0 6px 16px rgba(0,0,0,.55)',
-                        }}
-                      >
-                        <span
-                          className="absolute left-1/2 top-[35%] z-10 -translate-x-1/2 -translate-y-1/2"
-                          style={{
-                            filter: 'drop-shadow(0 1px 4px rgba(139,46,46,.7))',
-                          }}
-                        >
-                          <span
-                            className="block h-[6px] w-[6px] rounded-full"
-                            style={{
-                              background: 'linear-gradient(145deg, #a83838, #6b1f1f)',
-                              boxShadow: '0 0 6px rgba(168,56,56,.8)',
-                            }}
-                          />
-                        </span>
-
-                        <span
-                          className="absolute inset-x-1.5 top-1/2 flex -translate-y-1/2 items-center justify-center text-center font-display text-[8px] uppercase tracking-[.05em] leading-tight"
-                          style={{
-                            color: isActive ? '#e5d8c8' : tone.text,
-                            textShadow: '0 1px 2px rgba(0,0,0,.5)',
-                          }}
-                        >
-                          {frame.shortTitle}
-                        </span>
-
-                        {isActive && (
-                          <span
-                            className="absolute bottom-0 left-0 h-[2px] w-full"
-                            style={{
-                              background: 'linear-gradient(90deg, transparent, #a83838, transparent)',
-                              boxShadow: '0 0 8px rgba(168,56,56,.8)',
-                            }}
-                          />
-                        )}
-                      </button>
-                    );
-                  })}
-                </div>
-
-                {/* Row 3: 2 notes */}
-                <div className="grid grid-cols-2 gap-3">
-                  {[5, 6].map((index) => {
-                    const frame = FRAMES[index];
-                    const layout = NOTE_LAYOUT[index];
-                    const tone = NOTE_TONES[layout.tone];
-                    const isActive = index === activeEntry;
-
-                    return (
-                      <button
-                        key={frame.id}
-                        type="button"
-                        onClick={() => selectEntry(index)}
-                        className="relative h-[70px] overflow-hidden rounded-[2px] border transition-all duration-300"
-                        style={{
-                          background: tone.background,
-                          borderColor: isActive ? tone.accent : tone.border,
-                          transform: `rotate(${layout.rotate * 0.3}deg)`,
-                          boxShadow: isActive
-                            ? `0 8px 20px rgba(0,0,0,.65), 0 0 12px ${tone.accent}30`
-                            : '0 6px 16px rgba(0,0,0,.55)',
-                        }}
-                      >
-                        <span
-                          className="absolute left-1/2 top-[35%] z-10 -translate-x-1/2 -translate-y-1/2"
-                          style={{
-                            filter: 'drop-shadow(0 1px 4px rgba(139,46,46,.7))',
-                          }}
-                        >
-                          <span
-                            className="block h-[6px] w-[6px] rounded-full"
-                            style={{
-                              background: 'linear-gradient(145deg, #a83838, #6b1f1f)',
-                              boxShadow: '0 0 6px rgba(168,56,56,.8)',
-                            }}
-                          />
-                        </span>
-
-                        <span
-                          className="absolute inset-x-2 top-1/2 flex -translate-y-1/2 items-center justify-center text-center font-display text-[9px] uppercase tracking-[.06em] leading-tight"
-                          style={{
-                            color: isActive ? '#e5d8c8' : tone.text,
-                            textShadow: '0 1px 2px rgba(0,0,0,.5)',
-                          }}
-                        >
-                          {frame.shortTitle}
-                        </span>
-
-                        {isActive && (
-                          <span
-                            className="absolute bottom-0 left-0 h-[2px] w-full"
-                            style={{
-                              background: 'linear-gradient(90deg, transparent, #a83838, transparent)',
-                              boxShadow: '0 0 8px rgba(168,56,56,.8)',
-                            }}
-                          />
-                        )}
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-            </div>
-
-            {/* Right Column - Video + Vault Card */}
-            <div>
-              {/* Video section */}
-              <div className="mb-5">
-                <div className="overflow-hidden border border-white/[.12] shadow-[0_20px_60px_rgba(0,0,0,.65)]">
-                  <div className="relative aspect-[16/10]">
+              {/* Right Column - Cinematic Video */}
+              <section className="relative min-w-0">
+                <div
+                  className="
+                    relative
+                    overflow-hidden
+                    border
+                    border-white/[.12]
+                    bg-[#090909]
+                    shadow-[0_30px_85px_rgba(0,0,0,.55)]
+                  "
+                >
+                  {/* Video frame */}
+                  <div className="relative aspect-[1.62/1] w-full overflow-hidden">
                     <ArchiveVideo
                       key={active.id}
                       frame={active}
                       priority
-                      className="absolute inset-0 h-full w-full object-cover brightness-[.72] contrast-[1.08] saturate-[.76]"
+                      className="
+                        absolute
+                        inset-0
+                        h-full
+                        w-full
+                        object-cover
+                        brightness-[.74]
+                        contrast-[1.08]
+                        saturate-[.76]
+                        transition-opacity
+                        duration-700
+                      "
                     />
 
-                    <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_25%,rgba(0,0,0,.62)_100%)]" />
+                    {/* Cinematic color wash */}
+                    <div
+                      className="pointer-events-none absolute inset-0"
+                      style={{
+                        background:
+                          'linear-gradient(90deg, rgba(0,0,0,.28), transparent 40%, rgba(0,0,0,.15)), linear-gradient(0deg, rgba(0,0,0,.28), transparent 35%, rgba(0,0,0,.2))',
+                      }}
+                    />
 
-                    <div className="absolute inset-0 flex items-center justify-center px-6 text-center">
-                      <p className="max-w-[85%] font-serif text-[13px] font-semibold leading-[1.65] tracking-wide text-white [text-shadow:0_2px_12px_rgba(0,0,0,.95)]">
-                        <Quote frame={active} />
-                      </p>
+                    {/* Center vignette */}
+                    <div
+                      className="pointer-events-none absolute inset-0"
+                      style={{
+                        background:
+                          'radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,.58) 100%)',
+                      }}
+                    />
+
+                    {/* Quote */}
+                    <div className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center px-8">
+                      <div className="relative max-w-[88%] text-center">
+                        {/* Opening quote */}
+                        <span className="absolute -left-6 -top-6 font-serif text-[42px] leading-none text-[#a9363d]/75">
+                          "
+                        </span>
+
+                        <p
+                          className="
+                            font-serif
+                            text-[15px]
+                            font-semibold
+                            leading-[1.7]
+                            tracking-[.045em]
+                            text-[#f0ece4]
+                          "
+                          style={{
+                            textShadow:
+                              '0 2px 10px rgba(0,0,0,.95), 0 0 24px rgba(0,0,0,.75)',
+                          }}
+                        >
+                          <Quote frame={active} />
+                        </p>
+
+                        {/* Closing quote */}
+                        <span className="absolute -bottom-7 -right-6 font-serif text-[42px] leading-none text-[#a9363d]/75">
+                          "
+                        </span>
+                      </div>
                     </div>
+
+                    {/* Frame edge */}
+                    <div className="pointer-events-none absolute inset-0 border border-white/[.07]" />
+
+                    {/* Enter interaction */}
+                    <button
+                      type="button"
+                      onClick={() => navigate('/login')}
+                      aria-label={`Enter ${active.title}`}
+                      className="absolute inset-0 z-30 cursor-pointer"
+                    >
+                      <span className="sr-only">
+                        Enter {active.title}
+                      </span>
+                    </button>
                   </div>
                 </div>
-              </div>
+              </section>
+            </div>
 
-              {/* ESO Vault Card - Tiny landscape */}
-              <div className="max-w-[420px]">
-                <button
-                  type="button"
-                  onClick={() => navigate('/login')}
-                  className="group relative h-[90px] w-full -rotate-[0.8deg] overflow-hidden border border-[#9b8066]/20 bg-[#0b0a09] px-5 py-4 text-left shadow-[0_15px_45px_rgba(0,0,0,.55)] transition-all duration-500 hover:rotate-0 hover:border-[#a9363d]/35"
-                >
-                  <span
-                    className="absolute inset-0 opacity-[.08]"
-                    style={{
-                      backgroundImage:
-                        'linear-gradient(rgba(255,255,255,.15) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.15) 1px, transparent 1px)',
-                      backgroundSize: '8px 8px',
-                    }}
-                  />
+            {/* ESO VAULT CARD - Outside grid, centered below */}
+            <div className="flex justify-center">
+              <button
+                type="button"
+                onClick={() => navigate('/login')}
+                className="
+                  group
+                  relative
+                  h-[90px]
+                  w-full
+                  max-w-[520px]
+                  -rotate-[0.8deg]
+                  overflow-hidden
+                  border
+                  border-[#9b8066]/20
+                  bg-[#0b0a09]
+                  px-6
+                  py-4
+                  text-left
+                  shadow-[0_20px_55px_rgba(0,0,0,.50)]
+                  transition-all
+                  duration-500
+                  hover:rotate-0
+                  hover:border-[#a9363d]/35
+                "
+              >
+                <span
+                  className="absolute inset-0 opacity-[.1]"
+                  style={{
+                    backgroundImage:
+                      'linear-gradient(rgba(255,255,255,.15) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.15) 1px, transparent 1px)',
+                    backgroundSize: '10px 10px',
+                  }}
+                />
 
-                  <div className="relative">
-                    <div className="flex items-center justify-between">
-                      <span className="font-mono text-[7px] uppercase tracking-[.28em] text-[#70685f]">
-                        ESO — VAULT
-                      </span>
-                      <span className="font-mono text-[7px] text-[#4f4943]">
-                        {active.number}
-                      </span>
-                    </div>
+                <div className="relative">
+                  <div className="flex items-center justify-between">
+                    <span className="font-mono text-[7px] uppercase tracking-[.28em] text-[#70685f]">
+                      ESO — VAULT
+                    </span>
 
-                    <div className="mt-2 font-display text-[18px] uppercase tracking-[.04em] leading-tight text-[#c9c0b4]">
-                      {active.shortTitle}
-                    </div>
-
-                    <div className="mt-2 flex items-center gap-2">
-                      <span className="font-mono text-[7px] uppercase tracking-[.18em] text-[#a9363d]">
-                        Enter Vault
-                      </span>
-                      <span className="text-[10px] text-[#a9363d] transition-transform group-hover:translate-x-1">
-                        →
-                      </span>
-                    </div>
+                    <span className="font-mono text-[7px] text-[#4f4943]">
+                      {active.number}
+                    </span>
                   </div>
-                </button>
-              </div>
+
+                  <div className="mt-3 font-display text-[18px] uppercase tracking-[.05em] leading-tight text-[#c9c0b4]">
+                    {active.shortTitle}
+                  </div>
+
+                  <div className="mt-2 font-mono text-[7px] uppercase tracking-[.16em] text-[#5d5750]">
+                    {active.tagline}
+                  </div>
+
+                  <div className="mt-2 flex items-center gap-2">
+                    <span className="font-mono text-[7px] uppercase tracking-[.18em] text-[#a9363d]">
+                      Enter Vault
+                    </span>
+
+                    <span className="text-[10px] text-[#a9363d] transition-transform group-hover:translate-x-1">
+                      →
+                    </span>
+                  </div>
+                </div>
+              </button>
             </div>
           </div>
         </div>
