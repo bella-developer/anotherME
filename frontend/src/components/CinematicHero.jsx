@@ -999,28 +999,204 @@ export default function CinematicHero() {
             ================================================================== */}
 
         <div className="hidden md:block lg:hidden">
-          <div className="grid grid-cols-[300px_1fr] gap-x-8">
-            {/* Left Column - Sticky Notes */}
+          <div className="grid grid-cols-[320px_1fr] gap-x-6">
+            {/* Left Column - Sticky Notes Grid */}
             <div>
               {/* Section heading */}
-              <div className="mb-5 pl-1">
-                <div className="font-mono text-[9px] font-medium uppercase tracking-[.32em] text-[#b5a99a]">
+              <div className="mb-4 pl-1">
+                <div className="font-mono text-[8px] font-medium uppercase tracking-[.32em] text-[#b5a99a]">
                   Sacred Home of ...
                 </div>
-                <div className="mt-3 h-px w-20 bg-[#9b343a]/60" />
+                <div className="mt-2.5 h-px w-16 bg-[#9b343a]/70" />
               </div>
 
-              {/* Sticky notes wall - compact for tablet */}
-              <div className="relative h-[400px] w-full">
-                {FRAMES.map((frame, index) => (
-                  <StickyNote
-                    key={frame.id}
-                    frame={frame}
-                    index={index}
-                    active={index === activeEntry}
-                    onSelect={selectEntry}
-                  />
-                ))}
+              {/* Sticky notes - simple grid layout */}
+              <div className="space-y-3">
+                {/* Row 1: 2 notes */}
+                <div className="grid grid-cols-2 gap-3">
+                  {[0, 1].map((index) => {
+                    const frame = FRAMES[index];
+                    const layout = NOTE_LAYOUT[index];
+                    const tone = NOTE_TONES[layout.tone];
+                    const isActive = index === activeEntry;
+
+                    return (
+                      <button
+                        key={frame.id}
+                        type="button"
+                        onClick={() => selectEntry(index)}
+                        className="relative h-[70px] overflow-hidden rounded-[2px] border transition-all duration-300"
+                        style={{
+                          background: tone.background,
+                          borderColor: isActive ? tone.accent : tone.border,
+                          transform: `rotate(${layout.rotate * 0.3}deg)`,
+                          boxShadow: isActive
+                            ? `0 8px 20px rgba(0,0,0,.65), 0 0 12px ${tone.accent}30`
+                            : '0 6px 16px rgba(0,0,0,.55)',
+                        }}
+                      >
+                        <span
+                          className="absolute left-1/2 top-[35%] z-10 -translate-x-1/2 -translate-y-1/2"
+                          style={{
+                            filter: 'drop-shadow(0 1px 4px rgba(139,46,46,.7))',
+                          }}
+                        >
+                          <span
+                            className="block h-[6px] w-[6px] rounded-full"
+                            style={{
+                              background: 'linear-gradient(145deg, #a83838, #6b1f1f)',
+                              boxShadow: '0 0 6px rgba(168,56,56,.8)',
+                            }}
+                          />
+                        </span>
+
+                        <span
+                          className="absolute inset-x-2 top-1/2 flex -translate-y-1/2 items-center justify-center text-center font-display text-[9px] uppercase tracking-[.06em] leading-tight"
+                          style={{
+                            color: isActive ? '#e5d8c8' : tone.text,
+                            textShadow: '0 1px 2px rgba(0,0,0,.5)',
+                          }}
+                        >
+                          {frame.shortTitle}
+                        </span>
+
+                        {isActive && (
+                          <span
+                            className="absolute bottom-0 left-0 h-[2px] w-full"
+                            style={{
+                              background: 'linear-gradient(90deg, transparent, #a83838, transparent)',
+                              boxShadow: '0 0 8px rgba(168,56,56,.8)',
+                            }}
+                          />
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {/* Row 2: 3 notes */}
+                <div className="grid grid-cols-3 gap-2">
+                  {[2, 3, 4].map((index) => {
+                    const frame = FRAMES[index];
+                    const layout = NOTE_LAYOUT[index];
+                    const tone = NOTE_TONES[layout.tone];
+                    const isActive = index === activeEntry;
+
+                    return (
+                      <button
+                        key={frame.id}
+                        type="button"
+                        onClick={() => selectEntry(index)}
+                        className="relative h-[70px] overflow-hidden rounded-[2px] border transition-all duration-300"
+                        style={{
+                          background: tone.background,
+                          borderColor: isActive ? tone.accent : tone.border,
+                          transform: `rotate(${layout.rotate * 0.3}deg)`,
+                          boxShadow: isActive
+                            ? `0 8px 20px rgba(0,0,0,.65), 0 0 12px ${tone.accent}30`
+                            : '0 6px 16px rgba(0,0,0,.55)',
+                        }}
+                      >
+                        <span
+                          className="absolute left-1/2 top-[35%] z-10 -translate-x-1/2 -translate-y-1/2"
+                          style={{
+                            filter: 'drop-shadow(0 1px 4px rgba(139,46,46,.7))',
+                          }}
+                        >
+                          <span
+                            className="block h-[6px] w-[6px] rounded-full"
+                            style={{
+                              background: 'linear-gradient(145deg, #a83838, #6b1f1f)',
+                              boxShadow: '0 0 6px rgba(168,56,56,.8)',
+                            }}
+                          />
+                        </span>
+
+                        <span
+                          className="absolute inset-x-1.5 top-1/2 flex -translate-y-1/2 items-center justify-center text-center font-display text-[8px] uppercase tracking-[.05em] leading-tight"
+                          style={{
+                            color: isActive ? '#e5d8c8' : tone.text,
+                            textShadow: '0 1px 2px rgba(0,0,0,.5)',
+                          }}
+                        >
+                          {frame.shortTitle}
+                        </span>
+
+                        {isActive && (
+                          <span
+                            className="absolute bottom-0 left-0 h-[2px] w-full"
+                            style={{
+                              background: 'linear-gradient(90deg, transparent, #a83838, transparent)',
+                              boxShadow: '0 0 8px rgba(168,56,56,.8)',
+                            }}
+                          />
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {/* Row 3: 2 notes */}
+                <div className="grid grid-cols-2 gap-3">
+                  {[5, 6].map((index) => {
+                    const frame = FRAMES[index];
+                    const layout = NOTE_LAYOUT[index];
+                    const tone = NOTE_TONES[layout.tone];
+                    const isActive = index === activeEntry;
+
+                    return (
+                      <button
+                        key={frame.id}
+                        type="button"
+                        onClick={() => selectEntry(index)}
+                        className="relative h-[70px] overflow-hidden rounded-[2px] border transition-all duration-300"
+                        style={{
+                          background: tone.background,
+                          borderColor: isActive ? tone.accent : tone.border,
+                          transform: `rotate(${layout.rotate * 0.3}deg)`,
+                          boxShadow: isActive
+                            ? `0 8px 20px rgba(0,0,0,.65), 0 0 12px ${tone.accent}30`
+                            : '0 6px 16px rgba(0,0,0,.55)',
+                        }}
+                      >
+                        <span
+                          className="absolute left-1/2 top-[35%] z-10 -translate-x-1/2 -translate-y-1/2"
+                          style={{
+                            filter: 'drop-shadow(0 1px 4px rgba(139,46,46,.7))',
+                          }}
+                        >
+                          <span
+                            className="block h-[6px] w-[6px] rounded-full"
+                            style={{
+                              background: 'linear-gradient(145deg, #a83838, #6b1f1f)',
+                              boxShadow: '0 0 6px rgba(168,56,56,.8)',
+                            }}
+                          />
+                        </span>
+
+                        <span
+                          className="absolute inset-x-2 top-1/2 flex -translate-y-1/2 items-center justify-center text-center font-display text-[9px] uppercase tracking-[.06em] leading-tight"
+                          style={{
+                            color: isActive ? '#e5d8c8' : tone.text,
+                            textShadow: '0 1px 2px rgba(0,0,0,.5)',
+                          }}
+                        >
+                          {frame.shortTitle}
+                        </span>
+
+                        {isActive && (
+                          <span
+                            className="absolute bottom-0 left-0 h-[2px] w-full"
+                            style={{
+                              background: 'linear-gradient(90deg, transparent, #a83838, transparent)',
+                              boxShadow: '0 0 8px rgba(168,56,56,.8)',
+                            }}
+                          />
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
             </div>
 
@@ -1049,7 +1225,7 @@ export default function CinematicHero() {
               </div>
 
               {/* ESO Vault Card - Tiny landscape */}
-              <div className="max-w-[380px]">
+              <div className="max-w-[420px]">
                 <button
                   type="button"
                   onClick={() => navigate('/login')}
