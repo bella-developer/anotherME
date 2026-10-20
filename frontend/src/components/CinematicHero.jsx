@@ -182,7 +182,7 @@ export default function CinematicHero() {
       <div className="absolute inset-0 bg-[#050505]"/>
       <div className="absolute inset-0" style={{background:'radial-gradient(circle at 56% 48%,rgba(93,58,35,.08),transparent 32%),radial-gradient(circle at 12% 65%,rgba(101,75,49,.035),transparent 27%)'}}/>
       <div className="absolute inset-0" style={{background:'radial-gradient(circle at center,transparent 35%,rgba(0,0,0,.65) 100%)'}}/>
-      <div className="absolute inset-0 opacity-[.035]" style={{backgroundImage:"url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.75'/%3E%3C/svg%3E\")'}}/>
+      <div className="absolute inset-0 opacity-[.035]" style={{backgroundImage:"url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.75'/%3E%3C/svg%3E\")"}}/>
       <div className="absolute inset-0 opacity-[.025]" style={{backgroundImage:'repeating-linear-gradient(to bottom,transparent 0,transparent 4px,rgba(255,255,255,.25) 5px)'}}/>
     </div>
 
