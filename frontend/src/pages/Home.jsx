@@ -129,8 +129,8 @@ function Home() {
               >
                 {/* Elliptical (egg-shaped) portal - wider, more artistic */}
                 <div className="relative w-full mx-auto" style={{ maxWidth: '520px' }}>
-                  {/* Wider elliptical aspect ratio - 110% height (larger ellipse) */}
-                  <div style={{ position: 'relative', width: '100%', paddingBottom: '110%' }}>
+                  {/* Wider elliptical aspect ratio - 95% height (larger ellipse) */}
+                  <div style={{ position: 'relative', width: '100%', paddingBottom: '95%' }}>
                     <button
                       onClick={() => navigate(room.path)}
                       onMouseEnter={() => setHovered(room.id)}
@@ -151,9 +151,9 @@ function Home() {
                         style={{
                           position: 'absolute',
                           top: '0',
-                          left: '4px',
-                          right: '4px',
-                          bottom: '4px',
+                          left: '0',
+                          right: '0',
+                          bottom: '0',
                           border: `1px solid rgba(${room.glowColorRGB}, 0.3)`,
                           boxShadow: `
                               inset 0 0 30px rgba(${room.glowColorRGB}, 0.1),
