@@ -1,23 +1,62 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import Layout from '../components/Layout';
 import PageTransition from '../components/PageTransition';
 import { usePageTitle } from '../hooks/usePageTitle';
 
+const rooms = [
+  {
+    id: 'dark',
+    name: 'DARK ROOM',
+    tagline: 'Release. Witness. Discharge.',
+    description: 'Where raw emotion finds its voice.',
+    path: '/rooms/dark',
+    video:
+      'https://res.cloudinary.com/dbtm7etag/video/upload/v1790862087/d-room_p0skvw.mp4',
+    glowColor: '#2EE6FF',
+    glowRGB: '46, 230, 255',
+    number: '01',
+  },
+  {
+    id: 'fantasy',
+    name: 'FANTASY ROOM',
+    tagline: 'Create. Imagine. Inspire.',
+    description: 'Where imagination roams free.',
+    path: '/rooms/fantasy',
+    video:
+      'https://res.cloudinary.com/dbtm7etag/video/upload/v1790862085/f-room_njbnpx.mp4',
+    glowColor: '#FF9D1C',
+    glowRGB: '255, 157, 28',
+    number: '02',
+  },
+  {
+    id: 'philo',
+    name: 'PHILO ROOM',
+    tagline: 'Understand. Reflect. Inquire.',
+    description: 'The question that stays.',
+    path: '/rooms/philo',
+    video:
+      'https://res.cloudinary.com/dbtm7etag/video/upload/v1790862085/p-room_rj0tfq.mp4',
+    glowColor: '#D05BFF',
+    glowRGB: '208, 91, 255',
+    number: '03',
+  },
+];
+
 function Home() {
   usePageTitle('Home');
+
   const navigate = useNavigate();
   const [hovered, setHovered] = useState(null);
-  const [time, setTime] = useState(new Date());
+  const [time, setTime] = useState(() => new Date());
+  const reduceMotion = useReducedMotion();
 
-  // Update time for time-based greeting
   useEffect(() => {
-    const timer = setInterval(() => setTime(new Date()), 60000);
-    return () => clearInterval(timer);
+    const timer = window.setInterval(() => setTime(new Date()), 60000);
+    return () => window.clearInterval(timer);
   }, []);
 
-  // Get greeting based on time
   const getGreeting = () => {
     const hour = time.getHours();
     if (hour < 12) return 'Good morning';
@@ -25,456 +64,612 @@ function Home() {
     return 'Good evening';
   };
 
-  const rooms = [
-    {
-      id: 'dark',
-      name: 'DARK ROOM',
-      tagline: 'Release. Witness. Discharge.',
-      description: 'Where raw emotion finds its voice.',
-      path: '/rooms/dark',
-      video: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1790862087/d-room_p0skvw.mp4',
-      glowColor: '#2EE6FF', // Electric Cyan
-      glowColorRGB: '46, 230, 255',
-    },
-    {
-      id: 'fantasy',
-      name: 'FANTASY ROOM',
-      tagline: 'Create. Imagine. Inspire.',
-      description: 'Where imagination roams free.',
-      path: '/rooms/fantasy',
-      video: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1790862085/f-room_njbnpx.mp4',
-      glowColor: '#FF9D1C', // Amber/Gold
-      glowColorRGB: '255, 157, 28',
-    },
-    {
-      id: 'philo',
-      name: 'PHILO ROOM',
-      tagline: 'Understand. Reflect. Inquire.',
-      description: 'The question that stays.',
-      path: '/rooms/philo',
-      video: 'https://res.cloudinary.com/dbtm7etag/video/upload/v1790862085/p-room_rj0tfq.mp4',
-      glowColor: '#B56DFF', // Violet
-      glowColorRGB: '181, 109, 255',
-    },
-  ];
-
   return (
     <PageTransition>
       <Layout leftSidebar={null} rightSidebar={null}>
-        <div className="min-h-[calc(100vh-4rem)] flex flex-col items-center justify-center px-3 sm:px-4 md:px-6 py-0 md:py-2 lg:py-4 relative z-10 scale-[0.85] md:scale-[0.8] lg:scale-[0.75] origin-top">
+        <main className="eso-home">
+          <div className="eso-starfield" aria-hidden="true">
+            <span className="eso-star eso-star--one" />
+            <span className="eso-star eso-star--two" />
+            <span className="eso-star eso-star--three" />
+            <span className="eso-star eso-star--four" />
+            <span className="eso-star eso-star--five" />
+            <span className="eso-star eso-star--six" />
+            <span className="eso-star eso-star--seven" />
+            <span className="eso-star eso-star--eight" />
+            <span className="eso-star eso-star--nine" />
+            <span className="eso-star eso-star--ten" />
+          </div>
 
-          {/* Opening quote - small with background highlight */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 2, delay: 0.5 }}
-            className="text-center mb-2 md:mb-4"
-          >
-            <span 
-              className="text-[10px] md:text-xs tracking-[0.35em] uppercase inline-block px-3 py-1.5 rounded"
-              style={{ 
-                fontFamily: 'var(--font-body)',
-                fontWeight: '500',
-                color: '#ffffff',
-                background: 'rgba(59, 130, 246, 0.3)',
-                backdropFilter: 'blur(8px)',
-              }}
+          <section className="eso-hero" aria-labelledby="eso-page-title">
+            <motion.div
+              className="eso-greeting"
+              initial={reduceMotion ? false : { opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.15 }}
             >
               {getGreeting()}
-            </span>
-          </motion.div>
+            </motion.div>
 
-          {/* Header - refined, breathing */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.8, delay: 0.8 }}
-            className="text-center mb-4 md:mb-8 lg:mb-10"
-          >
-            <p 
-              className="text-[11px] md:text-sm tracking-[0.35em] uppercase mb-3 md:mb-5"
-              style={{ 
-                fontFamily: 'var(--font-body)',
-                fontWeight: '500',
-                color: 'rgba(255, 255, 255, 0.75)',
-              }}
+            <motion.p
+              className="eso-eyebrow"
+              initial={reduceMotion ? false : { opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.9, delay: 0.3 }}
             >
-              Choose Your Room
-            </p>
+              Choose your room
+            </motion.p>
+
             <motion.h1
-              animate={{ 
-                scale: [1, 1.008, 1],
-              }}
-              transition={{ 
-                duration: 8, 
-                repeat: Infinity, 
-                ease: 'easeInOut' 
-              }}
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extralight tracking-[0.12em] px-4"
-              style={{ fontWeight: 200, color: '#ffffff' }}
+              id="eso-page-title"
+              className="eso-title"
+              initial={reduceMotion ? false : { opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, delay: 0.4 }}
             >
               Your Safe Space
             </motion.h1>
-          </motion.div>
 
-          {/* Room Cards - Circular portals with stable border and rotating energy arcs */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 sm:gap-10 md:gap-12 lg:gap-16 w-full max-w-7xl px-4 sm:px-6 md:px-8">
-            {rooms.map((room, idx) => (
-              <motion.div
+            <motion.div
+              className="eso-title-rule"
+              initial={{ scaleX: 0, opacity: 0 }}
+              animate={{ scaleX: 1, opacity: 1 }}
+              transition={{ duration: 1.1, delay: 0.7 }}
+              aria-hidden="true"
+            />
+          </section>
+
+          <section className="eso-rooms" aria-label="Choose a room">
+            {rooms.map((room, index) => (
+              <motion.article
                 key={room.id}
-                initial={{ opacity: 0, y: 40 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1.2, delay: 1.2 + idx * 0.2 }}
-                className="flex flex-col items-center w-full"
-              >
-                {/* Elliptical (egg-shaped) portal - wider, more artistic */}
-                <div className="relative w-full mx-auto" style={{ maxWidth: '520px' }}>
-                  {/* Wider elliptical aspect ratio - 95% height (larger ellipse) */}
-                  <div style={{ position: 'relative', width: '100%', paddingBottom: '95%' }}>
-                    <button
-                      onClick={() => navigate(room.path)}
-                      onMouseEnter={() => setHovered(room.id)}
-                      onMouseLeave={() => setHovered(null)}
-                      className="group focus:outline-none"
-                      style={{
-                        position: 'absolute',
-                        top: 0,
-                        left: 0,
-                        right: 0,
-                        bottom: 0,
-                        cursor: 'pointer',
-                      }}
-                    >
-                      {/* Stable circular border - BOLD IN LIGHT MODE */}
-                      <div
-                        className="rounded-full"
-                        style={{
-                          position: 'absolute',
-                          top: '0',
-                          left: '0',
-                          right: '0',
-                          bottom: '0',
-                          border: `1px solid rgba(${room.glowColorRGB}, 0.3)`,
-                          boxShadow: `
-                              inset 0 0 30px rgba(${room.glowColorRGB}, 0.1),
-                              0 0 20px rgba(${room.glowColorRGB}, 0.2)
-                            `,
-                          transition: 'all 0.8s ease',
-                        }}
-                      />
-
-                      {/* Rotating energy arcs - MORE VISIBLE IN LIGHT MODE */}
-                      <div
-                        className="rounded-full"
-                        style={{
-                          position: 'absolute',
-                          top: '0',
-                          left: '4px',
-                          right: '4px',
-                          bottom: '4px',
-                          animation: 'rotate360 20s linear infinite',
-                          opacity: 1,
-                        }}
-                      >
-                        {/* Primary energy arc */}
-                        <svg
-                          className="absolute inset-0 w-full h-full"
-                          viewBox="0 0 400 400"
-                          style={{
-                            filter: `drop-shadow(0 0 15px ${room.glowColor})`,
-                          }}
-                        >
-                          <defs>
-                            <linearGradient id={`arc-gradient-${room.id}`} x1="0%" y1="0%" x2="100%" y2="0%">
-                              <stop offset="0%" stopColor={room.glowColor} stopOpacity="0" />
-                              <stop offset="50%" stopColor={room.glowColor} stopOpacity="1" />
-                              <stop offset="100%" stopColor={room.glowColor} stopOpacity="0" />
-                            </linearGradient>
-                            
-                            {/* Glow filter */}
-                            <filter id={`arc-glow-${room.id}`}>
-                              <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
-                              <feMerge>
-                                <feMergeNode in="coloredBlur"/>
-                                <feMergeNode in="coloredBlur"/>
-                                <feMergeNode in="SourceGraphic"/>
-                              </feMerge>
-                            </filter>
-                          </defs>
-                          
-                          {/* Main rotating arc (90 degrees) */}
-                          <path
-                            d="M 200,20 A 180,180 0 0,1 380,200"
-                            fill="none"
-                            stroke={`url(#arc-gradient-${room.id})`}
-                            strokeWidth="4"
-                            strokeLinecap="round"
-                            filter={`url(#arc-glow-${room.id})`}
-                            style={{ mixBlendMode: 'screen' }}
-                          />
-                          
-                          {/* Bright spot at arc peak */}
-                          <circle
-                            cx="290"
-                            cy="110"
-                            r="6"
-                            fill={room.glowColor}
-                            filter={`url(#arc-glow-${room.id})`}
-                            style={{ mixBlendMode: 'screen' }}
-                          >
-                            <animate
-                              attributeName="r"
-                              values="6; 8; 6"
-                              dur="2s"
-                              repeatCount="indefinite"
-                            />
-                          </circle>
-                        </svg>
-                      </div>
-
-                      {/* Counter-rotating secondary arc - MORE VISIBLE */}
-                      <div
-                        className="rounded-full"
-                        style={{
-                          position: 'absolute',
-                          top: '0',
-                          left: '4px',
-                          right: '4px',
-                          bottom: '4px',
-                          animation: 'rotate360reverse 15s linear infinite',
-                          opacity: 0.6,
-                        }}
-                      >
-                        <svg
-                          className="absolute inset-0 w-full h-full"
-                          viewBox="0 0 400 400"
-                          style={{
-                            filter: `drop-shadow(0 0 10px ${room.glowColor})`,
-                            opacity: 0.6,
-                          }}
-                        >
-                          {/* Secondary arc (smaller, 60 degrees) */}
-                          <path
-                            d="M 380,200 A 180,180 0 0,1 290,290"
-                            fill="none"
-                            stroke={room.glowColor}
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            style={{ mixBlendMode: 'screen' }}
-                          />
-                        </svg>
-                      </div>
-
-                      {/* Orbital particles - MORE VISIBLE */}
-                      <div
-                        className="rounded-full pointer-events-none"
-                        style={{
-                          position: 'absolute',
-                          top: '5px',
-                          left: '9px',
-                          right: '9px',
-                          bottom: '9px',
-                          animation: 'rotate360 25s linear infinite',
-                          opacity: 0.8,
-                        }}
-                      >
-                        {[0, 90, 180, 270].map((angle, i) => {
-                          const rad = (angle * Math.PI) / 180;
-                          const x = 50 + 50 * Math.cos(rad);
-                          const y = 50 + 50 * Math.sin(rad);
-                          return (
-                            <div
-                              key={i}
-                              className="absolute"
-                              style={{
-                                width: '4px',
-                                height: '4px',
-                                borderRadius: '50%',
-                                background: room.glowColor,
-                                boxShadow: `0 0 10px ${room.glowColor}`,
-                                top: `${y}%`,
-                                left: `${x}%`,
-                                transform: 'translate(-50%, -50%)',
-                                opacity: 0.8,
-                                mixBlendMode: 'screen',
-                              }}
-                            />
-                          );
-                        })}
-                      </div>
-
-                      {/* CSS Animations */}
-                      <style jsx>{`
-                        @keyframes rotate360 {
-                          from { transform: rotate(0deg); }
-                          to { transform: rotate(360deg); }
-                        }
-                        @keyframes rotate360reverse {
-                          from { transform: rotate(360deg); }
-                          to { transform: rotate(0deg); }
-                        }
-                      `}</style>
-
-                      {/* Atmospheric glow beneath - STRONGER IN LIGHT MODE */}
-                      <div
-                        className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 rounded-full"
-                        style={{
-                          width: '70%',
-                          height: '30px',
-                          background: `radial-gradient(ellipse, rgba(${room.glowColorRGB}, ${hovered === room.id ? 0.4 : 0.25}) 0%, transparent 70%)`,
-                          filter: 'blur(20px)',
-                          transition: 'all 0.8s ease',
-                        }}
-                      />
-
-                      {/* Inner circle container with video background */}
-                      <div
-                        className="rounded-full overflow-hidden"
-                        style={{
-                          position: 'absolute',
-                          top: '10px',
-                          left: '14px',
-                          right: '14px',
-                          bottom: '14px',
-                          backgroundColor: '#000000',
-                          border: `1px solid rgba(${room.glowColorRGB}, ${hovered === room.id ? 0.4 : 0.2})`,
-                          boxShadow: `
-                            inset 0 0 40px rgba(${room.glowColorRGB}, 0.15),
-                            0 0 30px rgba(${room.glowColorRGB}, ${hovered === room.id ? 0.3 : 0.15})
-                          `,
-                          transform: hovered === room.id ? 'scale(1.03)' : 'scale(1)',
-                          transition: 'all 0.8s cubic-bezier(0.22, 1, 0.36, 1)',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                        }}
-                      >
-                        {/* Video background - cover with scale 1.2 to fill circle completely */}
-                        <video
-                          autoPlay
-                          loop
-                          muted
-                          playsInline
-                          style={{
-                            width: '100%',
-                            height: '100%',
-                            // Use cover to fill circle completely
-                            objectFit: 'cover',
-                            objectPosition: 'center center',
-                            display: 'block',
-                            // Scale up to 1.2x to ensure full coverage
-                            transform: 'scale(1.2)',
-                            filter: hovered === room.id 
-                              ? 'brightness(1.1) contrast(1.1)' 
-                              : 'brightness(0.95) contrast(1.05)',
-                            transition: 'filter 0.8s ease',
-                          }}
-                        >
-                          <source src={room.video} type="video/mp4" />
-                        </video>
-
-                        {/* Subtle dark overlay */}
-                        <div
-                          style={{
-                            position: 'absolute',
-                            top: 0,
-                            left: 0,
-                            right: 0,
-                            bottom: 0,
-                            background: `radial-gradient(circle, transparent 30%, rgba(0,0,0,${hovered === room.id ? 0.2 : 0.4}) 100%)`,
-                            transition: 'background 0.8s ease',
-                            pointerEvents: 'none',
-                          }}
-                        />
-                      </div>
-                    </button>
-                  </div>
-                </div>
-
-                  {/* Room info below circle - Strong whites */}
-                  <div className="mt-12 md:mt-14 text-center">
-                    <h2
-                      className="text-xl md:text-2xl font-light tracking-[0.25em] mb-3 uppercase"
-                      style={{
-                        color: hovered === room.id ? room.glowColor : '#ffffff',
-                        textShadow: (hovered === room.id)
-                          ? `0 0 20px rgba(${room.glowColorRGB}, 0.6)` 
-                          : 'none',
-                        transition: 'all 0.6s ease',
-                      }}
-                    >
-                      {room.name}
-                    </h2>
-                    
-                    <p
-                      className="text-[10px] md:text-[11px] tracking-[0.15em] mb-2"
-                      style={{
-                        color: '#e6edf3',
-                      }}
-                    >
-                      {room.tagline}
-                    </p>
-
-                    {/* Enter button */}
-                    <motion.div
-                      animate={{
-                        opacity: hovered === room.id ? 1 : 0.5,
-                      }}
-                      className="mt-4 flex items-center justify-center gap-2"
-                    >
-                      <span
-                        className="text-[9px] tracking-[0.3em] uppercase"
-                        style={{
-                          color: hovered === room.id 
-                            ? room.glowColor 
-                            : '#8b949e',
-                          transition: 'color 0.6s ease',
-                        }}
-                      >
-                        ENTER
-                      </span>
-                      <motion.span
-                        animate={{
-                          x: hovered === room.id ? 4 : 0,
-                        }}
-                        style={{
-                          color: hovered === room.id 
-                            ? room.glowColor 
-                            : '#8b949e',
-                        }}
-                      >
-                        →
-                      </motion.span>
-                    </motion.div>
-                  </div>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Footer text with divider lines */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 2, delay: 2.5 }}
-            className="mt-16 md:mt-20 lg:mt-24 text-center"
-          >
-            <div className="flex items-center justify-center gap-4">
-              <div className="h-px flex-1 max-w-[100px]" style={{ background: 'rgba(255, 255, 255, 0.1)' }} />
-              <p
-                className="text-[10px] md:text-xs tracking-[0.25em] uppercase"
-                style={{ 
-                  color: 'rgba(255, 255, 255, 0.6)',
-                  fontFamily: 'var(--font-body)',
-                  fontWeight: '500',
+                className={`eso-room eso-room--${room.id} ${
+                  hovered === room.id ? 'is-hovered' : ''
+                }`}
+                style={{
+                  '--room-glow': room.glowColor,
+                  '--room-rgb': room.glowRGB,
+                  '--room-index': index,
                 }}
+                initial={reduceMotion ? false : { opacity: 0, y: 28 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  duration: 0.85,
+                  delay: reduceMotion ? 0 : 0.55 + index * 0.16,
+                }}
+                onMouseEnter={() => setHovered(room.id)}
+                onMouseLeave={() => setHovered(null)}
               >
-                This is your space. Take your time.
-              </p>
-              <div className="h-px flex-1 max-w-[100px]" style={{ background: 'rgba(255, 255, 255, 0.1)' }} />
-            </div>
-          </motion.div>
+                <button
+                  type="button"
+                  className="eso-room__portal"
+                  onClick={() => navigate(room.path)}
+                  onFocus={() => setHovered(room.id)}
+                  onBlur={() => setHovered(null)}
+                  aria-label={`Enter ${room.name.toLowerCase()}`}
+                >
+                  <span className="eso-room__outer-frame" aria-hidden="true" />
+                  <span className="eso-room__frame-shadow" aria-hidden="true" />
+                  <span className="eso-room__inner-frame" aria-hidden="true" />
 
-        </div>
+                  <span className="eso-room__scene">
+                    <video
+                      className="eso-room__video"
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      preload="metadata"
+                      aria-hidden="true"
+                    >
+                      <source src={room.video} type="video/mp4" />
+                    </video>
+                    <span className="eso-room__scene-shade" aria-hidden="true" />
+                    <span className="eso-room__scanline" aria-hidden="true" />
+                    <span className="eso-room__corner eso-room__corner--tl" aria-hidden="true" />
+                    <span className="eso-room__corner eso-room__corner--tr" aria-hidden="true" />
+                    <span className="eso-room__corner eso-room__corner--bl" aria-hidden="true" />
+                    <span className="eso-room__corner eso-room__corner--br" aria-hidden="true" />
+                    <span className="eso-room__index">{room.number}</span>
+                    <span className="eso-room__open-mark" aria-hidden="true">↗</span>
+                  </span>
+                </button>
+
+                <div className="eso-room__copy">
+                  <div className="eso-room__name-row">
+                    <span className="eso-room__dash" aria-hidden="true" />
+                    <h2>{room.name}</h2>
+                    <span className="eso-room__dash" aria-hidden="true" />
+                  </div>
+                  <p className="eso-room__tagline">{room.tagline}</p>
+                  <p className="eso-room__description">{room.description}</p>
+                  <button
+                    type="button"
+                    className="eso-enter"
+                    onClick={() => navigate(room.path)}
+                    onMouseEnter={() => setHovered(room.id)}
+                    onMouseLeave={() => setHovered(null)}
+                  >
+                    <span>Enter room</span>
+                    <span className="eso-enter__arrow" aria-hidden="true">⟶</span>
+                  </button>
+                </div>
+              </motion.article>
+            ))}
+          </section>
+
+          <motion.footer
+            className="eso-footer"
+            initial={reduceMotion ? false : { opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1, delay: 1.2 }}
+          >
+            <span className="eso-footer__line" aria-hidden="true" />
+            <p>This is your space. Take your time.</p>
+            <span className="eso-footer__line" aria-hidden="true" />
+          </motion.footer>
+        </main>
+
+        <style>{`
+          .eso-home {
+            --eso-bg: #030405;
+            --eso-white: #f4f0eb;
+            position: relative;
+            isolation: isolate;
+            min-height: calc(100vh - 4rem);
+            overflow: hidden;
+            padding: clamp(2.25rem, 5vh, 4.5rem) clamp(1rem, 4vw, 4rem) 2.5rem;
+            color: var(--eso-white);
+            background:
+              radial-gradient(ellipse at 50% 38%, rgba(25, 29, 39, .28), transparent 52%),
+              radial-gradient(ellipse at 50% 100%, rgba(22, 16, 12, .28), transparent 45%),
+              var(--eso-bg);
+          }
+
+          .eso-starfield {
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+            opacity: .72;
+            background-image:
+              radial-gradient(1px 1px at 7% 14%, rgba(255,255,255,.85) 50%, transparent 100%),
+              radial-gradient(1px 1px at 17% 67%, rgba(255,255,255,.7) 50%, transparent 100%),
+              radial-gradient(1px 1px at 31% 9%, rgba(255,255,255,.8) 50%, transparent 100%),
+              radial-gradient(1px 1px at 46% 24%, rgba(255,255,255,.65) 50%, transparent 100%),
+              radial-gradient(1px 1px at 57% 11%, rgba(255,255,255,.8) 50%, transparent 100%),
+              radial-gradient(1px 1px at 74% 18%, rgba(255,255,255,.7) 50%, transparent 100%),
+              radial-gradient(1px 1px at 89% 41%, rgba(255,255,255,.8) 50%, transparent 100%),
+              radial-gradient(1px 1px at 94% 79%, rgba(255,255,255,.65) 50%, transparent 100%),
+              radial-gradient(1px 1px at 12% 91%, rgba(255,255,255,.6) 50%, transparent 100%),
+              radial-gradient(1px 1px at 65% 83%, rgba(255,255,255,.75) 50%, transparent 100%);
+          }
+
+          .eso-star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            border-radius: 50%;
+            background: #e7e8ff;
+            box-shadow: 0 0 8px 2px rgba(180, 198, 255, .25);
+          }
+          .eso-star--one { left: 4%; top: 30%; }
+          .eso-star--two { left: 29%; top: 16%; }
+          .eso-star--three { left: 40%; top: 49%; }
+          .eso-star--four { left: 63%; top: 13%; }
+          .eso-star--five { left: 82%; top: 7%; }
+          .eso-star--six { left: 94%; top: 31%; }
+          .eso-star--seven { left: 18%; top: 80%; }
+          .eso-star--eight { left: 52%; top: 88%; }
+          .eso-star--nine { left: 75%; top: 73%; }
+          .eso-star--ten { left: 97%; top: 91%; }
+
+          .eso-hero {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            margin: 0 auto clamp(2.25rem, 5.8vh, 4.6rem);
+          }
+
+          .eso-greeting {
+            margin-bottom: 1.15rem;
+            padding: .55rem 1.15rem .5rem;
+            border: 1px solid rgba(126, 143, 255, .34);
+            border-radius: 999px;
+            color: #f7f6ff;
+            background: linear-gradient(110deg, rgba(47, 61, 145, .78), rgba(27, 28, 68, .7));
+            box-shadow: 0 0 24px rgba(71, 83, 208, .2), inset 0 1px rgba(255,255,255,.1);
+            font: 600 .62rem/1.1 var(--font-body, ui-sans-serif, sans-serif);
+            letter-spacing: .32em;
+            text-transform: uppercase;
+          }
+
+          .eso-eyebrow {
+            margin: 0 0 .7rem;
+            color: rgba(245, 242, 239, .77);
+            font: 500 clamp(.63rem, .9vw, .8rem)/1.4 var(--font-body, ui-sans-serif, sans-serif);
+            letter-spacing: .48em;
+            text-transform: uppercase;
+          }
+
+          .eso-title {
+            margin: 0;
+            padding-left: .12em;
+            color: #fbf8f4;
+            font-family: var(--font-display, Georgia, 'Times New Roman', serif);
+            font-size: clamp(2.8rem, 6vw, 5.8rem);
+            font-weight: 300;
+            line-height: 1.08;
+            letter-spacing: .13em;
+            text-shadow: 0 2px 34px rgba(255,255,255,.08);
+          }
+
+          .eso-title-rule {
+            width: clamp(3rem, 8vw, 6.5rem);
+            height: 1px;
+            margin-top: 1.3rem;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,.6), transparent);
+            transform-origin: center;
+          }
+
+          .eso-rooms {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: clamp(1.15rem, 3.2vw, 3.3rem);
+            width: min(100%, 1500px);
+            margin: 0 auto;
+            align-items: start;
+          }
+
+          .eso-room {
+            min-width: 0;
+            --room-glow: #fff;
+            --room-rgb: 255,255,255;
+          }
+
+          .eso-room__portal {
+            position: relative;
+            display: block;
+            width: 100%;
+            aspect-ratio: 1.52 / 1;
+            padding: 0;
+            border: 0;
+            border-radius: 0;
+            background: transparent;
+            cursor: pointer;
+            isolation: isolate;
+            -webkit-tap-highlight-color: transparent;
+            outline: none;
+          }
+
+          .eso-room__outer-frame {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            border: 1px solid rgba(var(--room-rgb), .76);
+            background: linear-gradient(135deg, rgba(var(--room-rgb), .11), transparent 20%, transparent 80%, rgba(var(--room-rgb), .1));
+            box-shadow:
+              0 0 0 1px rgba(var(--room-rgb), .13),
+              0 0 24px rgba(var(--room-rgb), .14),
+              inset 0 0 18px rgba(var(--room-rgb), .12);
+            transition: box-shadow .55s ease, border-color .55s ease, inset .55s ease;
+          }
+
+          .eso-room__frame-shadow {
+            position: absolute;
+            inset: 8px;
+            z-index: 1;
+            border: 1px solid rgba(var(--room-rgb), .35);
+            box-shadow: inset 0 0 22px rgba(0,0,0,.8);
+            pointer-events: none;
+            transition: inset .55s cubic-bezier(.2,.75,.2,1), border-color .55s ease;
+          }
+
+          .eso-room__inner-frame {
+            position: absolute;
+            inset: 14px;
+            z-index: 2;
+            border: 1px solid rgba(var(--room-rgb), .35);
+            pointer-events: none;
+            transition: inset .55s cubic-bezier(.2,.75,.2,1), border-color .55s ease;
+          }
+
+          .eso-room__scene {
+            position: absolute;
+            inset: 15px;
+            z-index: 1;
+            display: block;
+            overflow: hidden;
+            background: #080909;
+            box-shadow: inset 0 0 50px #000;
+          }
+
+          .eso-room__video {
+            position: absolute;
+            inset: 0;
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            filter: brightness(.72) contrast(1.13) saturate(.9);
+            transform: scale(1.025);
+            transition: filter .8s ease, transform 1.1s cubic-bezier(.2,.7,.2,1);
+          }
+
+          .eso-room__scene-shade {
+            position: absolute;
+            inset: 0;
+            background:
+              linear-gradient(180deg, rgba(0,0,0,.18), transparent 35%, rgba(0,0,0,.42)),
+              linear-gradient(90deg, rgba(0,0,0,.22), transparent 18%, transparent 82%, rgba(0,0,0,.22));
+            box-shadow: inset 0 0 35px rgba(0,0,0,.7);
+            pointer-events: none;
+          }
+
+          .eso-room__scanline {
+            position: absolute;
+            inset: 0;
+            opacity: .18;
+            background: repeating-linear-gradient(180deg, transparent 0, transparent 3px, rgba(255,255,255,.045) 4px);
+            mix-blend-mode: screen;
+            pointer-events: none;
+          }
+
+          .eso-room__corner {
+            position: absolute;
+            width: 17px;
+            height: 17px;
+            opacity: .8;
+            border-color: var(--room-glow);
+            border-style: solid;
+            filter: drop-shadow(0 0 5px rgba(var(--room-rgb), .7));
+            transition: width .55s ease, height .55s ease, opacity .55s ease;
+          }
+          .eso-room__corner--tl { top: 8px; left: 8px; border-width: 1px 0 0 1px; }
+          .eso-room__corner--tr { top: 8px; right: 8px; border-width: 1px 1px 0 0; }
+          .eso-room__corner--bl { bottom: 8px; left: 8px; border-width: 0 0 1px 1px; }
+          .eso-room__corner--br { bottom: 8px; right: 8px; border-width: 0 1px 1px 0; }
+
+          .eso-room__index {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            color: rgba(255,255,255,.82);
+            font: 500 .58rem/1 var(--font-body, ui-sans-serif, sans-serif);
+            letter-spacing: .2em;
+            text-shadow: 0 1px 8px #000;
+          }
+
+          .eso-room__open-mark {
+            position: absolute;
+            right: 1rem;
+            bottom: .8rem;
+            color: var(--room-glow);
+            font-size: 1.15rem;
+            opacity: 0;
+            transform: translate(-4px, 4px);
+            transition: opacity .45s ease, transform .45s ease;
+            text-shadow: 0 0 12px rgba(var(--room-rgb), .8);
+          }
+
+          .eso-room__portal:hover .eso-room__outer-frame,
+          .eso-room.is-hovered .eso-room__outer-frame,
+          .eso-room__portal:focus-visible .eso-room__outer-frame {
+            border-color: var(--room-glow);
+            box-shadow:
+              0 0 0 1px rgba(var(--room-rgb), .24),
+              0 0 34px rgba(var(--room-rgb), .28),
+              0 0 75px rgba(var(--room-rgb), .11),
+              inset 0 0 25px rgba(var(--room-rgb), .16);
+          }
+
+          .eso-room__portal:hover .eso-room__frame-shadow,
+          .eso-room.is-hovered .eso-room__frame-shadow { inset: 5px; border-color: rgba(var(--room-rgb), .55); }
+
+          .eso-room__portal:hover .eso-room__inner-frame,
+          .eso-room.is-hovered .eso-room__inner-frame { inset: 11px; border-color: rgba(var(--room-rgb), .58); }
+
+          .eso-room__portal:hover .eso-room__video,
+          .eso-room.is-hovered .eso-room__video,
+          .eso-room__portal:focus-visible .eso-room__video {
+            filter: brightness(.92) contrast(1.12) saturate(1.06);
+            transform: scale(1.075);
+          }
+
+          .eso-room__portal:hover .eso-room__open-mark,
+          .eso-room.is-hovered .eso-room__open-mark,
+          .eso-room__portal:focus-visible .eso-room__open-mark {
+            opacity: 1;
+            transform: translate(0, 0);
+          }
+
+          .eso-room__portal:focus-visible {
+            outline: 1px solid var(--room-glow);
+            outline-offset: 7px;
+          }
+
+          .eso-room__copy {
+            position: relative;
+            text-align: center;
+            padding: clamp(1.25rem, 2.1vw, 2rem) .35rem 0;
+          }
+
+          .eso-room__name-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: clamp(.45rem, 1vw, 1rem);
+          }
+
+          .eso-room__name-row h2 {
+            margin: 0;
+            color: #f6f2ed;
+            font-family: var(--font-display, Georgia, 'Times New Roman', serif);
+            font-size: clamp(.9rem, 1.45vw, 1.45rem);
+            font-weight: 400;
+            letter-spacing: .24em;
+            line-height: 1.5;
+            white-space: nowrap;
+            transition: color .4s ease, text-shadow .4s ease;
+          }
+
+          .eso-room.is-hovered .eso-room__name-row h2 {
+            color: var(--room-glow);
+            text-shadow: 0 0 20px rgba(var(--room-rgb), .24);
+          }
+
+          .eso-room__dash {
+            width: clamp(.65rem, 1.5vw, 1.5rem);
+            height: 1px;
+            flex: 0 0 auto;
+            background: rgba(var(--room-rgb), .58);
+            opacity: .75;
+          }
+
+          .eso-room__tagline {
+            margin: .8rem 0 0;
+            color: rgba(244, 240, 235, .82);
+            font: 500 clamp(.58rem, .78vw, .72rem)/1.7 var(--font-body, ui-sans-serif, sans-serif);
+            letter-spacing: .2em;
+          }
+
+          .eso-room__description {
+            margin: .35rem 0 0;
+            color: rgba(225, 225, 230, .48);
+            font: 400 clamp(.65rem, .78vw, .76rem)/1.6 var(--font-body, ui-sans-serif, sans-serif);
+            letter-spacing: .045em;
+          }
+
+          .eso-enter {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: .75rem;
+            margin-top: 1.15rem;
+            padding: .45rem .25rem;
+            border: 0;
+            border-bottom: 1px solid transparent;
+            color: rgba(255,255,255,.58);
+            background: transparent;
+            font: 600 .61rem/1.4 var(--font-body, ui-sans-serif, sans-serif);
+            letter-spacing: .28em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: color .35s ease, border-color .35s ease;
+          }
+
+          .eso-enter:hover,
+          .eso-enter:focus-visible,
+          .eso-room.is-hovered .eso-enter {
+            color: var(--room-glow);
+            border-bottom-color: rgba(var(--room-rgb), .48);
+            outline: none;
+          }
+
+          .eso-enter__arrow {
+            display: inline-block;
+            font-size: 1rem;
+            letter-spacing: 0;
+            transition: transform .35s ease;
+          }
+          .eso-enter:hover .eso-enter__arrow,
+          .eso-room.is-hovered .eso-enter__arrow { transform: translateX(4px); }
+
+          .eso-footer {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: clamp(.75rem, 2vw, 1.5rem);
+            width: min(100%, 520px);
+            margin: clamp(2.5rem, 6vh, 4.5rem) auto 0;
+          }
+
+          .eso-footer p {
+            margin: 0;
+            color: rgba(239, 235, 230, .54);
+            font: 500 .62rem/1.5 var(--font-body, ui-sans-serif, sans-serif);
+            letter-spacing: .22em;
+            text-align: center;
+            white-space: nowrap;
+          }
+
+          .eso-footer__line {
+            width: clamp(1.25rem, 5vw, 4rem);
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,.22));
+          }
+          .eso-footer__line:last-child { transform: rotate(180deg); }
+
+          @media (min-width: 1500px) {
+            .eso-home { padding-top: 5.5vh; }
+            .eso-hero { margin-bottom: 5.5vh; }
+            .eso-room__portal { aspect-ratio: 1.58 / 1; }
+          }
+
+          @media (max-width: 900px) {
+            .eso-home { padding-top: 2.5rem; }
+            .eso-hero { margin-bottom: 2.5rem; }
+            .eso-rooms { gap: 1.1rem; }
+            .eso-room__scene { inset: 11px; }
+            .eso-room__frame-shadow { inset: 6px; }
+            .eso-room__inner-frame { inset: 10px; }
+            .eso-room__name-row h2 { letter-spacing: .16em; }
+            .eso-room__dash { display: none; }
+            .eso-room__tagline { letter-spacing: .1em; }
+          }
+
+          @media (max-width: 640px) {
+            .eso-home {
+              min-height: calc(100vh - 4rem);
+              padding: 2.25rem 1.15rem 2rem;
+            }
+            .eso-hero { margin-bottom: 2rem; }
+            .eso-greeting { margin-bottom: 1rem; font-size: .56rem; }
+            .eso-eyebrow { letter-spacing: .3em; }
+            .eso-title {
+              max-width: 100%;
+              font-size: clamp(2.3rem, 11vw, 3.8rem);
+              letter-spacing: .045em;
+            }
+            .eso-rooms {
+              grid-template-columns: minmax(0, 1fr);
+              width: min(100%, 520px);
+              gap: 2.4rem;
+            }
+            .eso-room__portal { aspect-ratio: 1.55 / 1; }
+            .eso-room__scene { inset: 13px; }
+            .eso-room__frame-shadow { inset: 7px; }
+            .eso-room__inner-frame { inset: 11px; }
+            .eso-room__copy { padding-top: 1.15rem; }
+            .eso-room__name-row h2 { font-size: 1.08rem; letter-spacing: .22em; }
+            .eso-room__dash { display: block; width: 1rem; }
+            .eso-room__tagline { margin-top: .45rem; font-size: .66rem; }
+            .eso-room__description { font-size: .72rem; }
+            .eso-enter { margin-top: .65rem; }
+            .eso-footer { margin-top: 2.8rem; }
+            .eso-footer p { font-size: .55rem; letter-spacing: .12em; }
+          }
+
+          @media (prefers-reduced-motion: reduce) {
+            .eso-room__outer-frame,
+            .eso-room__frame-shadow,
+            .eso-room__inner-frame,
+            .eso-room__video,
+            .eso-room__corner,
+            .eso-room__open-mark,
+            .eso-enter,
+            .eso-enter__arrow {
+              transition: none !important;
+            }
+          }
+        `}</style>
       </Layout>
     </PageTransition>
   );
