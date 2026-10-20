@@ -161,7 +161,7 @@ function Home() {
                       className="eso-room__video"
                       loading="lazy"
                       decoding="async"
-                      fetchpriority={idx === 0 ? 'high' : 'auto'}
+                      fetchPriority={index === 0 ? 'high' : 'auto'}
                       aria-hidden="true"
                     />
                     <span className="eso-room__scene-shade" aria-hidden="true" />
