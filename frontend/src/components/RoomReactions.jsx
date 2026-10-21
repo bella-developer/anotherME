@@ -1,43 +1,22 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-// Lucide icons for humanistic, relatable reactions
-import { 
-  Heart, Waves, Users, Flame, // Dark Room - solidarity & support
-  Lightbulb, Sparkles, HelpCircle, Target, // Philo Room - thinking & wonder
-  Sparkle, PartyPopper, ThumbsUp, Palette // Fantasy Room - joy & creativity
-} from 'lucide-react';
+// Premium icons - simple and catchy
+import { Heart, ThumbsUp, ThumbsDown } from 'lucide-react';
 
 /**
  * RoomReactions Component
- * Displays room-specific reaction buttons with humanistic, daily-life language
- * Uses Lucide icons with room-themed colors and subtle glow effects
+ * Simple 3-button reaction system with premium icons only
+ * Heart (love), ThumbsUp (like), ThumbsDown (dislike)
  */
 
-const ROOM_REACTIONS = {
-  dark: [
-    { type: 'same', label: 'Same', icon: Heart, color: '#2EE6FF', colorRGB: '46, 230, 255' },
-    { type: 'thatsTough', label: "That's tough", icon: Waves, color: '#2EE6FF', colorRGB: '46, 230, 255' },
-    { type: 'notAlone', label: 'Not alone', icon: Users, color: '#2EE6FF', colorRGB: '46, 230, 255' },
-    { type: 'felt', label: 'Felt', icon: Flame, color: '#2EE6FF', colorRGB: '46, 230, 255' }
-  ],
-  philo: [
-    { type: 'deep', label: 'Deep', icon: Lightbulb, color: '#B56DFF', colorRGB: '181, 109, 255' },
-    { type: 'wow', label: 'Wow', icon: Sparkles, color: '#B56DFF', colorRGB: '181, 109, 255' },
-    { type: 'sameQuestion', label: 'Same question', icon: HelpCircle, color: '#B56DFF', colorRGB: '181, 109, 255' },
-    { type: 'this', label: 'This', icon: Target, color: '#B56DFF', colorRGB: '181, 109, 255' }
-  ],
-  fantasy: [
-    { type: 'loveIt', label: 'Love it', icon: Sparkle, color: '#FF9D1C', colorRGB: '255, 157, 28' },
-    { type: 'cheers', label: 'Cheers', icon: PartyPopper, color: '#FF9D1C', colorRGB: '255, 157, 28' },
-    { type: 'yes', label: 'Yes', icon: ThumbsUp, color: '#FF9D1C', colorRGB: '255, 157, 28' },
-    { type: 'beautiful', label: 'Beautiful', icon: Palette, color: '#FF9D1C', colorRGB: '255, 157, 28' }
-  ]
-};
+const REACTIONS = [
+  { type: 'heart', icon: Heart, color: '#ffffff', activeColor: '#a9363d', activeRGB: '169, 54, 61' },
+  { type: 'like', icon: ThumbsUp, color: '#ffffff', activeColor: '#a9363d', activeRGB: '169, 54, 61' },
+  { type: 'dislike', icon: ThumbsDown, color: '#ffffff', activeColor: '#a9363d', activeRGB: '169, 54, 61' }
+];
 
-function RoomReactions({ room, reactions, userReactions = [], onReact, disabled = false }) {
+function RoomReactions({ reactions, userReactions = [], onReact, disabled = false }) {
   const [animatingReaction, setAnimatingReaction] = useState(null);
-
-  const roomReactions = ROOM_REACTIONS[room] || [];
 
   const handleReactionClick = async (reactionType) => {
     if (disabled) return;
@@ -56,14 +35,14 @@ function RoomReactions({ room, reactions, userReactions = [], onReact, disabled 
     }
   };
 
-  const getButtonStyle = (reactionType, hasReacted, color, colorRGB) => {
+  const getButtonStyle = (reactionType, hasReacted, activeRGB) => {
     const isAnimating = animatingReaction === reactionType;
     
     if (hasReacted) {
       return {
-        background: `rgba(${colorRGB}, 0.12)`,
-        border: `1px solid rgba(${colorRGB}, 0.35)`,
-        boxShadow: `0 0 12px rgba(${colorRGB}, 0.2), inset 0 0 16px rgba(${colorRGB}, 0.08)`,
+        background: `rgba(${activeRGB}, 0.15)`,
+        border: `1px solid rgba(${activeRGB}, 0.4)`,
+        boxShadow: `0 0 16px rgba(${activeRGB}, 0.25), inset 0 0 20px rgba(${activeRGB}, 0.1)`,
         transform: 'scale(1.05)',
         transition: 'all 0.3s cubic-bezier(0.22, 1, 0.36, 1)',
       };
@@ -72,24 +51,24 @@ function RoomReactions({ room, reactions, userReactions = [], onReact, disabled 
     if (isAnimating) {
       return {
         background: 'rgba(255, 255, 255, 0.05)',
-        border: '1px solid rgba(255, 255, 255, 0.12)',
+        border: '1px solid rgba(255, 255, 255, 0.15)',
         transform: 'scale(0.95)',
         transition: 'all 0.15s ease',
       };
     }
     
     return {
-      background: 'rgba(255, 255, 255, 0.04)',
-      border: '1px solid rgba(255, 255, 255, 0.1)',
+      background: 'rgba(255, 255, 255, 0.03)',
+      border: '1px solid rgba(255, 255, 255, 0.08)',
       transition: 'all 0.3s cubic-bezier(0.22, 1, 0.36, 1)',
     };
   };
 
   return (
     <div className="relative">
-      {/* Reaction Buttons - Small, responsive, artistic dark design */}
-      <div className="flex flex-wrap gap-1.5 sm:gap-2 justify-center items-center">
-        {roomReactions.map(({ type, label, icon: Icon, color, colorRGB }) => {
+      {/* Premium 3-button reaction system - icons only */}
+      <div className="flex gap-2 justify-center items-center">
+        {REACTIONS.map(({ type, icon: Icon, color, activeColor, activeRGB }) => {
           const count = reactions[type] || 0;
           const hasReacted = userReactions.includes(type);
           
@@ -98,76 +77,54 @@ function RoomReactions({ room, reactions, userReactions = [], onReact, disabled 
               key={type}
               onClick={() => handleReactionClick(type)}
               disabled={disabled}
-              className="group relative px-2.5 sm:px-3 py-2 sm:py-2.5 rounded-md flex items-center gap-2 cursor-pointer outline-none min-h-[36px]"
-              style={getButtonStyle(type, hasReacted, color, colorRGB)}
-              title={label}
+              className="group relative p-3 rounded-lg flex items-center justify-center gap-2 cursor-pointer outline-none min-w-[48px] min-h-[48px]"
+              style={getButtonStyle(type, hasReacted, activeRGB)}
+              title={type.charAt(0).toUpperCase() + type.slice(1)}
               onMouseEnter={(e) => {
                 if (!hasReacted) {
                   e.currentTarget.style.background = 'rgba(255, 255, 255, 0.08)';
-                  e.currentTarget.style.border = '1px solid rgba(255, 255, 255, 0.15)';
+                  e.currentTarget.style.border = '1px solid rgba(255, 255, 255, 0.18)';
                   e.currentTarget.style.transform = 'translateY(-2px) scale(1.05)';
-                  e.currentTarget.style.boxShadow = `0 4px 12px rgba(${colorRGB}, 0.15)`;
-                }
-                // Make label brighter on hover
-                const label = e.currentTarget.querySelector('span:last-child');
-                if (label) {
-                  label.style.color = color;
-                  label.style.textShadow = `0 0 6px rgba(${colorRGB}, 0.4)`;
+                  e.currentTarget.style.boxShadow = `0 4px 16px rgba(${activeRGB}, 0.2)`;
                 }
               }}
               onMouseLeave={(e) => {
                 if (!hasReacted) {
-                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.04)';
-                  e.currentTarget.style.border = '1px solid rgba(255, 255, 255, 0.1)';
+                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.03)';
+                  e.currentTarget.style.border = '1px solid rgba(255, 255, 255, 0.08)';
                   e.currentTarget.style.transform = 'translateY(0) scale(1)';
                   e.currentTarget.style.boxShadow = 'none';
                 }
-                // Reset label color when not hovered
-                const label = e.currentTarget.querySelector('span:last-child');
-                if (label && !hasReacted) {
-                  label.style.color = 'rgba(255, 255, 255, 0.7)';
-                  label.style.textShadow = 'none';
-                }
               }}
             >
-              {/* Icon with subtle glow effect - Premium sizing */}
+              {/* Premium icon with subtle glow effect */}
               <Icon 
-                size={16}
-                strokeWidth={1.8}
+                size={20}
+                strokeWidth={2}
                 className="flex-shrink-0"
                 style={{
-                  color: hasReacted ? color : 'rgba(255, 255, 255, 0.55)',
-                  filter: hasReacted ? `drop-shadow(0 0 3px rgba(${colorRGB}, 0.5))` : 'none',
+                  color: hasReacted ? activeColor : color,
+                  opacity: hasReacted ? 1 : 0.6,
+                  filter: hasReacted ? `drop-shadow(0 0 4px rgba(${activeRGB}, 0.6))` : 'none',
                   transition: 'all 0.3s ease',
                 }}
               />
               
-              {/* Count - Premium visibility */}
+              {/* Count badge - only show when > 0 */}
               {count > 0 && (
                 <span
-                  className="text-[11px] sm:text-xs font-medium tracking-wide"
+                  className="absolute -top-1 -right-1 text-[10px] font-mono font-medium tracking-wider px-1.5 py-0.5 rounded-full min-w-[18px] text-center"
                   style={{
-                    color: hasReacted ? color : 'rgba(255, 255, 255, 0.65)',
-                    textShadow: hasReacted ? `0 0 6px rgba(${colorRGB}, 0.4)` : 'none',
+                    background: hasReacted ? `rgba(${activeRGB}, 0.9)` : 'rgba(255, 255, 255, 0.15)',
+                    color: hasReacted ? '#ffffff' : 'rgba(255, 255, 255, 0.8)',
+                    border: hasReacted ? `1px solid rgba(${activeRGB}, 1)` : '1px solid rgba(255, 255, 255, 0.2)',
+                    boxShadow: hasReacted ? `0 0 8px rgba(${activeRGB}, 0.5)` : 'none',
                     transition: 'all 0.3s ease',
-                    fontWeight: '500',
                   }}
                 >
                   {count}
                 </span>
               )}
-              
-              {/* Label - always visible with better contrast, more prominent on hover */}
-              <span
-                className="text-[9px] sm:text-[10px] tracking-wide uppercase whitespace-nowrap transition-all duration-300"
-                style={{
-                  color: hasReacted ? color : 'rgba(255, 255, 255, 0.7)',
-                  letterSpacing: '0.1em',
-                  fontWeight: '500',
-                }}
-              >
-                {label}
-              </span>
             </button>
           );
         })}
@@ -177,7 +134,6 @@ function RoomReactions({ room, reactions, userReactions = [], onReact, disabled 
 }
 
 RoomReactions.propTypes = {
-  room: PropTypes.oneOf(['dark', 'philo', 'fantasy']).isRequired,
   reactions: PropTypes.object.isRequired,
   userReactions: PropTypes.arrayOf(PropTypes.string),
   onReact: PropTypes.func.isRequired,

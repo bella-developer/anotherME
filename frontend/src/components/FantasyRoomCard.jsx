@@ -286,7 +286,6 @@ function FantasyRoomCard({ post, onReaction, onEdit, onDelete }) {
         {/* Reactions - Responsive spacing */}
         <div className="pt-3 sm:pt-4 border-t mt-auto" style={{ borderColor: 'rgba(168, 85, 247, 0.15)' }}>
           <RoomReactions
-            room="fantasy"
             reactions={post.reactions || {}}
             userReactions={post.userReactions || []}
             onReact={(reactionType) => onReaction?.(post.id, reactionType)}
