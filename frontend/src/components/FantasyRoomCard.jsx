@@ -132,9 +132,6 @@ function FantasyRoomCard({ post, onReaction, onEdit, onDelete }) {
                   textIndent: '1.5em',
                   fontSize: index === 0 ? '13px' : '12px',
                   opacity: index === 0 ? 0.95 : 0.9,
-                  paddingLeft: '2px',
-                  borderLeft: index === 0 ? '2px solid rgba(255, 157, 28, 0.3)' : 'none',
-                  paddingLeft: index === 0 ? '12px' : '2px',
                 }}
               >
                 {paragraph}
