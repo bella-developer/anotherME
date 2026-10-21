@@ -2,7 +2,7 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 // Room-specific premium Lucide icons
 import { 
-  FaceSlightlyFrowning,
+  Frown,
   HeartCrack, 
   HeartOff,
   Smile,
@@ -21,7 +21,7 @@ import {
 
 const ROOM_REACTIONS = {
   dark: [
-    { type: 'sad', icon: FaceSlightlyFrowning, label: 'Sad' },
+    { type: 'sad', icon: Frown, label: 'Sad' },
     { type: 'heartCrack', icon: HeartCrack, label: 'Heart Break' },
     { type: 'heartOff', icon: HeartOff, label: 'Hurt' }
   ],
