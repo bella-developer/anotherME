@@ -427,6 +427,31 @@ function getEngagementStars(count) {
   return { count: 0, color: '' };
 }
 
+// Generate consistent color from username for user identification
+function getUserColor(username) {
+  if (!username) return 'rgba(255,255,255,0.3)';
+  let hash = 0;
+  for (let i = 0; i < username.length; i++) {
+    hash = username.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  
+  // Premium muted palette - sophisticated colors
+  const colors = [
+    '#c4a882', // warm gold
+    '#8b9dc3', // soft blue
+    '#b8a8d4', // lavender
+    '#a8c0a8', // sage green
+    '#d4a8b8', // dusty rose
+    '#a8c8d4', // sky blue
+    '#c4b088', // caramel
+    '#a8b8a8', // cool gray
+    '#c4a8a8', // warm gray
+    '#a8c4c0', // mint
+  ];
+  
+  return colors[Math.abs(hash) % colors.length];
+}
+
 function CommentItem({ comment, depth, circleId, accent }) {
   const { user } = useSelector(selectAuth);
   const [showReplyForm, setShowReplyForm] = useState(false);
@@ -444,6 +469,9 @@ function CommentItem({ comment, depth, circleId, accent }) {
   const isOwnComment = comment.isOwnComment || false;
   const stars = getEngagementStars(replyCount);
   const hasReacted = (type) => userReactions.includes(type);
+  
+  // Get user-specific color for visual differentiation
+  const userColor = getUserColor(comment.author?.username);
 
   // Sync replies from server data (critical for real-time updates from other users)
   useEffect(() => { setReplies(comment.replies || []); }, [comment.replies]);
@@ -506,27 +534,62 @@ function CommentItem({ comment, depth, circleId, accent }) {
 
   return (
     <div style={{ marginLeft: depth > 0 ? `${depth * 20}px` : '0' }}>
-      {/* Comment card */}
+      {/* Comment card with premium visual differentiation */}
       <div
-        className="mb-2 p-4 transition-all duration-200"
+        className="mb-2 p-4 transition-all duration-200 group hover:translate-x-0.5"
         style={{
           background: depth === 0 ? 'rgba(255,255,255,0.03)' : 'rgba(255,255,255,0.02)',
           boxShadow: depth === 0 ? '0 0 0 1px rgba(255,255,255,0.055)' : 'none',
           borderRadius: '3px',
-          borderLeft: depth > 0 ? `1px solid rgba(255,255,255,0.08)` : 'none',
+          // Premium left border - thread decoration for replies, user color for root messages
+          borderLeft: depth > 0 
+            ? `2px solid ${userColor}40` 
+            : `3px solid ${userColor}25`,
+          position: 'relative',
         }}
       >
+        {/* Subtle connecting line for threaded replies */}
+        {depth > 0 && (
+          <div 
+            style={{
+              position: 'absolute',
+              left: '-21px',
+              top: '20px',
+              width: '20px',
+              height: '1px',
+              background: `linear-gradient(to right, ${userColor}20, ${userColor}40)`,
+            }}
+          />
+        )}
+        
         {/* Header */}
         <div className="flex items-center gap-2 mb-3">
+          {/* User avatar with color-coded border */}
           <div
-            className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 text-[10px] font-light"
-            style={{ background: 'rgba(255,255,255,0.07)', color: 'rgba(255,255,255,0.5)' }}
+            className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 text-[10px] font-light ring-1 transition-all group-hover:ring-2"
+            style={{ 
+              background: `${userColor}15`, 
+              color: userColor,
+              ringColor: `${userColor}40`,
+            }}
           >
             {comment.author?.username ? comment.author.username.charAt(0).toUpperCase() : '?'}
           </div>
-          <span className="text-white/60 text-[11px] font-light tracking-wide">
-            {comment.author?.username || 'User'}
-          </span>
+          
+          {/* Username with subtle color indicator dot */}
+          <div className="flex items-center gap-1.5">
+            <span 
+              className="w-1.5 h-1.5 rounded-full flex-shrink-0" 
+              style={{ 
+                background: userColor,
+                boxShadow: `0 0 4px ${userColor}60`,
+              }}
+            />
+            <span className="text-white/60 text-[11px] font-light tracking-wide">
+              {comment.author?.username || 'User'}
+            </span>
+          </div>
+          
           {comment.author?.levelBadge && (
             <LevelBadge stat={comment.author.levelBadge.stat} level={comment.author.levelBadge.level} size="xs" />
           )}

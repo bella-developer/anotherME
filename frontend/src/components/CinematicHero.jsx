@@ -7,13 +7,13 @@ import { useNavigate } from 'react-router-dom';
    Desktop: notes/vault left + cinematic video center + film strip right. */
 
 const FRAMES = [
-  { id:'welcome', number:'01', video:'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410933/frame1_gnpv3w.gif', mobileVideo:'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410933/frame1_gnpv3w.gif', title:'THE MEMORY PALACE', shortTitle:'MEMORY', tagline:'Rooms of memory.', quote:'In the architecture of remembrance, we build who we become.', highlightWords:['architecture','become'], description:'A space for introspection and personal history' },
-  { id:'dark-confession', number:'02', video:'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410932/frame2_lia8kg.gif', mobileVideo:'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410932/frame2_lia8kg.gif', title:'CONFESSION', shortTitle:'CONFESSION', tagline:'Things left unsaid.', quote:'The weight we carry is lighter when shared in whispers.', highlightWords:['weight','whispers'], description:'Release your burdens without judgment' },
-  { id:'dark-understanding', number:'03', video:'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410933/frame3_yrjfiw.gif', mobileVideo:'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410933/frame3_yrjfiw.gif', title:'UNDERSTANDING', shortTitle:'UNDERSTANDING', tagline:'A shared darkness.', quote:'To be understood is to find another who speaks the language of your silence.', highlightWords:['language','silence'], description:'Connect with those who truly understand' },
-  { id:'fantasy-daydream', number:'04', video:'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410935/frame4_lfwlgn.gif', mobileVideo:'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410935/frame4_lfwlgn.gif', title:'IMAGINATION', shortTitle:'IMAGINATION', tagline:'Beyond imagination.', quote:'Reality is merely the canvas; imagination paints what could be.', highlightWords:['canvas','paints'], description:'Explore worlds beyond the ordinary' },
-  { id:'fantasy-vibes', number:'05', video:'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410934/frame5_lwtld5.gif', mobileVideo:'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410934/frame5_lwtld5.gif', title:'VIBES', shortTitle:'VIBES', tagline:'A space for anything.', quote:'Between structure and chaos lies the frequency of authentic being.', highlightWords:['frequency','authentic'], description:'Flow freely in unstructured expression' },
-  { id:'philo-questioning', number:'06', video:'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410942/frame6_fbhc4b.gif', mobileVideo:'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410942/frame6_fbhc4b.gif', title:'QUESTIONING', shortTitle:'QUESTIONING', tagline:'Questions without answers.', quote:'The mind that asks is forever more alive than one that accepts.', highlightWords:['alive','accepts'], description:'Challenge everything, seek deeper truth' },
-  { id:'philo-truth', number:'07', video:'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410949/frame7_dnusjj.gif', mobileVideo:'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410949/frame7_dnusjj.gif', title:'TRUTH', shortTitle:'TRUTH', tagline:'Where mystery begins.', quote:'Truth is not found in certainty, but in the courage to remain uncertain.', highlightWords:['courage','uncertain'], description:'Embrace the uncomfortable realities' },
+  { id:'welcome', number:'01', video:'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410933/frame1_gnpv3w.gif', mobileVideo:'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410933/frame1_gnpv3w.gif', title:'THE MEMORY PALACE', shortTitle:'MEMORY', tagline:'Rooms of memory.', quote:'REMEMBER', description:'A space for introspection and personal history' },
+  { id:'dark-confession', number:'02', video:'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410932/frame2_lia8kg.gif', mobileVideo:'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410932/frame2_lia8kg.gif', title:'CONFESSION', shortTitle:'CONFESSION', tagline:'Things left unsaid.', quote:'RELEASE', description:'Release your burdens without judgment' },
+  { id:'dark-understanding', number:'03', video:'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410933/frame3_yrjfiw.gif', mobileVideo:'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410933/frame3_yrjfiw.gif', title:'UNDERSTANDING', shortTitle:'UNDERSTANDING', tagline:'A shared darkness.', quote:'WITNESS', description:'Connect with those who truly understand' },
+  { id:'fantasy-daydream', number:'04', video:'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410935/frame4_lfwlgn.gif', mobileVideo:'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410935/frame4_lfwlgn.gif', title:'IMAGINATION', shortTitle:'IMAGINATION', tagline:'Beyond imagination.', quote:'CREATE', description:'Explore worlds beyond the ordinary' },
+  { id:'fantasy-vibes', number:'05', video:'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410934/frame5_lwtld5.gif', mobileVideo:'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410934/frame5_lwtld5.gif', title:'VIBES', shortTitle:'VIBES', tagline:'A space for anything.', quote:'FLOW', description:'Flow freely in unstructured expression' },
+  { id:'philo-questioning', number:'06', video:'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410942/frame6_fbhc4b.gif', mobileVideo:'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410942/frame6_fbhc4b.gif', title:'QUESTIONING', shortTitle:'QUESTIONING', tagline:'Questions without answers.', quote:'QUESTION', description:'Challenge everything, seek deeper truth' },
+  { id:'philo-truth', number:'07', video:'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410949/frame7_dnusjj.gif', mobileVideo:'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410949/frame7_dnusjj.gif', title:'TRUTH', shortTitle:'TRUTH', tagline:'Where mystery begins.', quote:'SEEK', description:'Embrace the uncomfortable realities' },
 ];
 
 const NOTE_LAYOUT = [
@@ -48,20 +48,6 @@ const ArchiveVideo = memo(function ArchiveVideo({ frame, className='', priority=
   },[priority]);
   return <img ref={ref} src={visible ? (frame.mobileVideo || frame.video) : undefined} alt="" aria-hidden="true" draggable="false" loading={priority?'eager':'lazy'} className={className}/>;
 });
-
-function Quote({frame}) {
-  let rest = frame.quote;
-  const parts = [];
-  frame.highlightWords.forEach((word) => {
-    const match = rest.match(new RegExp(`(${word})`,'i'));
-    if (!match || match.index === undefined) return;
-    if (match.index) parts.push(rest.slice(0,match.index));
-    parts.push(<span key={`${frame.id}-${word}`} className="text-[#b9363f]" style={{textShadow:'0 0 18px rgba(185,54,63,.28)'}}>{match[0]}</span>);
-    rest = rest.slice(match.index + match[0].length);
-  });
-  parts.push(rest);
-  return <>{parts}</>;
-}
 
 function StickyNote({frame,index,active,onSelect,compact=false}) {
   const layout = NOTE_LAYOUT[index], tone = TONES[layout.tone];
@@ -135,11 +121,17 @@ function CinematicVideo({active,navigate,compact=false,onVideoEnd}) {
         <ArchiveVideo key={active.id} frame={active} priority className="absolute inset-0 h-full w-full object-cover brightness-[.72] contrast-[1.08] saturate-[.76]"/>
         <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,.25),transparent_40%,rgba(0,0,0,.15)),linear-gradient(0deg,rgba(0,0,0,.3),transparent_35%,rgba(0,0,0,.18))]"/>
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_25%,rgba(0,0,0,.62)_100%)]"/>
-        <div className={`pointer-events-none absolute inset-0 z-20 flex items-center justify-center text-center ${compact?'px-4':'px-6 sm:px-10'}`}>
-          <div className="relative max-w-[88%]">
-            <span className={`absolute -left-4 -top-5 font-serif leading-none text-[#a9363d]/70 ${compact?'text-[32px]':'text-[44px]'}`}>“</span>
-            <p className={`font-serif font-semibold leading-[1.7] tracking-[.035em] text-[#f0ece4] [text-shadow:0_2px_10px_rgba(0,0,0,.95)] ${compact?'text-[clamp(11px,1.5vw,15px)]':'text-[clamp(13px,1.25vw,18px)]'}`}><Quote frame={active}/></p>
-            <span className={`absolute -bottom-6 -right-4 font-serif leading-none text-[#a9363d]/70 ${compact?'text-[32px]':'text-[44px]'}`}>”</span>
+        <div className={`pointer-events-none absolute inset-0 z-20 flex items-center justify-center ${compact?'px-4':'px-6 sm:px-10'}`}>
+          <div className="relative flex items-center gap-3 sm:gap-4">
+            <span className="font-mono text-[clamp(48px,6vw,72px)] font-black leading-none text-[#a9363d]" style={{textShadow:'0 0 20px rgba(169,54,61,.4)'}}>"</span>
+            <p className="font-display text-[clamp(32px,5vw,56px)] font-black uppercase leading-none tracking-[.08em]" style={{
+              background: 'linear-gradient(135deg, #ffffff 0%, #ff8c42 40%, #a9363d 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
+              filter: 'drop-shadow(0 4px 16px rgba(0,0,0,.95)) drop-shadow(0 0 12px rgba(169,54,61,.3))'
+            }}>{active.quote}</p>
+            <span className="font-mono text-[clamp(48px,6vw,72px)] font-black leading-none text-[#a9363d]" style={{textShadow:'0 0 20px rgba(169,54,61,.4)'}}>"</span>
           </div>
         </div>
         <div className="pointer-events-none absolute inset-0 border border-white/[.07]"/>
@@ -229,7 +221,7 @@ export default function CinematicHero() {
 
         {/* One video instance, sized by the grid's available space. */}
         <div className="min-w-0 md:col-start-2 md:row-start-1">
-          <CinematicVideo active={active} navigate={navigate} compact onVideoEnd={handleVideoEnd}/>
+          <CinematicVideo active={active} navigate={navigate} onVideoEnd={handleVideoEnd}/>
         </div>
 
         {/* Film strip is intentionally withheld until a wide desktop breakpoint. */}

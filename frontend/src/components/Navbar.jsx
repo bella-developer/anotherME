@@ -52,12 +52,11 @@ function Navbar() {
 
   return (
     <nav 
-      className="fixed top-0 left-0 right-0 z-50 h-14"
+      className="fixed top-0 left-0 right-0 z-50 h-12"
       style={{ 
         background: 'rgba(0, 0, 0, 0.95)', 
         backdropFilter: 'blur(20px)',
-        WebkitBackdropFilter: 'blur(20px)',
-        borderBottom: '1px solid rgba(255, 255, 255, 0.1)'
+        WebkitBackdropFilter: 'blur(20px)'
       }}
       role="navigation"
       aria-label="Main navigation"
@@ -189,7 +188,7 @@ function Navbar() {
           <>
             {/* Backdrop */}
             <div 
-              className="md:hidden fixed inset-0 top-16 z-40"
+              className="md:hidden fixed inset-0 top-12 z-40"
               style={{ background: 'rgba(0, 0, 0, 0.8)' }}
               onClick={() => setIsMobileMenuOpen(false)}
               aria-hidden="true"
@@ -198,12 +197,11 @@ function Navbar() {
             {/* Menu content */}
             <div 
               id="mobile-menu"
-              className="md:hidden fixed top-16 left-0 right-0 z-50 shadow-2xl"
+              className="md:hidden fixed top-12 left-0 right-0 z-50 shadow-2xl"
               style={{
                 background: 'rgba(10, 10, 10, 0.98)',
                 backdropFilter: 'blur(20px)',
-                borderTop: '1px solid rgba(255, 255, 255, 0.1)',
-                maxHeight: 'calc(100vh - 4rem)',
+                maxHeight: 'calc(100vh - 3rem)',
                 overflowY: 'auto'
               }}
               role="menu"
