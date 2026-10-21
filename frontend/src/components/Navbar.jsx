@@ -52,7 +52,7 @@ function Navbar() {
 
   return (
     <nav 
-      className="fixed top-0 left-0 right-0 z-50 h-12"
+      className="fixed top-0 left-0 right-0 z-50 h-8"
       style={{ 
         background: 'rgba(0, 0, 0, 0.95)', 
         backdropFilter: 'blur(20px)',
@@ -66,10 +66,10 @@ function Navbar() {
           {/* Logo */}
           <Link 
             to="/home" 
-            className="flex items-center focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-black rounded p-1"
+            className="flex items-center focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-black rounded p-0.5"
             aria-label="ESO home"
           >
-            <EsoLogo className="h-8 w-auto" />
+            <EsoLogo className="h-6 w-auto" />
           </Link>
 
           {/* Desktop Navigation Links */}
@@ -188,7 +188,7 @@ function Navbar() {
           <>
             {/* Backdrop */}
             <div 
-              className="md:hidden fixed inset-0 top-12 z-40"
+              className="md:hidden fixed inset-0 top-8 z-40"
               style={{ background: 'rgba(0, 0, 0, 0.8)' }}
               onClick={() => setIsMobileMenuOpen(false)}
               aria-hidden="true"
@@ -197,11 +197,11 @@ function Navbar() {
             {/* Menu content */}
             <div 
               id="mobile-menu"
-              className="md:hidden fixed top-12 left-0 right-0 z-50 shadow-2xl"
+              className="md:hidden fixed top-8 left-0 right-0 z-50 shadow-2xl"
               style={{
                 background: 'rgba(10, 10, 10, 0.98)',
                 backdropFilter: 'blur(20px)',
-                maxHeight: 'calc(100vh - 3rem)',
+                maxHeight: 'calc(100vh - 2rem)',
                 overflowY: 'auto'
               }}
               role="menu"

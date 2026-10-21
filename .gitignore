@@ -2,6 +2,12 @@
 *.md
 !README.md
 
+# Test and migration scripts (security)
+backend/scripts/*.js
+backend/check-*.js
+backend/migrate-*.js
+backend/*.txt
+
 # Node modules
 node_modules/
 

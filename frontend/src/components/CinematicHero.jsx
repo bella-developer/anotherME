@@ -7,13 +7,13 @@ import { useNavigate } from 'react-router-dom';
    Desktop: notes/vault left + cinematic video center + film strip right. */
 
 const FRAMES = [
-  { id:'welcome', number:'01', video:'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410933/frame1_gnpv3w.gif', mobileVideo:'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410933/frame1_gnpv3w.gif', title:'THE MEMORY PALACE', shortTitle:'MEMORY', tagline:'Rooms of memory.', quote:'REMEMBER', description:'A space for introspection and personal history' },
-  { id:'dark-confession', number:'02', video:'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410932/frame2_lia8kg.gif', mobileVideo:'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410932/frame2_lia8kg.gif', title:'CONFESSION', shortTitle:'CONFESSION', tagline:'Things left unsaid.', quote:'RELEASE', description:'Release your burdens without judgment' },
-  { id:'dark-understanding', number:'03', video:'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410933/frame3_yrjfiw.gif', mobileVideo:'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410933/frame3_yrjfiw.gif', title:'UNDERSTANDING', shortTitle:'UNDERSTANDING', tagline:'A shared darkness.', quote:'WITNESS', description:'Connect with those who truly understand' },
-  { id:'fantasy-daydream', number:'04', video:'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410935/frame4_lfwlgn.gif', mobileVideo:'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410935/frame4_lfwlgn.gif', title:'IMAGINATION', shortTitle:'IMAGINATION', tagline:'Beyond imagination.', quote:'CREATE', description:'Explore worlds beyond the ordinary' },
-  { id:'fantasy-vibes', number:'05', video:'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410934/frame5_lwtld5.gif', mobileVideo:'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410934/frame5_lwtld5.gif', title:'VIBES', shortTitle:'VIBES', tagline:'A space for anything.', quote:'FLOW', description:'Flow freely in unstructured expression' },
-  { id:'philo-questioning', number:'06', video:'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410942/frame6_fbhc4b.gif', mobileVideo:'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410942/frame6_fbhc4b.gif', title:'QUESTIONING', shortTitle:'QUESTIONING', tagline:'Questions without answers.', quote:'QUESTION', description:'Challenge everything, seek deeper truth' },
-  { id:'philo-truth', number:'07', video:'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410949/frame7_dnusjj.gif', mobileVideo:'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410949/frame7_dnusjj.gif', title:'TRUTH', shortTitle:'TRUTH', tagline:'Where mystery begins.', quote:'SEEK', description:'Embrace the uncomfortable realities' },
+  { id:'welcome', number:'01', video:'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410933/frame1_gnpv3w.gif', mobileVideo:'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410933/frame1_gnpv3w.gif', title:'THE MEMORY PALACE', shortTitle:'MEMORY', tagline:'Rooms of memory.', quote:'remember', description:'A space for introspection and personal history' },
+  { id:'dark-confession', number:'02', video:'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410932/frame2_lia8kg.gif', mobileVideo:'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410932/frame2_lia8kg.gif', title:'CONFESSION', shortTitle:'CONFESSION', tagline:'Things left unsaid.', quote:'release', description:'Release your burdens without judgment' },
+  { id:'dark-understanding', number:'03', video:'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410933/frame3_yrjfiw.gif', mobileVideo:'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410933/frame3_yrjfiw.gif', title:'UNDERSTANDING', shortTitle:'UNDERSTANDING', tagline:'A shared darkness.', quote:'witness', description:'Connect with those who truly understand' },
+  { id:'fantasy-daydream', number:'04', video:'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410935/frame4_lfwlgn.gif', mobileVideo:'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410935/frame4_lfwlgn.gif', title:'IMAGINATION', shortTitle:'IMAGINATION', tagline:'Beyond imagination.', quote:'create', description:'Explore worlds beyond the ordinary' },
+  { id:'fantasy-vibes', number:'05', video:'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410934/frame5_lwtld5.gif', mobileVideo:'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410934/frame5_lwtld5.gif', title:'VIBES', shortTitle:'VIBES', tagline:'A space for anything.', quote:'flow', description:'Flow freely in unstructured expression' },
+  { id:'philo-questioning', number:'06', video:'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410942/frame6_fbhc4b.gif', mobileVideo:'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410942/frame6_fbhc4b.gif', title:'QUESTIONING', shortTitle:'QUESTIONING', tagline:'Questions without answers.', quote:'question', description:'Challenge everything, seek deeper truth' },
+  { id:'philo-truth', number:'07', video:'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410949/frame7_dnusjj.gif', mobileVideo:'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410949/frame7_dnusjj.gif', title:'TRUTH', shortTitle:'TRUTH', tagline:'Where mystery begins.', quote:'seek', description:'Embrace the uncomfortable realities' },
 ];
 
 const NOTE_LAYOUT = [
@@ -76,7 +76,7 @@ function StickyNote({frame,index,active,onSelect,compact=false}) {
 
 function StickyWall({activeEntry,selectEntry,compact=false}) {
   return <div className="w-full min-w-0">
-    <div className={`mb-4 ${compact?'text-center':'pl-1'}`}>
+    <div className={`mb-4 mt-8 ${compact?'text-center':'pl-1'}`}>
       <p className="font-mono text-[8px] font-medium uppercase tracking-[.32em] text-[#a79a8b]">Sacred Home of ...</p>
       <div className={`mt-2.5 h-px w-16 bg-[#9b343a]/65 ${compact?'mx-auto':''}`}/>
     </div>
@@ -122,17 +122,10 @@ function CinematicVideo({active,navigate,compact=false,onVideoEnd}) {
         <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,.25),transparent_40%,rgba(0,0,0,.15)),linear-gradient(0deg,rgba(0,0,0,.3),transparent_35%,rgba(0,0,0,.18))]"/>
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_25%,rgba(0,0,0,.62)_100%)]"/>
         <div className={`pointer-events-none absolute inset-0 z-20 flex items-center justify-center ${compact?'px-4':'px-6 sm:px-10'}`}>
-          <div className="relative flex items-center gap-3 sm:gap-4">
-            <span className="font-mono text-[clamp(48px,6vw,72px)] font-black leading-none text-[#a9363d]" style={{textShadow:'0 0 20px rgba(169,54,61,.4)'}}>"</span>
-            <p className="font-display text-[clamp(32px,5vw,56px)] font-black uppercase leading-none tracking-[.08em]" style={{
-              background: 'linear-gradient(135deg, #ffffff 0%, #ff8c42 40%, #a9363d 100%)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text',
-              filter: 'drop-shadow(0 4px 16px rgba(0,0,0,.95)) drop-shadow(0 0 12px rgba(169,54,61,.3))'
-            }}>{active.quote}</p>
-            <span className="font-mono text-[clamp(48px,6vw,72px)] font-black leading-none text-[#a9363d]" style={{textShadow:'0 0 20px rgba(169,54,61,.4)'}}>"</span>
-          </div>
+          <p className="font-display text-[clamp(38px,5.5vw,64px)] font-black lowercase leading-none tracking-[.06em] text-white" style={{
+            textShadow: '0 4px 20px rgba(0,0,0,.95), 0 0 40px rgba(255,255,255,.15)',
+            filter: 'drop-shadow(0 0 8px rgba(255,255,255,.2))'
+          }}>{active.quote}</p>
         </div>
         <div className="pointer-events-none absolute inset-0 border border-white/[.07]"/>
         <button type="button" onClick={()=>navigate('/login')} aria-label={`Enter ${active.title}`} className="absolute inset-0 z-30 cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#a9363d]"><span className="sr-only">Enter {active.title}</span></button>
