@@ -1,19 +1,41 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-// Premium icons - simple and catchy
-import { Heart, ThumbsUp, ThumbsDown } from 'lucide-react';
+// Room-specific premium Lucide icons
+import { 
+  CircleSlash2,
+  HeartCrack, 
+  HeartOff,
+  Smile,
+  ThumbsUp,
+  ThumbsDown,
+  Lightbulb
+} from 'lucide-react';
 
 /**
  * RoomReactions Component
- * Simple 3-button reaction system with premium icons only
- * Heart (love), ThumbsUp (like), ThumbsDown (dislike)
+ * Room-specific 3-button reaction system with premium icons
+ * Dark Room: sad, heartCrack, heartOff
+ * Fantasy Room: laugh, like, dislike
+ * Philo Room: lightbulb, like, dislike
  */
 
-const REACTIONS = [
-  { type: 'heart', icon: Heart, color: '#ffffff', activeColor: '#a9363d', activeRGB: '169, 54, 61' },
-  { type: 'like', icon: ThumbsUp, color: '#ffffff', activeColor: '#a9363d', activeRGB: '169, 54, 61' },
-  { type: 'dislike', icon: ThumbsDown, color: '#ffffff', activeColor: '#a9363d', activeRGB: '169, 54, 61' }
-];
+const ROOM_REACTIONS = {
+  dark: [
+    { type: 'sad', icon: CircleSlash2, label: 'Sad' },
+    { type: 'heartCrack', icon: HeartCrack, label: 'Heart Break' },
+    { type: 'heartOff', icon: HeartOff, label: 'Hurt' }
+  ],
+  fantasy: [
+    { type: 'laugh', icon: Smile, label: 'Laugh' },
+    { type: 'like', icon: ThumbsUp, label: 'Like' },
+    { type: 'dislike', icon: ThumbsDown, label: 'Dislike' }
+  ],
+  philo: [
+    { type: 'lightbulb', icon: Lightbulb, label: 'Insight' },
+    { type: 'like', icon: ThumbsUp, label: 'Like' },
+    { type: 'dislike', icon: ThumbsDown, label: 'Dislike' }
+  ]
+};
 
 function RoomReactions({ room, reactions, userReactions = [], onReact, disabled = false }) {
   const [animatingReaction, setAnimatingReaction] = useState(null);
