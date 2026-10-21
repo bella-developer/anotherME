@@ -42,8 +42,6 @@ const DarkRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, onCirc
 
   // Reset form when modal opens/closes
   useEffect(() => {
-  // Reset form when modal opens/closes
-  useEffect(() => {
     if (!isOpen) {
       setFormData({
         content: '',
