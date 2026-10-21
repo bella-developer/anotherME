@@ -40,8 +40,8 @@ export async function createPost(req, res, next) {
       authorId
     );
 
-    // Sanitize response
-    const sanitized = sanitizePost(post);
+    // Sanitize response with userId to show isAuthor flag
+    const sanitized = sanitizePost(post, { userId: req.user.id });
 
     res.status(201).json(createSuccessResponse(sanitized, 'Post created successfully'));
   } catch (error) {
@@ -130,8 +130,8 @@ export async function updatePost(req, res, next) {
     // Update post via service (ownership verified in service)
     const post = await postService.updatePost(id, { content }, userId);
 
-    // Sanitize response
-    const sanitized = sanitizePost(post);
+    // Sanitize response with userId to show isAuthor flag
+    const sanitized = sanitizePost(post, { userId });
 
     res.status(200).json(createSuccessResponse(sanitized, 'Post updated successfully'));
   } catch (error) {

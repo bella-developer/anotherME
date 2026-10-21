@@ -57,17 +57,28 @@ const FantasyRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, onC
       setCircleError('');
       dispatch(clearError());
     } else if (isOpen && editingPost) {
+      // Extract plain text from HTML content
       const tempDiv = document.createElement('div');
       tempDiv.innerHTML = editingPost.content;
       const plainTextContent = tempDiv.textContent || tempDiv.innerText || '';
+      
+      // Extract circleId - handle both formats
+      let extractedCircleId = '';
+      if (editingPost.circles && editingPost.circles.length > 0) {
+        // New format: circles array with circleId property
+        extractedCircleId = editingPost.circles[0].circleId || editingPost.circles[0].id || '';
+      } else if (editingPost.circleId) {
+        // Legacy format: direct circleId
+        extractedCircleId = editingPost.circleId;
+      }
       
       setFormData({
         title: editingPost.title || '',
         content: plainTextContent,
         room: editingPost.room,
-        circleId: editingPost.circleId || '',
+        circleId: extractedCircleId,
         category: editingPost.category,
-        image: null,
+        image: editingPost.image?.url ? editingPost.image : null, // Preserve existing image
       });
     }
   }, [isOpen, editingPost, dispatch]);

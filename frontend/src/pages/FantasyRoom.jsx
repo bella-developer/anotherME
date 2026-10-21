@@ -62,6 +62,11 @@ function FantasyRoom() {
   useEffect(() => { fetchData(); }, [navigate, selectedCategory]);
 
   const handlePostCreated = (newPost) => setPosts(prev => [newPost, ...prev]);
+  
+  const handlePostUpdated = (updatedPost) => {
+    // Replace the updated post in the posts array
+    setPosts(prev => prev.map(p => p.id === updatedPost.id ? updatedPost : p));
+  };
 
   const handleCircleCreated = () => {
     // Refetch circles to update dropdown with cache bust
@@ -317,7 +322,7 @@ function FantasyRoom() {
             setIsPostFormOpen(false);
             setEditingPost(null);
           }}
-          onPostCreated={handlePostCreated}
+          onPostCreated={editingPost ? handlePostUpdated : handlePostCreated}
           onCircleCreated={handleCircleCreated}
           circles={circles}
           editingPost={editingPost}
