@@ -80,8 +80,8 @@ function StickyWall({activeEntry,selectEntry,compact=false}) {
       <p className="font-mono text-[8px] font-medium uppercase tracking-[.32em] text-[#a79a8b]">Sacred Home of ...</p>
       <div className={`mt-2.5 h-px w-16 bg-[#9b343a]/65 ${compact?'mx-auto':''}`}/>
     </div>
-    {compact ? <div className="mx-auto grid w-full max-w-[410px] gap-y-2.5">
-      {NOTE_ROWS.map((row,rowIndex)=><div key={rowIndex} className="mx-auto grid w-full gap-2" style={{gridTemplateColumns:`repeat(${row.length},minmax(0,1fr))`,maxWidth:row.length===3?'100%':'76%'}}>
+    {compact ? <div className="mx-auto grid w-full max-w-[410px] gap-y-1.5">
+      {NOTE_ROWS.map((row,rowIndex)=><div key={rowIndex} className="mx-auto grid w-full gap-1.5" style={{gridTemplateColumns:`repeat(${row.length},minmax(0,1fr))`,maxWidth:row.length===3?'100%':'76%'}}>
         {row.map(index=><StickyNote key={FRAMES[index].id} frame={FRAMES[index]} index={index} active={index===activeEntry} onSelect={selectEntry} compact/>)}
       </div>)}
     </div> : <div className="relative mx-auto h-[clamp(280px,28vw,360px)] w-full max-w-[390px] overflow-visible">
@@ -118,13 +118,13 @@ function CinematicVideo({active,navigate,compact=false,onVideoEnd}) {
   return <section className="relative min-w-0">
     <div className="relative overflow-hidden border border-white/[.12] bg-[#090909] shadow-[0_30px_85px_rgba(0,0,0,.55)]">
       <div className={`relative w-full overflow-hidden ${compact?'aspect-[1.7/1]':'aspect-[1.62/1]'}`}>
-        <ArchiveVideo key={active.id} frame={active} priority className="absolute inset-0 h-full w-full object-cover brightness-[.72] contrast-[1.08] saturate-[.76]"/>
-        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,.25),transparent_40%,rgba(0,0,0,.15)),linear-gradient(0deg,rgba(0,0,0,.3),transparent_35%,rgba(0,0,0,.18))]"/>
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_25%,rgba(0,0,0,.62)_100%)]"/>
-        <div className={`pointer-events-none absolute inset-0 z-20 flex items-center justify-center ${compact?'px-4':'px-6 sm:px-10'}`}>
-          <p className="font-display text-[clamp(38px,5.5vw,64px)] font-black lowercase leading-none tracking-[.06em] text-white" style={{
-            textShadow: '0 4px 20px rgba(0,0,0,.95), 0 0 40px rgba(255,255,255,.15)',
-            filter: 'drop-shadow(0 0 8px rgba(255,255,255,.2))'
+        <ArchiveVideo key={active.id} frame={active} priority className="absolute inset-0 h-full w-full object-cover brightness-[.85] contrast-[1.05] saturate-[.85]"/>
+        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,.12),transparent_40%,rgba(0,0,0,.08)),linear-gradient(0deg,rgba(0,0,0,.15),transparent_35%,rgba(0,0,0,.1))]"/>
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_30%,rgba(0,0,0,.35)_100%)]"/>
+        <div className={`pointer-events-none absolute inset-0 z-20 flex items-center justify-center ${compact?'px-4 pt-1':'px-6 sm:px-10 pt-1'}`}>
+          <p className="font-display text-[clamp(28px,4.2vw,48px)] font-black lowercase leading-none tracking-[.06em] text-white" style={{
+            textShadow: '0 3px 16px rgba(0,0,0,.9), 0 0 30px rgba(255,255,255,.12)',
+            filter: 'drop-shadow(0 0 6px rgba(255,255,255,.15))'
           }}>{active.quote}</p>
         </div>
         <div className="pointer-events-none absolute inset-0 border border-white/[.07]"/>
@@ -138,7 +138,7 @@ function FilmStrip({activeEntry,selectEntry}) {
   return <aside className="hidden h-[545px] min-w-0 lg:block" aria-label="Choose a memory">
     <div className="relative h-full w-full">
       <div className="absolute bottom-0 left-0 top-0 w-px bg-white/[.09]"/>
-      <div className="flex h-full flex-col gap-[5px] pl-3">
+      <div className="flex h-full flex-col gap-[3px] pl-3">
         {FRAMES.map((frame,index)=>{const selected=index===activeEntry;return <button key={frame.id} type="button" onClick={()=>selectEntry(index)} aria-label={`Select ${frame.title}`} aria-pressed={selected} className="group relative min-h-0 flex-1 overflow-hidden text-left focus-visible:outline focus-visible:outline-1 focus-visible:outline-[#a9363d]">
           <ArchiveVideo frame={frame} priority={selected} className={`absolute inset-0 h-full w-full object-cover transition-all duration-700 ${selected?'scale-100 opacity-80 grayscale-[.15]':'scale-[1.08] opacity-[.22] grayscale'} group-hover:scale-100 group-hover:opacity-[.62]`}/>
           <span className="absolute inset-0 bg-black/40 transition-colors group-hover:bg-black/20"/>
