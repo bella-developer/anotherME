@@ -15,8 +15,11 @@ const REACTIONS = [
   { type: 'dislike', icon: ThumbsDown, color: '#ffffff', activeColor: '#a9363d', activeRGB: '169, 54, 61' }
 ];
 
-function RoomReactions({ reactions, userReactions = [], onReact, disabled = false }) {
+function RoomReactions({ room, reactions, userReactions = [], onReact, disabled = false }) {
   const [animatingReaction, setAnimatingReaction] = useState(null);
+
+  // Get room-specific reactions
+  const roomReactions = ROOM_REACTIONS[room] || ROOM_REACTIONS.dark;
 
   const handleReactionClick = async (reactionType) => {
     if (disabled) return;
@@ -35,8 +38,9 @@ function RoomReactions({ reactions, userReactions = [], onReact, disabled = fals
     }
   };
 
-  const getButtonStyle = (reactionType, hasReacted, activeRGB) => {
+  const getButtonStyle = (reactionType, hasReacted) => {
     const isAnimating = animatingReaction === reactionType;
+    const activeRGB = '169, 54, 61'; // ESO blood-red
     
     if (hasReacted) {
       return {
@@ -66,11 +70,13 @@ function RoomReactions({ reactions, userReactions = [], onReact, disabled = fals
 
   return (
     <div className="relative">
-      {/* Premium 3-button reaction system - icons only */}
+      {/* Premium room-specific 3-button reaction system - bold white icons */}
       <div className="flex gap-2 justify-center items-center">
-        {REACTIONS.map(({ type, icon: Icon, color, activeColor, activeRGB }) => {
+        {roomReactions.map(({ type, icon: Icon, label }) => {
           const count = reactions[type] || 0;
           const hasReacted = userReactions.includes(type);
+          const activeColor = '#a9363d'; // ESO blood-red
+          const activeRGB = '169, 54, 61';
           
           return (
             <button
@@ -78,8 +84,8 @@ function RoomReactions({ reactions, userReactions = [], onReact, disabled = fals
               onClick={() => handleReactionClick(type)}
               disabled={disabled}
               className="group relative p-3 rounded-lg flex items-center justify-center gap-2 cursor-pointer outline-none min-w-[48px] min-h-[48px]"
-              style={getButtonStyle(type, hasReacted, activeRGB)}
-              title={type.charAt(0).toUpperCase() + type.slice(1)}
+              style={getButtonStyle(type, hasReacted)}
+              title={label}
               onMouseEnter={(e) => {
                 if (!hasReacted) {
                   e.currentTarget.style.background = 'rgba(255, 255, 255, 0.08)';
@@ -97,14 +103,14 @@ function RoomReactions({ reactions, userReactions = [], onReact, disabled = fals
                 }
               }}
             >
-              {/* Premium icon with subtle glow effect */}
+              {/* Premium bold white icon with glow effect */}
               <Icon 
                 size={20}
-                strokeWidth={2}
+                strokeWidth={2.5}
                 className="flex-shrink-0"
                 style={{
-                  color: hasReacted ? activeColor : color,
-                  opacity: hasReacted ? 1 : 0.6,
+                  color: hasReacted ? activeColor : '#ffffff',
+                  opacity: hasReacted ? 1 : 0.7,
                   filter: hasReacted ? `drop-shadow(0 0 4px rgba(${activeRGB}, 0.6))` : 'none',
                   transition: 'all 0.3s ease',
                 }}
@@ -134,6 +140,7 @@ function RoomReactions({ reactions, userReactions = [], onReact, disabled = fals
 }
 
 RoomReactions.propTypes = {
+  room: PropTypes.oneOf(['dark', 'fantasy', 'philo']).isRequired,
   reactions: PropTypes.object.isRequired,
   userReactions: PropTypes.arrayOf(PropTypes.string),
   onReact: PropTypes.func.isRequired,

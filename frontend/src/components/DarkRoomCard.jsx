@@ -300,6 +300,7 @@ function DarkRoomCard({ post, onReaction, onEdit, onDelete }) {
         {/* Reactions - Responsive spacing */}
         <div className="pt-3 sm:pt-4 border-t mt-auto" style={{ borderColor: 'rgba(46, 230, 255, 0.15)' }}>
           <RoomReactions
+            room="dark"
             reactions={post.reactions || {}}
             userReactions={post.userReactions || []}
             onReact={(reactionType) => onReaction?.(post.id, reactionType)}
