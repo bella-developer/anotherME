@@ -117,7 +117,18 @@ function VaultCard({active,navigate,compact=false}) {
   </button>;
 }
 
-function CinematicVideo({active,navigate,compact=false}) {
+function CinematicVideo({active,navigate,compact=false,onVideoEnd}) {
+  // Handle video end event for GIF (using timer to simulate video end)
+  useEffect(() => {
+    // Since we're using GIFs, use a timer to simulate video end
+    // Approximate GIF duration: ~5 seconds per frame
+    const timer = setTimeout(() => {
+      if (onVideoEnd) onVideoEnd();
+    }, 5000); // 5 seconds per video
+    
+    return () => clearTimeout(timer);
+  }, [active.id, onVideoEnd]);
+  
   return <section className="relative min-w-0">
     <div className="relative overflow-hidden border border-white/[.12] bg-[#090909] shadow-[0_30px_85px_rgba(0,0,0,.55)]">
       <div className={`relative w-full overflow-hidden ${compact?'aspect-[1.7/1]':'aspect-[1.62/1]'}`}>
@@ -158,19 +169,38 @@ function FilmStrip({activeEntry,selectEntry}) {
 
 export default function CinematicHero() {
   const navigate=useNavigate();
-  const [activeEntry,setActiveEntry]=useState(1);
+  const [activeEntry,setActiveEntry]=useState(0); // Start with memory video (index 0)
+  const [userInteracted,setUserInteracted]=useState(false); // Track if user manually selected
   const active=FRAMES[activeEntry];
-  const selectEntry=useCallback(index=>setActiveEntry(index),[]);
+  
+  const selectEntry=useCallback(index=>{
+    setActiveEntry(index);
+    setUserInteracted(true); // User took control
+  },[]);
+  
   const next=useCallback(()=>setActiveEntry(current=>(current+1)%FRAMES.length),[]);
   const previous=useCallback(()=>setActiveEntry(current=>(current-1+FRAMES.length)%FRAMES.length),[]);
+  
+  // Auto-advance to next video when current ends (only if user hasn't interacted)
+  const handleVideoEnd = useCallback(() => {
+    if (!userInteracted) {
+      next();
+    }
+  }, [userInteracted, next]);
 
   useEffect(()=>{
     const onKeyDown=event=>{
       const target=event.target;
       const typing=target instanceof HTMLElement&&(target.isContentEditable||['INPUT','TEXTAREA','SELECT'].includes(target.tagName));
       if(typing||event.altKey||event.ctrlKey||event.metaKey)return;
-      if(event.key==='ArrowRight'||event.key==='ArrowDown')next();
-      if(event.key==='ArrowLeft'||event.key==='ArrowUp')previous();
+      if(event.key==='ArrowRight'||event.key==='ArrowDown'){
+        next();
+        setUserInteracted(true);
+      }
+      if(event.key==='ArrowLeft'||event.key==='ArrowUp'){
+        previous();
+        setUserInteracted(true);
+      }
     };
     window.addEventListener('keydown',onKeyDown);
     return()=>window.removeEventListener('keydown',onKeyDown);
@@ -199,7 +229,7 @@ export default function CinematicHero() {
 
         {/* One video instance, sized by the grid's available space. */}
         <div className="min-w-0 md:col-start-2 md:row-start-1">
-          <CinematicVideo active={active} navigate={navigate} compact/>
+          <CinematicVideo active={active} navigate={navigate} compact onVideoEnd={handleVideoEnd}/>
         </div>
 
         {/* Film strip is intentionally withheld until a wide desktop breakpoint. */}
