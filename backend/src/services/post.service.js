@@ -389,6 +389,11 @@ export async function updatePost(postId, updates, userId) {
     post.contentSanitized = sanitizePostContent(updates.content);
   }
 
+  // Update image if provided
+  if (updates.imageData) {
+    post.image = updates.imageData;
+  }
+
   await post.save();
 
   return post;

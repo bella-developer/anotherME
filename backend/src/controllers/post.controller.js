@@ -127,8 +127,20 @@ export async function updatePost(req, res, next) {
     const { content } = req.body;
     const userId = req.user.id;
 
+    // Prepare updates object
+    const updates = { content };
+
+    // Handle image upload if present
+    if (req.file) {
+      const imageData = {
+        url: req.file.path, // Cloudinary URL
+        publicId: req.file.filename, // Cloudinary public ID for deletion
+      };
+      updates.imageData = imageData;
+    }
+
     // Update post via service (ownership verified in service)
-    const post = await postService.updatePost(id, { content }, userId);
+    const post = await postService.updatePost(id, updates, userId);
 
     // Sanitize response with userId to show isAuthor flag
     const sanitized = sanitizePost(post, { userId });

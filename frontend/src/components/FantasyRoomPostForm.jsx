@@ -276,6 +276,7 @@ const FantasyRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, onC
           <ImageUpload
             onImageSelect={(file) => setFormData(prev => ({ ...prev, image: file }))}
             onImageRemove={() => setFormData(prev => ({ ...prev, image: null }))}
+            existingImage={formData.image}
             disabled={loading}
           />
 

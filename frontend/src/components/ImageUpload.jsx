@@ -1,15 +1,29 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { FaImage, FaTimes } from 'react-icons/fa';
 
 /**
  * ImageUpload Component
  * Compact image upload with drag & drop and preview
  */
-const ImageUpload = ({ onImageSelect, onImageRemove, disabled = false }) => {
+const ImageUpload = ({ onImageSelect, onImageRemove, disabled = false, existingImage = null }) => {
   const [preview, setPreview] = useState(null);
   const [fileName, setFileName] = useState('');
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef(null);
+
+  // Handle existing image from server
+  useEffect(() => {
+    if (existingImage) {
+      // If existingImage has a url property (from server), use it
+      const imageUrl = existingImage.url || existingImage;
+      setPreview(imageUrl);
+      setFileName('Existing image');
+    } else {
+      // Clear preview if no existing image
+      setPreview(null);
+      setFileName('');
+    }
+  }, [existingImage]);
 
   const validateAndProcessFile = (file) => {
     if (!file) return false;

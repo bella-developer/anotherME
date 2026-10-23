@@ -80,6 +80,7 @@ router.patch(
   authenticate,
   writeRateLimiter,
   noCache(),
+  upload.single('image'), // Add multer middleware for image upload
   validateUpdatePost,
   postController.updatePost
 );
