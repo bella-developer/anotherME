@@ -23,6 +23,14 @@ export async function createPost(req, res, next) {
     // Handle image upload if present
     let imageData = null;
     if (req.file) {
+      // Validate that file buffer exists
+      if (!req.file.buffer) {
+        const err = new Error('Image file is corrupted or empty');
+        err.statusCode = 400;
+        err.code = 'INVALID_IMAGE_FILE';
+        throw err;
+      }
+      
       try {
         imageData = await uploadImage(req.file.buffer, 'eso/posts');
       } catch (uploadError) {

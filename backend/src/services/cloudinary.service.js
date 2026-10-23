@@ -13,6 +13,11 @@ import { Readable } from 'stream';
  * @returns {Promise<Object>} Upload result with URL
  */
 export async function uploadImage(fileBuffer, folder = 'eso/posts') {
+  // Validate fileBuffer exists
+  if (!fileBuffer) {
+    throw new Error('File buffer is required for image upload');
+  }
+  
   return new Promise((resolve, reject) => {
     const uploadStream = cloudinary.uploader.upload_stream(
       {
@@ -39,9 +44,13 @@ export async function uploadImage(fileBuffer, folder = 'eso/posts') {
       }
     );
 
-    // Convert buffer to stream and pipe to Cloudinary
-    const readableStream = Readable.from(fileBuffer);
-    readableStream.pipe(uploadStream);
+    try {
+      // Convert buffer to stream and pipe to Cloudinary
+      const readableStream = Readable.from(fileBuffer);
+      readableStream.pipe(uploadStream);
+    } catch (streamError) {
+      reject(new Error(`Failed to create stream from buffer: ${streamError.message}`));
+    }
   });
 }
 

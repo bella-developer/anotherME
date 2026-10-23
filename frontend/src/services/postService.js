@@ -109,11 +109,9 @@ export const createPost = async (postData) => {
       formData.append('image', postData.image);
     }
 
-    const response = await apiClient.post('/posts', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
+    const response = await apiClient.post('/posts', formData);
+    // Note: Don't set Content-Type manually for FormData
+    // Axios will automatically set multipart/form-data with the correct boundary
     
     // Validate response structure
     if (!response.data || !response.data.data) {
@@ -148,7 +146,29 @@ export const updatePost = async (postId, postData) => {
       throw new Error('Content must be between 10 and 5000 characters');
     }
 
-    const response = await apiClient.patch(`/posts/${postId}`, postData);
+    // Create FormData for multipart/form-data submission (to support image updates)
+    const formData = new FormData();
+    
+    // Only append fields that are provided
+    if (postData.content !== undefined) {
+      formData.append('content', postData.content);
+    }
+    if (postData.title !== undefined) {
+      formData.append('title', postData.title);
+    }
+    if (postData.category !== undefined) {
+      formData.append('category', postData.category);
+    }
+    if (postData.circleId !== undefined) {
+      formData.append('circleId', postData.circleId);
+    }
+    if (postData.image) {
+      formData.append('image', postData.image);
+    }
+
+    const response = await apiClient.patch(`/posts/${postId}`, formData);
+    // Note: Don't set Content-Type manually for FormData
+    // Axios will automatically set multipart/form-data with the correct boundary
     
     // Validate response structure
     if (!response.data || !response.data.id) {
