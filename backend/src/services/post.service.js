@@ -191,12 +191,15 @@ export async function createPost({ content, room, title, circleId, category, ima
   
   // Format author data for response
   const formattedPost = post.toObject();
+  
+  // Add formatted author but KEEP authorId for sanitization
   if (post.authorId) {
     formattedPost.author = {
       username: post.authorId.username || 'User'
     };
+    // Keep authorId as ObjectId for controller sanitization
+    formattedPost.authorId = post.authorId._id;
   }
-  delete formattedPost.authorId;
 
   // Increment circle post count (async, don't wait)
   Circle.findByIdAndUpdate(mongoCircleId, { $inc: { postCount: 1 } }).catch(err => {

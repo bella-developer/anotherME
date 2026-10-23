@@ -126,7 +126,7 @@ export function sanitizePost(post, options = {}) {
   }
 
   // Include isAuthor flag if userId provided (for UI logic)
-  if (options.userId) {
+  if (options.userId && postData.authorId) {
     sanitized.isAuthor = postData.authorId.toString() === options.userId.toString();
   }
 
