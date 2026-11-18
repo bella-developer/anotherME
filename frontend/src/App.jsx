@@ -41,18 +41,11 @@ const Manifesto = lazy(() => import('./pages/Manifesto'));
 const AdminDashboard = lazy(() => import('./pages/AdminDashboard'));
 const DebugAuth = lazy(() => import('./pages/DebugAuth'));
 const NotFound = lazy(() => import('./pages/NotFound'));
+const SanctuaryPostStudio = lazy(() => import('./pages/SanctuaryPostStudio'));
+const SanctuaryVault = lazy(() => import('./pages/SanctuaryVault'));
 
-// Placeholder Create component
-function Create() {
-  return (
-    <div className="text-center py-12">
-      <h1 className="text-3xl font-bold text-white mb-4">
-        Create Post
-      </h1>
-      <p className="text-gray-400">Share your thoughts</p>
-    </div>
-  );
-}
+import SanctuaryAudioDock from './components/SanctuaryAudioDock';
+import SanctuaryPassModal from './components/SanctuaryPassModal';
 
 // Loading fallback component
 function PageLoader() {
@@ -170,9 +163,19 @@ function App() {
               path="/create"
               element={
                 <ProtectedRoute>
-                  <Layout>
-                    <Create />
-                  </Layout>
+                  <Suspense fallback={<PageLoader />}>
+                    <SanctuaryPostStudio />
+                  </Suspense>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/vault"
+              element={
+                <ProtectedRoute>
+                  <Suspense fallback={<PageLoader />}>
+                    <SanctuaryVault />
+                  </Suspense>
                 </ProtectedRoute>
               }
             />
@@ -281,6 +284,10 @@ function App() {
               onClose={closeNotification}
             />
           )}
+
+          {/* Ambient Generative Soundscape Dock & Commercial Sanctuary Pass */}
+          <SanctuaryAudioDock />
+          <SanctuaryPassModal />
         </StatsProvider>
       </ToastProvider>
     </Router>

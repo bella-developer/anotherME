@@ -1,9 +1,13 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { FaPen, FaTrash } from 'react-icons/fa';
+import { Bookmark } from 'lucide-react';
 import RoomReactions from './RoomReactions';
 import ConfirmDialog from './ConfirmDialog';
+import { toggleBookmark } from '../features/sanctuarySlice';
+import { useToast } from '../contexts/ToastContext';
 
 /**
  * Philo Room Card Component
@@ -11,7 +15,22 @@ import ConfirmDialog from './ConfirmDialog';
  */
 function PhiloRoomCard({ post, onReaction, onEdit, onDelete }) {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { addToast } = useToast();
+  const { vaultBookmarks } = useSelector((state) => state.sanctuary);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+
+  const isBookmarked = vaultBookmarks?.some((b) => b.id === post.id);
+
+  const handleToggleBookmark = (e) => {
+    e.stopPropagation();
+    dispatch(toggleBookmark(post));
+    addToast({
+      type: isBookmarked ? 'info' : 'success',
+      title: isBookmarked ? 'Removed from Vault' : 'Saved to Vault',
+      message: isBookmarked ? 'Thought removed from your Sanctuary Vault' : 'Thought preserved in your private Sanctuary Vault',
+    });
+  };
 
   const formatTimeAgo = (date) => {
     const seconds = Math.floor((new Date() - new Date(date)) / 1000);
@@ -53,6 +72,19 @@ function PhiloRoomCard({ post, onReaction, onEdit, onDelete }) {
           )}
         </div>
         <div className="flex items-center gap-1 sm:gap-2">
+          {/* Save to Sanctuary Vault Button */}
+          <button
+            onClick={handleToggleBookmark}
+            className={`p-1 sm:p-1.5 rounded-full transition-colors ${
+              isBookmarked
+                ? 'text-[#a855f7] bg-[#a855f7]/15'
+                : 'text-white/40 hover:text-white/80 hover:bg-white/10'
+            }`}
+            title={isBookmarked ? 'Remove from Sanctuary Vault' : 'Save to Sanctuary Vault'}
+            aria-label={isBookmarked ? 'Remove from Sanctuary Vault' : 'Save to Sanctuary Vault'}
+          >
+            <Bookmark size={12} fill={isBookmarked ? 'currentColor' : 'none'} />
+          </button>
           {post.isAuthor && (
             <div className="flex items-center gap-0.5 sm:gap-1">
               <button

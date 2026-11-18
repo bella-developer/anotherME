@@ -1,8 +1,11 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Sparkles, PenTool, Bookmark } from 'lucide-react';
 import useAuth from '../hooks/useAuth';
 import NotificationBell from './NotificationBell';
 import EsoLogo from './EsoLogo';
+import { openMembershipModal } from '../features/sanctuarySlice';
 
 /**
  * Navbar Component
@@ -11,7 +14,9 @@ import EsoLogo from './EsoLogo';
  */
 function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const dispatch = useDispatch();
   const { user, isAuthenticated } = useAuth();
+  const { isPatron } = useSelector((state) => state.sanctuary || {});
 
   // Don't show navbar on landing/auth pages
   const location = window.location.pathname;
@@ -73,7 +78,7 @@ function Navbar() {
           </Link>
 
           {/* Desktop Navigation Links */}
-          <div className="hidden md:flex items-center space-x-8" role="menubar">
+          <div className="hidden md:flex items-center space-x-6 lg:space-x-8" role="menubar">
             <Link
               to="/home"
               className="text-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white/50 rounded px-2 py-1 tracking-wider uppercase text-white/85 hover:text-white font-medium"
@@ -88,6 +93,28 @@ function Navbar() {
             >
               Circles
             </Link>
+            {isAuthenticated && (
+              <>
+                <Link
+                  to="/create"
+                  className="text-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white/50 rounded px-2 py-1 tracking-wider uppercase text-white/85 hover:text-white font-medium flex items-center gap-1.5"
+                  role="menuitem"
+                  title="Sanctuary Studio"
+                >
+                  <PenTool size={13} className="text-[#d97757]" />
+                  <span>Studio</span>
+                </Link>
+                <Link
+                  to="/vault"
+                  className="text-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white/50 rounded px-2 py-1 tracking-wider uppercase text-white/85 hover:text-white font-medium flex items-center gap-1.5"
+                  role="menuitem"
+                  title="Sanctuary Vault"
+                >
+                  <Bookmark size={13} className="text-[#397982]" />
+                  <span>Vault</span>
+                </Link>
+              </>
+            )}
             <Link
               to="/support"
               className="text-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white/50 rounded px-2 py-1 tracking-wider uppercase text-white/85 hover:text-white font-medium"
@@ -98,7 +125,20 @@ function Navbar() {
           </div>
 
           {/* User Info / Auth */}
-          <div className="hidden md:flex items-center space-x-4">
+          <div className="hidden md:flex items-center space-x-3 lg:space-x-4">
+            {/* ESO Sanctuary Pass Button */}
+            <button
+              onClick={() => dispatch(openMembershipModal())}
+              className={`text-[10px] uppercase tracking-wider px-2.5 py-0.5 rounded-full border transition-all flex items-center gap-1.5 font-medium ${
+                isPatron
+                  ? 'border-[#397982]/60 bg-[#397982]/15 text-[#6ebac4] hover:bg-[#397982]/25 shadow-[0_0_12px_rgba(57,121,130,0.2)]'
+                  : 'border-[#d97757]/50 bg-[#d97757]/10 text-[#f39c7d] hover:bg-[#d97757]/20 shadow-[0_0_12px_rgba(217,119,87,0.2)]'
+              }`}
+              title="ESO Sanctuary Pass"
+            >
+              <Sparkles size={11} className={isPatron ? 'text-[#6ebac4]' : 'text-[#f39c7d]'} />
+              <span>{isPatron ? 'Patron' : 'Pass'}</span>
+            </button>
             {user?.role === 'admin' && (
               <Link
                 to="/admin"
@@ -223,6 +263,44 @@ function Navbar() {
                 >
                   Circles
                 </Link>
+                {isAuthenticated && (
+                  <>
+                    <Link
+                      to="/create"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="py-3 px-4 rounded-lg transition-colors duration-200 text-base font-medium text-white/80 hover:text-white hover:bg-white/10 flex items-center gap-2.5"
+                      role="menuitem"
+                    >
+                      <PenTool size={16} className="text-[#d97757]" />
+                      <span>Sanctuary Studio</span>
+                    </Link>
+                    <Link
+                      to="/vault"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="py-3 px-4 rounded-lg transition-colors duration-200 text-base font-medium text-white/80 hover:text-white hover:bg-white/10 flex items-center gap-2.5"
+                      role="menuitem"
+                    >
+                      <Bookmark size={16} className="text-[#397982]" />
+                      <span>Sanctuary Vault</span>
+                    </Link>
+                  </>
+                )}
+                <button
+                  onClick={() => {
+                    setIsMobileMenuOpen(false);
+                    dispatch(openMembershipModal());
+                  }}
+                  className="text-left py-3 px-4 rounded-lg transition-colors duration-200 text-base font-medium text-[#f39c7d] hover:bg-[#d97757]/10 flex items-center justify-between"
+                  role="menuitem"
+                >
+                  <span className="flex items-center gap-2.5">
+                    <Sparkles size={16} />
+                    <span>Sanctuary Pass</span>
+                  </span>
+                  <span className="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full border border-[#d97757]/40 bg-[#d97757]/20 text-[#f39c7d]">
+                    {isPatron ? 'Active' : 'Upgrade'}
+                  </span>
+                </button>
                 <Link
                   to="/support"
                   onClick={() => setIsMobileMenuOpen(false)}

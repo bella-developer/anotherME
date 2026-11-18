@@ -4,6 +4,7 @@ import postsReducer from '../features/postsSlice';
 import circlesReducer from '../features/circlesSlice';
 import commentsReducer from '../features/commentsSlice';
 import userReducer from '../features/userSlice';
+import sanctuaryReducer from '../features/sanctuarySlice';
 
 // Root reducer
 const rootReducer = {
@@ -12,6 +13,7 @@ const rootReducer = {
   circles: circlesReducer,
   comments: commentsReducer,
   user: userReducer,
+  sanctuary: sanctuaryReducer,
 };
 
 export const store = configureStore({
