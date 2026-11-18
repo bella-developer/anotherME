@@ -198,7 +198,10 @@ export async function createPost({ content, room, title, circleId, category, ima
       username: post.authorId.username || 'User'
     };
     // Keep authorId as ObjectId for controller sanitization
-    formattedPost.authorId = post.authorId._id;
+    formattedPost.authorId = post.authorId._id || post.authorId;
+  } else {
+    formattedPost.authorId = authorId;
+    formattedPost.author = { username: 'User' };
   }
 
   // Increment circle post count (async, don't wait)
@@ -212,6 +215,8 @@ export async function createPost({ content, room, title, circleId, category, ima
     console.log('Setting post as circle topic:', post._id, 'Circle:', mongoCircleId);
     await setPostAsCircleTopic(post._id, mongoCircleId, authorId);
     console.log('Successfully set post as circle topic');
+    formattedPost.isCircleTopic = true;
+    formattedPost.circleTopicSetAt = new Date();
   } catch (err) {
     console.error('Failed to set post as circle topic:', err);
     // Continue even if this fails

@@ -256,11 +256,11 @@ export async function getTopicPosts(req, res, next) {
     }
 
     // Format response (include user reactions if authenticated)
-    const userId = req.user?.id;
+    const userId = req.user?.id ? req.user.id.toString() : null;
     const formattedPosts = topicPosts.map(topicPost => {
-      const userReactions = userId
+      const userReactions = (userId && Array.isArray(topicPost.userReactions))
         ? topicPost.userReactions
-            .filter(r => r.userId.toString() === userId.toString())
+            .filter(r => (r?.userId?._id ? r.userId._id.toString() : (r?.userId ? r.userId.toString() : null)) === userId)
             .map(r => r.type)
         : [];
 
@@ -314,10 +314,10 @@ export async function getTopicPost(req, res, next) {
     }
 
     // Format response (include user reactions if authenticated)
-    const userId = req.user?.id;
-    const userReactions = userId
+    const userId = req.user?.id ? req.user.id.toString() : null;
+    const userReactions = (userId && Array.isArray(topicPost.userReactions))
       ? topicPost.userReactions
-          .filter(r => r.userId.toString() === userId.toString())
+          .filter(r => (r?.userId?._id ? r.userId._id.toString() : (r?.userId ? r.userId.toString() : null)) === userId)
           .map(r => r.type)
       : [];
 

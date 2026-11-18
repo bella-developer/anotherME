@@ -104,62 +104,87 @@ export function sanitizePost(post, options = {}) {
   // Handle Mongoose document
   const postData = post.toObject ? post.toObject() : post;
 
+  const postId = (postData._id || postData.id)?.toString() || null;
+
   const sanitized = {
-    id: postData._id.toString(), // Use MongoDB ObjectId directly
+    id: postId, // Use MongoDB ObjectId directly
     room: postData.room,
     title: postData.title || null,
-    content: postData.contentSanitized, // Only sanitized content
+    content: postData.contentSanitized || postData.content, // Only sanitized content
     category: postData.category,
     image: postData.image || null, // Include image data if present
     reactions: postData.reactions || {},
     commentCount: postData.commentCount || 0,
+    isCircleTopic: Boolean(postData.isCircleTopic),
+    circleTopicSetAt: postData.circleTopicSetAt || null,
     createdAt: postData.createdAt,
     updatedAt: postData.updatedAt,
     // Never include: _id, authorId, circleId (raw), content (unsanitized), isHidden, hiddenBy, hiddenAt
   };
 
+  // Safe user ID string for comparisons
+  const currentUserId = options.userId
+    ? (options.userId?._id ? options.userId._id.toString() : options.userId.toString())
+    : null;
+
   // Include user's reactions if userId provided
-  if (options.userId && postData.userReactions) {
+  if (currentUserId && postData.userReactions && Array.isArray(postData.userReactions)) {
     sanitized.userReactions = postData.userReactions
-      .filter(r => r.userId.toString() === options.userId.toString())
+      .filter(r => {
+        const rUserId = r?.userId?._id ? r.userId._id.toString() : (r?.userId ? r.userId.toString() : null);
+        return Boolean(rUserId && rUserId === currentUserId);
+      })
       .map(r => r.type);
   }
 
   // Include isAuthor flag if userId provided (for UI logic)
-  if (options.userId && postData.authorId) {
-    sanitized.isAuthor = postData.authorId.toString() === options.userId.toString();
+  if (options.userId) {
+    const postAuthorId = postData.authorId?._id
+      ? postData.authorId._id.toString()
+      : (postData.authorId
+        ? postData.authorId.toString()
+        : (postData.author?._id ? postData.author._id.toString() : (postData.author?.id ? postData.author.id.toString() : null)));
+
+    sanitized.isAuthor = Boolean(currentUserId && postAuthorId && currentUserId === postAuthorId);
   }
 
   // Include circles array with sanitized data
   if (postData.circles && postData.circles.length > 0) {
     sanitized.circles = postData.circles.map(circle => {
-      const circleIdValue = circle.circleId?._id?.toString() || circle.circleId?.toString();
+      const circleIdValue = circle.circleId?._id
+        ? circle.circleId._id.toString()
+        : (circle.circleId
+          ? circle.circleId.toString()
+          : (circle.id ? circle.id.toString() : (circle._id ? circle._id.toString() : null)));
       return {
         id: circleIdValue,
         circleId: circleIdValue, // Include for backward compatibility
-        name: circle.name,
-        fullName: circle.circleId?.name || circle.name,
+        name: circle.name || circle.circleId?.name || null,
+        fullName: circle.circleId?.name || circle.name || null,
         description: circle.circleId?.description || null,
-        room: circle.circleId?.room || null, // Include room field for badges
-        color: circle.color,
-        icon: circle.icon
+        room: circle.circleId?.room || circle.room || null, // Include room field for badges
+        color: circle.color || '#D97757',
+        icon: circle.icon || '⬢'
       };
     });
   }
 
   // Optionally include author username (if populated and requested)
-  if (options.includeAuthorUsername && postData.authorId?.username) {
+  if (options.includeAuthorUsername && (postData.authorId?.username || postData.author?.username)) {
     sanitized.author = {
-      username: postData.authorId.username,
+      username: postData.authorId?.username || postData.author?.username,
     };
   }
 
   // Legacy: Optionally include single circle name (if populated and requested)
-  if (options.includeCircleName && postData.circleId?.name) {
+  if (options.includeCircleName && postData.circleId) {
+    const legacyCircleId = postData.circleId?._id
+      ? postData.circleId._id.toString()
+      : (postData.circleId ? postData.circleId.toString() : null);
     sanitized.circle = {
-      id: postData.circleId._id.toString(),
-      name: postData.circleId.name,
-      room: postData.circleId.room || null, // Include room field for badges
+      id: legacyCircleId,
+      name: postData.circleId?.name || null,
+      room: postData.circleId?.room || null, // Include room field for badges
     };
   }
 

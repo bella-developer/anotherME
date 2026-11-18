@@ -133,6 +133,69 @@ describe('Response Sanitization Utilities', () => {
       assert.ok(sanitized.author);
       assert.strictEqual(sanitized.author.username, 'testauthor123');
     });
+
+    it('should never throw when authorId is undefined and options.userId is provided', () => {
+      const post = {
+        _id: '507f1f77bcf86cd799439012',
+        // authorId is intentionally missing/undefined
+        contentSanitized: 'Content without authorId',
+        category: 'DARK',
+        room: 'dark',
+        reactions: {},
+        commentCount: 0,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      };
+
+      const sanitized = sanitizePost(post, { userId: '507f1f77bcf86cd799439011' });
+      assert.ok(sanitized);
+      assert.strictEqual(sanitized.isAuthor, false);
+    });
+
+    it('should handle populated authorId object when determining isAuthor', () => {
+      const post = {
+        _id: '507f1f77bcf86cd799439012',
+        authorId: {
+          _id: '507f1f77bcf86cd799439011',
+          username: 'authorUser',
+        },
+        contentSanitized: 'Populated author test',
+        category: 'CONFESSION',
+        room: 'dark',
+        reactions: {},
+        commentCount: 0,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      };
+
+      const authorSanitized = sanitizePost(post, { userId: '507f1f77bcf86cd799439011' });
+      assert.strictEqual(authorSanitized.isAuthor, true);
+
+      const nonAuthorSanitized = sanitizePost(post, { userId: '6a3a389333eeff4bbc6cb57f' });
+      assert.strictEqual(nonAuthorSanitized.isAuthor, false);
+    });
+
+    it('should handle null/undefined in userReactions gracefully', () => {
+      const post = {
+        _id: '507f1f77bcf86cd799439012',
+        authorId: '507f1f77bcf86cd799439011',
+        userReactions: [
+          { userId: null, type: 'iFeelYou' },
+          { userId: undefined, type: 'wild' },
+          { userId: '507f1f77bcf86cd799439011', type: 'lamp' },
+        ],
+        contentSanitized: 'Reactions test',
+        category: 'DEEP',
+        room: 'philo',
+        reactions: {},
+        commentCount: 0,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      };
+
+      const sanitized = sanitizePost(post, { userId: '507f1f77bcf86cd799439011' });
+      assert.deepStrictEqual(sanitized.userReactions, ['lamp']);
+    });
   });
 
   describe('sanitizeCircle', () => {

@@ -49,7 +49,8 @@ export async function createPost(req, res, next) {
     );
 
     // Sanitize response with userId to show isAuthor flag
-    const sanitized = sanitizePost(post, { userId: req.user.id });
+    const currentUserId = req.user?.id || req.user?._id;
+    const sanitized = sanitizePost(post, { userId: currentUserId });
 
     res.status(201).json(createSuccessResponse(sanitized, 'Post created successfully'));
   } catch (error) {
