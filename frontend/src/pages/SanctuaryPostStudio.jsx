@@ -1,7 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { motion, AnimatePresence } from 'framer-motion';
 import {
   Sparkles,
   Maximize2,
@@ -11,10 +10,8 @@ import {
   Eye,
   PenTool,
   Volume2,
-  CheckCircle2,
   ArrowLeft,
   Image as ImageIcon,
-  Compass,
 } from 'lucide-react';
 import Layout from '../components/Layout';
 import ImageUpload from '../components/ImageUpload';
@@ -22,14 +19,14 @@ import { createPost } from '../services/postService';
 import { fetchCircles } from '../services/circleService';
 import { saveDraft, toggleSoundscape } from '../features/sanctuarySlice';
 import { useToast } from '../contexts/ToastContext';
+import { usePageTitle } from '../hooks/usePageTitle';
 
 const ROOM_CONFIGS = {
   dark: {
     id: 'dark',
     name: 'Dark Room',
     tagline: 'Release. Witness. Discharge.',
-    accent: '#397982',
-    accentRGB: '57, 121, 130',
+    accent: '#2EE6FF',
     categories: [
       { value: 'CONFESSION', label: 'Confession' },
       { value: 'REGRET', label: 'Regret' },
@@ -46,8 +43,7 @@ const ROOM_CONFIGS = {
     id: 'fantasy',
     name: 'Fantasy Room',
     tagline: 'Create. Imagine. Inspire.',
-    accent: '#947044',
-    accentRGB: '148, 112, 68',
+    accent: '#FF9D1C',
     categories: [
       { value: 'CREATIVE', label: 'Creative Fiction' },
       { value: 'DAYDREAM', label: 'Daydream' },
@@ -65,8 +61,7 @@ const ROOM_CONFIGS = {
     id: 'philo',
     name: 'Philosophy Room',
     tagline: 'Understand. Reflect. Inquire.',
-    accent: '#76517F',
-    accentRGB: '118, 81, 127',
+    accent: '#B56DFF',
     categories: [
       { value: 'SPIRITUAL', label: 'Spiritual' },
       { value: 'SHADOW', label: 'Shadow Self' },
@@ -82,76 +77,83 @@ const ROOM_CONFIGS = {
 };
 
 export default function SanctuaryPostStudio() {
+  usePageTitle('Sanctuary Studio');
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { addToast } = useToast();
   const { isPlaying } = useSelector((state) => state.sanctuary);
 
   const [room, setRoom] = useState('dark');
+  const [category, setCategory] = useState('CONFESSION');
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const [category, setCategory] = useState(ROOM_CONFIGS.dark.categories[0].value);
-  const [circleId, setCircleId] = useState('');
   const [image, setImage] = useState(null);
-
+  const [showImageUpload, setShowImageUpload] = useState(false);
+  const [circleId, setCircleId] = useState('');
   const [circles, setCircles] = useState([]);
-  const [loadingCircles, setLoadingCircles] = useState(true);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [zenMode, setZenMode] = useState(false);
+  const [loadingCircles, setLoadingCircles] = useState(false);
+
+  const [activePrompt, setActivePrompt] = useState(null);
   const [previewMode, setPreviewMode] = useState(false);
+  const [zenMode, setZenMode] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [lastAutoSave, setLastAutoSave] = useState(null);
 
   const currentConfig = ROOM_CONFIGS[room];
 
-  // Fetch circles when room changes
+  // Fetch room circles
   useEffect(() => {
-    let mounted = true;
-    const loadCircles = async () => {
+    let isMounted = true;
+    async function loadCircles() {
       try {
         setLoadingCircles(true);
-        const res = await fetchCircles({ room });
-        if (mounted && res.circles) {
-          setCircles(res.circles);
-          if (res.circles.length > 0) {
-            setCircleId(res.circles[0]._id || res.circles[0].id);
+        const res = await fetchCircles({ room, limit: 50 });
+        if (isMounted) {
+          const list = res.circles || [];
+          setCircles(list);
+          if (list.length > 0) {
+            setCircleId(list[0].id || list[0]._id);
+          } else {
+            setCircleId('');
           }
         }
       } catch (err) {
-        console.error('Failed to load circles for room', err);
+        console.error('Failed to load circles for room:', err);
       } finally {
-        if (mounted) setLoadingCircles(false);
+        if (isMounted) setLoadingCircles(false);
       }
-    };
+    }
     loadCircles();
     return () => {
-      mounted = false;
+      isMounted = false;
     };
   }, [room]);
 
-  // Update default category when room changes
+  // Handle Room Change
   const handleRoomChange = (newRoom) => {
     setRoom(newRoom);
-    setCategory(ROOM_CONFIGS[newRoom].categories[0].value);
+    const newConfig = ROOM_CONFIGS[newRoom];
+    setCategory(newConfig.categories[0].value);
+    setActivePrompt(null);
   };
 
-  // Metrics calculation
+  // Metrics
   const metrics = useMemo(() => {
     const trimmed = content.trim();
-    const charCount = trimmed.length;
     const words = trimmed ? trimmed.split(/\s+/).length : 0;
-    const readTimeMin = Math.max(1, Math.ceil(words / 180));
-    const isValidLength = charCount >= 10 && charCount <= 5000;
+    const chars = content.length;
+    const readingTime = Math.max(1, Math.ceil(words / 180));
     return {
-      charCount,
       words,
-      readTimeMin,
-      isValidLength,
+      chars,
+      readingTime,
+      isValidLength: chars >= 10 && chars <= 5000,
     };
   }, [content]);
 
-  // Autosave draft locally every 15s if content exists
+  // Draft Auto-save timer
   useEffect(() => {
-    if (!content || content.length < 5) return;
+    if (!content.trim() || content.length < 20) return;
     const timer = setTimeout(() => {
       dispatch(
         saveDraft({
@@ -159,37 +161,27 @@ export default function SanctuaryPostStudio() {
           content,
           room,
           category,
+          circleId,
+          image,
         })
       );
-      setLastAutoSave(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
-    }, 15000);
-    return () => clearTimeout(timer);
-  }, [content, title, room, category, dispatch]);
+      setLastAutoSave(
+        new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      );
+    }, 12000);
 
-  // Whisper Prompt Generator
+    return () => clearTimeout(timer);
+  }, [title, content, room, category, circleId, image, dispatch]);
+
   const handleWhisperPrompt = () => {
     const list = currentConfig.prompts;
-    const randomPrompt = list[Math.floor(Math.random() * list.length)];
-    if (!content) {
-      setContent(randomPrompt + '\n\n');
-    } else {
-      setContent((prev) => prev + '\n\n' + randomPrompt + '\n\n');
-    }
-    addToast({
-      type: 'info',
-      title: 'Whisper Received',
-      message: 'A contemplative thought has been placed in your canvas.',
-    });
+    const random = list[Math.floor(Math.random() * list.length)];
+    setActivePrompt(random);
   };
 
-  // Manual save draft to Sanctuary Vault
-  const handleManualDraftSave = () => {
+  const handleManualSaveDraft = () => {
     if (!content.trim()) {
-      addToast({
-        type: 'warning',
-        title: 'Empty Canvas',
-        message: 'Write a few thoughts before saving a draft.',
-      });
+      addToast('Cannot save an empty draft.', 'info');
       return;
     }
     dispatch(
@@ -198,9 +190,13 @@ export default function SanctuaryPostStudio() {
         content,
         room,
         category,
+        circleId,
+        image,
       })
     );
-    setLastAutoSave(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
+    setLastAutoSave(
+      new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+    );
     addToast({
       type: 'success',
       title: 'Draft Vaulted',
@@ -208,14 +204,13 @@ export default function SanctuaryPostStudio() {
     });
   };
 
-  // Publish Post
   const handlePublish = async (e) => {
     e.preventDefault();
     if (!metrics.isValidLength) {
       addToast({
         type: 'error',
-        title: 'Validation Error',
-        message: 'Post content must be between 10 and 5,000 characters.',
+        title: 'Validation',
+        message: 'Content must be between 10 and 5,000 characters.',
       });
       return;
     }
@@ -223,7 +218,7 @@ export default function SanctuaryPostStudio() {
       addToast({
         type: 'error',
         title: 'Missing Circle',
-        message: 'Please select a circle for your post.',
+        message: 'Please select a circle for your thought.',
       });
       return;
     }
@@ -231,28 +226,22 @@ export default function SanctuaryPostStudio() {
     try {
       setIsSubmitting(true);
       const postPayload = {
+        title: title.trim() || undefined,
+        content: content.trim(),
         room,
         category,
-        content,
-        title: title.trim() || undefined,
         circleId,
         image: image || undefined,
       };
 
-      const result = await createPost(postPayload);
+      await createPost(postPayload);
       addToast({
         type: 'success',
         title: 'Released into Sanctuary',
         message: 'Your words now rest in the quiet collective.',
       });
 
-      // Navigate to post or room
-      const createdId = result.id || result._id;
-      if (createdId) {
-        navigate(`/posts/${createdId}`);
-      } else {
-        navigate(`/rooms/${room}`);
-      }
+      navigate(`/rooms/${room}`);
     } catch (err) {
       console.error('Failed to create post:', err);
       addToast({
@@ -267,189 +256,225 @@ export default function SanctuaryPostStudio() {
 
   return (
     <Layout leftSidebar={null} rightSidebar={null}>
-      <div
-        className={`min-h-screen text-white transition-all duration-700 relative pb-20 ${
-          zenMode ? 'pt-8' : 'pt-14 sm:pt-16'
-        }`}
-        style={{
-          background: 'radial-gradient(ellipse at top, rgba(14, 15, 20, 1) 0%, rgba(6, 6, 8, 1) 100%)',
-        }}
-      >
-        {/* Dynamic Room Aura Glow */}
-        <div
-          className="fixed top-0 left-1/2 -translate-x-1/2 w-[700px] h-[350px] rounded-full blur-[140px] pointer-events-none transition-all duration-1000 -z-0 opacity-40"
-          style={{
-            backgroundColor: `rgba(${currentConfig.accentRGB}, 0.35)`,
-          }}
-        />
-
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 relative z-10">
+      <div className="bg-transparent text-white min-h-[calc(100vh-3rem)] pb-20 pt-2 sm:pt-4">
+        {/* Centered Container matching App UI Philosophy */}
+        <div className="max-w-2xl mx-auto px-3 sm:px-4">
           {/* Top Bar Navigation */}
           {!zenMode && (
-            <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center justify-between mb-4 pb-3 border-b border-[#21262d]">
               <button
                 onClick={() => navigate(-1)}
-                className="flex items-center gap-2 text-xs uppercase tracking-wider text-white/50 hover:text-white transition-colors py-1 px-2.5 rounded-lg hover:bg-white/5"
+                className="flex items-center gap-1.5 text-[11px] uppercase tracking-[0.2em] text-[#8b949e] hover:text-[#e6edf3] font-mono transition-colors"
               >
-                <ArrowLeft size={14} />
+                <ArrowLeft size={13} />
                 <span>Return</span>
               </button>
 
-              {/* Room Selector Tabs */}
-              <div
-                className="inline-flex p-1 rounded-2xl border"
-                style={{
-                  background: 'rgba(255, 255, 255, 0.04)',
-                  borderColor: 'rgba(255, 255, 255, 0.08)',
-                  backdropFilter: 'blur(16px)',
-                }}
-              >
+              {/* Room Selector Tabs - Minimal segmented control */}
+              <div className="flex items-center border border-[#21262d] rounded p-0.5 bg-[rgba(255,255,255,0.02)]">
                 {Object.values(ROOM_CONFIGS).map((r) => {
                   const isActive = r.id === room;
                   return (
                     <button
                       key={r.id}
                       onClick={() => handleRoomChange(r.id)}
-                      className={`px-3 sm:px-4 py-1.5 rounded-xl text-xs font-medium tracking-wide transition-all ${
+                      className={`px-2.5 sm:px-3 py-1 rounded text-xs font-mono transition-all ${
                         isActive
-                          ? 'shadow-md text-white font-semibold'
-                          : 'text-white/50 hover:text-white/80'
+                          ? 'bg-[#21262d] text-[#e6edf3] font-medium'
+                          : 'text-[#8b949e] hover:text-[#e6edf3]'
                       }`}
-                      style={{
-                        backgroundColor: isActive ? r.accent : 'transparent',
-                      }}
                     >
-                      {r.name}
+                      {r.name.replace(' Room', '')}
                     </button>
                   );
                 })}
               </div>
 
-              {/* Utility Actions */}
-              <div className="flex items-center gap-2">
+              {/* Utilities */}
+              <div className="flex items-center gap-1 sm:gap-2">
                 <button
                   type="button"
                   onClick={() => dispatch(toggleSoundscape())}
-                  className={`p-2 rounded-xl border transition-colors ${
+                  className={`p-1.5 rounded border transition-colors ${
                     isPlaying
-                      ? 'border-emerald-500/40 text-emerald-400 bg-emerald-500/10'
-                      : 'border-white/10 text-white/50 hover:text-white hover:bg-white/5'
+                      ? 'border-[#2EE6FF]/50 text-[#2EE6FF] bg-[#2EE6FF]/10'
+                      : 'border-[#21262d] text-[#6e7681] hover:text-[#e6edf3]'
                   }`}
                   title={isPlaying ? 'Pause soundscape' : 'Play ambient soundscape'}
-                  aria-label="Toggle ambient soundscape"
                 >
-                  <Volume2 size={15} />
+                  <Volume2 size={14} />
                 </button>
                 <button
                   type="button"
                   onClick={() => setZenMode(true)}
-                  className="p-2 rounded-xl border border-white/10 text-white/50 hover:text-white hover:bg-white/5 transition-colors"
-                  title="Enter Zen Focus Mode"
-                  aria-label="Enter Zen Focus Mode"
+                  className="p-1.5 rounded border border-[#21262d] text-[#6e7681] hover:text-[#e6edf3] transition-colors"
+                  title="Zen Focus Mode"
                 >
-                  <Maximize2 size={15} />
+                  <Maximize2 size={14} />
                 </button>
               </div>
             </div>
           )}
 
-          {/* Zen Mode Exit Button */}
+          {/* Zen Exit Trigger */}
           {zenMode && (
-            <div className="flex justify-between items-center mb-6">
-              <span className="text-[11px] uppercase tracking-widest text-white/30">
-                Zen Focus Sanctuary Active
+            <div className="flex justify-between items-center mb-4 pb-2 border-b border-[#21262d]">
+              <span className="text-[10px] uppercase tracking-[0.2em] text-[#6e7681] font-mono">
+                Zen Mode Active
               </span>
               <button
                 onClick={() => setZenMode(false)}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium text-white/70 hover:text-white bg-white/5 border border-white/10 hover:bg-white/10 transition-colors"
+                className="flex items-center gap-1 text-xs font-mono text-[#8b949e] hover:text-[#e6edf3] border border-[#21262d] px-2.5 py-1 rounded hover:border-[#30363d] transition-colors"
               >
-                <Minimize2 size={13} />
-                <span>Exit Zen Mode</span>
+                <Minimize2 size={12} />
+                <span>Exit</span>
               </button>
             </div>
           )}
 
-          {/* Studio Canvas Card */}
+          {/* Studio Workspace Card - Transparent Dark Aesthetic */}
           <div
-            className="rounded-3xl border p-5 sm:p-8 shadow-2xl transition-all"
+            className="rounded-lg border p-4 sm:p-6 transition-all"
             style={{
-              background: 'rgba(15, 16, 20, 0.75)',
-              backdropFilter: 'blur(30px)',
-              WebkitBackdropFilter: 'blur(30px)',
-              borderColor: `rgba(${currentConfig.accentRGB}, 0.25)`,
-              boxShadow: `0 20px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(${currentConfig.accentRGB}, 0.08)`,
+              background: 'rgba(0, 0, 0, 0.55)',
+              backdropFilter: 'blur(12px)',
+              borderColor: '#21262d',
+              boxShadow: '0 0 0 1px rgba(255,255,255,0.02), 0 8px 32px rgba(0,0,0,0.6)',
             }}
           >
-            {/* Header / Mode Toggle */}
-            <div className="flex flex-wrap items-center justify-between gap-3 pb-5 border-b border-white/10">
+            {/* Studio Header */}
+            <div className="flex items-center justify-between pb-3 border-b border-[#21262d]">
               <div>
-                <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-white/95">
+                <span className="text-[10px] uppercase tracking-[0.2em] text-[#8b949e] font-mono block">
                   Sanctuary Studio
-                </h1>
-                <p className="text-xs text-white/45 mt-0.5">
+                </span>
+                <span className="text-xs text-[#6e7681] font-mono mt-0.5 block">
                   {currentConfig.tagline}
-                </p>
+                </span>
               </div>
 
               <div className="flex items-center gap-2">
                 <button
                   type="button"
                   onClick={handleWhisperPrompt}
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium text-amber-300 bg-amber-500/10 border border-amber-500/25 hover:bg-amber-500/20 transition-colors"
-                  title="Receive contemplation inspiration"
+                  className="flex items-center gap-1.5 px-2.5 py-1 rounded text-xs font-mono text-[#8b949e] hover:text-[#e6edf3] border border-[#21262d] hover:border-[#30363d] transition-colors"
+                  title="Receive contemplation prompt"
                 >
-                  <Sparkles size={13} />
-                  <span>Whisper Prompt</span>
+                  <Sparkles size={12} />
+                  <span>Prompt</span>
                 </button>
 
-                <div className="inline-flex p-0.5 rounded-xl bg-white/5 border border-white/10">
+                <div className="flex border border-[#21262d] rounded p-0.5 bg-[rgba(255,255,255,0.02)]">
                   <button
                     type="button"
                     onClick={() => setPreviewMode(false)}
-                    className={`flex items-center gap-1 px-3 py-1 rounded-lg text-xs font-medium transition-colors ${
-                      !previewMode ? 'bg-white/15 text-white' : 'text-white/40 hover:text-white'
+                    className={`flex items-center gap-1 px-2 py-0.5 rounded text-xs font-mono transition-colors ${
+                      !previewMode ? 'bg-[#21262d] text-[#e6edf3]' : 'text-[#6e7681] hover:text-[#e6edf3]'
                     }`}
                   >
-                    <PenTool size={12} />
+                    <PenTool size={11} />
                     <span>Write</span>
                   </button>
                   <button
                     type="button"
                     onClick={() => setPreviewMode(true)}
-                    className={`flex items-center gap-1 px-3 py-1 rounded-lg text-xs font-medium transition-colors ${
-                      previewMode ? 'bg-white/15 text-white' : 'text-white/40 hover:text-white'
+                    className={`flex items-center gap-1 px-2 py-0.5 rounded text-xs font-mono transition-colors ${
+                      previewMode ? 'bg-[#21262d] text-[#e6edf3]' : 'text-[#6e7681] hover:text-[#e6edf3]'
                     }`}
                   >
-                    <Eye size={12} />
-                    <span>Contemplate</span>
+                    <Eye size={11} />
+                    <span>Preview</span>
                   </button>
                 </div>
               </div>
             </div>
 
-            {/* Title Field */}
-            <div className="py-4 border-b border-white/10">
+            {/* Whisper Prompt Suggestion */}
+            {activePrompt && (
+              <div className="mt-3 p-2.5 rounded border border-[#21262d] bg-[rgba(255,255,255,0.02)] text-xs text-[#8b949e] font-mono flex items-start justify-between gap-2">
+                <div className="italic leading-relaxed">
+                  &ldquo;{activePrompt}&rdquo;
+                </div>
+                <button
+                  onClick={() => setActivePrompt(null)}
+                  className="text-[#6e7681] hover:text-[#e6edf3] text-xs font-mono ml-2 flex-shrink-0"
+                >
+                  &times;
+                </button>
+              </div>
+            )}
+
+            {/* Category Pills */}
+            <div className="flex flex-wrap gap-1.5 pt-3 pb-2">
+              {currentConfig.categories.map((c) => (
+                <button
+                  key={c.value}
+                  type="button"
+                  onClick={() => setCategory(c.value)}
+                  className={`px-2.5 py-1 rounded text-xs font-mono transition-all ${
+                    category === c.value
+                      ? 'bg-[#21262d] text-[#e6edf3] border border-[#30363d]'
+                      : 'text-[#6e7681] hover:text-[#e6edf3] border border-transparent'
+                  }`}
+                >
+                  {c.label}
+                </button>
+              ))}
+            </div>
+
+            {/* Circle Selection */}
+            <div className="py-2">
+              <select
+                value={circleId}
+                onChange={(e) => setCircleId(e.target.value)}
+                className="w-full px-3 py-1.5 rounded text-xs font-mono border transition-colors focus:outline-none"
+                style={{
+                  background: '#0a0a0a',
+                  borderColor: '#21262d',
+                  color: '#e6edf3',
+                }}
+              >
+                {loadingCircles ? (
+                  <option value="">Loading circles...</option>
+                ) : circles.length === 0 ? (
+                  <option value="">No circles available for this room</option>
+                ) : (
+                  circles.map((c) => (
+                    <option key={c.id || c._id} value={c.id || c._id}>
+                      Circle: {c.name}
+                    </option>
+                  ))
+                )}
+              </select>
+            </div>
+
+            {/* Title Input */}
+            <div className="py-2 border-b border-[#21262d]">
               <input
                 type="text"
                 placeholder={room === 'dark' ? 'Title or unsaid whisper (optional)' : 'Give your thought a quiet title...'}
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 maxLength={120}
-                className="w-full bg-transparent text-lg sm:text-xl font-semibold text-white/90 placeholder-white/20 focus:outline-none focus:ring-0"
+                className="w-full bg-transparent text-sm sm:text-base font-mono text-[#e6edf3] placeholder-[#484f58] focus:outline-none"
               />
             </div>
 
             {/* Canvas / Preview */}
-            <div className="py-5 min-h-[280px]">
+            <div className="py-3 min-h-[220px]">
               {previewMode ? (
-                <div className="prose prose-invert max-w-none min-h-[260px] p-4 rounded-2xl bg-white/[0.02] border border-white/5">
-                  <div className="text-xs uppercase tracking-widest text-[#D97757] font-semibold mb-2">
+                <div className="p-3 rounded bg-[rgba(255,255,255,0.01)] border border-[#21262d] min-h-[200px]">
+                  <div className="text-[10px] uppercase tracking-[0.2em] text-[#6e7681] font-mono mb-2">
                     {category} &bull; {currentConfig.name}
                   </div>
-                  {title && <h2 className="text-xl font-bold text-white mb-4">{title}</h2>}
-                  <div className="text-white/80 whitespace-pre-wrap leading-relaxed font-serif text-base">
+                  {title && (
+                    <h3 className="text-base font-medium text-[#e6edf3] font-mono mb-3">
+                      {title}
+                    </h3>
+                  )}
+                  <div className="text-xs sm:text-sm text-[#c9d1d9] font-mono whitespace-pre-wrap leading-relaxed">
                     {content || (
-                      <span className="text-white/30 italic">
+                      <span className="text-[#484f58] italic">
                         Your words will preview here once written...
                       </span>
                     )}
@@ -459,86 +484,54 @@ export default function SanctuaryPostStudio() {
                 <textarea
                   value={content}
                   onChange={(e) => setContent(e.target.value)}
-                  placeholder={`What rests on your mind in the silence of the ${currentConfig.name}? Express without fear or pretense...`}
-                  rows={10}
-                  className="w-full bg-transparent text-white/85 placeholder-white/25 focus:outline-none resize-none leading-relaxed text-sm sm:text-base font-serif"
-                  style={{
-                    fontFamily: 'Georgia, Cambria, "Times New Roman", Times, serif',
-                  }}
+                  placeholder="In the stillness of this sanctuary, write with honesty..."
+                  rows={8}
+                  className="w-full bg-transparent text-xs sm:text-sm font-mono text-[#e6edf3] placeholder-[#484f58] leading-relaxed resize-none focus:outline-none"
                 />
               )}
             </div>
 
-            {/* Category & Circle Selectors */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 pb-4 border-t border-white/10">
-              {/* Category selector */}
-              <div>
-                <label className="block text-[11px] font-medium tracking-wider uppercase text-white/45 mb-2">
-                  Category Aura
-                </label>
-                <div className="flex flex-wrap gap-1.5">
-                  {currentConfig.categories.map((c) => {
-                    const isSelected = category === c.value;
-                    return (
-                      <button
-                        key={c.value}
-                        type="button"
-                        onClick={() => setCategory(c.value)}
-                        className={`px-3 py-1.5 rounded-xl text-xs font-medium tracking-wide transition-all border ${
-                          isSelected
-                            ? 'border-white/40 text-white bg-white/15 shadow-sm'
-                            : 'border-white/10 text-white/50 hover:text-white/80 hover:bg-white/5'
-                        }`}
-                      >
-                        {c.label}
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-
-              {/* Circle selector */}
-              <div>
-                <label className="block text-[11px] font-medium tracking-wider uppercase text-white/45 mb-2">
-                  Destined Circle
-                </label>
-                {loadingCircles ? (
-                  <div className="text-xs text-white/40 py-2">Loading circles...</div>
-                ) : (
-                  <select
-                    value={circleId}
-                    onChange={(e) => setCircleId(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-xs font-medium text-white/85 focus:outline-none focus:border-white/30 cursor-pointer"
+            {/* Optional Image Attachment */}
+            {showImageUpload ? (
+              <div className="py-3 border-t border-[#21262d]">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-[10px] uppercase tracking-wider text-[#8b949e] font-mono">
+                    Attachment
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setImage(null);
+                      setShowImageUpload(false);
+                    }}
+                    className="text-[11px] text-[#6e7681] hover:text-[#e6edf3] font-mono"
                   >
-                    {circles.map((c) => (
-                      <option key={c._id || c.id} value={c._id || c.id} className="bg-neutral-900 text-white">
-                        {c.name}
-                      </option>
-                    ))}
-                  </select>
-                )}
+                    Remove
+                  </button>
+                </div>
+                <ImageUpload onImageSelected={(img) => setImage(img)} />
               </div>
-            </div>
+            ) : (
+              <div className="py-1">
+                <button
+                  type="button"
+                  onClick={() => setShowImageUpload(true)}
+                  className="flex items-center gap-1.5 text-xs font-mono text-[#6e7681] hover:text-[#8b949e] transition-colors"
+                >
+                  <ImageIcon size={13} />
+                  <span>Attach image (optional)</span>
+                </button>
+              </div>
+            )}
 
-            {/* Optional Image Upload */}
-            <div className="pt-2 pb-4">
-              <ImageUpload
-                onImageSelect={(file) => setImage(file)}
-                onImageRemove={() => setImage(null)}
-                selectedImage={image}
-              />
-            </div>
-
-            {/* Metrics & AutoSave Bar */}
-            <div className="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-white/10 text-[11px] text-white/45">
-              <div className="flex items-center gap-4">
+            {/* Footer Toolbar */}
+            <div className="flex flex-wrap items-center justify-between gap-3 pt-3 mt-2 border-t border-[#21262d]">
+              <div className="flex items-center gap-3 text-[11px] text-[#6e7681] font-mono">
+                <span>{metrics.chars} / 5000 chars</span>
                 <span>{metrics.words} words</span>
-                <span>{metrics.charCount} / 5000 characters</span>
-                <span>~{metrics.readTimeMin} min read</span>
                 {lastAutoSave && (
-                  <span className="hidden sm:inline-flex items-center gap-1 text-emerald-400/80">
-                    <CheckCircle2 size={12} />
-                    <span>Autosaved at {lastAutoSave}</span>
+                  <span className="hidden sm:inline">
+                    &bull; Saved {lastAutoSave}
                   </span>
                 )}
               </div>
@@ -546,35 +539,25 @@ export default function SanctuaryPostStudio() {
               <div className="flex items-center gap-2">
                 <button
                   type="button"
-                  onClick={handleManualDraftSave}
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-white/10 text-white/60 hover:text-white hover:bg-white/5 transition-colors"
+                  onClick={handleManualSaveDraft}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-mono text-[#8b949e] hover:text-[#e6edf3] border border-[#21262d] hover:border-[#30363d] transition-colors"
                 >
-                  <Bookmark size={13} />
-                  <span>Save to Vault</span>
+                  <Bookmark size={12} />
+                  <span>Vault Draft</span>
                 </button>
 
                 <button
                   type="button"
-                  disabled={!metrics.isValidLength || isSubmitting}
                   onClick={handlePublish}
-                  className={`flex items-center gap-2 px-5 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all shadow-lg ${
-                    metrics.isValidLength && !isSubmitting
-                      ? 'text-white hover:opacity-90 active:scale-95'
-                      : 'opacity-40 cursor-not-allowed bg-white/10 text-white/40'
-                  }`}
-                  style={{
-                    backgroundColor: metrics.isValidLength ? currentConfig.accent : undefined,
-                    boxShadow: metrics.isValidLength
-                      ? `0 0 25px rgba(${currentConfig.accentRGB}, 0.5)`
-                      : 'none',
-                  }}
+                  disabled={!metrics.isValidLength || isSubmitting}
+                  className="flex items-center gap-1.5 px-4 py-1.5 rounded text-xs font-mono font-medium uppercase tracking-wider text-black bg-[#e6edf3] hover:bg-white active:scale-[0.98] transition-all disabled:opacity-40 disabled:cursor-not-allowed"
                 >
                   {isSubmitting ? (
-                    <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                    <span className="inline-block w-3.5 h-3.5 border-2 border-black border-t-transparent rounded-full animate-spin" />
                   ) : (
                     <>
-                      <Send size={13} />
-                      <span>Release Thought</span>
+                      <Send size={12} />
+                      <span>Release</span>
                     </>
                   )}
                 </button>

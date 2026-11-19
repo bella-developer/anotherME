@@ -101,7 +101,7 @@ function Navbar() {
                   role="menuitem"
                   title="Sanctuary Studio"
                 >
-                  <PenTool size={13} className="text-[#d97757]" />
+                  <PenTool size={12} className="text-[#8b949e]" />
                   <span>Studio</span>
                 </Link>
                 <Link
@@ -110,7 +110,7 @@ function Navbar() {
                   role="menuitem"
                   title="Sanctuary Vault"
                 >
-                  <Bookmark size={13} className="text-[#397982]" />
+                  <Bookmark size={12} className="text-[#8b949e]" />
                   <span>Vault</span>
                 </Link>
               </>
@@ -129,14 +129,10 @@ function Navbar() {
             {/* ESO Sanctuary Pass Button */}
             <button
               onClick={() => dispatch(openMembershipModal())}
-              className={`text-[10px] uppercase tracking-wider px-2.5 py-0.5 rounded-full border transition-all flex items-center gap-1.5 font-medium ${
-                isPatron
-                  ? 'border-[#397982]/60 bg-[#397982]/15 text-[#6ebac4] hover:bg-[#397982]/25 shadow-[0_0_12px_rgba(57,121,130,0.2)]'
-                  : 'border-[#d97757]/50 bg-[#d97757]/10 text-[#f39c7d] hover:bg-[#d97757]/20 shadow-[0_0_12px_rgba(217,119,87,0.2)]'
-              }`}
+              className="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded border border-[#30363d] bg-transparent text-[#8b949e] hover:text-[#e6edf3] hover:border-[#8b949e] font-mono transition-colors flex items-center gap-1"
               title="ESO Sanctuary Pass"
             >
-              <Sparkles size={11} className={isPatron ? 'text-[#6ebac4]' : 'text-[#f39c7d]'} />
+              <Sparkles size={10} className="text-[#8b949e]" />
               <span>{isPatron ? 'Patron' : 'Pass'}</span>
             </button>
             {user?.role === 'admin' && (
@@ -271,7 +267,7 @@ function Navbar() {
                       className="py-3 px-4 rounded-lg transition-colors duration-200 text-base font-medium text-white/80 hover:text-white hover:bg-white/10 flex items-center gap-2.5"
                       role="menuitem"
                     >
-                      <PenTool size={16} className="text-[#d97757]" />
+                      <PenTool size={15} className="text-[#8b949e]" />
                       <span>Sanctuary Studio</span>
                     </Link>
                     <Link
@@ -280,7 +276,7 @@ function Navbar() {
                       className="py-3 px-4 rounded-lg transition-colors duration-200 text-base font-medium text-white/80 hover:text-white hover:bg-white/10 flex items-center gap-2.5"
                       role="menuitem"
                     >
-                      <Bookmark size={16} className="text-[#397982]" />
+                      <Bookmark size={15} className="text-[#8b949e]" />
                       <span>Sanctuary Vault</span>
                     </Link>
                   </>
@@ -290,15 +286,15 @@ function Navbar() {
                     setIsMobileMenuOpen(false);
                     dispatch(openMembershipModal());
                   }}
-                  className="text-left py-3 px-4 rounded-lg transition-colors duration-200 text-base font-medium text-[#f39c7d] hover:bg-[#d97757]/10 flex items-center justify-between"
+                  className="text-left py-3 px-4 rounded-lg transition-colors duration-200 text-base font-medium text-white/80 hover:text-white hover:bg-white/10 flex items-center justify-between"
                   role="menuitem"
                 >
                   <span className="flex items-center gap-2.5">
-                    <Sparkles size={16} />
+                    <Sparkles size={15} className="text-[#8b949e]" />
                     <span>Sanctuary Pass</span>
                   </span>
-                  <span className="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full border border-[#d97757]/40 bg-[#d97757]/20 text-[#f39c7d]">
-                    {isPatron ? 'Active' : 'Upgrade'}
+                  <span className="text-[10px] uppercase font-mono tracking-wider px-2 py-0.5 rounded border border-[#21262d] text-[#8b949e]">
+                    {isPatron ? 'Active' : 'Pass'}
                   </span>
                 </button>
                 <Link

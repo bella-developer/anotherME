@@ -8,7 +8,6 @@ import {
   Pause,
   ChevronDown,
   ChevronUp,
-  Sparkles,
   CloudRain,
   Flame,
   Compass,
@@ -28,28 +27,28 @@ const TRACKS = [
     title: 'Kyoto Rain',
     subtitle: 'Filtered pink noise & droplet resonance',
     icon: CloudRain,
-    accent: '#397982',
+    accent: '#2EE6FF',
   },
   {
     id: 'hearth',
     title: 'Midnight Hearth',
     subtitle: 'Warm ember rumble & fireside pops',
     icon: Flame,
-    accent: '#D97757',
+    accent: '#FF9D1C',
   },
   {
     id: 'nordic',
     title: 'Nordic Solitude',
-    subtitle: '432Hz ambient drone & slow harmonic sweep',
+    subtitle: '432Hz ambient drone & harmonic sweep',
     icon: Compass,
-    accent: '#8BA4B4',
+    accent: '#e6edf3',
   },
   {
     id: 'celestial',
     title: 'Celestial Theta',
     subtitle: '6Hz binaural beat for deep contemplative focus',
     icon: Radio,
-    accent: '#76517F',
+    accent: '#B56DFF',
   },
 ];
 
@@ -89,59 +88,47 @@ export default function SanctuaryAudioDock() {
 
   return (
     <aside
-      className="fixed bottom-4 right-4 z-40 max-w-sm"
-      aria-label="Zenith Sanctuary Soundscape Player"
+      className="fixed bottom-3 right-3 sm:bottom-4 sm:right-4 z-40 max-w-sm"
+      aria-label="Sanctuary Soundscape Player"
     >
       <AnimatePresence>
         {isAudioDockOpen && (
           <motion.div
-            initial={{ opacity: 0, y: 16, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 16, scale: 0.95 }}
-            transition={{ duration: 0.25, ease: 'easeOut' }}
-            className="mb-3 w-80 rounded-2xl p-4 shadow-2xl border"
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 12 }}
+            transition={{ duration: 0.18, ease: 'easeOut' }}
+            className="mb-2 w-72 sm:w-80 p-3.5 border shadow-2xl"
             style={{
-              background: 'rgba(10, 10, 12, 0.88)',
-              backdropFilter: 'blur(24px)',
-              WebkitBackdropFilter: 'blur(24px)',
-              borderColor: 'rgba(255, 255, 255, 0.1)',
-              boxShadow: '0 20px 50px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.08)',
+              background: '#0a0a0a',
+              borderRadius: '8px',
+              borderColor: '#21262d',
+              boxShadow: '0 0 40px rgba(0, 0, 0, 0.95)',
             }}
           >
             {/* Header */}
-            <div className="flex items-center justify-between pb-3 border-b border-white/10">
-              <div className="flex items-center gap-2">
-                <div
-                  className="w-7 h-7 rounded-lg flex items-center justify-center"
-                  style={{
-                    backgroundColor: `${activeTrackObj.accent}25`,
-                    color: activeTrackObj.accent,
-                  }}
-                >
-                  <Sparkles size={14} />
-                </div>
-                <div>
-                  <h3 className="text-xs font-semibold tracking-wider uppercase text-white/90">
-                    Zenith Sanctuary
-                  </h3>
-                  <p className="text-[10px] text-white/40 tracking-wide">
-                    Generative Focus Soundscapes
-                  </p>
-                </div>
+            <div className="flex items-center justify-between pb-2.5 border-b border-[#21262d]">
+              <div>
+                <span className="text-[10px] uppercase tracking-[0.2em] text-[#8b949e] font-mono block">
+                  Soundscape
+                </span>
+                <span className="text-xs text-[#e6edf3] font-mono font-medium block">
+                  Generative Audio
+                </span>
               </div>
 
               {!isPatron && (
                 <button
                   onClick={() => dispatch(openMembershipModal())}
-                  className="text-[9px] uppercase tracking-widest px-2 py-0.5 rounded-full border border-amber-500/40 text-amber-300 bg-amber-500/10 hover:bg-amber-500/20 transition-colors"
+                  className="text-[9px] uppercase tracking-wider px-2 py-0.5 rounded border border-[#30363d] text-[#8b949e] hover:text-[#e6edf3] font-mono transition-colors"
                 >
-                  Sanctuary Pass
+                  Pass
                 </button>
               )}
             </div>
 
             {/* Soundscape List */}
-            <div className="py-3 space-y-1.5" role="radiogroup" aria-label="Select ambient soundscape">
+            <div className="py-2 space-y-1" role="radiogroup" aria-label="Select ambient soundscape">
               {TRACKS.map((t) => {
                 const isSelected = t.id === currentTrack;
                 const Icon = t.icon;
@@ -151,36 +138,29 @@ export default function SanctuaryAudioDock() {
                     onClick={() => dispatch(setSoundscapeTrack(t.id))}
                     role="radio"
                     aria-checked={isSelected}
-                    className={`w-full flex items-center gap-3 p-2.5 rounded-xl transition-all text-left ${
+                    className={`w-full flex items-center gap-2.5 p-2 rounded text-left transition-all ${
                       isSelected
-                        ? 'bg-white/10 border border-white/15'
-                        : 'hover:bg-white/5 border border-transparent'
+                        ? 'bg-[#21262d] border border-[#30363d]'
+                        : 'hover:bg-white/[0.03] border border-transparent'
                     }`}
                   >
-                    <div
-                      className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 transition-colors"
-                      style={{
-                        backgroundColor: isSelected ? `${t.accent}33` : 'rgba(255,255,255,0.04)',
-                        color: isSelected ? t.accent : 'rgba(255,255,255,0.4)',
-                      }}
-                    >
-                      <Icon size={16} />
-                    </div>
-
+                    <Icon size={14} className={isSelected ? 'text-[#e6edf3]' : 'text-[#6e7681]'} />
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center justify-between">
-                        <span className="text-xs font-medium text-white/90 truncate">
+                        <span className="text-xs font-mono text-[#e6edf3] truncate">
                           {t.title}
                         </span>
                         {isSelected && isPlaying && (
-                          <span className="flex items-center gap-0.5 h-3">
-                            <span className="w-0.5 h-full bg-cyan-400 animate-pulse" />
-                            <span className="w-0.5 h-2/3 bg-cyan-400 animate-pulse delay-75" />
-                            <span className="w-0.5 h-full bg-cyan-400 animate-pulse delay-150" />
+                          <span className="flex items-center gap-0.5 h-2.5">
+                            <span className="w-0.5 h-full bg-[#2EE6FF] animate-pulse" />
+                            <span className="w-0.5 h-2/3 bg-[#2EE6FF] animate-pulse delay-75" />
+                            <span className="w-0.5 h-full bg-[#2EE6FF] animate-pulse delay-150" />
                           </span>
                         )}
                       </div>
-                      <p className="text-[10px] text-white/40 truncate">{t.subtitle}</p>
+                      <p className="text-[10px] font-mono text-[#6e7681] truncate">
+                        {t.subtitle}
+                      </p>
                     </div>
                   </button>
                 );
@@ -188,18 +168,18 @@ export default function SanctuaryAudioDock() {
             </div>
 
             {/* Volume Control */}
-            <div className="pt-3 border-t border-white/10">
-              <div className="flex items-center justify-between text-[10px] text-white/50 mb-1.5">
-                <span>Sanctuary Volume</span>
+            <div className="pt-2 border-t border-[#21262d]">
+              <div className="flex items-center justify-between text-[10px] font-mono text-[#6e7681] mb-1">
+                <span>Volume</span>
                 <span>{Math.round(volume * 100)}%</span>
               </div>
               <div className="flex items-center gap-2">
                 <button
                   onClick={handleMuteToggle}
-                  className="text-white/50 hover:text-white transition-colors"
+                  className="text-[#6e7681] hover:text-[#e6edf3] transition-colors"
                   aria-label={isMuted ? 'Unmute' : 'Mute'}
                 >
-                  {volume === 0 || isMuted ? <VolumeX size={15} /> : <Volume2 size={15} />}
+                  {volume === 0 || isMuted ? <VolumeX size={14} /> : <Volume2 size={14} />}
                 </button>
                 <input
                   type="range"
@@ -209,7 +189,7 @@ export default function SanctuaryAudioDock() {
                   value={volume}
                   onChange={handleVolumeChange}
                   aria-label="Soundscape volume slider"
-                  className="w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-[#D97757]"
+                  className="w-full h-1 bg-[#21262d] rounded appearance-none cursor-pointer accent-[#e6edf3]"
                 />
               </div>
             </div>
@@ -217,55 +197,49 @@ export default function SanctuaryAudioDock() {
         )}
       </AnimatePresence>
 
-      {/* Floating Pill Dock */}
-      <motion.div
-        layout
-        className="flex items-center gap-2 px-3 py-2 rounded-full border shadow-xl cursor-pointer"
+      {/* Floating Trigger Dock */}
+      <div
+        className="flex items-center gap-2 px-2.5 py-1.5 rounded border shadow-xl cursor-pointer select-none transition-colors"
         style={{
-          background: 'rgba(15, 15, 18, 0.85)',
-          backdropFilter: 'blur(20px)',
-          WebkitBackdropFilter: 'blur(20px)',
-          borderColor: isPlaying ? `${activeTrackObj.accent}55` : 'rgba(255, 255, 255, 0.12)',
-          boxShadow: isPlaying
-            ? `0 10px 30px rgba(0,0,0,0.6), 0 0 20px ${activeTrackObj.accent}25`
-            : '0 10px 30px rgba(0,0,0,0.5)',
+          background: 'rgba(10, 10, 10, 0.95)',
+          borderColor: '#21262d',
         }}
         onClick={() => dispatch(toggleAudioDock())}
       >
         <button
           onClick={handlePlayToggle}
-          className="w-7 h-7 rounded-full flex items-center justify-center transition-transform active:scale-95 flex-shrink-0"
+          className="w-6 h-6 rounded flex items-center justify-center transition-colors flex-shrink-0"
           style={{
-            backgroundColor: isPlaying ? activeTrackObj.accent : 'rgba(255,255,255,0.1)',
-            color: isPlaying ? '#000' : '#fff',
+            backgroundColor: isPlaying ? '#e6edf3' : 'rgba(255,255,255,0.06)',
+            color: isPlaying ? '#000000' : '#8b949e',
           }}
           aria-label={isPlaying ? 'Pause soundscape' : 'Play soundscape'}
         >
-          {isPlaying ? <Pause size={12} fill="currentColor" /> : <Play size={12} fill="currentColor" className="ml-0.5" />}
+          {isPlaying ? (
+            <Pause size={10} fill="currentColor" />
+          ) : (
+            <Play size={10} fill="currentColor" className="ml-0.5" />
+          )}
         </button>
 
-        <div className="flex items-center gap-1.5 pl-0.5 pr-1">
-          <ActiveIcon size={13} style={{ color: activeTrackObj.accent }} />
-          <span className="text-xs font-medium text-white/90 tracking-wide">
+        <div className="flex items-center gap-1.5 pr-1">
+          <ActiveIcon size={12} className="text-[#8b949e]" />
+          <span className="text-xs font-mono text-[#e6edf3]">
             {activeTrackObj.title}
           </span>
           {isPlaying && (
-            <span className="flex items-center gap-0.5 h-2.5 ml-1">
-              <span className="w-0.5 h-full bg-emerald-400/80 animate-pulse" />
-              <span className="w-0.5 h-1/2 bg-emerald-400/80 animate-pulse delay-75" />
-              <span className="w-0.5 h-3/4 bg-emerald-400/80 animate-pulse delay-150" />
-            </span>
+            <span className="w-1.5 h-1.5 rounded-full bg-[#2EE6FF] animate-pulse ml-0.5" />
           )}
         </div>
 
         <button
           type="button"
-          className="text-white/40 hover:text-white transition-colors pl-1"
+          className="text-[#6e7681] hover:text-[#e6edf3] transition-colors"
           aria-label={isAudioDockOpen ? 'Collapse player' : 'Expand player'}
         >
-          {isAudioDockOpen ? <ChevronDown size={14} /> : <ChevronUp size={14} />}
+          {isAudioDockOpen ? <ChevronDown size={13} /> : <ChevronUp size={13} />}
         </button>
-      </motion.div>
+      </div>
     </aside>
   );
 }

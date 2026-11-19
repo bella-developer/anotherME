@@ -77,7 +77,7 @@ function DarkRoomCard({ post, onReaction, onEdit, onDelete }) {
             onClick={handleToggleBookmark}
             className={`p-1 sm:p-1.5 rounded-full transition-colors ${
               isBookmarked
-                ? 'text-[#D97757] bg-[#D97757]/15'
+                ? 'text-[#2EE6FF] bg-[#2EE6FF]/15'
                 : 'text-white/40 hover:text-white/80 hover:bg-white/10'
             }`}
             title={isBookmarked ? 'Remove from Sanctuary Vault' : 'Save to Sanctuary Vault'}
