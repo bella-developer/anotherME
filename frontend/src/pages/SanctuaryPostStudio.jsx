@@ -23,7 +23,7 @@ const ROOMS = {
   dark: {
     id: 'dark',
     name: 'Dark',
-    accent: '#2EE6FF',
+    accent: '#DC2626',
     categories: [
       { value: 'CONFESSION', label: 'Confession' },
       { value: 'REGRET', label: 'Regret' },
@@ -33,7 +33,7 @@ const ROOMS = {
   fantasy: {
     id: 'fantasy',
     name: 'Fantasy',
-    accent: '#FF9D1C',
+    accent: '#F97316',
     categories: [
       { value: 'CREATIVE', label: 'Creative' },
       { value: 'DAYDREAM', label: 'Daydream' },
@@ -44,7 +44,7 @@ const ROOMS = {
   philo: {
     id: 'philo',
     name: 'Philo',
-    accent: '#B56DFF',
+    accent: '#6366F1',
     categories: [
       { value: 'SPIRITUAL', label: 'Spiritual' },
       { value: 'SHADOW', label: 'Shadow' },
@@ -296,7 +296,7 @@ export default function SanctuaryPostStudio() {
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 maxLength={120}
-                className="w-full bg-transparent text-sm font-mono text-[#e6edf3] placeholder-[#484f58] focus:outline-none"
+                className="w-full bg-transparent text-sm font-sans text-[#e6edf3] placeholder-[#484f58] focus:outline-none"
               />
             </div>
 
@@ -308,15 +308,30 @@ export default function SanctuaryPostStudio() {
                     {room} &bull; {category}
                   </div>
                   {title && (
-                    <h3 className="text-sm font-mono font-medium text-[#e6edf3] mb-2">
+                    <h3 className="text-sm font-sans font-medium text-[#e6edf3] mb-2">
                       {title}
                     </h3>
                   )}
-                  <p className="text-xs sm:text-sm font-mono text-[#c9d1d9] whitespace-pre-wrap leading-relaxed">
+                  <p className="text-xs sm:text-sm font-sans text-[#c9d1d9] whitespace-pre-wrap leading-relaxed">
                     {content || (
                       <span className="text-[#484f58] italic">No text yet...</span>
                     )}
                   </p>
+                  {image && (
+                    <div className="mt-3 overflow-hidden rounded border border-[#21262d] max-h-72 flex items-center justify-center bg-black/40">
+                      <img
+                        src={
+                          typeof image === 'string'
+                            ? image
+                            : (typeof File !== 'undefined' && image instanceof File) || (typeof Blob !== 'undefined' && image instanceof Blob)
+                            ? URL.createObjectURL(image)
+                            : image?.url || ''
+                        }
+                        alt="Attached preview"
+                        className="max-h-72 object-contain"
+                      />
+                    </div>
+                  )}
                 </div>
               ) : (
                 <textarea
@@ -324,7 +339,7 @@ export default function SanctuaryPostStudio() {
                   onChange={(e) => setContent(e.target.value)}
                   placeholder="What's on your mind?..."
                   rows={8}
-                  className="w-full bg-transparent text-xs sm:text-sm font-mono text-[#e6edf3] placeholder-[#484f58] leading-relaxed resize-none focus:outline-none"
+                  className="w-full bg-transparent text-xs sm:text-sm font-sans text-[#e6edf3] placeholder-[#484f58] leading-relaxed resize-none focus:outline-none"
                 />
               )}
             </div>
@@ -346,7 +361,11 @@ export default function SanctuaryPostStudio() {
                     <span>Cancel</span>
                   </button>
                 </div>
-                <ImageUpload onImageSelected={(img) => setImage(img)} />
+                <ImageUpload
+                  onImageSelect={(img) => setImage(img)}
+                  onImageSelected={(img) => setImage(img)}
+                  onImageRemove={() => setImage(null)}
+                />
               </div>
             ) : (
               <div className="pt-1">

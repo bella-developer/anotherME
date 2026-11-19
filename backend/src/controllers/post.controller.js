@@ -40,6 +40,11 @@ export async function createPost(req, res, next) {
         err.code = 'IMAGE_UPLOAD_FAILED';
         throw err;
       }
+    } else if (req.body.image_url || req.body.image) {
+      const urlStr = req.body.image_url || (typeof req.body.image === 'string' ? req.body.image : req.body.image?.url);
+      if (urlStr && typeof urlStr === 'string' && !urlStr.startsWith('blob:')) {
+        imageData = { url: urlStr };
+      }
     }
 
     // Create post via service
@@ -61,7 +66,8 @@ export async function createPost(req, res, next) {
         title: post?.title || null,
         content: post?.contentSanitized || post?.content,
         category: post?.category,
-        image: post?.image || null,
+        image: post?.image || (post?.image_url ? { url: post.image_url } : null),
+        image_url: post?.image_url || post?.image?.url || null,
         reactions: post?.reactions || {},
         commentCount: post?.commentCount || 0,
         isCircleTopic: Boolean(post?.isCircleTopic),

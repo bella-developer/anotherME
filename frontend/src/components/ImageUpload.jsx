@@ -5,11 +5,13 @@ import { FaImage, FaTimes } from 'react-icons/fa';
  * ImageUpload Component
  * Compact image upload with drag & drop and preview
  */
-const ImageUpload = ({ onImageSelect, onImageRemove, disabled = false, existingImage = null }) => {
+const ImageUpload = ({ onImageSelect, onImageSelected, onImageRemove, disabled = false, existingImage = null }) => {
   const [preview, setPreview] = useState(null);
   const [fileName, setFileName] = useState('');
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef(null);
+
+  const notifySelect = onImageSelect || onImageSelected;
 
   // Handle existing image from server
   useEffect(() => {
@@ -46,7 +48,9 @@ const ImageUpload = ({ onImageSelect, onImageRemove, disabled = false, existingI
     reader.onloadend = () => {
       setPreview(reader.result);
       setFileName(file.name);
-      onImageSelect(file);
+      if (notifySelect) {
+        notifySelect(file);
+      }
     };
     reader.readAsDataURL(file);
     return true;
@@ -99,7 +103,9 @@ const ImageUpload = ({ onImageSelect, onImageRemove, disabled = false, existingI
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
     }
-    onImageRemove();
+    if (onImageRemove) {
+      onImageRemove();
+    }
   };
 
   const handleClick = () => {

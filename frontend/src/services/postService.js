@@ -106,7 +106,17 @@ export const createPost = async (postData) => {
     }
     
     if (postData.image) {
-      formData.append('image', postData.image);
+      if (typeof File !== 'undefined' && postData.image instanceof File) {
+        formData.append('image', postData.image);
+      } else if (typeof Blob !== 'undefined' && postData.image instanceof Blob) {
+        formData.append('image', postData.image);
+      } else if (typeof postData.image === 'string' && !postData.image.startsWith('blob:')) {
+        formData.append('image_url', postData.image);
+      } else if (postData.image?.url && !postData.image.url.startsWith('blob:')) {
+        formData.append('image_url', postData.image.url);
+      }
+    } else if (postData.image_url && !postData.image_url.startsWith('blob:')) {
+      formData.append('image_url', postData.image_url);
     }
 
     const response = await apiClient.post('/posts', formData);

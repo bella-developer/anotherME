@@ -4,8 +4,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['var(--font-family-primary)'],
-        mono: ['var(--font-family-primary)'],
+        sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+        mono: ['var(--font-family-mono)', 'IBM Plex Mono', 'Space Mono', 'Courier New', 'monospace'],
         display: ['var(--font-family-display)'],
       },
       colors: {

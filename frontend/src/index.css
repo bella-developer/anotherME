@@ -1,5 +1,5 @@
-/* Google Fonts - Nostalgic Artistic Monospace */
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&family=VT323&display=swap');
+/* Google Fonts - Inter & Nostalgic Artistic Monospace */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&family=VT323&display=swap');
 
 /* Dagger Square Font - Local */
 @import './styles/daggersquare.css';
@@ -14,13 +14,16 @@
 @layer base {
   /* CSS Custom Properties for Font Families */
   :root {
-    --font-body: 'IBM Plex Mono', 'Courier New', monospace;
-    --font-heading: 'Space Mono', 'IBM Plex Mono', monospace;
+    --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-heading: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: 'IBM Plex Mono', 'Space Mono', monospace;
     --font-accent: 'VT323', 'Courier New', monospace;
   }
 
   html {
     scroll-behavior: smooth;
+    background: #000000;
+    min-height: 100dvh;
   }
 
   body {
@@ -29,6 +32,7 @@
     -moz-osx-font-smoothing: grayscale;
     background: #000000;
     color: #ffffff;
+    min-height: 100dvh;
     overflow-x: hidden;
     position: relative;
   }
@@ -144,7 +148,7 @@
 
   .paper-texture {
     position: relative;
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: transparent;
   }
 
   .paper-texture::before {

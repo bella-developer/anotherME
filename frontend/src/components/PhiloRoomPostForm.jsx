@@ -216,8 +216,8 @@ const PhiloRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, onCir
                 disabled={loading}
                 className="flex-1 py-1.5 rounded text-xs font-medium transition-all disabled:opacity-50"
                 style={{
-                  background: formData.category === cat.value ? 'rgba(181, 109, 255, 0.15)' : 'rgba(255, 255, 255, 0.02)',
-                  color: formData.category === cat.value ? '#B56DFF' : '#6b7280',
+                  background: formData.category === cat.value ? 'rgba(99, 102, 241, 0.15)' : 'rgba(255, 255, 255, 0.02)',
+                  color: formData.category === cat.value ? '#6366F1' : '#6b7280',
                   border: 'none',
                 }}
               >
@@ -240,7 +240,7 @@ const PhiloRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, onCir
               border: '1px solid rgba(255, 255, 255, 0.06)',
               color: '#e5e5e5',
             }}
-            onFocus={(e) => e.target.style.borderColor = 'rgba(181, 109, 255, 0.25)'}
+            onFocus={(e) => e.target.style.borderColor = 'rgba(99, 102, 241, 0.25)'}
             onBlur={(e) => e.target.style.borderColor = 'rgba(255, 255, 255, 0.06)'}
           />
 
@@ -259,7 +259,7 @@ const PhiloRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, onCir
               color: '#e5e5e5',
               lineHeight: '1.5',
             }}
-            onFocus={(e) => e.target.style.borderColor = 'rgba(181, 109, 255, 0.25)'}
+            onFocus={(e) => e.target.style.borderColor = 'rgba(99, 102, 241, 0.25)'}
             onBlur={(e) => e.target.style.borderColor = 'rgba(255, 255, 255, 0.06)'}
           />
           <div className="flex items-center justify-between -mt-2 px-1">
@@ -294,7 +294,7 @@ const PhiloRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, onCir
                 border: '1px solid rgba(255, 255, 255, 0.06)',
                 color: formData.circleId ? '#e5e5e5' : '#6b7280',
               }}
-              onFocus={(e) => e.target.style.borderColor = 'rgba(181, 109, 255, 0.25)'}
+              onFocus={(e) => e.target.style.borderColor = 'rgba(99, 102, 241, 0.25)'}
               onBlur={(e) => e.target.style.borderColor = 'rgba(255, 255, 255, 0.06)'}
             >
               <option value="">Select circle</option>
@@ -311,7 +311,7 @@ const PhiloRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, onCir
                 onClick={() => setShowCircleCreation(true)}
                 disabled={loading}
                 className="text-[11px] mt-1.5 px-1 transition-colors disabled:opacity-50"
-                style={{ color: '#B56DFF' }}
+                style={{ color: '#6366F1' }}
               >
                 + Create new circle
               </button>
@@ -319,8 +319,8 @@ const PhiloRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, onCir
 
             {showCircleCreation && (
               <div className="mt-2 space-y-2 p-3 rounded" style={{
-                background: 'rgba(181, 109, 255, 0.05)',
-                border: '1px solid rgba(181, 109, 255, 0.15)'
+                background: 'rgba(99, 102, 241, 0.05)',
+                border: '1px solid rgba(99, 102, 241, 0.15)'
               }}>
                 <input
                   type="text"
@@ -360,7 +360,7 @@ const PhiloRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, onCir
                     disabled={creatingCircle}
                     className="flex-1 px-3 py-1.5 rounded text-xs font-medium transition-all disabled:opacity-50"
                     style={{
-                      background: '#B56DFF',
+                      background: '#6366F1',
                       color: '#000',
                     }}
                   >
@@ -403,7 +403,7 @@ const PhiloRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, onCir
             disabled={loading || !isFormReady()}
             className="w-full py-2.5 rounded font-medium text-sm transition-all disabled:opacity-40"
             style={{
-              background: !isFormReady() ? 'rgba(255, 255, 255, 0.03)' : '#B56DFF',
+              background: !isFormReady() ? 'rgba(255, 255, 255, 0.03)' : '#6366F1',
               color: !isFormReady() ? '#6b7280' : '#000',
               cursor: !isFormReady() ? 'not-allowed' : 'pointer',
             }}

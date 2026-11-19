@@ -63,7 +63,7 @@ function DebugAuth() {
       <h1 style={{ color: '#FF9D1C' }}>🔍 Auth Debug Page</h1>
       
       <div style={{ marginTop: '30px' }}>
-        <h2 style={{ color: '#2EE6FF' }}>Redux State (from useAuth hook)</h2>
+        <h2 style={{ color: '#DC2626' }}>Redux State (from useAuth hook)</h2>
         <pre style={{ 
           background: '#1a1a1a', 
           padding: '20px', 
@@ -75,7 +75,7 @@ function DebugAuth() {
       </div>
 
       <div style={{ marginTop: '30px' }}>
-        <h2 style={{ color: '#2EE6FF' }}>LocalStorage / SessionStorage</h2>
+        <h2 style={{ color: '#DC2626' }}>LocalStorage / SessionStorage</h2>
         <pre style={{ 
           background: '#1a1a1a', 
           padding: '20px', 
@@ -87,7 +87,7 @@ function DebugAuth() {
       </div>
 
       <div style={{ marginTop: '30px' }}>
-        <h2 style={{ color: '#2EE6FF' }}>Fresh Session from Backend</h2>
+        <h2 style={{ color: '#DC2626' }}>Fresh Session from Backend</h2>
         {sessionData && (
           <pre style={{ 
             background: '#1a1a1a', 
@@ -113,13 +113,13 @@ function DebugAuth() {
       </div>
 
       <div style={{ marginTop: '30px' }}>
-        <h2 style={{ color: '#B56DFF' }}>Actions</h2>
+        <h2 style={{ color: '#6366F1' }}>Actions</h2>
         <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }}>
           <button
             onClick={forceRefresh}
             style={{
-              background: '#2EE6FF',
-              color: '#0a0a0a',
+              background: '#DC2626',
+              color: '#ffffff',
               padding: '12px 24px',
               border: 'none',
               borderRadius: '6px',
@@ -147,7 +147,7 @@ function DebugAuth() {
       </div>
 
       <div style={{ marginTop: '30px' }}>
-        <h2 style={{ color: '#B56DFF' }}>Diagnostics</h2>
+        <h2 style={{ color: '#6366F1' }}>Diagnostics</h2>
         <ul style={{ lineHeight: '2' }}>
           <li>
             <strong>Has Access Token:</strong> {localData.accessToken ? '✅ Yes' : '❌ No'}

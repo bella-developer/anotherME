@@ -144,19 +144,19 @@ function PhiloRoom() {
                 className="px-4 py-2 text-xs tracking-wide uppercase mb-12 transition-all flex items-center gap-2 rounded"
                 style={{
                   color: '#e6edf3',
-                  border: '1px solid rgba(181, 109, 255, 0.3)',
-                  backgroundColor: 'rgba(181, 109, 255, 0.05)',
+                  border: '1px solid rgba(99, 102, 241, 0.3)',
+                  backgroundColor: 'rgba(99, 102, 241, 0.05)',
                   fontWeight: '500',
                   transitionDuration: 'var(--duration-slow)',
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = 'rgba(181, 109, 255, 0.1)';
-                  e.currentTarget.style.borderColor = 'rgba(181, 109, 255, 0.5)';
-                  e.currentTarget.style.color = '#B56DFF';
+                  e.currentTarget.style.backgroundColor = 'rgba(99, 102, 241, 0.1)';
+                  e.currentTarget.style.borderColor = 'rgba(99, 102, 241, 0.5)';
+                  e.currentTarget.style.color = '#6366F1';
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = 'rgba(181, 109, 255, 0.05)';
-                  e.currentTarget.style.borderColor = 'rgba(181, 109, 255, 0.3)';
+                  e.currentTarget.style.backgroundColor = 'rgba(99, 102, 241, 0.05)';
+                  e.currentTarget.style.borderColor = 'rgba(99, 102, 241, 0.3)';
                   e.currentTarget.style.color = '#e6edf3';
                 }}
               >
@@ -164,15 +164,14 @@ function PhiloRoom() {
               </button>
 
               <div className="w-12 h-px mb-6 sm:mb-8" style={{ 
-                background: 'linear-gradient(to right, rgba(168, 85, 247, 0.4), transparent)' 
+                background: 'linear-gradient(to right, rgba(99, 102, 241, 0.4), transparent)' 
               }} />
               
-              <h1 className="text-lg sm:text-4xl md:text-5xl uppercase mb-6 sm:mb-8 heading-text" style={{
-                color: '#B56DFF',
+              <h1 className="text-lg sm:text-4xl md:text-5xl uppercase mb-6 sm:mb-8 heading-text font-sans font-bold" style={{
+                color: '#FFFFFF',
                 fontFamily: 'var(--font-heading)',
                 letterSpacing: '0.05em',
                 lineHeight: 'var(--leading-tight)',
-                fontWeight: '700',
               }}>
                 THE PHILO ROOM
               </h1>
@@ -198,11 +197,11 @@ function PhiloRoom() {
             <div className="sticky top-16 z-20 mb-6 -mx-3 sm:mx-0 px-3 sm:px-4 py-2 flex items-center justify-between gap-3" style={{
               backgroundColor: 'rgba(0, 0, 0, 0.95)',
               backdropFilter: 'blur(12px)',
-              borderBottom: '1px solid rgba(181, 109, 255, 0.15)',
+              borderBottom: '1px solid rgba(99, 102, 241, 0.15)',
             }}>
               {/* Left: Room Title */}
               <h2 className="text-[10px] sm:text-sm uppercase tracking-wider whitespace-nowrap flex-shrink-0" style={{
-                color: '#B56DFF',
+                color: '#6366F1',
                 fontFamily: 'var(--font-heading)',
                 fontWeight: '700',
               }}>
@@ -265,19 +264,19 @@ function PhiloRoom() {
                     className="flex-shrink-0 px-2 sm:px-4 py-1 sm:py-2 text-[9px] sm:text-[10px] tracking-widest uppercase transition-all"
                     style={{
                       background: 'rgba(0, 0, 0, 0.3)',
-                      border: '1px solid rgba(181, 109, 255, 0.15)',
+                      border: '1px solid rgba(99, 102, 241, 0.15)',
                       color: '#c9d1d9',
                       borderRadius: 'var(--radius-soft)',
                       transitionDuration: 'var(--duration-slow)',
                       fontWeight: '400',
                     }}
                     onMouseEnter={(e) => {
-                      e.currentTarget.style.borderColor = 'rgba(181, 109, 255, 0.3)';
-                      e.currentTarget.style.color = '#B56DFF';
-                      e.currentTarget.style.background = 'rgba(181, 109, 255, 0.05)';
+                      e.currentTarget.style.borderColor = 'rgba(99, 102, 241, 0.3)';
+                      e.currentTarget.style.color = '#6366F1';
+                      e.currentTarget.style.background = 'rgba(99, 102, 241, 0.05)';
                     }}
                     onMouseLeave={(e) => {
-                      e.currentTarget.style.borderColor = 'rgba(181, 109, 255, 0.15)';
+                      e.currentTarget.style.borderColor = 'rgba(99, 102, 241, 0.15)';
                       e.currentTarget.style.color = '#c9d1d9';
                       e.currentTarget.style.background = 'rgba(0, 0, 0, 0.3)';
                     }}

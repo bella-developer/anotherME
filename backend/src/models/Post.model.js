@@ -104,6 +104,12 @@ const postSchema = new mongoose.Schema(
       }
     },
 
+    // Public URL for direct access
+    image_url: {
+      type: String,
+      default: null
+    },
+
     // Atomic reaction counters (room-specific)
     reactions: {
       // Dark Room reactions

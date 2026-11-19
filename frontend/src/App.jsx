@@ -70,7 +70,8 @@ function App() {
 
   return (
     <Router>
-      <ThemedBackground />
+      <div className="app-root min-h-[100dvh] overflow-x-hidden relative" style={{ minHeight: '100dvh', overflowX: 'hidden' }}>
+        <ThemedBackground />
         <ToastProvider>
           <StatsProvider>
             <ErrorBoundary>
@@ -300,6 +301,7 @@ function App() {
           <SanctuaryPassModal />
         </StatsProvider>
       </ToastProvider>
+      </div>
     </Router>
   );
 }

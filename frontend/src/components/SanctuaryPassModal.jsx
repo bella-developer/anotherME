@@ -47,22 +47,22 @@ export default function SanctuaryPassModal() {
     {
       icon: Volume2,
       title: 'Background sounds',
-      desc: 'Ambient rain, fireplace, and quiet drones while reading and writing.',
+      desc: 'Calm audio for deep focus',
     },
     {
       icon: Bookmark,
       title: 'Saved posts & drafts',
-      desc: 'Save your favorite reflections and offline drafts.',
+      desc: 'Keep thoughts and private drafts',
     },
     {
       icon: Star,
       title: 'Supporter badge',
-      desc: 'A subtle badge on your profile showing your support.',
+      desc: 'Subtle supporter icon on profile',
     },
     {
       icon: Shield,
       title: 'No ads, ever',
-      desc: 'No tracking, no feeds trying to grab your attention.',
+      desc: 'Pure quiet with zero tracking',
     },
   ];
 
@@ -88,9 +88,11 @@ export default function SanctuaryPassModal() {
       <div
         className="w-full max-w-sm my-6 overflow-hidden text-left"
         style={{
-          background: '#0a0a0a',
+          background: 'rgba(255, 255, 255, 0.02)',
+          backdropFilter: 'blur(12px)',
+          WebkitBackdropFilter: 'blur(12px)',
           borderRadius: '8px',
-          border: '1px solid #21262d',
+          border: '1px solid rgba(255, 255, 255, 0.08)',
           boxShadow: '0 0 50px rgba(0, 0, 0, 0.95)',
           animation: prefersReducedMotion
             ? 'none'
@@ -102,7 +104,7 @@ export default function SanctuaryPassModal() {
           <div>
             <h2
               id="supporter-pass-title"
-              className="text-base font-mono font-medium text-[#e6edf3]"
+              className="text-base font-sans font-medium text-[#ffffff]"
             >
               ESO Pass
             </h2>
@@ -144,7 +146,7 @@ export default function SanctuaryPassModal() {
               }`}
             >
               <span>Annual ($39.99)</span>
-              <span className="text-[9px] uppercase font-mono text-[#2EE6FF] border border-[#2EE6FF]/30 px-1 rounded">
+              <span className="text-[9px] uppercase font-mono text-[#DC2626] border border-[#DC2626]/30 px-1 rounded">
                 -33%
               </span>
             </button>

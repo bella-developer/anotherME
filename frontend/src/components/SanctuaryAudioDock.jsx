@@ -138,7 +138,7 @@ export default function SanctuaryAudioDock() {
                     <Icon size={13} className={isSelected ? 'text-[#e6edf3]' : 'text-[#6e7681]'} />
                     <span className="text-xs font-mono truncate">{t.title}</span>
                     {isSelected && isPlaying && (
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#2EE6FF] ml-auto" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#DC2626] ml-auto" />
                     )}
                   </button>
                 );

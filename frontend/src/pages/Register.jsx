@@ -379,26 +379,26 @@ function Register() {
                             if (/[A-Z]/.test(formData.password)) score++;
                             if (/[0-9]/.test(formData.password)) score++;
                             if (/[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(formData.password)) score++;
-                            return score >= 5 ? '#2EE6FF' : score >= 3 ? '#FF9D1C' : '#ff6b6b';
+                            return score >= 5 ? '#10B981' : score >= 3 ? '#FF9D1C' : '#ff6b6b';
                           })()
                         }}
                       />
                     </div>
                   </div>
                   <div className="grid grid-cols-5 gap-2 text-[0.6rem]">
-                    <span className={formData.password.length >= 8 ? 'text-[#2EE6FF]' : 'text-white/20'}>
+                    <span className={formData.password.length >= 8 ? 'text-[#10B981]' : 'text-white/20'}>
                       {formData.password.length >= 8 ? '✓' : '○'} 8+ chars
                     </span>
-                    <span className={/[a-z]/.test(formData.password) ? 'text-[#2EE6FF]' : 'text-white/20'}>
+                    <span className={/[a-z]/.test(formData.password) ? 'text-[#10B981]' : 'text-white/20'}>
                       {/[a-z]/.test(formData.password) ? '✓' : '○'} lowercase
                     </span>
-                    <span className={/[A-Z]/.test(formData.password) ? 'text-[#2EE6FF]' : 'text-white/20'}>
+                    <span className={/[A-Z]/.test(formData.password) ? 'text-[#10B981]' : 'text-white/20'}>
                       {/[A-Z]/.test(formData.password) ? '✓' : '○'} uppercase
                     </span>
-                    <span className={/[0-9]/.test(formData.password) ? 'text-[#2EE6FF]' : 'text-white/20'}>
+                    <span className={/[0-9]/.test(formData.password) ? 'text-[#10B981]' : 'text-white/20'}>
                       {/[0-9]/.test(formData.password) ? '✓' : '○'} number
                     </span>
-                    <span className={/[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(formData.password) ? 'text-[#2EE6FF]' : 'text-white/20'}>
+                    <span className={/[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(formData.password) ? 'text-[#10B981]' : 'text-white/20'}>
                       {/[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(formData.password) ? '✓' : '○'} special
                     </span>
                   </div>

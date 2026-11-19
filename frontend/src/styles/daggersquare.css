@@ -37,32 +37,32 @@
     0 0 30px rgba(255, 255, 255, 0.2);
 }
 
-/* Speed blur with room-specific color glow - Dark Room (Cyan) */
+/* Speed blur with room-specific color glow - Dark Room (Blood Red) */
 .speed-blur-dark {
   transform: skewX(-12deg);
   text-shadow:
     /* Motion trails */
-    -2px 0 4px rgba(46, 230, 255, 0.8),
-    -4px 0 6px rgba(46, 230, 255, 0.7),
-    -6px 0 8px rgba(46, 230, 255, 0.6),
-    -8px 0 10px rgba(46, 230, 255, 0.5),
-    -12px 0 12px rgba(46, 230, 255, 0.4),
-    -16px 0 14px rgba(46, 230, 255, 0.35),
-    -20px 0 16px rgba(46, 230, 255, 0.3),
-    -24px 0 18px rgba(46, 230, 255, 0.25),
-    -28px 0 20px rgba(46, 230, 255, 0.2),
-    -32px 0 22px rgba(46, 230, 255, 0.15),
-    -36px 0 24px rgba(46, 230, 255, 0.1),
-    -40px 0 26px rgba(46, 230, 255, 0.08),
-    -44px 0 28px rgba(46, 230, 255, 0.06),
-    -48px 0 30px rgba(46, 230, 255, 0.04),
-    -52px 0 32px rgba(46, 230, 255, 0.03),
-    -56px 0 34px rgba(46, 230, 255, 0.02),
+    -2px 0 4px rgba(220, 38, 38, 0.8),
+    -4px 0 6px rgba(220, 38, 38, 0.7),
+    -6px 0 8px rgba(220, 38, 38, 0.6),
+    -8px 0 10px rgba(220, 38, 38, 0.5),
+    -12px 0 12px rgba(220, 38, 38, 0.4),
+    -16px 0 14px rgba(220, 38, 38, 0.35),
+    -20px 0 16px rgba(220, 38, 38, 0.3),
+    -24px 0 18px rgba(220, 38, 38, 0.25),
+    -28px 0 20px rgba(220, 38, 38, 0.2),
+    -32px 0 22px rgba(220, 38, 38, 0.15),
+    -36px 0 24px rgba(220, 38, 38, 0.1),
+    -40px 0 26px rgba(220, 38, 38, 0.08),
+    -44px 0 28px rgba(220, 38, 38, 0.06),
+    -48px 0 30px rgba(220, 38, 38, 0.04),
+    -52px 0 32px rgba(220, 38, 38, 0.03),
+    -56px 0 34px rgba(220, 38, 38, 0.02),
     /* Core glow */
-    0 0 10px rgba(46, 230, 255, 0.8),
-    0 0 20px rgba(46, 230, 255, 0.6),
-    0 0 30px rgba(46, 230, 255, 0.4),
-    0 0 40px rgba(46, 230, 255, 0.3);
+    0 0 10px rgba(220, 38, 38, 0.8),
+    0 0 20px rgba(220, 38, 38, 0.6),
+    0 0 30px rgba(220, 38, 38, 0.4),
+    0 0 40px rgba(220, 38, 38, 0.3);
 }
 
 /* Speed blur with room-specific color glow - Fantasy Room (Orange) */
@@ -93,32 +93,32 @@
     0 0 40px rgba(255, 157, 28, 0.3);
 }
 
-/* Speed blur with room-specific color glow - Philo Room (Purple) */
+/* Speed blur with room-specific color glow - Philo Room (Indigo) */
 .speed-blur-philo {
   transform: skewX(-12deg);
   text-shadow:
     /* Motion trails */
-    -2px 0 4px rgba(181, 109, 255, 0.8),
-    -4px 0 6px rgba(181, 109, 255, 0.7),
-    -6px 0 8px rgba(181, 109, 255, 0.6),
-    -8px 0 10px rgba(181, 109, 255, 0.5),
-    -12px 0 12px rgba(181, 109, 255, 0.4),
-    -16px 0 14px rgba(181, 109, 255, 0.35),
-    -20px 0 16px rgba(181, 109, 255, 0.3),
-    -24px 0 18px rgba(181, 109, 255, 0.25),
-    -28px 0 20px rgba(181, 109, 255, 0.2),
-    -32px 0 22px rgba(181, 109, 255, 0.15),
-    -36px 0 24px rgba(181, 109, 255, 0.1),
-    -40px 0 26px rgba(181, 109, 255, 0.08),
-    -44px 0 28px rgba(181, 109, 255, 0.06),
-    -48px 0 30px rgba(181, 109, 255, 0.04),
-    -52px 0 32px rgba(181, 109, 255, 0.03),
-    -56px 0 34px rgba(181, 109, 255, 0.02),
+    -2px 0 4px rgba(99, 102, 241, 0.8),
+    -4px 0 6px rgba(99, 102, 241, 0.7),
+    -6px 0 8px rgba(99, 102, 241, 0.6),
+    -8px 0 10px rgba(99, 102, 241, 0.5),
+    -12px 0 12px rgba(99, 102, 241, 0.4),
+    -16px 0 14px rgba(99, 102, 241, 0.35),
+    -20px 0 16px rgba(99, 102, 241, 0.3),
+    -24px 0 18px rgba(99, 102, 241, 0.25),
+    -28px 0 20px rgba(99, 102, 241, 0.2),
+    -32px 0 22px rgba(99, 102, 241, 0.15),
+    -36px 0 24px rgba(99, 102, 241, 0.1),
+    -40px 0 26px rgba(99, 102, 241, 0.08),
+    -44px 0 28px rgba(99, 102, 241, 0.06),
+    -48px 0 30px rgba(99, 102, 241, 0.04),
+    -52px 0 32px rgba(99, 102, 241, 0.03),
+    -56px 0 34px rgba(99, 102, 241, 0.02),
     /* Core glow */
-    0 0 10px rgba(181, 109, 255, 0.8),
-    0 0 20px rgba(181, 109, 255, 0.6),
-    0 0 30px rgba(181, 109, 255, 0.4),
-    0 0 40px rgba(181, 109, 255, 0.3);
+    0 0 10px rgba(99, 102, 241, 0.8),
+    0 0 20px rgba(99, 102, 241, 0.6),
+    0 0 30px rgba(99, 102, 241, 0.4),
+    0 0 40px rgba(99, 102, 241, 0.3);
 }
 
 /* Subtle motion blur for subtitles */

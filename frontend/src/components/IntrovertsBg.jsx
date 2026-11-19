@@ -55,7 +55,7 @@ export default function IntrovertsBg() {
           background: '#000000',
           overflow: 'hidden',
           pointerEvents: 'none',
-          zIndex: 0,
+          zIndex: -1,
         }}
       >
         {/* Galaxy smudge — faint, upper-left, blue-tinted, opacity ~0.07 */}

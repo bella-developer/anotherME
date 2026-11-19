@@ -156,6 +156,7 @@ export async function createPost({ content, room, title, circleId, category, ima
     content,
     contentSanitized,
     image: imageData || {}, // Add image data if provided
+    image_url: imageData?.url || (typeof imageData === 'string' ? imageData : null),
     climbState: undefined, // No state tracking for any room
     reactions: {
       // Dark Room reactions

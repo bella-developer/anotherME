@@ -138,55 +138,41 @@ function DarkRoom() {
           <div className="max-w-full sm:max-w-2xl md:max-w-3xl mx-auto">
 
             {/* Hero Header - Scrolls away */}
-            <div className="mb-8 sm:mb-12">
+            <div className="mb-8 sm:mb-12 text-center flex flex-col items-center">
               <button
                 onClick={() => navigate('/home')}
-                className="px-4 py-2 text-xs tracking-wide uppercase mb-12 transition-all flex items-center gap-2 rounded"
+                className="px-3 py-1 text-[10px] tracking-widest uppercase mb-8 transition-all flex items-center gap-1.5 rounded"
                 style={{
                   color: '#e6edf3',
-                  border: '1px solid rgba(46, 230, 255, 0.3)',
-                  backgroundColor: 'rgba(46, 230, 255, 0.05)',
+                  border: '1px solid rgba(220, 38, 38, 0.3)',
+                  backgroundColor: 'rgba(220, 38, 38, 0.05)',
                   fontWeight: '500',
                   transitionDuration: 'var(--duration-slow)',
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = 'rgba(46, 230, 255, 0.1)';
-                  e.currentTarget.style.borderColor = 'rgba(46, 230, 255, 0.5)';
-                  e.currentTarget.style.color = '#2EE6FF';
+                  e.currentTarget.style.backgroundColor = 'rgba(220, 38, 38, 0.15)';
+                  e.currentTarget.style.borderColor = 'rgba(220, 38, 38, 0.5)';
+                  e.currentTarget.style.color = '#DC2626';
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = 'rgba(46, 230, 255, 0.05)';
-                  e.currentTarget.style.borderColor = 'rgba(46, 230, 255, 0.3)';
+                  e.currentTarget.style.backgroundColor = 'rgba(220, 38, 38, 0.05)';
+                  e.currentTarget.style.borderColor = 'rgba(220, 38, 38, 0.3)';
                   e.currentTarget.style.color = '#e6edf3';
                 }}
               >
                 ← ROOMS
               </button>
 
-              <div className="w-12 h-px mb-8" style={{ 
-                background: 'linear-gradient(to right, rgba(239, 68, 68, 0.4), transparent)' 
-              }} />
-              
-              <h1 className="text-lg sm:text-4xl md:text-5xl uppercase mb-6 sm:mb-8 heading-text" style={{
-                color: '#2EE6FF',
+              <h1 className="text-xl sm:text-4xl md:text-5xl uppercase mb-3 heading-text text-center font-sans font-bold" style={{
+                color: '#DC2626',
                 fontFamily: 'var(--font-heading)',
                 letterSpacing: '0.05em',
                 lineHeight: 'var(--leading-tight)',
-                fontWeight: '700',
               }}>
                 THE DARK ROOM
               </h1>
-              
-              <p className="text-base sm:text-lg mb-3 sm:mb-4 max-w-md" style={{
-                color: '#e6edf3',
-                lineHeight: 'var(--leading-relaxed)',
-                fontWeight: '600'
-              }}>
-                In the Dark
-              </p>
-              
-              <p className="text-xs sm:text-[11px] max-w-md dark-room-subtext" style={{
-                color: '#c9d1d9',
+
+              <p className="text-xs sm:text-sm max-w-md text-center mx-auto text-[#c9d1d9] font-sans" style={{
                 lineHeight: 'var(--leading-relaxed)',
                 fontWeight: '300'
               }}>
@@ -194,98 +180,59 @@ function DarkRoom() {
               </p>
             </div>
 
-            {/* Compact Sticky Bar */}
-            <div className="sticky top-16 z-20 mb-6 -mx-3 sm:mx-0 px-3 sm:px-4 py-2 flex items-center justify-between gap-3" style={{
-              backgroundColor: 'rgba(0, 0, 0, 0.95)',
+            {/* Compact Sticky Bar - Centered */}
+            <div className="sticky top-16 z-20 mb-6 px-3 sm:px-4 py-2 flex items-center justify-center gap-3 rounded-lg" style={{
+              backgroundColor: 'rgba(0, 0, 0, 0.85)',
               backdropFilter: 'blur(12px)',
-              borderBottom: '1px solid rgba(46, 230, 255, 0.15)',
+              border: '1px solid rgba(255, 255, 255, 0.08)',
             }}>
-              {/* Left: Room Title */}
-              <h2 className="text-[10px] sm:text-sm uppercase tracking-wider whitespace-nowrap flex-shrink-0" style={{
-                color: '#2EE6FF',
-                fontFamily: 'var(--font-heading)',
-                fontWeight: '700',
+              <span className="text-[10px] sm:text-xs uppercase tracking-wider font-mono font-bold" style={{
+                color: '#DC2626',
               }}>
                 DARK ROOM
-              </h2>
+              </span>
 
-              {/* Right: Categories + BACK + POST Button */}
-              <div className="flex items-center gap-2 ml-auto">
-                {/* Category Dropdown - Tiny and compact, pure white */}
-                <select
-                  value={selectedCategory}
-                  onChange={(e) => setSelectedCategory(e.target.value)}
-                  className="px-1.5 py-0.5 text-[8px] tracking-wide uppercase transition-all cursor-pointer"
-                  style={{
-                    borderRadius: '2px',
-                    background: 'rgba(255, 255, 255, 0.05)',
-                    border: '1px solid rgba(255, 255, 255, 0.2)',
-                    color: '#ffffff',
-                    fontWeight: '500',
-                    width: 'auto',
-                    minWidth: 'fit-content',
-                    height: '20px',
-                  }}
-                >
-                  {categories.map((cat) => (
-                    <option key={cat.value} value={cat.value} style={{ background: '#000', color: '#fff' }}>
-                      {cat.label}
-                    </option>
-                  ))}
-                </select>
+              {/* Category Dropdown */}
+              <select
+                value={selectedCategory}
+                onChange={(e) => setSelectedCategory(e.target.value)}
+                className="px-2 py-0.5 text-[9px] tracking-wide uppercase font-mono transition-all cursor-pointer rounded"
+                style={{
+                  background: 'rgba(255, 255, 255, 0.05)',
+                  border: '1px solid rgba(255, 255, 255, 0.15)',
+                  color: '#ffffff',
+                  height: '24px',
+                }}
+              >
+                {categories.map((cat) => (
+                  <option key={cat.value} value={cat.value} style={{ background: '#000', color: '#fff' }}>
+                    {cat.label}
+                  </option>
+                ))}
+              </select>
 
-                {/* BACK Button */}
+              {/* POST Button */}
+              {isAuthenticated && (
                 <button
-                  onClick={() => navigate('/home')}
-                  className="px-2 py-0.5 text-[8px] tracking-wide uppercase transition-all"
+                  onClick={() => setIsPostFormOpen(true)}
+                  className="px-3 py-1 text-[9px] sm:text-[10px] tracking-widest uppercase font-mono transition-all rounded"
                   style={{
-                    borderRadius: '2px',
-                    background: 'rgba(255, 255, 255, 0.05)',
-                    border: '1px solid rgba(255, 255, 255, 0.2)',
-                    color: '#ffffff',
-                    fontWeight: '500',
-                    height: '20px',
+                    background: 'rgba(220, 38, 38, 0.12)',
+                    border: '1px solid rgba(220, 38, 38, 0.3)',
+                    color: '#DC2626',
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)';
-                    e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.3)';
+                    e.currentTarget.style.borderColor = 'rgba(220, 38, 38, 0.6)';
+                    e.currentTarget.style.background = 'rgba(220, 38, 38, 0.2)';
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)';
-                    e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+                    e.currentTarget.style.borderColor = 'rgba(220, 38, 38, 0.3)';
+                    e.currentTarget.style.background = 'rgba(220, 38, 38, 0.12)';
                   }}
                 >
-                  BACK
+                  Post
                 </button>
-
-                {/* POST Button */}
-                {isAuthenticated && (
-                  <button
-                    onClick={() => setIsPostFormOpen(true)}
-                    className="flex-shrink-0 px-2 sm:px-4 py-1 sm:py-2 text-[9px] sm:text-[10px] tracking-widest uppercase transition-all"
-                    style={{
-                      background: 'rgba(0, 0, 0, 0.3)',
-                      border: '1px solid rgba(46, 230, 255, 0.15)',
-                      color: '#c9d1d9',
-                      borderRadius: 'var(--radius-soft)',
-                      transitionDuration: 'var(--duration-slow)',
-                      fontWeight: '400',
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.borderColor = 'rgba(46, 230, 255, 0.3)';
-                      e.currentTarget.style.color = '#2EE6FF';
-                      e.currentTarget.style.background = 'rgba(46, 230, 255, 0.05)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.borderColor = 'rgba(46, 230, 255, 0.15)';
-                      e.currentTarget.style.color = '#c9d1d9';
-                      e.currentTarget.style.background = 'rgba(0, 0, 0, 0.3)';
-                    }}
-                  >
-                    Post
-                  </button>
-                )}
-              </div>
+              )}
             </div>
 
             {/* Feed */}

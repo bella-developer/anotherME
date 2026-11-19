@@ -16,8 +16,8 @@ const rooms = [
     path: '/rooms/dark',
     gif:
       'https://res.cloudinary.com/dbtm7etag/image/upload/v1792502428/converted_twbyo4.gif',
-    glowColor: '#397982',
-    glowRGB: '57, 121, 130',
+    glowColor: '#DC2626',
+    glowRGB: '220, 38, 38',
     number: '01',
   },
   {
@@ -28,8 +28,8 @@ const rooms = [
     path: '/rooms/fantasy',
     gif:
       'https://res.cloudinary.com/dbtm7etag/image/upload/v1792502433/converted_1_ik5xbs.gif',
-    glowColor: '#947044',
-    glowRGB: '148, 112, 68',
+    glowColor: '#F97316',
+    glowRGB: '249, 115, 22',
     number: '02',
   },
   {
@@ -40,8 +40,8 @@ const rooms = [
     path: '/rooms/philo',
     gif:
       'https://res.cloudinary.com/dbtm7etag/image/upload/v1792502429/converted_2_neetec.gif',
-    glowColor: '#76517F',
-    glowRGB: '118, 81, 127',
+    glowColor: '#6366F1',
+    glowRGB: '99, 102, 241',
     number: '03',
   },
 ];
@@ -51,20 +51,7 @@ function Home() {
 
   const navigate = useNavigate();
   const [hovered, setHovered] = useState(null);
-  const [time, setTime] = useState(() => new Date());
   const reduceMotion = useReducedMotion();
-
-  useEffect(() => {
-    const timer = window.setInterval(() => setTime(new Date()), 60000);
-    return () => window.clearInterval(timer);
-  }, []);
-
-  const getGreeting = () => {
-    const hour = time.getHours();
-    if (hour < 12) return 'Good morning';
-    if (hour < 18) return 'Good afternoon';
-    return 'Good evening';
-  };
 
   return (
     <PageTransition>
@@ -84,30 +71,12 @@ function Home() {
           </div>
 
           <section className="eso-hero" aria-labelledby="eso-page-title">
-            <motion.div
-              className="eso-greeting"
-              initial={reduceMotion ? false : { opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.15 }}
-            >
-              {getGreeting()}
-            </motion.div>
-
-            <motion.p
-              className="eso-eyebrow"
-              initial={reduceMotion ? false : { opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.9, delay: 0.3 }}
-            >
-              Choose your room
-            </motion.p>
-
             <motion.h1
               id="eso-page-title"
               className="eso-title"
               initial={reduceMotion ? false : { opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 0.4 }}
+              transition={{ duration: 1, delay: 0.2 }}
             >
               Your Safe Space
             </motion.h1>
@@ -116,7 +85,7 @@ function Home() {
               className="eso-title-rule"
               initial={{ scaleX: 0, opacity: 0 }}
               animate={{ scaleX: 1, opacity: 1 }}
-              transition={{ duration: 1.1, delay: 0.7 }}
+              transition={{ duration: 1.1, delay: 0.5 }}
               aria-hidden="true"
             />
           </section>
@@ -182,7 +151,6 @@ function Home() {
                     <span className="eso-room__dash" aria-hidden="true" />
                   </div>
                   <p className="eso-room__tagline">{room.tagline}</p>
-                  <p className="eso-room__description">{room.description}</p>
                   <button
                     type="button"
                     className="eso-enter"

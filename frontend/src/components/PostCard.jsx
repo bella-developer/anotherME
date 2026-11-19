@@ -71,25 +71,26 @@ const PostCard = ({ post, onPostClick }) => {
       onClick={() => onPostClick && onPostClick(post.id)}
       className="rounded-lg p-6 mb-4 transition-all duration-200 cursor-pointer"
       style={{
-        backgroundColor: 'rgba(0, 0, 0, 0.3)',
-        backdropFilter: 'blur(10px)',
+        backgroundColor: 'rgba(255, 255, 255, 0.02)',
+        backdropFilter: 'blur(12px)',
+        border: '1px solid rgba(255, 255, 255, 0.08)',
       }}
       role="article"
-      onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'rgba(0, 0, 0, 0.35)'}
-      onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'rgba(0, 0, 0, 0.3)'}
+      onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.04)'}
+      onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.02)'}
     >
       {/* Header: Room Section and Timestamp */}
       <div className="flex items-center justify-between mb-6">
         {/* Room Header */}
         {post.circle?.room && (
           <div className="flex flex-col gap-2">
-            <span className="text-xs tracking-[0.25em] uppercase" style={{ color: '#e6edf3', fontWeight: '700' }}>
+            <span className="text-xs tracking-[0.25em] uppercase font-mono" style={{ color: '#e6edf3', fontWeight: '700' }}>
               ROOMS
             </span>
-            <span className="text-lg tracking-[0.12em] uppercase" style={{ 
-              color: post.circle.room === 'dark' ? '#2EE6FF' :
-                     post.circle.room === 'fantasy' ? '#FF9D1C' :
-                     post.circle.room === 'philo' ? '#B56DFF' :
+            <span className="text-lg tracking-[0.12em] uppercase font-sans" style={{ 
+              color: post.circle.room === 'dark' ? '#DC2626' :
+                     post.circle.room === 'fantasy' ? '#F97316' :
+                     post.circle.room === 'philo' ? '#6366F1' :
                      '#ffffff',
               fontWeight: '800'
             }}>

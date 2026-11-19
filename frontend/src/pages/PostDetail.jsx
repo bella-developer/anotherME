@@ -120,9 +120,9 @@ function PostDetail() {
             {/* Room name as main heading - strongest, boldest, and largest */}
             {post.circle?.room && (
               <h2 className="text-2xl uppercase tracking-[0.12em]" style={{ 
-                color: post.circle.room === 'dark' ? '#2EE6FF' :
-                       post.circle.room === 'fantasy' ? '#FF9D1C' :
-                       post.circle.room === 'philo' ? '#B56DFF' :
+                color: post.circle.room === 'dark' ? '#DC2626' :
+                       post.circle.room === 'fantasy' ? '#F97316' :
+                       post.circle.room === 'philo' ? '#6366F1' :
                        '#ffffff',
                 fontWeight: '800'
               }}>
@@ -143,15 +143,21 @@ function PostDetail() {
           {/* Category and timestamp */}
           <div className="flex items-center gap-4">
             {post.category && (
-              <span className="px-3 py-1 text-[10px] uppercase tracking-widest font-semibold rounded" style={{
-                background: 'rgba(46, 230, 255, 0.1)',
-                border: '1px solid rgba(46, 230, 255, 0.3)',
-                color: '#2EE6FF'
+              <span className="px-3 py-1 text-[10px] uppercase tracking-widest font-semibold rounded font-mono" style={{
+                background: post.circle?.room === 'fantasy' ? 'rgba(249, 115, 22, 0.1)' :
+                            post.circle?.room === 'philo' ? 'rgba(99, 102, 241, 0.1)' :
+                            'rgba(220, 38, 38, 0.1)',
+                border: post.circle?.room === 'fantasy' ? '1px solid rgba(249, 115, 22, 0.3)' :
+                        post.circle?.room === 'philo' ? '1px solid rgba(99, 102, 241, 0.3)' :
+                        '1px solid rgba(220, 38, 38, 0.3)',
+                color: post.circle?.room === 'fantasy' ? '#F97316' :
+                       post.circle?.room === 'philo' ? '#6366F1' :
+                       '#DC2626'
               }}>
                 {post.category}
               </span>
             )}
-            <div className="text-xs uppercase tracking-[0.15em]" style={{ color: '#8b949e', fontWeight: '400' }}>
+            <div className="text-xs uppercase tracking-[0.15em] font-mono" style={{ color: '#8b949e', fontWeight: '400' }}>
               {formatTimeAgo(post.createdAt)}
             </div>
           </div>
@@ -159,91 +165,94 @@ function PostDetail() {
 
         {/* Post Title */}
         {post.title && (
-          <h1 className="leading-relaxed mb-6 md:mb-8" style={{ 
+          <h1 className="leading-relaxed mb-6 md:mb-8 font-sans" style={{ 
             color: '#ffffff',
             fontWeight: '600',
             fontSize: '1.75rem',
             letterSpacing: '-0.01em',
-            fontFamily: "'Space Mono', monospace"
           }}>
             {post.title}
           </h1>
         )}
 
         {/* Post Image - if exists */}
-        {post.image?.url && (
-          <div className="mb-8 md:mb-10">
-            <div style={{
-              position: 'relative',
-              width: '100%',
-              maxWidth: '600px',
-              margin: '0 auto',
-              padding: '20px',
-              background: 'rgba(255,255,255,0.03)',
-              border: '1px solid rgba(255,255,255,0.1)',
-              borderRadius: '4px'
-            }}>
-              {/* Polaroid-style mat with thicker bottom */}
+        {(() => {
+          const imageUrl = post.image_url || post.image?.url || (typeof post.image === 'string' ? post.image : null);
+          if (!imageUrl) return null;
+          return (
+            <div className="mb-8 md:mb-10">
               <div style={{
-                padding: '16px 16px 48px',
-                background: 'linear-gradient(180deg, rgba(240,240,240,0.95) 0%, rgba(230,230,230,0.93) 100%)',
-                boxShadow: '0 4px 12px rgba(0,0,0,0.3), 0 1px 3px rgba(0,0,0,0.2)',
-                position: 'relative'
+                position: 'relative',
+                width: '100%',
+                maxWidth: '600px',
+                margin: '0 auto',
+                padding: '20px',
+                background: 'rgba(255, 255, 255, 0.02)',
+                backdropFilter: 'blur(12px)',
+                WebkitBackdropFilter: 'blur(12px)',
+                border: '1px solid rgba(255, 255, 255, 0.08)',
+                borderRadius: '8px'
               }}>
+                {/* Polaroid-style mat with thicker bottom */}
                 <div style={{
-                  position: 'relative',
-                  width: '100%',
-                  aspectRatio: `${post.image.width || 4} / ${post.image.height || 3}`,
-                  overflow: 'hidden',
-                  background: '#000000'
+                  padding: '16px 16px 48px',
+                  background: 'linear-gradient(180deg, rgba(240,240,240,0.95) 0%, rgba(230,230,230,0.93) 100%)',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.3), 0 1px 3px rgba(0,0,0,0.2)',
+                  position: 'relative'
                 }}>
-                  <img
-                    src={post.image.url}
-                    alt={post.title || 'Post image'}
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      objectFit: 'contain',
-                      display: 'block'
-                    }}
-                    loading="lazy"
-                  />
-                  {/* Vintage vignette overlay */}
                   <div style={{
-                    position: 'absolute',
-                    inset: 0,
-                    background: 'radial-gradient(circle at center, transparent 30%, rgba(0,0,0,0.15) 100%)',
-                    pointerEvents: 'none',
-                    mixBlendMode: 'multiply'
-                  }} />
+                    position: 'relative',
+                    width: '100%',
+                    aspectRatio: `${post.image?.width || 4} / ${post.image?.height || 3}`,
+                    overflow: 'hidden',
+                    background: '#000000'
+                  }}>
+                    <img
+                      src={imageUrl}
+                      alt={post.title || 'Post image'}
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'contain',
+                        display: 'block'
+                      }}
+                      loading="lazy"
+                    />
+                    {/* Vintage vignette overlay */}
+                    <div style={{
+                      position: 'absolute',
+                      inset: 0,
+                      background: 'radial-gradient(circle at center, transparent 30%, rgba(0,0,0,0.15) 100%)',
+                      pointerEvents: 'none'
+                    }} />
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        )}
+          );
+        })()}
 
         {/* Post Content */}
-        <div className={`space-y-5 ${post.image?.url ? 'mb-10 md:mb-12' : 'mb-6'}`}>
+        <div className={`space-y-5 ${(post.image_url || post.image?.url || post.image) ? 'mb-10 md:mb-12' : 'mb-6'}`}>
           {post.content ? (
             post.content.split('\n').filter(line => line.trim()).map((paragraph, index) => (
-              <p key={index} className="leading-relaxed" style={{ 
+              <p key={index} className="leading-relaxed font-sans" style={{ 
                 color: '#e6edf3',
                 lineHeight: '1.9',
                 fontWeight: '400',
                 fontSize: '1.05rem',
-                fontFamily: "'IBM Plex Mono', monospace"
               }}>
                 {paragraph}
               </p>
             ))
           ) : (
-            <p style={{ color: '#8b949e', fontStyle: 'italic' }}>No content available</p>
+            <p className="font-sans" style={{ color: '#8b949e', fontStyle: 'italic' }}>No content available</p>
           )}
         </div>
 
         {/* Linked Reference Section */}
         {post.circle && (
-          <div className={post.image?.url ? 'mb-6' : 'mb-4'}>
+          <div className={(post.image_url || post.image?.url || post.image) ? 'mb-6' : 'mb-4'}>
             <div className="text-[0.65rem] uppercase tracking-[0.2em] mb-2" style={{ color: '#6e7681', fontWeight: '400' }}>
               Circle
             </div>
@@ -259,15 +268,15 @@ function PostDetail() {
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-3">
                   <div className="w-8 h-8 rounded-full flex items-center justify-center" style={{ 
-                    background: post.circle.room === 'dark' ? 'rgba(46, 230, 255, 0.1)' :
-                               post.circle.room === 'fantasy' ? 'rgba(255, 157, 28, 0.1)' :
-                               post.circle.room === 'philo' ? 'rgba(181, 109, 255, 0.1)' :
+                    background: post.circle.room === 'dark' ? 'rgba(220, 38, 38, 0.1)' :
+                               post.circle.room === 'fantasy' ? 'rgba(249, 115, 22, 0.1)' :
+                               post.circle.room === 'philo' ? 'rgba(99, 102, 241, 0.1)' :
                                'rgba(255,255,255,0.05)'
                   }}>
                     <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" style={{
-                      color: post.circle.room === 'dark' ? '#2EE6FF' :
-                             post.circle.room === 'fantasy' ? '#FF9D1C' :
-                             post.circle.room === 'philo' ? '#B56DFF' :
+                      color: post.circle.room === 'dark' ? '#DC2626' :
+                             post.circle.room === 'fantasy' ? '#F97316' :
+                             post.circle.room === 'philo' ? '#6366F1' :
                              '#8b949e'
                     }}>
                       <circle cx="10" cy="10" r="8" />

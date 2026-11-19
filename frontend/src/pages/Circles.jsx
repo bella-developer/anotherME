@@ -9,25 +9,25 @@ import { usePageTitle } from '../hooks/usePageTitle';
 
 // Room accent config with energy ring colors matching Home page
 const roomAccent = {
-  dark:  { 
-    color: '#2EE6FF', // Electric Cyan
-    colorRGB: '46, 230, 255',
-    bg: 'rgba(46, 230, 255, 0.05)', 
-    glow: 'rgba(46, 230, 255, 0.3)', 
+  dark: { 
+    color: '#DC2626', // Blood Red
+    colorRGB: '220, 38, 38',
+    bg: 'rgba(220, 38, 38, 0.05)', 
+    glow: 'rgba(220, 38, 38, 0.3)', 
     label: 'Dark' 
   },
   fantasy: { 
-    color: '#FF9D1C', // Amber/Gold
-    colorRGB: '255, 157, 28',
-    bg: 'rgba(255, 157, 28, 0.05)',  
-    glow: 'rgba(255, 157, 28, 0.3)',  
+    color: '#F97316', // Orange
+    colorRGB: '249, 115, 22',
+    bg: 'rgba(249, 115, 22, 0.05)',  
+    glow: 'rgba(249, 115, 22, 0.3)',  
     label: 'Fantasy' 
   },
   philo: { 
-    color: '#B56DFF', // Violet
-    colorRGB: '181, 109, 255',
-    bg: 'rgba(181, 109, 255, 0.05)', 
-    glow: 'rgba(181, 109, 255, 0.3)', 
+    color: '#6366F1', // Indigo
+    colorRGB: '99, 102, 241',
+    bg: 'rgba(99, 102, 241, 0.05)', 
+    glow: 'rgba(99, 102, 241, 0.3)', 
     label: 'Philo' 
   },
 };
@@ -41,6 +41,9 @@ function CircleCard({ circle, onClick }) {
     glow: 'rgba(255,255,255,0.06)', 
     label: circle.room 
   };
+
+  const circleName = (circle.name || '').replace(/darker thoughta/gi, 'Darker Thoughts');
+  const circleDesc = (circle.description || '').replace(/darker thoughta/gi, 'Darker thoughts');
 
   return (
     <div
@@ -200,9 +203,9 @@ function CircleCard({ circle, onClick }) {
           }}
         >
           <span
-            className="font-light text-center leading-tight"
+            className="font-light text-center leading-tight font-sans"
             style={{
-              fontSize: circle.name.length > 15 ? '9px' : circle.name.length > 10 ? '11px' : '13px',
+              fontSize: circleName.length > 15 ? '9px' : circleName.length > 10 ? '11px' : '13px',
               color: accent.color,
               textShadow: `0 0 12px rgba(${accent.colorRGB}, 0.6)`,
               letterSpacing: '0.05em',
@@ -214,14 +217,14 @@ function CircleCard({ circle, onClick }) {
               overflow: 'hidden',
             }}
           >
-            {circle.name}
+            {circleName}
           </span>
         </div>
 
         {/* Room badge */}
         {circle.room && (
           <div
-            className="absolute -top-1 -right-1 px-2 py-0.5 text-[8px] tracking-[0.2em] uppercase rounded-full"
+            className="absolute -top-1 -right-1 px-2 py-0.5 text-[8px] tracking-[0.2em] uppercase font-mono rounded-full"
             style={{
               background: hovered ? accent.bg : 'rgba(0,0,0,0.8)',
               border: `1px solid rgba(${accent.colorRGB}, ${hovered ? 0.5 : 0.3})`,
@@ -237,25 +240,27 @@ function CircleCard({ circle, onClick }) {
 
       {/* Description */}
       <p
-        className="text-[10px] leading-relaxed mb-3 text-center transition-colors duration-300 line-clamp-2"
+        className="text-[10px] leading-relaxed mb-3 text-center transition-colors duration-300 line-clamp-2 font-sans"
         style={{ 
           color: hovered ? '#c9d1d9' : '#8b949e',
           maxWidth: '200px',
         }}
       >
-        {circle.description}
+        {circleDesc}
       </p>
 
       {/* Footer */}
       <div className="flex items-center gap-2">
         <span
-          className="text-[9px] tracking-[0.12em] transition-colors duration-300"
+          className="text-[9px] tracking-[0.12em] font-mono transition-colors duration-300"
           style={{ color: hovered ? '#c9d1d9' : '#8b949e' }}
         >
-          {(circle.activeUserCount || 0).toLocaleString()} souls
+          {(circle.activeUserCount || 0) === 1
+            ? '1 soul'
+            : `${(circle.activeUserCount || 0).toLocaleString()} souls`}
         </span>
         <span
-          className="text-[9px] transition-all duration-300"
+          className="text-[9px] font-mono transition-all duration-300"
           style={{
             color: hovered ? accent.color : '#8b949e',
             transform: hovered ? 'translateX(2px)' : 'translateX(0)',
@@ -326,19 +331,19 @@ function Circles() {
       <Layout leftSidebar={null} rightSidebar={null}>
         <div className="relative z-10 max-w-5xl mx-auto py-12 px-4">
 
-          {/* Header */}
-          <div className="mb-12">
-            <div className="w-8 h-px mb-6" style={{ background: 'linear-gradient(to right, rgba(255,255,255,0.4), transparent)' }} />
-            <h1 className="text-3xl font-light tracking-[0.2em] uppercase mb-3" style={{ color: '#ffffff' }}>
+          {/* Header - Centered */}
+          <div className="mb-12 text-center flex flex-col items-center">
+            <div className="w-8 h-px mb-6 bg-white/20 mx-auto" />
+            <h1 className="text-3xl font-light tracking-[0.2em] uppercase mb-3 text-center" style={{ color: '#ffffff' }}>
               Circles
             </h1>
-            <p className="text-[11px] tracking-[0.12em]" style={{ color: '#8b949e' }}>
+            <p className="text-[11px] tracking-[0.12em] text-center max-w-md mx-auto" style={{ color: '#8b949e' }}>
               Quietly explore the unspoken thoughts of the collective.
             </p>
           </div>
 
-          {/* Filter row */}
-          <div className="flex gap-2 mb-10 flex-wrap">
+          {/* Filter row - Centered */}
+          <div className="flex justify-center items-center gap-2 mb-10 flex-wrap">
             {filters.map((f) => {
               const acc = f.value !== 'all' ? roomAccent[f.value] : null;
               const active = filter === f.value;

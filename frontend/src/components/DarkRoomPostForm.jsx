@@ -213,8 +213,8 @@ const DarkRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, onCirc
                 disabled={loading}
                 className="flex-1 py-1.5 rounded text-xs font-medium transition-all disabled:opacity-50"
                 style={{
-                  background: formData.category === cat.value ? 'rgba(46, 230, 255, 0.15)' : 'rgba(255, 255, 255, 0.02)',
-                  color: formData.category === cat.value ? '#2EE6FF' : '#6b7280',
+                  background: formData.category === cat.value ? 'rgba(220, 38, 38, 0.15)' : 'rgba(255, 255, 255, 0.02)',
+                  color: formData.category === cat.value ? '#DC2626' : '#6b7280',
                   border: 'none',
                 }}
               >
@@ -238,7 +238,7 @@ const DarkRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, onCirc
               color: '#e5e5e5',
               lineHeight: '1.5',
             }}
-            onFocus={(e) => e.target.style.borderColor = 'rgba(46, 230, 255, 0.25)'}
+            onFocus={(e) => e.target.style.borderColor = 'rgba(220, 38, 38, 0.35)'}
             onBlur={(e) => e.target.style.borderColor = 'rgba(255, 255, 255, 0.06)'}
           />
           <div className="flex items-center justify-between -mt-2 px-1">
@@ -273,7 +273,7 @@ const DarkRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, onCirc
                 border: '1px solid rgba(255, 255, 255, 0.06)',
                 color: formData.circleId ? '#e5e5e5' : '#6b7280',
               }}
-              onFocus={(e) => e.target.style.borderColor = 'rgba(46, 230, 255, 0.25)'}
+              onFocus={(e) => e.target.style.borderColor = 'rgba(220, 38, 38, 0.35)'}
               onBlur={(e) => e.target.style.borderColor = 'rgba(255, 255, 255, 0.06)'}
             >
               <option value="">Select circle</option>
@@ -290,7 +290,7 @@ const DarkRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, onCirc
                 onClick={() => setShowCircleCreation(true)}
                 disabled={loading}
                 className="text-[11px] mt-1.5 px-1 transition-colors disabled:opacity-50"
-                style={{ color: '#2EE6FF' }}
+                style={{ color: '#DC2626' }}
               >
                 + Create new circle
               </button>
@@ -298,8 +298,8 @@ const DarkRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, onCirc
 
             {showCircleCreation && (
               <div className="mt-2 space-y-2 p-3 rounded" style={{
-                background: 'rgba(46, 230, 255, 0.05)',
-                border: '1px solid rgba(46, 230, 255, 0.15)'
+                background: 'rgba(220, 38, 38, 0.05)',
+                border: '1px solid rgba(220, 38, 38, 0.15)'
               }}>
                 <input
                   type="text"
@@ -339,8 +339,8 @@ const DarkRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, onCirc
                     disabled={creatingCircle}
                     className="flex-1 px-3 py-1.5 rounded text-xs font-medium transition-all disabled:opacity-50"
                     style={{
-                      background: '#2EE6FF',
-                      color: '#000',
+                      background: '#DC2626',
+                      color: '#fff',
                     }}
                   >
                     {creatingCircle ? 'Creating...' : 'Create'}
@@ -382,8 +382,8 @@ const DarkRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, onCirc
             disabled={loading || !isFormReady()}
             className="w-full py-2.5 rounded font-medium text-sm transition-all disabled:opacity-40"
             style={{
-              background: !isFormReady() ? 'rgba(255, 255, 255, 0.03)' : '#2EE6FF',
-              color: !isFormReady() ? '#6b7280' : '#000',
+              background: !isFormReady() ? 'rgba(255, 255, 255, 0.03)' : '#DC2626',
+              color: !isFormReady() ? '#6b7280' : '#fff',
               cursor: !isFormReady() ? 'not-allowed' : 'pointer',
             }}
           >

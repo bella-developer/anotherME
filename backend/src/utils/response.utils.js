@@ -112,7 +112,8 @@ export function sanitizePost(post, options = {}) {
     title: postData.title || null,
     content: postData.contentSanitized || postData.content, // Only sanitized content
     category: postData.category,
-    image: postData.image || null, // Include image data if present
+    image: postData.image ? (typeof postData.image === 'string' ? { url: postData.image } : postData.image) : (postData.image_url ? { url: postData.image_url } : null),
+    image_url: postData.image?.url || postData.image_url || (typeof postData.image === 'string' ? postData.image : null),
     reactions: postData.reactions || {},
     commentCount: postData.commentCount || 0,
     isCircleTopic: Boolean(postData.isCircleTopic),
@@ -207,10 +208,15 @@ export function sanitizeCircle(circle, options = {}) {
   // Handle Mongoose document
   const circleData = circle.toObject ? circle.toObject() : circle;
 
+  const rawName = circleData.name || '';
+  const cleanName = rawName.replace(/darker thoughta/gi, 'Darker Thoughts');
+  const rawDesc = circleData.description || '';
+  const cleanDesc = rawDesc.replace(/darker thoughta/gi, 'Darker thoughts');
+
   const sanitized = {
     id: circleData._id.toString(), // Use MongoDB ObjectId directly
-    name: circleData.name,
-    description: circleData.description,
+    name: cleanName,
+    description: cleanDesc,
     visibility: circleData.visibility,
     memberCount: circleData.memberCount || 0,
     postCount: circleData.postCount || 0,

@@ -136,7 +136,7 @@ function Navbar() {
             {user?.role === 'admin' && (
               <Link
                 to="/admin"
-                className="text-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white/50 rounded px-2 py-1 tracking-wider uppercase text-purple-400/85 hover:text-purple-400 font-medium"
+                className="text-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white/50 rounded px-2 py-1 tracking-wider uppercase text-white/85 hover:text-white font-medium"
                 role="menuitem"
                 title="Admin Dashboard"
               >
@@ -313,7 +313,7 @@ function Navbar() {
                     <Link
                       to="/admin"
                       onClick={() => setIsMobileMenuOpen(false)}
-                      className="py-3 px-4 rounded-lg transition-colors duration-200 text-base font-medium text-purple-400/80 hover:text-purple-400 hover:bg-purple-400/10"
+                      className="py-3 px-4 rounded-lg transition-colors duration-200 text-base font-medium text-white/80 hover:text-white hover:bg-white/10"
                       role="menuitem"
                     >
                       Admin Dashboard
