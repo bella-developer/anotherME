@@ -119,34 +119,45 @@ export function preloadResources(urls, type = 'script') {
  * Reports LCP, FID, and CLS metrics silently
  */
 export function monitorWebVitals() {
-  if (process.env.NODE_ENV === 'production' && 'PerformanceObserver' in window) {
+  if (
+    typeof process !== 'undefined' &&
+    process.env?.NODE_ENV === 'production' &&
+    typeof window !== 'undefined' &&
+    'PerformanceObserver' in window
+  ) {
+    const supported = Array.isArray(PerformanceObserver.supportedEntryTypes)
+      ? PerformanceObserver.supportedEntryTypes
+      : [];
+
     // Largest Contentful Paint (LCP)
-    const lcpObserver = new PerformanceObserver((list) => {
-      const entries = list.getEntries();
-      const lastEntry = entries[entries.length - 1];
-      // LCP: lastEntry.renderTime || lastEntry.loadTime
-    });
-    lcpObserver.observe({ entryTypes: ['largest-contentful-paint'] });
+    if (supported.includes('largest-contentful-paint')) {
+      try {
+        const lcpObserver = new PerformanceObserver(() => {});
+        lcpObserver.observe({ entryTypes: ['largest-contentful-paint'] });
+      } catch {
+        // unsupported observer
+      }
+    }
 
     // First Input Delay (FID)
-    const fidObserver = new PerformanceObserver((list) => {
-      const entries = list.getEntries();
-      // FID: entry.processingStart - entry.startTime
-    });
-    fidObserver.observe({ entryTypes: ['first-input'] });
+    if (supported.includes('first-input')) {
+      try {
+        const fidObserver = new PerformanceObserver(() => {});
+        fidObserver.observe({ entryTypes: ['first-input'] });
+      } catch {
+        // unsupported observer
+      }
+    }
 
     // Cumulative Layout Shift (CLS)
-    let clsScore = 0;
-    const clsObserver = new PerformanceObserver((list) => {
-      const entries = list.getEntries();
-      entries.forEach((entry) => {
-        if (!entry.hadRecentInput) {
-          clsScore += entry.value;
-        }
-      });
-      // CLS: clsScore
-    });
-    clsObserver.observe({ entryTypes: ['layout-shift'] });
+    if (supported.includes('layout-shift')) {
+      try {
+        const clsObserver = new PerformanceObserver(() => {});
+        clsObserver.observe({ entryTypes: ['layout-shift'] });
+      } catch {
+        // unsupported observer
+      }
+    }
   }
 }
 

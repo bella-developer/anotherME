@@ -1,6 +1,6 @@
 import { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { ToastProvider } from './components/ToastContainer';
+import { ToastProvider } from './contexts/ToastContext';
 import { StatsProvider } from './contexts/StatsContext';
 import Layout from './components/Layout';
 import LoadingSpinner from './components/LoadingSpinner';

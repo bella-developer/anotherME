@@ -5,18 +5,21 @@ import { X, CheckCircle, AlertCircle, Info, AlertTriangle } from 'lucide-react';
  * Minimalistic Toast Notification
  * Dark aesthetic with minimal border, small font, hide button
  */
-const Toast = ({ message, type = 'info', duration = 3000, onClose }) => {
+const Toast = ({ title, message, type = 'info', duration = 3000, onClose }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [isExiting, setIsExiting] = useState(false);
 
   useEffect(() => {
-    setTimeout(() => setIsVisible(true), 10);
+    const timerIn = setTimeout(() => setIsVisible(true), 10);
 
     const timer = setTimeout(() => {
       handleClose();
     }, duration);
 
-    return () => clearTimeout(timer);
+    return () => {
+      clearTimeout(timerIn);
+      clearTimeout(timer);
+    };
   }, [duration]);
 
   const handleClose = () => {
@@ -57,7 +60,7 @@ const Toast = ({ message, type = 'info', duration = 3000, onClose }) => {
 
   return (
     <div
-      className={`fixed top-20 right-4 z-[9999] transition-all duration-200 ease-out ${
+      className={`relative pointer-events-auto transition-all duration-200 ease-out ${
         isVisible && !isExiting
           ? 'opacity-100 translate-x-0'
           : 'opacity-0 translate-x-8'
@@ -70,28 +73,40 @@ const Toast = ({ message, type = 'info', duration = 3000, onClose }) => {
       <div
         style={{
           background: '#0a0a0a',
-          boxShadow: '0 0 20px rgba(0, 0, 0, 0.8)',
-          border: '1px solid rgba(255, 255, 255, 0.06)',
+          boxShadow: '0 8px 24px rgba(0, 0, 0, 0.8)',
+          border: '1px solid rgba(255, 255, 255, 0.08)',
           borderRadius: '6px',
         }}
       >
-        <div className="flex items-center gap-2.5 px-3 py-2.5">
-          <div style={{ color: colors.icon, flexShrink: 0 }}>
+        <div className="flex items-start gap-2.5 px-3 py-2.5">
+          <div style={{ color: colors.icon, flexShrink: 0, marginTop: '2px' }}>
             {getIcon()}
           </div>
-          <p 
-            className="text-[#e5e5e5] flex-1"
-            style={{
-              fontSize: '11px',
-              fontWeight: '400',
-              lineHeight: '1.4',
-            }}
-          >
-            {message}
-          </p>
+          <div className="flex-1 min-w-0">
+            {title && (
+              <p
+                className="text-[#f5f5f5] font-medium leading-tight mb-0.5"
+                style={{ fontSize: '12px' }}
+              >
+                {title}
+              </p>
+            )}
+            {message && (
+              <p
+                className="text-[#9ca3af] leading-relaxed"
+                style={{
+                  fontSize: '11px',
+                  fontWeight: '400',
+                  lineHeight: '1.4',
+                }}
+              >
+                {typeof message === 'string' ? message : JSON.stringify(message)}
+              </p>
+            )}
+          </div>
           <button
             onClick={handleClose}
-            className="text-[#6b7280] hover:text-[#9ca3af] transition-colors flex-shrink-0"
+            className="text-[#6b7280] hover:text-[#9ca3af] transition-colors flex-shrink-0 ml-1 mt-0.5"
             title="Hide"
           >
             <X className="w-3.5 h-3.5" strokeWidth={2} />
