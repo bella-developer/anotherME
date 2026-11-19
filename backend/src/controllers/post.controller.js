@@ -48,9 +48,30 @@ export async function createPost(req, res, next) {
       authorId
     );
 
-    // Sanitize response with userId to show isAuthor flag
+    // Sanitize response with userId to show isAuthor flag (defensive fallback)
     const currentUserId = req.user?.id || req.user?._id;
-    const sanitized = sanitizePost(post, { userId: currentUserId });
+    let sanitized;
+    try {
+      sanitized = sanitizePost(post, { userId: currentUserId });
+    } catch (sanitizeErr) {
+      console.error('[sanitizePost Error in createPost]', sanitizeErr);
+      sanitized = {
+        id: (post?._id || post?.id)?.toString?.() || null,
+        room: post?.room,
+        title: post?.title || null,
+        content: post?.contentSanitized || post?.content,
+        category: post?.category,
+        image: post?.image || null,
+        reactions: post?.reactions || {},
+        commentCount: post?.commentCount || 0,
+        isCircleTopic: Boolean(post?.isCircleTopic),
+        circleTopicSetAt: post?.circleTopicSetAt || null,
+        circles: post?.circles || [],
+        createdAt: post?.createdAt || new Date(),
+        updatedAt: post?.updatedAt || new Date(),
+        isAuthor: true,
+      };
+    }
 
     res.status(201).json(createSuccessResponse(sanitized, 'Post created successfully'));
   } catch (error) {

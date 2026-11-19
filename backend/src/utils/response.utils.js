@@ -123,26 +123,26 @@ export function sanitizePost(post, options = {}) {
   };
 
   // Safe user ID string for comparisons
-  const currentUserId = options.userId
-    ? (options.userId?._id ? options.userId._id.toString() : options.userId.toString())
+  const currentUserId = options?.userId
+    ? (options.userId?._id ? options.userId._id.toString() : (options.userId.toString?.() || String(options.userId)))
     : null;
 
   // Include user's reactions if userId provided
   if (currentUserId && postData.userReactions && Array.isArray(postData.userReactions)) {
     sanitized.userReactions = postData.userReactions
       .filter(r => {
-        const rUserId = r?.userId?._id ? r.userId._id.toString() : (r?.userId ? r.userId.toString() : null);
+        const rUserId = r?.userId?._id ? r.userId._id.toString() : (r?.userId ? (r.userId.toString?.() || String(r.userId)) : null);
         return Boolean(rUserId && rUserId === currentUserId);
       })
       .map(r => r.type);
   }
 
   // Include isAuthor flag if userId provided (for UI logic)
-  if (options.userId) {
+  if (options?.userId) {
     const postAuthorId = postData.authorId?._id
       ? postData.authorId._id.toString()
       : (postData.authorId
-        ? postData.authorId.toString()
+        ? (postData.authorId.toString?.() || String(postData.authorId))
         : (postData.author?._id ? postData.author._id.toString() : (postData.author?.id ? postData.author.id.toString() : null)));
 
     sanitized.isAuthor = Boolean(currentUserId && postAuthorId && currentUserId === postAuthorId);
