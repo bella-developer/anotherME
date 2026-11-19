@@ -47,7 +47,7 @@ function Landing() {
   ];
 
   return (
-    <div className="min-h-screen text-white overflow-x-hidden bg-transparent" style={{ fontFamily: "var(--font-body)" }}>
+    <div className="min-h-screen text-white overflow-x-hidden bg-transparent">
 
       {/* NAVIGATION - Editorial Spacing */}
       <motion.header 

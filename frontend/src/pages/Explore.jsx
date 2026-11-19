@@ -35,7 +35,7 @@ function Explore() {
   ];
 
   return (
-    <div className="min-h-screen text-white relative bg-transparent" style={{ fontFamily: "var(--font-body)" }}>
+    <div className="min-h-screen text-white relative bg-transparent">
       {/* Fixed Navigation */}
       <nav 
         className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl"

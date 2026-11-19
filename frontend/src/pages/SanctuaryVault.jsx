@@ -91,19 +91,19 @@ export default function SanctuaryVault() {
     <Layout leftSidebar={null} rightSidebar={null}>
       <div className="bg-transparent text-white min-h-[calc(100vh-3rem)] pb-16 pt-3 sm:pt-5">
         <div className="max-w-xl mx-auto px-4">
-          {/* Centered Header */}
-          <div className="flex flex-col items-center text-center pb-4 mb-4 border-b border-[#21262d]">
-            <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-white font-sans">
-              Saved
-            </h1>
-            <p className="text-xs font-sans text-neutral-400 mt-1">
-              Your bookmarks and drafts
-            </p>
+          {/* Header */}
+          <div className="flex items-center justify-between pb-3 mb-4 border-b border-[#21262d]">
+            <div>
+              <h1 className="text-base font-semibold text-[#e6edf3]">Saved</h1>
+              <p className="text-xs text-[#8b949e] mt-0.5">
+                Your bookmarks and drafts
+              </p>
+            </div>
 
             <button
               type="button"
               onClick={handleExport}
-              className="mt-3 flex items-center gap-1.5 px-3 py-1 rounded text-xs font-mono text-[#8b949e] hover:text-[#e6edf3] border border-[#21262d] hover:border-[#30363d] transition-colors"
+              className="flex items-center gap-1.5 px-2.5 py-1 rounded text-xs font-mono text-[#8b949e] hover:text-[#e6edf3] border border-[#21262d] hover:border-[#30363d] transition-colors"
               title="Export as JSON"
             >
               <Download size={12} />
@@ -111,8 +111,8 @@ export default function SanctuaryVault() {
             </button>
           </div>
 
-          {/* Centered Subheader: Tabs & Room Filters */}
-          <div className="flex flex-col items-center justify-center gap-3 mb-4">
+          {/* Subheader: Tabs & Room Filters */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 mb-3">
             {/* Tabs */}
             <div className="flex border border-[#21262d] rounded p-0.5 bg-[rgba(255,255,255,0.02)]">
               <button

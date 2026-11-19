@@ -296,7 +296,7 @@ function Home() {
             margin: 0;
             padding-left: .12em;
             color: #fbf8f4;
-            font-family: var(--font-body, monospace);
+            font-family: var(--font-body, ui-sans-serif, sans-serif);
             font-size: clamp(2.5rem, 4.2vw, 4.5rem);
             font-weight: 200;
             line-height: 1.08;

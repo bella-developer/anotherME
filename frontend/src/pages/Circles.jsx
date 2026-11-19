@@ -331,19 +331,19 @@ function Circles() {
       <Layout leftSidebar={null} rightSidebar={null}>
         <div className="relative z-10 max-w-5xl mx-auto py-12 px-4">
 
-          {/* Header - Centered */}
-          <div className="mb-12 text-center flex flex-col items-center">
-            <div className="w-8 h-px mb-6 bg-white/20 mx-auto" />
-            <h1 className="text-3xl font-light tracking-[0.2em] uppercase mb-3 text-center" style={{ color: '#ffffff' }}>
+          {/* Header */}
+          <div className="mb-12">
+            <div className="w-8 h-px mb-6" style={{ background: 'linear-gradient(to right, rgba(255,255,255,0.4), transparent)' }} />
+            <h1 className="text-3xl font-light tracking-[0.2em] uppercase mb-3" style={{ color: '#ffffff' }}>
               Circles
             </h1>
-            <p className="text-[11px] tracking-[0.12em] text-center max-w-md mx-auto" style={{ color: '#8b949e' }}>
+            <p className="text-[11px] tracking-[0.12em]" style={{ color: '#8b949e' }}>
               Quietly explore the unspoken thoughts of the collective.
             </p>
           </div>
 
-          {/* Filter row - Centered */}
-          <div className="flex justify-center items-center gap-2 mb-10 flex-wrap">
+          {/* Filter row */}
+          <div className="flex gap-2 mb-10 flex-wrap">
             {filters.map((f) => {
               const acc = f.value !== 'all' ? roomAccent[f.value] : null;
               const active = filter === f.value;
