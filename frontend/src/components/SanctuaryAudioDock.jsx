@@ -10,7 +10,7 @@ import {
   ChevronUp,
   CloudRain,
   Flame,
-  Compass,
+  Wind,
   Radio,
 } from 'lucide-react';
 import {
@@ -24,31 +24,27 @@ import {
 const TRACKS = [
   {
     id: 'rain',
-    title: 'Kyoto Rain',
-    subtitle: 'Filtered pink noise & droplet resonance',
+    title: 'Rain',
+    subtitle: 'Kyoto soft rain',
     icon: CloudRain,
-    accent: '#2EE6FF',
   },
   {
     id: 'hearth',
-    title: 'Midnight Hearth',
-    subtitle: 'Warm ember rumble & fireside pops',
+    title: 'Fireplace',
+    subtitle: 'Warm quiet hearth',
     icon: Flame,
-    accent: '#FF9D1C',
   },
   {
     id: 'nordic',
-    title: 'Nordic Solitude',
-    subtitle: '432Hz ambient drone & harmonic sweep',
-    icon: Compass,
-    accent: '#e6edf3',
+    title: 'Wind',
+    subtitle: 'Soft distant drone',
+    icon: Wind,
   },
   {
     id: 'celestial',
-    title: 'Celestial Theta',
-    subtitle: '6Hz binaural beat for deep contemplative focus',
+    title: 'Ambient',
+    subtitle: 'Calm background hum',
     icon: Radio,
-    accent: '#B56DFF',
   },
 ];
 
@@ -89,117 +85,93 @@ export default function SanctuaryAudioDock() {
   return (
     <aside
       className="fixed bottom-3 right-3 sm:bottom-4 sm:right-4 z-40 max-w-sm"
-      aria-label="Sanctuary Soundscape Player"
+      aria-label="Background Sound Player"
     >
       <AnimatePresence>
         {isAudioDockOpen && (
           <motion.div
-            initial={{ opacity: 0, y: 12 }}
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 12 }}
-            transition={{ duration: 0.18, ease: 'easeOut' }}
-            className="mb-2 w-72 sm:w-80 p-3.5 border shadow-2xl"
+            exit={{ opacity: 0, y: 10 }}
+            transition={{ duration: 0.15 }}
+            className="mb-2 w-64 p-3 border shadow-2xl"
             style={{
               background: '#0a0a0a',
               borderRadius: '8px',
               borderColor: '#21262d',
-              boxShadow: '0 0 40px rgba(0, 0, 0, 0.95)',
+              boxShadow: '0 0 30px rgba(0, 0, 0, 0.95)',
             }}
           >
             {/* Header */}
-            <div className="flex items-center justify-between pb-2.5 border-b border-[#21262d]">
-              <div>
-                <span className="text-[10px] uppercase tracking-[0.2em] text-[#8b949e] font-mono block">
-                  Soundscape
-                </span>
-                <span className="text-xs text-[#e6edf3] font-mono font-medium block">
-                  Generative Audio
-                </span>
-              </div>
+            <div className="flex items-center justify-between pb-2 border-b border-[#21262d]">
+              <span className="text-xs font-mono font-medium text-[#e6edf3]">
+                Sounds
+              </span>
 
               {!isPatron && (
                 <button
+                  type="button"
                   onClick={() => dispatch(openMembershipModal())}
-                  className="text-[9px] uppercase tracking-wider px-2 py-0.5 rounded border border-[#30363d] text-[#8b949e] hover:text-[#e6edf3] font-mono transition-colors"
+                  className="text-[10px] uppercase font-mono px-1.5 py-0.5 rounded border border-[#21262d] text-[#8b949e] hover:text-[#e6edf3]"
                 >
                   Pass
                 </button>
               )}
             </div>
 
-            {/* Soundscape List */}
-            <div className="py-2 space-y-1" role="radiogroup" aria-label="Select ambient soundscape">
+            {/* Track list */}
+            <div className="py-1.5 space-y-1">
               {TRACKS.map((t) => {
                 const isSelected = t.id === currentTrack;
                 const Icon = t.icon;
                 return (
                   <button
                     key={t.id}
+                    type="button"
                     onClick={() => dispatch(setSoundscapeTrack(t.id))}
-                    role="radio"
-                    aria-checked={isSelected}
-                    className={`w-full flex items-center gap-2.5 p-2 rounded text-left transition-all ${
+                    className={`w-full flex items-center gap-2 p-1.5 rounded text-left transition-colors ${
                       isSelected
-                        ? 'bg-[#21262d] border border-[#30363d]'
-                        : 'hover:bg-white/[0.03] border border-transparent'
+                        ? 'bg-[#21262d] text-[#e6edf3]'
+                        : 'text-[#8b949e] hover:bg-white/[0.03] hover:text-[#e6edf3]'
                     }`}
                   >
-                    <Icon size={14} className={isSelected ? 'text-[#e6edf3]' : 'text-[#6e7681]'} />
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center justify-between">
-                        <span className="text-xs font-mono text-[#e6edf3] truncate">
-                          {t.title}
-                        </span>
-                        {isSelected && isPlaying && (
-                          <span className="flex items-center gap-0.5 h-2.5">
-                            <span className="w-0.5 h-full bg-[#2EE6FF] animate-pulse" />
-                            <span className="w-0.5 h-2/3 bg-[#2EE6FF] animate-pulse delay-75" />
-                            <span className="w-0.5 h-full bg-[#2EE6FF] animate-pulse delay-150" />
-                          </span>
-                        )}
-                      </div>
-                      <p className="text-[10px] font-mono text-[#6e7681] truncate">
-                        {t.subtitle}
-                      </p>
-                    </div>
+                    <Icon size={13} className={isSelected ? 'text-[#e6edf3]' : 'text-[#6e7681]'} />
+                    <span className="text-xs font-mono truncate">{t.title}</span>
+                    {isSelected && isPlaying && (
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#2EE6FF] ml-auto" />
+                    )}
                   </button>
                 );
               })}
             </div>
 
-            {/* Volume Control */}
-            <div className="pt-2 border-t border-[#21262d]">
-              <div className="flex items-center justify-between text-[10px] font-mono text-[#6e7681] mb-1">
-                <span>Volume</span>
-                <span>{Math.round(volume * 100)}%</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <button
-                  onClick={handleMuteToggle}
-                  className="text-[#6e7681] hover:text-[#e6edf3] transition-colors"
-                  aria-label={isMuted ? 'Unmute' : 'Mute'}
-                >
-                  {volume === 0 || isMuted ? <VolumeX size={14} /> : <Volume2 size={14} />}
-                </button>
-                <input
-                  type="range"
-                  min="0"
-                  max="1"
-                  step="0.01"
-                  value={volume}
-                  onChange={handleVolumeChange}
-                  aria-label="Soundscape volume slider"
-                  className="w-full h-1 bg-[#21262d] rounded appearance-none cursor-pointer accent-[#e6edf3]"
-                />
-              </div>
+            {/* Volume */}
+            <div className="pt-2 border-t border-[#21262d] flex items-center gap-2">
+              <button
+                type="button"
+                onClick={handleMuteToggle}
+                className="text-[#6e7681] hover:text-[#e6edf3] transition-colors"
+                aria-label={isMuted ? 'Unmute' : 'Mute'}
+              >
+                {volume === 0 || isMuted ? <VolumeX size={13} /> : <Volume2 size={13} />}
+              </button>
+              <input
+                type="range"
+                min="0"
+                max="1"
+                step="0.01"
+                value={volume}
+                onChange={handleVolumeChange}
+                className="w-full h-1 bg-[#21262d] rounded appearance-none cursor-pointer accent-[#e6edf3]"
+              />
             </div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Floating Trigger Dock */}
+      {/* Floating Pill */}
       <div
-        className="flex items-center gap-2 px-2.5 py-1.5 rounded border shadow-xl cursor-pointer select-none transition-colors"
+        className="flex items-center gap-2 px-2.5 py-1.5 rounded border cursor-pointer select-none transition-colors"
         style={{
           background: 'rgba(10, 10, 10, 0.95)',
           borderColor: '#21262d',
@@ -207,37 +179,34 @@ export default function SanctuaryAudioDock() {
         onClick={() => dispatch(toggleAudioDock())}
       >
         <button
+          type="button"
           onClick={handlePlayToggle}
-          className="w-6 h-6 rounded flex items-center justify-center transition-colors flex-shrink-0"
+          className="w-5 h-5 rounded flex items-center justify-center transition-colors"
           style={{
             backgroundColor: isPlaying ? '#e6edf3' : 'rgba(255,255,255,0.06)',
             color: isPlaying ? '#000000' : '#8b949e',
           }}
-          aria-label={isPlaying ? 'Pause soundscape' : 'Play soundscape'}
+          aria-label={isPlaying ? 'Pause' : 'Play'}
         >
           {isPlaying ? (
-            <Pause size={10} fill="currentColor" />
+            <Pause size={9} fill="currentColor" />
           ) : (
-            <Play size={10} fill="currentColor" className="ml-0.5" />
+            <Play size={9} fill="currentColor" className="ml-0.5" />
           )}
         </button>
 
-        <div className="flex items-center gap-1.5 pr-1">
+        <div className="flex items-center gap-1.5">
           <ActiveIcon size={12} className="text-[#8b949e]" />
           <span className="text-xs font-mono text-[#e6edf3]">
             {activeTrackObj.title}
           </span>
-          {isPlaying && (
-            <span className="w-1.5 h-1.5 rounded-full bg-[#2EE6FF] animate-pulse ml-0.5" />
-          )}
         </div>
 
         <button
           type="button"
-          className="text-[#6e7681] hover:text-[#e6edf3] transition-colors"
-          aria-label={isAudioDockOpen ? 'Collapse player' : 'Expand player'}
+          className="text-[#6e7681] hover:text-[#e6edf3] transition-colors ml-1"
         >
-          {isAudioDockOpen ? <ChevronDown size={13} /> : <ChevronUp size={13} />}
+          {isAudioDockOpen ? <ChevronDown size={12} /> : <ChevronUp size={12} />}
         </button>
       </div>
     </aside>

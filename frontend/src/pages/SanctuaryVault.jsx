@@ -16,7 +16,7 @@ import { useToast } from '../contexts/ToastContext';
 import { usePageTitle } from '../hooks/usePageTitle';
 
 export default function SanctuaryVault() {
-  usePageTitle('Sanctuary Vault');
+  usePageTitle('Saved');
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { addToast } = useToast();
@@ -54,8 +54,7 @@ export default function SanctuaryVault() {
     });
   }, [vaultDrafts, selectedRoom, searchQuery]);
 
-  // Export Vault Data
-  const handleExportVault = () => {
+  const handleExport = () => {
     const exportData = {
       exportedAt: new Date().toISOString(),
       bookmarks: vaultBookmarks,
@@ -67,57 +66,46 @@ export default function SanctuaryVault() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `eso-sanctuary-vault-${new Date().toISOString().slice(0, 10)}.json`;
+    a.download = `eso-saved-${new Date().toISOString().slice(0, 10)}.json`;
     a.click();
     URL.revokeObjectURL(url);
 
-    addToast({
-      type: 'success',
-      title: 'Vault Exported',
-      message: 'Your quiet reflections have been downloaded.',
-    });
+    addToast('Saved posts exported.', 'success');
   };
 
-  const roomFilters = [
+  const rooms = [
     { id: 'all', label: 'All' },
     { id: 'dark', label: 'Dark' },
     { id: 'fantasy', label: 'Fantasy' },
-    { id: 'philo', label: 'Philosophy' },
+    { id: 'philo', label: 'Philo' },
   ];
 
   return (
     <Layout leftSidebar={null} rightSidebar={null}>
-      <div className="bg-transparent text-white min-h-[calc(100vh-3rem)] pb-20 pt-2 sm:pt-4">
-        {/* Centered Container matching App UI Philosophy */}
-        <div className="max-w-2xl mx-auto px-3 sm:px-4">
+      <div className="bg-transparent text-white min-h-[calc(100vh-3rem)] pb-16 pt-3 sm:pt-5">
+        <div className="max-w-xl mx-auto px-4">
           {/* Header */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#21262d] mb-4">
+          <div className="flex items-center justify-between pb-3 mb-4 border-b border-[#21262d]">
             <div>
-              <div className="text-[10px] uppercase tracking-[0.2em] text-[#8b949e] font-mono">
-                Sanctuary Vault
-              </div>
-              <h1 className="text-base sm:text-lg font-medium text-[#e6edf3] font-mono mt-0.5">
-                Quiet Archive
-              </h1>
-              <p className="text-xs text-[#6e7681] font-mono mt-0.5">
-                Private bookmarks &amp; unpublished drafts
+              <h1 className="text-base font-mono text-[#e6edf3]">Saved</h1>
+              <p className="text-xs font-mono text-[#8b949e] mt-0.5">
+                Your bookmarks and drafts
               </p>
             </div>
 
-            <div className="flex items-center gap-2">
-              <button
-                onClick={handleExportVault}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-mono text-[#8b949e] hover:text-[#e6edf3] border border-[#21262d] hover:border-[#30363d] transition-colors"
-                title="Download offline JSON backup"
-              >
-                <Download size={12} />
-                <span>Export</span>
-              </button>
-            </div>
+            <button
+              type="button"
+              onClick={handleExport}
+              className="flex items-center gap-1.5 px-2.5 py-1 rounded text-xs font-mono text-[#8b949e] hover:text-[#e6edf3] border border-[#21262d] hover:border-[#30363d] transition-colors"
+              title="Export as JSON"
+            >
+              <Download size={12} />
+              <span>Export</span>
+            </button>
           </div>
 
-          {/* Subheader: Tabs & Search Controls */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 mb-4">
+          {/* Subheader: Tabs & Room Filters */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 mb-3">
             {/* Tabs */}
             <div className="flex border border-[#21262d] rounded p-0.5 bg-[rgba(255,255,255,0.02)] self-start">
               <button
@@ -146,20 +134,20 @@ export default function SanctuaryVault() {
               </button>
             </div>
 
-            {/* Room filters */}
+            {/* Room Filters */}
             <div className="flex items-center gap-1">
-              {roomFilters.map((rf) => (
+              {rooms.map((r) => (
                 <button
-                  key={rf.id}
+                  key={r.id}
                   type="button"
-                  onClick={() => setSelectedRoom(rf.id)}
-                  className={`px-2 py-0.5 rounded text-[10px] uppercase tracking-wider font-mono transition-colors ${
-                    selectedRoom === rf.id
+                  onClick={() => setSelectedRoom(r.id)}
+                  className={`px-2 py-0.5 rounded text-xs font-mono transition-colors ${
+                    selectedRoom === r.id
                       ? 'bg-[#21262d] text-[#e6edf3] border border-[#30363d]'
                       : 'text-[#6e7681] hover:text-[#8b949e] border border-transparent'
                   }`}
                 >
-                  {rf.label}
+                  {r.label}
                 </button>
               ))}
             </div>
@@ -173,7 +161,7 @@ export default function SanctuaryVault() {
             />
             <input
               type="text"
-              placeholder="Search your vaulted words..."
+              placeholder="Search..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full pl-8 pr-3 py-1.5 rounded text-xs font-mono text-[#e6edf3] placeholder-[#484f58] border transition-colors focus:outline-none"
@@ -184,83 +172,81 @@ export default function SanctuaryVault() {
             />
           </div>
 
-          {/* Content Feed */}
+          {/* List Content */}
           {activeTab === 'bookmarks' ? (
             <div>
               {filteredBookmarks.length === 0 ? (
                 <div
-                  className="rounded-lg border p-8 text-center"
+                  className="rounded-lg border p-6 text-center"
                   style={{
                     background: 'rgba(0, 0, 0, 0.4)',
                     borderColor: '#21262d',
                   }}
                 >
-                  <Bookmark size={20} className="mx-auto text-[#484f58] mb-2" />
                   <p className="text-xs font-mono text-[#8b949e]">
                     {searchQuery
-                      ? 'No bookmarks match your search query.'
-                      : 'Your vault has no saved thoughts yet. Bookmark reflections in Dark, Fantasy, or Philo rooms to keep them here.'}
+                      ? 'No bookmarks match your search.'
+                      : 'No bookmarks yet. Bookmark posts you like to see them here.'}
                   </p>
                 </div>
               ) : (
-                <div className="space-y-3">
+                <div className="space-y-2.5">
                   {filteredBookmarks.map((item) => (
                     <article
                       key={item.id}
-                      className="rounded-lg border p-4 transition-all"
+                      className="rounded-lg border p-3.5 sm:p-4 transition-all"
                       style={{
                         background: 'rgba(0, 0, 0, 0.45)',
                         backdropFilter: 'blur(12px)',
                         borderColor: '#21262d',
                       }}
                     >
-                      <div className="flex items-center justify-between gap-2 pb-2 mb-2 border-b border-[#21262d]">
-                        <div className="flex items-center gap-2">
-                          <span className="text-[9px] uppercase tracking-wider font-mono text-[#2EE6FF] border border-[#2EE6FF]/30 px-1.5 py-0.2 rounded">
-                            {item.room || 'Solitude'}
+                      <div className="flex items-center justify-between gap-2 pb-1.5 mb-1.5 border-b border-[#21262d]">
+                        <div className="flex items-center gap-1.5">
+                          <span className="text-[10px] uppercase font-mono text-[#8b949e] border border-[#30363d] px-1.5 py-0.2 rounded">
+                            {item.room || 'post'}
                           </span>
                           {item.category && (
-                            <span className="text-[10px] text-[#6e7681] font-mono">
+                            <span className="text-[10px] font-mono text-[#6e7681]">
                               &bull; {item.category}
                             </span>
                           )}
                         </div>
-                        <span className="text-[10px] text-[#6e7681] font-mono">
+                        <span className="text-[10px] font-mono text-[#6e7681]">
                           {item.createdAt
                             ? new Date(item.createdAt).toLocaleDateString()
-                            : 'Saved'}
+                            : ''}
                         </span>
                       </div>
 
                       {item.title && (
-                        <h3 className="text-sm font-medium text-[#e6edf3] font-mono mb-1.5">
+                        <h3 className="text-sm font-mono font-medium text-[#e6edf3] mb-1">
                           {item.title}
                         </h3>
                       )}
 
-                      <p className="text-xs text-[#c9d1d9] font-mono leading-relaxed line-clamp-3 mb-3">
+                      <p className="text-xs font-mono text-[#c9d1d9] leading-relaxed line-clamp-3 mb-2.5">
                         {item.content}
                       </p>
 
-                      <div className="flex items-center justify-between pt-2 border-t border-[#21262d]/60">
+                      <div className="flex items-center justify-between pt-1.5 border-t border-[#21262d]/60">
                         <button
                           type="button"
                           onClick={() => navigate(`/posts/${item.id}`)}
                           className="flex items-center gap-1 text-xs font-mono text-[#8b949e] hover:text-[#e6edf3] transition-colors"
                         >
-                          <ExternalLink size={12} />
-                          <span>View Full Reflection</span>
+                          <ExternalLink size={11} />
+                          <span>View</span>
                         </button>
                         <button
                           type="button"
                           onClick={() => {
                             dispatch(toggleBookmark(item));
-                            addToast('Removed from Vault', 'info');
+                            addToast('Removed from saved.', 'info');
                           }}
                           className="flex items-center gap-1 text-xs font-mono text-[#6e7681] hover:text-red-400 transition-colors"
-                          title="Remove bookmark"
                         >
-                          <Trash2 size={12} />
+                          <Trash2 size={11} />
                           <span>Remove</span>
                         </button>
                       </div>
@@ -273,79 +259,70 @@ export default function SanctuaryVault() {
             <div>
               {filteredDrafts.length === 0 ? (
                 <div
-                  className="rounded-lg border p-8 text-center"
+                  className="rounded-lg border p-6 text-center"
                   style={{
                     background: 'rgba(0, 0, 0, 0.4)',
                     borderColor: '#21262d',
                   }}
                 >
-                  <FileText size={20} className="mx-auto text-[#484f58] mb-2" />
                   <p className="text-xs font-mono text-[#8b949e]">
-                    {searchQuery
-                      ? 'No drafts match your search query.'
-                      : 'No drafts saved yet. Auto-saved and vaulted writing will appear here.'}
+                    {searchQuery ? 'No drafts match your search.' : 'No drafts saved.'}
                   </p>
                 </div>
               ) : (
-                <div className="space-y-3">
+                <div className="space-y-2.5">
                   {filteredDrafts.map((draft) => (
                     <article
                       key={draft.id}
-                      className="rounded-lg border p-4 transition-all"
+                      className="rounded-lg border p-3.5 sm:p-4 transition-all"
                       style={{
                         background: 'rgba(0, 0, 0, 0.45)',
                         backdropFilter: 'blur(12px)',
                         borderColor: '#21262d',
                       }}
                     >
-                      <div className="flex items-center justify-between gap-2 pb-2 mb-2 border-b border-[#21262d]">
-                        <div className="flex items-center gap-2">
-                          <span className="text-[9px] uppercase tracking-wider font-mono text-[#8b949e] border border-[#30363d] px-1.5 py-0.2 rounded">
-                            {draft.room || 'Draft'}
-                          </span>
-                          <span className="text-[10px] text-[#6e7681] font-mono">
-                            {draft.category || 'Thought'}
-                          </span>
-                        </div>
-                        <span className="text-[10px] text-[#6e7681] font-mono">
+                      <div className="flex items-center justify-between gap-2 pb-1.5 mb-1.5 border-b border-[#21262d]">
+                        <span className="text-[10px] uppercase font-mono text-[#8b949e] border border-[#30363d] px-1.5 py-0.2 rounded">
+                          {draft.room || 'draft'}
+                        </span>
+                        <span className="text-[10px] font-mono text-[#6e7681]">
                           {draft.updatedAt
                             ? new Date(draft.updatedAt).toLocaleTimeString([], {
                                 hour: '2-digit',
                                 minute: '2-digit',
                               })
-                            : 'Draft'}
+                            : ''}
                         </span>
                       </div>
 
                       {draft.title && (
-                        <h3 className="text-sm font-medium text-[#e6edf3] font-mono mb-1.5">
+                        <h3 className="text-sm font-mono font-medium text-[#e6edf3] mb-1">
                           {draft.title}
                         </h3>
                       )}
 
-                      <p className="text-xs text-[#c9d1d9] font-mono leading-relaxed line-clamp-3 mb-3">
+                      <p className="text-xs font-mono text-[#c9d1d9] leading-relaxed line-clamp-3 mb-2.5">
                         {draft.content}
                       </p>
 
-                      <div className="flex items-center justify-between pt-2 border-t border-[#21262d]/60">
+                      <div className="flex items-center justify-between pt-1.5 border-t border-[#21262d]/60">
                         <button
                           type="button"
                           onClick={() => navigate('/create')}
                           className="flex items-center gap-1 text-xs font-mono text-[#8b949e] hover:text-[#e6edf3] transition-colors"
                         >
-                          <PenTool size={12} />
-                          <span>Open in Studio</span>
+                          <PenTool size={11} />
+                          <span>Open in editor</span>
                         </button>
                         <button
                           type="button"
                           onClick={() => {
                             dispatch(deleteDraft(draft.id));
-                            addToast('Draft Deleted', 'info');
+                            addToast('Draft deleted.', 'info');
                           }}
                           className="flex items-center gap-1 text-xs font-mono text-[#6e7681] hover:text-red-400 transition-colors"
-                          title="Delete draft"
                         >
-                          <Trash2 size={12} />
+                          <Trash2 size={11} />
                           <span>Delete</span>
                         </button>
                       </div>

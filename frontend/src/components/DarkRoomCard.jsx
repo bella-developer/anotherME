@@ -25,11 +25,7 @@ function DarkRoomCard({ post, onReaction, onEdit, onDelete }) {
   const handleToggleBookmark = (e) => {
     e.stopPropagation();
     dispatch(toggleBookmark(post));
-    addToast({
-      type: isBookmarked ? 'info' : 'success',
-      title: isBookmarked ? 'Removed from Vault' : 'Saved to Vault',
-      message: isBookmarked ? 'Thought removed from your Sanctuary Vault' : 'Thought preserved in your private Sanctuary Vault',
-    });
+    addToast(isBookmarked ? 'Removed from saved.' : 'Saved.', isBookmarked ? 'info' : 'success');
   };
 
   const formatTimeAgo = (date) => {
@@ -80,8 +76,8 @@ function DarkRoomCard({ post, onReaction, onEdit, onDelete }) {
                 ? 'text-[#2EE6FF] bg-[#2EE6FF]/15'
                 : 'text-white/40 hover:text-white/80 hover:bg-white/10'
             }`}
-            title={isBookmarked ? 'Remove from Sanctuary Vault' : 'Save to Sanctuary Vault'}
-            aria-label={isBookmarked ? 'Remove from Sanctuary Vault' : 'Save to Sanctuary Vault'}
+            title={isBookmarked ? 'Remove' : 'Save'}
+            aria-label={isBookmarked ? 'Remove' : 'Save'}
           >
             <Bookmark size={12} fill={isBookmarked ? 'currentColor' : 'none'} />
           </button>

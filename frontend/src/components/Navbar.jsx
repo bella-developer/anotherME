@@ -97,21 +97,19 @@ function Navbar() {
               <>
                 <Link
                   to="/create"
-                  className="text-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white/50 rounded px-2 py-1 tracking-wider uppercase text-white/85 hover:text-white font-medium flex items-center gap-1.5"
+                  className="text-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white/50 rounded px-2 py-1 tracking-wider uppercase text-white/85 hover:text-white font-medium"
                   role="menuitem"
-                  title="Sanctuary Studio"
+                  title="Create Post"
                 >
-                  <PenTool size={12} className="text-[#8b949e]" />
-                  <span>Studio</span>
+                  Create
                 </Link>
                 <Link
                   to="/vault"
-                  className="text-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white/50 rounded px-2 py-1 tracking-wider uppercase text-white/85 hover:text-white font-medium flex items-center gap-1.5"
+                  className="text-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white/50 rounded px-2 py-1 tracking-wider uppercase text-white/85 hover:text-white font-medium"
                   role="menuitem"
-                  title="Sanctuary Vault"
+                  title="Saved Posts"
                 >
-                  <Bookmark size={12} className="text-[#8b949e]" />
-                  <span>Vault</span>
+                  Saved
                 </Link>
               </>
             )}
@@ -264,20 +262,18 @@ function Navbar() {
                     <Link
                       to="/create"
                       onClick={() => setIsMobileMenuOpen(false)}
-                      className="py-3 px-4 rounded-lg transition-colors duration-200 text-base font-medium text-white/80 hover:text-white hover:bg-white/10 flex items-center gap-2.5"
+                      className="py-3 px-4 rounded-lg transition-colors duration-200 text-base font-medium text-white/80 hover:text-white hover:bg-white/10"
                       role="menuitem"
                     >
-                      <PenTool size={15} className="text-[#8b949e]" />
-                      <span>Sanctuary Studio</span>
+                      Create
                     </Link>
                     <Link
                       to="/vault"
                       onClick={() => setIsMobileMenuOpen(false)}
-                      className="py-3 px-4 rounded-lg transition-colors duration-200 text-base font-medium text-white/80 hover:text-white hover:bg-white/10 flex items-center gap-2.5"
+                      className="py-3 px-4 rounded-lg transition-colors duration-200 text-base font-medium text-white/80 hover:text-white hover:bg-white/10"
                       role="menuitem"
                     >
-                      <Bookmark size={15} className="text-[#8b949e]" />
-                      <span>Sanctuary Vault</span>
+                      Saved
                     </Link>
                   </>
                 )}
@@ -289,10 +285,7 @@ function Navbar() {
                   className="text-left py-3 px-4 rounded-lg transition-colors duration-200 text-base font-medium text-white/80 hover:text-white hover:bg-white/10 flex items-center justify-between"
                   role="menuitem"
                 >
-                  <span className="flex items-center gap-2.5">
-                    <Sparkles size={15} className="text-[#8b949e]" />
-                    <span>Sanctuary Pass</span>
-                  </span>
+                  <span>ESO Pass</span>
                   <span className="text-[10px] uppercase font-mono tracking-wider px-2 py-0.5 rounded border border-[#21262d] text-[#8b949e]">
                     {isPatron ? 'Active' : 'Pass'}
                   </span>

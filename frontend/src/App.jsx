@@ -180,6 +180,16 @@ function App() {
               }
             />
             <Route
+              path="/saved"
+              element={
+                <ProtectedRoute>
+                  <Suspense fallback={<PageLoader />}>
+                    <SanctuaryVault />
+                  </Suspense>
+                </ProtectedRoute>
+              }
+            />
+            <Route
               path="/profile"
               element={
                 <ProtectedRoute>
