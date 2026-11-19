@@ -141,8 +141,14 @@ function AdminDashboard() {
   return (
     <Layout leftSidebar={null} rightSidebar={null}>
       <div className="max-w-6xl mx-auto px-4 py-4 sm:py-6">
-        {/* Centered Header */}
-        <div className="flex flex-col items-center text-center pb-6 mb-6 border-b border-[#21262d]">
+        {/* Header - Left-aligned editorial */}
+        <div className="pb-6 mb-6 border-b border-[#21262d]">
+          <button
+            onClick={() => navigate('/home')}
+            className="mb-4 text-xs font-mono tracking-wider uppercase transition-colors flex items-center gap-2 px-3 py-1.5 rounded text-neutral-400 border border-white/10 hover:text-white hover:border-white/25"
+          >
+            ← BACK
+          </button>
           <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white font-mono mb-1.5">
             ADMIN DASHBOARD
           </h1>

@@ -51,7 +51,20 @@ function Home() {
 
   const navigate = useNavigate();
   const [hovered, setHovered] = useState(null);
+  const [time, setTime] = useState(() => new Date());
   const reduceMotion = useReducedMotion();
+
+  useEffect(() => {
+    const timer = window.setInterval(() => setTime(new Date()), 60000);
+    return () => window.clearInterval(timer);
+  }, []);
+
+  const getGreeting = () => {
+    const hour = time.getHours();
+    if (hour < 12) return 'Good morning';
+    if (hour < 18) return 'Good afternoon';
+    return 'Good evening';
+  };
 
   return (
     <PageTransition>
@@ -71,12 +84,30 @@ function Home() {
           </div>
 
           <section className="eso-hero" aria-labelledby="eso-page-title">
+            <motion.div
+              className="eso-greeting"
+              initial={reduceMotion ? false : { opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.15 }}
+            >
+              {getGreeting()}
+            </motion.div>
+
+            <motion.p
+              className="eso-eyebrow"
+              initial={reduceMotion ? false : { opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.9, delay: 0.3 }}
+            >
+              Choose your room
+            </motion.p>
+
             <motion.h1
               id="eso-page-title"
               className="eso-title"
               initial={reduceMotion ? false : { opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 0.2 }}
+              transition={{ duration: 1, delay: 0.4 }}
             >
               Your Safe Space
             </motion.h1>
@@ -85,7 +116,7 @@ function Home() {
               className="eso-title-rule"
               initial={{ scaleX: 0, opacity: 0 }}
               animate={{ scaleX: 1, opacity: 1 }}
-              transition={{ duration: 1.1, delay: 0.5 }}
+              transition={{ duration: 1.1, delay: 0.7 }}
               aria-hidden="true"
             />
           </section>
@@ -151,6 +182,7 @@ function Home() {
                     <span className="eso-room__dash" aria-hidden="true" />
                   </div>
                   <p className="eso-room__tagline">{room.tagline}</p>
+                  <p className="eso-room__description">{room.description}</p>
                   <button
                     type="button"
                     className="eso-enter"
@@ -265,7 +297,7 @@ function Home() {
             padding-left: .12em;
             color: #fbf8f4;
             font-family: var(--font-body, monospace);
-            font-size: clamp(1.75rem, 3.2vw, 2.75rem);
+            font-size: clamp(2.5rem, 4.2vw, 4.5rem);
             font-weight: 200;
             line-height: 1.08;
             letter-spacing: .12em;
@@ -285,8 +317,8 @@ function Home() {
             z-index: 1;
             display: grid;
             grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: clamp(1rem, 2.4vw, 2.2rem);
-            width: min(100%, 1020px);
+            gap: clamp(1rem, 2.7vw, 2.7rem);
+            width: min(100%, 1280px);
             margin: 0 auto;
             align-items: start;
           }
@@ -599,7 +631,7 @@ function Home() {
             .eso-eyebrow { letter-spacing: .3em; }
             .eso-title {
               max-width: 100%;
-              font-size: clamp(1.4rem, 6.5vw, 2.1rem);
+              font-size: clamp(2.15rem, 9vw, 3.2rem);
               letter-spacing: .045em;
             }
             .eso-rooms {

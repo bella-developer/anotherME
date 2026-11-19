@@ -20,12 +20,12 @@ function Layout({ leftSidebar, rightSidebar, children }) {
       <Navbar />
 
       {/* Main content area — sits above the fixed bg (z-index > 0) */}
-      <div className="relative z-10 pt-7">
-        <div className="container max-w-5xl mx-auto px-3 sm:px-5 lg:px-6 py-2 md:py-3">
-          <div className="grid grid-cols-1 md:grid-cols-12 lg:grid-cols-12 gap-3 md:gap-4 justify-center">
+      <div className="relative z-10 pt-8">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-3 md:py-4">
+          <div className="grid grid-cols-1 md:grid-cols-12 lg:grid-cols-12 gap-3 md:gap-4">
             {leftSidebar && (
               <aside className="hidden md:block md:col-span-4 lg:col-span-3" aria-label="Category filters">
-                <div className="sticky top-16">{leftSidebar}</div>
+                <div className="sticky top-20">{leftSidebar}</div>
               </aside>
             )}
 
@@ -36,7 +36,7 @@ function Layout({ leftSidebar, rightSidebar, children }) {
                   ? 'md:col-span-8 lg:col-span-6'
                   : leftSidebar || rightSidebar
                   ? 'md:col-span-8 lg:col-span-9'
-                  : 'md:col-span-12 lg:col-span-12 max-w-3xl mx-auto w-full'
+                  : 'md:col-span-12 lg:col-span-12'
               }`}
               role="main"
               aria-label="Main content"
@@ -46,7 +46,7 @@ function Layout({ leftSidebar, rightSidebar, children }) {
 
             {rightSidebar && (
               <aside className="hidden lg:block lg:col-span-3" aria-label="Trending circles">
-                <div className="sticky top-16">{rightSidebar}</div>
+                <div className="sticky top-20">{rightSidebar}</div>
               </aside>
             )}
           </div>

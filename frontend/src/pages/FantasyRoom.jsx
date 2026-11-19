@@ -137,11 +137,11 @@ function FantasyRoom() {
         <div className="min-h-screen pt-4 pb-24 px-3 sm:px-4 md:px-6 relative z-10">
           <div className="max-w-full sm:max-w-2xl md:max-w-3xl mx-auto">
 
-            {/* Hero Header - Scrolls away, Centered */}
-            <div className="mb-6 sm:mb-10 text-center flex flex-col items-center">
+            {/* Hero Header - Scrolls away */}
+            <div className="mb-8 sm:mb-12">
               <button
                 onClick={() => navigate('/home')}
-                className="px-3 py-1 text-[10px] tracking-widest uppercase mb-6 transition-all flex items-center gap-1.5 rounded font-mono"
+                className="px-4 py-2 text-xs tracking-wide uppercase mb-12 transition-all flex items-center gap-2 rounded font-mono"
                 style={{
                   color: '#e6edf3',
                   border: '1px solid rgba(249, 115, 22, 0.3)',
@@ -163,11 +163,11 @@ function FantasyRoom() {
                 ← ROOMS
               </button>
 
-              <div className="w-12 h-px mb-4" style={{ 
-                background: 'linear-gradient(to right, transparent, rgba(249, 115, 22, 0.6), transparent)' 
+              <div className="w-12 h-px mb-8" style={{ 
+                background: 'linear-gradient(to right, rgba(249, 115, 22, 0.6), transparent)' 
               }} />
               
-              <h1 className="text-xl sm:text-3xl md:text-4xl uppercase mb-3 heading-text font-mono font-bold text-center" style={{
+              <h1 className="text-lg sm:text-4xl md:text-5xl uppercase mb-6 sm:mb-8 heading-text font-bold" style={{
                 color: '#F97316',
                 fontFamily: 'var(--font-heading)',
                 letterSpacing: '0.05em',
@@ -176,15 +176,14 @@ function FantasyRoom() {
                 THE FANTASY ROOM
               </h1>
               
-              <p className="text-sm sm:text-base mb-2 max-w-md text-center font-mono" style={{
+              <p className="text-base sm:text-lg mb-3 sm:mb-4 max-w-md font-semibold" style={{
                 color: '#e6edf3',
                 lineHeight: 'var(--leading-relaxed)',
-                fontWeight: '500'
               }}>
                 Unleash Your Imagination
               </p>
               
-              <p className="text-xs max-w-md text-center font-mono" style={{
+              <p className="text-xs sm:text-[11px] max-w-md" style={{
                 color: '#c9d1d9',
                 lineHeight: 'var(--leading-relaxed)',
                 fontWeight: '300'
@@ -193,18 +192,16 @@ function FantasyRoom() {
               </p>
             </div>
 
-            {/* Compact Centered Sticky Bar */}
-            <div className="sticky top-16 z-20 mb-5 px-3 py-1.5 flex items-center justify-between gap-3 max-w-xl mx-auto rounded-lg" style={{
-              background: 'rgba(255, 255, 255, 0.02)',
+            {/* Compact Sticky Bar */}
+            <div className="sticky top-16 z-20 mb-6 -mx-3 sm:mx-0 px-3 sm:px-4 py-2 flex items-center justify-between gap-3" style={{
+              backgroundColor: 'rgba(0, 0, 0, 0.9)',
               backdropFilter: 'blur(12px)',
-              WebkitBackdropFilter: 'blur(12px)',
-              border: '1px solid rgba(255, 255, 255, 0.08)',
+              borderBottom: '1px solid rgba(249, 115, 22, 0.2)',
             }}>
               {/* Left: Room Title */}
-              <h2 className="text-[10px] sm:text-xs uppercase tracking-wider whitespace-nowrap flex-shrink-0 font-mono" style={{
+              <h2 className="text-[10px] sm:text-sm uppercase tracking-wider whitespace-nowrap flex-shrink-0 font-mono font-bold" style={{
                 color: '#F97316',
                 fontFamily: 'var(--font-heading)',
-                fontWeight: '700',
               }}>
                 FANTASY ROOM
               </h2>
@@ -215,11 +212,13 @@ function FantasyRoom() {
                 <select
                   value={selectedCategory}
                   onChange={(e) => setSelectedCategory(e.target.value)}
-                  className="px-2 py-0.5 text-[9px] tracking-wide uppercase transition-all cursor-pointer font-mono rounded"
+                  className="px-2 py-0.5 text-[8px] sm:text-[9px] tracking-wide uppercase transition-all cursor-pointer font-mono rounded"
                   style={{
+                    borderRadius: '2px',
                     background: 'rgba(255, 255, 255, 0.05)',
-                    border: '1px solid rgba(255, 255, 255, 0.15)',
+                    border: '1px solid rgba(255, 255, 255, 0.2)',
                     color: '#ffffff',
+                    fontWeight: '500',
                     height: '22px',
                   }}
                 >
@@ -234,12 +233,13 @@ function FantasyRoom() {
                 {isAuthenticated && (
                   <button
                     onClick={() => setIsPostFormOpen(true)}
-                    className="flex-shrink-0 px-2.5 py-0.5 text-[9px] tracking-widest uppercase transition-all rounded font-mono"
+                    className="flex-shrink-0 px-3 py-1 text-[9px] sm:text-[10px] tracking-widest uppercase transition-all rounded font-mono font-bold"
                     style={{
                       backgroundColor: '#F97316',
                       color: '#000000',
-                      fontWeight: '700',
                       height: '22px',
+                      display: 'flex',
+                      alignItems: 'center',
                     }}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.backgroundColor = '#ea580c';
