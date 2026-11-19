@@ -143,7 +143,7 @@ function AdminDashboard() {
       <div className="max-w-6xl mx-auto px-4 py-4 sm:py-6">
         {/* Centered Header */}
         <div className="flex flex-col items-center text-center pb-6 mb-6 border-b border-[#21262d]">
-          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white font-sans mb-1.5">
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white font-mono mb-1.5">
             ADMIN DASHBOARD
           </h1>
           <p className="text-xs font-mono text-neutral-400">
@@ -153,23 +153,23 @@ function AdminDashboard() {
 
         {/* Stats Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-          {/* Total Users */}
+          {/* Total Users - Green for user counts */}
           <div
             onClick={() => toggleSection('users')}
             style={glassCardStyle}
-            className="p-5 cursor-pointer hover:border-red-500/40 transition-all"
+            className="p-5 cursor-pointer hover:border-emerald-500/40 transition-all"
           >
             <div className="flex items-center justify-between mb-2.5">
-              <Users size={20} color="#DC2626" />
-              {expandedSection === 'users' ? <ChevronUp size={16} color="#DC2626" /> : <ChevronDown size={16} color="#DC2626" />}
+              <Users size={20} color="#10B981" />
+              {expandedSection === 'users' ? <ChevronUp size={16} color="#10B981" /> : <ChevronDown size={16} color="#10B981" />}
             </div>
-            <div className="text-3xl font-bold text-[#DC2626] mb-1 font-mono">
+            <div className="text-3xl font-bold text-[#10B981] mb-1 font-mono">
               {stats.users.total}
             </div>
             <div className="text-[11px] text-[#8b949e] font-mono tracking-wider">
               TOTAL USERS
             </div>
-            <div className="text-[10px] text-[#6b7985] font-mono mt-2">
+            <div className="text-[10px] text-[#10B981]/90 font-mono mt-2">
               +{stats.users.new24h} last 24h
             </div>
           </div>
@@ -233,20 +233,20 @@ function AdminDashboard() {
         {/* Detailed Users List */}
         {expandedSection === 'users' && detailedUsers.length > 0 && (
           <div style={glassCardStyle} className="p-5 mb-8">
-            <h2 className="text-sm font-sans font-bold text-[#DC2626] mb-4 tracking-wider">
+            <h2 className="text-sm font-mono font-bold text-[#10B981] mb-4 tracking-wider">
               ALL USERS ({detailedUsers.length})
             </h2>
             <div className="overflow-x-auto">
               <table className="w-full text-xs font-mono border-collapse">
                 <thead>
-                  <tr className="border-b border-[#DC2626]/20">
-                    <th className="text-left p-2.5 text-[#DC2626] font-normal">USERNAME</th>
-                    <th className="text-left p-2.5 text-[#DC2626] font-normal">GENDER</th>
-                    <th className="text-center p-2.5 text-[#DC2626] font-normal">TOTAL</th>
+                  <tr className="border-b border-[#10B981]/20">
+                    <th className="text-left p-2.5 text-[#10B981] font-normal">USERNAME</th>
+                    <th className="text-left p-2.5 text-[#10B981] font-normal">GENDER</th>
+                    <th className="text-center p-2.5 text-[#10B981] font-normal">TOTAL</th>
                     <th className="text-center p-2.5 text-[#DC2626] font-normal">DARK</th>
                     <th className="text-center p-2.5 text-[#F97316] font-normal">FANTASY</th>
                     <th className="text-center p-2.5 text-[#6366F1] font-normal">PHILO</th>
-                    <th className="text-left p-2.5 text-[#DC2626] font-normal">JOINED</th>
+                    <th className="text-left p-2.5 text-[#10B981] font-normal">JOINED</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -273,7 +273,7 @@ function AdminDashboard() {
         {/* Detailed Posts List */}
         {expandedSection === 'posts' && detailedPosts.length > 0 && (
           <div style={glassCardStyle} className="p-5 mb-8">
-            <h2 className="text-sm font-sans font-bold text-[#F97316] mb-4 tracking-wider">
+            <h2 className="text-sm font-mono font-bold text-[#F97316] mb-4 tracking-wider">
               ALL POSTS ({detailedPosts.length})
             </h2>
             <div className="overflow-x-auto">
@@ -319,7 +319,7 @@ function AdminDashboard() {
         {/* Detailed Circles List */}
         {expandedSection === 'circles' && detailedCircles.length > 0 && (
           <div style={glassCardStyle} className="p-5 mb-8">
-            <h2 className="text-sm font-sans font-bold text-[#6366F1] mb-4 tracking-wider">
+            <h2 className="text-sm font-mono font-bold text-[#6366F1] mb-4 tracking-wider">
               ALL CIRCLES ({detailedCircles.length})
             </h2>
             <div className="overflow-x-auto">
@@ -358,7 +358,7 @@ function AdminDashboard() {
 
         {/* Gender Distribution */}
         <div style={glassCardStyle} className="p-5 mb-8">
-          <h2 className="text-sm font-sans font-bold text-white mb-4 tracking-wider">
+          <h2 className="text-sm font-mono font-bold text-white mb-4 tracking-wider">
             GENDER DISTRIBUTION
           </h2>
           <div className="flex gap-2.5 mb-3">
@@ -366,7 +366,7 @@ function AdminDashboard() {
               style={{
                 flex: stats.users.gender.malePercentage,
                 height: '40px',
-                background: 'linear-gradient(90deg, #DC2626, #991B1B)',
+                background: 'linear-gradient(90deg, #10B981, #059669)',
                 borderRadius: '4px',
                 display: 'flex',
                 alignItems: 'center',
@@ -381,7 +381,7 @@ function AdminDashboard() {
               style={{
                 flex: stats.users.gender.femalePercentage,
                 height: '40px',
-                background: 'linear-gradient(90deg, #F97316, #C2410C)',
+                background: 'linear-gradient(90deg, #34D399, #059669)',
                 borderRadius: '4px',
                 display: 'flex',
                 alignItems: 'center',
@@ -397,7 +397,7 @@ function AdminDashboard() {
                 style={{
                   flex: stats.users.gender.otherPercentage,
                   height: '40px',
-                  background: 'linear-gradient(90deg, #6366F1, #4338CA)',
+                  background: 'linear-gradient(90deg, #6EE7B7, #10B981)',
                   borderRadius: '4px',
                   display: 'flex',
                   alignItems: 'center',
@@ -422,7 +422,7 @@ function AdminDashboard() {
           {stats.rooms.map((room) => (
             <div key={room.room} style={glassCardStyle} className="p-5">
               <h3
-                className="text-sm font-sans font-bold mb-3 tracking-wider"
+                className="text-sm font-mono font-bold mb-3 tracking-wider"
                 style={{ color: getRoomColor(room.room) }}
               >
                 {room.room.toUpperCase()} ROOM

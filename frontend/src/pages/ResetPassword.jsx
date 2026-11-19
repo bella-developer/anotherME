@@ -63,7 +63,7 @@ function ResetPassword() {
 
   if (success) {
     return (
-      <div className="min-h-screen flex items-center justify-center px-4 bg-black text-white relative z-10" style={{ fontFamily: "'Geist Mono', monospace" }}>
+      <div className="min-h-screen flex items-center justify-center px-4 bg-transparent text-white relative z-10" style={{ fontFamily: "var(--font-body)" }}>
         <div className="w-full max-w-md animate-fadeIn">
           <div className="text-center mb-8">
             <Link to="/" className="inline-block mb-6 transform hover:scale-105 transition-transform duration-300">
@@ -98,7 +98,7 @@ function ResetPassword() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 bg-black text-white relative z-10" style={{ fontFamily: "'Geist Mono', monospace" }}>
+    <div className="min-h-screen flex items-center justify-center px-4 bg-transparent text-white relative z-10" style={{ fontFamily: "var(--font-body)" }}>
       <div className="w-full max-w-md animate-fadeIn">
         <div className="text-center mb-8">
           <Link to="/" className="inline-block mb-4 focus:outline-none focus:ring-2 focus:ring-white/50 rounded transform hover:scale-105 transition-transform duration-300">

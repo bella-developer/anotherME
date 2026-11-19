@@ -35,7 +35,7 @@ function Explore() {
   ];
 
   return (
-    <div className="min-h-screen text-white relative" style={{ fontFamily: "'Geist Mono', monospace" }}>
+    <div className="min-h-screen text-white relative bg-transparent" style={{ fontFamily: "var(--font-body)" }}>
       {/* Fixed Navigation */}
       <nav 
         className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl"
@@ -308,7 +308,8 @@ function Explore() {
       {/* FOOTER - Match Landing.jsx Style */}
       <footer className="border-t relative z-10" style={{ 
         borderColor: 'rgba(255, 255, 255, 0.08)',
-        background: '#000000'
+        background: 'rgba(0, 0, 0, 0.4)',
+        backdropFilter: 'blur(12px)',
       }}>
         <div className="max-w-7xl mx-auto px-8 lg:px-16 py-20">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-16 mb-16">

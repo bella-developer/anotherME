@@ -264,8 +264,8 @@ function Home() {
             margin: 0;
             padding-left: .12em;
             color: #fbf8f4;
-            font-family: var(--font-body, ui-sans-serif, sans-serif);
-            font-size: clamp(2.5rem, 4.2vw, 4.5rem);
+            font-family: var(--font-body, monospace);
+            font-size: clamp(1.75rem, 3.2vw, 2.75rem);
             font-weight: 200;
             line-height: 1.08;
             letter-spacing: .12em;
@@ -285,8 +285,8 @@ function Home() {
             z-index: 1;
             display: grid;
             grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: clamp(1rem, 2.7vw, 2.7rem);
-            width: min(100%, 1280px);
+            gap: clamp(1rem, 2.4vw, 2.2rem);
+            width: min(100%, 1020px);
             margin: 0 auto;
             align-items: start;
           }
@@ -599,7 +599,7 @@ function Home() {
             .eso-eyebrow { letter-spacing: .3em; }
             .eso-title {
               max-width: 100%;
-              font-size: clamp(2.15rem, 9vw, 3.2rem);
+              font-size: clamp(1.4rem, 6.5vw, 2.1rem);
               letter-spacing: .045em;
             }
             .eso-rooms {

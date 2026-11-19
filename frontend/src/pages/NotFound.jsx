@@ -7,17 +7,17 @@ function NotFound() {
   const navigate = useNavigate();
 
   return (
-    <main className="min-h-screen flex items-center justify-center px-4 bg-black text-white relative z-10">
+    <main className="min-h-screen flex items-center justify-center px-4 bg-transparent text-white relative z-10" style={{ fontFamily: 'var(--font-body)' }}>
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
         className="text-center max-w-2xl"
       >
-        <h1 className="text-9xl font-bold mb-4" style={{ fontFamily: "'Space Mono', monospace" }}>
+        <h1 className="text-8xl sm:text-9xl font-bold mb-4" style={{ fontFamily: 'var(--font-heading)' }}>
           404
         </h1>
-        <h2 className="text-2xl mb-4 tracking-[0.2em] uppercase" style={{ fontFamily: "'Geist Mono', monospace" }}>
+        <h2 className="text-xl sm:text-2xl mb-4 tracking-[0.2em] uppercase" style={{ fontFamily: 'var(--font-heading)' }}>
           Lost in the Void
         </h2>
         <p className="text-white/60 mb-8 text-sm tracking-wide">

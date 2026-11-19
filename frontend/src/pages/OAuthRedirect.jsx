@@ -17,7 +17,7 @@ function OAuthRedirect() {
   }, [searchParams]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-black">
+    <div className="min-h-screen flex items-center justify-center bg-transparent">
       <div className="text-center">
         <p className="text-white/60 text-sm">...</p>
       </div>

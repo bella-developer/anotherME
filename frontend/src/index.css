@@ -12,29 +12,47 @@
 @tailwind utilities;
 
 @layer base {
-  /* CSS Custom Properties for Font Families */
+  /* CSS Custom Properties for Font Families - Monospace everywhere */
   :root {
-    --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    --font-heading: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    --font-mono: 'IBM Plex Mono', 'Space Mono', monospace;
+    --font-body: 'IBM Plex Mono', 'Space Mono', 'Courier New', monospace;
+    --font-heading: 'Space Mono', 'IBM Plex Mono', 'Courier New', monospace;
+    --font-mono: 'IBM Plex Mono', 'Space Mono', 'Courier New', monospace;
     --font-accent: 'VT323', 'Courier New', monospace;
   }
 
   html {
     scroll-behavior: smooth;
-    background: #000000;
+    background: transparent;
     min-height: 100dvh;
+    font-size: 13px;
+  }
+
+  @media (min-width: 768px) {
+    html {
+      font-size: 14px;
+    }
   }
 
   body {
     font-family: var(--font-body);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background: #000000;
+    background: transparent;
     color: #ffffff;
     min-height: 100dvh;
     overflow-x: hidden;
     position: relative;
+  }
+
+  button, input, optgroup, select, textarea {
+    font-family: var(--font-body);
+  }
+
+  #root, .app-root {
+    background: transparent !important;
+    position: relative;
+    z-index: 1;
+    min-height: 100dvh;
   }
 
   /* Static artistic grain overlay - nostalgic film texture */
@@ -100,15 +118,15 @@
     }
   }
 
-  /* Responsive font sizes */
+  /* Responsive font sizes - slightly reduced for tight, delicate minimal UI */
   html {
-    font-size: 14px;
+    font-size: 13px;
     scroll-behavior: smooth;
   }
 
   @media (min-width: 768px) {
     html {
-      font-size: 16px;
+      font-size: 14px;
     }
   }
 

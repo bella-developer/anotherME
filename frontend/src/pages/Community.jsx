@@ -49,7 +49,7 @@ function Community() {
 
   return (
     <PageTransition>
-      <div className="min-h-screen bg-black text-white relative">
+      <div className="min-h-screen bg-transparent text-white relative">
         {/* Background */}
         <div 
           className="fixed inset-0 pointer-events-none"

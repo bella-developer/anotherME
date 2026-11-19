@@ -30,7 +30,7 @@ function Privacy() {
 
   return (
     <PageTransition>
-      <div className="min-h-screen bg-black text-white relative" style={{ fontFamily: 'var(--font-body)' }}>
+      <div className="min-h-screen bg-transparent text-white relative" style={{ fontFamily: 'var(--font-body)' }}>
         {/* Background atmospheric effect */}
         <div 
           className="fixed inset-0 pointer-events-none"

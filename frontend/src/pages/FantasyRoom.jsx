@@ -137,11 +137,11 @@ function FantasyRoom() {
         <div className="min-h-screen pt-4 pb-24 px-3 sm:px-4 md:px-6 relative z-10">
           <div className="max-w-full sm:max-w-2xl md:max-w-3xl mx-auto">
 
-            {/* Hero Header - Scrolls away */}
-            <div className="mb-8 sm:mb-12">
+            {/* Hero Header - Scrolls away, Centered */}
+            <div className="mb-6 sm:mb-10 text-center flex flex-col items-center">
               <button
                 onClick={() => navigate('/home')}
-                className="px-4 py-2 text-xs tracking-wide uppercase mb-12 transition-all flex items-center gap-2 rounded"
+                className="px-3 py-1 text-[10px] tracking-widest uppercase mb-6 transition-all flex items-center gap-1.5 rounded font-mono"
                 style={{
                   color: '#e6edf3',
                   border: '1px solid rgba(249, 115, 22, 0.3)',
@@ -150,9 +150,9 @@ function FantasyRoom() {
                   transitionDuration: 'var(--duration-slow)',
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = 'rgba(249, 115, 22, 0.1)';
+                  e.currentTarget.style.backgroundColor = 'rgba(249, 115, 22, 0.15)';
                   e.currentTarget.style.borderColor = 'rgba(249, 115, 22, 0.5)';
-                  e.currentTarget.style.color = '#FF9D1C';
+                  e.currentTarget.style.color = '#F97316';
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.backgroundColor = 'rgba(249, 115, 22, 0.05)';
@@ -163,12 +163,12 @@ function FantasyRoom() {
                 ← ROOMS
               </button>
 
-              <div className="w-12 h-px mb-6 sm:mb-8" style={{ 
-                background: 'linear-gradient(to right, rgba(249, 115, 22, 0.4), transparent)' 
+              <div className="w-12 h-px mb-4" style={{ 
+                background: 'linear-gradient(to right, transparent, rgba(249, 115, 22, 0.6), transparent)' 
               }} />
               
-              <h1 className="text-lg sm:text-4xl md:text-5xl uppercase mb-6 sm:mb-8 heading-text font-sans font-bold" style={{
-                color: '#FFFFFF',
+              <h1 className="text-xl sm:text-3xl md:text-4xl uppercase mb-3 heading-text font-mono font-bold text-center" style={{
+                color: '#F97316',
                 fontFamily: 'var(--font-heading)',
                 letterSpacing: '0.05em',
                 lineHeight: 'var(--leading-tight)',
@@ -176,15 +176,15 @@ function FantasyRoom() {
                 THE FANTASY ROOM
               </h1>
               
-              <p className="text-base sm:text-lg mb-3 sm:mb-4 max-w-md" style={{
+              <p className="text-sm sm:text-base mb-2 max-w-md text-center font-mono" style={{
                 color: '#e6edf3',
                 lineHeight: 'var(--leading-relaxed)',
-                fontWeight: '600'
+                fontWeight: '500'
               }}>
                 Unleash Your Imagination
               </p>
               
-              <p className="text-xs sm:text-[11px] max-w-md" style={{
+              <p className="text-xs max-w-md text-center font-mono" style={{
                 color: '#c9d1d9',
                 lineHeight: 'var(--leading-relaxed)',
                 fontWeight: '300'
@@ -193,95 +193,62 @@ function FantasyRoom() {
               </p>
             </div>
 
-            {/* Compact Sticky Bar */}
-            <div className="sticky top-16 z-20 mb-6 -mx-3 sm:mx-0 px-3 sm:px-4 py-2 flex items-center justify-between gap-3" style={{
-              backgroundColor: 'rgba(0, 0, 0, 0.95)',
+            {/* Compact Centered Sticky Bar */}
+            <div className="sticky top-16 z-20 mb-5 px-3 py-1.5 flex items-center justify-between gap-3 max-w-xl mx-auto rounded-lg" style={{
+              background: 'rgba(255, 255, 255, 0.02)',
               backdropFilter: 'blur(12px)',
-              borderBottom: '1px solid rgba(249, 115, 22, 0.15)',
+              WebkitBackdropFilter: 'blur(12px)',
+              border: '1px solid rgba(255, 255, 255, 0.08)',
             }}>
               {/* Left: Room Title */}
-              <h2 className="text-[10px] sm:text-sm uppercase tracking-wider whitespace-nowrap flex-shrink-0" style={{
-                color: '#FF9D1C',
+              <h2 className="text-[10px] sm:text-xs uppercase tracking-wider whitespace-nowrap flex-shrink-0 font-mono" style={{
+                color: '#F97316',
                 fontFamily: 'var(--font-heading)',
                 fontWeight: '700',
               }}>
                 FANTASY ROOM
               </h2>
 
-              {/* Right: Categories + BACK + POST Button */}
+              {/* Right: Categories + POST Button */}
               <div className="flex items-center gap-2 ml-auto">
-                {/* Category Dropdown - Tiny and compact */}
+                {/* Category Dropdown */}
                 <select
                   value={selectedCategory}
                   onChange={(e) => setSelectedCategory(e.target.value)}
-                  className="px-1.5 py-0.5 text-[8px] tracking-wide uppercase transition-all cursor-pointer"
+                  className="px-2 py-0.5 text-[9px] tracking-wide uppercase transition-all cursor-pointer font-mono rounded"
                   style={{
-                    borderRadius: '2px',
                     background: 'rgba(255, 255, 255, 0.05)',
-                    border: '1px solid rgba(255, 255, 255, 0.2)',
+                    border: '1px solid rgba(255, 255, 255, 0.15)',
                     color: '#ffffff',
-                    fontWeight: '500',
-                    width: 'auto',
-                    minWidth: 'fit-content',
-                    height: '20px',
+                    height: '22px',
                   }}
                 >
                   {categories.map((cat) => (
-                    <option key={cat.value} value={cat.value} style={{ background: '#000', color: '#fff' }}>
+                    <option key={cat.value} value={cat.value} style={{ background: '#0a0a0f', color: '#fff' }}>
                       {cat.label}
                     </option>
                   ))}
                 </select>
 
-                {/* BACK Button */}
-                <button
-                  onClick={() => navigate('/home')}
-                  className="px-2 py-0.5 text-[8px] tracking-wide uppercase transition-all"
-                  style={{
-                    borderRadius: '2px',
-                    background: 'rgba(255, 255, 255, 0.05)',
-                    border: '1px solid rgba(255, 255, 255, 0.2)',
-                    color: '#ffffff',
-                    fontWeight: '500',
-                    height: '20px',
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)';
-                    e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.3)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)';
-                    e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)';
-                  }}
-                >
-                  BACK
-                </button>
-
                 {/* POST Button */}
                 {isAuthenticated && (
                   <button
                     onClick={() => setIsPostFormOpen(true)}
-                    className="flex-shrink-0 px-2 sm:px-4 py-1 sm:py-2 text-[9px] sm:text-[10px] tracking-widest uppercase transition-all"
+                    className="flex-shrink-0 px-2.5 py-0.5 text-[9px] tracking-widest uppercase transition-all rounded font-mono"
                     style={{
-                      background: 'rgba(0, 0, 0, 0.3)',
-                      border: '1px solid rgba(249, 115, 22, 0.15)',
-                      color: '#c9d1d9',
-                      borderRadius: 'var(--radius-soft)',
-                      transitionDuration: 'var(--duration-slow)',
-                      fontWeight: '400',
+                      backgroundColor: '#F97316',
+                      color: '#000000',
+                      fontWeight: '700',
+                      height: '22px',
                     }}
                     onMouseEnter={(e) => {
-                      e.currentTarget.style.borderColor = 'rgba(249, 115, 22, 0.3)';
-                      e.currentTarget.style.color = '#FF9D1C';
-                      e.currentTarget.style.background = 'rgba(249, 115, 22, 0.05)';
+                      e.currentTarget.style.backgroundColor = '#ea580c';
                     }}
                     onMouseLeave={(e) => {
-                      e.currentTarget.style.borderColor = 'rgba(249, 115, 22, 0.15)';
-                      e.currentTarget.style.color = '#c9d1d9';
-                      e.currentTarget.style.background = 'rgba(0, 0, 0, 0.3)';
+                      e.currentTarget.style.backgroundColor = '#F97316';
                     }}
                   >
-                    Post
+                    POST
                   </button>
                 )}
               </div>

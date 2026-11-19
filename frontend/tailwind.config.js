@@ -4,9 +4,9 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
-        mono: ['var(--font-family-mono)', 'IBM Plex Mono', 'Space Mono', 'Courier New', 'monospace'],
-        display: ['var(--font-family-display)'],
+        sans: ['IBM Plex Mono', 'Space Mono', 'Courier New', 'monospace'],
+        mono: ['IBM Plex Mono', 'Space Mono', 'Courier New', 'monospace'],
+        display: ['Space Mono', 'IBM Plex Mono', 'Courier New', 'monospace'],
       },
       colors: {
         // Semantic color aliases that use CSS variables

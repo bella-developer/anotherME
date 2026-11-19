@@ -47,7 +47,7 @@ function Landing() {
   ];
 
   return (
-    <div className="min-h-screen text-white overflow-x-hidden bg-black" style={{ fontFamily: "var(--font-body)" }}>
+    <div className="min-h-screen text-white overflow-x-hidden bg-transparent" style={{ fontFamily: "var(--font-body)" }}>
 
       {/* NAVIGATION - Editorial Spacing */}
       <motion.header 
@@ -145,7 +145,7 @@ function Landing() {
         id="explore"
         className="relative z-10 py-24 overflow-hidden"
         style={{ 
-          background: '#000000',
+          background: 'transparent',
         }}
       >
         <style>{`
@@ -508,7 +508,8 @@ function Landing() {
       {/* FOOTER - Editorial Spacing */}
       <footer className="border-t relative z-10" style={{ 
         borderColor: 'var(--border-whisper)',
-        background: 'var(--surface-void)'
+        background: 'rgba(0, 0, 0, 0.4)',
+        backdropFilter: 'blur(12px)',
       }}>
         <div className="max-w-7xl mx-auto px-8 lg:px-16 py-20">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-16 mb-16">

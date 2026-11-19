@@ -180,59 +180,65 @@ function DarkRoom() {
               </p>
             </div>
 
-            {/* Compact Sticky Bar - Centered */}
-            <div className="sticky top-16 z-20 mb-6 px-3 sm:px-4 py-2 flex items-center justify-center gap-3 rounded-lg" style={{
-              backgroundColor: 'rgba(0, 0, 0, 0.85)',
+            {/* Compact Centered Sticky Bar */}
+            <div className="sticky top-16 z-20 mb-5 px-3 py-1.5 flex items-center justify-between gap-3 max-w-xl mx-auto rounded-lg" style={{
+              background: 'rgba(255, 255, 255, 0.02)',
               backdropFilter: 'blur(12px)',
+              WebkitBackdropFilter: 'blur(12px)',
               border: '1px solid rgba(255, 255, 255, 0.08)',
             }}>
-              <span className="text-[10px] sm:text-xs uppercase tracking-wider font-mono font-bold" style={{
+              {/* Left: Room Title */}
+              <h2 className="text-[10px] sm:text-xs uppercase tracking-wider whitespace-nowrap flex-shrink-0 font-mono" style={{
                 color: '#DC2626',
+                fontFamily: 'var(--font-heading)',
+                fontWeight: '700',
               }}>
                 DARK ROOM
-              </span>
+              </h2>
 
-              {/* Category Dropdown */}
-              <select
-                value={selectedCategory}
-                onChange={(e) => setSelectedCategory(e.target.value)}
-                className="px-2 py-0.5 text-[9px] tracking-wide uppercase font-mono transition-all cursor-pointer rounded"
-                style={{
-                  background: 'rgba(255, 255, 255, 0.05)',
-                  border: '1px solid rgba(255, 255, 255, 0.15)',
-                  color: '#ffffff',
-                  height: '24px',
-                }}
-              >
-                {categories.map((cat) => (
-                  <option key={cat.value} value={cat.value} style={{ background: '#000', color: '#fff' }}>
-                    {cat.label}
-                  </option>
-                ))}
-              </select>
-
-              {/* POST Button */}
-              {isAuthenticated && (
-                <button
-                  onClick={() => setIsPostFormOpen(true)}
-                  className="px-3 py-1 text-[9px] sm:text-[10px] tracking-widest uppercase font-mono transition-all rounded"
+              {/* Right: Categories + POST Button */}
+              <div className="flex items-center gap-2 ml-auto">
+                {/* Category Dropdown */}
+                <select
+                  value={selectedCategory}
+                  onChange={(e) => setSelectedCategory(e.target.value)}
+                  className="px-2 py-0.5 text-[9px] tracking-wide uppercase font-mono transition-all cursor-pointer rounded"
                   style={{
-                    background: 'rgba(220, 38, 38, 0.12)',
-                    border: '1px solid rgba(220, 38, 38, 0.3)',
-                    color: '#DC2626',
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.borderColor = 'rgba(220, 38, 38, 0.6)';
-                    e.currentTarget.style.background = 'rgba(220, 38, 38, 0.2)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.borderColor = 'rgba(220, 38, 38, 0.3)';
-                    e.currentTarget.style.background = 'rgba(220, 38, 38, 0.12)';
+                    background: 'rgba(255, 255, 255, 0.05)',
+                    border: '1px solid rgba(255, 255, 255, 0.15)',
+                    color: '#ffffff',
+                    height: '22px',
                   }}
                 >
-                  Post
-                </button>
-              )}
+                  {categories.map((cat) => (
+                    <option key={cat.value} value={cat.value} style={{ background: '#0a0a0f', color: '#fff' }}>
+                      {cat.label}
+                    </option>
+                  ))}
+                </select>
+
+                {/* POST Button */}
+                {isAuthenticated && (
+                  <button
+                    onClick={() => setIsPostFormOpen(true)}
+                    className="flex-shrink-0 px-2.5 py-0.5 text-[9px] tracking-widest uppercase transition-all rounded font-mono"
+                    style={{
+                      backgroundColor: '#DC2626',
+                      color: '#ffffff',
+                      fontWeight: '700',
+                      height: '22px',
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.backgroundColor = '#B91C1C';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.backgroundColor = '#DC2626';
+                    }}
+                  >
+                    POST
+                  </button>
+                )}
+              </div>
             </div>
 
             {/* Feed */}

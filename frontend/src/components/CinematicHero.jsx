@@ -191,17 +191,16 @@ export default function CinematicHero() {
     return()=>window.removeEventListener('keydown',onKeyDown);
   },[next,previous]);
 
-  return <main className="relative isolate min-h-screen overflow-hidden bg-[#050505] text-[#e7e0d4]">
-    {/* Subtle black / coffee atmosphere and film grain */}
+  return <main className="relative isolate min-h-screen overflow-hidden bg-transparent text-[#e7e0d4]">
+    {/* Subtle coffee atmosphere and film grain */}
     <div className="pointer-events-none fixed inset-0 z-[-1] overflow-hidden">
-      <div className="absolute inset-0 bg-[#050505]"/>
       <div className="absolute inset-0" style={{background:'radial-gradient(circle at 56% 48%,rgba(93,58,35,.08),transparent 32%),radial-gradient(circle at 12% 65%,rgba(101,75,49,.035),transparent 27%)'}}/>
-      <div className="absolute inset-0" style={{background:'radial-gradient(circle at center,transparent 35%,rgba(0,0,0,.65) 100%)'}}/>
+      <div className="absolute inset-0" style={{background:'radial-gradient(circle at center,transparent 35%,rgba(0,0,0,.45) 100%)'}}/>
       <div className="absolute inset-0 opacity-[.035]" style={{backgroundImage:"url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.75'/%3E%3C/svg%3E\")"}}/>
       <div className="absolute inset-0 opacity-[.025]" style={{backgroundImage:'repeating-linear-gradient(to bottom,transparent 0,transparent 4px,rgba(255,255,255,.25) 5px)'}}/>
     </div>
 
-    <section className="relative z-10 mx-auto flex min-h-screen w-full max-w-[1500px] items-center px-4 py-8 sm:px-6 sm:py-10 md:px-7 lg:px-8 xl:px-10">
+    <section className="relative z-10 mx-auto flex min-h-screen w-full max-w-6xl items-center justify-center px-4 py-8 sm:px-6 sm:py-10 md:px-7 lg:px-8">
       <div className="mx-auto grid w-full min-w-0 grid-cols-1 items-center gap-y-7 sm:gap-y-8 md:grid-cols-[minmax(0,0.82fr)_minmax(0,1.35fr)] md:gap-x-5 md:gap-y-5 lg:grid-cols-[minmax(300px,0.82fr)_minmax(0,1.55fr)_minmax(74px,0.27fr)] lg:gap-x-5 xl:grid-cols-[minmax(340px,0.86fr)_minmax(0,1.55fr)_minmax(88px,0.28fr)] xl:gap-x-7">
         {/* Left column: note wall. Vault is attached here only on desktop. */}
         <aside className="min-w-0 md:col-start-1 md:row-start-1">
