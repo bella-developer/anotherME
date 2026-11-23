@@ -15,6 +15,7 @@ import {
 } from '../features/sanctuarySlice';
 import { useToast } from '../contexts/ToastContext';
 import useReducedMotion from '../hooks/useReducedMotion';
+import PaymentModal from './PaymentModal';
 
 export default function SanctuaryPassModal() {
   const dispatch = useDispatch();
@@ -26,16 +27,12 @@ export default function SanctuaryPassModal() {
 
   const [billingCycle, setBillingCycle] = useState('annual'); // 'annual' | 'monthly'
   const [isProcessing, setIsProcessing] = useState(false);
+  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
 
   if (!isMembershipModalOpen) return null;
 
   const handleActivate = () => {
-    setIsProcessing(true);
-    setTimeout(() => {
-      dispatch(upgradeToPatron({ tier: billingCycle }));
-      setIsProcessing(false);
-      addToast('ESO Pass activated. Thank you for your support!', 'success');
-    }, 600);
+    setIsPaymentModalOpen(true);
   };
 
   const handleCancel = () => {
@@ -219,6 +216,15 @@ export default function SanctuaryPassModal() {
           </div>
         </div>
       </div>
+
+      <PaymentModal
+        isOpen={isPaymentModalOpen}
+        onClose={() => setIsPaymentModalOpen(false)}
+        onSuccess={() => {
+          setIsPaymentModalOpen(false);
+          dispatch(closeMembershipModal());
+        }}
+      />
     </div>
   );
 }

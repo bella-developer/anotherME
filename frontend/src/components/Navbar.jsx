@@ -57,7 +57,7 @@ function Navbar() {
 
   return (
     <nav 
-      className="fixed top-0 left-0 right-0 z-50 h-8"
+      className="fixed top-0 left-0 right-0 z-50 h-14"
       style={{ 
         background: 'rgba(0, 0, 0, 0.95)', 
         backdropFilter: 'blur(20px)',
@@ -71,10 +71,10 @@ function Navbar() {
           {/* Logo */}
           <Link 
             to="/home" 
-            className="flex items-center focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-black rounded p-0.5"
+            className="flex items-center focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-black rounded py-1"
             aria-label="ESO home"
           >
-            <EsoLogo className="h-6 w-auto" />
+            <EsoLogo className="h-9 sm:h-10 w-auto object-contain" />
           </Link>
 
           {/* Desktop Navigation Links */}
@@ -124,15 +124,6 @@ function Navbar() {
 
           {/* User Info / Auth */}
           <div className="hidden md:flex items-center space-x-3 lg:space-x-4">
-            {/* ESO Sanctuary Pass Button */}
-            <button
-              onClick={() => dispatch(openMembershipModal())}
-              className="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded border border-[#30363d] bg-transparent text-[#8b949e] hover:text-[#e6edf3] hover:border-[#8b949e] font-mono transition-colors flex items-center gap-1"
-              title="ESO Sanctuary Pass"
-            >
-              <Sparkles size={10} className="text-[#8b949e]" />
-              <span>{isPatron ? 'Patron' : 'Pass'}</span>
-            </button>
             {user?.role === 'admin' && (
               <Link
                 to="/admin"
@@ -222,7 +213,7 @@ function Navbar() {
           <>
             {/* Backdrop */}
             <div 
-              className="md:hidden fixed inset-0 top-8 z-40"
+              className="md:hidden fixed inset-0 top-14 z-40"
               style={{ background: 'rgba(0, 0, 0, 0.8)' }}
               onClick={() => setIsMobileMenuOpen(false)}
               aria-hidden="true"
@@ -231,11 +222,11 @@ function Navbar() {
             {/* Menu content */}
             <div 
               id="mobile-menu"
-              className="md:hidden fixed top-8 left-0 right-0 z-50 shadow-2xl"
+              className="md:hidden fixed top-14 left-0 right-0 z-50 shadow-2xl"
               style={{
                 background: 'rgba(10, 10, 10, 0.98)',
                 backdropFilter: 'blur(20px)',
-                maxHeight: 'calc(100vh - 2rem)',
+                maxHeight: 'calc(100vh - 3.5rem)',
                 overflowY: 'auto'
               }}
               role="menu"
@@ -277,19 +268,6 @@ function Navbar() {
                     </Link>
                   </>
                 )}
-                <button
-                  onClick={() => {
-                    setIsMobileMenuOpen(false);
-                    dispatch(openMembershipModal());
-                  }}
-                  className="text-left py-3 px-4 rounded-lg transition-colors duration-200 text-base font-medium text-white/80 hover:text-white hover:bg-white/10 flex items-center justify-between"
-                  role="menuitem"
-                >
-                  <span>ESO Pass</span>
-                  <span className="text-[10px] uppercase font-mono tracking-wider px-2 py-0.5 rounded border border-[#21262d] text-[#8b949e]">
-                    {isPatron ? 'Active' : 'Pass'}
-                  </span>
-                </button>
                 <Link
                   to="/support"
                   onClick={() => setIsMobileMenuOpen(false)}

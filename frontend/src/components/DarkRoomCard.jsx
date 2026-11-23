@@ -40,15 +40,17 @@ function DarkRoomCard({ post, onReaction, onEdit, onDelete }) {
 
   return (
     <article
-      className="relative mb-4 sm:mb-6 transition-all duration-200 analog-texture paper-texture overflow-hidden"
+      className="group relative mb-4 sm:mb-6 transition-all duration-300 rounded-xl overflow-hidden"
       style={{
-        background: 'rgba(255, 255, 255, 0.02)',
-        backdropFilter: 'blur(12px)',
-        border: '1px solid rgba(255, 255, 255, 0.08)',
-        borderRadius: '16px',
+        background: 'transparent',
+        boxShadow: '0 0 0 1px rgba(255,255,255,0.1)',
         minHeight: imageUrl ? '420px' : 'auto',
       }}
     >
+      <div 
+        className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+        style={{ boxShadow: 'inset 0 0 30px rgba(255,255,255,0.05)' }} 
+      />
       {/* Header Bar - Responsive */}
       <div className="flex items-center justify-between px-3 sm:px-5 pt-3 sm:pt-4 pb-2">
         <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">

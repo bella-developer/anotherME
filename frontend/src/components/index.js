@@ -14,3 +14,5 @@ export { default as CommentForm } from './CommentForm';
 export { default as PageTransition } from './PageTransition';
 export { default as StaggerList } from './StaggerList';
 export { default as ProtectedRoute } from './ProtectedRoute';
+export { default as EsoPassCard } from './EsoPassCard';
+export { default as PaymentModal } from './PaymentModal';

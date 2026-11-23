@@ -206,8 +206,33 @@ function PhiloRoom() {
                 PHILO ROOM
               </h2>
 
-              {/* Right: Categories + POST Button */}
+              {/* Right: Back Button + Categories + POST Button */}
               <div className="flex items-center gap-2 ml-auto">
+                {/* Back Button */}
+                <button
+                  type="button"
+                  onClick={() => navigate('/home')}
+                  className="flex-shrink-0 px-2.5 py-1 text-[9px] sm:text-[10px] tracking-wider uppercase transition-all rounded font-mono font-medium flex items-center gap-1"
+                  style={{
+                    backgroundColor: 'rgba(255, 255, 255, 0.05)',
+                    color: '#e6edf3',
+                    border: '1px solid rgba(255, 255, 255, 0.2)',
+                    height: '22px',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.12)';
+                    e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.4)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.05)';
+                    e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+                  }}
+                  aria-label="Back to rooms"
+                >
+                  <span>←</span>
+                  <span>Back</span>
+                </button>
+
                 {/* Category Dropdown */}
                 <select
                   value={selectedCategory}

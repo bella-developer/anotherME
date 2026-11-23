@@ -13,15 +13,27 @@ const ImageUpload = ({ onImageSelect, onImageSelected, onImageRemove, disabled =
 
   const notifySelect = onImageSelect || onImageSelected;
 
-  // Handle existing image from server
+  // Handle existing image from server or file object
   useEffect(() => {
     if (existingImage) {
-      // If existingImage has a url property (from server), use it
-      const imageUrl = existingImage.url || existingImage;
-      setPreview(imageUrl);
-      setFileName('Existing image');
+      if (typeof existingImage === 'string') {
+        setPreview(existingImage);
+        setFileName('Selected image');
+      } else if (existingImage.url) {
+        setPreview(existingImage.url);
+        setFileName('Attached image');
+      } else if (typeof File !== 'undefined' && existingImage instanceof File) {
+        const objUrl = URL.createObjectURL(existingImage);
+        setPreview(objUrl);
+        setFileName(existingImage.name || 'Selected image');
+        return () => URL.revokeObjectURL(objUrl);
+      } else if (typeof Blob !== 'undefined' && existingImage instanceof Blob) {
+        const objUrl = URL.createObjectURL(existingImage);
+        setPreview(objUrl);
+        setFileName('Selected image');
+        return () => URL.revokeObjectURL(objUrl);
+      }
     } else {
-      // Clear preview if no existing image
       setPreview(null);
       setFileName('');
     }
@@ -163,38 +175,35 @@ const ImageUpload = ({ onImageSelect, onImageSelected, onImageRemove, disabled =
           </div>
         </div>
       ) : (
-        <div className="relative flex items-center gap-2 p-2 border border-white/10 rounded bg-white/5">
-          {/* Small preview thumbnail */}
-          <div className="relative w-12 h-12 flex-shrink-0 overflow-hidden rounded border border-white/20">
+        <div className="relative flex flex-col gap-2 p-2.5 border border-white/10 rounded bg-white/5">
+          {/* Preview Container with Image */}
+          <div className="relative w-full max-h-52 overflow-hidden rounded border border-white/10 bg-black/50 flex items-center justify-center">
             <img
               src={preview}
               alt="Preview"
-              className="w-full h-full object-cover"
+              className="w-full max-h-52 object-contain rounded"
             />
+            {/* Remove button */}
+            <button
+              type="button"
+              onClick={handleRemove}
+              disabled={disabled}
+              className="absolute top-2 right-2 w-7 h-7 rounded-full flex items-center justify-center bg-black/70 hover:bg-red-600 text-white transition-all duration-200 shadow"
+              title="Remove image"
+            >
+              <FaTimes size={12} />
+            </button>
           </div>
 
-          {/* File name */}
-          <div className="flex-1 min-w-0">
-            <span className="text-white/60 text-xs block truncate">
+          {/* File details bar */}
+          <div className="flex items-center justify-between px-1">
+            <span className="text-white/70 text-xs truncate max-w-[220px]">
               {fileName}
             </span>
-            <span className="text-white/30 text-[10px]">
-              Image attached
+            <span className="text-white/40 text-[10px] font-mono">
+              Ready to publish
             </span>
           </div>
-
-          {/* Remove button */}
-          <button
-            type="button"
-            onClick={handleRemove}
-            disabled={disabled}
-            className="w-6 h-6 rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110"
-            style={{
-              background: 'rgba(220, 38, 38, 0.8)',
-            }}
-          >
-            <FaTimes className="text-white" size={10} />
-          </button>
         </div>
       )}
     </div>

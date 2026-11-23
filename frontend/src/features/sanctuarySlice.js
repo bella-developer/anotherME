@@ -11,7 +11,7 @@ const safeGetJSON = (key, fallback) => {
 };
 
 const initialState = {
-  isPatron: localStorage.getItem('eso_sanctuary_patron') === 'true',
+  isPatron: localStorage.getItem('eso_sanctuary_patron') === 'true' || Boolean(localStorage.getItem('eso_pass_token')),
   patronTier: localStorage.getItem('eso_sanctuary_tier') || 'none', // 'monthly' | 'annual' | 'lifetime' | 'none'
   patronSince: localStorage.getItem('eso_sanctuary_since') || null,
   theme: localStorage.getItem('eso_sanctuary_theme') || 'obsidian',
@@ -35,8 +35,9 @@ export const sanctuarySlice = createSlice({
       state.isMembershipModalOpen = false;
     },
     upgradeToPatron: (state, action) => {
-      const tier = action.payload?.tier || 'annual';
+      const tier = action.payload?.tier || 'monthly';
       const now = new Date().toISOString();
+      const token = action.payload?.token || `eso_pass_${Date.now()}`;
       state.isPatron = true;
       state.patronTier = tier;
       state.patronSince = now;
@@ -45,6 +46,7 @@ export const sanctuarySlice = createSlice({
       localStorage.setItem('eso_sanctuary_patron', 'true');
       localStorage.setItem('eso_sanctuary_tier', tier);
       localStorage.setItem('eso_sanctuary_since', now);
+      localStorage.setItem('eso_pass_token', token);
     },
     cancelPatron: (state) => {
       state.isPatron = false;
@@ -53,6 +55,7 @@ export const sanctuarySlice = createSlice({
       localStorage.removeItem('eso_sanctuary_patron');
       localStorage.removeItem('eso_sanctuary_tier');
       localStorage.removeItem('eso_sanctuary_since');
+      localStorage.removeItem('eso_pass_token');
     },
     setTheme: (state, action) => {
       state.theme = action.payload;

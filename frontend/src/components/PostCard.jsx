@@ -69,16 +69,17 @@ const PostCard = ({ post, onPostClick }) => {
   return (
     <article 
       onClick={() => onPostClick && onPostClick(post.id)}
-      className="rounded-lg p-6 mb-4 transition-all duration-200 cursor-pointer"
+      className="group relative rounded-xl p-5 sm:p-6 mb-4 transition-all duration-300 cursor-pointer overflow-hidden"
       style={{
-        backgroundColor: 'rgba(255, 255, 255, 0.02)',
-        backdropFilter: 'blur(12px)',
-        border: '1px solid rgba(255, 255, 255, 0.08)',
+        backgroundColor: 'transparent',
+        boxShadow: '0 0 0 1px rgba(255,255,255,0.1)',
       }}
       role="article"
-      onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.04)'}
-      onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.02)'}
     >
+      <div 
+        className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+        style={{ boxShadow: 'inset 0 0 30px rgba(255,255,255,0.05)' }} 
+      />
       {/* Header: Room Section and Timestamp */}
       <div className="flex items-center justify-between mb-6">
         {/* Room Header */}

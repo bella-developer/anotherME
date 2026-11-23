@@ -16,6 +16,14 @@ const apiClient = axios.create({
 // Request interceptor - Add JWT token to requests
 apiClient.interceptors.request.use(
   (config) => {
+    // If sending FormData, let browser/axios set multipart/form-data with proper boundary
+    if (typeof FormData !== 'undefined' && config.data instanceof FormData) {
+      if (config.headers) {
+        delete config.headers['Content-Type'];
+        delete config.headers['content-type'];
+      }
+    }
+
     // Get access token from localStorage
     const accessToken = localStorage.getItem('accessToken');
     
