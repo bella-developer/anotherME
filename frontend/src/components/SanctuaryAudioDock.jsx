@@ -107,16 +107,6 @@ export default function SanctuaryAudioDock() {
               <span className="text-xs font-mono font-medium text-[#e6edf3]">
                 Sounds
               </span>
-
-              {!isPatron && (
-                <button
-                  type="button"
-                  onClick={() => dispatch(openMembershipModal())}
-                  className="text-[10px] uppercase font-mono px-1.5 py-0.5 rounded border border-[#21262d] text-[#8b949e] hover:text-[#e6edf3]"
-                >
-                  Pass
-                </button>
-              )}
             </div>
 
             {/* Track list */}

@@ -37,22 +37,20 @@ const PostCard = memo(({ post, onPostClick, onReaction }) => {
       onClick={() => onPostClick && onPostClick(post.id)}
       className="group relative rounded-xl p-4 sm:p-5 mb-4 transition-all duration-200 cursor-pointer overflow-hidden font-mono"
       style={{
-        backgroundColor: '#191820',
-        border: '1px solid #292630',
+        backgroundColor: 'rgba(25, 24, 32, 0.5)',
+        backdropFilter: 'blur(16px)',
+        WebkitBackdropFilter: 'blur(16px)',
+        border: '1px solid rgba(255, 255, 255, 0.08)',
+        boxShadow: '0 4px 24px rgba(0, 0, 0, 0.35)',
       }}
       role="article"
     >
       {/* Header: Room Section and Timestamp */}
-      <div className="flex items-center justify-between mb-4 pb-2 border-b border-[#292630]/60">
+      <div className="flex items-center justify-between mb-4 pb-2 border-b border-white/[0.06]">
         <div className="flex items-center gap-2">
           <span className="text-[10px] tracking-[0.2em] uppercase font-bold" style={{ color: roomColor }}>
             {room.toUpperCase()}
           </span>
-          {post.circle && (
-            <span className="text-[10px] text-[#928B91]">
-              &bull; {post.circle.name}
-            </span>
-          )}
         </div>
 
         {/* Timestamp */}
@@ -63,15 +61,31 @@ const PostCard = memo(({ post, onPostClick, onReaction }) => {
         </span>
       </div>
 
-      {/* Title */}
+      {/* Title with Brush Gritty Background */}
       {post.title && (
-        <h3 className="text-sm sm:text-base font-semibold text-[#E7DED5] mb-2 leading-snug">
-          {post.title}
-        </h3>
+        <div className="mb-3">
+          <div className="relative inline-block">
+            <span 
+              className="absolute inset-0 -skew-x-2 pointer-events-none rounded-[2px]"
+              style={{
+                backgroundColor: roomColor === '#DB762E' 
+                  ? 'rgba(219, 118, 46, 0.88)' 
+                  : roomColor === '#7771D9' 
+                  ? 'rgba(119, 113, 217, 0.88)' 
+                  : 'rgba(180, 74, 74, 0.88)',
+                clipPath: 'polygon(0% 10%, 4% 3%, 16% 7%, 34% 1%, 56% 6%, 76% 1%, 94% 6%, 100% 14%, 99% 86%, 95% 97%, 74% 93%, 52% 98%, 28% 94%, 7% 98%, 0% 86%)',
+                boxShadow: `0 0 16px ${roomColor}66`,
+              }}
+            />
+            <h3 className="relative z-10 px-2.5 py-0.5 text-xs sm:text-sm md:text-base font-bold text-white tracking-wide leading-snug">
+              {post.title}
+            </h3>
+          </div>
+        </div>
       )}
 
       {/* Content */}
-      <div className="mb-4 space-y-2">
+      <div className="mb-3 space-y-2">
         {paragraphs.slice(0, 3).map((paragraph, index) => (
           <p 
             key={index} 
@@ -84,6 +98,29 @@ const PostCard = memo(({ post, onPostClick, onReaction }) => {
           <p className="text-[10px] text-[#928B91] italic">...click to read full post</p>
         )}
       </div>
+
+      {/* Attached Circle: right half with smaller space consumption, thinner premium look */}
+      {(post.circle || (post.circles && post.circles.length > 0)) && (() => {
+        const circleObj = post.circle || post.circles[0];
+        const circleName = circleObj?.name || circleObj?.fullName;
+        if (!circleName) return null;
+        return (
+          <div className="flex justify-end mb-3">
+            <span 
+              className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[9px] tracking-wider uppercase border"
+              style={{
+                backgroundColor: 'rgba(0, 0, 0, 0.45)',
+                borderColor: `${roomColor}55`,
+                color: roomColor,
+                boxShadow: `0 0 8px ${roomColor}22`,
+              }}
+            >
+              <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: roomColor }} />
+              <span className="font-semibold">{circleName}</span>
+            </span>
+          </div>
+        );
+      })()}
 
       {/* Footer: Reaction Buttons */}
       <div className="flex items-center justify-between pt-3 border-t border-[#292630]" onClick={(e) => e.stopPropagation()}>

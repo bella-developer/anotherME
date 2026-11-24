@@ -11,9 +11,9 @@ const safeGetJSON = (key, fallback) => {
 };
 
 const initialState = {
-  isPatron: localStorage.getItem('eso_sanctuary_patron') === 'true' || Boolean(localStorage.getItem('eso_pass_token')),
-  patronTier: localStorage.getItem('eso_sanctuary_tier') || 'none', // 'monthly' | 'annual' | 'lifetime' | 'none'
-  patronSince: localStorage.getItem('eso_sanctuary_since') || null,
+  isPatron: true, // Free app - all features unlocked
+  patronTier: 'lifetime',
+  patronSince: localStorage.getItem('eso_sanctuary_since') || new Date().toISOString(),
   theme: localStorage.getItem('eso_sanctuary_theme') || 'obsidian',
   isMembershipModalOpen: false,
   isAudioDockOpen: false,
@@ -29,7 +29,8 @@ export const sanctuarySlice = createSlice({
   initialState,
   reducers: {
     openMembershipModal: (state) => {
-      state.isMembershipModalOpen = true;
+      // Free app mode - pass modal is disabled
+      state.isMembershipModalOpen = false;
     },
     closeMembershipModal: (state) => {
       state.isMembershipModalOpen = false;

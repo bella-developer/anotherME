@@ -5,8 +5,6 @@ import { register, selectAuth } from '../features/authSlice';
 import IntrovertsBg from '../components/IntrovertsBg';
 import EsoLogo from '../components/EsoLogo';
 import GoogleSignInButton from '../components/GoogleSignInButton';
-import EsoPassCard from '../components/EsoPassCard';
-import PaymentModal from '../components/PaymentModal';
 import { usePageTitle } from '../hooks/usePageTitle';
 
 function Register() {
@@ -14,10 +12,8 @@ function Register() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { user, isAuthenticated, loading, error } = useSelector(selectAuth);
-  const { isPatron } = useSelector((state) => state.sanctuary || {});
 
   const [showSuccess, setShowSuccess] = useState(false);
-  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
   const [formData, setFormData] = useState({
     username: '',
     email: '',
@@ -232,7 +228,7 @@ function Register() {
       {/* Light Overlay - Starfield Visible */}
       <div className="absolute inset-0 z-10 bg-black/15 backdrop-blur-sm" />
       
-      <div className="relative z-20 w-full max-w-4xl px-4 py-8 mx-auto">
+      <div className="relative z-20 w-full max-w-md px-4 py-8 mx-auto">
         <div className="text-center mb-6">
           <Link to="/" className="inline-block mb-1 focus:outline-none focus:ring-2 focus:ring-white/50 rounded transform hover:scale-105 transition-transform duration-300">
             <EsoLogo className="h-12 w-auto mx-auto" />
@@ -243,7 +239,7 @@ function Register() {
           <p className="text-[0.65rem] tracking-[0.2em] uppercase text-white/40">Create Your Account</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+        <div>
           <div className="border border-white/5 rounded-xl p-5" style={{ background: 'rgba(0,0,0,0.4)', backdropFilter: 'blur(16px)' }}>
 
 
@@ -499,29 +495,13 @@ function Register() {
           </div>
         </div>
 
-        {/* Right: Attached ESO Pass Card */}
-        <div className="space-y-4">
-          <EsoPassCard
-            onPermitSuccess={() => {
-              navigate('/home', { replace: true });
-            }}
-          />
-          <div className="text-center pt-2">
-            <p className="text-[0.65rem] text-white/40">
-              Read our <Link to="/privacy" className="underline hover:text-white/70">Privacy Policy</Link>
-            </p>
-          </div>
+        {/* Privacy Link */}
+        <div className="text-center pt-4">
+          <p className="text-[0.65rem] text-white/40">
+            Read our <Link to="/privacy" className="underline hover:text-white/70">Privacy Policy</Link>
+          </p>
         </div>
       </div>
-
-      {/* Payment Modal */}
-      <PaymentModal
-        isOpen={isPaymentModalOpen}
-        onClose={() => setIsPaymentModalOpen(false)}
-        onSuccess={() => {
-          navigate('/home', { replace: true });
-        }}
-      />
     </div>
   </div>
   );

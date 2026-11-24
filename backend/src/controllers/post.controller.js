@@ -57,7 +57,7 @@ export async function createPost(req, res, next) {
     const currentUserId = req.user?.id || req.user?._id;
     let sanitized;
     try {
-      sanitized = sanitizePost(post, { userId: currentUserId });
+      sanitized = sanitizePost(post, { userId: currentUserId, includeCircleName: true });
     } catch (sanitizeErr) {
       console.error('[sanitizePost Error in createPost]', sanitizeErr);
       sanitized = {

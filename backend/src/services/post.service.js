@@ -194,8 +194,11 @@ export async function createPost({ content, room, title, circleId, category, ima
   
   console.log('Post saved:', post._id, 'Circle:', mongoCircleId);
 
-  // Populate author data before returning
-  await post.populate('authorId', 'username stats');
+  // Populate author data and circle data before returning
+  await post.populate([
+    { path: 'authorId', select: 'username stats' },
+    { path: 'circles.circleId', select: 'name description room' }
+  ]);
   
   // Format author data for response
   const formattedPost = post.toObject();

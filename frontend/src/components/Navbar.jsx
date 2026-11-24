@@ -104,14 +104,6 @@ function Navbar() {
                 >
                   Create
                 </Link>
-                <Link
-                  to="/vault"
-                  className="text-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white/50 rounded px-2 py-1 tracking-wider uppercase text-white/85 hover:text-white font-medium"
-                  role="menuitem"
-                  title="Saved Posts"
-                >
-                  Saved
-                </Link>
               </>
             )}
             <Link
@@ -258,14 +250,6 @@ function Navbar() {
                       role="menuitem"
                     >
                       Create
-                    </Link>
-                    <Link
-                      to="/vault"
-                      onClick={() => setIsMobileMenuOpen(false)}
-                      className="py-3 px-4 rounded-lg transition-colors duration-200 text-base font-medium text-white/80 hover:text-white hover:bg-white/10"
-                      role="menuitem"
-                    >
-                      Saved
                     </Link>
                   </>
                 )}

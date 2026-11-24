@@ -78,7 +78,7 @@ function Home() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.9, delay: 0.2 }}
             >
-              Less noise. More meaning.
+              your safe space
             </motion.h1>
             <motion.p
               className="text-xs sm:text-sm text-[#928B91] font-mono tracking-wide mt-2"
@@ -86,7 +86,7 @@ function Home() {
               animate={{ opacity: 1 }}
               transition={{ duration: 0.9, delay: 0.4 }}
             >
-              A quiet space for thoughts that don't fit anywhere else.
+              for thoughts that don't fit anywhere
             </motion.p>
           </section>
 
@@ -120,8 +120,6 @@ function Home() {
                   aria-label={`Enter ${room.name.toLowerCase()}`}
                 >
                   <span className="eso-room__outer-frame" aria-hidden="true" />
-                  <span className="eso-room__frame-shadow" aria-hidden="true" />
-                  <span className="eso-room__inner-frame" aria-hidden="true" />
 
                   <span className="eso-room__scene">
                     <img
@@ -134,12 +132,6 @@ function Home() {
                       aria-hidden="true"
                     />
                     <span className="eso-room__scene-shade" aria-hidden="true" />
-                    <span className="eso-room__scanline" aria-hidden="true" />
-                    <span className="eso-room__corner eso-room__corner--tl" aria-hidden="true" />
-                    <span className="eso-room__corner eso-room__corner--tr" aria-hidden="true" />
-                    <span className="eso-room__corner eso-room__corner--bl" aria-hidden="true" />
-                    <span className="eso-room__corner eso-room__corner--br" aria-hidden="true" />
-                    <span className="eso-room__index">{room.number}</span>
                   </span>
                 </button>
 
@@ -279,43 +271,20 @@ function Home() {
           .eso-room__outer-frame {
             position: absolute;
             inset: 0;
-            z-index: 0;
-            border: 1px solid rgba(var(--room-rgb), .48);
-            background: linear-gradient(135deg, rgba(var(--room-rgb), .055), transparent 20%, transparent 80%, rgba(var(--room-rgb), .05));
-            box-shadow:
-              0 0 0 1px rgba(var(--room-rgb), .07),
-              0 0 18px rgba(var(--room-rgb), .075),
-              inset 0 0 18px rgba(var(--room-rgb), .07);
-            transition: box-shadow .55s ease, border-color .55s ease, inset .55s ease;
-          }
-
-          .eso-room__frame-shadow {
-            position: absolute;
-            inset: 8px;
-            z-index: 1;
-            border: 1px solid rgba(var(--room-rgb), .24);
-            box-shadow: inset 0 0 22px rgba(0,0,0,.8);
-            pointer-events: none;
-            transition: inset .55s cubic-bezier(.2,.75,.2,1), border-color .55s ease;
-          }
-
-          .eso-room__inner-frame {
-            position: absolute;
-            inset: 14px;
             z-index: 2;
-            border: 1px solid rgba(var(--room-rgb), .24);
+            border: 1px solid rgba(var(--room-rgb), .35);
             pointer-events: none;
-            transition: inset .55s cubic-bezier(.2,.75,.2,1), border-color .55s ease;
+            transition: box-shadow .55s ease, border-color .55s ease;
           }
 
           .eso-room__scene {
             position: absolute;
-            inset: 15px;
+            inset: 0;
             z-index: 1;
             display: block;
             overflow: hidden;
             background: #080909;
-            box-shadow: inset 0 0 50px #000;
+            box-shadow: inset 0 0 40px #000;
           }
 
           .eso-room__video {
@@ -326,8 +295,8 @@ function Home() {
             height: 100%;
             object-fit: cover;
             object-position: center;
-            filter: brightness(.62) contrast(1.08) saturate(.72);
-            transform: scale(1.025);
+            filter: brightness(.68) contrast(1.08) saturate(.75);
+            transform: scale(1.01);
             transition: filter .8s ease, transform 1.1s cubic-bezier(.2,.7,.2,1);
           }
 
@@ -335,44 +304,10 @@ function Home() {
             position: absolute;
             inset: 0;
             background:
-              linear-gradient(180deg, rgba(0,0,0,.18), transparent 35%, rgba(0,0,0,.42)),
-              linear-gradient(90deg, rgba(0,0,0,.22), transparent 18%, transparent 82%, rgba(0,0,0,.22));
-            box-shadow: inset 0 0 35px rgba(0,0,0,.7);
+              linear-gradient(180deg, rgba(0,0,0,.15), transparent 40%, rgba(0,0,0,.45)),
+              linear-gradient(90deg, rgba(0,0,0,.2), transparent 15%, transparent 85%, rgba(0,0,0,.2));
+            box-shadow: inset 0 0 30px rgba(0,0,0,.7);
             pointer-events: none;
-          }
-
-          .eso-room__scanline {
-            position: absolute;
-            inset: 0;
-            opacity: .1;
-            background: repeating-linear-gradient(180deg, transparent 0, transparent 3px, rgba(255,255,255,.045) 4px);
-            mix-blend-mode: screen;
-            pointer-events: none;
-          }
-
-          .eso-room__corner {
-            position: absolute;
-            width: 17px;
-            height: 17px;
-            opacity: .55;
-            border-color: var(--room-glow);
-            border-style: solid;
-            filter: drop-shadow(0 0 3px rgba(var(--room-rgb), .35));
-            transition: width .55s ease, height .55s ease, opacity .55s ease;
-          }
-          .eso-room__corner--tl { top: 8px; left: 8px; border-width: 1px 0 0 1px; }
-          .eso-room__corner--tr { top: 8px; right: 8px; border-width: 1px 1px 0 0; }
-          .eso-room__corner--bl { bottom: 8px; left: 8px; border-width: 0 0 1px 1px; }
-          .eso-room__corner--br { bottom: 8px; right: 8px; border-width: 0 1px 1px 0; }
-
-          .eso-room__index {
-            position: absolute;
-            top: 1rem;
-            left: 1rem;
-            color: rgba(255,255,255,.58);
-            font: 500 .58rem/1 var(--font-body, ui-sans-serif, sans-serif);
-            letter-spacing: .2em;
-            text-shadow: 0 1px 8px #000;
           }
 
           .eso-room__open-mark {

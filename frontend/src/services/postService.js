@@ -9,15 +9,21 @@ import apiClient from './api';
  * @param {string} params.room - Filter by room (dark, fantasy, philo)
  * @returns {Promise<Object>} Posts data with pagination
  */
-export const fetchPosts = async ({ cursor, circleId, category, room } = {}) => {
+export const fetchPosts = async ({ cursor, circleId, category, room, bustCache = true } = {}) => {
   try {
     const params = {};
     if (cursor) params.cursor = cursor;
     if (circleId) params.circleId = circleId;
     if (category) params.category = category;
     if (room) params.room = room;
+    if (bustCache) params._t = Date.now();
 
-    const response = await apiClient.get('/posts', { params });
+    const headers = {
+      'Cache-Control': 'no-cache',
+      'Pragma': 'no-cache',
+    };
+
+    const response = await apiClient.get('/posts', { params, headers });
     
     // Validate response structure (API returns nested data structure)
     if (!response.data?.data?.data || !Array.isArray(response.data.data.data)) {

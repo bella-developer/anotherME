@@ -7,8 +7,8 @@ import { useNavigate } from 'react-router-dom';
    Desktop: notes/vault left + cinematic video center + film strip right. */
 
 const FRAMES = [
-  { id:'welcome', number:'01', video:'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410933/frame1_gnpv3w.gif', mobileVideo:'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410933/frame1_gnpv3w.gif', title:'THE MEMORY PALACE', shortTitle:'MEMORY', tagline:'Rooms of memory.', quote:'remember', description:'A space for introspection and personal history' },
-  { id:'dark-confession', number:'02', video:'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410932/frame2_lia8kg.gif', mobileVideo:'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410932/frame2_lia8kg.gif', title:'CONFESSION', shortTitle:'CONFESSION', tagline:'Things left unsaid.', quote:'release', description:'Release your burdens without judgment' },
+  { id:'welcome', number:'01', video:'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410933/frame1_gnpv3w.gif', mobileVideo:'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410933/frame1_gnpv3w.gif', title:'THE MOMENTS PALACE', shortTitle:'MOMENTS', tagline:'Rooms of moments.', quote:'Remember the moment', description:'A space for introspection and personal history' },
+  { id:'dark-confession', number:'02', video:'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410932/frame2_lia8kg.gif', mobileVideo:'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410932/frame2_lia8kg.gif', title:'CONFESSION', shortTitle:'CONFESSION', tagline:'Things left unsaid.', quote:'Release your regrets', description:'Release your burdens without judgment' },
   { id:'dark-understanding', number:'03', video:'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410933/frame3_yrjfiw.gif', mobileVideo:'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410933/frame3_yrjfiw.gif', title:'UNDERSTANDING', shortTitle:'UNDERSTANDING', tagline:'A shared darkness.', quote:'witness', description:'Connect with those who truly understand' },
   { id:'fantasy-daydream', number:'04', video:'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410935/frame4_lfwlgn.gif', mobileVideo:'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410935/frame4_lfwlgn.gif', title:'IMAGINATION', shortTitle:'IMAGINATION', tagline:'Beyond imagination.', quote:'create', description:'Explore worlds beyond the ordinary' },
   { id:'fantasy-vibes', number:'05', video:'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410934/frame5_lwtld5.gif', mobileVideo:'https://res.cloudinary.com/dbtm7etag/image/upload/v1792410934/frame5_lwtld5.gif', title:'VIBES', shortTitle:'VIBES', tagline:'A space for anything.', quote:'flow', description:'Flow freely in unstructured expression' },
@@ -92,13 +92,31 @@ function StickyWall({activeEntry,selectEntry,compact=false}) {
 }
 
 function VaultCard({active,navigate,compact=false}) {
-  return <button type="button" onClick={()=>navigate('/login')} className={`group relative mx-auto block w-full overflow-hidden border border-[#9b8066]/20 bg-[#0b0a09] text-left shadow-[0_18px_48px_rgba(0,0,0,.48)] transition-all duration-500 hover:rotate-0 hover:border-[#a9363d]/35 focus-visible:outline focus-visible:outline-1 focus-visible:outline-[#a9363d] ${compact?'min-h-[84px] max-w-[520px] px-5 py-3':'min-h-[94px] max-w-[350px] -rotate-[.6deg] px-5 py-3.5'}`}>
-    <span className="pointer-events-none absolute inset-0 opacity-[.08]" style={{backgroundImage:'linear-gradient(rgba(255,255,255,.12) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.12) 1px,transparent 1px)',backgroundSize:'10px 10px'}}/>
-    <span className="relative block">
-      <span className="flex items-center justify-between font-mono text-[7px] uppercase tracking-[.25em] text-[#70685f]"><span>ESO — VAULT</span><span className="text-[#4f4943]">{active.number}</span></span>
-      <span className="mt-2 block font-display text-[clamp(15px,1.4vw,19px)] uppercase leading-tight tracking-[.05em] text-[#c9c0b4]">{active.shortTitle}</span>
-      <span className="mt-1.5 block font-mono text-[7px] uppercase tracking-[.15em] text-[#5d5750]">{active.tagline}</span>
-      <span className="mt-2 flex items-center gap-2 font-mono text-[7px] uppercase tracking-[.18em] text-[#a9363d]"><span>Enter Vault</span><span className="text-[10px] transition-transform group-hover:translate-x-1">→</span></span>
+  return <button 
+    type="button" 
+    onClick={()=>navigate('/login')} 
+    className={`group relative mx-auto block w-full rounded border border-white/10 bg-[#0e0e12]/80 backdrop-blur text-left transition-all duration-300 hover:border-[#a9363d]/50 focus-visible:outline focus-visible:outline-1 focus-visible:outline-[#a9363d] ${
+      compact ? 'max-w-[420px] px-3.5 py-2' : 'max-w-[320px] px-3.5 py-2'
+    }`}
+  >
+    <div className="flex items-center justify-between font-mono text-[7px] uppercase tracking-[0.2em] text-[#80776d]">
+      <span className="flex items-center gap-1.5">
+        <span className="h-1 w-1 rounded-full bg-[#a9363d]" />
+        <span>ESO — VAULT</span>
+      </span>
+      <span className="text-[#55504a]">{active.number}</span>
+    </div>
+    <div className="mt-1 flex items-baseline justify-between gap-2">
+      <span className="font-display text-xs sm:text-sm uppercase tracking-[0.05em] text-[#d6cdbf] font-medium">
+        {active.shortTitle}
+      </span>
+      <span className="font-mono text-[7px] uppercase tracking-[0.15em] text-[#a9363d] group-hover:translate-x-0.5 transition-transform flex items-center gap-1">
+        <span>Enter</span>
+        <span>→</span>
+      </span>
+    </div>
+    <span className="mt-0.5 block font-mono text-[7px] uppercase tracking-[0.12em] text-[#635c54] truncate">
+      {active.tagline}
     </span>
   </button>;
 }
@@ -135,7 +153,7 @@ function CinematicVideo({active,navigate,compact=false,onVideoEnd}) {
 }
 
 function FilmStrip({activeEntry,selectEntry}) {
-  return <aside className="hidden h-[545px] min-w-0 lg:block" aria-label="Choose a memory">
+  return <aside className="hidden h-[545px] min-w-0 lg:block" aria-label="Choose a moment">
     <div className="relative h-full w-full">
       <div className="absolute bottom-0 left-0 top-0 w-px bg-white/[.09]"/>
       <div className="flex h-full flex-col gap-[3px] pl-3">

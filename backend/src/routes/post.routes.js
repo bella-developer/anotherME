@@ -52,7 +52,7 @@ router.get(
   '/',
   optionalAuthenticate,
   readRateLimiter,
-  cacheStaleWhileRevalidate(180, 360), // 3 min fresh, 6 min stale
+  noCache(), // Ensure feeds always return fresh data immediately after post creation
   validatePagination,
   postController.listPosts
 );

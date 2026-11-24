@@ -32,15 +32,16 @@ function DarkRoom() {
     { value: 'DARK', label: 'Dark' },
   ];
 
-  const fetchData = async (bustCache = false) => {
+  const fetchData = async (bustCache = false, isBackground = false) => {
     try {
-      setLoading(true);
+      if (!isBackground) setLoading(true);
       setError(null);
       
       // Fetch posts using service (includes JWT token via interceptor)
       const postsData = await postService.fetchPosts({
         room: 'dark',
-        category: selectedCategory === 'ALL' ? undefined : selectedCategory
+        category: selectedCategory === 'ALL' ? undefined : selectedCategory,
+        bustCache
       });
       setPosts(postsData.posts || []);
       
@@ -55,13 +56,26 @@ function DarkRoom() {
       setError(err.message || 'Failed to load data');
       if (err.code === 'UNAUTHORIZED') navigate('/login');
     } finally {
-      setLoading(false);
+      if (!isBackground) setLoading(false);
     }
   };
 
   useEffect(() => { fetchData(); }, [navigate, selectedCategory]);
 
-  const handlePostCreated = (newPost) => setPosts(prev => [newPost, ...prev]);
+  const handlePostCreated = (newPost) => {
+    setSelectedCategory('ALL');
+    setPosts(prev => [newPost, ...prev.filter(p => p.id !== newPost.id)]);
+    postService.fetchPosts({ room: 'dark', bustCache: true })
+      .then(res => {
+        if (res?.posts?.length) {
+          setPosts(prev => {
+            const hasNew = res.posts.some(p => p.id === newPost.id);
+            return hasNew ? res.posts : [newPost, ...res.posts.filter(p => p.id !== newPost.id)];
+          });
+        }
+      })
+      .catch(console.error);
+  };
   
   const handlePostUpdated = (updatedPost) => {
     // Replace the updated post in the posts array
@@ -141,9 +155,10 @@ function DarkRoom() {
             <div className="mb-8 sm:mb-12 font-mono">
               <button
                 onClick={() => navigate('/home')}
-                className="px-4 py-2 text-xs tracking-wide uppercase mb-12 transition-all flex items-center gap-2 rounded border border-[#292630] bg-[#191820] text-[#E7DED5] hover:border-[#B44A4A] hover:text-[#B44A4A]"
+                className="group inline-flex items-center gap-1.5 px-3 py-1 text-[10px] uppercase tracking-[0.18em] font-medium transition-all duration-300 rounded border border-white/10 bg-white/[0.02] text-[#928B91] hover:text-[#E7DED5] hover:border-[#B44A4A]/40 hover:bg-[#B44A4A]/5 mb-8"
               >
-                ← ROOMS
+                <span className="transition-transform duration-300 group-hover:-translate-x-0.5">←</span>
+                <span>ROOMS</span>
               </button>
 
               <div className="w-12 h-px mb-8 bg-[#292630]" />
@@ -161,63 +176,64 @@ function DarkRoom() {
               </p>
             </div>
 
-            {/* Compact Sticky Bar */}
-            <div className="sticky top-16 z-20 mb-6 -mx-3 sm:mx-0 px-3 sm:px-4 py-2 flex items-center justify-between gap-3 font-mono" style={{
-              backgroundColor: '#111117',
-              borderBottom: '1px solid #292630',
-            }}>
+            {/* Compact Sticky Bar - Thinner Premium Filter Bar */}
+            <div 
+              className="sticky top-14 sm:top-16 z-20 mb-6 -mx-3 sm:mx-0 px-3 sm:px-4 py-1.5 flex items-center justify-between gap-2.5 font-mono rounded-lg transition-all"
+              style={{
+                backgroundColor: 'rgba(15, 14, 20, 0.72)',
+                backdropFilter: 'blur(16px)',
+                WebkitBackdropFilter: 'blur(16px)',
+                border: '1px solid rgba(255, 255, 255, 0.07)',
+                boxShadow: '0 4px 20px rgba(0, 0, 0, 0.4)',
+              }}
+            >
               {/* Left: Room Title */}
-              <h2 className="text-[10px] sm:text-sm uppercase tracking-wider whitespace-nowrap flex-shrink-0 font-bold" style={{ color: '#B44A4A' }}>
-                DARK ROOM
-              </h2>
+              <div className="flex items-center gap-2 flex-shrink-0">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#B44A4A]" />
+                <h2 className="text-[10px] sm:text-xs uppercase tracking-[0.16em] whitespace-nowrap font-bold text-[#B44A4A]">
+                  DARK ROOM
+                </h2>
+              </div>
 
               {/* Right: Back Button + Categories + POST Button */}
-              <div className="flex items-center gap-2 ml-auto">
+              <div className="flex items-center gap-1.5 sm:gap-2 ml-auto">
                 {/* Back Button */}
                 <button
                   type="button"
                   onClick={() => navigate('/home')}
-                  className="flex-shrink-0 px-2.5 py-1 text-[9px] sm:text-[10px] tracking-wider uppercase transition-all rounded font-medium flex items-center gap-1 border border-[#292630] bg-[#191820] text-[#E7DED5] hover:border-[#B44A4A]"
-                  style={{ height: '22px' }}
+                  className="flex-shrink-0 px-2.5 py-0.5 text-[9px] tracking-wider uppercase transition-all rounded font-medium flex items-center gap-1 border border-white/10 bg-white/[0.03] text-[#928B91] hover:text-[#E7DED5] hover:border-white/20"
                   aria-label="Back to rooms"
                 >
-                  <span>←</span>
-                  <span>Back</span>
+                  <span className="text-[10px]">←</span>
+                  <span className="hidden xs:inline">Back</span>
                 </button>
 
-                {/* Category Dropdown */}
-                <select
-                  value={selectedCategory}
-                  onChange={(e) => setSelectedCategory(e.target.value)}
-                  className="px-2 py-0.5 text-[8px] sm:text-[9px] tracking-wide uppercase transition-all cursor-pointer rounded border border-[#292630] bg-[#191820] text-[#E7DED5]"
-                  style={{ height: '22px' }}
-                >
-                  {categories.map((cat) => (
-                    <option key={cat.value} value={cat.value} style={{ background: '#191820', color: '#E7DED5' }}>
-                      {cat.label}
-                    </option>
-                  ))}
-                </select>
+                {/* Thinner Category Dropdown */}
+                <div className="relative inline-flex items-center">
+                  <select
+                    value={selectedCategory}
+                    onChange={(e) => setSelectedCategory(e.target.value)}
+                    className="appearance-none pl-2.5 pr-6 py-0.5 text-[9px] tracking-wider uppercase transition-all cursor-pointer rounded border border-white/10 bg-black/60 text-[#E7DED5] hover:border-white/20 focus:outline-none focus:border-[#B44A4A]/50"
+                  >
+                    {categories.map((cat) => (
+                      <option key={cat.value} value={cat.value} style={{ background: '#141318', color: '#E7DED5' }}>
+                        {cat.label}
+                      </option>
+                    ))}
+                  </select>
+                  <span className="pointer-events-none absolute right-2 text-[8px] text-[#928B91]">▼</span>
+                </div>
 
                 {/* POST Button */}
                 {isAuthenticated && (
                   <button
                     onClick={() => setIsPostFormOpen(true)}
-                    className="flex-shrink-0 px-3 py-1 text-[9px] sm:text-[10px] tracking-widest uppercase transition-all rounded font-bold text-[#E7DED5]"
+                    className="flex-shrink-0 px-3 py-0.5 text-[9px] tracking-widest uppercase transition-all duration-200 rounded font-bold text-white shadow-sm hover:opacity-90 active:scale-[0.98]"
                     style={{
                       backgroundColor: '#B44A4A',
-                      height: '22px',
-                      display: 'flex',
-                      alignItems: 'center',
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.backgroundColor = '#9e3f3f';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.backgroundColor = '#B44A4A';
                     }}
                   >
-                    POST
+                    + POST
                   </button>
                 )}
               </div>

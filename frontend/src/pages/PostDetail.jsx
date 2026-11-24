@@ -157,12 +157,15 @@ function PostDetail() {
         <article 
           className="rounded-xl border p-5 sm:p-7 mb-8 transition-all"
           style={{
-            backgroundColor: '#191820',
-            borderColor: '#292630',
+            backgroundColor: 'rgba(25, 24, 32, 0.5)',
+            backdropFilter: 'blur(16px)',
+            WebkitBackdropFilter: 'blur(16px)',
+            borderColor: 'rgba(255, 255, 255, 0.08)',
+            boxShadow: '0 4px 24px rgba(0, 0, 0, 0.35)',
           }}
         >
           {/* Post Meta */}
-          <div className="mb-5 flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-[#292630]">
+          <div className="mb-5 flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-white/[0.06]">
             <div className="flex items-center gap-2.5">
               {post.category && (
                 <span 
@@ -182,11 +185,27 @@ function PostDetail() {
             </div>
           </div>
 
-          {/* Post Title */}
+          {/* Post Title with Brush Gritty Background */}
           {post.title && (
-            <h1 className="leading-snug mb-5 text-lg sm:text-2xl font-semibold text-[#E7DED5] tracking-tight">
-              {post.title}
-            </h1>
+            <div className="mb-5">
+              <div className="relative inline-block">
+                <span 
+                  className="absolute inset-0 -skew-x-2 pointer-events-none rounded-[2px]"
+                  style={{
+                    backgroundColor: roomColor === '#DB762E' 
+                      ? 'rgba(219, 118, 46, 0.88)' 
+                      : roomColor === '#7771D9' 
+                      ? 'rgba(119, 113, 217, 0.88)' 
+                      : 'rgba(180, 74, 74, 0.88)',
+                    clipPath: 'polygon(0% 10%, 4% 3%, 16% 7%, 34% 1%, 56% 6%, 76% 1%, 94% 6%, 100% 14%, 99% 86%, 95% 97%, 74% 93%, 52% 98%, 28% 94%, 7% 98%, 0% 86%)',
+                    boxShadow: `0 0 18px ${roomColor}66`,
+                  }}
+                />
+                <h1 className="relative z-10 px-3 py-1 text-base sm:text-xl md:text-2xl font-bold text-white tracking-wide leading-snug">
+                  {post.title}
+                </h1>
+              </div>
+            </div>
           )}
 
           {/* Post Image */}

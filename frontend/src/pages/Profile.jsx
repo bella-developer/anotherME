@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { Bookmark } from 'lucide-react';
 import { selectAuth, setUser, clearUser } from '../features/authSlice';
 import PageTransition from '../components/PageTransition';
 import LoadingSpinner from '../components/LoadingSpinner';
@@ -20,6 +21,7 @@ function Profile() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user, isAuthenticated } = useSelector(selectAuth);
+  const { vaultBookmarks } = useSelector((state) => state.sanctuary || {});
   
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -434,6 +436,48 @@ function Profile() {
                   </button>
                 </div>
               )}
+            </div>
+
+            {/* Saved Feature inside Profile */}
+            <div 
+              className="mb-8 p-5 transition-all duration-300 font-mono"
+              style={{
+                background: 'rgba(255, 255, 255, 0.03)',
+                boxShadow: '0 0 0 1px rgba(255, 255, 255, 0.08)',
+                borderRadius: '4px',
+              }}
+            >
+              <div className="flex items-center justify-between gap-4">
+                <div className="flex items-center gap-3.5">
+                  <div 
+                    className="w-10 h-10 rounded flex items-center justify-center flex-shrink-0"
+                    style={{
+                      background: 'rgba(255, 255, 255, 0.04)',
+                      border: '1px solid rgba(255, 255, 255, 0.1)',
+                      color: '#E7DED5',
+                    }}
+                  >
+                    <Bookmark size={18} strokeWidth={1.8} />
+                  </div>
+                  <div>
+                    <h3 className="text-xs uppercase tracking-[0.18em] font-semibold text-[#E7DED5]">
+                      Saved Posts
+                    </h3>
+                    <p className="text-[10px] text-[#928B91] tracking-wider mt-0.5">
+                      {vaultBookmarks?.length || 0} {(vaultBookmarks?.length === 1) ? 'item' : 'items'} in your personal vault
+                    </p>
+                  </div>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => navigate('/vault')}
+                  className="px-3.5 py-1.5 text-[10px] uppercase tracking-[0.16em] transition-all rounded font-medium flex items-center gap-1.5 border border-white/15 bg-white/[0.04] text-[#E7DED5] hover:bg-white/[0.08] hover:border-white/30"
+                >
+                  <span>Open Vault</span>
+                  <span className="text-[11px]">→</span>
+                </button>
+              </div>
             </div>
 
             {/* Stats Section */}

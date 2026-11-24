@@ -42,13 +42,16 @@ function FantasyRoomCard({ post, onReaction, onEdit, onDelete }) {
     <article
       className="group relative mb-4 sm:mb-6 transition-all duration-300 rounded-xl overflow-hidden font-mono"
       style={{
-        backgroundColor: '#191820',
-        border: '1px solid #292630',
+        backgroundColor: 'rgba(25, 24, 32, 0.5)',
+        backdropFilter: 'blur(16px)',
+        WebkitBackdropFilter: 'blur(16px)',
+        border: '1px solid rgba(255, 255, 255, 0.08)',
+        boxShadow: '0 4px 24px rgba(0, 0, 0, 0.35)',
         minHeight: imageUrl ? '420px' : 'auto',
       }}
     >
       {/* Header Bar */}
-      <div className="flex items-center justify-between px-3 sm:px-5 pt-3 sm:pt-4 pb-2 border-b border-[#292630]/60">
+      <div className="flex items-center justify-between px-3 sm:px-5 pt-3 sm:pt-4 pb-2 border-b border-white/[0.06]">
         <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
           <time className="text-[9px] sm:text-[10px] tracking-wide text-[#928B91]">
             {formatTimeAgo(post.createdAt)}
@@ -65,31 +68,6 @@ function FantasyRoomCard({ post, onReaction, onEdit, onDelete }) {
               {post.category}
             </span>
           )}
-          {post.circles && post.circles.length > 0 && post.circles.slice(0, 2).map((circle, index) => {
-            const circleIdToUse = circle.circleId || circle.id;
-            const circleName = (circle.name || '').replace(/darker thoughta/gi, 'Darker Thoughts');
-            return (
-              <button
-                key={index}
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  if (circleIdToUse) {
-                    navigate(`/circles/${circleIdToUse}?from=post&postId=${post.id}`);
-                  }
-                }}
-                className="px-1.5 sm:px-2 py-0.5 rounded text-[8px] uppercase tracking-wider transition-all border"
-                style={{
-                  backgroundColor: 'rgba(219, 118, 46, 0.08)',
-                  color: '#DB762E',
-                  borderColor: 'rgba(219, 118, 46, 0.25)',
-                }}
-                title={`View in ${circle.fullName || circle.name}`}
-              >
-                {circleName.length > 10 ? circleName.slice(0, 10).toUpperCase() : circleName.toUpperCase()}
-              </button>
-            );
-          })}
         </div>
 
         <div className="flex items-center gap-1 sm:gap-2">
@@ -144,7 +122,7 @@ function FantasyRoomCard({ post, onReaction, onEdit, onDelete }) {
 
       {/* Main Content */}
       <div className="px-3 sm:px-5 py-3 sm:py-4 flex flex-col">
-        {/* Title */}
+        {/* Title with Burnt Orange Gritty Paint Brush Background */}
         {(() => {
           let displayTitle = post.title;
           if (!displayTitle && post.content) {
@@ -159,12 +137,22 @@ function FantasyRoomCard({ post, onReaction, onEdit, onDelete }) {
           
           return displayTitle ? (
             <div className="mb-2 sm:mb-3">
-              <h2 
+              <div 
                 onClick={() => navigate(`/posts/${post.id}`)}
-                className="text-sm sm:text-base md:text-lg font-semibold text-[#E7DED5] hover:text-[#DB762E] cursor-pointer transition-colors leading-snug"
+                className="relative inline-block cursor-pointer group"
               >
-                {displayTitle}
-              </h2>
+                <span 
+                  className="absolute inset-0 -skew-x-2 pointer-events-none rounded-[2px] transition-transform duration-300 group-hover:scale-[1.02]"
+                  style={{
+                    backgroundColor: 'rgba(219, 118, 46, 0.88)',
+                    clipPath: 'polygon(0% 10%, 4% 3%, 16% 7%, 34% 1%, 56% 6%, 76% 1%, 94% 6%, 100% 14%, 99% 86%, 95% 97%, 74% 93%, 52% 98%, 28% 94%, 7% 98%, 0% 86%)',
+                    boxShadow: '0 0 16px rgba(219, 118, 46, 0.45)',
+                  }}
+                />
+                <h2 className="relative z-10 px-2.5 py-0.5 text-xs sm:text-sm md:text-base font-bold text-white tracking-wide leading-snug">
+                  {displayTitle}
+                </h2>
+              </div>
             </div>
           ) : null;
         })()}
@@ -193,6 +181,38 @@ function FantasyRoomCard({ post, onReaction, onEdit, onDelete }) {
             ));
           })()}
         </div>
+
+        {/* Attached Circle: right half with smaller space consumption, thinner premium look */}
+        {(() => {
+          const circleObj = (post.circles && post.circles.length > 0) ? post.circles[0] : (post.circle || null);
+          if (!circleObj) return null;
+          const circleName = (circleObj.name || circleObj.fullName || '').replace(/darker thoughta/gi, 'Darker Thoughts');
+          const circleId = circleObj.circleId || circleObj.id;
+          if (!circleName) return null;
+
+          return (
+            <div className="flex justify-end mb-2.5">
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  if (circleId) navigate(`/circles/${circleId}?from=post&postId=${post.id}`);
+                }}
+                className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[9px] tracking-wider uppercase transition-all border hover:border-[#DB762E] hover:bg-[#DB762E]/10"
+                style={{
+                  backgroundColor: 'rgba(0, 0, 0, 0.45)',
+                  borderColor: 'rgba(219, 118, 46, 0.35)',
+                  color: '#DB762E',
+                  boxShadow: '0 0 8px rgba(219, 118, 46, 0.15)',
+                }}
+                title={`View in ${circleName}`}
+              >
+                <span className="w-1.5 h-1.5 rounded-full bg-[#DB762E]" />
+                <span className="font-semibold">{circleName.length > 16 ? circleName.slice(0, 16) + '...' : circleName}</span>
+              </button>
+            </div>
+          );
+        })()}
         
         {/* Attached Image */}
         {imageUrl && (
