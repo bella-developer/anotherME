@@ -20,44 +20,62 @@ function TopicPost({ post }) {
       case 'dark': return 'Dark Room';
       case 'fantasy': return 'Fantasy Room';
       case 'philo': return 'Philo Room';
-      default: return '';
+      default: return 'Sanctuary';
     }
   };
 
+  const roomColor = post.room === 'fantasy' 
+    ? '#DB762E' 
+    : post.room === 'philo' 
+    ? '#7771D9' 
+    : '#B44A4A';
+
   return (
-    <div 
-      className="bg-[#1A1412] rounded-lg p-5 mb-6 relative"
+    <article 
+      className="relative rounded-xl p-5 sm:p-6 mb-2 font-mono transition-all duration-300"
       style={{
-        border: '2px solid #D97757',
-        boxShadow: '0 0 15px rgba(217, 119, 87, 0.2)'
+        backgroundColor: 'rgba(25, 24, 32, 0.65)',
+        backdropFilter: 'blur(16px)',
+        WebkitBackdropFilter: 'blur(16px)',
+        border: '1px solid rgba(255, 255, 255, 0.08)',
+        borderLeft: `3px solid ${roomColor}`,
+        boxShadow: `0 4px 24px rgba(0, 0, 0, 0.45), 0 0 20px ${roomColor}15`,
       }}
     >
-      {/* Topic Badge */}
-      <div className="absolute top-3 right-3 flex items-center gap-2">
-        <span className="px-2 py-0.5 bg-[#D97757] text-black text-[10px] font-bold uppercase tracking-wider rounded">
-          Topic
-        </span>
-        <span className="text-[10px] text-[#6B5E59] tracking-wider">
+      {/* Header Bar */}
+      <div className="flex items-center justify-between gap-3 pb-3 mb-4 border-b border-white/[0.06]">
+        <div className="flex items-center gap-2">
+          <span 
+            className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider text-white"
+            style={{
+              backgroundColor: roomColor,
+              boxShadow: `0 0 10px ${roomColor}40`,
+            }}
+          >
+            <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
+            <span>TOPIC</span>
+          </span>
+          <span className="text-[10px] uppercase tracking-wider font-semibold" style={{ color: roomColor }}>
+            From {getRoomLabel()}
+          </span>
+        </div>
+
+        <span className="text-[10px] text-[#928B91] tracking-wide">
           {formatTimeAgo(post.createdAt)}
         </span>
       </div>
 
-      {/* Room Origin Badge */}
-      <div className="mb-3">
-        <span className="text-[10px] text-[#D97757] uppercase tracking-wider">
-          From {getRoomLabel()}
-        </span>
-      </div>
-
-      {/* Content - Only the post body */}
+      {/* Content */}
       <div className="mb-4">
         {post.title && (
-          <h2 className="text-lg text-[#F5E6D3] mb-2 font-light leading-relaxed">
-            {post.title}
-          </h2>
+          <div className="mb-3">
+            <h2 className="text-base sm:text-lg font-bold text-[#E7DED5] leading-snug tracking-tight">
+              {post.title}
+            </h2>
+          </div>
         )}
         <div 
-          className="text-[#F5E6D3] space-y-2 prose prose-invert max-w-none"
+          className="text-sm leading-relaxed text-[#E7DED5]/90 space-y-2 font-sans"
           dangerouslySetInnerHTML={{ __html: post.content }}
         />
         
@@ -65,68 +83,21 @@ function TopicPost({ post }) {
         {post.image?.url && (
           <div className="mt-4">
             <div
-              className="relative overflow-hidden"
+              className="relative overflow-hidden rounded-lg p-2"
               style={{
-                background: 'linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%)',
-                borderRadius: '3px',
-                padding: '12px',
-                boxShadow: '0 0 0 1px rgba(255,255,255,0.1), inset 0 0 20px rgba(0,0,0,0.3)',
+                background: 'rgba(0, 0, 0, 0.35)',
+                border: '1px solid rgba(255, 255, 255, 0.08)',
+                boxShadow: 'inset 0 0 20px rgba(0, 0, 0, 0.5)',
               }}
             >
-              <div
-                className="relative overflow-hidden"
+              <img
+                src={post.image.url}
+                alt="Post attachment"
+                className="w-full h-auto rounded"
                 style={{
-                  borderRadius: '2px',
-                  boxShadow: 'inset 0 0 15px rgba(0,0,0,0.5)',
-                }}
-              >
-                <img
-                  src={post.image.url}
-                  alt="Post attachment"
-                  className="w-full h-auto"
-                  style={{
-                    display: 'block',
-                    maxHeight: '500px',
-                    objectFit: 'contain',
-                  }}
-                />
-              </div>
-
-              {/* Decorative corner accents */}
-              <div
-                className="absolute top-2 left-2"
-                style={{
-                  width: '16px',
-                  height: '16px',
-                  borderTop: '2px solid rgba(255,255,255,0.2)',
-                  borderLeft: '2px solid rgba(255,255,255,0.2)',
-                }}
-              />
-              <div
-                className="absolute top-2 right-2"
-                style={{
-                  width: '16px',
-                  height: '16px',
-                  borderTop: '2px solid rgba(255,255,255,0.2)',
-                  borderRight: '2px solid rgba(255,255,255,0.2)',
-                }}
-              />
-              <div
-                className="absolute bottom-2 left-2"
-                style={{
-                  width: '16px',
-                  height: '16px',
-                  borderBottom: '2px solid rgba(255,255,255,0.2)',
-                  borderLeft: '2px solid rgba(255,255,255,0.2)',
-                }}
-              />
-              <div
-                className="absolute bottom-2 right-2"
-                style={{
-                  width: '16px',
-                  height: '16px',
-                  borderBottom: '2px solid rgba(255,255,255,0.2)',
-                  borderRight: '2px solid rgba(255,255,255,0.2)',
+                  display: 'block',
+                  maxHeight: '480px',
+                  objectFit: 'contain',
                 }}
               />
             </div>
@@ -135,12 +106,12 @@ function TopicPost({ post }) {
       </div>
 
       {/* Topic Info Footer */}
-      <div className="mt-4 pt-3 text-center">
-        <p className="text-[10px] text-[#6B5E59] italic">
+      <div className="mt-4 pt-3 border-t border-white/[0.06] text-center">
+        <p className="text-[10px] text-[#928B91] italic tracking-wide">
           This post serves as the conversation starter for this circle. Share your thoughts below.
         </p>
       </div>
-    </div>
+    </article>
   );
 }
 
