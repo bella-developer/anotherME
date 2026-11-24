@@ -15,9 +15,9 @@ const FRAMES = [
     title:'THE MOMENTS PALACE', 
     shortTitle:'MOMENTS', 
     tagline:'Rooms of moments.', 
-    quoteLine1: 'Remember', 
-    quoteLine2: 'the', 
-    quoteHighlight: 'Moment', 
+    quoteLine1: 'Share', 
+    quoteLine2: 'your', 
+    quoteHighlight: 'Exprience', 
     quoteHighlightColor: '#DB762E', 
     description:'A space for introspection and personal history' 
   },
@@ -44,9 +44,9 @@ const FRAMES = [
     shortTitle:'UNDERSTANDING', 
     tagline:'A shared darkness.', 
     quoteLine1: 'Understand', 
-    quoteLine2: '', 
-    quoteHighlight: 'Each Other', 
-    quoteHighlightColor: '#7771D9', 
+    quoteLine2: 'others', 
+    quoteHighlight: 'Pain', 
+    quoteHighlightColor: '#B44A4A', 
     description:'Connect with those who truly understand' 
   },
   { 
@@ -187,29 +187,24 @@ function VaultCard({active,navigate,compact=false}) {
   return <button 
     type="button" 
     onClick={()=>navigate('/login')} 
-    className={`group relative mx-auto block w-full rounded border border-white/10 bg-[#0e0e12]/80 backdrop-blur text-left transition-all duration-300 hover:border-[#a9363d]/50 focus-visible:outline focus-visible:outline-1 focus-visible:outline-[#a9363d] ${
-      compact ? 'max-w-[420px] px-3.5 py-2' : 'max-w-[320px] px-3.5 py-2'
+    className={`group relative mx-auto block w-full rounded border border-white/10 bg-[#0e0e12]/60 backdrop-blur text-left transition-all duration-300 hover:border-[#a9363d]/40 focus-visible:outline focus-visible:outline-1 focus-visible:outline-[#a9363d] ${
+      compact ? 'max-w-[360px] px-3 py-1.5' : 'max-w-[280px] px-3 py-1.5'
     }`}
   >
-    <div className="flex items-center justify-between font-mono text-[7px] uppercase tracking-[0.2em] text-[#80776d]">
-      <span className="flex items-center gap-1.5">
-        <span className="h-1 w-1 rounded-full bg-[#a9363d]" />
-        <span>ESO — VAULT</span>
-      </span>
-      <span className="text-[#55504a]">{active.number}</span>
-    </div>
-    <div className="mt-1 flex items-baseline justify-between gap-2">
-      <span className="font-display text-xs sm:text-sm uppercase tracking-[0.05em] text-[#d6cdbf] font-medium">
-        {active.shortTitle}
-      </span>
-      <span className="font-mono text-[7px] uppercase tracking-[0.15em] text-[#a9363d] group-hover:translate-x-0.5 transition-transform flex items-center gap-1">
+    <div className="flex items-center justify-between gap-2">
+      <div className="min-w-0 flex-1">
+        <span className="font-display text-xs sm:text-[13px] uppercase tracking-[0.05em] text-[#d6cdbf] font-medium block truncate">
+          {active.shortTitle}
+        </span>
+        <span className="block font-mono text-[7.5px] uppercase tracking-[0.12em] text-[#70685f] truncate mt-0.5">
+          {active.tagline}
+        </span>
+      </div>
+      <span className="font-mono text-[7.5px] uppercase tracking-[0.15em] text-[#a9363d] group-hover:translate-x-0.5 transition-transform flex items-center gap-1 flex-shrink-0">
         <span>Enter</span>
         <span>→</span>
       </span>
     </div>
-    <span className="mt-0.5 block font-mono text-[7px] uppercase tracking-[0.12em] text-[#635c54] truncate">
-      {active.tagline}
-    </span>
   </button>;
 }
 
@@ -237,20 +232,21 @@ function CinematicVideo({active,navigate,compact=false,onVideoEnd}) {
             style={{
               fontFamily: "'Space Mono', 'Courier Prime', 'Courier New', monospace",
               textShadow: '0 3px 18px rgba(0,0,0,0.95), 0 0 28px rgba(0,0,0,0.7)',
-              filter: 'drop-shadow(0 2px 10px rgba(0,0,0,0.85))'
+              filter: 'drop-shadow(0 2px 10px rgba(0,0,0,0.85))',
+              marginLeft: '4px',
             }}
           >
             {active.singleLine ? (
-              <p className="text-[clamp(17px,2.6vw,32px)] leading-tight whitespace-nowrap">
+              <p className="text-[clamp(13px,2.3vw,28px)] leading-tight whitespace-nowrap">
                 <span>{active.quoteLine1} </span>
                 <span style={{ color: active.quoteHighlightColor }}>{active.quoteHighlight}</span>
               </p>
             ) : (
               <div className="flex flex-col items-center leading-[1.22]">
-                <p className="text-[clamp(20px,3.1vw,38px)]">
+                <p className="text-[clamp(16px,2.8vw,34px)]">
                   {active.quoteLine1}
                 </p>
-                <p className="text-[clamp(20px,3.1vw,38px)] mt-0.5 sm:mt-1">
+                <p className="text-[clamp(16px,2.8vw,34px)] mt-0.5 sm:mt-1">
                   {active.quoteLine2 ? <span>{active.quoteLine2} </span> : null}
                   <span style={{ color: active.quoteHighlightColor }}>{active.quoteHighlight}</span>
                 </p>

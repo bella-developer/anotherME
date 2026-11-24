@@ -42,11 +42,10 @@ function DarkRoomCard({ post, onReaction, onEdit, onDelete }) {
     <article
       className="group relative mb-4 sm:mb-6 transition-all duration-300 rounded-xl overflow-hidden font-mono"
       style={{
-        backgroundColor: 'rgba(25, 24, 32, 0.5)',
+        background: 'transparent',
         backdropFilter: 'blur(16px)',
         WebkitBackdropFilter: 'blur(16px)',
-        border: '1px solid rgba(255, 255, 255, 0.08)',
-        boxShadow: '0 4px 24px rgba(0, 0, 0, 0.35)',
+        boxShadow: '0 0 0 1px rgba(255, 255, 255, 0.1)',
         minHeight: imageUrl ? '420px' : 'auto',
       }}
     >

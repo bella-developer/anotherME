@@ -37,11 +37,10 @@ const PostCard = memo(({ post, onPostClick, onReaction }) => {
       onClick={() => onPostClick && onPostClick(post.id)}
       className="group relative rounded-xl p-4 sm:p-5 mb-4 transition-all duration-200 cursor-pointer overflow-hidden font-mono"
       style={{
-        backgroundColor: 'rgba(25, 24, 32, 0.5)',
+        background: 'transparent',
         backdropFilter: 'blur(16px)',
         WebkitBackdropFilter: 'blur(16px)',
-        border: '1px solid rgba(255, 255, 255, 0.08)',
-        boxShadow: '0 4px 24px rgba(0, 0, 0, 0.35)',
+        boxShadow: '0 0 0 1px rgba(255, 255, 255, 0.1)',
       }}
       role="article"
     >

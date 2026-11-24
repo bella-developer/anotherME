@@ -6,14 +6,13 @@ import { selectAuth, setUser, clearUser } from '../features/authSlice';
 import PageTransition from '../components/PageTransition';
 import LoadingSpinner from '../components/LoadingSpinner';
 import Layout from '../components/Layout';
-import LevelBadge from '../components/LevelBadge';
-import { getCurrentUser, updateUserProfile, fetchUserStats } from '../services/userService';
+import { getCurrentUser, updateUserProfile } from '../services/userService';
 import { logout } from '../services/authService';
 import { usePageTitle } from '../hooks/usePageTitle';
 
 /**
  * Profile Page - Artistic Redesign
- * Clean, elegant display of user identity and stats
+ * Clean, elegant display of user identity
  * Username-based identity (no alias/anonymous concept)
  */
 function Profile() {
@@ -29,7 +28,6 @@ function Profile() {
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-  const [stats, setStats] = useState(null);
   
   const [profileData, setProfileData] = useState({
     username: '',
@@ -50,7 +48,6 @@ function Profile() {
       return;
     }
     loadUserData();
-    loadUserStats();
   }, [isAuthenticated, navigate]);
 
   const loadUserData = async () => {
@@ -73,34 +70,6 @@ function Profile() {
       setLoading(false);
     }
   };
-
-  const loadUserStats = async () => {
-    try {
-      const statsData = await fetchUserStats();
-      setStats(statsData);
-    } catch (err) {
-      console.error('Failed to load stats:', err);
-    }
-  };
-
-  const getHighestLevelStat = () => {
-    if (!stats) return null;
-    
-    const allStats = [];
-    ['fantasy', 'dark', 'philo'].forEach(room => {
-      if (stats[room]) {
-        Object.entries(stats[room]).forEach(([stat, data]) => {
-          allStats.push({ room, stat, level: data.level, xp: data.xp });
-        });
-      }
-    });
-    
-    if (allStats.length === 0) return null;
-    allStats.sort((a, b) => b.level !== a.level ? b.level - a.level : b.xp - a.xp);
-    return allStats[0];
-  };
-
-  const highestStat = getHighestLevelStat();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -180,12 +149,6 @@ function Profile() {
     );
   }
 
-  const roomAccent = {
-    dark: '#c4a882',
-    fantasy: '#FF9D1C',
-    philo: '#8B7AA3'
-  };
-
   return (
     <PageTransition>
       <Layout leftSidebar={null} rightSidebar={null}>
@@ -209,7 +172,7 @@ function Profile() {
                     Profile
                   </h1>
                   <p className="text-[11px] tracking-[0.15em] uppercase" style={{ color: 'rgba(255,255,255,0.35)' }}>
-                    Your Identity · Stats · Progress
+                    Your Identity
                   </p>
                 </div>
               </div>
@@ -259,9 +222,6 @@ function Profile() {
                     <h2 className="text-2xl font-light tracking-wide" style={{ color: 'rgba(255,255,255,0.90)' }}>
                       {profileData.fullName || profileData.username}
                     </h2>
-                    {highestStat && (
-                      <LevelBadge stat={highestStat.stat} level={highestStat.level} size="md" />
-                    )}
                   </div>
                   <p className="text-[10px] tracking-[0.15em] uppercase" style={{ color: 'rgba(255,255,255,0.30)' }}>
                     @{profileData.username}
@@ -479,47 +439,6 @@ function Profile() {
                 </button>
               </div>
             </div>
-
-            {/* Stats Section */}
-            {stats && (
-              <div className="space-y-6">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-8 h-px" style={{ background: 'linear-gradient(to right, rgba(255,255,255,0.2), transparent)' }} />
-                  <h3 className="text-[10px] tracking-[0.2em] uppercase" style={{ color: 'rgba(255,255,255,0.30)' }}>Your Stats</h3>
-                </div>
-
-                {/* Room Stats */}
-                {['dark', 'philo', 'fantasy'].map(room => {
-                  if (!stats[room]) return null;
-                  const accent = roomAccent[room];
-                  const roomName = room === 'dark' ? 'Dark Room' : room === 'climb' ? 'Climb Room' : 'Philo Room';
-                  
-                  return (
-                    <div key={room} className="p-6" style={{
-                      background: 'rgba(255,255,255,0.02)',
-                      boxShadow: '0 0 0 1px rgba(255,255,255,0.05)',
-                      borderRadius: '3px'
-                    }}>
-                      <div className="flex items-center gap-2 mb-5">
-                        <div className="w-2 h-2 rounded-full" style={{ background: accent }} />
-                        <h4 className="text-[10px] tracking-[0.2em] uppercase" style={{ color: accent }}>{roomName}</h4>
-                      </div>
-                      <div className="grid grid-cols-3 gap-4">
-                        {Object.entries(stats[room]).map(([stat, data]) => (
-                          <div key={stat} className="text-center">
-                            <p className="text-[9px] tracking-[0.15em] uppercase mb-2" style={{ color: 'rgba(255,255,255,0.25)' }}>{stat}</p>
-                            <div className="flex flex-col items-center gap-1">
-                              <LevelBadge stat={stat} level={data.level} size="sm" />
-                              <p className="text-[10px]" style={{ color: 'rgba(255,255,255,0.40)' }}>{data.xp} XP</p>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            )}
           </div>
         </div>
       </Layout>

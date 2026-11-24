@@ -393,8 +393,8 @@ function CircleDetail() {
                     value={commentContent}
                     onChange={(e) => setCommentContent(e.target.value)}
                     onKeyDown={handleKeyDown}
-                    placeholder=""
-                    className="flex-1 text-[#E7DED5] text-xs sm:text-sm resize-none focus:outline-none bg-transparent py-1.5 px-2 leading-relaxed tracking-wide"
+                    placeholder="share your response..."
+                    className="flex-1 text-[#E7DED5] text-xs sm:text-sm resize-none focus:outline-none placeholder-white/30 bg-transparent py-1.5 px-2 leading-relaxed tracking-wide"
                     rows={1}
                     maxLength={2000}
                     style={{ minHeight: '38px', maxHeight: '120px' }}
