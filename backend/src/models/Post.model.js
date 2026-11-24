@@ -277,7 +277,7 @@ postSchema.methods.addReaction = async function(userId, reactionType) {
     );
 
     if (result) {
-      this.reactions[reactionType] = result.reactions[reactionType];
+      this.reactions = result.reactions;
       this.userReactions = result.userReactions;
       return true;
     }
@@ -313,7 +313,7 @@ postSchema.methods.removeReaction = async function(userId, reactionType) {
   );
 
   if (result) {
-    this.reactions[reactionType] = result.reactions[reactionType];
+    this.reactions = result.reactions;
     this.userReactions = result.userReactions;
     return true;
   }

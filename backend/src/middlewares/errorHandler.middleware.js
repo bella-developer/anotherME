@@ -83,6 +83,14 @@ export const errorHandler = (err, req, res, next) => {
     statusCode = 400;
     code = 'INVALID_ID';
     message = 'Invalid ID format';
+  } else if (err.name === 'JsonWebTokenError') {
+    statusCode = 401;
+    code = 'INVALID_TOKEN';
+    message = 'Invalid token';
+  } else if (err.name === 'TokenExpiredError') {
+    statusCode = 401;
+    code = 'TOKEN_EXPIRED';
+    message = 'Token expired';
   } else if (err.name === 'MongoServerError' && err.code === 11000) {
     // MongoDB duplicate key error
     statusCode = 409;

@@ -379,35 +379,22 @@ function CircleDetail() {
               onSubmit={handleSubmit}
               className="relative rounded-2xl transition-all duration-300 font-mono shadow-[0_12px_44px_rgba(0,0,0,0.85)] border border-white/10"
               style={{
-                backgroundColor: 'rgba(15, 14, 20, 0.88)',
+                backgroundColor: 'rgba(15, 14, 20, 0.92)',
                 backdropFilter: 'blur(20px)',
                 WebkitBackdropFilter: 'blur(20px)',
                 boxShadow: `0 12px 40px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(255, 255, 255, 0.08), 0 0 24px ${accent}15`,
               }}
             >
-              {/* Inner Well */}
+              {/* Inner Well - Clean text field and send button only */}
               <div className="p-2 sm:p-2.5">
-                <div className="flex items-start gap-2.5">
-                  {/* Current User Soul Indicator */}
-                  <div 
-                    className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 text-[10px] font-bold mt-0.5 border shadow-sm"
-                    style={{
-                      backgroundColor: `${accent}18`,
-                      color: accent,
-                      borderColor: `${accent}40`,
-                    }}
-                    title={circle?.name || 'You'}
-                  >
-                    ✦
-                  </div>
-
+                <div className="flex items-center gap-2 sm:gap-3">
                   {/* Textarea */}
                   <textarea
                     value={commentContent}
                     onChange={(e) => setCommentContent(e.target.value)}
                     onKeyDown={handleKeyDown}
-                    placeholder="whisper into the circle..."
-                    className="flex-1 text-[#E7DED5] text-xs sm:text-sm resize-none focus:outline-none placeholder-white/25 bg-transparent pt-1 leading-relaxed tracking-wide"
+                    placeholder=""
+                    className="flex-1 text-[#E7DED5] text-xs sm:text-sm resize-none focus:outline-none bg-transparent py-1.5 px-2 leading-relaxed tracking-wide"
                     rows={1}
                     maxLength={2000}
                     style={{ minHeight: '38px', maxHeight: '120px' }}
@@ -417,13 +404,13 @@ function CircleDetail() {
                   <button
                     type="submit"
                     disabled={!commentContent.trim() || submitting}
-                    className="flex-shrink-0 w-8 h-8 rounded-xl flex items-center justify-center transition-all duration-200 disabled:opacity-20 hover:scale-105 active:scale-95 shadow-sm"
+                    className="flex-shrink-0 w-8 h-8 rounded-xl flex items-center justify-center transition-all duration-200 disabled:opacity-20 hover:scale-105 active:scale-95 shadow-sm cursor-pointer disabled:cursor-not-allowed"
                     style={{
                       backgroundColor: commentContent.trim() ? accent : 'rgba(255, 255, 255, 0.06)',
                       color: commentContent.trim() ? '#ffffff' : 'rgba(255, 255, 255, 0.4)',
                       boxShadow: commentContent.trim() ? `0 0 14px ${accent}50` : 'none',
                     }}
-                    title="Send message (Enter)"
+                    title="Send"
                   >
                     {submitting ? (
                       <span className="text-[10px] animate-pulse">···</span>
@@ -431,36 +418,6 @@ function CircleDetail() {
                       <ArrowUp className="w-4 h-4 stroke-[2.5]" />
                     )}
                   </button>
-                </div>
-
-                {/* Micro Toolbar: Shortcut hint & Character count */}
-                <div className="flex items-center justify-between pt-1.5 px-1 border-t border-white/[0.05] mt-1 text-[9px] tracking-wider text-[#928B91]">
-                  <span className="hidden sm:inline text-white/25">
-                    press <kbd className="px-1 py-0.5 rounded bg-white/[0.06] text-white/50 text-[8px]">↵</kbd> to send · <kbd className="px-1 py-0.5 rounded bg-white/[0.06] text-white/50 text-[8px]">shift + ↵</kbd> line break
-                  </span>
-                  <span className="sm:hidden text-white/20">
-                    max 2000 chars
-                  </span>
-
-                  <div className="flex items-center gap-2 ml-auto">
-                    <div className="w-12 h-1 bg-white/[0.06] rounded-full overflow-hidden">
-                      <div
-                        className="h-full transition-all duration-200"
-                        style={{
-                          width: `${(commentContent.length / 2000) * 100}%`,
-                          backgroundColor: commentContent.length > 1800 ? '#B44A4A' : accent,
-                        }}
-                      />
-                    </div>
-                    <span 
-                      className="tabular-nums"
-                      style={{
-                        color: commentContent.length > 1800 ? '#B44A4A' : 'rgba(255,255,255,0.3)',
-                      }}
-                    >
-                      {commentContent.length}/2000
-                    </span>
-                  </div>
                 </div>
               </div>
             </form>
@@ -593,8 +550,7 @@ function CommentItem({ comment, depth, circleId, accent, topicAuthorUsername }) 
           backgroundColor: isOwnComment ? 'rgba(255, 255, 255, 0.04)' : 'rgba(25, 24, 32, 0.55)',
           backdropFilter: 'blur(16px)',
           WebkitBackdropFilter: 'blur(16px)',
-          border: isOwnComment ? `1px solid ${accent}45` : '1px solid rgba(255, 255, 255, 0.06)',
-          borderLeft: `3px solid ${userColor}`,
+          border: isOwnComment ? `1px solid ${accent}45` : '1px solid rgba(255, 255, 255, 0.08)',
           boxShadow: isOwnComment ? `0 4px 20px rgba(0, 0, 0, 0.35), 0 0 16px ${accent}12` : '0 4px 18px rgba(0, 0, 0, 0.3)',
           position: 'relative',
         }}

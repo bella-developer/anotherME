@@ -12,7 +12,7 @@ const rooms = [
     id: 'dark',
     name: 'DARK ROOM',
     tagline: 'Put it down.',
-    description: 'Confessions, regrets, loneliness, difficult feelings.',
+    description: 'confession, regrests and dark thoughts',
     path: '/rooms/dark',
     gif:
       'https://res.cloudinary.com/dbtm7etag/image/upload/v1792502428/converted_twbyo4.gif',
@@ -24,7 +24,7 @@ const rooms = [
     id: 'fantasy',
     name: 'FANTASY ROOM',
     tagline: 'Let your mind wander.',
-    description: 'Daydreams, imaginary worlds, creative expression.',
+    description: 'day dreams, vibes, creative expression',
     path: '/rooms/fantasy',
     gif:
       'https://res.cloudinary.com/dbtm7etag/image/upload/v1792502433/converted_1_ik5xbs.gif',
@@ -36,7 +36,7 @@ const rooms = [
     id: 'philo',
     name: 'PHILO ROOM',
     tagline: 'Think freely.',
-    description: 'Uncomfortable questions, unconventional beliefs.',
+    description: 'uncomfortable questions, controversies',
     path: '/rooms/philo',
     gif:
       'https://res.cloudinary.com/dbtm7etag/image/upload/v1792502429/converted_2_neetec.gif',

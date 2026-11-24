@@ -81,13 +81,17 @@ function RoomReactions({ room, reactions, userReactions = [], onReact, disabled 
               key={type}
               onClick={() => handleReactionClick(type)}
               disabled={disabled}
-              className="group relative px-2.5 py-1 rounded flex items-center justify-center gap-1.5 cursor-pointer outline-none transition-all duration-200 hover:bg-white/[0.04]"
+              className={`group relative px-2.5 py-1 rounded flex items-center justify-center gap-1.5 outline-none transition-all duration-200 ${
+                disabled
+                  ? 'opacity-40 cursor-not-allowed'
+                  : 'cursor-pointer hover:bg-white/[0.04]'
+              }`}
               style={{
                 border: 'none',
                 background: 'transparent',
                 transform: isAnimating ? 'scale(0.92)' : hasReacted ? 'scale(1.02)' : 'scale(1)',
               }}
-              title={label}
+              title={disabled ? 'Authors cannot react to their own posts' : label}
               aria-label={label}
             >
               <Icon 
@@ -108,7 +112,7 @@ function RoomReactions({ room, reactions, userReactions = [], onReact, disabled 
                   fontWeight: hasReacted ? '600' : '400',
                 }}
               >
-                {count > 0 ? count : ''}
+                {count}
               </span>
             </button>
           );

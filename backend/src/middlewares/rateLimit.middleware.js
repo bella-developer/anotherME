@@ -25,12 +25,12 @@ function createRateLimitHandler(limitType) {
 
 /**
  * Standard rate limiter for read endpoints (GET)
- * Development: 500 requests per 15 minutes per IP/token
- * Production: 100 requests per 15 minutes per IP/token
+ * Development: 10000 requests per 15 minutes per IP/token
+ * Production: 3000 requests per 15 minutes per IP/token
  */
 export const readRateLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: process.env.NODE_ENV === 'production' ? 100 : 500, // Higher limit for development
+  max: process.env.NODE_ENV === 'production' ? 3000 : 10000, // Generous limit to prevent false positives during active navigation
   standardHeaders: true, // Return rate limit info in `RateLimit-*` headers
   legacyHeaders: false, // Disable `X-RateLimit-*` headers
   message: {
@@ -52,11 +52,11 @@ export const readRateLimiter = rateLimit({
 
 /**
  * Stricter rate limiter for write endpoints (POST, PATCH, DELETE)
- * 30 requests per 15 minutes per IP/token
+ * 300 requests in prod / 1000 in dev per 15 minutes per IP/token
  */
 export const writeRateLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 30, // 30 requests per window
+  max: process.env.NODE_ENV === 'production' ? 300 : 1000,
   standardHeaders: true,
   legacyHeaders: false,
   message: {
@@ -130,11 +130,11 @@ export const strictRateLimiter = rateLimit({
 
 /**
  * Post creation rate limiter
- * 5 posts per hour per user
+ * 50 posts per hour per user (prod) / 200 (dev)
  */
 export const postCreationRateLimiter = rateLimit({
   windowMs: 60 * 60 * 1000, // 1 hour
-  max: 5, // 5 posts per hour
+  max: process.env.NODE_ENV === 'production' ? 50 : 200,
   standardHeaders: true,
   legacyHeaders: false,
   message: {
@@ -154,12 +154,12 @@ export const postCreationRateLimiter = rateLimit({
 
 /**
  * Comment creation rate limiter
- * Development: 100 comments per hour
- * Production: 20 comments per hour per user
+ * Development: 500 comments per hour
+ * Production: 200 comments per hour per user
  */
 export const commentCreationRateLimiter = rateLimit({
   windowMs: 60 * 60 * 1000, // 1 hour
-  max: process.env.NODE_ENV === 'production' ? 20 : 100, // Higher limit for development
+  max: process.env.NODE_ENV === 'production' ? 200 : 500,
   standardHeaders: true,
   legacyHeaders: false,
   message: {
@@ -179,11 +179,11 @@ export const commentCreationRateLimiter = rateLimit({
 
 /**
  * Reaction rate limiter
- * 100 reactions per hour per user
+ * 1000 reactions per hour (prod) / 3000 (dev)
  */
 export const reactionRateLimiter = rateLimit({
   windowMs: 60 * 60 * 1000, // 1 hour
-  max: 100, // 100 reactions per hour
+  max: process.env.NODE_ENV === 'production' ? 1000 : 3000,
   standardHeaders: true,
   legacyHeaders: false,
   message: {

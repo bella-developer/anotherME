@@ -123,14 +123,25 @@ function DarkRoom() {
     
     try {
       // Use postService which has JWT interceptor
+      let result;
       if (hasThisReaction) {
-        await postService.removeReaction(postId, reactionKey);
+        result = await postService.removeReaction(postId, reactionKey);
       } else {
-        await postService.addReaction(postId, reactionKey);
+        result = await postService.addReaction(postId, reactionKey);
+      }
+      if (result?.reactions) {
+        setPosts(prev => prev.map(p => {
+          if (p.id !== postId) return p;
+          return {
+            ...p,
+            reactions: result.reactions,
+            userReactions: result.userReactions || (hasThisReaction ? [] : [reactionKey])
+          };
+        }));
       }
     } catch (error) {
       console.error('Reaction failed:', error);
-      if (error.code === 'UNAUTHORIZED') navigate('/login');
+      if (error.code === 'UNAUTHORIZED' || error.status === 401) navigate('/login');
       // Revert optimistic update on error
       setPosts(prev => prev.map(p => p.id === postId ? post : p));
     }
@@ -172,7 +183,7 @@ function DarkRoom() {
               </p>
               
               <p className="text-xs sm:text-sm max-w-lg text-[#928B91] leading-relaxed">
-                Confessions, regrets, loneliness, shame, difficult feelings. Heard without unsolicited advice.
+                confession, regrests and dark thoughts
               </p>
             </div>
 
