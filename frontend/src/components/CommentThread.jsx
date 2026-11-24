@@ -6,12 +6,11 @@ import ConfirmDialog from './ConfirmDialog';
 
 /**
  * CommentThread Component
- * Displays nested comments with indentation, vertical lines, and reply functionality
- * Requirements: 27.1, 27.2, 27.3, 27.4, 27.5, 27.6, 27.7
+ * Displays nested comments with clean monospace indentation, hairline dividers, and reply functionality
+ * Obsidian Theme: Deep charcoal surface, warm ivory text, muted ash metadata
  */
-const CommentThread = memo(({ comments, postId, currentUserId, maxDepth = 3 }) => {
+const CommentThread = memo(({ comments, postId, currentUserId, maxDepth = 3, setDeleteCommentId }) => {
   const dispatch = useDispatch();
-  const [deleteCommentId, setDeleteCommentId] = useState(null);
 
   // Build comment tree structure
   const commentTree = useMemo(() => {
@@ -38,8 +37,16 @@ const CommentThread = memo(({ comments, postId, currentUserId, maxDepth = 3 }) =
     return rootComments;
   }, [comments]);
 
+  if (!comments || comments.length === 0) {
+    return (
+      <div className="py-6 text-center border border-[#292630] rounded-lg bg-[#191820]/40 font-mono">
+        <p className="text-xs text-[#928B91]">No thoughts yet. The silence is yours to break.</p>
+      </div>
+    );
+  }
+
   return (
-    <div className="space-y-2">
+    <div className="space-y-3 font-mono">
       {commentTree.map((comment) => (
         <CommentItem
           key={comment.id}
@@ -49,6 +56,7 @@ const CommentThread = memo(({ comments, postId, currentUserId, maxDepth = 3 }) =
           depth={0}
           maxDepth={maxDepth}
           dispatch={dispatch}
+          setDeleteCommentId={setDeleteCommentId}
         />
       ))}
     </div>
@@ -59,16 +67,15 @@ const CommentThread = memo(({ comments, postId, currentUserId, maxDepth = 3 }) =
  * CommentItem Component
  * Individual comment with reply functionality and nesting
  */
-const CommentItem = memo(({ comment, postId, currentUserId, depth, maxDepth, dispatch }) => {
+const CommentItem = memo(({ comment, postId, currentUserId, depth, maxDepth, dispatch, setDeleteCommentId }) => {
   const [showReplyForm, setShowReplyForm] = useState(false);
   const [showReplies, setShowReplies] = useState(true);
-  const [isHovered, setIsHovered] = useState(false);
 
-  // Calculate indentation (32px per level)
-  const indentPx = depth * 32;
+  // Indentation
+  const indentPx = depth * 24;
 
-  // Determine background color (alternating shades)
-  const bgColor = depth % 2 === 0 ? '#1a1a1a' : '#1f1f1f';
+  // Background
+  const bgColor = depth % 2 === 0 ? '#191820' : '#111117';
 
   // Check if at max depth
   const isMaxDepth = depth >= maxDepth;
@@ -86,149 +93,95 @@ const CommentItem = memo(({ comment, postId, currentUserId, depth, maxDepth, dis
     return date.toLocaleDateString();
   };
 
-  // Handle delete comment
-  const handleDelete = async (commentId) => {
-    try {
-      await dispatch(deleteComment(commentId)).unwrap();
-      setDeleteCommentId(null);
-    } catch (error) {
-      console.error('Failed to delete comment:', error);
-    }
-  };
-
-  // Handle reply form toggle
-  const handleReplyClick = () => {
-    setShowReplyForm(!showReplyForm);
-  };
-
-  // Handle reply success
-  const handleReplySuccess = () => {
-    setShowReplyForm(false);
-  };
-
-  // Check if user owns this comment
-  const isOwner = currentUserId && comment.authorId === currentUserId;
-
-  // Count visible replies
+  const isOwner = currentUserId && (comment.authorId === currentUserId || comment.userId === currentUserId);
   const replyCount = comment.replies?.length || 0;
 
   return (
     <div className="relative">
-      {/* Vertical line for nesting */}
+      {/* Hairline guide for nesting */}
       {depth > 0 && (
         <div
-          className="absolute top-0 bottom-0 w-px bg-[#2a2a2a]"
-          style={{ left: `${indentPx - 16}px` }}
+          className="absolute top-0 bottom-0 w-px bg-[#292630]"
+          style={{ left: `${indentPx - 12}px` }}
         />
       )}
 
       {/* Comment container */}
       <div
-        className="relative transition-all duration-200"
+        className="relative transition-all duration-200 rounded-lg border border-[#292630] p-3 sm:p-4"
         style={{
           marginLeft: `${indentPx}px`,
           backgroundColor: bgColor,
         }}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
       >
-        {/* Comment card */}
-        <div className="p-2 rounded">
-          {/* Header: Author and timestamp */}
-          <div className="flex items-center justify-between mb-2">
-            <div className="flex items-center gap-2">
-              <span className="text-white font-bold text-sm">
-                {comment.author?.username || 'User'}
-              </span>
-              <span className="text-[#a3a3a3] text-xs">
-                {formatTimestamp(comment.createdAt)}
-              </span>
-            </div>
-
-            {/* Delete button (only for owner) */}
-            {isOwner && (
-              <button
-                onClick={() => setDeleteCommentId(comment.id)}
-                className="text-[#a3a3a3] hover:text-red-500 transition-colors duration-200"
-                title="Delete comment"
-              >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                  />
-                </svg>
-              </button>
-            )}
+        {/* Header: Author and timestamp */}
+        <div className="flex items-center justify-between mb-2 pb-1.5 border-b border-[#292630]/60">
+          <div className="flex items-center gap-2">
+            <span className="text-[#E7DED5] font-semibold text-xs">
+              {comment.author?.username || comment.authorName || 'Anonymous'}
+            </span>
+            <span className="text-[#928B91] text-[10px]">
+              {formatTimestamp(comment.createdAt)}
+            </span>
           </div>
 
-          {/* Content */}
-          <p className="text-[#e5e5e5] text-sm leading-relaxed mb-3">
-            {comment.content}
-          </p>
-
-          {/* Actions: Upvote, Downvote, Reply count, Reply button */}
-          <div className="flex items-center gap-4">
-            {/* Upvote */}
+          {/* Delete button (owner only) */}
+          {isOwner && (
             <button
-              className="flex items-center gap-1 text-[#6B5E59] hover:text-[#D9C5B2] transition-colors duration-200"
-              title="Upvote"
+              onClick={() => setDeleteCommentId?.(comment.id)}
+              className="text-[#928B91] hover:text-red-400 transition-colors p-1"
+              title="Delete comment"
             >
-              <span className="text-base">▲</span>
-              <span className="text-xs">{comment.reactions?.resonate || 0}</span>
-            </button>
-
-            {/* Downvote */}
-            <button
-              className="flex items-center gap-1 text-[#6B5E59] hover:text-[#D9C5B2] transition-colors duration-200"
-              title="Downvote"
-            >
-              <span className="text-base">▼</span>
-              <span className="text-xs">{comment.reactions?.echo || 0}</span>
-            </button>
-
-            {/* Reply count */}
-            {replyCount > 0 && (
-              <div className="flex items-center gap-1 text-[#6B5E59]">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                </svg>
-                <span className="text-xs">{replyCount}</span>
-              </div>
-            )}
-
-            {/* Reply button */}
-            {!isMaxDepth && (
-              <button
-                onClick={handleReplyClick}
-                className="text-[#6B5E59] text-xs hover:text-[#D9C5B2] transition-colors duration-200"
-              >
-                {showReplyForm ? 'Cancel' : 'Reply'}
-              </button>
-            )}
-          </div>
-
-          {/* Max depth indicator */}
-          {isMaxDepth && replyCount > 0 && (
-            <button
-              onClick={() => {
-                // Navigate to dedicated thread page
-              }}
-              className="text-[#8b5cf6] text-sm font-medium hover:text-[#9d6fff] transition-colors duration-200"
-            >
-              Continue thread →
+              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                />
+              </svg>
             </button>
           )}
         </div>
 
-        {/* Reply form (inline) */}
+        {/* Content */}
+        <p className="text-[#E7DED5] text-xs sm:text-sm leading-relaxed mb-3 whitespace-pre-wrap">
+          {comment.content}
+        </p>
+
+        {/* Actions */}
+        <div className="flex items-center gap-4 text-xs">
+          {/* Reply button */}
+          {!isMaxDepth && (
+            <button
+              onClick={() => setShowReplyForm(!showReplyForm)}
+              className="text-[#928B91] hover:text-[#D77A35] transition-colors uppercase tracking-wider text-[10px] font-medium"
+            >
+              {showReplyForm ? 'Cancel' : 'Reply'}
+            </button>
+          )}
+
+          {/* Reply count toggle */}
+          {replyCount > 0 && (
+            <button
+              onClick={() => setShowReplies(!showReplies)}
+              className="text-[#928B91] hover:text-[#E7DED5] transition-colors flex items-center gap-1 text-[10px]"
+            >
+              <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+              </svg>
+              <span>{replyCount} {replyCount === 1 ? 'reply' : 'replies'}</span>
+            </button>
+          )}
+        </div>
+
+        {/* Inline Reply Form */}
         {showReplyForm && (
-          <div className="px-2 pb-2">
+          <div className="mt-3 pt-3 border-t border-[#292630]">
             <CommentForm
+              postId={postId}
               commentId={comment.id}
-              onSuccess={handleReplySuccess}
+              onSuccess={() => setShowReplyForm(false)}
               onCancel={() => setShowReplyForm(false)}
             />
           </div>
@@ -236,21 +189,9 @@ const CommentItem = memo(({ comment, postId, currentUserId, depth, maxDepth, dis
       </div>
 
       {/* Nested replies */}
-      {!isMaxDepth && replyCount > 0 && (
-        <div className="mt-2">
-          {/* Show more replies toggle */}
-          {replyCount > 5 && (
-            <button
-              onClick={() => setShowReplies(!showReplies)}
-              className="text-[#8b5cf6] text-sm font-medium hover:text-[#9d6fff] transition-colors duration-200 mb-2"
-              style={{ marginLeft: `${indentPx + 32}px` }}
-            >
-              {showReplies ? 'Hide replies' : `Show ${replyCount} more replies`}
-            </button>
-          )}
-
-          {/* Render replies */}
-          {showReplies && comment.replies.map((reply) => (
+      {!isMaxDepth && replyCount > 0 && showReplies && (
+        <div className="mt-2 space-y-2">
+          {comment.replies.map((reply) => (
             <CommentItem
               key={reply.id}
               comment={reply}
@@ -259,6 +200,7 @@ const CommentItem = memo(({ comment, postId, currentUserId, depth, maxDepth, dis
               depth={depth + 1}
               maxDepth={maxDepth}
               dispatch={dispatch}
+              setDeleteCommentId={setDeleteCommentId}
             />
           ))}
         </div>
@@ -270,7 +212,6 @@ const CommentItem = memo(({ comment, postId, currentUserId, depth, maxDepth, dis
 CommentThread.displayName = 'CommentThread';
 CommentItem.displayName = 'CommentItem';
 
-// Add ConfirmDialog outside the CommentItem component
 const CommentThreadWrapper = (props) => {
   const [deleteCommentId, setDeleteCommentId] = useState(null);
   const dispatch = useDispatch();
@@ -286,7 +227,7 @@ const CommentThreadWrapper = (props) => {
 
   return (
     <>
-      <CommentThread {...props} setDeleteCommentId={setDeleteCommentId} handleDeleteComment={handleDelete} />
+      <CommentThread {...props} setDeleteCommentId={setDeleteCommentId} />
       <ConfirmDialog
         isOpen={!!deleteCommentId}
         onClose={() => setDeleteCommentId(null)}

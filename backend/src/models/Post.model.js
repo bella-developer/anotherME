@@ -113,18 +113,25 @@ const postSchema = new mongoose.Schema(
     // Atomic reaction counters (room-specific)
     reactions: {
       // Dark Room reactions
+      sad: { type: Number, default: 0, min: 0 },
+      heartCrack: { type: Number, default: 0, min: 0 },
+      heartOff: { type: Number, default: 0, min: 0 },
       iFeelYou: { type: Number, default: 0, min: 0 },
       notGood: { type: Number, default: 0, min: 0 },
       youreNotAlone: { type: Number, default: 0, min: 0 },
       sendingStrength: { type: Number, default: 0, min: 0 },
       
       // Fantasy Room reactions
+      laugh: { type: Number, default: 0, min: 0 },
+      like: { type: Number, default: 0, min: 0 },
+      dislike: { type: Number, default: 0, min: 0 },
       vibe: { type: Number, default: 0, min: 0 },
       dream: { type: Number, default: 0, min: 0 },
       inspire: { type: Number, default: 0, min: 0 },
       wild: { type: Number, default: 0, min: 0 },
       
       // Philo Room reactions
+      lightbulb: { type: Number, default: 0, min: 0 },
       lamp: { type: Number, default: 0, min: 0 },
       spark: { type: Number, default: 0, min: 0 },
       clap: { type: Number, default: 0, min: 0 },

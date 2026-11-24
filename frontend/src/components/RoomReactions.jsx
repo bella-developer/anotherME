@@ -44,11 +44,11 @@ function RoomReactions({ room, reactions, userReactions = [], onReact, disabled 
   const roomReactions = ROOM_REACTIONS[room] || ROOM_REACTIONS.dark;
 
   const roomColors = {
-    dark: '#DC2626',
-    fantasy: '#F97316',
-    philo: '#6366F1'
+    dark: '#B44A4A',
+    fantasy: '#DB762E',
+    philo: '#7771D9'
   };
-  const activeColor = roomColors[room] || '#DC2626';
+  const activeColor = roomColors[room] || '#B44A4A';
 
   const handleReactionClick = async (reactionType) => {
     if (disabled) return;

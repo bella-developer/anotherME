@@ -230,13 +230,14 @@ export const addReaction = async (postId, reactionType) => {
 
     // Validate reaction type - supports all room-specific reactions
     const validReactions = [
-      // Dark Room reactions
+      // Current frontend RoomReactions
+      'sad', 'heartCrack', 'heartOff',
+      'laugh', 'like', 'dislike',
+      'lightbulb',
+      // Legacy room reactions
       'iFeelYou', 'notGood', 'youreNotAlone', 'sendingStrength',
-      // Fantasy Room reactions
       'vibe', 'dream', 'inspire', 'wild',
-      // Philo Room reactions
       'lamp', 'spark', 'clap',
-      // Legacy reactions
       'iRelate', 'imListening', 'theAbyss'
     ];
     if (!validReactions.includes(reactionType)) {
@@ -280,13 +281,14 @@ export const removeReaction = async (postId, reactionType) => {
 
     // Validate reaction type - supports all room-specific reactions
     const validReactions = [
-      // Dark Room reactions
+      // Current frontend RoomReactions
+      'sad', 'heartCrack', 'heartOff',
+      'laugh', 'like', 'dislike',
+      'lightbulb',
+      // Legacy room reactions
       'iFeelYou', 'notGood', 'youreNotAlone', 'sendingStrength',
-      // Fantasy Room reactions
       'vibe', 'dream', 'inspire', 'wild',
-      // Philo Room reactions
       'lamp', 'spark', 'clap',
-      // Legacy reactions
       'iRelate', 'imListening', 'theAbyss'
     ];
     if (!validReactions.includes(reactionType)) {

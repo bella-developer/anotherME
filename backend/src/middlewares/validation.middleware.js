@@ -173,10 +173,13 @@ export const validateReaction = [
     .withMessage('Reaction type must be a string')
     .isIn([
       // Dark Room reactions
+      'sad', 'heartCrack', 'heartOff',
       'iFeelYou', 'notGood', 'youreNotAlone', 'sendingStrength',
       // Fantasy Room reactions
+      'laugh', 'like', 'dislike',
       'vibe', 'dream', 'inspire', 'wild',
       // Philo Room reactions
+      'lightbulb',
       'lamp', 'spark', 'clap',
       // Legacy reactions
       'iRelate', 'imListening', 'theAbyss'

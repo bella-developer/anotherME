@@ -12,12 +12,12 @@
 @tailwind utilities;
 
 @layer base {
-  /* CSS Custom Properties for Font Families */
+  /* CSS Custom Properties for Font Families - Monospace Hierarchical */
   :root {
-    --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    --font-heading: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-body: 'Geist Mono', 'Space Mono', 'IBM Plex Mono', monospace;
+    --font-heading: 'Geist Mono', 'Space Mono', 'IBM Plex Mono', monospace;
     --font-mono: 'Geist Mono', 'Space Mono', 'IBM Plex Mono', monospace;
-    --font-accent: 'VT323', monospace;
+    --font-accent: 'Space Mono', monospace;
   }
 
   html {
@@ -34,11 +34,11 @@
   }
 
   body {
-    font-family: var(--font-body);
+    font-family: var(--font-mono);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     background: transparent;
-    color: #ffffff;
+    color: #E7DED5;
     min-height: 100dvh;
     overflow-x: hidden;
     position: relative;

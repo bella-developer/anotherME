@@ -39,11 +39,10 @@ function Login() {
   }, [searchParams]);
 
   useEffect(() => {
-    const hasPass = isPatron || Boolean(localStorage.getItem('eso_pass_token')) || localStorage.getItem('eso_sanctuary_patron') === 'true';
-    if (isAuthenticated && hasPass) {
+    if (isAuthenticated) {
       navigate('/home', { replace: true });
     }
-  }, [isAuthenticated, isPatron, navigate]);
+  }, [isAuthenticated, navigate]);
 
   useEffect(() => {
     return () => dispatch(clearError());
@@ -60,12 +59,7 @@ function Login() {
 
     try {
       await dispatch(login(formData)).unwrap();
-      const hasPass = isPatron || Boolean(localStorage.getItem('eso_pass_token')) || localStorage.getItem('eso_sanctuary_patron') === 'true';
-      if (hasPass) {
-        navigate('/home', { replace: true });
-      } else {
-        setIsPaymentModalOpen(true);
-      }
+      navigate('/home', { replace: true });
     } catch (err) {
       console.error('Login failed:', err);
     }

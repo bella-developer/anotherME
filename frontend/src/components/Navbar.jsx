@@ -57,11 +57,12 @@ function Navbar() {
 
   return (
     <nav 
-      className="fixed top-0 left-0 right-0 z-50 h-14"
+      className="fixed top-0 left-0 right-0 z-50 h-14 font-mono"
       style={{ 
-        background: 'rgba(0, 0, 0, 0.95)', 
+        background: 'rgba(9, 9, 13, 0.95)', 
         backdropFilter: 'blur(20px)',
-        WebkitBackdropFilter: 'blur(20px)'
+        WebkitBackdropFilter: 'blur(20px)',
+        borderBottom: '1px solid #292630',
       }}
       role="navigation"
       aria-label="Main navigation"

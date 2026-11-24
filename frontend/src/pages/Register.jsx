@@ -176,13 +176,8 @@ function Register() {
     
     const result = await dispatch(register(registrationData));
     if (register.fulfilled.match(result)) {
-      const hasPass = isPatron || Boolean(localStorage.getItem('eso_pass_token')) || localStorage.getItem('eso_sanctuary_patron') === 'true';
-      if (hasPass) {
-        setShowSuccess(true);
-        setTimeout(() => navigate('/home'), 2500);
-      } else {
-        setIsPaymentModalOpen(true);
-      }
+      setShowSuccess(true);
+      setTimeout(() => navigate('/home'), 1500);
     }
   };
 

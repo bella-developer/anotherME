@@ -37,11 +37,19 @@ export async function createNotification(userId, type, title, message, data = {}
 export async function createReactionNotification(userId, reactionType, postTitle, room) {
   const reactionLabels = {
     // Dark Room
+    sad: 'Sad',
+    heartCrack: 'Heart Break',
+    heartOff: 'Hurt',
     iFeelYou: 'I feel you',
     notGood: 'Not good',
     youreNotAlone: "You're not alone",
     sendingStrength: 'Sending strength',
+    // Fantasy Room
+    laugh: 'Laugh',
+    like: 'Like',
+    dislike: 'Dislike',
     // Philo Room
+    lightbulb: 'Insight',
     lamp: '💡 Insight',
     spark: '✨ Curiosity',
     clap: '👏 Resonance',

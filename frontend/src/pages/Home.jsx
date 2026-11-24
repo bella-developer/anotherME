@@ -11,37 +11,37 @@ const rooms = [
   {
     id: 'dark',
     name: 'DARK ROOM',
-    tagline: 'Release. Witness. Discharge.',
-    description: 'Where raw emotion finds its voice.',
+    tagline: 'Put it down.',
+    description: 'Confessions, regrets, loneliness, difficult feelings.',
     path: '/rooms/dark',
     gif:
       'https://res.cloudinary.com/dbtm7etag/image/upload/v1792502428/converted_twbyo4.gif',
-    glowColor: '#DC2626',
-    glowRGB: '220, 38, 38',
+    glowColor: '#B44A4A',
+    glowRGB: '180, 74, 74',
     number: '01',
   },
   {
     id: 'fantasy',
     name: 'FANTASY ROOM',
-    tagline: 'Create. Imagine. Inspire.',
-    description: 'Where imagination roams free.',
+    tagline: 'Let your mind wander.',
+    description: 'Daydreams, imaginary worlds, creative expression.',
     path: '/rooms/fantasy',
     gif:
       'https://res.cloudinary.com/dbtm7etag/image/upload/v1792502433/converted_1_ik5xbs.gif',
-    glowColor: '#F97316',
-    glowRGB: '249, 115, 22',
+    glowColor: '#DB762E',
+    glowRGB: '219, 118, 46',
     number: '02',
   },
   {
     id: 'philo',
     name: 'PHILO ROOM',
-    tagline: 'Understand. Reflect. Inquire.',
-    description: 'The question that stays.',
+    tagline: 'Think freely.',
+    description: 'Uncomfortable questions, unconventional beliefs.',
     path: '/rooms/philo',
     gif:
       'https://res.cloudinary.com/dbtm7etag/image/upload/v1792502429/converted_2_neetec.gif',
-    glowColor: '#6366F1',
-    glowRGB: '99, 102, 241',
+    glowColor: '#7771D9',
+    glowRGB: '119, 113, 217',
     number: '03',
   },
 ];
@@ -73,13 +73,21 @@ function Home() {
           <section className="eso-hero" aria-labelledby="eso-page-title">
             <motion.h1
               id="eso-page-title"
-              className="eso-title"
+              className="eso-title font-mono"
               initial={reduceMotion ? false : { opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.9, delay: 0.2 }}
             >
-              Your Safe Space
+              Less noise. More meaning.
             </motion.h1>
+            <motion.p
+              className="text-xs sm:text-sm text-[#928B91] font-mono tracking-wide mt-2"
+              initial={reduceMotion ? false : { opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.9, delay: 0.4 }}
+            >
+              A quiet space for thoughts that don't fit anywhere else.
+            </motion.p>
           </section>
 
           <section className="eso-rooms" aria-label="Choose a room">

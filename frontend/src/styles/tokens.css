@@ -9,30 +9,41 @@
      COLOR PALETTE - Base Colors
      ============================================ */
   
-  /* Pure Monochrome Base */
-  --color-black: #000000;
-  --color-white: #ffffff;
+  /* Pure Monochrome & Obsidian Base */
+  --color-black: #09090D;
+  --color-white: #E7DED5;
   
-  /* Gray Scale */
-  --color-gray-100: #0a0a0a;
-  --color-gray-200: #141414;
-  --color-gray-300: #1f1f1f;
-  --color-gray-400: #333333;
-  --color-gray-500: #666666;
-  --color-gray-600: #a0a0a0;
+  /* Gray & Charcoal Scale */
+  --color-gray-100: #09090D;
+  --color-gray-200: #111117;
+  --color-gray-300: #191820;
+  --color-gray-400: #292630;
+  --color-gray-500: #928B91;
+  --color-gray-600: #E7DED5;
+
+  /* ESO Obsidian Palette */
+  --bg-obsidian: #09090D;
+  --bg-charcoal: #111117;
+  --surface-card: #191820;
+  --border-graphite: #292630;
+  --text-ivory: #E7DED5;
+  --text-ash: #928B91;
+  --accent-burnt-orange: #D77A35;
+  --accent-teal: #42B89A;
+  --accent-amber: #D6A45F;
   
   /* Room Accent Colors */
-  --color-dark-room: #dc2626;
-  --color-dark-room-rgb: 220, 38, 38;
-  --color-fantasy-room: #f97316;
-  --color-fantasy-room-rgb: 249, 115, 22;
-  --color-philo-room: #6366f1;
-  --color-philo-room-rgb: 99, 102, 241;
+  --color-dark-room: #B44A4A;
+  --color-dark-room-rgb: 180, 74, 74;
+  --color-fantasy-room: #DB762E;
+  --color-fantasy-room-rgb: 219, 118, 46;
+  --color-philo-room: #7771D9;
+  --color-philo-room-rgb: 119, 113, 217;
   
   /* State Colors */
-  --color-error: #ff4444;
-  --color-warning: #ffaa00;
-  --color-success: #ffffff;
+  --color-error: #B44A4A;
+  --color-warning: #D6A45F;
+  --color-success: #42B89A;
   
   /* ============================================
      OPACITY LEVELS - Standardized Scale
@@ -51,10 +62,10 @@
      SEMANTIC COLORS - Background
      ============================================ */
   
-  --bg-primary: var(--color-black);
-  --bg-secondary: var(--color-gray-100);
-  --bg-elevated: var(--color-gray-200);
-  --bg-contrast: var(--color-gray-300);
+  --bg-primary: #09090D;
+  --bg-secondary: #111117;
+  --bg-elevated: #191820;
+  --bg-contrast: #292630;
   
   /* Surface overlays with standard opacity */
   --surface-void: var(--color-black);
@@ -77,34 +88,34 @@
      SEMANTIC COLORS - Text
      ============================================ */
   
-  --text-primary: var(--color-white);
-  --text-secondary: var(--color-gray-600);
-  --text-tertiary: rgba(255, 255, 255, var(--opacity-intense));
-  --text-quaternary: rgba(255, 255, 255, var(--opacity-strong));
-  --text-ghost: rgba(255, 255, 255, 0.15);
-  --text-muted: var(--color-gray-500);
-  --text-faint: rgba(255, 255, 255, var(--opacity-strong));
-  --text-subtle: rgba(255, 255, 255, var(--opacity-intense));
+  --text-primary: #E7DED5;
+  --text-secondary: #928B91;
+  --text-tertiary: #928B91;
+  --text-quaternary: #928B91;
+  --text-ghost: rgba(146, 139, 145, 0.4);
+  --text-muted: #928B91;
+  --text-faint: #928B91;
+  --text-subtle: #E7DED5;
   
   /* ============================================
      SEMANTIC COLORS - Borders
      ============================================ */
   
-  --border-whisper: rgba(255, 255, 255, var(--opacity-subtle));
-  --border-subtle: rgba(255, 255, 255, var(--opacity-faint));
-  --border-faint: rgba(255, 255, 255, var(--opacity-light));
-  --border-light: rgba(255, 255, 255, var(--opacity-medium));
-  --border-medium: rgba(255, 255, 255, 0.2);
-  --border-default: var(--color-gray-400);
+  --border-whisper: #292630;
+  --border-subtle: #292630;
+  --border-faint: #292630;
+  --border-light: #292630;
+  --border-medium: #292630;
+  --border-default: #292630;
   
   /* ============================================
      SEMANTIC COLORS - Interactive States
      ============================================ */
   
-  --state-hover-bg: rgba(255, 255, 255, var(--opacity-light));
-  --state-active-bg: rgba(255, 255, 255, var(--opacity-medium));
-  --state-focus-ring: #58a6ff;
-  --state-disabled-opacity: 0.4;
+  --state-hover-bg: rgba(255, 255, 255, 0.04);
+  --state-active-bg: rgba(215, 122, 53, 0.15);
+  --state-focus-ring: #D77A35;
+  --state-disabled-opacity: 0.35;
   
   /* ============================================
      RADIUS SCALE - Consistent Border Radius

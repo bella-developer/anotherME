@@ -38,26 +38,7 @@ function ProtectedRoute({ children }) {
     return <Navigate to="/" replace />;
   }
 
-  // Permit user when user pays
-  if (isAuthenticated && !hasPaidPass) {
-    return (
-      <div className="min-h-screen flex items-center justify-center p-4 bg-black/90">
-        <div className="w-full max-w-md">
-          <div className="text-center mb-6">
-            <h2 className="text-lg uppercase tracking-[0.2em] font-mono text-white mb-1">
-              ESO Pass Required
-            </h2>
-            <p className="text-xs text-white/50 font-sans">
-              Access is permitted upon ESO Pass payment.
-            </p>
-          </div>
-          <EsoPassCard onPermitSuccess={() => window.location.reload()} />
-        </div>
-      </div>
-    );
-  }
-
-  // Render protected content
+  // Authenticated users have free access to sanctuary rooms and circles
   return children;
 }
 

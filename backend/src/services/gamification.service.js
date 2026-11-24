@@ -13,6 +13,9 @@ import { createLevelUpNotification } from './notification.service.js';
 // Reaction weights for XP calculation
 export const REACTION_WEIGHTS = {
   fantasy: {
+    laugh: 5,
+    like: 6,
+    dislike: 0,
     vibe: 3,      // ✨ Resonates
     dream: 5,     // 🌙 Beautiful daydream
     inspire: 7,   // 💫 Inspiring
@@ -20,6 +23,9 @@ export const REACTION_WEIGHTS = {
   },
   dark: {
     // Dark Room uses special XP logic from darkroom.xp.service.js
+    sad: 5,
+    heartCrack: 6,
+    heartOff: 5,
     iFeelYou: 6,
     notGood: -1,
     youreNotAlone: 5,
@@ -27,6 +33,9 @@ export const REACTION_WEIGHTS = {
   },
   philo: {
     // Philo Room uses special XP logic from philo.xp.service.js
+    lightbulb: 6,
+    like: 5,
+    dislike: 0,
     lamp: 6,      // 💡 Insight
     spark: 4,     // ✨ Curiosity
     clap: 8       // 👏 Resonance

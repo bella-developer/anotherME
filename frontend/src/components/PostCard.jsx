@@ -1,16 +1,11 @@
-import { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { addReaction, removeReaction } from '../features/postsSlice';
+import { memo } from 'react';
+import RoomReactions from './RoomReactions';
 
 /**
  * PostCard Component
- * Displays a post with exact layout matching the design
+ * Displays a post card with Obsidian theme and room-specific reactions
  */
-const PostCard = ({ post, onPostClick }) => {
-  const dispatch = useDispatch();
-  const [isExpanded, setIsExpanded] = useState(false);
-  const [userReactions, setUserReactions] = useState(new Set());
-
+const PostCard = memo(({ post, onPostClick, onReaction }) => {
   // Format timestamp to relative time
   const formatTimestamp = (timestamp) => {
     const date = new Date(timestamp);
@@ -24,175 +19,95 @@ const PostCard = ({ post, onPostClick }) => {
     return date.toLocaleDateString();
   };
 
-  // Strip HTML tags from content
   const stripHtml = (html) => {
+    if (!html) return '';
     const tmp = document.createElement('DIV');
     tmp.innerHTML = html;
     return tmp.textContent || tmp.innerText || '';
   };
 
-  // Get plain text content
   const plainContent = post.content ? stripHtml(post.content) : '';
+  const paragraphs = plainContent ? plainContent.split('\n').filter(p => p.trim()) : [];
 
-  // Display full content without truncation
-  const displayContent = plainContent;
-
-  // Split content into paragraphs
-  const paragraphs = displayContent ? displayContent.split('\n').filter(p => p.trim()) : [];
-
-  // Handle reaction toggle
-  const handleReactionToggle = async (reactionType) => {
-    const hasReacted = userReactions.has(reactionType);
-
-    // Optimistic update
-    const newReactions = new Set(userReactions);
-    if (hasReacted) {
-      newReactions.delete(reactionType);
-    } else {
-      newReactions.add(reactionType);
-    }
-    setUserReactions(newReactions);
-
-    try {
-      if (hasReacted) {
-        await dispatch(removeReaction({ postId: post.id, reactionType })).unwrap();
-      } else {
-        await dispatch(addReaction({ postId: post.id, reactionType })).unwrap();
-      }
-    } catch (error) {
-      // Revert on error
-      setUserReactions(userReactions);
-      console.error('Failed to toggle reaction:', error);
-    }
-  };
+  const room = post.room || post.circle?.room || 'dark';
+  const roomColor = room === 'fantasy' ? '#DB762E' : room === 'philo' ? '#7771D9' : '#B44A4A';
 
   return (
     <article 
       onClick={() => onPostClick && onPostClick(post.id)}
-      className="group relative rounded-xl p-5 sm:p-6 mb-4 transition-all duration-300 cursor-pointer overflow-hidden"
+      className="group relative rounded-xl p-4 sm:p-5 mb-4 transition-all duration-200 cursor-pointer overflow-hidden font-mono"
       style={{
-        backgroundColor: 'transparent',
-        boxShadow: '0 0 0 1px rgba(255,255,255,0.1)',
+        backgroundColor: '#191820',
+        border: '1px solid #292630',
       }}
       role="article"
     >
-      <div 
-        className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-        style={{ boxShadow: 'inset 0 0 30px rgba(255,255,255,0.05)' }} 
-      />
       {/* Header: Room Section and Timestamp */}
-      <div className="flex items-center justify-between mb-6">
-        {/* Room Header */}
-        {post.circle?.room && (
-          <div className="flex flex-col gap-2">
-            <span className="text-xs tracking-[0.25em] uppercase font-mono" style={{ color: '#e6edf3', fontWeight: '700' }}>
-              ROOMS
+      <div className="flex items-center justify-between mb-4 pb-2 border-b border-[#292630]/60">
+        <div className="flex items-center gap-2">
+          <span className="text-[10px] tracking-[0.2em] uppercase font-bold" style={{ color: roomColor }}>
+            {room.toUpperCase()}
+          </span>
+          {post.circle && (
+            <span className="text-[10px] text-[#928B91]">
+              &bull; {post.circle.name}
             </span>
-            <span className="text-lg tracking-[0.12em] uppercase font-sans" style={{ 
-              color: post.circle.room === 'dark' ? '#DC2626' :
-                     post.circle.room === 'fantasy' ? '#F97316' :
-                     post.circle.room === 'philo' ? '#6366F1' :
-                     '#ffffff',
-              fontWeight: '800'
-            }}>
-              THE {post.circle.room.toUpperCase()} ROOM
-            </span>
-          </div>
-        )}
+          )}
+        </div>
 
         {/* Timestamp */}
-        <span className="text-[10px]" style={{ color: '#484f58', fontWeight: '300' }}>
+        <span className="text-[10px] text-[#928B91]">
           <time dateTime={post.createdAt}>
             {formatTimestamp(post.createdAt)}
           </time>
         </span>
       </div>
 
-      {/* Content with paragraph breaks - smaller and weaker */}
-      <div className="mb-4">
-        {paragraphs.map((paragraph, index) => (
+      {/* Title */}
+      {post.title && (
+        <h3 className="text-sm sm:text-base font-semibold text-[#E7DED5] mb-2 leading-snug">
+          {post.title}
+        </h3>
+      )}
+
+      {/* Content */}
+      <div className="mb-4 space-y-2">
+        {paragraphs.slice(0, 3).map((paragraph, index) => (
           <p 
             key={index} 
-            className="leading-relaxed mb-3 last:mb-0"
-            style={{ 
-              color: index === 0 ? '#6e7681' : '#575455', 
-              fontWeight: '300',
-              fontSize: index === 0 ? '11px' : '10px'
-            }}
+            className="leading-relaxed text-xs text-[#E7DED5]"
           >
             {paragraph}
           </p>
         ))}
+        {paragraphs.length > 3 && (
+          <p className="text-[10px] text-[#928B91] italic">...click to read full post</p>
+        )}
       </div>
 
-      {/* Footer: Reaction Buttons and Circle Badge */}
-      <div className="flex items-center justify-between pt-3" style={{ borderTop: '1px solid #251E1D' }}>
-        {/* Reaction Buttons */}
-        <div className="flex items-center gap-4">
-          {/* I relate */}
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              handleReactionToggle('iRelate');
-            }}
-            className="flex items-center gap-1.5 transition-colors"
-            style={{ color: '#8b949e', fontSize: '11px', fontWeight: '400' }}
-            onMouseEnter={(e) => e.currentTarget.style.color = '#e6edf3'}
-            onMouseLeave={(e) => e.currentTarget.style.color = '#8b949e'}
-          >
-            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <circle cx="12" cy="12" r="10" strokeWidth={1.5} />
-            </svg>
-            <span>I relate</span>
-          </button>
+      {/* Footer: Reaction Buttons */}
+      <div className="flex items-center justify-between pt-3 border-t border-[#292630]" onClick={(e) => e.stopPropagation()}>
+        <RoomReactions
+          room={room}
+          reactions={post.reactions || {}}
+          userReactions={post.userReactions || []}
+          onReact={(reactionType) => onReaction?.(post.id, reactionType)}
+          disabled={post.isAuthor}
+        />
 
-          {/* You're not alone */}
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              handleReactionToggle('youreNotAlone');
-            }}
-            className="flex items-center gap-1.5 transition-colors"
-            style={{ color: '#8b949e', fontSize: '11px', fontWeight: '400' }}
-            onMouseEnter={(e) => e.currentTarget.style.color = '#e6edf3'}
-            onMouseLeave={(e) => e.currentTarget.style.color = '#8b949e'}
-          >
-            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20 12H4" />
+        {post.commentCount > 0 && (
+          <div className="flex items-center gap-1 text-[10px] text-[#928B91]">
+            <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
             </svg>
-            <span>You're not alone</span>
-          </button>
-
-          {/* I'm listening */}
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              handleReactionToggle('imListening');
-            }}
-            className="flex items-center gap-1.5 transition-colors"
-            style={{ color: '#8b949e', fontSize: '11px', fontWeight: '400' }}
-            onMouseEnter={(e) => e.currentTarget.style.color = '#e6edf3'}
-            onMouseLeave={(e) => e.currentTarget.style.color = '#8b949e'}
-          >
-            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
-            </svg>
-            <span>I'm listening</span>
-          </button>
-        </div>
-
-        {/* Circle Badge */}
-        {post.circle && (
-          <div className="flex items-center gap-1.5 text-[10px]" style={{ color: '#484f58', fontWeight: '300' }}>
-            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-            </svg>
-            <span>{post.circle.name}</span>
+            <span>{post.commentCount}</span>
           </div>
         )}
       </div>
     </article>
   );
-};
+});
+
+PostCard.displayName = 'PostCard';
 
 export default PostCard;

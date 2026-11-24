@@ -4,11 +4,23 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+        sans: ['Geist Mono', 'Space Mono', 'IBM Plex Mono', 'monospace'],
         mono: ['Geist Mono', 'Space Mono', 'IBM Plex Mono', 'monospace'],
-        display: ['Inter', 'Space Mono', '-apple-system', 'sans-serif'],
+        display: ['Geist Mono', 'Space Mono', 'monospace'],
       },
       colors: {
+        obsidian: '#09090D',
+        charcoal: '#111117',
+        deepCharcoal: '#191820',
+        graphite: '#292630',
+        warmIvory: '#E7DED5',
+        mutedAsh: '#928B91',
+        burntOrange: '#D77A35',
+        mutedTeal: '#42B89A',
+        warmAmber: '#D6A45F',
+        darkRoom: '#B44A4A',
+        philoRoom: '#7771D9',
+        fantasyRoom: '#DB762E',
         // Semantic color aliases that use CSS variables
         primary: {
           bg: 'var(--bg-primary)',

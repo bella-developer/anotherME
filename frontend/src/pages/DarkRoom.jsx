@@ -138,71 +138,36 @@ function DarkRoom() {
           <div className="max-w-full sm:max-w-2xl md:max-w-3xl mx-auto">
 
             {/* Hero Header - Scrolls away */}
-            <div className="mb-8 sm:mb-12">
+            <div className="mb-8 sm:mb-12 font-mono">
               <button
                 onClick={() => navigate('/home')}
-                className="px-4 py-2 text-xs tracking-wide uppercase mb-12 transition-all flex items-center gap-2 rounded font-mono"
-                style={{
-                  color: '#e6edf3',
-                  border: '1px solid rgba(220, 38, 38, 0.3)',
-                  backgroundColor: 'rgba(220, 38, 38, 0.05)',
-                  fontWeight: '500',
-                  transitionDuration: 'var(--duration-slow)',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = 'rgba(220, 38, 38, 0.15)';
-                  e.currentTarget.style.borderColor = 'rgba(220, 38, 38, 0.5)';
-                  e.currentTarget.style.color = '#DC2626';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = 'rgba(220, 38, 38, 0.05)';
-                  e.currentTarget.style.borderColor = 'rgba(220, 38, 38, 0.3)';
-                  e.currentTarget.style.color = '#e6edf3';
-                }}
+                className="px-4 py-2 text-xs tracking-wide uppercase mb-12 transition-all flex items-center gap-2 rounded border border-[#292630] bg-[#191820] text-[#E7DED5] hover:border-[#B44A4A] hover:text-[#B44A4A]"
               >
                 ← ROOMS
               </button>
 
-              <div className="w-12 h-px mb-8" style={{ 
-                background: 'linear-gradient(to right, rgba(220, 38, 38, 0.6), transparent)' 
-              }} />
+              <div className="w-12 h-px mb-8 bg-[#292630]" />
               
-              <h1 className="text-lg sm:text-4xl md:text-5xl uppercase mb-6 sm:mb-8 heading-text font-bold" style={{
-                color: '#DC2626',
-                fontFamily: 'var(--font-heading)',
-                letterSpacing: '0.05em',
-                lineHeight: 'var(--leading-tight)',
-              }}>
+              <h1 className="text-lg sm:text-4xl md:text-5xl uppercase mb-4 sm:mb-6 font-bold tracking-wider" style={{ color: '#B44A4A' }}>
                 THE DARK ROOM
               </h1>
               
-              <p className="text-base sm:text-lg mb-3 sm:mb-4 max-w-md font-semibold" style={{
-                color: '#e6edf3',
-                lineHeight: 'var(--leading-relaxed)',
-              }}>
-                In the Dark
+              <p className="text-base sm:text-lg mb-2 sm:mb-3 font-semibold text-[#E7DED5]">
+                Put it down.
               </p>
               
-              <p className="text-xs sm:text-[11px] max-w-md dark-room-subtext" style={{
-                color: '#c9d1d9',
-                lineHeight: 'var(--leading-relaxed)',
-                fontWeight: '300'
-              }}>
-                You are not alone in the darkness.
+              <p className="text-xs sm:text-sm max-w-lg text-[#928B91] leading-relaxed">
+                Confessions, regrets, loneliness, shame, difficult feelings. Heard without unsolicited advice.
               </p>
             </div>
 
             {/* Compact Sticky Bar */}
-            <div className="sticky top-16 z-20 mb-6 -mx-3 sm:mx-0 px-3 sm:px-4 py-2 flex items-center justify-between gap-3" style={{
-              backgroundColor: 'rgba(0, 0, 0, 0.9)',
-              backdropFilter: 'blur(12px)',
-              borderBottom: '1px solid rgba(220, 38, 38, 0.2)',
+            <div className="sticky top-16 z-20 mb-6 -mx-3 sm:mx-0 px-3 sm:px-4 py-2 flex items-center justify-between gap-3 font-mono" style={{
+              backgroundColor: '#111117',
+              borderBottom: '1px solid #292630',
             }}>
               {/* Left: Room Title */}
-              <h2 className="text-[10px] sm:text-sm uppercase tracking-wider whitespace-nowrap flex-shrink-0 font-mono font-bold" style={{
-                color: '#DC2626',
-                fontFamily: 'var(--font-heading)',
-              }}>
+              <h2 className="text-[10px] sm:text-sm uppercase tracking-wider whitespace-nowrap flex-shrink-0 font-bold" style={{ color: '#B44A4A' }}>
                 DARK ROOM
               </h2>
 
@@ -212,21 +177,8 @@ function DarkRoom() {
                 <button
                   type="button"
                   onClick={() => navigate('/home')}
-                  className="flex-shrink-0 px-2.5 py-1 text-[9px] sm:text-[10px] tracking-wider uppercase transition-all rounded font-mono font-medium flex items-center gap-1"
-                  style={{
-                    backgroundColor: 'rgba(255, 255, 255, 0.05)',
-                    color: '#e6edf3',
-                    border: '1px solid rgba(255, 255, 255, 0.2)',
-                    height: '22px',
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.12)';
-                    e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.4)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.05)';
-                    e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)';
-                  }}
+                  className="flex-shrink-0 px-2.5 py-1 text-[9px] sm:text-[10px] tracking-wider uppercase transition-all rounded font-medium flex items-center gap-1 border border-[#292630] bg-[#191820] text-[#E7DED5] hover:border-[#B44A4A]"
+                  style={{ height: '22px' }}
                   aria-label="Back to rooms"
                 >
                   <span>←</span>
@@ -237,18 +189,11 @@ function DarkRoom() {
                 <select
                   value={selectedCategory}
                   onChange={(e) => setSelectedCategory(e.target.value)}
-                  className="px-2 py-0.5 text-[8px] sm:text-[9px] tracking-wide uppercase transition-all cursor-pointer font-mono rounded"
-                  style={{
-                    borderRadius: '2px',
-                    background: 'rgba(255, 255, 255, 0.05)',
-                    border: '1px solid rgba(255, 255, 255, 0.2)',
-                    color: '#ffffff',
-                    fontWeight: '500',
-                    height: '22px',
-                  }}
+                  className="px-2 py-0.5 text-[8px] sm:text-[9px] tracking-wide uppercase transition-all cursor-pointer rounded border border-[#292630] bg-[#191820] text-[#E7DED5]"
+                  style={{ height: '22px' }}
                 >
                   {categories.map((cat) => (
-                    <option key={cat.value} value={cat.value} style={{ background: '#0a0a0f', color: '#fff' }}>
+                    <option key={cat.value} value={cat.value} style={{ background: '#191820', color: '#E7DED5' }}>
                       {cat.label}
                     </option>
                   ))}
@@ -258,19 +203,18 @@ function DarkRoom() {
                 {isAuthenticated && (
                   <button
                     onClick={() => setIsPostFormOpen(true)}
-                    className="flex-shrink-0 px-3 py-1 text-[9px] sm:text-[10px] tracking-widest uppercase transition-all rounded font-mono font-bold"
+                    className="flex-shrink-0 px-3 py-1 text-[9px] sm:text-[10px] tracking-widest uppercase transition-all rounded font-bold text-[#E7DED5]"
                     style={{
-                      backgroundColor: '#DC2626',
-                      color: '#ffffff',
+                      backgroundColor: '#B44A4A',
                       height: '22px',
                       display: 'flex',
                       alignItems: 'center',
                     }}
                     onMouseEnter={(e) => {
-                      e.currentTarget.style.backgroundColor = '#B91C1C';
+                      e.currentTarget.style.backgroundColor = '#9e3f3f';
                     }}
                     onMouseLeave={(e) => {
-                      e.currentTarget.style.backgroundColor = '#DC2626';
+                      e.currentTarget.style.backgroundColor = '#B44A4A';
                     }}
                   >
                     POST

@@ -11,7 +11,7 @@ import { useToast } from '../contexts/ToastContext';
 
 /**
  * Dark Room Card Component
- * Mobile-first responsive design with vintage aesthetic
+ * Obsidian Theme: Deep charcoal surface, muted burgundy accent, warm ivory text, monospace hierarchy
  */
 function DarkRoomCard({ post, onReaction, onEdit, onDelete }) {
   const navigate = useNavigate();
@@ -40,30 +40,28 @@ function DarkRoomCard({ post, onReaction, onEdit, onDelete }) {
 
   return (
     <article
-      className="group relative mb-4 sm:mb-6 transition-all duration-300 rounded-xl overflow-hidden"
+      className="group relative mb-4 sm:mb-6 transition-all duration-300 rounded-xl overflow-hidden font-mono"
       style={{
-        background: 'transparent',
-        boxShadow: '0 0 0 1px rgba(255,255,255,0.1)',
+        backgroundColor: '#191820',
+        border: '1px solid #292630',
         minHeight: imageUrl ? '420px' : 'auto',
       }}
     >
-      <div 
-        className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-        style={{ boxShadow: 'inset 0 0 30px rgba(255,255,255,0.05)' }} 
-      />
-      {/* Header Bar - Responsive */}
-      <div className="flex items-center justify-between px-3 sm:px-5 pt-3 sm:pt-4 pb-2">
+      {/* Header Bar */}
+      <div className="flex items-center justify-between px-3 sm:px-5 pt-3 sm:pt-4 pb-2 border-b border-[#292630]/60">
         <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
-          <time className="text-[9px] sm:text-[10px] tracking-wide font-mono text-white/40">
+          <time className="text-[9px] sm:text-[10px] tracking-wide text-[#928B91]">
             {formatTimeAgo(post.createdAt)}
           </time>
           {post.category && (
-            <span className="px-1.5 sm:px-2 py-0.5 rounded-full text-[7px] sm:text-[8px] uppercase tracking-widest font-mono border" style={{
-              backgroundColor: 'rgba(220, 38, 38, 0.12)',
-              color: '#DC2626',
-              borderColor: 'rgba(220, 38, 38, 0.3)',
-              fontWeight: '500'
-            }}>
+            <span 
+              className="px-1.5 sm:px-2 py-0.5 rounded text-[8px] uppercase tracking-widest font-semibold border"
+              style={{
+                backgroundColor: 'rgba(180, 74, 74, 0.12)',
+                color: '#B44A4A',
+                borderColor: 'rgba(180, 74, 74, 0.3)',
+              }}
+            >
               {post.category}
             </span>
           )}
@@ -80,77 +78,78 @@ function DarkRoomCard({ post, onReaction, onEdit, onDelete }) {
                     navigate(`/circles/${circleIdToUse}?from=post&postId=${post.id}`);
                   }
                 }}
-                className="px-1.5 sm:px-2 py-0.5 rounded-full text-[7px] sm:text-[8px] font-mono uppercase tracking-wider transition-all border hover:border-red-500/50"
+                className="px-1.5 sm:px-2 py-0.5 rounded text-[8px] uppercase tracking-wider transition-all border"
                 style={{
-                  background: 'rgba(220, 38, 38, 0.08)',
-                  color: '#DC2626',
-                  borderColor: 'rgba(220, 38, 38, 0.25)',
+                  backgroundColor: 'rgba(180, 74, 74, 0.08)',
+                  color: '#B44A4A',
+                  borderColor: 'rgba(180, 74, 74, 0.25)',
                 }}
                 title={`View in ${circle.fullName || circle.name}`}
               >
-                {circleName.length > 8 ? circleName.slice(0, 8).toUpperCase() : circleName.toUpperCase()}
+                {circleName.length > 10 ? circleName.slice(0, 10).toUpperCase() : circleName.toUpperCase()}
               </button>
             );
           })}
         </div>
+
         <div className="flex items-center gap-1 sm:gap-2">
           {/* Save to Sanctuary Vault Button */}
           <button
             onClick={handleToggleBookmark}
-            className={`p-1 sm:p-1.5 rounded-full transition-colors ${
+            className={`p-1 sm:p-1.5 rounded transition-colors ${
               isBookmarked
-                ? 'text-[#DC2626] bg-[#DC2626]/15'
-                : 'text-white/40 hover:text-white/80 hover:bg-white/10'
+                ? 'text-[#B44A4A] bg-[#B44A4A]/15'
+                : 'text-[#928B91] hover:text-[#E7DED5] hover:bg-[#292630]'
             }`}
             title={isBookmarked ? 'Remove' : 'Save'}
             aria-label={isBookmarked ? 'Remove' : 'Save'}
           >
-            <Bookmark size={12} fill={isBookmarked ? 'currentColor' : 'none'} />
+            <Bookmark size={13} fill={isBookmarked ? 'currentColor' : 'none'} />
           </button>
 
           {post.isAuthor && (
             <div className="flex items-center gap-0.5 sm:gap-1">
               <button
                 onClick={() => onEdit?.(post)}
-                className="p-1 sm:p-1.5 rounded-full hover:bg-white/10 transition-colors"
+                className="p-1 sm:p-1.5 rounded hover:bg-[#292630] transition-colors"
                 title="Edit post"
                 aria-label="Edit post"
               >
-                <FaPen className="text-white/50 hover:text-white/80" size={9} />
+                <FaPen className="text-[#928B91] hover:text-[#E7DED5]" size={10} />
               </button>
               <button
                 onClick={() => setShowDeleteConfirm(true)}
-                className="p-1 sm:p-1.5 rounded-full hover:bg-red-500/15 transition-colors"
+                className="p-1 sm:p-1.5 rounded hover:bg-red-500/15 transition-colors"
                 title="Delete post"
                 aria-label="Delete post"
               >
-                <FaTrash className="text-red-400/50 hover:text-red-400/80" size={9} />
+                <FaTrash className="text-red-400/60 hover:text-red-400" size={10} />
               </button>
             </div>
           )}
-          {post.commentCount > 0 && (
-            <div className="flex items-center gap-0.5 sm:gap-1 text-[9px] sm:text-[10px] text-white/35 font-medium">
-              <svg className="w-2.5 h-2.5 sm:w-3 sm:h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-              </svg>
-              <span>{post.commentCount}</span>
-            </div>
-          )}
+
+          {/* Comment Count / Link */}
+          <button
+            onClick={() => navigate(`/posts/${post.id}`)}
+            className="flex items-center gap-1 text-[10px] text-[#928B91] hover:text-[#E7DED5] transition-colors ml-1"
+            title="View discussion"
+          >
+            <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+            </svg>
+            <span>{post.commentCount || 0}</span>
+          </button>
         </div>
       </div>
 
-      {/* Main Content - Responsive padding */}
-      <div className="px-3 sm:px-5 pb-3 sm:pb-5 flex flex-col">
-        {/* Title - Red brush effect - Extract from content if no title */}
+      {/* Main Content */}
+      <div className="px-3 sm:px-5 py-3 sm:py-4 flex flex-col">
+        {/* Title */}
         {(() => {
-          // Extract title: use post.title or extract from first line of content (35-45 chars)
           let displayTitle = post.title;
           if (!displayTitle && post.content) {
-            // Strip HTML tags and get plain text
             const plainText = post.content.replace(/<[^>]*>/g, '').trim();
-            // Get first line
             const firstLine = plainText.split('\n')[0];
-            // Extract 35-45 characters
             displayTitle = firstLine.length > 45 
               ? firstLine.substring(0, 45).trim() + '...'
               : firstLine.length >= 35
@@ -161,11 +160,8 @@ function DarkRoomCard({ post, onReaction, onEdit, onDelete }) {
           return displayTitle ? (
             <div className="mb-2 sm:mb-3">
               <h2 
-                className="text-sm sm:text-lg md:text-xl font-sans font-semibold text-white leading-tight"
-                style={{
-                  color: '#FFFFFF',
-                  letterSpacing: '0.01em',
-                }}
+                onClick={() => navigate(`/posts/${post.id}`)}
+                className="text-sm sm:text-base md:text-lg font-semibold text-[#E7DED5] hover:text-[#B44A4A] cursor-pointer transition-colors leading-snug"
               >
                 {displayTitle}
               </h2>
@@ -173,22 +169,16 @@ function DarkRoomCard({ post, onReaction, onEdit, onDelete }) {
           ) : null;
         })()}
 
-        {/* Content Text - Artistic formatting with comfortable reading */}
+        {/* Content Text */}
         <div 
-          className="text-[11px] sm:text-xs md:text-sm leading-relaxed mb-2 sm:mb-3 font-sans"
-          style={{
-            fontFamily: 'var(--font-body)',
-            lineHeight: '1.7',
-            color: '#E6EDF3',
-          }}
+          className="text-xs sm:text-sm leading-relaxed mb-3 text-[#E7DED5]"
+          style={{ lineHeight: '1.75' }}
         >
-          {/* Parse and format content with paragraph breaks */}
           {post.content && (() => {
             const tempDiv = document.createElement('div');
             tempDiv.innerHTML = post.content;
             const plainText = tempDiv.textContent || tempDiv.innerText || '';
             
-            // Split by double line breaks for paragraphs, or single if no doubles exist
             const paragraphs = plainText.includes('\n\n') 
               ? plainText.split('\n\n').filter(p => p.trim())
               : plainText.split('\n').filter(p => p.trim());
@@ -196,12 +186,7 @@ function DarkRoomCard({ post, onReaction, onEdit, onDelete }) {
             return paragraphs.map((paragraph, index) => (
               <p
                 key={index}
-                className="mb-4 last:mb-0"
-                style={{
-                  textIndent: '1.5em',
-                  fontSize: index === 0 ? '13px' : '12px',
-                  opacity: index === 0 ? 0.95 : 0.9,
-                }}
+                className="mb-3 last:mb-0"
               >
                 {paragraph}
               </p>
@@ -212,47 +197,28 @@ function DarkRoomCard({ post, onReaction, onEdit, onDelete }) {
         {/* Attached Image */}
         {imageUrl && (
           <div className="mb-3 flex-1">
-            <div className="w-full overflow-hidden">
+            <div className="w-full overflow-hidden rounded border border-[#292630] p-1.5 bg-[#111117]">
               <div
-                className="relative overflow-hidden w-full"
+                className="relative overflow-hidden w-full rounded bg-black/60 flex items-center justify-center"
                 style={{
-                  background: 'rgba(255, 255, 255, 0.02)',
-                  borderRadius: '4px',
-                  padding: '8px',
-                  boxShadow: '0 4px 12px rgba(0,0,0,0.5)',
-                  border: '1px solid rgba(255, 255, 255, 0.08)',
+                  minHeight: '200px',
+                  maxHeight: '380px',
                 }}
               >
-                <div
-                  className="relative overflow-hidden w-full"
-                  style={{
-                    borderRadius: '2px',
-                    background: 'rgba(0, 0, 0, 0.8)',
-                    minHeight: '200px',
-                    maxHeight: '380px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}
-                >
-                  <img
-                    src={imageUrl}
-                    alt={post.title || 'Post image'}
-                    className="max-w-full max-h-full object-contain"
-                    style={{
-                      display: 'block',
-                      maxHeight: '380px',
-                    }}
-                    loading="lazy"
-                  />
-                </div>
+                <img
+                  src={imageUrl}
+                  alt={post.title || 'Post image'}
+                  className="max-w-full max-h-full object-contain"
+                  style={{ maxHeight: '380px' }}
+                  loading="lazy"
+                />
               </div>
             </div>
           </div>
         )}
 
-        {/* Reactions - Responsive spacing */}
-        <div className="pt-3 sm:pt-4 border-t mt-auto" style={{ borderColor: 'rgba(255, 255, 255, 0.08)' }}>
+        {/* Reactions */}
+        <div className="pt-3 border-t border-[#292630] mt-auto">
           <RoomReactions
             room="dark"
             reactions={post.reactions || {}}

@@ -23,7 +23,7 @@ const ROOMS = {
   dark: {
     id: 'dark',
     name: 'Dark',
-    accent: '#DC2626',
+    accent: '#B44A4A',
     categories: [
       { value: 'CONFESSION', label: 'Confession' },
       { value: 'REGRET', label: 'Regret' },
@@ -33,7 +33,7 @@ const ROOMS = {
   fantasy: {
     id: 'fantasy',
     name: 'Fantasy',
-    accent: '#F97316',
+    accent: '#DB762E',
     categories: [
       { value: 'CREATIVE', label: 'Creative' },
       { value: 'DAYDREAM', label: 'Daydream' },
@@ -44,7 +44,7 @@ const ROOMS = {
   philo: {
     id: 'philo',
     name: 'Philo',
-    accent: '#6366F1',
+    accent: '#7771D9',
     categories: [
       { value: 'SPIRITUAL', label: 'Spiritual' },
       { value: 'SHADOW', label: 'Shadow' },
@@ -241,15 +241,14 @@ export default function SanctuaryPostStudio() {
 
           {/* Form Card */}
           <div
-            className="rounded-lg border p-4 sm:p-5 transition-all"
+            className="rounded-lg border p-4 sm:p-5 transition-all font-mono"
             style={{
-              background: 'rgba(0, 0, 0, 0.5)',
-              backdropFilter: 'blur(12px)',
-              borderColor: '#21262d',
+              background: '#191820',
+              borderColor: '#292630',
             }}
           >
             {/* Category selection */}
-            <div className="flex flex-wrap gap-1.5 pb-3 border-b border-[#21262d]">
+            <div className="flex flex-wrap gap-1.5 pb-3 border-b border-[#292630]">
               {currentRoom.categories.map((c) => (
                 <button
                   key={c.value}
@@ -257,9 +256,10 @@ export default function SanctuaryPostStudio() {
                   onClick={() => setCategory(c.value)}
                   className={`px-2.5 py-1 rounded text-xs font-mono transition-all ${
                     category === c.value
-                      ? 'bg-[#21262d] text-[#e6edf3] border border-[#30363d] font-medium'
-                      : 'text-[#8b949e] hover:text-[#e6edf3] border border-transparent'
+                      ? 'bg-[#111117] text-[#E7DED5] border border-[#292630] font-medium'
+                      : 'text-[#928B91] hover:text-[#E7DED5] border border-transparent'
                   }`}
+                  style={category === c.value ? { color: currentRoom.accent, borderColor: currentRoom.accent } : {}}
                 >
                   {c.label}
                 </button>
@@ -267,12 +267,12 @@ export default function SanctuaryPostStudio() {
             </div>
 
             {/* Circle dropdown */}
-            <div className="py-3 border-b border-[#21262d]">
+            <div className="py-3 border-b border-[#292630]">
               <select
                 value={circleId}
                 onChange={(e) => setCircleId(e.target.value)}
                 disabled={loadingCircles}
-                className="w-full bg-[#0a0a0a] border border-[#21262d] rounded px-3 py-1.5 text-xs font-mono text-[#e6edf3] focus:outline-none focus:border-[#30363d]"
+                className="w-full bg-[#111117] border border-[#292630] rounded px-3 py-1.5 text-xs font-mono text-[#E7DED5] focus:outline-none focus:border-[#D77A35]"
               >
                 {loadingCircles ? (
                   <option value="">Loading circles...</option>
@@ -289,36 +289,36 @@ export default function SanctuaryPostStudio() {
             </div>
 
             {/* Title (optional) */}
-            <div className="py-2 border-b border-[#21262d]">
+            <div className="py-2 border-b border-[#292630]">
               <input
                 type="text"
                 placeholder="Title (optional)"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 maxLength={120}
-                className="w-full bg-transparent text-sm font-sans text-[#e6edf3] placeholder-[#484f58] focus:outline-none"
+                className="w-full bg-transparent text-sm font-mono text-[#E7DED5] placeholder-[#928B91] focus:outline-none"
               />
             </div>
 
             {/* Textarea or Preview */}
             <div className="py-3 min-h-[220px]">
               {preview ? (
-                <div className="min-h-[200px] p-3 rounded bg-[rgba(255,255,255,0.01)] border border-[#21262d]">
-                  <div className="text-[10px] uppercase font-mono text-[#8b949e] mb-2">
+                <div className="min-h-[200px] p-3 rounded bg-[#111117] border border-[#292630]">
+                  <div className="text-[10px] uppercase font-mono text-[#928B91] mb-2">
                     {room} &bull; {category}
                   </div>
                   {title && (
-                    <h3 className="text-sm font-sans font-medium text-[#e6edf3] mb-2">
+                    <h3 className="text-sm font-mono font-medium text-[#E7DED5] mb-2">
                       {title}
                     </h3>
                   )}
-                  <p className="text-xs sm:text-sm font-sans text-[#c9d1d9] whitespace-pre-wrap leading-relaxed">
+                  <p className="text-xs sm:text-sm font-mono text-[#E7DED5] whitespace-pre-wrap leading-relaxed">
                     {content || (
-                      <span className="text-[#484f58] italic">No text yet...</span>
+                      <span className="text-[#928B91] italic">No text yet...</span>
                     )}
                   </p>
                   {image && (
-                    <div className="mt-3 overflow-hidden rounded border border-[#21262d] max-h-72 flex items-center justify-center bg-black/40">
+                    <div className="mt-3 overflow-hidden rounded border border-[#292630] max-h-72 flex items-center justify-center bg-black/40">
                       <img
                         src={
                           typeof image === 'string'
@@ -339,23 +339,23 @@ export default function SanctuaryPostStudio() {
                   onChange={(e) => setContent(e.target.value)}
                   placeholder="What's on your mind?..."
                   rows={8}
-                  className="w-full bg-transparent text-xs sm:text-sm font-sans text-[#e6edf3] placeholder-[#484f58] leading-relaxed resize-none focus:outline-none"
+                  className="w-full bg-transparent text-xs sm:text-sm font-mono text-[#E7DED5] placeholder-[#928B91] leading-relaxed resize-none focus:outline-none"
                 />
               )}
             </div>
 
             {/* Optional Image */}
             {showImageUpload ? (
-              <div className="pt-2 pb-3 border-t border-[#21262d]">
+              <div className="pt-2 pb-3 border-t border-[#292630]">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-xs font-mono text-[#8b949e]">Image</span>
+                  <span className="text-xs font-mono text-[#928B91]">Image</span>
                   <button
                     type="button"
                     onClick={() => {
                       setImage(null);
                       setShowImageUpload(false);
                     }}
-                    className="text-xs font-mono text-[#6e7681] hover:text-[#e6edf3] flex items-center gap-1"
+                    className="text-xs font-mono text-[#928B91] hover:text-[#E7DED5] flex items-center gap-1"
                   >
                     <X size={12} />
                     <span>Cancel</span>
@@ -372,7 +372,7 @@ export default function SanctuaryPostStudio() {
                 <button
                   type="button"
                   onClick={() => setShowImageUpload(true)}
-                  className="flex items-center gap-1.5 text-xs font-mono text-[#6e7681] hover:text-[#8b949e] transition-colors"
+                  className="flex items-center gap-1.5 text-xs font-mono text-[#928B91] hover:text-[#E7DED5] transition-colors"
                 >
                   <ImageIcon size={13} />
                   <span>Add image</span>
@@ -381,8 +381,8 @@ export default function SanctuaryPostStudio() {
             )}
 
             {/* Footer */}
-            <div className="flex items-center justify-between pt-3 mt-2 border-t border-[#21262d]">
-              <div className="text-[11px] font-mono text-[#6e7681]">
+            <div className="flex items-center justify-between pt-3 mt-2 border-t border-[#292630]">
+              <div className="text-[11px] font-mono text-[#928B91]">
                 <span>{content.length}/5000</span>
                 {savedAt && <span className="ml-2">&bull; Saved {savedAt}</span>}
               </div>
@@ -391,7 +391,7 @@ export default function SanctuaryPostStudio() {
                 <button
                   type="button"
                   onClick={handleSaveDraft}
-                  className="flex items-center gap-1 px-3 py-1.5 rounded text-xs font-mono text-[#8b949e] hover:text-[#e6edf3] border border-[#21262d] hover:border-[#30363d] transition-colors"
+                  className="flex items-center gap-1 px-3 py-1.5 rounded text-xs font-mono text-[#928B91] hover:text-[#E7DED5] border border-[#292630] hover:border-[#D77A35] transition-colors"
                 >
                   <Bookmark size={12} />
                   <span>Save draft</span>
@@ -401,10 +401,10 @@ export default function SanctuaryPostStudio() {
                   type="button"
                   onClick={handlePublish}
                   disabled={content.trim().length < 10 || isSubmitting}
-                  className="flex items-center gap-1.5 px-4 py-1.5 rounded text-xs font-mono font-medium uppercase tracking-wider text-black bg-[#e6edf3] hover:bg-white active:scale-[0.98] transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+                  className="flex items-center gap-1.5 px-4 py-1.5 rounded text-xs font-mono font-medium uppercase tracking-wider text-[#E7DED5] bg-[#D77A35] hover:bg-[#c66e2e] active:scale-[0.98] transition-all disabled:opacity-40 disabled:cursor-not-allowed"
                 >
                   {isSubmitting ? (
-                    <span className="inline-block w-3.5 h-3.5 border-2 border-black border-t-transparent rounded-full animate-spin" />
+                    <span className="inline-block w-3.5 h-3.5 border-2 border-[#E7DED5] border-t-transparent rounded-full animate-spin" />
                   ) : (
                     <>
                       <Send size={11} />

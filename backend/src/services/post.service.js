@@ -160,16 +160,23 @@ export async function createPost({ content, room, title, circleId, category, ima
     climbState: undefined, // No state tracking for any room
     reactions: {
       // Dark Room reactions
+      sad: 0,
+      heartCrack: 0,
+      heartOff: 0,
       iFeelYou: 0,
       notGood: 0,
       youreNotAlone: 0,
       sendingStrength: 0,
       // Fantasy Room reactions
+      laugh: 0,
+      like: 0,
+      dislike: 0,
       vibe: 0,
       dream: 0,
       inspire: 0,
       wild: 0,
       // Philo Room reactions
+      lightbulb: 0,
       lamp: 0,
       spark: 0,
       clap: 0,

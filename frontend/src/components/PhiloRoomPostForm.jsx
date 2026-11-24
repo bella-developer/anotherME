@@ -176,12 +176,12 @@ const PhiloRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, onCir
       }}
     >
       <div
-        className="w-full max-w-md max-h-[85vh] overflow-y-auto"
+        className="w-full max-w-md max-h-[85vh] overflow-y-auto font-mono"
         style={{
-          background: '#0a0a0a',
+          background: '#191820',
           borderRadius: '8px',
           boxShadow: '0 0 40px rgba(0, 0, 0, 0.9)',
-          border: '1px solid rgba(255, 255, 255, 0.03)',
+          border: '1px solid #292630',
           animation: prefersReducedMotion ? 'none' : 'slideUp 250ms cubic-bezier(0.16, 1, 0.3, 1)',
           scrollbarWidth: 'none',
           msOverflowStyle: 'none',
@@ -194,18 +194,18 @@ const PhiloRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, onCir
         `}</style>
 
         {/* Header */}
-        <div className="flex items-center justify-between px-5 pt-5 pb-3">
-          <h2 className="text-white text-base font-medium">Philo Room</h2>
+        <div className="flex items-center justify-between px-5 pt-5 pb-3 border-b border-[#292630]">
+          <h2 className="text-[#E7DED5] text-sm font-semibold tracking-wider uppercase">Philo Room</h2>
           <button
             onClick={onClose}
             disabled={loading}
-            className="text-[#6b7280] hover:text-[#9ca3af] transition-colors disabled:opacity-50"
+            className="text-[#928B91] hover:text-[#E7DED5] transition-colors disabled:opacity-50"
           >
             <X className="w-4 h-4" />
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="px-5 pb-5 space-y-3">
+        <form onSubmit={handleSubmit} className="px-5 py-4 space-y-3">
           {/* Category */}
           <div className="flex gap-1.5">
             {categories.map((cat) => (
@@ -216,9 +216,9 @@ const PhiloRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, onCir
                 disabled={loading}
                 className="flex-1 py-1.5 rounded text-xs font-medium transition-all disabled:opacity-50"
                 style={{
-                  background: formData.category === cat.value ? 'rgba(99, 102, 241, 0.15)' : 'rgba(255, 255, 255, 0.02)',
-                  color: formData.category === cat.value ? '#6366F1' : '#6b7280',
-                  border: 'none',
+                  background: formData.category === cat.value ? 'rgba(119, 113, 217, 0.15)' : '#111117',
+                  color: formData.category === cat.value ? '#7771D9' : '#928B91',
+                  border: formData.category === cat.value ? '1px solid rgba(119, 113, 217, 0.3)' : '1px solid #292630',
                 }}
               >
                 {cat.label}
@@ -230,18 +230,18 @@ const PhiloRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, onCir
           <input
             type="text"
             name="title"
-            placeholder="Title"
+            placeholder="Title (optional)"
             value={formData.title}
             onChange={handleChange}
             disabled={loading}
-            className="w-full px-3 py-2 rounded text-sm transition-all disabled:opacity-50"
+            className="w-full px-3 py-2 rounded text-xs transition-all disabled:opacity-50"
             style={{
-              background: 'rgba(255, 255, 255, 0.02)',
-              border: '1px solid rgba(255, 255, 255, 0.06)',
-              color: '#e5e5e5',
+              background: '#111117',
+              border: '1px solid #292630',
+              color: '#E7DED5',
             }}
-            onFocus={(e) => e.target.style.borderColor = 'rgba(99, 102, 241, 0.25)'}
-            onBlur={(e) => e.target.style.borderColor = 'rgba(255, 255, 255, 0.06)'}
+            onFocus={(e) => e.target.style.borderColor = '#7771D9'}
+            onBlur={(e) => e.target.style.borderColor = '#292630'}
           />
 
           {/* Content */}
@@ -251,26 +251,26 @@ const PhiloRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, onCir
             value={formData.content}
             onChange={handleChange}
             disabled={loading}
-            className="w-full px-3 py-2.5 rounded text-sm resize-none transition-all disabled:opacity-50"
+            className="w-full px-3 py-2.5 rounded text-xs resize-none transition-all disabled:opacity-50"
             rows={5}
             style={{
-              background: 'rgba(255, 255, 255, 0.02)',
-              border: '1px solid rgba(255, 255, 255, 0.06)',
-              color: '#e5e5e5',
-              lineHeight: '1.5',
+              background: '#111117',
+              border: '1px solid #292630',
+              color: '#E7DED5',
+              lineHeight: '1.6',
             }}
-            onFocus={(e) => e.target.style.borderColor = 'rgba(99, 102, 241, 0.25)'}
-            onBlur={(e) => e.target.style.borderColor = 'rgba(255, 255, 255, 0.06)'}
+            onFocus={(e) => e.target.style.borderColor = '#7771D9'}
+            onBlur={(e) => e.target.style.borderColor = '#292630'}
           />
           <div className="flex items-center justify-between -mt-2 px-1">
             <span className="text-[10px]" style={{
-              color: contentValidation.status === 'valid' ? '#22c55e' : 
-                     contentValidation.status === 'tooShort' ? '#f59e0b' : 
-                     contentValidation.status === 'tooLong' ? '#ef4444' : '#6b7280'
+              color: contentValidation.status === 'valid' ? '#42B89A' : 
+                     contentValidation.status === 'tooShort' ? '#D6A45F' : 
+                     contentValidation.status === 'tooLong' ? '#B44A4A' : '#928B91'
             }}>
               {contentValidation.message}
             </span>
-            <span className="text-[10px] text-[#6b7280]">{formData.content.length}</span>
+            <span className="text-[10px] text-[#928B91]">{formData.content.length}</span>
           </div>
 
           {/* Image Upload */}
@@ -288,14 +288,14 @@ const PhiloRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, onCir
               value={formData.circleId}
               onChange={handleChange}
               disabled={loading || showCircleCreation}
-              className="w-full px-3 py-2 rounded text-sm transition-all disabled:opacity-50"
+              className="w-full px-3 py-2 rounded text-xs transition-all disabled:opacity-50"
               style={{
-                background: 'rgba(255, 255, 255, 0.02)',
-                border: '1px solid rgba(255, 255, 255, 0.06)',
-                color: formData.circleId ? '#e5e5e5' : '#6b7280',
+                background: '#111117',
+                border: '1px solid #292630',
+                color: formData.circleId ? '#E7DED5' : '#928B91',
               }}
-              onFocus={(e) => e.target.style.borderColor = 'rgba(99, 102, 241, 0.25)'}
-              onBlur={(e) => e.target.style.borderColor = 'rgba(255, 255, 255, 0.06)'}
+              onFocus={(e) => e.target.style.borderColor = '#7771D9'}
+              onBlur={(e) => e.target.style.borderColor = '#292630'}
             >
               <option value="">Select circle</option>
               {circles.filter(circle => circle.room === 'philo').map((circle) => (
@@ -311,7 +311,7 @@ const PhiloRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, onCir
                 onClick={() => setShowCircleCreation(true)}
                 disabled={loading}
                 className="text-[11px] mt-1.5 px-1 transition-colors disabled:opacity-50"
-                style={{ color: '#6366F1' }}
+                style={{ color: '#7771D9' }}
               >
                 + Create new circle
               </button>
@@ -319,8 +319,8 @@ const PhiloRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, onCir
 
             {showCircleCreation && (
               <div className="mt-2 space-y-2 p-3 rounded" style={{
-                background: 'rgba(99, 102, 241, 0.05)',
-                border: '1px solid rgba(99, 102, 241, 0.15)'
+                background: 'rgba(119, 113, 217, 0.05)',
+                border: '1px solid rgba(119, 113, 217, 0.2)'
               }}>
                 <input
                   type="text"
@@ -330,9 +330,9 @@ const PhiloRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, onCir
                   disabled={creatingCircle}
                   className="w-full px-2.5 py-1.5 rounded text-xs disabled:opacity-50"
                   style={{
-                    background: 'rgba(0, 0, 0, 0.3)',
-                    border: '1px solid rgba(255, 255, 255, 0.1)',
-                    color: '#e5e5e5',
+                    background: '#111117',
+                    border: '1px solid #292630',
+                    color: '#E7DED5',
                   }}
                 />
                 <textarea
@@ -343,13 +343,13 @@ const PhiloRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, onCir
                   rows={2}
                   className="w-full px-2.5 py-1.5 rounded text-xs resize-none disabled:opacity-50"
                   style={{
-                    background: 'rgba(0, 0, 0, 0.3)',
-                    border: '1px solid rgba(255, 255, 255, 0.1)',
-                    color: '#e5e5e5',
+                    background: '#111117',
+                    border: '1px solid #292630',
+                    color: '#E7DED5',
                   }}
                 />
                 {circleError && (
-                  <div className="text-[10px]" style={{ color: '#ef4444' }}>
+                  <div className="text-[10px]" style={{ color: '#B44A4A' }}>
                     {circleError}
                   </div>
                 )}
@@ -360,8 +360,8 @@ const PhiloRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, onCir
                     disabled={creatingCircle}
                     className="flex-1 px-3 py-1.5 rounded text-xs font-medium transition-all disabled:opacity-50"
                     style={{
-                      background: '#6366F1',
-                      color: '#000',
+                      background: '#7771D9',
+                      color: '#E7DED5',
                     }}
                   >
                     {creatingCircle ? 'Creating...' : 'Create'}
@@ -376,8 +376,8 @@ const PhiloRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, onCir
                     disabled={creatingCircle}
                     className="px-3 py-1.5 rounded text-xs transition-all disabled:opacity-50"
                     style={{
-                      background: 'rgba(255, 255, 255, 0.05)',
-                      color: '#9ca3af',
+                      background: '#292630',
+                      color: '#928B91',
                     }}
                   >
                     Cancel
@@ -390,8 +390,8 @@ const PhiloRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, onCir
           {/* Error */}
           {error && (
             <div className="px-3 py-1.5 rounded text-[11px]" style={{
-              background: 'rgba(239, 68, 68, 0.1)',
-              color: '#ef4444',
+              background: 'rgba(180, 74, 74, 0.1)',
+              color: '#B44A4A',
             }}>
               {error}
             </div>
@@ -401,10 +401,10 @@ const PhiloRoomPostForm = ({ isOpen, onClose, circles = [], onPostCreated, onCir
           <button
             type="submit"
             disabled={loading || !isFormReady()}
-            className="w-full py-2.5 rounded font-medium text-sm transition-all disabled:opacity-40"
+            className="w-full py-2.5 rounded font-medium text-xs uppercase tracking-wider transition-all disabled:opacity-40"
             style={{
-              background: !isFormReady() ? 'rgba(255, 255, 255, 0.03)' : '#6366F1',
-              color: !isFormReady() ? '#6b7280' : '#000',
+              background: !isFormReady() ? '#292630' : '#7771D9',
+              color: !isFormReady() ? '#928B91' : '#E7DED5',
               cursor: !isFormReady() ? 'not-allowed' : 'pointer',
             }}
           >

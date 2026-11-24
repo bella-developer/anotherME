@@ -5,7 +5,7 @@ import { createComment, createReply } from '../features/commentsSlice';
 /**
  * CommentForm Component
  * Inline textarea for creating comments or replies
- * Requirements: 27.7
+ * Obsidian Theme: Deep charcoal surface, warm ivory text, burnt orange action
  */
 const CommentForm = memo(({ postId, commentId, onSuccess, onCancel }) => {
   const dispatch = useDispatch();
@@ -87,35 +87,35 @@ const CommentForm = memo(({ postId, commentId, onSuccess, onCancel }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-2">
+    <form onSubmit={handleSubmit} className="space-y-2 font-mono">
       {/* Textarea */}
       <div className="relative">
         <textarea
           value={content}
           onChange={handleContentChange}
           onKeyDown={handleKeyDown}
-          placeholder={commentId ? 'Write a reply...' : 'Write a comment...'}
-          className={`w-full bg-[#1a1a1a] text-[#e5e5e5] rounded-lg px-3 py-2 text-sm
+          placeholder={commentId ? 'Write a quiet reply...' : 'Leave a thought...'}
+          className={`w-full bg-[#111117] text-[#E7DED5] rounded-lg px-3 py-2 text-xs sm:text-sm
             border transition-all duration-200 resize-none
-            placeholder:text-[#4a4a4a] placeholder:italic
-            focus:outline-none focus:ring-2 focus:ring-[#8b5cf6] focus:ring-opacity-50
-            ${error ? 'border-red-500' : 'border-[#2a2a2a]'}
+            placeholder:text-[#928B91]
+            focus:outline-none focus:border-[#D77A35]
+            ${error ? 'border-red-500' : 'border-[#292630]'}
             ${isOverLimit ? 'border-red-500' : ''}
           `}
           rows={3}
           disabled={isSubmitting}
-          style={{ minHeight: '100px' }}
+          style={{ minHeight: '90px' }}
         />
 
         {/* Character counter */}
         <div className="absolute bottom-2 right-2">
           <span
-            className={`text-xs transition-colors duration-200 ${
+            className={`text-[10px] ${
               isOverLimit
-                ? 'text-red-500 font-bold'
+                ? 'text-red-400 font-bold'
                 : isNearLimit
-                ? 'text-yellow-500'
-                : 'text-[#a3a3a3]'
+                ? 'text-[#D6A45F]'
+                : 'text-[#928B91]'
             }`}
           >
             {remainingChars}
@@ -125,7 +125,7 @@ const CommentForm = memo(({ postId, commentId, onSuccess, onCancel }) => {
 
       {/* Error message */}
       {error && (
-        <div className="text-red-500 text-xs">
+        <div className="text-red-400 text-xs">
           {error}
         </div>
       )}
@@ -135,18 +135,18 @@ const CommentForm = memo(({ postId, commentId, onSuccess, onCancel }) => {
         <button
           type="submit"
           disabled={!isValid || isSubmitting}
-          className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200
+          className={`px-4 py-1.5 rounded text-xs uppercase tracking-wider font-medium transition-all duration-200
             ${
               !isValid || isSubmitting
-                ? 'bg-[#2a2a2a] text-[#a3a3a3] cursor-not-allowed'
-                : 'bg-[#8b5cf6] text-white hover:bg-[#9d6fff] hover:scale-105 active:scale-95'
+                ? 'bg-[#292630] text-[#928B91] cursor-not-allowed'
+                : 'bg-[#D77A35] text-[#E7DED5] hover:bg-[#c66e2e] active:scale-95'
             }
           `}
         >
           {isSubmitting ? (
-            <span className="flex items-center gap-2">
+            <span className="flex items-center gap-1.5">
               <svg
-                className="animate-spin h-4 w-4"
+                className="animate-spin h-3.5 w-3.5"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
@@ -165,21 +165,21 @@ const CommentForm = memo(({ postId, commentId, onSuccess, onCancel }) => {
                   d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                 />
               </svg>
-              Posting...
+              <span>Sending...</span>
             </span>
           ) : (
-            'Post Reply'
+            commentId ? 'Reply' : 'Post Comment'
           )}
         </button>
 
-        {/* Cancel button (only show if onCancel is provided) */}
+        {/* Cancel button */}
         {onCancel && (
           <button
             type="button"
             onClick={handleCancel}
             disabled={isSubmitting}
-            className="px-4 py-2 rounded-lg text-sm font-medium text-[#a3a3a3] 
-              hover:text-white transition-colors duration-200
+            className="px-3 py-1.5 rounded text-xs uppercase tracking-wider font-medium text-[#928B91] 
+              hover:text-[#E7DED5] transition-colors duration-200
               disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Cancel
