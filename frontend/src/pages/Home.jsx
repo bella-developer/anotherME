@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion, useReducedMotion } from 'framer-motion';
 import Layout from '../components/Layout';
 import PageTransition from '../components/PageTransition';
+import HomeTour from '../components/HomeTour';
 import { usePageTitle } from '../hooks/usePageTitle';
 
 const rooms = [
@@ -90,7 +91,7 @@ function Home() {
             </motion.p>
           </section>
 
-          <section className="eso-rooms" aria-label="Choose a room">
+          <section className="eso-rooms" data-tour="rooms" aria-label="Choose a room">
             {rooms.map((room, index) => (
               <motion.article
                 key={room.id}
@@ -162,6 +163,7 @@ function Home() {
             <p>This is your space. Take your time.</p>
           </motion.footer>
         </main>
+        <HomeTour />
 
         <style>{`
           .eso-home {

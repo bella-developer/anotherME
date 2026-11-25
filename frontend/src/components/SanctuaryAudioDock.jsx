@@ -84,6 +84,7 @@ export default function SanctuaryAudioDock() {
 
   return (
     <aside
+      data-tour="audio-dock"
       className="fixed bottom-24 right-3 sm:bottom-4 sm:right-4 z-40 max-w-sm"
       aria-label="Background Sound Player"
     >

@@ -89,6 +89,7 @@ function Navbar() {
             </Link>
             <Link
               to="/circles"
+              data-tour="circles"
               className="text-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white/50 rounded px-2 py-1 tracking-wider uppercase text-white/85 hover:text-white font-medium"
               role="menuitem"
             >
@@ -98,6 +99,7 @@ function Navbar() {
               <>
                 <Link
                   to="/create"
+                  data-tour="create"
                   className="text-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white/50 rounded px-2 py-1 tracking-wider uppercase text-white/85 hover:text-white font-medium"
                   role="menuitem"
                   title="Create Post"
@@ -138,6 +140,7 @@ function Navbar() {
             {isAuthenticated ? (
               <Link
                 to="/profile"
+                data-tour="profile"
                 className="relative w-9 h-9 rounded-full bg-black flex items-center justify-center hover:opacity-80 transition-opacity"
                 aria-label={`Profile: ${user?.username || 'User'}`}
               >
@@ -162,6 +165,7 @@ function Navbar() {
           {/* Mobile Hamburger Menu - Increased touch target */}
           <button
             onClick={toggleMobileMenu}
+            data-tour="mobile-menu"
             className="md:hidden focus:outline-none focus:ring-2 focus:ring-offset-2 rounded p-2 min-h-touch min-w-touch flex items-center justify-center text-white focus:ring-white/50 focus:ring-offset-black"
             aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
             aria-expanded={isMobileMenuOpen}
