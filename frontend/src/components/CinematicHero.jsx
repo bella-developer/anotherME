@@ -1,5 +1,24 @@
 import { memo, useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import {
+  Aperture,
+  AudioLines,
+  Compass,
+  Flame,
+  HeartHandshake,
+  HelpCircle,
+  Sparkles,
+} from 'lucide-react';
+
+const VAULT_ICONS = {
+  welcome: Aperture,
+  'dark-confession': Flame,
+  'dark-understanding': HeartHandshake,
+  'fantasy-daydream': Sparkles,
+  'fantasy-vibes': AudioLines,
+  'philo-questioning': HelpCircle,
+  'philo-truth': Compass,
+};
 
 /* ESO — BLACK VAULT | Responsive cinematic hero
    Mobile: notes, video, vault in one column.
@@ -197,41 +216,49 @@ function StickyWall({activeEntry,selectEntry,compact=false}) {
 }
 
 function VaultCard({active,navigate,compact=false}) {
+  const Icon = VAULT_ICONS[active.id] || Aperture;
+  const accent = active.quoteHighlightColor || '#FF7A1A';
+
   return <button 
     type="button" 
     onClick={()=>navigate('/login')} 
-    className={`group relative mx-auto block w-full overflow-hidden rounded-lg border border-white/[0.1] text-left transition-all duration-300 hover:border-[#DB762E]/50 focus-visible:outline focus-visible:outline-1 focus-visible:outline-[#DB762E] ${
+    className={`group relative mx-auto block w-full overflow-hidden rounded-lg border border-white/[0.1] text-left transition-all duration-300 focus-visible:outline focus-visible:outline-1 ${
       compact ? 'max-w-[380px] px-3.5 py-2.5' : 'max-w-[310px] px-3.5 py-2.5'
     }`}
     style={{
-      background: 'linear-gradient(90deg, rgba(219, 118, 46, 0.1) 0%, rgba(14, 13, 18, 0.88) 28%, rgba(10, 10, 14, 0.92) 100%)',
+      background: `linear-gradient(90deg, ${accent}18 0%, rgba(14, 13, 18, 0.88) 28%, rgba(10, 10, 14, 0.92) 100%)`,
       backdropFilter: 'blur(14px)',
       WebkitBackdropFilter: 'blur(14px)',
       boxShadow: '0 10px 28px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.05)',
+      outlineColor: accent,
     }}
   >
-    {/* Left warm orange edge accent */}
+    {/* Left accent bar */}
     <span
       aria-hidden="true"
-      className="pointer-events-none absolute left-0 top-2 bottom-2 w-[2px] rounded-full bg-[#DB762E]"
-      style={{ boxShadow: '0 0 10px rgba(219, 118, 46, 0.9)' }}
+      className="pointer-events-none absolute left-0 top-2 bottom-2 w-[2px] rounded-full transition-colors duration-300"
+      style={{ backgroundColor: accent, boxShadow: `0 0 10px ${accent}cc` }}
     />
 
     <div className="flex items-center justify-between gap-3 pl-1">
       <div className="flex items-center gap-3 min-w-0 flex-1">
-        {/* Glowing burnt-orange waveform emblem */}
+        {/* Per-note vector icon emblem */}
         <span
           aria-hidden="true"
-          className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-md bg-[#DB762E]/10 border border-[#DB762E]/25"
+          className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-md transition-colors duration-300"
+          style={{
+            backgroundColor: `${accent}18`,
+            border: `1px solid ${accent}40`,
+          }}
         >
-          <svg viewBox="0 0 24 20" width="16" height="14" className="overflow-visible" style={{ filter: 'drop-shadow(0 0 4px rgba(219, 118, 46, 0.7))' }}>
-            <rect x="1" y="8" width="2" height="4" rx="1" fill="#DB762E" opacity="0.7" />
-            <rect x="5" y="5" width="2" height="10" rx="1" fill="#DB762E" opacity="0.85" />
-            <rect x="9" y="2" width="2" height="16" rx="1" fill="#E88438" />
-            <rect x="13" y="4" width="2" height="12" rx="1" fill="#E88438" />
-            <rect x="17" y="6" width="2" height="8" rx="1" fill="#DB762E" opacity="0.85" />
-            <rect x="21" y="8" width="2" height="4" rx="1" fill="#DB762E" opacity="0.7" />
-          </svg>
+          <Icon
+            size={14}
+            strokeWidth={1.75}
+            style={{
+              color: accent,
+              filter: `drop-shadow(0 0 4px ${accent}99)`,
+            }}
+          />
         </span>
 
         <div className="min-w-0 flex-1">
@@ -244,7 +271,10 @@ function VaultCard({active,navigate,compact=false}) {
         </div>
       </div>
 
-      <span className="font-mono text-[9px] uppercase tracking-[0.16em] text-[#DB762E] group-hover:translate-x-0.5 transition-transform flex items-center gap-1 flex-shrink-0">
+      <span
+        className="font-mono text-[9px] uppercase tracking-[0.16em] group-hover:translate-x-0.5 transition-transform flex items-center gap-1 flex-shrink-0"
+        style={{ color: accent }}
+      >
         <span>Enter</span>
         <span>→</span>
       </span>

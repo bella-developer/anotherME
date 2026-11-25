@@ -285,20 +285,20 @@ function Home() {
 
           .eso-room__corner {
             position: absolute;
-            width: 8px;
-            height: 8px;
+            width: 13px;
+            height: 13px;
             border-color: var(--room-glow);
             border-style: solid;
             border-width: 0;
-            opacity: .92;
+            opacity: .88;
             filter: drop-shadow(0 0 3px rgba(var(--room-rgb), .32));
             transition: transform .35s ease, filter .35s ease, opacity .35s ease;
           }
 
-          .eso-room__corner--tl { top: -1px; left: -1px; border-top-width: 3px; border-left-width: 3px; }
-          .eso-room__corner--tr { top: -1px; right: -1px; border-top-width: 3px; border-right-width: 3px; }
-          .eso-room__corner--bl { bottom: -1px; left: -1px; border-bottom-width: 3px; border-left-width: 3px; }
-          .eso-room__corner--br { bottom: -1px; right: -1px; border-bottom-width: 3px; border-right-width: 3px; }
+          .eso-room__corner--tl { top: 8px; left: 8px; border-top-width: 2.5px; border-left-width: 2.5px; }
+          .eso-room__corner--tr { top: 8px; right: 8px; border-top-width: 2.5px; border-right-width: 2.5px; }
+          .eso-room__corner--bl { bottom: 8px; left: 8px; border-bottom-width: 2.5px; border-left-width: 2.5px; }
+          .eso-room__corner--br { bottom: 8px; right: 8px; border-bottom-width: 2.5px; border-right-width: 2.5px; }
 
           .eso-room__scene {
             position: absolute;
@@ -307,7 +307,7 @@ function Home() {
             display: block;
             overflow: hidden;
             background: #080909;
-            border: 1px solid rgba(255, 255, 255, .04);
+            border: 1px solid rgba(255, 255, 255, .08);
             box-shadow: inset 0 0 40px #000;
             transition: border-color .45s ease;
           }
@@ -356,24 +356,24 @@ function Home() {
 
           .eso-room__portal:hover .eso-room__corner--tl,
           .eso-room.is-hovered .eso-room__corner--tl,
-          .eso-room__portal:focus-visible .eso-room__corner--tl { transform: translate(-2px, -2px); }
+          .eso-room__portal:focus-visible .eso-room__corner--tl { transform: translate(2px, 2px); }
 
           .eso-room__portal:hover .eso-room__corner--tr,
           .eso-room.is-hovered .eso-room__corner--tr,
-          .eso-room__portal:focus-visible .eso-room__corner--tr { transform: translate(2px, -2px); }
+          .eso-room__portal:focus-visible .eso-room__corner--tr { transform: translate(-2px, 2px); }
 
           .eso-room__portal:hover .eso-room__corner--bl,
           .eso-room.is-hovered .eso-room__corner--bl,
-          .eso-room__portal:focus-visible .eso-room__corner--bl { transform: translate(-2px, 2px); }
+          .eso-room__portal:focus-visible .eso-room__corner--bl { transform: translate(2px, -2px); }
 
           .eso-room__portal:hover .eso-room__corner--br,
           .eso-room.is-hovered .eso-room__corner--br,
-          .eso-room__portal:focus-visible .eso-room__corner--br { transform: translate(2px, 2px); }
+          .eso-room__portal:focus-visible .eso-room__corner--br { transform: translate(-2px, -2px); }
 
           .eso-room__portal:hover .eso-room__scene,
           .eso-room.is-hovered .eso-room__scene,
           .eso-room__portal:focus-visible .eso-room__scene {
-            border-color: rgba(var(--room-rgb), .18);
+            border-color: rgba(var(--room-rgb), .24);
           }
 
           .eso-room__portal:hover .eso-room__video,
@@ -499,7 +499,11 @@ function Home() {
             }
             .eso-room { --scene-inset: 13px; }
             .eso-room__portal { aspect-ratio: 1.5 / 1; }
-            .eso-room__corner { width: 7px; height: 7px; }
+            .eso-room__corner { width: 10px; height: 10px; }
+            .eso-room__corner--tl { top: 6px; left: 6px; }
+            .eso-room__corner--tr { top: 6px; right: 6px; }
+            .eso-room__corner--bl { bottom: 6px; left: 6px; }
+            .eso-room__corner--br { bottom: 6px; right: 6px; }
             .eso-room__copy { padding-top: 1.15rem; }
             .eso-room__name-row h2 { font-size: 1.08rem; letter-spacing: .22em; }
             .eso-enter { margin-top: .65rem; }
