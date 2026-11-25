@@ -1,6 +1,7 @@
 import express from 'express';
 import * as commentController from '../controllers/comment.controller.js';
 import { authenticate } from '../middlewares/auth.middleware.js';
+import upload from '../middlewares/upload.middleware.js';
 import {
   validateCreateComment,
   validateCreateReply,
@@ -61,6 +62,7 @@ router.get(
 router.post(
   '/comments/:commentId/replies',
   authenticate,
+  upload.single('image'),
   commentCreationRateLimiter,
   noCache(),
   validateCreateReply,

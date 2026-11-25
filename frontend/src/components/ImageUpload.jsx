@@ -5,7 +5,7 @@ import { FaImage, FaTimes } from 'react-icons/fa';
  * ImageUpload Component
  * Compact image upload with drag & drop and preview
  */
-const ImageUpload = ({ onImageSelect, onImageSelected, onImageRemove, disabled = false, existingImage = null }) => {
+const ImageUpload = ({ onImageSelect, onImageSelected, onImageRemove, disabled = false, existingImage = null, variant = 'default' }) => {
   const [preview, setPreview] = useState(null);
   const [fileName, setFileName] = useState('');
   const [isDragging, setIsDragging] = useState(false);
@@ -125,6 +125,50 @@ const ImageUpload = ({ onImageSelect, onImageSelected, onImageRemove, disabled =
       fileInputRef.current.click();
     }
   };
+
+  if (variant === 'tiny') {
+    return (
+      <div className="relative inline-flex items-center flex-shrink-0">
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept="image/jpeg,image/jpg,image/png,image/gif,image/webp"
+          onChange={handleFileChange}
+          className="hidden"
+          disabled={disabled}
+        />
+        {!preview ? (
+          <button
+            type="button"
+            onClick={handleClick}
+            disabled={disabled}
+            className="w-6 h-6 rounded flex items-center justify-center text-[#928B91] hover:text-[#E7DED5] hover:bg-white/[0.06] transition-all disabled:opacity-30"
+            title="Attach image or GIF (max 5MB)"
+            aria-label="Attach image or GIF"
+          >
+            <FaImage size={11} className="opacity-80 hover:opacity-100" />
+          </button>
+        ) : (
+          <div className="relative inline-flex items-center gap-1 p-0.5 rounded border border-white/10 bg-white/[0.06]">
+            <img
+              src={preview}
+              alt="Attachment"
+              className="w-5 h-5 object-cover rounded"
+            />
+            <button
+              type="button"
+              onClick={handleRemove}
+              disabled={disabled}
+              className="w-3.5 h-3.5 rounded-full flex items-center justify-center bg-black/60 hover:bg-red-500 text-white/80 hover:text-white transition-all text-[8px]"
+              title="Remove attachment"
+            >
+              <FaTimes size={7} />
+            </button>
+          </div>
+        )}
+      </div>
+    );
+  }
 
   return (
     <div className="w-full">

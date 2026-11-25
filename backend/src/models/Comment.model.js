@@ -43,15 +43,24 @@ const commentSchema = new mongoose.Schema(
     // Original content (before sanitization)
     content: {
       type: String,
-      required: true,
-      minlength: 1,
+      default: '',
       maxlength: 2000
     },
 
     // HTML-sanitized content for safe display
     contentSanitized: {
       type: String,
-      required: true
+      default: ''
+    },
+
+    // Optional image or GIF attachment
+    image: {
+      type: String,
+      default: null
+    },
+    imageUrl: {
+      type: String,
+      default: null
     },
 
     // Nesting depth (0 for top-level, max 5)

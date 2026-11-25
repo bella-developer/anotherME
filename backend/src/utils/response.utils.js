@@ -268,6 +268,8 @@ export function sanitizeComment(comment, options = {}) {
       resonate: commentData.reactions?.resonate || 0,
       echo: commentData.reactions?.echo || 0
     },
+    image: commentData.image || commentData.imageUrl || null,
+    imageUrl: commentData.imageUrl || commentData.image || null,
     replyCount: commentData.replyCount || 0,
     createdAt: commentData.createdAt,
     // Never include: _id, postId, authorId, parentId (raw), content (unsanitized), updatedAt
@@ -312,6 +314,8 @@ export function sanitizeCircleComment(comment, options = {}) {
       resonate: commentData.reactions?.resonate || 0,
       echo: commentData.reactions?.echo || 0
     },
+    image: commentData.image || commentData.imageUrl || null,
+    imageUrl: commentData.imageUrl || commentData.image || null,
     replyCount: commentData.replyCount || 0,
     createdAt: commentData.createdAt,
     // Never include: _id, postId, authorId (raw), parentId (raw), content (unsanitized), updatedAt

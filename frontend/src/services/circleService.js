@@ -241,22 +241,29 @@ export const createCircleComment = async (circleId, content, postId = null) => {
  * @param {string} content - Reply content (1-2000 chars)
  * @returns {Promise<Object>} Created reply data
  */
-export const createCommentReply = async (commentId, content) => {
+export const createCommentReply = async (commentId, content, image = null) => {
   try {
     if (!commentId) {
       throw new Error('Comment ID is required');
     }
-    if (!content) {
-      throw new Error('Content is required');
+    const hasContent = Boolean(content && typeof content === 'string' && content.trim());
+    if (!hasContent && !image) {
+      throw new Error('Content or attachment is required');
     }
 
-    if (content.length < 1 || content.length > 2000) {
-      throw new Error('Content must be between 1 and 2000 characters');
+    let response;
+    if (image && typeof File !== 'undefined' && image instanceof File) {
+      const formData = new FormData();
+      formData.append('content', content || '');
+      formData.append('image', image);
+      response = await apiClient.post(`/comments/${commentId}/replies`, formData);
+    } else {
+      const payload = { content: content || '' };
+      if (image && typeof image === 'string') {
+        payload.image = image;
+      }
+      response = await apiClient.post(`/comments/${commentId}/replies`, payload);
     }
-
-    const response = await apiClient.post(`/comments/${commentId}/replies`, {
-      content,
-    });
     
     // Response format: { status: 'success', data: {...} }
     const responseData = response.data?.data || response.data;

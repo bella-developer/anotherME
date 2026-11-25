@@ -19,14 +19,14 @@ const SANITIZATION_CONFIG = {
   // Allowed HTML tags
   ALLOWED_TAGS: [
     'p', 'br', 'strong', 'em', 'u', 's', 'blockquote',
-    'ul', 'ol', 'li', 'a', 'code', 'pre'
+    'ul', 'ol', 'li', 'a', 'code', 'pre', 'img'
   ],
   
   // Allowed attributes per tag
-  ALLOWED_ATTR: ['href', 'title'],
+  ALLOWED_ATTR: ['href', 'title', 'src', 'alt', 'class', 'style'],
   
   // Allowed URI schemes for links
-  ALLOWED_URI_REGEXP: /^(?:(?:https?|mailto):)/i,
+  ALLOWED_URI_REGEXP: /^(?:(?:https?|mailto|data):)/i,
   
   // Keep content of removed tags
   KEEP_CONTENT: true,
@@ -131,8 +131,8 @@ export function sanitizeCommentContent(content) {
   // Use more restrictive config for comments
   const commentConfig = {
     ...SANITIZATION_CONFIG,
-    ALLOWED_TAGS: ['strong', 'em', 'u', 's', 'code', 'a', 'br'],
-    ALLOWED_ATTR: ['href']
+    ALLOWED_TAGS: ['strong', 'em', 'u', 's', 'code', 'a', 'br', 'img'],
+    ALLOWED_ATTR: ['href', 'src', 'alt', 'class', 'style']
   };
   
   const trimmed = content.trim();

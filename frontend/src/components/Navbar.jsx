@@ -62,7 +62,7 @@ function Navbar() {
         background: 'rgba(9, 9, 13, 0.95)', 
         backdropFilter: 'blur(20px)',
         WebkitBackdropFilter: 'blur(20px)',
-        borderBottom: '1px solid #292630',
+        borderBottom: 'none',
       }}
       role="navigation"
       aria-label="Main navigation"

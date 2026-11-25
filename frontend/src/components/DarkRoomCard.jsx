@@ -45,7 +45,8 @@ function DarkRoomCard({ post, onReaction, onEdit, onDelete }) {
         background: 'transparent',
         backdropFilter: 'blur(16px)',
         WebkitBackdropFilter: 'blur(16px)',
-        boxShadow: '0 0 0 1px rgba(255, 255, 255, 0.1)',
+        border: '1px solid rgba(255, 255, 255, 0.06)',
+        boxShadow: 'none',
         minHeight: imageUrl ? '420px' : 'auto',
       }}
     >

@@ -2,7 +2,18 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { FaStar } from 'react-icons/fa';
-import { ChevronsRight, ArrowUp } from 'lucide-react';
+import { 
+  ChevronsRight, 
+  ArrowUp,
+  Frown,
+  HeartCrack,
+  HeartOff,
+  Smile,
+  ThumbsUp,
+  ThumbsDown,
+  Lightbulb
+} from 'lucide-react';
+import ImageUpload from '../components/ImageUpload';
 import { selectAuth } from '../features/authSlice';
 import PageTransition from '../components/PageTransition';
 import LoadingSpinner from '../components/LoadingSpinner';
@@ -11,6 +22,16 @@ import LevelBadge from '../components/LevelBadge';
 import Layout from '../components/Layout';
 import { usePageTitle } from '../hooks/usePageTitle';
 import { fetchCircleById, fetchCircleComments, createCircleComment, fetchCircleTopicPosts } from '../services/circleService';
+
+const REPLY_REACTION_EMOJIS = [
+  { icon: HeartCrack, emoji: '💔', label: 'Heart Break' },
+  { icon: HeartOff, emoji: '❤️‍🩹', label: 'Hurt' },
+  { icon: Frown, emoji: '😔', label: 'Sad' },
+  { icon: Smile, emoji: '😊', label: 'Laugh' },
+  { icon: ThumbsUp, emoji: '👍', label: 'Like' },
+  { icon: ThumbsDown, emoji: '👎', label: 'Dislike' },
+  { icon: Lightbulb, emoji: '💡', label: 'Insight' },
+];
 
 const roomAccent = {
   dark:  '#B44A4A',
@@ -464,6 +485,7 @@ function CommentItem({ comment, depth, circleId, accent, topicAuthorUsername }) 
   const { user } = useSelector(selectAuth);
   const [showReplyForm, setShowReplyForm] = useState(false);
   const [replyContent, setReplyContent] = useState('');
+  const [replyImage, setReplyImage] = useState(null);
   const [submitting, setSubmitting] = useState(false);
   const [replies, setReplies] = useState(comment.replies || []);
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -512,13 +534,18 @@ function CommentItem({ comment, depth, circleId, accent, topicAuthorUsername }) 
     }
   };
 
+  const handleAddEmoji = (emoji) => {
+    setReplyContent((prev) => (prev ? `${prev} ${emoji}` : emoji));
+  };
+
   const handleReplySubmit = async (e) => {
-    e.preventDefault();
-    if (!replyContent.trim() || submitting) return;
+    if (e?.preventDefault) e.preventDefault();
+    const trimmed = replyContent.trim();
+    if ((!trimmed && !replyImage) || submitting) return;
     try {
       setSubmitting(true);
       const { createCommentReply } = await import('../services/circleService');
-      const newReply = await createCommentReply(comment.id, replyContent);
+      const newReply = await createCommentReply(comment.id, trimmed, replyImage);
       
       // Optimistically update UI immediately
       setReplyCount(p => p + 1);
@@ -530,6 +557,7 @@ function CommentItem({ comment, depth, circleId, accent, topicAuthorUsername }) 
       });
       
       setReplyContent('');
+      setReplyImage(null);
       setShowReplyForm(false);
     } catch (err) {
       setReplyCount(p => Math.max(0, p - 1));
@@ -634,9 +662,24 @@ function CommentItem({ comment, depth, circleId, accent, topicAuthorUsername }) 
 
         {/* Content */}
         <div
-          className="text-[#E7DED5]/90 text-xs sm:text-sm leading-relaxed mb-3 pl-8 font-sans"
+          className="text-[#E7DED5]/90 text-xs sm:text-sm leading-relaxed mb-2 pl-8 font-sans"
           dangerouslySetInnerHTML={{ __html: comment.isDeleted ? '<em style="color:rgba(255,255,255,0.25)">[deleted]</em>' : comment.content }}
         />
+
+        {/* Attached Image or GIF */}
+        {!comment.isDeleted && (comment.image || comment.imageUrl) && (
+          <div className="mb-2.5 pl-8">
+            <div className="max-w-[200px] sm:max-w-[240px] rounded-lg overflow-hidden border border-white/[0.08] bg-black/40">
+              <img 
+                src={comment.image || comment.imageUrl} 
+                alt="Attachment" 
+                className="w-full max-h-44 object-cover rounded cursor-pointer transition-transform hover:scale-[1.02]"
+                onClick={() => window.open(comment.image || comment.imageUrl, '_blank')}
+                loading="lazy" 
+              />
+            </div>
+          </div>
+        )}
 
         {/* Actions Bar */}
         {!comment.isDeleted && (
@@ -702,45 +745,75 @@ function CommentItem({ comment, depth, circleId, accent, topicAuthorUsername }) 
 
         {/* Reply form */}
         {showReplyForm && (
-          <div className="mt-3.5 pl-8">
+          <div className="mt-2 pl-8">
             <div 
-              className="p-2 rounded-lg border border-white/10"
+              className="p-1.5 rounded-lg border border-white/[0.08] transition-all"
               style={{
                 backgroundColor: 'rgba(0, 0, 0, 0.45)',
               }}
             >
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1.5">
                 <textarea
                   value={replyContent}
                   onChange={(e) => setReplyContent(e.target.value)}
                   onKeyDown={handleReplyKey}
-                  placeholder="add your thought..."
-                  className="flex-1 text-[#E7DED5] text-xs resize-none focus:outline-none placeholder-white/20 bg-transparent leading-relaxed"
+                  placeholder="reply or react..."
+                  className="flex-1 text-[#E7DED5] text-xs resize-none focus:outline-none placeholder-white/20 bg-transparent leading-relaxed py-0.5 px-1.5"
                   rows={1}
                   maxLength={2000}
-                  style={{ minHeight: '30px', maxHeight: '80px' }}
+                  style={{ minHeight: '26px', maxHeight: '56px' }}
                 />
+
+                {/* Tiny Image / GIF attachment */}
+                <ImageUpload
+                  variant="tiny"
+                  onImageSelect={(file) => setReplyImage(file)}
+                  onImageRemove={() => setReplyImage(null)}
+                  existingImage={replyImage}
+                  disabled={submitting}
+                />
+
+                {/* Send button */}
                 <button
                   type="submit"
                   onClick={handleReplySubmit}
-                  disabled={!replyContent.trim() || submitting}
-                  className="w-7 h-7 rounded-lg flex items-center justify-center transition-all disabled:opacity-25 hover:scale-105 active:scale-95 flex-shrink-0"
+                  disabled={(!replyContent.trim() && !replyImage) || submitting}
+                  className="w-6 h-6 rounded-md flex items-center justify-center transition-all disabled:opacity-20 hover:scale-105 active:scale-95 flex-shrink-0"
                   style={{ 
-                    backgroundColor: replyContent.trim() ? accent : 'rgba(255, 255, 255, 0.05)', 
-                    color: replyContent.trim() ? '#ffffff' : 'rgba(255, 255, 255, 0.4)',
+                    backgroundColor: (replyContent.trim() || replyImage) ? accent : 'rgba(255, 255, 255, 0.05)', 
+                    color: (replyContent.trim() || replyImage) ? '#ffffff' : 'rgba(255, 255, 255, 0.4)',
                   }}
                   title="Reply"
                 >
                   {submitting ? (
-                    <span className="text-[10px]">···</span>
+                    <span className="text-[9px]">···</span>
                   ) : (
-                    <ArrowUp className="w-3.5 h-3.5 stroke-[2.5]" />
+                    <ArrowUp className="w-3 h-3 stroke-[2.5]" />
                   )}
                 </button>
               </div>
-              <div className="flex items-center justify-between text-[9px] text-[#928B91] pt-1 mt-1 border-t border-white/[0.04]">
-                <span>press ↵ to reply</span>
-                <span>{replyContent.length}/2000</span>
+
+              {/* Flat emoji quick reaction bar */}
+              <div className="flex items-center justify-between pt-1 mt-1 border-t border-white/[0.04] px-1">
+                <div className="flex items-center gap-1">
+                  {REPLY_REACTION_EMOJIS.map(({ icon: Icon, emoji, label }) => (
+                    <button
+                      key={label}
+                      type="button"
+                      onClick={() => handleAddEmoji(emoji)}
+                      className="p-1 rounded text-[#928B91] hover:text-[#E7DED5] hover:bg-white/[0.08] transition-all flex items-center justify-center"
+                      title={`${label} (${emoji})`}
+                      aria-label={label}
+                    >
+                      <Icon size={12} strokeWidth={1.8} />
+                    </button>
+                  ))}
+                </div>
+                {replyContent.length > 0 && (
+                  <span className="text-[8px] text-[#928B91]/50 tabular-nums">
+                    {replyContent.length}/2000
+                  </span>
+                )}
               </div>
             </div>
           </div>

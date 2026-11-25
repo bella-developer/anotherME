@@ -82,11 +82,22 @@ export async function createReply(req, res, next) {
     const { commentId } = req.params;
     const { content } = req.body;
     const authorId = req.user.id;
+    let imageUrl = req.body?.image || req.body?.image_url || null;
+
+    if (req.file) {
+      try {
+        const { uploadImage } = await import('../services/cloudinary.service.js');
+        const uploadResult = await uploadImage(req.file.buffer, 'eso/comments');
+        imageUrl = uploadResult.url;
+      } catch (uploadError) {
+        console.error('[Comment Image Upload Error]:', uploadError);
+      }
+    }
 
     // Create reply via service
     const reply = await commentService.createReply(
       commentId,
-      { content },
+      { content: content || '', image: imageUrl },
       authorId
     );
 

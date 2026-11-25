@@ -84,7 +84,7 @@ export default function SanctuaryAudioDock() {
 
   return (
     <aside
-      className="fixed bottom-3 right-3 sm:bottom-4 sm:right-4 z-40 max-w-sm"
+      className="fixed bottom-20 right-3 sm:bottom-4 sm:right-4 z-40 max-w-sm"
       aria-label="Background Sound Player"
     >
       <AnimatePresence>

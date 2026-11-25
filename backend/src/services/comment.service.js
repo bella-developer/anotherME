@@ -175,7 +175,7 @@ export async function listComments(postId, options = {}) {
  * @returns {Promise<Object>} Created reply document
  * @throws {Error} If validation fails, parent doesn't exist, or depth limit exceeded
  */
-export async function createReply(commentId, { content }, authorId) {
+export async function createReply(commentId, { content, image = null }, authorId) {
   // For circle comments, commentId is already a MongoDB ObjectId (not opaque)
   // Validate ObjectId format directly
   if (!mongoose.Types.ObjectId.isValid(commentId)) {
@@ -213,7 +213,7 @@ export async function createReply(commentId, { content }, authorId) {
   }
 
   // Sanitize content
-  const contentSanitized = sanitizeCommentContent(content);
+  const contentSanitized = sanitizeCommentContent(content || '');
 
   // Create reply with incremented depth
   // For circle comments, include circleId; for post comments, include postId
@@ -222,8 +222,10 @@ export async function createReply(commentId, { content }, authorId) {
     circleId: parentComment.circleId, // Include circleId for circle comments
     authorId,
     parentId: mongoCommentId,
-    content,
+    content: content || '',
     contentSanitized,
+    image: image || null,
+    imageUrl: image || null,
     depth: parentComment.getReplyDepth(),
     isDeleted: false
   });
@@ -239,6 +241,8 @@ export async function createReply(commentId, { content }, authorId) {
     username: reply.authorId?.username || 'User'
   };
   delete formattedReply.authorId;
+  formattedReply.image = reply.image || null;
+  formattedReply.imageUrl = reply.imageUrl || reply.image || null;
 
   // Increment reply count for ALL ancestor comments (not just immediate parent)
   // This ensures the root comment shows the total count of all descendants
