@@ -18,7 +18,7 @@ const FRAMES = [
     quoteLine1: 'Share', 
     quoteLine2: 'your', 
     quoteHighlight: 'Experience', 
-    quoteHighlightColor: '#DB762E', 
+    quoteHighlightColor: '#FF7A1A', 
     description:'A space for introspection and personal history' 
   },
   { 
@@ -32,7 +32,7 @@ const FRAMES = [
     quoteLine1: 'Release', 
     quoteLine2: 'your', 
     quoteHighlight: 'Regrets', 
-    quoteHighlightColor: '#B44A4A', 
+    quoteHighlightColor: '#E02424', 
     description:'Release your burdens without judgment' 
   },
   { 
@@ -46,7 +46,7 @@ const FRAMES = [
     quoteLine1: 'Understand', 
     quoteLine2: 'others', 
     quoteHighlight: 'Pain', 
-    quoteHighlightColor: '#B44A4A', 
+    quoteHighlightColor: '#E02424', 
     description:'Connect with those who truly understand' 
   },
   { 
@@ -61,7 +61,7 @@ const FRAMES = [
     quoteLine1: 'Fantasies,', 
     quoteLine2: '', 
     quoteHighlight: 'Daydreams', 
-    quoteHighlightColor: '#DB762E', 
+    quoteHighlightColor: '#FF7A1A', 
     description:'Explore worlds beyond the ordinary' 
   },
   { 
@@ -75,7 +75,7 @@ const FRAMES = [
     quoteLine1: 'Flow', 
     quoteLine2: 'with the', 
     quoteHighlight: 'Vibe', 
-    quoteHighlightColor: '#DB762E', 
+    quoteHighlightColor: '#FF7A1A', 
     description:'Flow freely in unstructured expression' 
   },
   { 
@@ -89,7 +89,7 @@ const FRAMES = [
     quoteLine1: 'Question', 
     quoteLine2: '', 
     quoteHighlight: 'Everything', 
-    quoteHighlightColor: '#B44A4A', 
+    quoteHighlightColor: '#E02424', 
     description:'Challenge everything, seek deeper truth' 
   },
   { 
@@ -103,7 +103,7 @@ const FRAMES = [
     quoteLine1: 'Seek', 
     quoteLine2: 'the', 
     quoteHighlight: 'Truth', 
-    quoteHighlightColor: '#DB762E', 
+    quoteHighlightColor: '#FF7A1A', 
     description:'Embrace the uncomfortable realities' 
   },
 ];
@@ -278,49 +278,57 @@ function CinematicVideo({active,navigate,compact=false,onVideoEnd}) {
         <div className="pointer-events-none absolute inset-0" style={{ boxShadow: 'inset 0 0 0 1px rgba(255, 255, 255, 0.06), inset 0 0 40px rgba(219, 118, 46, 0.08)' }}/>
         <div className={`pointer-events-none absolute inset-0 z-20 flex flex-col items-center justify-center ${compact ? 'px-4' : 'px-6 sm:px-10'}`}>
           <div 
-            className="select-none italic"
+            className="select-none font-mono tracking-[0.06em]"
             style={{
-              fontFamily: "'Playfair Display', Georgia, serif",
-              textShadow: '0 4px 24px rgba(0,0,0,0.92), 0 2px 10px rgba(0,0,0,0.8)',
+              fontFamily: "'Space Mono', 'Geist Mono', 'Courier New', monospace",
+              textShadow: '0 3px 18px rgba(0,0,0,0.95), 0 0 24px rgba(0,0,0,0.8)',
             }}
           >
             {active.singleLine ? (
               <div className="flex flex-col items-center text-center">
-                <p className="text-[clamp(18px,2.8vw,38px)] leading-tight whitespace-nowrap font-medium text-[#F5EFE8]">
+                <p className="text-[clamp(13px,1.8vw,22px)] leading-tight whitespace-nowrap font-bold text-[#F5EFE8]">
                   <span>{active.quoteLine1} </span>
-                  <span style={{ color: active.quoteHighlightColor }}>{active.quoteHighlight}</span>
+                  <span
+                    style={{
+                      color: active.quoteHighlightColor,
+                      textShadow: `0 0 18px ${active.quoteHighlightColor}88, 0 2px 12px rgba(0,0,0,0.95)`,
+                    }}
+                  >
+                    {active.quoteHighlight}
+                  </span>
                 </p>
                 <span
                   aria-hidden="true"
-                  className="mt-2 h-px w-28 sm:w-40"
-                  style={{ background: `linear-gradient(90deg, transparent, ${active.quoteHighlightColor}aa, transparent)` }}
+                  className="mt-2 h-px w-24 sm:w-32"
+                  style={{ background: `linear-gradient(90deg, transparent, ${active.quoteHighlightColor}cc, transparent)` }}
                 />
               </div>
             ) : (
-              <div className="flex flex-col items-start pl-4 sm:pl-12">
-                <p className="text-[clamp(22px,3.6vw,48px)] leading-[1.05] font-medium text-[#F5EFE8] self-center sm:ml-6">
+              <div className="flex flex-col items-center text-center">
+                <p className="text-[clamp(14px,2vw,24px)] leading-[1.2] font-bold text-[#F5EFE8]">
                   {active.quoteLine1}
                 </p>
-                <div className="flex flex-col items-start mt-0.5">
-                  <p className="leading-[1.08] whitespace-nowrap">
-                    {active.quoteLine2 ? (
-                      <span className="text-[clamp(13px,1.9vw,24px)] text-[#E7DED5]/90 mr-2 font-normal align-baseline">
-                        {active.quoteLine2}
-                      </span>
-                    ) : null}
-                    <span
-                      className="text-[clamp(22px,3.6vw,48px)] font-medium"
-                      style={{ color: active.quoteHighlightColor }}
-                    >
-                      {active.quoteHighlight}
+                <p className="mt-0.5 leading-[1.2] whitespace-nowrap">
+                  {active.quoteLine2 ? (
+                    <span className="text-[clamp(12px,1.55vw,19px)] text-[#E7DED5]/90 mr-2 font-normal">
+                      {active.quoteLine2}
                     </span>
-                  </p>
+                  ) : null}
                   <span
-                    aria-hidden="true"
-                    className="mt-1.5 h-px w-28 sm:w-44"
-                    style={{ background: `linear-gradient(90deg, ${active.quoteHighlightColor}cc, ${active.quoteHighlightColor}33 70%, transparent)` }}
-                  />
-                </div>
+                    className="text-[clamp(15px,2.15vw,26px)] font-bold"
+                    style={{
+                      color: active.quoteHighlightColor,
+                      textShadow: `0 0 20px ${active.quoteHighlightColor}99, 0 2px 12px rgba(0,0,0,0.95)`,
+                    }}
+                  >
+                    {active.quoteHighlight}
+                  </span>
+                </p>
+                <span
+                  aria-hidden="true"
+                  className="mt-2 h-px w-24 sm:w-36"
+                  style={{ background: `linear-gradient(90deg, transparent, ${active.quoteHighlightColor}cc, transparent)` }}
+                />
               </div>
             )}
           </div>
@@ -337,7 +345,6 @@ function FilmStrip({activeEntry,selectEntry}) {
       <div className="flex h-full flex-col gap-2 pl-1">
         {FRAMES.map((frame,index)=>{
           const selected=index===activeEntry;
-          const label = frame.shortTitle.charAt(0) + frame.shortTitle.slice(1).toLowerCase();
           return (
             <button
               key={frame.id}
@@ -345,12 +352,12 @@ function FilmStrip({activeEntry,selectEntry}) {
               onClick={()=>selectEntry(index)}
               aria-label={`Select ${frame.title}`}
               aria-pressed={selected}
-              className={`group relative min-h-0 flex-1 overflow-hidden rounded-md text-center transition-all duration-300 focus-visible:outline focus-visible:outline-1 focus-visible:outline-[#DB762E] ${
-                selected ? 'border border-[#DB762E]/85' : 'border border-white/[0.08] hover:border-white/25'
+              className={`group relative min-h-0 flex-1 overflow-hidden rounded-md transition-all duration-300 focus-visible:outline focus-visible:outline-1 focus-visible:outline-[#DB762E] ${
+                selected ? 'border border-[#FF7A1A]/85' : 'border border-white/[0.08] hover:border-white/25'
               }`}
               style={{
                 boxShadow: selected
-                  ? '0 0 18px rgba(219, 118, 46, 0.25), inset 0 1px 0 rgba(255, 190, 130, 0.2)'
+                  ? '0 0 18px rgba(255, 122, 26, 0.28), inset 0 1px 0 rgba(255, 190, 130, 0.2)'
                   : '0 4px 12px rgba(0, 0, 0, 0.35)',
               }}
             >
@@ -358,21 +365,10 @@ function FilmStrip({activeEntry,selectEntry}) {
                 frame={frame}
                 priority={selected}
                 className={`absolute inset-0 h-full w-full object-cover transition-all duration-500 ${
-                  selected ? 'scale-100 opacity-70 brightness-95' : 'scale-[1.06] opacity-25 grayscale group-hover:scale-100 group-hover:opacity-55 group-hover:grayscale-0'
+                  selected ? 'scale-100 opacity-85 brightness-95' : 'scale-[1.06] opacity-30 grayscale group-hover:scale-100 group-hover:opacity-65 group-hover:grayscale-0'
                 }`}
               />
-              <span className={`absolute inset-0 transition-colors ${selected ? 'bg-gradient-to-t from-black/70 via-black/35 to-[#DB762E]/10' : 'bg-black/55 group-hover:bg-black/35'}`} />
-              <span
-                className={`relative z-10 flex h-full w-full items-center justify-center px-2 text-[11px] tracking-wide transition-colors ${
-                  selected ? 'text-[#F5EFE8] font-medium' : 'text-[#928B91] group-hover:text-[#E7DED5]'
-                }`}
-                style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
-              >
-                {label}
-              </span>
-              <span className={`absolute bottom-1 right-1.5 z-10 font-mono text-[7px] ${selected ? 'text-[#DB762E]' : 'text-white/25 group-hover:text-white/55'}`}>
-                {frame.number}
-              </span>
+              <span className={`absolute inset-0 transition-colors ${selected ? 'bg-gradient-to-t from-black/35 via-transparent to-[#FF7A1A]/10' : 'bg-black/45 group-hover:bg-black/20'}`} />
             </button>
           );
         })}

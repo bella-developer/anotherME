@@ -50,7 +50,7 @@ function Landing() {
   return (
     <div className="min-h-screen text-white overflow-x-hidden bg-transparent">
 
-      {/* NAVIGATION - Editorial Spacing with Warm Orange Under-Glow */}
+      {/* NAVIGATION - Editorial Spacing */}
       <motion.header 
         initial={{ y: -100 }}
         animate={{ y: 0 }}
@@ -59,6 +59,7 @@ function Landing() {
         style={{
           zIndex: 50,
           border: 'none',
+          borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
           backgroundColor: isScrolled ? 'rgba(6, 6, 9, 0.94)' : 'rgba(8, 7, 10, 0.65)',
           backdropFilter: 'blur(20px)',
           WebkitBackdropFilter: 'blur(20px)',
@@ -83,14 +84,6 @@ function Landing() {
                 style={{ background: 'transparent' }}
               >
                 Explore
-                <span
-                  aria-hidden="true"
-                  className="pointer-events-none absolute -bottom-[11px] left-1/2 -translate-x-1/2 w-24 h-[2px]"
-                  style={{
-                    background: 'linear-gradient(90deg, transparent 0%, rgba(235, 118, 42, 0.95) 50%, transparent 100%)',
-                    boxShadow: '0 0 12px rgba(235, 118, 42, 0.85)',
-                  }}
-                />
               </a>
               <Link
                 to="/community"
@@ -137,22 +130,6 @@ function Landing() {
             </div>
           </div>
         </nav>
-
-        {/* Subtle orange horizon hairline & ambient glow below top nav */}
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute bottom-0 left-0 right-0 h-px"
-          style={{
-            background: 'linear-gradient(90deg, rgba(219, 118, 46, 0.25) 0%, rgba(255, 255, 255, 0.08) 22%, rgba(219, 118, 46, 0.65) 42%, rgba(219, 118, 46, 0.2) 65%, rgba(255, 255, 255, 0.07) 100%)',
-          }}
-        />
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute -bottom-6 left-0 right-0 h-6"
-          style={{
-            background: 'radial-gradient(ellipse 35% 100% at 42% 0%, rgba(219, 118, 46, 0.22), transparent 75%), radial-gradient(ellipse 25% 100% at 6% 0%, rgba(219, 118, 46, 0.14), transparent 75%)',
-          }}
-        />
       </motion.header>
 
       {/* CINEMATIC HERO - Museum Gallery */}
