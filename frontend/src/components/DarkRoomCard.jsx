@@ -8,6 +8,7 @@ import RoomReactions from './RoomReactions';
 import ConfirmDialog from './ConfirmDialog';
 import { toggleBookmark } from '../features/sanctuarySlice';
 import { useToast } from '../contexts/ToastContext';
+import { extractPostTitle } from '../utils/postTitle';
 
 /**
  * Dark Room Card Component
@@ -124,16 +125,7 @@ function DarkRoomCard({ post, onReaction, onEdit, onDelete }) {
       <div className="px-3 sm:px-5 py-3 sm:py-4 flex flex-col">
         {/* Title with Red Gritty Paint Brush Background */}
         {(() => {
-          let displayTitle = post.title;
-          if (!displayTitle && post.content) {
-            const plainText = post.content.replace(/<[^>]*>/g, '').trim();
-            const firstLine = plainText.split('\n')[0];
-            displayTitle = firstLine.length > 45 
-              ? firstLine.substring(0, 45).trim() + '...'
-              : firstLine.length >= 35
-              ? firstLine.substring(0, firstLine.length).trim()
-              : firstLine.substring(0, 35).trim() + (firstLine.length > 35 ? '...' : '');
-          }
+          const displayTitle = extractPostTitle(post);
           
           return displayTitle ? (
             <div className="mb-2 sm:mb-3">
