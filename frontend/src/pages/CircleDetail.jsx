@@ -270,13 +270,21 @@ function CircleDetail() {
         <div className="relative z-10 max-w-2xl mx-auto px-4 pb-44 pt-2">
 
           {/* Circle header */}
-          <div className="mb-10 font-mono">
-            <button 
-              onClick={() => navigate('/circles')} 
-              className="text-[10px] tracking-[0.18em] uppercase transition-all mb-7 inline-flex items-center gap-2 px-3 py-1 rounded border border-white/10 bg-white/[0.03] text-[#928B91] hover:text-[#E7DED5] hover:border-white/20 hover:bg-white/[0.06]"
-            >
-              ← Circles
-            </button>
+          <div className="mb-7 font-mono">
+            <div className="flex items-center justify-between gap-3 mb-7">
+              <button 
+                onClick={() => navigate('/circles')} 
+                className="text-[10px] tracking-[0.18em] uppercase transition-all inline-flex items-center gap-2 px-3 py-1 rounded border border-white/[0.08] bg-white/[0.03] text-[#928B91] hover:text-[#E7DED5] hover:border-white/20 hover:bg-white/[0.06]"
+              >
+                ← Circles
+              </button>
+
+              <div className="flex items-center gap-3 text-[10px] tracking-[0.18em] uppercase">
+                <button onClick={() => navigate('/circles')} className="text-[#928B91] hover:text-[#E7DED5] transition-colors">Other Circles</button>
+                <span className="text-white/15" aria-hidden="true">·</span>
+                <button onClick={() => navigate('/rules')} className="text-[#928B91] hover:text-[#E7DED5] transition-colors">Rules</button>
+              </div>
+            </div>
 
             <div className="flex items-start justify-between gap-4">
               <div>
@@ -293,12 +301,6 @@ function CircleDetail() {
                 <div className="text-[9px] tracking-[0.2em] text-[#928B91] uppercase mb-0.5">Souls</div>
                 <div className="text-xl font-bold tabular-nums" style={{ color: accent }}>{circle.activeUserCount || 0}</div>
               </div>
-            </div>
-
-            {/* nav links */}
-            <div className="flex gap-5 mt-6 text-[10px] tracking-[0.18em] uppercase">
-              <button onClick={() => navigate('/rules')} className="text-[#928B91] hover:text-[#E7DED5] transition-colors">Rules</button>
-              <button onClick={() => navigate('/circles')} className="text-[#928B91] hover:text-[#E7DED5] transition-colors">Other Circles</button>
             </div>
           </div>
 
