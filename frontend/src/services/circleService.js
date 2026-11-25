@@ -200,23 +200,35 @@ export const fetchCircleComments = async ({ circleId, cursor, postId } = {}) => 
  * @param {string} postId - Optional post ID to link comment to topic
  * @returns {Promise<Object>} Created comment data
  */
-export const createCircleComment = async (circleId, content, postId = null) => {
+export const createCircleComment = async (circleId, content, postId = null, image = null) => {
   try {
     if (!circleId) {
       throw new Error('Circle ID is required');
     }
-    if (!content) {
-      throw new Error('Content is required');
+    const hasContent = Boolean(content && typeof content === 'string' && content.trim());
+    if (!hasContent && !image) {
+      throw new Error('Content or attachment is required');
     }
 
-    if (content.length < 1 || content.length > 2000) {
-      throw new Error('Content must be between 1 and 2000 characters');
+    if (hasContent && content.length > 2000) {
+      throw new Error('Content must be 2000 characters or less');
     }
 
-    const payload = { content };
-    if (postId) payload.postId = postId; // Add postId if provided
-
-    const response = await apiClient.post(`/circles/${circleId}/comments`, payload);
+    let response;
+    if (image && typeof File !== 'undefined' && image instanceof File) {
+      const formData = new FormData();
+      formData.append('content', content || '');
+      if (postId) formData.append('postId', postId);
+      formData.append('image', image);
+      response = await apiClient.post(`/circles/${circleId}/comments`, formData);
+    } else {
+      const payload = { content: content || '' };
+      if (postId) payload.postId = postId;
+      if (image && typeof image === 'string') {
+        payload.image = image;
+      }
+      response = await apiClient.post(`/circles/${circleId}/comments`, payload);
+    }
     
     // Response format: { status: 'success', data: {...} }
     const responseData = response.data?.data || response.data;

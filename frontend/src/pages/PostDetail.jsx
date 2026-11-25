@@ -215,9 +215,9 @@ function PostDetail() {
             return (
               <div className="mb-6 w-full max-w-2xl mx-auto">
                 <div 
-                  className="relative overflow-hidden rounded-lg border border-[#292630] p-2 bg-[#111117]"
+                  className="relative overflow-hidden rounded-lg border border-white/[0.04] bg-black/40"
                 >
-                  <div className="relative w-full max-h-[500px] flex items-center justify-center overflow-hidden rounded bg-black/70">
+                  <div className="relative w-full max-h-[500px] flex items-center justify-center overflow-hidden">
                     <img
                       src={imageUrl}
                       alt={post.title || 'Post image'}
@@ -248,7 +248,7 @@ function PostDetail() {
           </div>
 
           {/* Reactions Section */}
-          <div className="pt-4 border-t border-[#292630]">
+          <div className="pt-2">
             <div className="text-[10px] uppercase tracking-[0.2em] mb-3 text-[#928B91]">
               Reactions
             </div>

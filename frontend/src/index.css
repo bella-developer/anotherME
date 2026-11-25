@@ -14,6 +14,7 @@
 @layer base {
   /* CSS Custom Properties for Font Families - Monospace Hierarchical */
   :root {
+    color-scheme: dark;
     --font-body: 'Geist Mono', 'Space Mono', 'IBM Plex Mono', monospace;
     --font-heading: 'Geist Mono', 'Space Mono', 'IBM Plex Mono', monospace;
     --font-mono: 'Geist Mono', 'Space Mono', 'IBM Plex Mono', monospace;

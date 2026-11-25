@@ -138,12 +138,23 @@ export async function deleteComment(req, res, next) {
 export async function createCircleComment(req, res, next) {
   try {
     const { circleId } = req.params;
-    const { content, postId } = req.body; // Added postId
+    const { content, postId } = req.body;
     const authorId = req.user.id;
+    let imageUrl = req.body?.image || req.body?.image_url || null;
+
+    if (req.file) {
+      try {
+        const { uploadImage } = await import('../services/cloudinary.service.js');
+        const uploadResult = await uploadImage(req.file.buffer, 'eso/comments');
+        imageUrl = uploadResult.url;
+      } catch (uploadError) {
+        console.error('[Circle Comment Image Upload Error]:', uploadError);
+      }
+    }
 
     const comment = await commentService.createCircleComment(
       circleId,
-      { content, postId }, // Pass postId
+      { content: content || '', postId, image: imageUrl },
       authorId
     );
 

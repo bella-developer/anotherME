@@ -17,7 +17,7 @@ const FRAMES = [
     tagline:'Rooms of moments.', 
     quoteLine1: 'Share', 
     quoteLine2: 'your', 
-    quoteHighlight: 'Exprience', 
+    quoteHighlight: 'Experience', 
     quoteHighlightColor: '#DB762E', 
     description:'A space for introspection and personal history' 
   },
@@ -143,11 +143,24 @@ const ArchiveVideo = memo(function ArchiveVideo({ frame, className='', priority=
 
 function StickyNote({frame,index,active,onSelect,compact=false}) {
   const layout = NOTE_LAYOUT[index], tone = TONES[layout.tone];
+  const pinSvg = (size) => (
+    <svg
+      viewBox="0 0 12 12"
+      width={size}
+      height={size}
+      aria-hidden="true"
+      className="block overflow-visible"
+      style={{ filter: 'drop-shadow(0 0 5px rgba(184, 50, 50, 0.75))' }}
+    >
+      <circle cx="6" cy="6" r="5" fill="#b83232" stroke="#5e1717" strokeWidth="0.8" />
+      <circle cx="4.4" cy="4.2" r="1.5" fill="#e57373" opacity="0.75" />
+    </svg>
+  );
   if (compact) return (
     <button type="button" onClick={()=>onSelect(index)} aria-label={`Select ${frame.title}`} aria-pressed={active}
       className="relative h-[clamp(54px,8vw,76px)] w-full min-w-0 overflow-hidden rounded-[2px] border text-left transition duration-300 focus-visible:outline focus-visible:outline-1 focus-visible:outline-[#8b2e2e]"
       style={{background:tone.bg,borderColor:active?tone.accent:tone.border,transform:`rotate(${layout.rotate*.45}deg)`,boxShadow:active?`0 8px 20px rgba(0,0,0,.6),0 0 10px ${tone.accent}24`:'0 5px 14px rgba(0,0,0,.42)'}}>
-      <span className="absolute left-1/2 top-[8px] z-10 h-[6px] w-[6px] -translate-x-1/2 rounded-full bg-[#87302d]"/>
+      <span className="pointer-events-none absolute left-1/2 top-[7px] z-10 -translate-x-1/2">{pinSvg(7)}</span>
       <span className="absolute inset-x-1.5 top-1/2 -translate-y-1/2 text-center font-display text-[clamp(8px,1.2vw,11px)] uppercase leading-tight tracking-[.05em]" style={{color:active?'#e5d8c8':tone.text}}>{frame.shortTitle}</span>
       {active && <span className="absolute inset-x-0 bottom-0 h-[2px] bg-gradient-to-r from-transparent via-[#a9363d] to-transparent"/>}
     </button>
@@ -156,7 +169,7 @@ function StickyNote({frame,index,active,onSelect,compact=false}) {
     <button type="button" onClick={()=>onSelect(index)} aria-label={`Select ${frame.title}`} aria-pressed={active}
       className={`absolute aspect-[115/78] w-[clamp(88px,8.4vw,115px)] text-left transition-[filter] duration-500 focus-visible:outline focus-visible:outline-1 focus-visible:outline-[#8b2e2e] ${active?'z-30 brightness-[1.08]':'z-10 hover:z-20 hover:brightness-[1.05]'}`}
       style={{left:`${layout.x}%`,top:`${layout.y}%`,transform:`rotate(${layout.rotate}deg)`}}>
-      <span className="absolute left-1/2 top-[10px] z-30 h-[9px] w-[9px] -translate-x-1/2 rounded-full bg-gradient-to-br from-[#a83838] to-[#6b1f1f] shadow-[0_0_8px_rgba(168,56,56,.5)]"/>
+      <span className="pointer-events-none absolute left-1/2 top-[9px] z-30 -translate-x-1/2">{pinSvg(10)}</span>
       <span className="absolute inset-0 overflow-hidden rounded-[3px] border" style={{background:tone.bg,borderColor:active?tone.accent:tone.border,boxShadow:active?`0 12px 28px rgba(0,0,0,.65),0 0 14px ${tone.accent}22`:'0 9px 22px rgba(0,0,0,.52)'}}>
         <span className="absolute inset-0 opacity-[.08]" style={{background:'radial-gradient(circle at 30% 30%,rgba(255,255,255,.08),transparent 45%)'}}/>
         <span className="absolute inset-x-2 top-1/2 -translate-y-1/2 text-center font-display text-[clamp(9px,.85vw,11px)] uppercase leading-tight tracking-[.06em]" style={{color:active?'#e5d8c8':tone.text}}>{frame.shortTitle}</span>
@@ -187,20 +200,51 @@ function VaultCard({active,navigate,compact=false}) {
   return <button 
     type="button" 
     onClick={()=>navigate('/login')} 
-    className={`group relative mx-auto block w-full rounded border border-white/10 bg-[#0e0e12]/60 backdrop-blur text-left transition-all duration-300 hover:border-[#a9363d]/40 focus-visible:outline focus-visible:outline-1 focus-visible:outline-[#a9363d] ${
-      compact ? 'max-w-[360px] px-3 py-1.5' : 'max-w-[280px] px-3 py-1.5'
+    className={`group relative mx-auto block w-full overflow-hidden rounded-lg border border-white/[0.1] text-left transition-all duration-300 hover:border-[#DB762E]/50 focus-visible:outline focus-visible:outline-1 focus-visible:outline-[#DB762E] ${
+      compact ? 'max-w-[380px] px-3.5 py-2.5' : 'max-w-[310px] px-3.5 py-2.5'
     }`}
+    style={{
+      background: 'linear-gradient(90deg, rgba(219, 118, 46, 0.1) 0%, rgba(14, 13, 18, 0.88) 28%, rgba(10, 10, 14, 0.92) 100%)',
+      backdropFilter: 'blur(14px)',
+      WebkitBackdropFilter: 'blur(14px)',
+      boxShadow: '0 10px 28px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.05)',
+    }}
   >
-    <div className="flex items-center justify-between gap-2">
-      <div className="min-w-0 flex-1">
-        <span className="font-display text-xs sm:text-[13px] uppercase tracking-[0.05em] text-[#d6cdbf] font-medium block truncate">
-          {active.shortTitle}
+    {/* Left warm orange edge accent */}
+    <span
+      aria-hidden="true"
+      className="pointer-events-none absolute left-0 top-2 bottom-2 w-[2px] rounded-full bg-[#DB762E]"
+      style={{ boxShadow: '0 0 10px rgba(219, 118, 46, 0.9)' }}
+    />
+
+    <div className="flex items-center justify-between gap-3 pl-1">
+      <div className="flex items-center gap-3 min-w-0 flex-1">
+        {/* Glowing burnt-orange waveform emblem */}
+        <span
+          aria-hidden="true"
+          className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-md bg-[#DB762E]/10 border border-[#DB762E]/25"
+        >
+          <svg viewBox="0 0 24 20" width="16" height="14" className="overflow-visible" style={{ filter: 'drop-shadow(0 0 4px rgba(219, 118, 46, 0.7))' }}>
+            <rect x="1" y="8" width="2" height="4" rx="1" fill="#DB762E" opacity="0.7" />
+            <rect x="5" y="5" width="2" height="10" rx="1" fill="#DB762E" opacity="0.85" />
+            <rect x="9" y="2" width="2" height="16" rx="1" fill="#E88438" />
+            <rect x="13" y="4" width="2" height="12" rx="1" fill="#E88438" />
+            <rect x="17" y="6" width="2" height="8" rx="1" fill="#DB762E" opacity="0.85" />
+            <rect x="21" y="8" width="2" height="4" rx="1" fill="#DB762E" opacity="0.7" />
+          </svg>
         </span>
-        <span className="block font-mono text-[7.5px] uppercase tracking-[0.12em] text-[#70685f] truncate mt-0.5">
-          {active.tagline}
-        </span>
+
+        <div className="min-w-0 flex-1">
+          <span className="font-display text-xs sm:text-[13px] uppercase tracking-[0.12em] text-[#E7DED5] font-medium block truncate">
+            {active.shortTitle}
+          </span>
+          <span className="block font-mono text-[8px] uppercase tracking-[0.14em] text-[#80776d] truncate mt-0.5">
+            {active.tagline}
+          </span>
+        </div>
       </div>
-      <span className="font-mono text-[7.5px] uppercase tracking-[0.15em] text-[#a9363d] group-hover:translate-x-0.5 transition-transform flex items-center gap-1 flex-shrink-0">
+
+      <span className="font-mono text-[9px] uppercase tracking-[0.16em] text-[#DB762E] group-hover:translate-x-0.5 transition-transform flex items-center gap-1 flex-shrink-0">
         <span>Enter</span>
         <span>→</span>
       </span>
@@ -221,59 +265,117 @@ function CinematicVideo({active,navigate,compact=false,onVideoEnd}) {
   }, [active.id, onVideoEnd]);
   
   return <section className="relative min-w-0">
-    <div className="relative overflow-hidden border border-white/[.12] bg-[#090909] shadow-[0_30px_85px_rgba(0,0,0,.55)]">
+    <div
+      className="relative overflow-hidden rounded-lg border border-[#DB762E]/25 bg-[#090909]"
+      style={{
+        boxShadow: '0 30px 85px rgba(0, 0, 0, 0.72), 0 0 38px rgba(219, 118, 46, 0.1)',
+      }}
+    >
       <div className={`relative w-full overflow-hidden ${compact?'aspect-[1.7/1]':'aspect-[1.62/1]'}`}>
-        <ArchiveVideo key={active.id} frame={active} priority className="absolute inset-0 h-full w-full object-cover brightness-[.85] contrast-[1.05] saturate-[.85]"/>
-        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,.12),transparent_40%,rgba(0,0,0,.08)),linear-gradient(0deg,rgba(0,0,0,.15),transparent_35%,rgba(0,0,0,.1))]"/>
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_30%,rgba(0,0,0,.35)_100%)]"/>
-        <div className={`pointer-events-none absolute inset-0 z-20 flex flex-col items-center justify-center text-center ${compact ? 'px-4' : 'px-6 sm:px-10'}`}>
+        <ArchiveVideo key={active.id} frame={active} priority className="absolute inset-0 h-full w-full object-cover brightness-[.86] contrast-[1.06] saturate-[.92]"/>
+        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,.22),transparent_42%,rgba(0,0,0,.18)),linear-gradient(0deg,rgba(0,0,0,.28),transparent_38%,rgba(0,0,0,.14))]"/>
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_32%,rgba(0,0,0,.45)_100%)]"/>
+        <div className="pointer-events-none absolute inset-0" style={{ boxShadow: 'inset 0 0 0 1px rgba(255, 255, 255, 0.06), inset 0 0 40px rgba(219, 118, 46, 0.08)' }}/>
+        <div className={`pointer-events-none absolute inset-0 z-20 flex flex-col items-center justify-center ${compact ? 'px-4' : 'px-6 sm:px-10'}`}>
           <div 
-            className="font-mono font-bold tracking-[0.06em] text-[#E7DED5] select-none"
+            className="select-none italic"
             style={{
-              fontFamily: "'Space Mono', 'Courier Prime', 'Courier New', monospace",
-              textShadow: '0 3px 18px rgba(0,0,0,0.95), 0 0 28px rgba(0,0,0,0.7)',
-              filter: 'drop-shadow(0 2px 10px rgba(0,0,0,0.85))',
-              marginLeft: '4px',
+              fontFamily: "'Playfair Display', Georgia, serif",
+              textShadow: '0 4px 24px rgba(0,0,0,0.92), 0 2px 10px rgba(0,0,0,0.8)',
             }}
           >
             {active.singleLine ? (
-              <p className="text-[clamp(13px,2.3vw,28px)] leading-tight whitespace-nowrap">
-                <span>{active.quoteLine1} </span>
-                <span style={{ color: active.quoteHighlightColor }}>{active.quoteHighlight}</span>
-              </p>
-            ) : (
-              <div className="flex flex-col items-center leading-[1.22]">
-                <p className="text-[clamp(16px,2.8vw,34px)]">
-                  {active.quoteLine1}
-                </p>
-                <p className="text-[clamp(16px,2.8vw,34px)] mt-0.5 sm:mt-1">
-                  {active.quoteLine2 ? <span>{active.quoteLine2} </span> : null}
+              <div className="flex flex-col items-center text-center">
+                <p className="text-[clamp(18px,2.8vw,38px)] leading-tight whitespace-nowrap font-medium text-[#F5EFE8]">
+                  <span>{active.quoteLine1} </span>
                   <span style={{ color: active.quoteHighlightColor }}>{active.quoteHighlight}</span>
                 </p>
+                <span
+                  aria-hidden="true"
+                  className="mt-2 h-px w-28 sm:w-40"
+                  style={{ background: `linear-gradient(90deg, transparent, ${active.quoteHighlightColor}aa, transparent)` }}
+                />
+              </div>
+            ) : (
+              <div className="flex flex-col items-start pl-4 sm:pl-12">
+                <p className="text-[clamp(22px,3.6vw,48px)] leading-[1.05] font-medium text-[#F5EFE8] self-center sm:ml-6">
+                  {active.quoteLine1}
+                </p>
+                <div className="flex flex-col items-start mt-0.5">
+                  <p className="leading-[1.08] whitespace-nowrap">
+                    {active.quoteLine2 ? (
+                      <span className="text-[clamp(13px,1.9vw,24px)] text-[#E7DED5]/90 mr-2 font-normal align-baseline">
+                        {active.quoteLine2}
+                      </span>
+                    ) : null}
+                    <span
+                      className="text-[clamp(22px,3.6vw,48px)] font-medium"
+                      style={{ color: active.quoteHighlightColor }}
+                    >
+                      {active.quoteHighlight}
+                    </span>
+                  </p>
+                  <span
+                    aria-hidden="true"
+                    className="mt-1.5 h-px w-28 sm:w-44"
+                    style={{ background: `linear-gradient(90deg, ${active.quoteHighlightColor}cc, ${active.quoteHighlightColor}33 70%, transparent)` }}
+                  />
+                </div>
               </div>
             )}
           </div>
         </div>
-        <div className="pointer-events-none absolute inset-0 border border-white/[.07]"/>
-        <button type="button" onClick={()=>navigate('/login')} aria-label={`Enter ${active.title}`} className="absolute inset-0 z-30 cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#a9363d]"><span className="sr-only">Enter {active.title}</span></button>
+        <button type="button" onClick={()=>navigate('/login')} aria-label={`Enter ${active.title}`} className="absolute inset-0 z-30 cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#DB762E]"><span className="sr-only">Enter {active.title}</span></button>
       </div>
     </div>
   </section>;
 }
 
 function FilmStrip({activeEntry,selectEntry}) {
-  return <aside className="hidden h-[545px] min-w-0 lg:block" aria-label="Choose a moment">
+  return <aside className="hidden h-[520px] min-w-0 lg:block" aria-label="Choose a moment">
     <div className="relative h-full w-full">
-      <div className="absolute bottom-0 left-0 top-0 w-px bg-white/[.09]"/>
-      <div className="flex h-full flex-col gap-[3px] pl-3">
-        {FRAMES.map((frame,index)=>{const selected=index===activeEntry;return <button key={frame.id} type="button" onClick={()=>selectEntry(index)} aria-label={`Select ${frame.title}`} aria-pressed={selected} className="group relative min-h-0 flex-1 overflow-hidden text-left focus-visible:outline focus-visible:outline-1 focus-visible:outline-[#a9363d]">
-          <ArchiveVideo frame={frame} priority={selected} className={`absolute inset-0 h-full w-full object-cover transition-all duration-700 ${selected?'scale-100 opacity-80 grayscale-[.15]':'scale-[1.08] opacity-[.22] grayscale'} group-hover:scale-100 group-hover:opacity-[.62]`}/>
-          <span className="absolute inset-0 bg-black/40 transition-colors group-hover:bg-black/20"/>
-          <span className={`absolute right-2 top-2 z-10 font-mono text-[7px] ${selected?'text-[#e7dfd2]':'text-white/35 group-hover:text-white/70'}`}>{frame.number}</span>
-          <span className="absolute bottom-1 left-1 top-1 flex flex-col justify-around">{Array.from({length:5}).map((_,hole)=><span key={hole} className="h-[3px] w-[3px] rounded-full bg-white/20"/>)}</span>
-          {selected&&<span className="absolute bottom-2 left-3 h-[2px] w-5 bg-[#b9363f] shadow-[0_0_10px_rgba(185,54,63,.55)]"/>}
-          <span className={`pointer-events-none absolute inset-0 border ${selected?'border-[#a9363d]/80':'border-white/[.04]'}`}/>
-        </button>})}
+      <div className="flex h-full flex-col gap-2 pl-1">
+        {FRAMES.map((frame,index)=>{
+          const selected=index===activeEntry;
+          const label = frame.shortTitle.charAt(0) + frame.shortTitle.slice(1).toLowerCase();
+          return (
+            <button
+              key={frame.id}
+              type="button"
+              onClick={()=>selectEntry(index)}
+              aria-label={`Select ${frame.title}`}
+              aria-pressed={selected}
+              className={`group relative min-h-0 flex-1 overflow-hidden rounded-md text-center transition-all duration-300 focus-visible:outline focus-visible:outline-1 focus-visible:outline-[#DB762E] ${
+                selected ? 'border border-[#DB762E]/85' : 'border border-white/[0.08] hover:border-white/25'
+              }`}
+              style={{
+                boxShadow: selected
+                  ? '0 0 18px rgba(219, 118, 46, 0.25), inset 0 1px 0 rgba(255, 190, 130, 0.2)'
+                  : '0 4px 12px rgba(0, 0, 0, 0.35)',
+              }}
+            >
+              <ArchiveVideo
+                frame={frame}
+                priority={selected}
+                className={`absolute inset-0 h-full w-full object-cover transition-all duration-500 ${
+                  selected ? 'scale-100 opacity-70 brightness-95' : 'scale-[1.06] opacity-25 grayscale group-hover:scale-100 group-hover:opacity-55 group-hover:grayscale-0'
+                }`}
+              />
+              <span className={`absolute inset-0 transition-colors ${selected ? 'bg-gradient-to-t from-black/70 via-black/35 to-[#DB762E]/10' : 'bg-black/55 group-hover:bg-black/35'}`} />
+              <span
+                className={`relative z-10 flex h-full w-full items-center justify-center px-2 text-[11px] tracking-wide transition-colors ${
+                  selected ? 'text-[#F5EFE8] font-medium' : 'text-[#928B91] group-hover:text-[#E7DED5]'
+                }`}
+                style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
+              >
+                {label}
+              </span>
+              <span className={`absolute bottom-1 right-1.5 z-10 font-mono text-[7px] ${selected ? 'text-[#DB762E]' : 'text-white/25 group-hover:text-white/55'}`}>
+                {frame.number}
+              </span>
+            </button>
+          );
+        })}
       </div>
     </div>
   </aside>;
@@ -319,9 +421,9 @@ export default function CinematicHero() {
   },[next,previous]);
 
   return <main className="relative isolate min-h-screen overflow-hidden bg-transparent text-[#e7e0d4]">
-    {/* Subtle coffee atmosphere and film grain */}
+    {/* Subtle warm amber atmosphere, top-left glow, and film grain */}
     <div className="pointer-events-none fixed inset-0 z-[-1] overflow-hidden">
-      <div className="absolute inset-0" style={{background:'radial-gradient(circle at 56% 48%,rgba(93,58,35,.08),transparent 32%),radial-gradient(circle at 12% 65%,rgba(101,75,49,.035),transparent 27%)'}}/>
+      <div className="absolute inset-0" style={{background:'radial-gradient(circle at 0% 0%,rgba(219,118,46,.14),transparent 26%),radial-gradient(circle at 56% 48%,rgba(145,82,36,.09),transparent 36%),radial-gradient(circle at 12% 65%,rgba(101,75,49,.04),transparent 28%)'}}/>
       <div className="absolute inset-0" style={{background:'radial-gradient(circle at center,transparent 35%,rgba(0,0,0,.45) 100%)'}}/>
       <div className="absolute inset-0 opacity-[.035]" style={{backgroundImage:"url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.75'/%3E%3C/svg%3E\")"}}/>
       <div className="absolute inset-0 opacity-[.025]" style={{backgroundImage:'repeating-linear-gradient(to bottom,transparent 0,transparent 4px,rgba(255,255,255,.25) 5px)'}}/>

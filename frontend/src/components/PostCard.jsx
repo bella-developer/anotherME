@@ -40,13 +40,13 @@ const PostCard = memo(({ post, onPostClick, onReaction }) => {
         background: 'transparent',
         backdropFilter: 'blur(16px)',
         WebkitBackdropFilter: 'blur(16px)',
-        border: '1px solid rgba(255, 255, 255, 0.06)',
+        border: '1px solid rgba(255, 255, 255, 0.035)',
         boxShadow: 'none',
       }}
       role="article"
     >
       {/* Header: Room Section and Timestamp */}
-      <div className="flex items-center justify-between mb-4 pb-2 border-b border-white/[0.06]">
+      <div className="flex items-center justify-between mb-4 pb-2 border-b border-white/[0.03]">
         <div className="flex items-center gap-2">
           <span className="text-[10px] tracking-[0.2em] uppercase font-bold" style={{ color: roomColor }}>
             {room.toUpperCase()}
@@ -123,7 +123,7 @@ const PostCard = memo(({ post, onPostClick, onReaction }) => {
       })()}
 
       {/* Footer: Reaction Buttons */}
-      <div className="flex items-center justify-between pt-3 border-t border-[#292630]" onClick={(e) => e.stopPropagation()}>
+      <div className="flex items-center justify-between pt-2" onClick={(e) => e.stopPropagation()}>
         <RoomReactions
           room={room}
           reactions={post.reactions || {}}

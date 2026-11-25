@@ -91,6 +91,7 @@ router.delete(
 router.post(
   '/circles/:circleId/comments',
   authenticate,
+  upload.single('image'),
   commentCreationRateLimiter,
   noCache(),
   validateCreateCircleComment,

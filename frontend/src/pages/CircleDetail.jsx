@@ -54,6 +54,7 @@ function CircleDetail() {
   const [loadingComments, setLoadingComments] = useState(false);
   const [error, setError] = useState(null);
   const [commentContent, setCommentContent] = useState('');
+  const [commentImage, setCommentImage] = useState(null);
   const [submitting, setSubmitting] = useState(false);
   const [cursor, setCursor] = useState(null);
 
@@ -180,12 +181,17 @@ function CircleDetail() {
     };
   }, [id, activeTopicId, loadComments]);
 
+  const handleAddCommentEmoji = (emoji) => {
+    setCommentContent((prev) => (prev ? `${prev} ${emoji}` : emoji));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!commentContent.trim() || submitting) return;
+    const trimmed = commentContent.trim();
+    if ((!trimmed && !commentImage) || submitting) return;
     try {
       setSubmitting(true);
-      const newComment = await createCircleComment(id, commentContent, activeTopicId);
+      const newComment = await createCircleComment(id, trimmed, activeTopicId, commentImage);
       // Immediately add to UI - optimistic update
       setComments(prev => {
         // Check if comment already exists (shouldn't, but be safe)
@@ -195,6 +201,7 @@ function CircleDetail() {
         return [...prev, newComment].sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
       });
       setCommentContent('');
+      setCommentImage(null);
       
       // Trigger immediate refresh to get server state
       setTimeout(() => loadComments(true, true), 50);
@@ -398,47 +405,80 @@ function CircleDetail() {
           <div className="max-w-2xl mx-auto pointer-events-auto">
             <form 
               onSubmit={handleSubmit}
-              className="relative rounded-2xl transition-all duration-300 font-mono shadow-[0_12px_44px_rgba(0,0,0,0.85)] border border-white/10"
+              className="relative rounded-2xl transition-all duration-300 font-mono"
               style={{
                 backgroundColor: 'rgba(15, 14, 20, 0.92)',
                 backdropFilter: 'blur(20px)',
                 WebkitBackdropFilter: 'blur(20px)',
-                boxShadow: `0 12px 40px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(255, 255, 255, 0.08), 0 0 24px ${accent}15`,
+                border: '1px solid rgba(255, 255, 255, 0.06)',
+                boxShadow: `0 12px 40px rgba(0, 0, 0, 0.85), 0 0 24px ${accent}12`,
               }}
             >
-              {/* Inner Well - Clean text field and send button only */}
-              <div className="p-2 sm:p-2.5">
-                <div className="flex items-center gap-2 sm:gap-3">
+              {/* Inner Well - Flat input with tiny media attachment, quick emojis, and send button */}
+              <div className="px-2.5 py-1.5 sm:px-3 sm:py-2">
+                <div className="flex items-center gap-2">
                   {/* Textarea */}
                   <textarea
                     value={commentContent}
                     onChange={(e) => setCommentContent(e.target.value)}
                     onKeyDown={handleKeyDown}
                     placeholder="share your response..."
-                    className="flex-1 text-[#E7DED5] text-xs sm:text-sm resize-none focus:outline-none placeholder-white/30 bg-transparent py-1.5 px-2 leading-relaxed tracking-wide"
+                    className="flex-1 text-[#E7DED5] text-xs sm:text-sm resize-none focus:outline-none placeholder-white/30 bg-transparent py-1 px-1.5 leading-snug tracking-wide"
                     rows={1}
                     maxLength={2000}
-                    style={{ minHeight: '38px', maxHeight: '120px' }}
+                    style={{ minHeight: '28px', maxHeight: '72px' }}
+                  />
+
+                  {/* Tiny Image / GIF attachment */}
+                  <ImageUpload
+                    variant="tiny"
+                    onImageSelect={(file) => setCommentImage(file)}
+                    onImageRemove={() => setCommentImage(null)}
+                    existingImage={commentImage}
+                    disabled={submitting}
                   />
 
                   {/* Send Button */}
                   <button
                     type="submit"
-                    disabled={!commentContent.trim() || submitting}
-                    className="flex-shrink-0 w-8 h-8 rounded-xl flex items-center justify-center transition-all duration-200 disabled:opacity-20 hover:scale-105 active:scale-95 shadow-sm cursor-pointer disabled:cursor-not-allowed"
+                    disabled={(!commentContent.trim() && !commentImage) || submitting}
+                    className="flex-shrink-0 w-7 h-7 rounded-xl flex items-center justify-center transition-all duration-200 disabled:opacity-20 hover:scale-105 active:scale-95 shadow-sm cursor-pointer disabled:cursor-not-allowed"
                     style={{
-                      backgroundColor: commentContent.trim() ? accent : 'rgba(255, 255, 255, 0.06)',
-                      color: commentContent.trim() ? '#ffffff' : 'rgba(255, 255, 255, 0.4)',
-                      boxShadow: commentContent.trim() ? `0 0 14px ${accent}50` : 'none',
+                      backgroundColor: (commentContent.trim() || commentImage) ? accent : 'rgba(255, 255, 255, 0.06)',
+                      color: (commentContent.trim() || commentImage) ? '#ffffff' : 'rgba(255, 255, 255, 0.4)',
+                      boxShadow: (commentContent.trim() || commentImage) ? `0 0 14px ${accent}50` : 'none',
                     }}
                     title="Send"
                   >
                     {submitting ? (
                       <span className="text-[10px] animate-pulse">···</span>
                     ) : (
-                      <ArrowUp className="w-4 h-4 stroke-[2.5]" />
+                      <ArrowUp className="w-3.5 h-3.5 stroke-[2.5]" />
                     )}
                   </button>
+                </div>
+
+                {/* Flat emoji quick reaction bar */}
+                <div className="flex items-center justify-between pt-1 mt-1 border-t border-white/[0.04] px-1">
+                  <div className="flex items-center gap-1">
+                    {REPLY_REACTION_EMOJIS.map(({ icon: Icon, emoji, label }) => (
+                      <button
+                        key={label}
+                        type="button"
+                        onClick={() => handleAddCommentEmoji(emoji)}
+                        className="p-1 rounded text-[#928B91] hover:text-[#E7DED5] hover:bg-white/[0.08] transition-all flex items-center justify-center"
+                        title={`${label} (${emoji})`}
+                        aria-label={label}
+                      >
+                        <Icon size={12} strokeWidth={1.8} />
+                      </button>
+                    ))}
+                  </div>
+                  {commentContent.length > 0 && (
+                    <span className="text-[8px] text-[#928B91]/50 tabular-nums">
+                      {commentContent.length}/2000
+                    </span>
+                  )}
                 </div>
               </div>
             </form>

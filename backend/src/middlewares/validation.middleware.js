@@ -322,13 +322,18 @@ export const validateCreateCircleComment = [
     .isString()
     .withMessage('Circle ID must be a string'),
   body('content')
-    .notEmpty()
-    .withMessage('Content is required')
-    .isString()
-    .withMessage('Content must be a string')
-    .isLength({ min: 1, max: 1000 })
-    .withMessage('Content must be between 1 and 1000 characters')
-    .trim(),
+    .custom((val, { req }) => {
+      const hasContent = typeof val === 'string' && val.trim().length > 0;
+      const hasFile = Boolean(req.file);
+      const hasImage = Boolean(req.body?.image || req.body?.image_url);
+      if (!hasContent && !hasFile && !hasImage) {
+        throw new Error('Content or attachment is required');
+      }
+      if (hasContent && val.length > 2000) {
+        throw new Error('Content must not exceed 2000 characters');
+      }
+      return true;
+    }),
   handleValidationErrors,
 ];
 

@@ -1,6 +1,7 @@
 import { useNavigate, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
+import { UserPlus } from 'lucide-react';
 import EsoLogo from '../components/EsoLogo';
 import { usePageTitle } from '../hooks/usePageTitle';
 import CinematicHero from '../components/CinematicHero';
@@ -49,7 +50,7 @@ function Landing() {
   return (
     <div className="min-h-screen text-white overflow-x-hidden bg-transparent">
 
-      {/* NAVIGATION - Editorial Spacing */}
+      {/* NAVIGATION - Editorial Spacing with Warm Orange Under-Glow */}
       <motion.header 
         initial={{ y: -100 }}
         animate={{ y: 0 }}
@@ -58,37 +59,42 @@ function Landing() {
         style={{
           zIndex: 50,
           border: 'none',
-          borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
-          backgroundColor: isScrolled ? 'rgba(0, 0, 0, 0.95)' : 'rgba(0, 0, 0, 0.5)',
+          backgroundColor: isScrolled ? 'rgba(6, 6, 9, 0.94)' : 'rgba(8, 7, 10, 0.65)',
           backdropFilter: 'blur(20px)',
           WebkitBackdropFilter: 'blur(20px)',
           transitionDuration: 'var(--duration-slow)',
         }}
       >
-        <nav className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-16 py-3" role="navigation" aria-label="Main navigation" style={{ background: 'transparent' }}>
+        <nav className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-16 py-3 relative" role="navigation" aria-label="Main navigation" style={{ background: 'transparent' }}>
           <div className="flex items-center justify-between gap-4" style={{ background: 'transparent' }}>
-            {/* Logo */}
-            <Link to="/" className="focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50 rounded transition-transform duration-300 hover:scale-105 flex-shrink-0" style={{ background: 'transparent' }}>
-              <EsoLogo className="h-8 sm:h-10 w-auto" />
-            </Link>
+            {/* Logo + subtle divider */}
+            <div className="flex items-center gap-4 flex-shrink-0" style={{ background: 'transparent' }}>
+              <Link to="/" className="focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50 rounded transition-transform duration-300 hover:scale-105" style={{ background: 'transparent' }}>
+                <EsoLogo className="h-8 sm:h-10 w-auto" />
+              </Link>
+              <span className="hidden md:block h-4 w-px bg-white/10" aria-hidden="true" />
+            </div>
             
             {/* Navigation - Magazine-like spacing */}
-            <div className="hidden md:flex items-center gap-8 lg:gap-12 text-xs tracking-widest uppercase flex-1 justify-center" style={{ background: 'transparent' }}>
+            <div className="hidden md:flex items-center gap-8 lg:gap-12 text-xs tracking-[0.2em] uppercase flex-1 justify-center" style={{ background: 'transparent' }}>
               <a 
                 href="#explore" 
-                className="transition-all duration-500 relative after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 hover:after:w-full after:transition-all after:duration-500"
-                style={{
-                  color: 'rgba(255, 255, 255, 0.5)',
-                  background: 'transparent',
-                }}
-                onMouseEnter={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 1)'}
-                onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.5)'}
+                className="transition-all duration-300 relative py-1 text-[#F2EAE0] hover:text-white"
+                style={{ background: 'transparent' }}
               >
                 Explore
+                <span
+                  aria-hidden="true"
+                  className="pointer-events-none absolute -bottom-[11px] left-1/2 -translate-x-1/2 w-24 h-[2px]"
+                  style={{
+                    background: 'linear-gradient(90deg, transparent 0%, rgba(235, 118, 42, 0.95) 50%, transparent 100%)',
+                    boxShadow: '0 0 12px rgba(235, 118, 42, 0.85)',
+                  }}
+                />
               </a>
               <Link
                 to="/community"
-                className="transition-all duration-500"
+                className="transition-all duration-300 py-1"
                 style={{
                   color: 'rgba(255, 255, 255, 0.5)',
                   background: 'transparent',
@@ -102,39 +108,51 @@ function Landing() {
 
             {/* Auth buttons - Responsive */}
             <div className="flex items-center gap-2 sm:gap-4 flex-shrink-0" style={{ background: 'transparent' }}>
+              <span className="hidden sm:block h-4 w-px bg-white/10" aria-hidden="true" />
               <Link 
                 to="/login"
-                className="hidden sm:inline-block px-4 lg:px-6 py-2 text-xs transition-all duration-500 tracking-widest uppercase"
+                className="hidden sm:inline-block px-3 lg:px-5 py-2 text-xs transition-all duration-300 tracking-[0.18em] uppercase"
                 style={{
-                  color: 'rgba(255, 255, 255, 0.6)',
+                  color: 'rgba(255, 255, 255, 0.65)',
                   background: 'transparent',
                 }}
                 onMouseEnter={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 1)'}
-                onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.6)'}
+                onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.65)'}
               >
                 Sign In
               </Link>
               <Link 
                 to="/register"
-                className="px-4 sm:px-6 py-2 text-xs transition-all duration-500 tracking-widest uppercase join-button"
+                className="inline-flex items-center gap-2 px-4 sm:px-5 py-1.5 text-xs transition-all duration-300 tracking-[0.18em] uppercase rounded-md join-button hover:brightness-110"
                 style={{
-                  backgroundColor: '#FFFFFF',
-                  color: '#000000',
-                  border: `1px solid ${'#FFFFFF'}`,
-                  borderRadius: 'var(--radius-soft)',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.9)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = '#FFFFFF';
+                  background: 'linear-gradient(135deg, rgba(219, 118, 46, 0.24) 0%, rgba(22, 14, 10, 0.94) 100%)',
+                  color: '#F3EAE0',
+                  border: '1px solid rgba(219, 118, 46, 0.55)',
+                  boxShadow: '0 0 18px rgba(219, 118, 46, 0.22), inset 0 1px 0 rgba(255, 185, 125, 0.16)',
                 }}
               >
-                Join
+                <UserPlus className="w-3.5 h-3.5 text-[#E88438]" strokeWidth={2} />
+                <span>Join</span>
               </Link>
             </div>
           </div>
         </nav>
+
+        {/* Subtle orange horizon hairline & ambient glow below top nav */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute bottom-0 left-0 right-0 h-px"
+          style={{
+            background: 'linear-gradient(90deg, rgba(219, 118, 46, 0.25) 0%, rgba(255, 255, 255, 0.08) 22%, rgba(219, 118, 46, 0.65) 42%, rgba(219, 118, 46, 0.2) 65%, rgba(255, 255, 255, 0.07) 100%)',
+          }}
+        />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -bottom-6 left-0 right-0 h-6"
+          style={{
+            background: 'radial-gradient(ellipse 35% 100% at 42% 0%, rgba(219, 118, 46, 0.22), transparent 75%), radial-gradient(ellipse 25% 100% at 6% 0%, rgba(219, 118, 46, 0.14), transparent 75%)',
+          }}
+        />
       </motion.header>
 
       {/* CINEMATIC HERO - Museum Gallery */}

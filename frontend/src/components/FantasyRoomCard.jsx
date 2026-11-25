@@ -45,13 +45,13 @@ function FantasyRoomCard({ post, onReaction, onEdit, onDelete }) {
         background: 'transparent',
         backdropFilter: 'blur(16px)',
         WebkitBackdropFilter: 'blur(16px)',
-        border: '1px solid rgba(255, 255, 255, 0.06)',
+        border: '1px solid rgba(255, 255, 255, 0.035)',
         boxShadow: 'none',
         minHeight: imageUrl ? '420px' : 'auto',
       }}
     >
       {/* Header Bar */}
-      <div className="flex items-center justify-between px-3 sm:px-5 pt-3 sm:pt-4 pb-2 border-b border-white/[0.06]">
+      <div className="flex items-center justify-between px-3 sm:px-5 pt-3 sm:pt-4 pb-2 border-b border-white/[0.03]">
         <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
           <time className="text-[9px] sm:text-[10px] tracking-wide text-[#928B91]">
             {formatTimeAgo(post.createdAt)}
@@ -217,9 +217,9 @@ function FantasyRoomCard({ post, onReaction, onEdit, onDelete }) {
         {/* Attached Image */}
         {imageUrl && (
           <div className="mb-3 flex-1">
-            <div className="w-full overflow-hidden rounded border border-[#292630] p-1.5 bg-[#111117]">
+            <div className="w-full overflow-hidden rounded border border-white/[0.04] bg-black/40">
               <div
-                className="relative overflow-hidden w-full rounded bg-black/60 flex items-center justify-center"
+                className="relative overflow-hidden w-full flex items-center justify-center"
                 style={{
                   minHeight: '200px',
                   maxHeight: '380px',
@@ -238,7 +238,7 @@ function FantasyRoomCard({ post, onReaction, onEdit, onDelete }) {
         )}
 
         {/* Reactions */}
-        <div className="pt-3 border-t border-[#292630] mt-auto">
+        <div className="pt-2 mt-auto">
           <RoomReactions
             room="fantasy"
             reactions={post.reactions || {}}

@@ -493,7 +493,7 @@ export async function removeComment(commentId, moderatorId) {
  * @param {string} authorId - MongoDB ObjectId of author
  * @returns {Promise<Object>} Created comment document
  */
-export async function createCircleComment(circleId, { content, postId }, authorId) {
+export async function createCircleComment(circleId, { content = '', postId, image = null }, authorId) {
   // Circle IDs are regular MongoDB ObjectIds (not opaque)
   if (!mongoose.Types.ObjectId.isValid(circleId)) {
     const err = new Error('Invalid circle ID format');
@@ -548,7 +548,7 @@ export async function createCircleComment(circleId, { content, postId }, authorI
   }
 
   // Sanitize content
-  const contentSanitized = sanitizeCommentContent(content);
+  const contentSanitized = sanitizeCommentContent(content || '');
 
   // Create top-level circle comment
   const comment = new Comment({
@@ -556,8 +556,10 @@ export async function createCircleComment(circleId, { content, postId }, authorI
     postId: mongoPostId,
     authorId,
     parentId: null,
-    content,
+    content: content || '',
     contentSanitized,
+    image: image || null,
+    imageUrl: image || null,
     depth: 0,
     isDeleted: false
   });
@@ -573,6 +575,8 @@ export async function createCircleComment(circleId, { content, postId }, authorI
     username: comment.authorId?.username || 'User'
   };
   delete formattedComment.authorId;
+  formattedComment.image = comment.image || null;
+  formattedComment.imageUrl = comment.imageUrl || comment.image || null;
 
   // Increment post comment count if linked to a topic (async, don't wait)
   if (mongoPostId) {
