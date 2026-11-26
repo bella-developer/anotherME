@@ -120,13 +120,10 @@ function Home() {
                   onBlur={() => setHovered(null)}
                   aria-label={`Enter ${room.name.toLowerCase()}`}
                 >
-                  <span className="eso-room__corners" aria-hidden="true">
-                    <span className="eso-room__corner eso-room__corner--tl" />
-                    <span className="eso-room__corner eso-room__corner--tr" />
-                    <span className="eso-room__corner eso-room__corner--bl" />
-                    <span className="eso-room__corner eso-room__corner--br" />
-                  </span>
+                  {/* Layer 1: Outer bronze architectural sill */}
+                  <span className="eso-room__frame-outer" aria-hidden="true" />
 
+                  {/* Layer 2: Recessed inner bronze bezel & room scene */}
                   <span className="eso-room__scene">
                     <img
                       src={room.gif}
@@ -258,7 +255,7 @@ function Home() {
             min-width: 0;
             --room-glow: #fff;
             --room-rgb: 255,255,255;
-            --scene-inset: 0px;
+            --scene-inset: 6px;
           }
 
           .eso-room__portal {
@@ -268,48 +265,46 @@ function Home() {
             aspect-ratio: 1.42 / 1;
             padding: 0;
             border: 0;
-            border-radius: 0;
+            border-radius: 2px;
             background: transparent;
             cursor: pointer;
             isolation: isolate;
             -webkit-tap-highlight-color: transparent;
             outline: none;
+            transition: transform .45s cubic-bezier(.22, 1, .36, 1);
           }
 
-          .eso-room__corners {
+          /* Layer 1: Outer architectural bronze frame + matte recessed mat */
+          .eso-room__frame-outer {
             position: absolute;
-            inset: var(--scene-inset);
-            z-index: 3;
+            inset: 0;
+            z-index: 1;
+            border-radius: 2px;
+            border: 1px solid rgba(176, 134, 84, .34);
+            background: linear-gradient(180deg, rgba(18, 15, 13, .92) 0%, rgba(9, 9, 12, .96) 100%);
+            box-shadow:
+              0 18px 40px rgba(0, 0, 0, .72),
+              0 4px 12px rgba(0, 0, 0, .55),
+              inset 0 1px 0 rgba(235, 198, 146, .14);
             pointer-events: none;
+            transition: border-color .45s ease, box-shadow .45s ease;
           }
 
-          .eso-room__corner {
-            position: absolute;
-            width: 13px;
-            height: 13px;
-            border-color: var(--room-glow);
-            border-style: solid;
-            border-width: 0;
-            opacity: .88;
-            filter: drop-shadow(0 0 3px rgba(var(--room-rgb), .32));
-            transition: transform .35s ease, filter .35s ease, opacity .35s ease;
-          }
-
-          .eso-room__corner--tl { top: 8px; left: 8px; border-top-width: 2.5px; border-left-width: 2.5px; }
-          .eso-room__corner--tr { top: 8px; right: 8px; border-top-width: 2.5px; border-right-width: 2.5px; }
-          .eso-room__corner--bl { bottom: 8px; left: 8px; border-bottom-width: 2.5px; border-left-width: 2.5px; }
-          .eso-room__corner--br { bottom: 8px; right: 8px; border-bottom-width: 2.5px; border-right-width: 2.5px; }
-
+          /* Layer 2: Inner recessed bronze bezel + room viewport */
           .eso-room__scene {
             position: absolute;
             inset: var(--scene-inset);
-            z-index: 1;
+            z-index: 2;
             display: block;
             overflow: hidden;
+            border-radius: 1px;
             background: #080909;
-            border: 1px solid rgba(255, 255, 255, .08);
-            box-shadow: inset 0 0 40px #000;
-            transition: border-color .45s ease;
+            border: 1px solid rgba(196, 152, 98, .42);
+            box-shadow:
+              inset 0 0 36px rgba(0, 0, 0, .92),
+              inset 0 1px 0 rgba(235, 200, 150, .14),
+              0 0 0 1px rgba(0, 0, 0, .75);
+            transition: border-color .45s ease, box-shadow .45s ease;
           }
 
           .eso-room__video {
@@ -329,51 +324,39 @@ function Home() {
             position: absolute;
             inset: 0;
             background:
-              linear-gradient(180deg, rgba(0,0,0,.15), transparent 40%, rgba(0,0,0,.45)),
-              linear-gradient(90deg, rgba(0,0,0,.2), transparent 15%, transparent 85%, rgba(0,0,0,.2));
-            box-shadow: inset 0 0 30px rgba(0,0,0,.7);
+              linear-gradient(145deg, rgba(225, 185, 130, .05) 0%, transparent 28%),
+              linear-gradient(180deg, rgba(0,0,0,.18), transparent 40%, rgba(0,0,0,.52)),
+              linear-gradient(90deg, rgba(0,0,0,.22), transparent 16%, transparent 84%, rgba(0,0,0,.22));
+            box-shadow: inset 0 0 34px rgba(0,0,0,.78);
             pointer-events: none;
           }
 
-          .eso-room__open-mark {
-            position: absolute;
-            right: 1rem;
-            bottom: .8rem;
-            color: var(--room-glow);
-            font-size: 1.15rem;
-            opacity: 0;
-            transform: translate(-4px, 4px);
-            transition: opacity .45s ease, transform .45s ease;
-            text-shadow: 0 0 8px rgba(var(--room-rgb), .35);
+          .eso-room__portal:hover,
+          .eso-room.is-hovered .eso-room__portal,
+          .eso-room__portal:focus-visible {
+            transform: translateY(-3px);
           }
 
-          .eso-room__portal:hover .eso-room__corner,
-          .eso-room.is-hovered .eso-room__corner,
-          .eso-room__portal:focus-visible .eso-room__corner {
-            opacity: 1;
-            filter: drop-shadow(0 0 5px rgba(var(--room-rgb), .48));
+          .eso-room__portal:hover .eso-room__frame-outer,
+          .eso-room.is-hovered .eso-room__frame-outer,
+          .eso-room__portal:focus-visible .eso-room__frame-outer {
+            border-color: rgba(208, 162, 106, .56);
+            box-shadow:
+              0 24px 52px rgba(0, 0, 0, .82),
+              0 6px 16px rgba(0, 0, 0, .6),
+              0 0 24px rgba(var(--room-rgb), .12),
+              inset 0 1px 0 rgba(242, 206, 156, .24);
           }
-
-          .eso-room__portal:hover .eso-room__corner--tl,
-          .eso-room.is-hovered .eso-room__corner--tl,
-          .eso-room__portal:focus-visible .eso-room__corner--tl { transform: translate(2px, 2px); }
-
-          .eso-room__portal:hover .eso-room__corner--tr,
-          .eso-room.is-hovered .eso-room__corner--tr,
-          .eso-room__portal:focus-visible .eso-room__corner--tr { transform: translate(-2px, 2px); }
-
-          .eso-room__portal:hover .eso-room__corner--bl,
-          .eso-room.is-hovered .eso-room__corner--bl,
-          .eso-room__portal:focus-visible .eso-room__corner--bl { transform: translate(2px, -2px); }
-
-          .eso-room__portal:hover .eso-room__corner--br,
-          .eso-room.is-hovered .eso-room__corner--br,
-          .eso-room__portal:focus-visible .eso-room__corner--br { transform: translate(-2px, -2px); }
 
           .eso-room__portal:hover .eso-room__scene,
           .eso-room.is-hovered .eso-room__scene,
           .eso-room__portal:focus-visible .eso-room__scene {
-            border-color: rgba(var(--room-rgb), .24);
+            border-color: rgba(222, 178, 122, .65);
+            box-shadow:
+              inset 0 0 28px rgba(0, 0, 0, .85),
+              inset 0 0 22px rgba(var(--room-rgb), .14),
+              inset 0 1px 0 rgba(245, 212, 166, .22),
+              0 0 0 1px rgba(0, 0, 0, .8);
           }
 
           .eso-room__portal:hover .eso-room__video,
@@ -477,7 +460,7 @@ function Home() {
             .eso-home { padding-top: 1.75rem; }
             .eso-hero { margin-bottom: 1.8rem; }
             .eso-rooms { gap: 1.1rem; }
-            .eso-room { --scene-inset: 11px; }
+            .eso-room { --scene-inset: 5px; }
             .eso-room__name-row h2 { letter-spacing: .16em; }
           }
 
@@ -497,13 +480,8 @@ function Home() {
               width: min(100%, 520px);
               gap: 2.4rem;
             }
-            .eso-room { --scene-inset: 13px; }
+            .eso-room { --scene-inset: 5px; }
             .eso-room__portal { aspect-ratio: 1.5 / 1; }
-            .eso-room__corner { width: 10px; height: 10px; }
-            .eso-room__corner--tl { top: 6px; left: 6px; }
-            .eso-room__corner--tr { top: 6px; right: 6px; }
-            .eso-room__corner--bl { bottom: 6px; left: 6px; }
-            .eso-room__corner--br { bottom: 6px; right: 6px; }
             .eso-room__copy { padding-top: 1.15rem; }
             .eso-room__name-row h2 { font-size: 1.08rem; letter-spacing: .22em; }
             .eso-enter { margin-top: .65rem; }
@@ -512,11 +490,10 @@ function Home() {
           }
 
           @media (prefers-reduced-motion: reduce) {
-            .eso-room__outer-frame,
-            .eso-room__frame-shadow,
-            .eso-room__inner-frame,
+            .eso-room__portal,
+            .eso-room__frame-outer,
+            .eso-room__scene,
             .eso-room__video,
-            .eso-room__corner,
             .eso-enter {
               transition: none !important;
             }

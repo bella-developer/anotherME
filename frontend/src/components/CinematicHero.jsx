@@ -1,24 +1,6 @@
 import { memo, useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {
-  Aperture,
-  AudioLines,
-  Compass,
-  Flame,
-  HeartHandshake,
-  HelpCircle,
-  Sparkles,
-} from 'lucide-react';
-
-const VAULT_ICONS = {
-  welcome: Aperture,
-  'dark-confession': Flame,
-  'dark-understanding': HeartHandshake,
-  'fantasy-daydream': Sparkles,
-  'fantasy-vibes': AudioLines,
-  'philo-questioning': HelpCircle,
-  'philo-truth': Compass,
-};
+import VaultDottedMotion from './VaultDottedMotion';
 
 /* ESO — BLACK VAULT | Responsive cinematic hero
    Mobile: notes, video, vault in one column.
@@ -216,8 +198,7 @@ function StickyWall({activeEntry,selectEntry,compact=false}) {
 }
 
 function VaultCard({active,navigate,compact=false}) {
-  const Icon = VAULT_ICONS[active.id] || Aperture;
-  const accent = active.quoteHighlightColor || '#FF7A1A';
+  const accent = active.id === 'philo-questioning' ? '#857BFF' : (active.quoteHighlightColor || '#FF7A1A');
 
   return <button 
     type="button" 
@@ -242,23 +223,17 @@ function VaultCard({active,navigate,compact=false}) {
 
     <div className="flex items-center justify-between gap-3 pl-1">
       <div className="flex items-center gap-3 min-w-0 flex-1">
-        {/* Per-note vector icon emblem */}
+        {/* Per-note dotted motion graphic emblem */}
         <span
           aria-hidden="true"
           className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-md transition-colors duration-300"
           style={{
-            backgroundColor: `${accent}18`,
-            border: `1px solid ${accent}40`,
+            backgroundColor: `${accent}14`,
+            border: `1px solid ${accent}38`,
+            boxShadow: `inset 0 0 10px ${accent}14`,
           }}
         >
-          <Icon
-            size={14}
-            strokeWidth={1.75}
-            style={{
-              color: accent,
-              filter: `drop-shadow(0 0 4px ${accent}99)`,
-            }}
-          />
+          <VaultDottedMotion frameId={active.id} />
         </span>
 
         <div className="min-w-0 flex-1">
