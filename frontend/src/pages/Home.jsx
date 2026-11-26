@@ -17,8 +17,8 @@ const rooms = [
     path: '/rooms/dark',
     gif:
       'https://res.cloudinary.com/dbtm7etag/image/upload/v1792502428/converted_twbyo4.gif',
-    glowColor: '#E02424',
-    glowRGB: '224, 36, 36',
+    glowColor: '#DC2626',
+    glowRGB: '220, 38, 38',
     number: '01',
   },
   {
@@ -41,8 +41,8 @@ const rooms = [
     path: '/rooms/philo',
     gif:
       'https://res.cloudinary.com/dbtm7etag/image/upload/v1792502429/converted_2_neetec.gif',
-    glowColor: '#857BFF',
-    glowRGB: '133, 123, 255',
+    glowColor: '#7B61FF',
+    glowRGB: '123, 97, 255',
     number: '03',
   },
 ];
@@ -274,37 +274,38 @@ function Home() {
             transition: transform .45s cubic-bezier(.22, 1, .36, 1);
           }
 
-          /* Layer 1: Outer architectural bronze frame + matte recessed mat */
+          /* Layer 1: Outer architectural sill in room color + matte recessed mat */
           .eso-room__frame-outer {
             position: absolute;
             inset: 0;
             z-index: 1;
-            border-radius: 2px;
-            border: 1px solid rgba(176, 134, 84, .34);
-            background: linear-gradient(180deg, rgba(18, 15, 13, .92) 0%, rgba(9, 9, 12, .96) 100%);
+            border-radius: 3px;
+            border: 1.5px solid rgba(var(--room-rgb), .52);
+            background: linear-gradient(180deg, rgba(var(--room-rgb), .08) 0%, rgba(11, 10, 14, .96) 100%);
             box-shadow:
-              0 18px 40px rgba(0, 0, 0, .72),
+              0 18px 40px rgba(0, 0, 0, .74),
               0 4px 12px rgba(0, 0, 0, .55),
-              inset 0 1px 0 rgba(235, 198, 146, .14);
+              0 0 18px rgba(var(--room-rgb), .14),
+              inset 0 1px 0 rgba(var(--room-rgb), .2);
             pointer-events: none;
-            transition: border-color .45s ease, box-shadow .45s ease;
+            transition: border-color .4s ease, box-shadow .4s ease;
           }
 
-          /* Layer 2: Inner recessed bronze bezel + room viewport */
+          /* Layer 2: Thicker, bold inner bezel in vivid room color + room viewport */
           .eso-room__scene {
             position: absolute;
             inset: var(--scene-inset);
             z-index: 2;
             display: block;
             overflow: hidden;
-            border-radius: 1px;
+            border-radius: 2px;
             background: #080909;
-            border: 1px solid rgba(196, 152, 98, .42);
+            border: 3px solid rgba(var(--room-rgb), .92);
             box-shadow:
-              inset 0 0 36px rgba(0, 0, 0, .92),
-              inset 0 1px 0 rgba(235, 200, 150, .14),
-              0 0 0 1px rgba(0, 0, 0, .75);
-            transition: border-color .45s ease, box-shadow .45s ease;
+              inset 0 0 34px rgba(0, 0, 0, .92),
+              inset 0 0 14px rgba(var(--room-rgb), .14),
+              0 0 14px rgba(var(--room-rgb), .22);
+            transition: border-color .4s ease, box-shadow .4s ease;
           }
 
           .eso-room__video {
@@ -340,23 +341,22 @@ function Home() {
           .eso-room__portal:hover .eso-room__frame-outer,
           .eso-room.is-hovered .eso-room__frame-outer,
           .eso-room__portal:focus-visible .eso-room__frame-outer {
-            border-color: rgba(208, 162, 106, .56);
+            border-color: rgba(var(--room-rgb), .85);
             box-shadow:
               0 24px 52px rgba(0, 0, 0, .82),
               0 6px 16px rgba(0, 0, 0, .6),
-              0 0 24px rgba(var(--room-rgb), .12),
-              inset 0 1px 0 rgba(242, 206, 156, .24);
+              0 0 28px rgba(var(--room-rgb), .24),
+              inset 0 1px 0 rgba(var(--room-rgb), .32);
           }
 
           .eso-room__portal:hover .eso-room__scene,
           .eso-room.is-hovered .eso-room__scene,
           .eso-room__portal:focus-visible .eso-room__scene {
-            border-color: rgba(222, 178, 122, .65);
+            border-color: var(--room-glow);
             box-shadow:
               inset 0 0 28px rgba(0, 0, 0, .85),
-              inset 0 0 22px rgba(var(--room-rgb), .14),
-              inset 0 1px 0 rgba(245, 212, 166, .22),
-              0 0 0 1px rgba(0, 0, 0, .8);
+              inset 0 0 24px rgba(var(--room-rgb), .24),
+              0 0 20px rgba(var(--room-rgb), .35);
           }
 
           .eso-room__portal:hover .eso-room__video,
