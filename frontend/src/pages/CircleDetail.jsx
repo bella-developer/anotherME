@@ -5,9 +5,11 @@ import { FaStar } from 'react-icons/fa';
 import { 
   ChevronsRight, 
   ArrowUp,
+  Compass,
   Frown,
   HeartCrack,
   HeartOff,
+  ShieldCheck,
   Smile,
   ThumbsUp,
   ThumbsDown,
@@ -271,18 +273,39 @@ function CircleDetail() {
 
           {/* Circle header */}
           <div className="mb-7 font-mono">
-            <div className="flex items-center justify-between gap-3 mb-7">
+            <div className="flex flex-wrap items-center justify-between gap-3 mb-7">
               <button 
+                type="button"
                 onClick={() => navigate('/circles')} 
-                className="text-[10px] tracking-[0.18em] uppercase transition-all inline-flex items-center gap-2 px-3 py-1 rounded border border-white/[0.08] bg-white/[0.03] text-[#928B91] hover:text-[#E7DED5] hover:border-white/20 hover:bg-white/[0.06]"
+                className="text-[10px] tracking-[0.18em] uppercase transition-all inline-flex items-center gap-2 px-3 py-1.5 rounded-lg border border-white/10 bg-white/[0.04] text-[#928B91] hover:text-[#E7DED5] hover:border-white/25 hover:bg-white/[0.08] active:scale-[0.98] shadow-[0_2px_10px_rgba(0,0,0,0.35)] cursor-pointer"
               >
                 ← Circles
               </button>
 
-              <div className="flex items-center gap-3 text-[10px] tracking-[0.18em] uppercase">
-                <button onClick={() => navigate('/circles')} className="text-[#928B91] hover:text-[#E7DED5] transition-colors">Other Circles</button>
-                <span className="text-white/15" aria-hidden="true">·</span>
-                <button onClick={() => navigate('/rules')} className="text-[#928B91] hover:text-[#E7DED5] transition-colors">Rules</button>
+              <div className="flex items-center gap-2.5">
+                <button
+                  type="button"
+                  onClick={() => navigate('/circles')}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[10px] font-semibold tracking-[0.16em] uppercase transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
+                  style={{
+                    color: '#F3EAE0',
+                    border: `1px solid ${accent}55`,
+                    background: `linear-gradient(180deg, ${accent}22 0%, rgba(18, 17, 24, 0.92) 100%)`,
+                    boxShadow: `0 4px 14px rgba(0, 0, 0, 0.45), 0 0 14px ${accent}1f, inset 0 1px 0 rgba(255, 255, 255, 0.08)`,
+                  }}
+                >
+                  <Compass size={12} strokeWidth={2} style={{ color: accent }} />
+                  <span>Other Circles</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => navigate('/rules')}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[10px] font-semibold tracking-[0.16em] uppercase text-[#E7DED5] border border-white/15 bg-white/[0.06] hover:bg-white/[0.12] hover:border-white/30 transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0 shadow-[0_4px_14px_rgba(0,0,0,0.45),inset_0_1px_0_rgba(255,255,255,0.08)] cursor-pointer"
+                >
+                  <ShieldCheck size={12} strokeWidth={2} style={{ color: accent }} />
+                  <span>Rules</span>
+                </button>
               </div>
             </div>
 

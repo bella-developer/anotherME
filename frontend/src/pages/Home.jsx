@@ -255,7 +255,7 @@ function Home() {
             min-width: 0;
             --room-glow: #fff;
             --room-rgb: 255,255,255;
-            --scene-inset: 6px;
+            --scene-inset: 0px;
           }
 
           .eso-room__portal {
@@ -274,38 +274,35 @@ function Home() {
             transition: transform .45s cubic-bezier(.22, 1, .36, 1);
           }
 
-          /* Layer 1: Outer architectural sill in room color + matte recessed mat */
+          /* Thin outer architectural frame in room color */
           .eso-room__frame-outer {
             position: absolute;
             inset: 0;
-            z-index: 1;
-            border-radius: 3px;
-            border: 1.5px solid rgba(var(--room-rgb), .52);
-            background: linear-gradient(180deg, rgba(var(--room-rgb), .08) 0%, rgba(11, 10, 14, .96) 100%);
+            z-index: 2;
+            border-radius: 2px;
+            border: 1.5px solid rgba(var(--room-rgb), .58);
+            background: transparent;
             box-shadow:
-              0 18px 40px rgba(0, 0, 0, .74),
+              0 18px 40px rgba(0, 0, 0, .72),
               0 4px 12px rgba(0, 0, 0, .55),
-              0 0 18px rgba(var(--room-rgb), .14),
-              inset 0 1px 0 rgba(var(--room-rgb), .2);
+              0 0 16px rgba(var(--room-rgb), .14),
+              inset 0 1px 0 rgba(var(--room-rgb), .18);
             pointer-events: none;
             transition: border-color .4s ease, box-shadow .4s ease;
           }
 
-          /* Layer 2: Thicker, bold inner bezel in vivid room color + room viewport */
+          /* Room viewport (no inner border layer) */
           .eso-room__scene {
             position: absolute;
             inset: var(--scene-inset);
-            z-index: 2;
+            z-index: 1;
             display: block;
             overflow: hidden;
             border-radius: 2px;
             background: #080909;
-            border: 3px solid rgba(var(--room-rgb), .92);
-            box-shadow:
-              inset 0 0 34px rgba(0, 0, 0, .92),
-              inset 0 0 14px rgba(var(--room-rgb), .14),
-              0 0 14px rgba(var(--room-rgb), .22);
-            transition: border-color .4s ease, box-shadow .4s ease;
+            border: 0;
+            box-shadow: inset 0 0 34px rgba(0, 0, 0, .92);
+            transition: box-shadow .4s ease;
           }
 
           .eso-room__video {
@@ -341,22 +338,18 @@ function Home() {
           .eso-room__portal:hover .eso-room__frame-outer,
           .eso-room.is-hovered .eso-room__frame-outer,
           .eso-room__portal:focus-visible .eso-room__frame-outer {
-            border-color: rgba(var(--room-rgb), .85);
+            border-color: var(--room-glow);
             box-shadow:
               0 24px 52px rgba(0, 0, 0, .82),
               0 6px 16px rgba(0, 0, 0, .6),
-              0 0 28px rgba(var(--room-rgb), .24),
+              0 0 24px rgba(var(--room-rgb), .24),
               inset 0 1px 0 rgba(var(--room-rgb), .32);
           }
 
           .eso-room__portal:hover .eso-room__scene,
           .eso-room.is-hovered .eso-room__scene,
           .eso-room__portal:focus-visible .eso-room__scene {
-            border-color: var(--room-glow);
-            box-shadow:
-              inset 0 0 28px rgba(0, 0, 0, .85),
-              inset 0 0 24px rgba(var(--room-rgb), .24),
-              0 0 20px rgba(var(--room-rgb), .35);
+            box-shadow: inset 0 0 28px rgba(0, 0, 0, .85);
           }
 
           .eso-room__portal:hover .eso-room__video,
@@ -460,7 +453,6 @@ function Home() {
             .eso-home { padding-top: 1.75rem; }
             .eso-hero { margin-bottom: 1.8rem; }
             .eso-rooms { gap: 1.1rem; }
-            .eso-room { --scene-inset: 5px; }
             .eso-room__name-row h2 { letter-spacing: .16em; }
           }
 
@@ -480,7 +472,6 @@ function Home() {
               width: min(100%, 520px);
               gap: 2.4rem;
             }
-            .eso-room { --scene-inset: 5px; }
             .eso-room__portal { aspect-ratio: 1.5 / 1; }
             .eso-room__copy { padding-top: 1.15rem; }
             .eso-room__name-row h2 { font-size: 1.08rem; letter-spacing: .22em; }
